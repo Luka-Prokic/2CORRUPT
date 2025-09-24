@@ -55,7 +55,7 @@ export default function RotatingTriangle({
         anchorX="center"
         anchorY="middle"
       >
-        BOOBS
+        SPIN
       </Text>
       
       {/* Lighting */}

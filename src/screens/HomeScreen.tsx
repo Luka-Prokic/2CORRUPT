@@ -8,8 +8,8 @@ export default function HomeScreen() {
   return (
     <View style={styles.container}>
       {/* <RotatingTriangle size={1.5} color="yellow" rotationSpeed={0.005} />  */}
-      {/* <SpinTriangle size={1.5} color="black" idleRotationSpeed={0.005} spinSpeed={0.1} /> */}
-      <Cepko3DModel />
+      <SpinTriangle size={1.5} color="black" idleRotationSpeed={0.005} spinSpeed={0.1} />
+      {/* <Cepko3DModel /> */}
     </View>
   );
 }
