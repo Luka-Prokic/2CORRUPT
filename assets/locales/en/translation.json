@@ -1,0 +1,142 @@
+{
+  "button": {
+    "create": "Create",
+    "edit": "Edit",
+    "save": "Save",
+    "reset": "Reset",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "discard": "Discard",
+    "search": "Search",
+    "close": "Close",
+    "upload": "Upload",
+    "preview": "Preview",
+    "download": "Download",
+    "open": "Open",
+    "view": "View"
+  },
+  "form": {
+    "name": "Name",
+    "email": "Email",
+    "title": "Title",
+    "description": "Description",
+    "tags": "Tags"
+  },
+  "list": {
+    "no-items": "No models",
+    "search-x-items": "Search {{count}} models"
+  },
+  "validation": {
+    "required": "Required",
+    "invalid-format": "Invalid format"
+  },
+  "dialog": {
+    "confirm": "Confirm",
+    "discard-changes": "Discard changes",
+    "are-you-sure": "Are you sure?",
+    "unsaved-changes": "You have unsaved changes",
+    "delete-model": "Are you sure you want to delete this model?",
+    "filter": "Filter",
+    "click-to-toggle": "Click to toggle",
+    "click-to-expand": "Click to expand",
+    "click-to-collapse": "Click to collapse",
+    "click-to-open": "Click to open",
+    "click-to-close": "Click to close",
+    "show-more": "Show more",
+    "show-less": "Show less"
+  },
+  "auth-form": {
+    "required": "Required",
+    "wrongFormat": "Wrong format",
+    "passwordDontMatch": "Passwords do not match",
+    "email": "Email",
+    "password": "Password",
+    "forgotPassword": "Forgot password?",
+    "repeatPassword": "Repeat password",
+    "login": "Login",
+    "register": "Register",
+    "resetPassword": "Reset password",
+    "dontHaveAccount": "Don't have an account?",
+    "haveAccount": "Already have an account?"
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "reset-password": "Reset Password",
+    "logout": "Logout"
+  },
+  "models": {
+    "models": "Models",
+    "my-models": "My Models",
+    "upload-model": "Upload Model",
+    "edit-model": "Edit Model",
+    "create-model": "Create Model",
+    "model-details": "Model Details",
+    "no-models": "You haven’t uploaded any models yet.",
+    "open-model": "Open Model",
+    "delete-model": "Delete Model",
+    "preview-model": "Preview Model",
+    "download-model": "Download Model",
+    "last-updated": "Last Updated",
+    "created-at": "Created At",
+    "uploaded-by": "Uploaded By",
+    "tags": "Tags",
+    "file-size": "File Size",
+    "file-type": "File Type",
+    "views": "{{count}} views",
+    "views_0": "No views",
+    "views_1": "1 view",
+    "views_other": "{{count}} views",
+    "search-by-name": "Search by name",
+    "sort-by": "Sort by",
+    "sort-options": {
+      "recent": "Most Recent",
+      "popular": "Most Viewed",
+      "name": "Name"
+    }
+  },
+  "viewer": {
+    "scene": "Scene",
+    "controls": "Controls",
+    "rotate": "Rotate",
+    "zoom": "Zoom",
+    "pan": "Pan",
+    "fullscreen": "Fullscreen",
+    "background": "Background",
+    "wireframe": "Wireframe",
+    "reset-view": "Reset View"
+  },
+  "example": {
+    "create-title": "Create Example",
+    "edit-title": "Edit Example",
+    "role-field": "Role",
+    "is-active-field": "Is Active",
+    "user-status-field": "User Status",
+    "user-status-options": {
+      "any": "Any",
+      "active": "Active",
+      "inactive": "Inactive"
+    }
+  },
+  "navigation": {
+    "render": "Render",
+    "stash": "Stash",
+    "profile": "Profile"
+  },
+  "theme": {
+    "dark": "Dark",
+    "light": "Light",
+    "theme": "Theme"
+  },
+  "language": {
+    "english": "English",
+    "serbian": "Serbian",
+    "language": "Language"
+  },
+  "settings": {
+    "appearance": "Change theme",
+    "change-language": "Change language",
+    "choose-language": "Choose language",
+    "label-app-settings": "App"
+  }
+}

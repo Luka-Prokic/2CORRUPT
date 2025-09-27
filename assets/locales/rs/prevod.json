@@ -1,0 +1,142 @@
+{
+  "button": {
+    "create": "Napravi",
+    "edit": "Uredi",
+    "save": "Sačuvaj",
+    "reset": "Resetuj",
+    "cancel": "Otkaži",
+    "delete": "Obriši",
+    "discard": "Odbaci",
+    "search": "Pretraži",
+    "close": "Zatvori",
+    "upload": "Otpremi",
+    "preview": "Pregledaj",
+    "download": "Preuzmi",
+    "open": "Otvori",
+    "view": "Pogledaj"
+  },
+  "form": {
+    "name": "Naziv",
+    "email": "Email",
+    "title": "Naslov",
+    "description": "Opis",
+    "tags": "Oznake"
+  },
+  "list": {
+    "no-items": "Nema modela",
+    "search-x-items": "Pretraži {{count}} modela"
+  },
+  "validation": {
+    "required": "Obavezno polje",
+    "invalid-format": "Neispravan format"
+  },
+  "dialog": {
+    "confirm": "Potvrdi",
+    "discard-changes": "Odbaci izmene",
+    "are-you-sure": "Da li si siguran?",
+    "unsaved-changes": "Imaš nesačuvane izmene",
+    "delete-model": "Da li zaista želiš da obrišeš ovaj model?",
+    "filter": "Filter",
+    "click-to-toggle": "Klikni da promeniš",
+    "click-to-expand": "Klikni da proširiš",
+    "click-to-collapse": "Klikni da sklopiš",
+    "click-to-open": "Klikni da otvoriš",
+    "click-to-close": "Klikni da zatvoriš",
+    "show-more": "Pokaži više",
+    "show-less": "Pokaži manje"
+  },
+  "auth-form": {
+    "required": "Obavezno polje",
+    "wrongFormat": "Pogrešan format",
+    "passwordDontMatch": "Lozinke se ne poklapaju",
+    "email": "Email",
+    "password": "Lozinka",
+    "forgotPassword": "Zaboravljena lozinka?",
+    "repeatPassword": "Ponovi lozinku",
+    "login": "Prijavi se",
+    "register": "Registruj se",
+    "resetPassword": "Resetuj lozinku",
+    "dontHaveAccount": "Nemaš nalog?",
+    "haveAccount": "Već imaš nalog?"
+  },
+  "auth": {
+    "login": "Prijava",
+    "register": "Registracija",
+    "reset-password": "Resetuj lozinku",
+    "logout": "Odjavi se"
+  },
+  "models": {
+    "models": "Modeli",
+    "my-models": "Moji modeli",
+    "upload-model": "Otpremi model",
+    "edit-model": "Uredi model",
+    "create-model": "Kreiraj model",
+    "model-details": "Detalji modela",
+    "no-models": "Još uvek nisi otpremio nijedan model.",
+    "open-model": "Otvori model",
+    "delete-model": "Obriši model",
+    "preview-model": "Pregledaj model",
+    "download-model": "Preuzmi model",
+    "last-updated": "Poslednja izmena",
+    "created-at": "Kreirano",
+    "uploaded-by": "Otpremio",
+    "tags": "Oznake",
+    "file-size": "Veličina fajla",
+    "file-type": "Tip fajla",
+    "views": "{{count}} pregleda",
+    "views_0": "Nema pregleda",
+    "views_1": "1 pregled",
+    "views_other": "{{count}} pregleda",
+    "search-by-name": "Pretraži po nazivu",
+    "sort-by": "Sortiraj po",
+    "sort-options": {
+      "recent": "Najnovije",
+      "popular": "Najgledanije",
+      "name": "Nazivu"
+    }
+  },
+  "viewer": {
+    "scene": "Scena",
+    "controls": "Kontrole",
+    "rotate": "Rotiraj",
+    "zoom": "Zumiraj",
+    "pan": "Pomeraj",
+    "fullscreen": "Ceo ekran",
+    "background": "Pozadina",
+    "wireframe": "Wireframe",
+    "reset-view": "Resetuj pogled"
+  },
+  "example": {
+    "create-title": "Napravi primer",
+    "edit-title": "Uredi primer",
+    "role-field": "Uloga",
+    "is-active-field": "Aktivan",
+    "user-status-field": "Status korisnika",
+    "user-status-options": {
+      "any": "Bilo koji",
+      "active": "Aktivan",
+      "inactive": "Neaktivan"
+    }
+  },
+  "navigation": {
+    "render": "Render",
+    "stash": "Štek",
+    "profile": "Profil"
+  },
+  "theme": {
+    "dark": "Tamna",
+    "light": "Svetla",
+    "theme": "Tema"
+  },
+  "language": {
+    "english": "Engleski",
+    "serbian": "Srpski",
+    "language": "Jezik"
+  },
+  "settings": {
+    "appearance": "Promeni temu",
+    "change-language": "Promeni jezik",
+    "choose-language": "Izaberi jezik",
+    "label-app-settings": "App"
+  }
+}
