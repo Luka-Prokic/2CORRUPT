@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, ViewStyle, Animated } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useTheme } from "../../../config/ThemeContext";
+import { useThemeStore } from "../../../stores/themeStore"; import Colors from "../../../config/constants/Colors";
 import OptionButton from "./OptionButton";
 import { useRotateAnimation } from "../../../animations/useRotateAnimation";
 import { useSmoothHeightAnim } from "../../../animations/useSmoothHeightAnim";
@@ -23,7 +23,7 @@ export default function DropDownButton({
   initialText = "Show More",
   expandedText = "Show Less",
 }: DropDownButtonProps) {
-  const { theme } = useTheme();
+  const { themeName } = useThemeStore(); const theme = Colors[themeName];
   const [isExpanded, setIsExpanded] = useState(false);
   const { rotateStyle } = useRotateAnimation(isExpanded);
   const { animatedStyle } = useSmoothHeightAnim(isExpanded, snapPoints, 300);

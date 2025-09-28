@@ -1,6 +1,6 @@
 import React from "react";
 import { ViewStyle, DimensionValue, Animated } from "react-native";
-import { useTheme } from "../../../config/ThemeContext";
+import { useThemeStore } from "../../../stores/themeStore"; import Colors from "../../../config/constants/Colors";
 import useFadeInAnim from "../../../animations/useFadeInAnim";
 
 interface CenterContainerProps {
@@ -14,7 +14,7 @@ export default function CenterContainer({
   style,
   paddingHorizontal = "5%",
 }: CenterContainerProps) {
-  const { theme } = useTheme();
+  const { themeName } = useThemeStore(); const theme = Colors[themeName];
   const { fadeIn } = useFadeInAnim(true);
 
   return (

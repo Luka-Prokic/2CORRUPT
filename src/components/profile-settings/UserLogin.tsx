@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { View, Text, Alert } from "react-native";
-import { useTheme } from "../../config/ThemeContext";
+import { useThemeStore } from "../../stores/themeStore";
+import Colors from "../../config/constants/Colors";
 import Input from "../ui/Input";
 import BounceButton from "../ui/buttons/BounceButton";
 import TextButton from "../ui/buttons/TextButton";
 import { useTranslation } from "react-i18next";
 import Container from "../ui/containers/Container";
+import StashHeader from "../stash/StashHeader";
 
 interface UserLoginProps {
   onLoginSuccess?: () => void;
@@ -16,7 +18,7 @@ export default function UserLogin({
   onLoginSuccess,
   onSwitchToRegister,
 }: UserLoginProps) {
-  const { theme } = useTheme();
+  const { themeName } = useThemeStore(); const theme = Colors[themeName];
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -74,8 +76,9 @@ export default function UserLogin({
           marginBottom: 8,
         }}
       >
-        {t("dialog.welcome-to")} Stashed.
+        {t("dialog.welcome-to")} <StashHeader />.
       </Text>
+
       <Text
         style={{
           color: theme.grayText,

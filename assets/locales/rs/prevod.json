@@ -68,7 +68,7 @@
     "signingIn": "Prijavljivanje...",
     "creatingAccount": "Kreiranje Naloga...",
     "createAccount": "Kreiraj Nalog",
-    "signIn-description": "Prijavi se da pristupiš svojim sačuvanim modelima i nastaviš tačno tamo gde si stao. Tvoj rad, projekti i ideje uvek su ti na dohvat ruke. Sve je spremno da nastaviš sa stvaranjem bez prekida."
+    "signIn-description": "Svaki trening možeš sačuvati offline, tako da ti ništa ne koči. Prijavi se da sačuvaš svoj napredak, podeli rutine i nastavi tačno tamo gde si stao i na drugim uređajima. Tvoje vežbe, setovi i lični rekordi su uvek na dohvatu ruke."
   },
   "models": {
     "models": "Modeli",
@@ -132,6 +132,10 @@
   "theme": {
     "dark": "Tamna",
     "light": "Svetla",
+    "oldschool": "Stara škola",
+    "peachy": "Breskvica",
+    "preworkout": "Preworkout",
+    "Corrupted": "Corrupted",
     "theme": "Tema"
   },
   "language": {
@@ -144,22 +148,9 @@
     "change-language": "Promeni jezik",
     "choose-language": "Izaberi jezik",
     "label-app-settings": "App",
-    "background": "Pozadina",
-    "backgroundType": "Tip pozadine",
-    "colors": "Boje",
-    "backgroundColor": "Boja pozadine",
-    "lineColor": "Boja linije",
-    "dotColor": "Boja tačke",
-    "gridSettings": "Podešavanja mreže",
-    "gridSize": "Veličina mreže",
-    "lineWidth": "Širina linije",
-    "dotSettings": "Podešavanja tačke",
-    "actions": "Akcije",
-    "resetToDefaults": "Resetuj na defaulte",
-    "blank": "Prazno",
-    "grid": "Mreža",
-    "dotted": "Tačkasto",
-    "dotSize": "Veličina tačke",
-    "dotSpacing": "Razmak tačaka"
+    "choose-theme": "Izaberi temu"
+  },
+  "app": {
+    "corrupt": "Corrupt"
   }
 }

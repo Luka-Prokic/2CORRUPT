@@ -1,26 +1,28 @@
 import React from "react";
 import { ScrollView } from "react-native";
-import { useTheme } from "../config/ThemeContext";
-import AppearanceSettings from "../components/app-settings/AppearanceSettings";
-import PickLanguageButton from "../components/app-settings/PickLanguageButton";
+import { useThemeStore } from "../stores/themeStore";
+import Colors from "../config/constants/Colors";
+import ThemeSettings from "../components/app-settings/ThemeSettings";
 import IList from "../components/ui/containers/IList";
+import LanguageSettings from "../components/app-settings/LanguageSettings";
 
 export default function SettingsScreen() {
-  const { theme } = useTheme();
+  const { themeName } = useThemeStore();
+  const theme = Colors[themeName];
 
   return (
     <ScrollView
       style={{
-        backgroundColor: theme.secondaryBackground,
+        backgroundColor: theme.background,
         paddingHorizontal: "5%",
         flex: 1,
         paddingTop: 20,
       }}
     >
       <IList style={{ gap: 16 }} hrStart="None">
-        <AppearanceSettings />
+        <ThemeSettings />
 
-        <PickLanguageButton />
+        <LanguageSettings />
       </IList>
     </ScrollView>
   );

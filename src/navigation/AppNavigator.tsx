@@ -7,12 +7,14 @@ import ProfileScreen from "../screens/ProfileScreen";
 import StashScreen from "../screens/StashScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 import { Ionicons } from "@expo/vector-icons";
-import { useTheme } from "../config/ThemeContext";
+import { useThemeStore } from "../stores/themeStore";
+import Colors from "../config/constants/Colors";
 import { useTranslation } from "react-i18next";
 import "../config/i18n";
-import { TouchableOpacity } from "react-native";
+import { TouchableOpacity, Text } from "react-native";
 import SettingsButton from "../components/app-settings/SettingsButton";
 import ProfileButton from "../components/profile-settings/ProfileButton";
+import StashHeader from "../components/stash/StashHeader";
 
 export type RootStackParamList = {
   Home: undefined;
@@ -24,7 +26,8 @@ export type RootStackParamList = {
 const Stack = createStackNavigator<RootStackParamList>();
 
 function ModalBackButton() {
-  const { theme } = useTheme();
+  const { themeName } = useThemeStore();
+  const theme = Colors[themeName];
   const navigation = useNavigation();
 
   return (
@@ -37,7 +40,8 @@ function ModalBackButton() {
   );
 }
 function ModalExitButton() {
-  const { theme } = useTheme();
+  const { themeName } = useThemeStore();
+  const theme = Colors[themeName];
   const navigation = useNavigation();
 
   return (
@@ -51,7 +55,8 @@ function ModalExitButton() {
 }
 
 export default function AppNavigator() {
-  const { theme } = useTheme();
+  const { themeName } = useThemeStore();
+  const theme = Colors[themeName];
   const { t } = useTranslation();
 
   return (
@@ -73,10 +78,11 @@ export default function AppNavigator() {
           name="Stash"
           component={StashScreen}
           options={{
-            title: t("navigation.stash"),
             presentation: "card",
+            headerStyle: { backgroundColor: theme.navBackground },
             headerLeft: () => <SettingsButton />,
             headerRight: () => <ProfileButton />,
+            headerTitle: () => <StashHeader />,
           }}
         />
         <Stack.Screen
@@ -86,7 +92,7 @@ export default function AppNavigator() {
             title: t("navigation.settings"),
             presentation: "modal",
             headerStyle: {
-              backgroundColor: theme.secondaryBackground,
+              backgroundColor: theme.background,
             },
             headerTintColor: theme.text,
             headerTitleStyle: { fontWeight: "bold" },

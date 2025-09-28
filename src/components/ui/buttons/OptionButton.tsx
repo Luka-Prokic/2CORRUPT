@@ -7,7 +7,7 @@ import {
   DimensionValue,
   ViewStyle,
 } from "react-native";
-import { useTheme } from "../../../config/ThemeContext";
+import { useThemeStore } from "../../../stores/themeStore"; import Colors from "../../../config/constants/Colors";
 
 interface OptionButtonProps {
   title: string;
@@ -30,7 +30,7 @@ const OptionButton: React.FC<OptionButtonProps> = ({
   color,
   disabled,
 }) => {
-  const { theme } = useTheme();
+  const { themeName } = useThemeStore(); const theme = Colors[themeName];
 
   return (
     <TouchableOpacity

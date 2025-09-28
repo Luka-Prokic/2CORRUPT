@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
-import { useTheme } from "../../config/ThemeContext";
+import { useThemeStore } from "../../stores/themeStore"; import Colors from "../../config/constants/Colors";
 import { useNavigation } from "@react-navigation/native";
 import IButton from "../ui/buttons/IButton";
 import { View } from "react-native";
@@ -11,7 +11,7 @@ interface StashButtonProps {
 }
 
 export default function StashButton({ onPress }: StashButtonProps) {
-  const { theme } = useTheme();
+  const { themeName } = useThemeStore(); const theme = Colors[themeName];
   const navigation = useNavigation();
 
   const handlePress = () => {
@@ -30,12 +30,11 @@ export default function StashButton({ onPress }: StashButtonProps) {
         right: 22,
         width: 44,
         height: 44,
-        backgroundColor: theme.text,
         alignItems: "center",
         justifyContent: "center",
         shadowColor: theme.shadow || "#000",
         shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.3,
+        shadowOpacity: 0.1,
         shadowRadius: 8,
         elevation: 5,
         borderRadius: 100,

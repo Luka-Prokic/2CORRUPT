@@ -1,33 +1,33 @@
 import React from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import AppNavigator from "../navigation/AppNavigator";
-import { ThemeProvider, useTheme } from "../config/ThemeContext";
+import { useThemeStore } from "../stores/themeStore";
+import Colors from "../config/constants/Colors";
+import { registerRootComponent } from "expo";
 
 function Main() {
-  const { theme, themeName } = useTheme();
+  const { themeName } = useThemeStore();
+  const theme = Colors[themeName];
 
   return (
     <SafeAreaView
-      style={[styles.container, { backgroundColor: theme.background }]}
+      edges={[]}
+      style={{ backgroundColor: theme.navBackground, flex: 1 }}
     >
       <AppNavigator />
-      <StatusBar style={themeName === "dark" ? "light" : "dark"} />
+      <StatusBar
+        style={
+          ["dark", "preworkout", "Corrupted"].includes(themeName)
+            ? "light"
+            : "dark"
+        }
+      />
     </SafeAreaView>
   );
 }
 
 export default function App() {
-  return (
-    <ThemeProvider>
-      <Main />
-    </ThemeProvider>
-  );
+  return <Main />;
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
+registerRootComponent(App);

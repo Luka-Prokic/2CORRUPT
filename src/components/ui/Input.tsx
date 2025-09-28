@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { TextInput, View, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useTheme } from "../../config/ThemeContext";
+import { useThemeStore } from "../../stores/themeStore"; import Colors from "../../config/constants/Colors";
 
 interface InputProps {
   placeholder?: string;
@@ -30,7 +30,7 @@ export default function Input({
   showPassword = false,
   onTogglePassword,
 }: InputProps) {
-  const { theme } = useTheme();
+  const { themeName } = useThemeStore(); const theme = Colors[themeName];
 
   return (
     <View style={{ position: "relative" }}>

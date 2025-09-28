@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, Alert } from "react-native";
-import { useTheme } from "../../config/ThemeContext";
+import { useThemeStore } from "../../stores/themeStore"; import Colors from "../../config/constants/Colors";
 import Input from "../ui/Input";
 import BounceButton from "../ui/buttons/BounceButton";
 import CenterContainer from "../ui/containers/CenterContainer";
@@ -16,7 +16,7 @@ export default function UserRegister({
   onRegisterSuccess,
   onSwitchToLogin,
 }: UserRegisterProps) {
-  const { theme } = useTheme();
+  const { themeName } = useThemeStore(); const theme = Colors[themeName];
   const { t } = useTranslation();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -145,7 +145,7 @@ export default function UserRegister({
         />
 
         <TextButton
-          title={`${t("auth-form.alreadyHaveAccount")} ${t(
+          title={`${t("auth-form.haveAccount")} ${t(
             "auth-form.signIn"
           )}...`}
           onPress={onSwitchToLogin}

@@ -6,7 +6,7 @@ import {
   TouchableOpacityProps,
   Animated,
 } from "react-native";
-import { useTheme } from "../../../config/ThemeContext";
+import { useThemeStore } from "../../../stores/themeStore"; import Colors from "../../../config/constants/Colors";
 import useBounceScaleAnim from "../../../animations/useBounceScaleAnim";
 
 interface BounceButtonProps
@@ -28,7 +28,7 @@ export default function BounceButton({
   onPress,
   ...rest
 }: BounceButtonProps) {
-  const { theme } = useTheme();
+  const { themeName } = useThemeStore(); const theme = Colors[themeName];
   const { bounceAnim, bounceIt } = useBounceScaleAnim();
 
   const handlePress = () => {

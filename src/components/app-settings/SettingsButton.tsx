@@ -1,7 +1,7 @@
 import React from "react";
 import { TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useTheme } from "../../config/ThemeContext";
+import { useThemeStore } from "../../stores/themeStore"; import Colors from "../../config/constants/Colors";
 import { useNavigation } from "@react-navigation/native";
 
 interface SettingsButtonProps {
@@ -9,7 +9,7 @@ interface SettingsButtonProps {
 }
 
 export default function SettingsButton({ onPress }: SettingsButtonProps) {
-  const { theme } = useTheme();
+  const { themeName } = useThemeStore(); const theme = Colors[themeName];
   const navigation = useNavigation();
 
   const handlePress = () => {
@@ -27,7 +27,7 @@ export default function SettingsButton({ onPress }: SettingsButtonProps) {
         paddingHorizontal: 10,
       }}
     >
-      <Ionicons name="cog-outline" size={24} color={theme.text} />
+      <Ionicons name="cog-outline" size={34} color={theme.grayText} />
     </TouchableOpacity>
   );
 }

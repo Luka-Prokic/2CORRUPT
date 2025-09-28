@@ -1,5 +1,6 @@
 import React from "react";
-import { useTheme } from "../../config/ThemeContext";
+import { useThemeStore } from "../../stores/themeStore";
+import Colors from "../../config/constants/Colors";
 import { useTranslation } from "react-i18next";
 import SettingsButton from "../ui/buttons/SettingsButton";
 import { Ionicons } from "@expo/vector-icons";
@@ -7,8 +8,9 @@ import IList from "../ui/containers/IList";
 import { Fragment } from "react";
 import { Text } from "react-native";
 
-export default function AppearanceSettings() {
-  const { theme, themeName, toggleTheme } = useTheme();
+export default function ToggleSettings() {
+  const { themeName, toggleTheme } = useThemeStore();
+  const theme = Colors[themeName];
   const { t } = useTranslation();
 
   const TOGGLE_BUTTONS = [

@@ -4,12 +4,12 @@
     "slug": "two-corrupt",
     "version": "2.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/2CORRUPT-icon.png",
     "userInterfaceStyle": "dark",
     "newArchEnabled": true,
     "assetBundlePatterns": ["assets/**/*"],
     "splash": {
-      "image": "./assets/splash-icon.png",
+      "image": "./assets/2CORRUPT-icon.png",
       "resizeMode": "contain",
       "backgroundColor": "black"
     },
@@ -21,14 +21,14 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/2CORRUPT-icon.png",
         "backgroundColor": "black"
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false
     },
     "web": {
-      "favicon": "./assets/favicon.png",
+      "favicon": "./assets/2CORRUPT-icon.png",
       "backgroundColor": "black"
     },
     "plugins": ["expo-asset"]

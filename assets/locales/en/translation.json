@@ -67,7 +67,7 @@
     "signingIn": "Signing In...",
     "creatingAccount": "Creating Your Account...",
     "createAccount": "Create Your Account",
-    "signIn-description": "Sign in to access your saved models and pick up right where you left off. Your work, projects, and ideas are always within reach. Everything is ready for you to continue creating without missing a beat."
+    "signIn-description": "Every workout can be logged offline, so nothing slows you down. Sign in to save your progress, share routines, and pick up where you left off on any device. Your exercises, sets, and personal records are always within reach."
   },
   "models": {
     "models": "Models",
@@ -131,6 +131,10 @@
   "theme": {
     "dark": "Dark",
     "light": "Light",
+    "oldschool": "Old School",
+    "peachy": "Peachy",
+    "preworkout": "Preworkout",
+    "Corrupted": "Corrupted",
     "theme": "Theme"
   },
   "language": {
@@ -143,22 +147,10 @@
     "change-language": "Change language",
     "choose-language": "Choose language",
     "label-app-settings": "App",
-    "background": "Background",
-    "backgroundType": "Background Type",
-    "colors": "Colors",
-    "backgroundColor": "Background Color",
-    "lineColor": "Line Color",
-    "dotColor": "Dot Color",
-    "gridSettings": "Grid Settings",
-    "gridSize": "Grid Size",
-    "lineWidth": "Line Width",
-    "dotSettings": "Dot Settings",
-    "actions": "Actions",
-    "resetToDefaults": "Reset to Defaults",
-    "blank": "Blank",
-    "grid": "Grid",
-    "dotted": "Dotted",
-    "dotSize": "Dot Size",
-    "dotSpacing": "Dot Spacing"
+    "choose-theme": "Choose theme"
+
+  },
+  "app": {
+    "corrupt": "Corrupt"
   }
 }

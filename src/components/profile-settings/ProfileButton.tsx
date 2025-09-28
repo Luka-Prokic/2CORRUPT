@@ -1,7 +1,8 @@
 import React from "react";
 import { TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useTheme } from "../../config/ThemeContext";
+import { useThemeStore } from "../../stores/themeStore";
+import Colors from "../../config/constants/Colors";
 import { useNavigation } from "@react-navigation/native";
 
 interface ProfileButtonProps {
@@ -9,7 +10,7 @@ interface ProfileButtonProps {
 }
 
 export default function ProfileButton({ onPress }: ProfileButtonProps) {
-  const { theme } = useTheme();
+  const { themeName } = useThemeStore(); const theme = Colors[themeName];
   const navigation = useNavigation();
 
   const handlePress = () => {
@@ -27,7 +28,7 @@ export default function ProfileButton({ onPress }: ProfileButtonProps) {
         paddingHorizontal: 10,
       }}
     >
-      <Ionicons name="person-circle-outline" size={24} color={theme.text} />
+      <Ionicons name="person-circle-outline" size={34} color={theme.grayText} />
     </TouchableOpacity>
   );
 }
