@@ -1,8 +1,9 @@
 import React from "react";
-import { Text, ScrollView } from "react-native";
+import { ScrollView } from "react-native";
 import { useTheme } from "../config/ThemeContext";
-import PickLanguageButton from "../components/profile-settings/PickLanguageButton";
-import AppearanceSettings from "../components/profile-settings/AppearanceSettings";
+import AppearanceSettings from "../components/app-settings/AppearanceSettings";
+import PickLanguageButton from "../components/app-settings/PickLanguageButton";
+import IList from "../components/ui/containers/IList";
 
 export default function SettingsScreen() {
   const { theme } = useTheme();
@@ -16,9 +17,11 @@ export default function SettingsScreen() {
         paddingTop: 20,
       }}
     >
-      <AppearanceSettings />
+      <IList style={{ gap: 16 }} hrStart="None">
+        <AppearanceSettings />
 
-      <PickLanguageButton />
+        <PickLanguageButton />
+      </IList>
     </ScrollView>
   );
 }

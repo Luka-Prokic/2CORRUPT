@@ -5,14 +5,15 @@ import i18n, { LANGUAGES_COUNT, languageArray } from "../../config/i18n";
 import DropDownButton from "../ui/buttons/DropDownButton";
 import OptionButton from "../ui/buttons/OptionButton";
 import Icon from "react-native-ico-flags";
-import { View } from "react-native";
+import hexToRGBA from "../../hooks/HEXtoRGB";
+import IList from "../ui/containers/IList";
 
 export default function PickLanguageButton() {
   const { theme } = useTheme();
   const { t } = useTranslation();
 
   return (
-    <View style={{ marginTop: 16 }}>
+    <IList label={t("settings.choose-language")}>
       <DropDownButton
         snapPoints={[44, 44 + 44 * LANGUAGES_COUNT]}
         initialText={
@@ -27,6 +28,11 @@ export default function PickLanguageButton() {
             title={t(`language.${item.code === "en" ? "english" : "serbian"}`)}
             onPress={item.onPress}
             height={44}
+            style={
+              i18n.language === item.code
+                ? { backgroundColor: hexToRGBA(theme.text, 0.1) }
+                : {}
+            }
             color={item.code === i18n.language ? theme.tint : theme.text}
             icon={
               <Icon
@@ -38,6 +44,6 @@ export default function PickLanguageButton() {
           />
         ))}
       </DropDownButton>
-    </View>
+    </IList>
   );
 }

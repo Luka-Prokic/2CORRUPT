@@ -43,7 +43,9 @@
     "click-to-open": "Klikni da otvoriš",
     "click-to-close": "Klikni da zatvoriš",
     "show-more": "Pokaži više",
-    "show-less": "Pokaži manje"
+    "show-less": "Pokaži manje",
+    "welcome-to": "Dobrodošao u",
+    "lets-get-started": "Hajde da krenemo"
   },
   "auth-form": {
     "required": "Obavezno polje",
@@ -57,13 +59,16 @@
     "register": "Registruj se",
     "resetPassword": "Resetuj lozinku",
     "dontHaveAccount": "Nemaš nalog?",
-    "haveAccount": "Već imaš nalog?"
-  },
-  "auth": {
-    "login": "Prijava",
-    "register": "Registracija",
-    "reset-password": "Resetuj lozinku",
-    "logout": "Odjavi se"
+    "createOne": "Napravi novi",
+    "haveAccount": "Već imaš nalog?",
+    "name": "Ime i prezime",
+    "signInToAccount": "Prijavi se na svoj nalog",
+    "signUpToGetStarted": "Samo još par koraka i to je to",
+    "signIn": "Prijavi se",
+    "signingIn": "Prijavljivanje...",
+    "creatingAccount": "Kreiranje Naloga...",
+    "createAccount": "Kreiraj Nalog",
+    "signIn-description": "Prijavi se da pristupiš svojim sačuvanim modelima i nastaviš tačno tamo gde si stao. Tvoj rad, projekti i ideje uvek su ti na dohvat ruke. Sve je spremno da nastaviš sa stvaranjem bez prekida."
   },
   "models": {
     "models": "Modeli",
@@ -121,7 +126,8 @@
   "navigation": {
     "render": "Render",
     "stash": "Štek",
-    "profile": "Profil"
+    "profile": "Nalog",
+    "settings": "Podešavanja"
   },
   "theme": {
     "dark": "Tamna",
@@ -137,6 +143,23 @@
     "appearance": "Promeni temu",
     "change-language": "Promeni jezik",
     "choose-language": "Izaberi jezik",
-    "label-app-settings": "App"
+    "label-app-settings": "App",
+    "background": "Pozadina",
+    "backgroundType": "Tip pozadine",
+    "colors": "Boje",
+    "backgroundColor": "Boja pozadine",
+    "lineColor": "Boja linije",
+    "dotColor": "Boja tačke",
+    "gridSettings": "Podešavanja mreže",
+    "gridSize": "Veličina mreže",
+    "lineWidth": "Širina linije",
+    "dotSettings": "Podešavanja tačke",
+    "actions": "Akcije",
+    "resetToDefaults": "Resetuj na defaulte",
+    "blank": "Prazno",
+    "grid": "Mreža",
+    "dotted": "Tačkasto",
+    "dotSize": "Veličina tačke",
+    "dotSpacing": "Razmak tačaka"
   }
 }

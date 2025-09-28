@@ -11,7 +11,7 @@ export default function StashScreen() {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: theme.background,
+        backgroundColor: theme.primaryBackground,
       }}
     >
       <Text style={{ color: theme.text, fontSize: 18 }}>Stash Screen</Text>

@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
-import Colors from "../constants/Colors";
+import Colors from "../config/constants/Colors";
 
 type ThemeContextType = {
   theme: typeof Colors.light;

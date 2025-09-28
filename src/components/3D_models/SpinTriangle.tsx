@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, Edges } from "@react-three/drei/native";
 import * as THREE from "three";
+import { useTheme } from "../../config/ThemeContext";
 
 interface SpinTriangleProps {
   size?: number;
@@ -19,6 +20,7 @@ function AnimatedSpinTriangle({
   const meshRef = useRef<THREE.Mesh>(null);
   const [isSpinning, setIsSpinning] = useState(false);
   const [spinProgress, setSpinProgress] = useState(0);
+  const { theme } = useTheme();
 
   // Handle click: trigger spin
   const handleClick = () => {
@@ -49,10 +51,14 @@ function AnimatedSpinTriangle({
   });
 
   return (
-    <mesh ref={meshRef} onPointerDown={handleClick}>
-      <tetrahedronGeometry args={[size, 0]} />
-      <meshStandardMaterial color={color} metalness={1} roughness={0} />
-      <Edges color="white" scale={1} />
+    <mesh ref={meshRef} onPointerDown={handleClick} castShadow receiveShadow>
+      <tetrahedronGeometry args={[size, 6]} />
+      <meshPhysicalMaterial
+        color={color}
+        metalness={1} // medium metallic
+        roughness={0.6}
+      />
+      <Edges color={theme.border} scale={1} />
     </mesh>
   );
 }
@@ -70,9 +76,11 @@ export default function SpinTriangle({
       camera={{ position: [0, 0, 5], fov: 80 }}
       gl={{ antialias: true }}
     >
-      {/* Lighting */}
-      <ambientLight intensity={1} />
-      <pointLight position={[5, 2, 10]} intensity={1} />
+      <ambientLight intensity={0.5} />
+
+      <pointLight position={[-3, 1, 3]} intensity={1} />
+      <pointLight position={[0, 1, 3]} intensity={5} />
+      <pointLight position={[3, 1, 3]} intensity={1} />
 
       {/* Triangle */}
       <AnimatedSpinTriangle
@@ -81,7 +89,6 @@ export default function SpinTriangle({
         idleRotationSpeed={idleRotationSpeed}
         spinSpeed={spinSpeed}
       />
-
       {/* Controls */}
       <OrbitControls
         enablePan={false}

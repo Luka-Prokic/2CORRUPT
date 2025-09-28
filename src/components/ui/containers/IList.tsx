@@ -6,7 +6,7 @@ import {
   ViewStyle,
   DimensionValue,
 } from "react-native";
-import { useTheme } from "../../config/ThemeContext";
+import { useTheme } from "../../../config/ThemeContext";
 
 interface IListProps {
   width?: DimensionValue;
