@@ -1,0 +1,129 @@
+import React, { useEffect, useRef, useMemo } from "react";
+import {
+  View,
+  Animated,
+  ViewStyle,
+  StyleSheet,
+  Dimensions,
+} from "react-native";
+import { BlurView } from "expo-blur";
+
+interface StrobeBlurProps {
+  style?: ViewStyle;
+  colors?: [string, string, string, string];
+  duration?: number;
+  children?: React.ReactNode;
+}
+
+const { width } = Dimensions.get("window");
+
+export default function StrobeBlur({
+  style,
+  colors = ["#ff0000", "#00ff00", "#0000ff", "#ff00ff"],
+  duration = 6000,
+  children,
+}: StrobeBlurProps) {
+  const animValues = useRef(
+    Array.from({ length: 4 }, () => new Animated.Value(0))
+  ).current;
+
+  // Randomize ONLY the path/shape
+  const blobSettings = useMemo(
+    () =>
+      Array.from({ length: 4 }, () => ({
+        offset: Math.random(), // start point of motion
+        radius: 50 + Math.random() * 80, // how far they travel
+        size: 80 + Math.random() * 60, // blob size
+        borderRadii: {
+          borderTopLeftRadius: 30 + Math.random() * 40,
+          borderTopRightRadius: 30 + Math.random() * 40,
+          borderBottomLeftRadius: 30 + Math.random() * 40,
+          borderBottomRightRadius: 30 + Math.random() * 40,
+        },
+      })),
+    []
+  );
+
+  // Animate all with the same speed
+  useEffect(() => {
+    animValues.forEach((anim, i) => {
+      anim.setValue(blobSettings[i].offset);
+      Animated.loop(
+        Animated.timing(anim, {
+          toValue: 1 + blobSettings[i].offset,
+          duration, // 👈 same duration for everyone
+          useNativeDriver: true,
+        })
+      ).start();
+    });
+  }, []);
+
+  const renderBlobs = (mirror = false) =>
+    blobSettings.map((blob, i) => {
+      const { radius, size, borderRadii } = blob;
+
+      const translateX = animValues[i].interpolate({
+        inputRange: [
+          0, 0.25, 0.5, 0.75, 1,
+          1.25, 1.5, 1.75, 2,
+        ],
+        outputRange: [
+          0, radius, 0, -radius, 0,
+          radius, 0, -radius, 0,
+        ],
+      });
+
+      const translateY = animValues[i].interpolate({
+        inputRange: [
+          0, 0.25, 0.5, 0.75, 1,
+          1.25, 1.5, 1.75, 2,
+        ],
+        outputRange: [
+          -radius, 0, radius, 0, -radius,
+          0, radius, 0, -radius,
+        ],
+      });
+
+      return (
+        <Animated.View
+          key={`${mirror ? "mirror" : "main"}-${i}`}
+          style={{
+            position: "absolute",
+            width: size,
+            height: size,
+            backgroundColor: colors[i],
+            opacity: 0.2,
+            transform: [
+              {
+                translateX: Animated.add(
+                  translateX,
+                  new Animated.Value(
+                    mirror ? width / 2 - size / 2 : -width / 2 + size / 2
+                  )
+                ),
+              },
+              { translateY },
+            ],
+            ...borderRadii,
+          }}
+        />
+      );
+    });
+
+  return (
+    <View style={[{ overflow: "hidden" }, style]}>
+      {renderBlobs(false)}
+      {renderBlobs(true)}
+      <BlurView
+        intensity={100}
+        tint="default"
+        style={[
+          StyleSheet.absoluteFill,
+          { justifyContent: "center", alignItems: "center" },
+        ]}
+      >
+        {children}
+      </BlurView>
+    </View>
+  );
+}

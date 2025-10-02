@@ -6,28 +6,28 @@ import HomeScreen from "../screens/HomeScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import StashScreen from "../screens/StashScreen";
 import SettingsScreen from "../screens/SettingsScreen";
+import WorkoutScreen from "../screens/WorkoutScreen";
 import { Ionicons } from "@expo/vector-icons";
 import { useThemeStore } from "../stores/themeStore";
-import Colors from "../config/constants/Colors";
 import { useTranslation } from "react-i18next";
 import "../config/i18n";
-import { TouchableOpacity, Text } from "react-native";
-import SettingsButton from "../components/app-settings/SettingsButton";
-import ProfileButton from "../components/profile-settings/ProfileButton";
-import StashHeader from "../components/stash/StashHeader";
+import { TouchableOpacity } from "react-native";
+import StashHeader from "../components/board-home/StashHeader";
+import WorkoutBoardScreen from "../screens/WorkoutBoardScreen";
 
 export type RootStackParamList = {
   Home: undefined;
   Stash: undefined;
   Settings: undefined;
   Profile: undefined;
+  Workout: undefined;
+  WorkoutBoard: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
 
 function ModalBackButton() {
-  const { themeName } = useThemeStore();
-  const theme = Colors[themeName];
+  const { theme } = useThemeStore();
   const navigation = useNavigation();
 
   return (
@@ -40,8 +40,7 @@ function ModalBackButton() {
   );
 }
 function ModalExitButton() {
-  const { themeName } = useThemeStore();
-  const theme = Colors[themeName];
+  const { theme } = useThemeStore();
   const navigation = useNavigation();
 
   return (
@@ -55,8 +54,7 @@ function ModalExitButton() {
 }
 
 export default function AppNavigator() {
-  const { themeName } = useThemeStore();
-  const theme = Colors[themeName];
+  const { theme } = useThemeStore();
   const { t } = useTranslation();
 
   return (
@@ -80,9 +78,7 @@ export default function AppNavigator() {
           options={{
             presentation: "card",
             headerStyle: { backgroundColor: theme.navBackground },
-            headerLeft: () => <SettingsButton />,
-            headerRight: () => <ProfileButton />,
-            headerTitle: () => <StashHeader />,
+            header: () => <StashHeader />,
           }}
         />
         <Stack.Screen
@@ -92,7 +88,7 @@ export default function AppNavigator() {
             title: t("navigation.settings"),
             presentation: "modal",
             headerStyle: {
-              backgroundColor: theme.background,
+              backgroundColor: theme.navBackground,
             },
             headerTintColor: theme.text,
             headerTitleStyle: { fontWeight: "bold" },
@@ -113,6 +109,26 @@ export default function AppNavigator() {
             headerTitleStyle: { fontWeight: "bold" },
             headerLeft: () => <Fragment />,
             headerRight: () => <ModalExitButton />,
+          }}
+        />
+        <Stack.Screen
+          name="Workout"
+          component={WorkoutScreen}
+          options={{
+            title: "Workout",
+            animation: "slide_from_right",
+            headerTintColor: theme.text,
+            headerTitleStyle: { fontWeight: "bold" },
+            headerLeft: () => <ModalBackButton />,
+          }}
+        />
+        <Stack.Screen
+          name="WorkoutBoard"
+          component={WorkoutBoardScreen}
+          options={{
+            presentation: "card",
+            headerStyle: { backgroundColor: theme.navBackground },
+            header: () => <StashHeader />,
           }}
         />
       </Stack.Navigator>

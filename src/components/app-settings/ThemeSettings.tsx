@@ -22,18 +22,13 @@ export default function ThemeSettings() {
     { name: "Corrupted", displayName: "Corrupted", emoji: "💸" },
   ];
 
-  const getThemeDisplayName = (theme: Themes) => {
-    const themeObj = themeArray.find((t) => t.name === theme);
-    return themeObj ? `${themeObj.emoji} ${themeObj.displayName}` : theme;
-  };
-
   return (
     <IList label={t("settings.choose-theme")}>
       <DropDownButton
         snapPoints={[44, 308]}
         initialText={t(`theme.${themeName}`)}
         expandedText={t("settings.choose-theme")}
-        style={{ backgroundColor: theme.primaryBackground }}
+        style={{ backgroundColor: theme.secondaryBackground }}
       >
         {themeArray.map((item, index: number) => (
           <OptionButton

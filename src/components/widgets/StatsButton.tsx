@@ -5,11 +5,11 @@ import { useThemeStore } from "../../stores/themeStore";
 import Colors from "../../config/constants/Colors";
 import { useNavigation } from "@react-navigation/native";
 
-interface SettingsButtonProps {
+interface StatsButtonProps {
   onPress?: () => void;
 }
 
-export default function SettingsButton({ onPress }: SettingsButtonProps) {
+export default function StatsButton({ onPress }: StatsButtonProps) {
   const { themeName } = useThemeStore();
   const theme = Colors[themeName];
   const navigation = useNavigation();
@@ -18,7 +18,7 @@ export default function SettingsButton({ onPress }: SettingsButtonProps) {
     if (onPress) {
       onPress();
     } else {
-      navigation.navigate("Settings" as never);
+      navigation.navigate("Stats" as never);
     }
   };
 
@@ -26,11 +26,10 @@ export default function SettingsButton({ onPress }: SettingsButtonProps) {
     <TouchableOpacity
       onPress={handlePress}
       style={{
-        paddingTop: 22,
-        paddingRight: 22,
+        padding: 10,
       }}
     >
-      <Ionicons name="cog-outline" size={44} color={theme.grayText} />
+      <Ionicons name="analytics-outline" size={33} color={theme.grayText} />
     </TouchableOpacity>
   );
 }

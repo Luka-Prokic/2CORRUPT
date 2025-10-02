@@ -148,7 +148,11 @@
     "choose-language": "Choose language",
     "label-app-settings": "App",
     "choose-theme": "Choose theme"
-
+  },
+  "greeting": {
+    "morning": "Good morning",
+    "afternoon": "Good afternoon",
+    "evening": "Good evening"
   },
   "app": {
     "corrupt": "Corrupt"

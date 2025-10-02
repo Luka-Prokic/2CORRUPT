@@ -1,12 +1,13 @@
 import React from "react";
 import {
-  TouchableOpacity,
   Text,
   ViewStyle,
   TouchableOpacityProps,
   Animated,
+  Pressable,
 } from "react-native";
-import { useThemeStore } from "../../../stores/themeStore"; import Colors from "../../../config/constants/Colors";
+import { useThemeStore } from "../../../stores/themeStore";
+import Colors from "../../../config/constants/Colors";
 import useBounceScaleAnim from "../../../animations/useBounceScaleAnim";
 
 interface BounceButtonProps
@@ -28,7 +29,8 @@ export default function BounceButton({
   onPress,
   ...rest
 }: BounceButtonProps) {
-  const { themeName } = useThemeStore(); const theme = Colors[themeName];
+  const { themeName } = useThemeStore();
+  const theme = Colors[themeName];
   const { bounceAnim, bounceIt } = useBounceScaleAnim();
 
   const handlePress = () => {
@@ -38,7 +40,7 @@ export default function BounceButton({
 
   return (
     <Animated.View style={[bounceAnim, style]}>
-      <TouchableOpacity
+      <Pressable
         style={[
           {
             borderRadius: 8,
@@ -70,7 +72,7 @@ export default function BounceButton({
             {title}
           </Text>
         )}
-      </TouchableOpacity>
+      </Pressable>
     </Animated.View>
   );
 }

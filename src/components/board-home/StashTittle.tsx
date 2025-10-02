@@ -1,16 +1,18 @@
 import React from "react";
 import { Animated } from "react-native";
 import { useThemeStore } from "../../stores/themeStore";
-import Colors from "../../config/constants/Colors";
 import { useTranslation } from "react-i18next";
-import { useUnifrakturCookFont } from "../../hooks/useUnifrakturCookFont";
 import useFlickerAnim from "../../animations/useFlickerAnim";
+import { useDracoFont } from "../../hooks/useDracoFont";
 
-export default function StashHeader() {
-  const { themeName } = useThemeStore();
-  const theme = Colors[themeName];
+interface StashTittleProps {
+  fontSize?: number;
+}
+
+export default function StashTittle({ fontSize = 28 }: StashTittleProps) {
+  const { theme, themeName } = useThemeStore();
   const { t } = useTranslation();
-  const { fontFamily } = useUnifrakturCookFont();
+  const { fontFamily } = useDracoFont();
   const flickerAnim = useFlickerAnim();
 
   const opacity = themeName === "Corrupted" ? flickerAnim : 1;
@@ -27,12 +29,13 @@ export default function StashHeader() {
 
   return (
     <Animated.Text
+      key={themeName}
       style={{
-        fontWeight: "bold",
         fontFamily,
-        fontSize: 36,
+        fontSize,
         opacity,
         color,
+        textAlign: "center",
       }}
     >
       {t("app.corrupt")}

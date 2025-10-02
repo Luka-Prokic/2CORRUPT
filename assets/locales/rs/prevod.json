@@ -150,6 +150,11 @@
     "label-app-settings": "App",
     "choose-theme": "Izaberi temu"
   },
+  "greeting": {
+    "morning": "Dobro jutro",
+    "afternoon": "Dobro dan",
+    "evening": "Dobro veče"
+  },
   "app": {
     "corrupt": "Corrupt"
   }

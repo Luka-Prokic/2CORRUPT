@@ -21,7 +21,7 @@ export default function PickLanguageSettings() {
           i18n.language === "en" ? t("language.english") : t("language.serbian")
         }
         expandedText={t("settings.choose-language")}
-        style={{ backgroundColor: theme.primaryBackground }}
+        style={{ backgroundColor: theme.secondaryBackground }}
       >
         {languageArray.map((item: any, index: number) => (
           <OptionButton

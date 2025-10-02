@@ -13,7 +13,7 @@ export default function SettingsScreen() {
   return (
     <ScrollView
       style={{
-        backgroundColor: theme.background,
+        backgroundColor: theme.navBackground,
         paddingHorizontal: "5%",
         flex: 1,
         paddingTop: 20,

@@ -7,7 +7,8 @@ import BounceButton from "../ui/buttons/BounceButton";
 import TextButton from "../ui/buttons/TextButton";
 import { useTranslation } from "react-i18next";
 import Container from "../ui/containers/Container";
-import StashHeader from "../stash/StashHeader";
+
+import StashTittle from "../stash/StashTittle";
 
 interface UserLoginProps {
   onLoginSuccess?: () => void;
@@ -76,7 +77,7 @@ export default function UserLogin({
           marginBottom: 8,
         }}
       >
-        {t("dialog.welcome-to")} <StashHeader />.
+        {t("dialog.welcome-to")} <StashTittle fontSize={26} />.
       </Text>
 
       <Text
