@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import { View, Text, Alert } from "react-native";
 import { useSettingsStore } from "../../stores/settingsStore";
-import Colors from "../../config/constants/Colors";
 import Input from "../ui/Input";
 import BounceButton from "../ui/buttons/BounceButton";
 import TextButton from "../ui/buttons/TextButton";
 import { useTranslation } from "react-i18next";
 import Container from "../ui/containers/Container";
 
-import StashTittle from "../board-home/StashTittle";
+import CorruptTittle from "../board-home/CorruptTittle";
 
 interface UserLoginProps {
   onLoginSuccess?: () => void;
@@ -19,7 +18,7 @@ export default function UserLogin({
   onLoginSuccess,
   onSwitchToRegister,
 }: UserLoginProps) {
-  const { themeName } = useSettingsStore(); const theme = Colors[themeName];
+  const { theme } = useSettingsStore();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -77,7 +76,7 @@ export default function UserLogin({
           marginBottom: 8,
         }}
       >
-        {t("dialog.welcome-to")} <StashTittle fontSize={26} />.
+        {t("dialog.welcome-to")} <CorruptTittle fontSize={26} />.
       </Text>
 
       <Text

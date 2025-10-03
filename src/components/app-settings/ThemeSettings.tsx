@@ -2,15 +2,13 @@ import React from "react";
 import { useSettingsStore } from "../../stores/settingsStore";
 import { useTranslation } from "react-i18next";
 import { Themes } from "../../config/constants/Colors";
-import Colors from "../../config/constants/Colors";
 import DropDownButton from "../ui/buttons/DropDownButton";
 import OptionButton from "../ui/buttons/OptionButton";
 import hexToRGBA from "../../features/HEXtoRGB";
 import IList from "../ui/containers/IList";
 
 export default function ThemeSettings() {
-  const { themeName, setTheme } = useSettingsStore();
-  const theme = Colors[themeName];
+  const { themeName, setTheme, theme } = useSettingsStore();
   const { t } = useTranslation();
 
   const themeArray: { name: Themes; displayName: string; emoji: string }[] = [

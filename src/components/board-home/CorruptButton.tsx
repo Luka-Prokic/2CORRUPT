@@ -3,7 +3,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useSettingsStore } from "../../stores/settingsStore";
 import { useUIStore } from "../../stores/ui";
 import IButton from "../ui/buttons/IButton";
-import StashTittle from "./StashTittle";
+import StashTittle from "./CorruptTittle";
 import { Animated } from "react-native";
 import { HEIGHT } from "../../features/Dimensions";
 import { useNavigation } from "@react-navigation/native";

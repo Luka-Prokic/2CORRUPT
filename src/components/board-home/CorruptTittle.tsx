@@ -5,15 +5,15 @@ import { useTranslation } from "react-i18next";
 import useFlickerAnim from "../../animations/useFlickerAnim";
 import { useDracoFont } from "../../features/fonts/useDracoFont";
 
-interface StashTittleProps {
+interface CorruptTittleProps {
   fontSize?: number;
   style?: StyleProp<TextStyle>;
 }
 
-export default function StashTittle({
+export default function CorruptTittle({
   fontSize = 28,
   style,
-}: StashTittleProps) {
+}: CorruptTittleProps) {
   const { theme, themeName } = useSettingsStore();
   const { t } = useTranslation();
   const { fontFamily } = useDracoFont();

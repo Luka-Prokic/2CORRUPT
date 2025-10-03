@@ -1,9 +1,9 @@
 import React from "react";
 import { Animated } from "react-native";
 import { useSettingsStore } from "../../stores/settingsStore";
-import StashTittle from "./StashTittle";
+import CorruptTittle from "./CorruptTittle";
 
-export default function StashHeader() {
+export default function CorruptHeader() {
   const { theme } = useSettingsStore();
 
   return (
@@ -17,7 +17,7 @@ export default function StashHeader() {
         backgroundColor: theme.background,
       }}
     >
-      <StashTittle />
+      <CorruptTittle />
     </Animated.View>
   );
 }

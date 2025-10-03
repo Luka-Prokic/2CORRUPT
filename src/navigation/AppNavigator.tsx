@@ -11,7 +11,7 @@ import { useSettingsStore } from "../stores/settingsStore";
 import { useTranslation } from "react-i18next";
 import "../config/i18n";
 import { TouchableOpacity } from "react-native";
-import StashHeader from "../components/board-home/StashHeader";
+import CorruptHeader from "../components/board-home/CorruptHeader";
 import WorkoutBoardMockup from "../components/board-workout/mockups/WorkoutBoardMockup";
 import HomeBoard from "../screens/HomeBoard";
 
@@ -78,7 +78,7 @@ export default function AppNavigator() {
           options={{
             presentation: "card",
             headerStyle: { backgroundColor: theme.navBackground },
-            header: () => <StashHeader />,
+            header: () => <CorruptHeader />,
           }}
         />
         <Stack.Screen
