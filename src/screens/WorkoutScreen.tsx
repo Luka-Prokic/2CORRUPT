@@ -1,10 +1,10 @@
 import React from "react";
 import { View, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useThemeStore } from "../stores/themeStore";
+import { useSettingsStore } from "../stores/settingsStore";
 
 export default function WorkoutScreen() {
-  const { theme } = useThemeStore();
+  const { theme } = useSettingsStore();
 
   return (
     <SafeAreaView style={{ backgroundColor: theme.background, flex: 1 }}>
@@ -22,7 +22,7 @@ export default function WorkoutScreen() {
             color: theme.text,
           }}
         >
-          Workout Screen
+          Workout Screens
         </Text>
       </View>
     </SafeAreaView>

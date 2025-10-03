@@ -1,9 +1,9 @@
 import React from "react";
 import { View, Text, StyleSheet, ViewStyle } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useThemeStore } from "../../stores/themeStore";
+import { useSettingsStore } from "../../../stores/settingsStore";
 import WidgetContainer from "./WidgetContainer";
-import hexToRGBA from "../../hooks/HEXtoRGB";
+import hexToRGBA from "../../../features/HEXtoRGB";
 
 interface StreakCounterWidgetProps {
   streak?: number;
@@ -18,7 +18,7 @@ export default function StreakCounterWidget({
   style,
   variant = "default",
 }: StreakCounterWidgetProps) {
-  const { theme } = useThemeStore();
+  const { theme } = useSettingsStore();
 
   const getVariantStyles = () => {
     switch (variant) {

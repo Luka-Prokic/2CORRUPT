@@ -8,12 +8,13 @@ import StashScreen from "../screens/StashScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 import WorkoutScreen from "../screens/WorkoutScreen";
 import { Ionicons } from "@expo/vector-icons";
-import { useThemeStore } from "../stores/themeStore";
+import { useSettingsStore } from "../stores/settingsStore";
 import { useTranslation } from "react-i18next";
 import "../config/i18n";
 import { TouchableOpacity } from "react-native";
 import StashHeader from "../components/board-home/StashHeader";
 import WorkoutBoardScreen from "../screens/WorkoutBoardScreen";
+import WorkoutBoardMockup from "../components/board-workout/mockups/WorkoutBoardMockup";
 
 export type RootStackParamList = {
   Home: undefined;
@@ -27,7 +28,7 @@ export type RootStackParamList = {
 const Stack = createStackNavigator<RootStackParamList>();
 
 function ModalBackButton() {
-  const { theme } = useThemeStore();
+  const { theme } = useSettingsStore();
   const navigation = useNavigation();
 
   return (
@@ -40,7 +41,7 @@ function ModalBackButton() {
   );
 }
 function ModalExitButton() {
-  const { theme } = useThemeStore();
+  const { theme } = useSettingsStore();
   const navigation = useNavigation();
 
   return (
@@ -54,7 +55,7 @@ function ModalExitButton() {
 }
 
 export default function AppNavigator() {
-  const { theme } = useThemeStore();
+  const { theme } = useSettingsStore();
   const { t } = useTranslation();
 
   return (
@@ -124,11 +125,10 @@ export default function AppNavigator() {
         />
         <Stack.Screen
           name="WorkoutBoard"
-          component={WorkoutBoardScreen}
+          component={WorkoutBoardMockup}
           options={{
             presentation: "card",
-            headerStyle: { backgroundColor: theme.navBackground },
-            header: () => <StashHeader />,
+            header: () => <Fragment />,
           }}
         />
       </Stack.Navigator>

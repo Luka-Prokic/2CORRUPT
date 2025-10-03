@@ -1,24 +1,22 @@
 import React, { useState } from "react";
 import { View, ScrollView, StyleSheet, Dimensions } from "react-native";
-import { useThemeStore } from "../stores/themeStore";
-import {
-  AwardsWidget,
-  StreakCounterWidget,
-  ProfileWidget,
-  TemplateWidget,
-} from "../components/widgets";
-import StatsWidget from "../components/widgets/StatsWidget";
-import ActiveSplitWidget from "../components/widgets/ActiveSplitWidget";
-import AllButtonWidget from "../components/widgets/AllButtonWidget";
-import WorkoutStreakWidget from "../components/widgets/WorkoutStreakWidget";
-import CalendarWidget from "../components/widgets/CalendarWidget";
-import hexToRGBA from "../hooks/HEXtoRGB";
+import { useSettingsStore } from "../stores/settingsStore";
+import AwardsWidget from "../components/board-home/mockups/AwardsWidget";
+import StreakCounterWidget from "../components/board-home/mockups/StreakCounterWidget";
+import ProfileWidget from "../components/board-home/mockups/ProfileWidget";
+import TemplateWidget from "../components/board-home/mockups/TemplateWidget";
+import StatsWidget from "../components/board-home/mockups/StatsWidget";
+import ActiveSplitWidget from "../components/board-home/mockups/ActiveSplitWidget";
+import AllButtonWidget from "../components/board-home/mockups/AllButtonWidget";
+import WorkoutStreakWidget from "../components/board-home/mockups/WorkoutStreakWidget";
+import CalendarWidget from "../components/board-home/mockups/CalendarWidget";
+import hexToRGBA from "../features/HEXtoRGB";
 
 const { width } = Dimensions.get("window");
 const widgetSize = (width - 40) / 2; // 2 columns with padding
 
 export default function StashScreen() {
-  const { theme } = useThemeStore();
+  const { theme } = useSettingsStore();
   const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <ScrollView

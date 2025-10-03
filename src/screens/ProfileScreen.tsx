@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { View, StyleSheet } from "react-native";
-import { useThemeStore } from "../stores/themeStore";
+import { useSettingsStore } from "../stores/settingsStore";
 import Colors from "../config/constants/Colors";
 import UserLogin from "../components/profile-settings/UserLogin";
 import UserRegister from "../components/profile-settings/UserRegister";
 
 export default function ProfileScreen() {
-  const { themeName } = useThemeStore();
+  const { themeName } = useSettingsStore();
   const theme = Colors[themeName];
   const [isLogin, setIsLogin] = useState(true);
 

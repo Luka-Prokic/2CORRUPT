@@ -1,6 +1,6 @@
 import React from "react";
 import { TouchableOpacity, Text, ViewStyle, TouchableOpacityProps } from "react-native";
-import { useThemeStore } from "../../../stores/themeStore"; import Colors from "../../../config/constants/Colors";
+import { useSettingsStore } from "../../../stores/settingsStore"; import Colors from "../../../config/constants/Colors";
 
 interface TextButtonProps extends Omit<TouchableOpacityProps, "style"> {
   title: string;
@@ -16,7 +16,7 @@ export default function TextButton({
   color,
   ...rest
 }: TextButtonProps) {
-  const { themeName } = useThemeStore(); const theme = Colors[themeName];
+  const { themeName } = useSettingsStore(); const theme = Colors[themeName];
 
   return (
     <TouchableOpacity

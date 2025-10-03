@@ -7,7 +7,7 @@ import {
   DimensionValue,
   ViewStyle,
 } from "react-native";
-import { useThemeStore } from "../../../stores/themeStore"; import Colors from "../../../config/constants/Colors";
+import { useSettingsStore } from "../../../stores/settingsStore"; import Colors from "../../../config/constants/Colors";
 
 interface OptionButtonProps {
   title: string;
@@ -30,7 +30,7 @@ const OptionButton: React.FC<OptionButtonProps> = ({
   color,
   disabled,
 }) => {
-  const { themeName } = useThemeStore(); const theme = Colors[themeName];
+  const { themeName } = useSettingsStore(); const theme = Colors[themeName];
 
   return (
     <TouchableOpacity
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     paddingHorizontal: 12,
-    minHeight: 24,
+    minHeight: 34,
     width: "100%",
   },
   title: {

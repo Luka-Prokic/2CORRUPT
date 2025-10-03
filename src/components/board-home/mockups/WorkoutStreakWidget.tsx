@@ -1,9 +1,9 @@
 import React from "react";
 import { View, Text, TouchableOpacity, ViewStyle } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useThemeStore } from "../../stores/themeStore";
+import { useSettingsStore } from "../../../stores/settingsStore";
 import WidgetContainer from "./WidgetContainer";
-import hexToRGBA from "../../hooks/HEXtoRGB";
+import hexToRGBA from "../../../features/HEXtoRGB";
 
 interface WorkoutStreakWidgetProps {
   onPress?: () => void;
@@ -14,7 +14,7 @@ export default function WorkoutStreakWidget({
   onPress,
   style,
 }: WorkoutStreakWidgetProps) {
-  const { theme } = useThemeStore();
+  const { theme } = useSettingsStore();
 
   // Mock data
   const workoutStreak = 12;

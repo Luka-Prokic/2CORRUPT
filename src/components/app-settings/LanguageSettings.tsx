@@ -1,16 +1,16 @@
 import React from "react";
-import { useThemeStore } from "../../stores/themeStore";
+import { useSettingsStore } from "../../stores/settingsStore";
 import Colors from "../../config/constants/Colors";
 import { useTranslation } from "react-i18next";
 import i18n, { LANGUAGES_COUNT, languageArray } from "../../config/i18n";
 import DropDownButton from "../ui/buttons/DropDownButton";
 import OptionButton from "../ui/buttons/OptionButton";
 import Icon from "react-native-ico-flags";
-import hexToRGBA from "../../hooks/HEXtoRGB";
+import hexToRGBA from "../../features/HEXtoRGB";
 import IList from "../ui/containers/IList";
 
 export default function PickLanguageSettings() {
-  const { themeName } = useThemeStore(); const theme = Colors[themeName];
+  const { themeName } = useSettingsStore(); const theme = Colors[themeName];
   const { t } = useTranslation();
 
   return (

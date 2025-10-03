@@ -1,8 +1,8 @@
 import React, { useRef, useEffect } from "react";
 import { ViewStyle, Animated, Easing, StyleSheet } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { useThemeStore } from "../../../stores/themeStore";
-import hexToRGBA from "../../../hooks/HEXtoRGB";
+import { useSettingsStore } from "../../../stores/settingsStore";
+import hexToRGBA from "../../../features/HEXtoRGB";
 
 interface AnimatedLinearGradientBoxProps {
   style?: ViewStyle;
@@ -15,7 +15,7 @@ export default function AnimatedLinearGradientBox({
   duration = 4000,
   children,
 }: AnimatedLinearGradientBoxProps) {
-  const { theme } = useThemeStore();
+  const { theme } = useSettingsStore();
   const progress = useRef(new Animated.Value(0)).current;
 
   // Gradient color tuple (static)

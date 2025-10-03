@@ -1,10 +1,10 @@
 import React from "react";
 import { View, Text, TouchableOpacity, ViewStyle } from "react-native";
-import { useThemeStore } from "../../stores/themeStore";
+import { useSettingsStore } from "../../../stores/settingsStore";
 import WidgetContainer from "./WidgetContainer";
-import ProfileButton from "../profile-settings/ProfileButton";
-import SettingsButton from "../app-settings/SettingsButton";
-import {username} from "../../config/constants/defaults";
+import ProfileButton from "../../profile-settings/ProfileButton";
+import SettingsButton from "../../app-settings/SettingsButton";
+import {username} from "../../../config/constants/defaults";
 
 interface ProfileWidgetProps {
   onPress?: () => void;
@@ -12,7 +12,7 @@ interface ProfileWidgetProps {
 }
 
 export default function ProfileWidget({ onPress, style }: ProfileWidgetProps) {
-  const { theme } = useThemeStore();
+  const { theme } = useSettingsStore();
 
   return (
     <WidgetContainer style={style} variant="inset">

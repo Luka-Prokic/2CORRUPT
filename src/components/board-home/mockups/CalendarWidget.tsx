@@ -7,10 +7,10 @@ import {
   Animated,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useThemeStore } from "../../stores/themeStore";
-import hexToRGBA from "../../hooks/HEXtoRGB";
-import StrobeBlur from "../../components/ui/misc/StrobeBlur";
-import BounceButton from "../ui/buttons/BounceButton";
+import { useSettingsStore } from "../../../stores/settingsStore";
+import hexToRGBA from "../../../features/HEXtoRGB";
+import StrobeBlur from "../../ui/misc/StrobeBlur";
+import BounceButton from "../../ui/buttons/BounceButton";
 
 const { width: screenWidth } = Dimensions.get("window");
 const DAY_LABELS = ["M", "T", "W", "T", "F", "S", "S"];
@@ -40,11 +40,11 @@ const CalendarWidget: React.FC<CalendarWidgetProps> = ({
   sharedSelectedDate,
   onSharedDateChange,
 }) => {
-  const { theme } = useThemeStore();
+  const { theme } = useSettingsStore();
   const [currentWeek, setCurrentWeek] = useState<Date[]>([]);
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
-  const [dayData, setDayData] = useState<any>(null); // Will store workout/rest day data
+  const [dayData, setDayData] = useState<any>(new Date()); // Will store workout/rest day data
 
   const animatedTranslateX = useRef(new Animated.Value(0)).current;
   const buttonWidth = useRef(0);
@@ -500,114 +500,93 @@ const CalendarWidget: React.FC<CalendarWidgetProps> = ({
       )}
 
       {/* Selected Day Card */}
-      {dayData && (
-        <StrobeBlur
+
+      <StrobeBlur
+        style={{
+          marginTop: 16,
+          padding: 16,
+          borderRadius: 24,
+          borderWidth: 1,
+          borderColor: theme.border,
+          height: 66,
+        }}
+        colors={[theme.caka, theme.primaryBackground, theme.accent, theme.tint]}
+        duration={5000} // optional, default 4000ms
+      >
+        <View
           style={{
-            marginTop: 16,
-            padding: 16,
-            borderRadius: 24,
-            borderWidth: 1,
-            borderColor: theme.border,
-            height: 66,
+            flexDirection: "row",
+            alignItems: "center",
+            padding: 8,
           }}
-          colors={[
-            theme.caka,
-            theme.primaryBackground,
-            theme.accent,
-            theme.tint,
-          ]}
-          duration={5000} // optional, default 4000ms
         >
           <View
             style={{
-              flexDirection: "row",
+              width: 48,
+              height: 48,
+              borderRadius: 24,
+              backgroundColor: "rgba(255, 255, 255, 0.05)",
+              justifyContent: "center",
               alignItems: "center",
-              padding: 8,
+              marginRight: 12,
             }}
           >
-            <View
-              style={{
-                width: 48,
-                height: 48,
-                borderRadius: 24,
-                backgroundColor: "rgba(255, 255, 255, 0.05)",
-                justifyContent: "center",
-                alignItems: "center",
-                marginRight: 12,
-              }}
-            >
-              <Ionicons
-                name={dayData.icon || "fitness"}
-                size={32}
-                color={
-                  dayData.type === "future"
-                    ? theme.grayText
-                    : dayData.type === "rest"
-                    ? theme.tabIconDefault
-                    : theme.accent
-                }
-              />
-            </View>
-            <View
-              style={{
-                flex: 1,
-              }}
-            >
-              <Text
-                style={{
-                  fontSize: 16,
-                  fontWeight: "bold",
-                  marginBottom: 4,
-                  color: theme.text,
-                }}
-              >
-                {dayData.title}
-              </Text>
-              <Text
-                style={{
-                  fontSize: 14,
-                  opacity: 0.8,
-                  color: theme.text,
-                }}
-              >
-                {selectedDate.toLocaleDateString("en-US", {
-                  weekday: "long",
-                  month: "long",
-                  day: "numeric",
-                })}
-              </Text>
-            </View>
+            <Ionicons
+              name={dayData.icon || "bandage"}
+              size={32}
+              color={
+                dayData.type === "future"
+                  ? theme.grayText
+                  : dayData.type === "rest"
+                  ? theme.tabIconDefault
+                  : theme.grayText
+              }
+            />
           </View>
-          {dayData.type === "future" && (
+          <View
+            style={{
+              flex: 1,
+            }}
+          >
             <Text
               style={{
-                fontSize: 12,
-                marginTop: 8,
-                lineHeight: 16,
-                opacity: 0.7,
-                color: theme.grayText,
+                fontSize: 16,
+                fontWeight: "bold",
+                marginBottom: 4,
+                color: theme.text,
               }}
             >
-              This date is in the future and cannot be selected
+              {dayData.title || "Rest Day"}
             </Text>
-          )}
-          {dayData.type !== "rest" &&
-            dayData.type !== "future" &&
-            dayData.description && (
-              <Text
-                style={{
-                  fontSize: 12,
-                  marginTop: 8,
-                  lineHeight: 16,
-                  opacity: 0.7,
-                  color: theme.grayText,
-                }}
-              >
-                {dayData.description}
-              </Text>
-            )}
-        </StrobeBlur>
-      )}
+            <Text
+              style={{
+                fontSize: 14,
+                opacity: 0.8,
+                color: theme.text,
+              }}
+            >
+              {selectedDate.toLocaleDateString("en-US", {
+                weekday: "long",
+                month: "long",
+                day: "numeric",
+              })}
+            </Text>
+          </View>
+        </View>
+        {dayData.type !== "rest" && dayData.description && (
+          <Text
+            style={{
+              fontSize: 12,
+              marginTop: 8,
+              lineHeight: 16,
+              opacity: 0.7,
+              color: theme.grayText,
+            }}
+          >
+            {dayData.description}
+          </Text>
+        )}
+      </StrobeBlur>
     </View>
   );
 };

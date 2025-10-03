@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import { Text, View, ViewStyle } from "react-native";
-import { useThemeStore } from "../../stores/themeStore";
+import { useSettingsStore } from "../../stores/settingsStore";
 import { username } from "../../config/constants/defaults";
 import { useTranslation } from "react-i18next";
 
@@ -9,7 +9,7 @@ interface GreetingTextProps {
 }
 
 export default function GreetingText({ style }: GreetingTextProps) {
-  const { theme } = useThemeStore();
+  const { theme } = useSettingsStore();
   const { t } = useTranslation();
 
   // Get current time and determine greeting
@@ -33,7 +33,7 @@ export default function GreetingText({ style }: GreetingTextProps) {
         style={{
           fontSize: 24,
           fontWeight: "bold",
-          color: theme.accent,
+          color: theme.tint,
           opacity: 0.9,
           paddingTop: 20,
           paddingLeft: 20,

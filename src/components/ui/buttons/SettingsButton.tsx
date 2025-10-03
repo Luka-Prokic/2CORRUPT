@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, DimensionValue, ViewStyle } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useThemeStore } from "../../../stores/themeStore"; import Colors from "../../../config/constants/Colors";
+import { useSettingsStore } from "../../../stores/settingsStore"; import Colors from "../../../config/constants/Colors";
 
 interface SettingsButtonProps {
     title: string;
@@ -26,7 +26,7 @@ const SettingsButton: React.FC<SettingsButtonProps> = ({
     style,
     color,
 }) => {
-    const { themeName } = useThemeStore(); const theme = Colors[themeName];
+    const { themeName } = useSettingsStore(); const theme = Colors[themeName];
 
     return (
         <TouchableOpacity

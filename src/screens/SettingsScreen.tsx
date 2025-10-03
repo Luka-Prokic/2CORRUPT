@@ -1,13 +1,13 @@
 import React from "react";
 import { ScrollView } from "react-native";
-import { useThemeStore } from "../stores/themeStore";
+import { useSettingsStore } from "../stores/settingsStore";
 import Colors from "../config/constants/Colors";
 import ThemeSettings from "../components/app-settings/ThemeSettings";
 import IList from "../components/ui/containers/IList";
 import LanguageSettings from "../components/app-settings/LanguageSettings";
 
 export default function SettingsScreen() {
-  const { themeName } = useThemeStore();
+  const { themeName } = useSettingsStore();
   const theme = Colors[themeName];
 
   return (

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ViewStyle } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useThemeStore } from '../../stores/themeStore';
+import { useSettingsStore } from '../../../stores/settingsStore';
 import WidgetContainer from './WidgetContainer';
 
 interface QuoteCardWidgetProps {
@@ -25,7 +25,7 @@ export default function QuoteCardWidget({
   style,
   variant = 'default'
 }: QuoteCardWidgetProps) {
-  const { theme } = useThemeStore();
+  const { theme } = useSettingsStore();
 
   // Use provided quote or pick a random one
   const selectedQuote = quote || defaultQuotes[Math.floor(Math.random() * defaultQuotes.length)];

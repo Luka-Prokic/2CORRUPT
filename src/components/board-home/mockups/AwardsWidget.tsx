@@ -1,5 +1,5 @@
 import React from "react";
-import { useThemeStore } from "../../stores/themeStore";
+import { useSettingsStore } from "../../../stores/settingsStore";
 import ThreeDWidget from "./ThreeDWidget";
 import TriangleModel from "./TriangleModel";
 import { Dimensions } from "react-native";
@@ -14,7 +14,7 @@ const widgetSize = (width - 40) / 2;
 export default function AwardsWidget({
   size = "medium",
 }: AwardsWidgetProps) {
-  const { theme } = useThemeStore();
+  const { theme } = useSettingsStore();
 
   const getSizeStyles = () => {
     switch (size) {

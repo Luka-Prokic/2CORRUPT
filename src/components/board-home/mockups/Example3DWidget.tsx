@@ -1,6 +1,6 @@
 import React from 'react';
 import { ViewStyle } from 'react-native';
-import { useThemeStore } from '../../stores/themeStore';
+import { useSettingsStore } from '../../../stores/settingsStore';
 import ThreeDWidget from './ThreeDWidget';
 
 interface Example3DWidgetProps {
@@ -9,7 +9,7 @@ interface Example3DWidgetProps {
 
 // Example of how to use ThreeDWidget for future 3D models
 export default function Example3DWidget({ style }: Example3DWidgetProps) {
-  const { theme } = useThemeStore();
+  const { theme } = useSettingsStore();
 
   return (
     <ThreeDWidget 

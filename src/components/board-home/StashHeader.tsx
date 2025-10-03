@@ -1,10 +1,10 @@
 import React from "react";
 import { Animated } from "react-native";
-import { useThemeStore } from "../../stores/themeStore";
+import { useSettingsStore } from "../../stores/settingsStore";
 import StashTittle from "./StashTittle";
 
 export default function StashHeader() {
-  const { theme } = useThemeStore();
+  const { theme } = useSettingsStore();
 
   return (
     <Animated.View

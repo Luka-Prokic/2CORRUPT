@@ -1,7 +1,9 @@
 import React from "react";
 import { View, Text, TouchableOpacity, ViewStyle } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useThemeStore } from "../../stores/themeStore";
+import { useSettingsStore } from "../../stores/settingsStore";
+import WorkoutScreenMockup from "../board-workout/mockups/WorkoutScreenMockup";
+import StrobeBlur from "../ui/misc/StrobeBlur";
 
 interface WorkoutViewProps {
   onBackPress: () => void;
@@ -9,19 +11,16 @@ interface WorkoutViewProps {
 }
 
 export default function WorkoutView({ onBackPress, style }: WorkoutViewProps) {
-  const { theme } = useThemeStore();
+  const { theme, themeName } = useSettingsStore();
 
   return (
     <View
-      style={[
-        {
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-          backgroundColor: theme.background,
-        },
-        style,
-      ]}
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: theme.background,
+      }}
     >
       {/* Back Button */}
       <TouchableOpacity
@@ -32,7 +31,7 @@ export default function WorkoutView({ onBackPress, style }: WorkoutViewProps) {
           left: 22,
           padding: 10,
           zIndex: 1,
-          backgroundColor: theme.accent,
+          // backgroundColor: theme.accent,
           borderRadius: 100,
         }}
         activeOpacity={0.7}
@@ -40,30 +39,7 @@ export default function WorkoutView({ onBackPress, style }: WorkoutViewProps) {
         <Ionicons name="chevron-back" size={24} color={theme.border} />
       </TouchableOpacity>
 
-      {/* Workout Content */}
-      <Text
-        style={{
-          fontSize: 24,
-          fontWeight: "bold",
-          color: theme.text,
-          textAlign: "center",
-        }}
-      >
-        Workout Screen
-      </Text>
-
-      {/* Additional workout content can be added here */}
-      <Text
-        style={{
-          fontSize: 16,
-          color: theme.grayText,
-          textAlign: "center",
-          marginTop: 16,
-          paddingHorizontal: 20,
-        }}
-      >
-        This is where your workout will begin...
-      </Text>
+      <WorkoutScreenMockup />
     </View>
   );
 }

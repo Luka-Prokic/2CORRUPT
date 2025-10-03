@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, ViewStyle, DimensionValue } from 'react-native';
-import { useThemeStore } from '../../stores/themeStore';
-import hexToRGBA from '../../hooks/HEXtoRGB';
+import { useSettingsStore } from '../../../stores/settingsStore';
+import hexToRGBA from '../../../features/HEXtoRGB';
 
 interface WidgetContainerProps {
   children: React.ReactNode;
@@ -18,7 +18,7 @@ export default function WidgetContainer({
   style,
   variant = 'default'
 }: WidgetContainerProps) {
-  const { theme } = useThemeStore();
+  const { theme } = useSettingsStore();
 
   const getVariantStyle = () => {
     switch (variant) {

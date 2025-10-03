@@ -1,10 +1,10 @@
 import React from "react";
 import { View, Text, TouchableOpacity, ViewStyle } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useThemeStore } from "../../stores/themeStore";
+import { useSettingsStore } from "../../../stores/settingsStore";
 import WidgetContainer from "./WidgetContainer";
-import hexToRGBA from "../../hooks/HEXtoRGB";
-import StrobeBlur from "../ui/misc/StrobeBlur";
+import hexToRGBA from "../../../features/HEXtoRGB";
+import StrobeBlur from "../../ui/misc/StrobeBlur";
 
 interface ActiveSplitWidgetProps {
   onPress?: () => void;
@@ -15,7 +15,7 @@ export default function ActiveSplitWidget({
   onPress,
   style,
 }: ActiveSplitWidgetProps) {
-  const { theme } = useThemeStore();
+  const { theme } = useSettingsStore();
 
   // Mock data
   const activeSplit = {

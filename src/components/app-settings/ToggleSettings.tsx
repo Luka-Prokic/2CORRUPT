@@ -1,5 +1,5 @@
 import React from "react";
-import { useThemeStore } from "../../stores/themeStore";
+import { useSettingsStore } from "../../stores/settingsStore";
 import Colors from "../../config/constants/Colors";
 import { useTranslation } from "react-i18next";
 import SettingsButton from "../ui/buttons/SettingsButton";
@@ -9,7 +9,7 @@ import { Fragment } from "react";
 import { Text } from "react-native";
 
 export default function ToggleSettings() {
-  const { themeName, toggleTheme } = useThemeStore();
+  const { themeName, toggleTheme } = useSettingsStore();
   const theme = Colors[themeName];
   const { t } = useTranslation();
 

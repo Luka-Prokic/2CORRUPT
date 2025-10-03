@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, Alert } from "react-native";
-import { useThemeStore } from "../../stores/themeStore";
+import { useSettingsStore } from "../../stores/settingsStore";
 import Colors from "../../config/constants/Colors";
 import Input from "../ui/Input";
 import BounceButton from "../ui/buttons/BounceButton";
@@ -8,7 +8,7 @@ import TextButton from "../ui/buttons/TextButton";
 import { useTranslation } from "react-i18next";
 import Container from "../ui/containers/Container";
 
-import StashTittle from "../stash/StashTittle";
+import StashTittle from "../board-home/StashTittle";
 
 interface UserLoginProps {
   onLoginSuccess?: () => void;
@@ -19,7 +19,7 @@ export default function UserLogin({
   onLoginSuccess,
   onSwitchToRegister,
 }: UserLoginProps) {
-  const { themeName } = useThemeStore(); const theme = Colors[themeName];
+  const { themeName } = useSettingsStore(); const theme = Colors[themeName];
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);

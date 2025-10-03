@@ -1,7 +1,7 @@
 import React from "react";
 import { View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useThemeStore } from "../../stores/themeStore";
+import { useSettingsStore } from "../../stores/settingsStore";
 import Colors from "../../config/constants/Colors";
 import { useNavigation } from "@react-navigation/native";
 import IButton from "../ui/buttons/IButton";
@@ -11,7 +11,7 @@ interface ProfileButtonProps {
 }
 
 export default function ProfileButton({ onPress }: ProfileButtonProps) {
-  const { themeName } = useThemeStore();
+  const { themeName } = useSettingsStore();
   const theme = Colors[themeName];
   const navigation = useNavigation();
 

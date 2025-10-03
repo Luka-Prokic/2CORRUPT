@@ -2,11 +2,11 @@ import React from "react";
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaView } from "react-native-safe-area-context";
 import AppNavigator from "../navigation/AppNavigator";
-import { useThemeStore } from "../stores/themeStore";
+import { useSettingsStore } from "../stores/settingsStore";
 import { registerRootComponent } from "expo";
 
 function Main() {
-  const { theme, themeName } = useThemeStore();
+  const { theme, themeName } = useSettingsStore();
 
   return (
     <SafeAreaView

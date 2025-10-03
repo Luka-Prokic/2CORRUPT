@@ -6,7 +6,7 @@ import {
   Animated,
   Pressable,
 } from "react-native";
-import { useThemeStore } from "../../../stores/themeStore";
+import { useSettingsStore } from "../../../stores/settingsStore";
 import Colors from "../../../config/constants/Colors";
 import useBounceScaleAnim from "../../../animations/useBounceScaleAnim";
 
@@ -29,7 +29,7 @@ export default function BounceButton({
   onPress,
   ...rest
 }: BounceButtonProps) {
-  const { themeName } = useThemeStore();
+  const { themeName } = useSettingsStore();
   const theme = Colors[themeName];
   const { bounceAnim, bounceIt } = useBounceScaleAnim();
 
@@ -39,21 +39,28 @@ export default function BounceButton({
   };
 
   return (
-    <Animated.View style={[bounceAnim, style]}>
+    <Animated.View
+      style={[
+        bounceAnim,
+        {
+          borderRadius: 8,
+          overflow: "hidden",
+          zIndex: 1,
+          backgroundColor: color ?? theme.primaryBackground,
+          opacity: rest.disabled ? 0.6 : 1,
+        },
+        style,
+      ]}
+    >
       <Pressable
         style={[
           {
-            borderRadius: 8,
             alignItems: "center",
             justifyContent: "center",
             flexDirection: "row",
-            overflow: "hidden",
             gap: 8,
-            zIndex: 1,
-            backgroundColor: color ?? theme.primaryBackground,
-            opacity: rest.disabled ? 0.6 : 1,
+            flex: 1,
           },
-          style,
         ]}
         hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
         onPress={handlePress}

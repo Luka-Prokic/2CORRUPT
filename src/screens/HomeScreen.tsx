@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Animated, View, Dimensions } from "react-native";
-import { useThemeStore } from "../stores/themeStore";
+import { useSettingsStore } from "../stores/settingsStore";
 import Colors from "../config/constants/Colors";
 import StashButton from "../components/board-home/StashButton";
 import GreetingText from "../components/home-screen/GreetingText";
@@ -13,7 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 const HEIGHT = Dimensions.get("window").height;
 
 export default function HomeScreen() {
-  const { themeName } = useThemeStore();
+  const { themeName } = useSettingsStore();
   const theme = Colors[themeName];
   const { fadeIn } = useFadeInAnim(true);
 
@@ -103,7 +103,9 @@ export default function HomeScreen() {
   };
 
   return (
-    <SafeAreaView style={{ backgroundColor: theme.background, flex: 1 }}>
+    <SafeAreaView
+      style={{ backgroundColor: theme.background, flex: 1 }}
+    >
       <View style={{ flex: 1, position: "relative" }}>
         {/* Home View - Only GreetingText */}
         <Animated.View

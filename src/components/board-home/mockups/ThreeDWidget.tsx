@@ -3,11 +3,10 @@ import { View, StyleSheet, ViewStyle, Text } from "react-native";
 import { Canvas } from "@react-three/fiber";
 import { LinearGradient } from "expo-linear-gradient";
 import { BlurView } from "expo-blur";
-import { useThemeStore } from "../../stores/themeStore";
+import { useSettingsStore } from "../../../stores/settingsStore";
 import WidgetContainer from "./WidgetContainer";
-import IButton from "../ui/buttons/IButton";
-import hexToRGBA from "../../hooks/HEXtoRGB";
-import BounceButton from "../ui/buttons/BounceButton";
+import hexToRGBA from "../../../features/HEXtoRGB";
+import BounceButton from "../../ui/buttons/BounceButton";
 
 interface ThreeDWidgetProps {
   children: ReactNode;
@@ -39,7 +38,7 @@ export default function ThreeDWidget({
   variant = "default",
   elevation = 2,
 }: ThreeDWidgetProps) {
-  const { theme } = useThemeStore();
+  const { theme } = useSettingsStore();
 
   const getVariantStyle = (): ViewStyle => {
     switch (variant) {

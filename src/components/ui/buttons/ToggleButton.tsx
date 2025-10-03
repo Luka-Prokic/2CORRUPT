@@ -1,6 +1,6 @@
 import React from "react";
 import { TouchableOpacity, Text, StyleSheet, ViewStyle, TextStyle } from "react-native";
-import { useThemeStore } from "../../../stores/themeStore"; import Colors from "../../../config/constants/Colors";
+import { useSettingsStore } from "../../../stores/settingsStore"; import Colors from "../../../config/constants/Colors";
 
 interface ToggleButtonProps {
   isActive: boolean;
@@ -21,7 +21,7 @@ export default function ToggleButton({
   textStyle,
   disabled = false,
 }: ToggleButtonProps) {
-  const { themeName } = useThemeStore(); const theme = Colors[themeName];
+  const { themeName } = useSettingsStore(); const theme = Colors[themeName];
 
   const buttonStyle = [
     styles.button,

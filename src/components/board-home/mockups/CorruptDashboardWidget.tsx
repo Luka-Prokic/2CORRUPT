@@ -1,9 +1,9 @@
 import React from "react";
 import { View, Text, TouchableOpacity, ViewStyle } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useThemeStore } from "../../stores/themeStore";
+import { useSettingsStore } from "../../../stores/settingsStore";
 import WidgetContainer from "./WidgetContainer";
-import hexToRGBA from "../../hooks/HEXtoRGB";
+import hexToRGBA from "../../../features/HEXtoRGB";
 
 interface CorruptDashboardWidgetProps {
   onPress?: () => void;
@@ -11,7 +11,7 @@ interface CorruptDashboardWidgetProps {
 }
 
 export default function CorruptDashboardWidget({ onPress, style }: CorruptDashboardWidgetProps) {
-  const { theme } = useThemeStore();
+  const { theme } = useSettingsStore();
   
   // Mock data
   const activeSplit = {

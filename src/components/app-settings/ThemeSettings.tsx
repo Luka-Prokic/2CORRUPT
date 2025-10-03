@@ -1,15 +1,15 @@
 import React from "react";
-import { useThemeStore } from "../../stores/themeStore";
+import { useSettingsStore } from "../../stores/settingsStore";
 import { useTranslation } from "react-i18next";
 import { Themes } from "../../config/constants/Colors";
 import Colors from "../../config/constants/Colors";
 import DropDownButton from "../ui/buttons/DropDownButton";
 import OptionButton from "../ui/buttons/OptionButton";
-import hexToRGBA from "../../hooks/HEXtoRGB";
+import hexToRGBA from "../../features/HEXtoRGB";
 import IList from "../ui/containers/IList";
 
 export default function ThemeSettings() {
-  const { themeName, setTheme } = useThemeStore();
+  const { themeName, setTheme } = useSettingsStore();
   const theme = Colors[themeName];
   const { t } = useTranslation();
 

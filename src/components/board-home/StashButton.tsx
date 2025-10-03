@@ -1,19 +1,19 @@
 import React, { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
-import { useThemeStore } from "../../stores/themeStore";
+import { useSettingsStore } from "../../stores/settingsStore";
 import Colors from "../../config/constants/Colors";
 import { useNavigation } from "@react-navigation/native";
 import IButton from "../ui/buttons/IButton";
 import { Text } from "react-native";
+import StashTittle from "./StashTittle";
 
 interface StashButtonProps {
   onPress: () => void;
 }
 
 export default function StashButton({ onPress }: StashButtonProps) {
-  const { themeName } = useThemeStore();
+  const { themeName } = useSettingsStore();
   const theme = Colors[themeName];
-  
 
   return (
     <IButton
@@ -27,10 +27,8 @@ export default function StashButton({ onPress }: StashButtonProps) {
         borderColor: theme.border,
       }}
     >
-      <Text style={{ fontSize: 24, fontWeight: "bold", color: theme.border }}>
-        DashBoard
-      </Text>
-      <Ionicons name="chevron-forward" size={24} color={theme.border} />
+      <StashTittle style={{ color: theme.border, fontSize: 22}} />
+      <Ionicons name="chevron-forward" size={28} color={theme.border} />
     </IButton>
   );
 }

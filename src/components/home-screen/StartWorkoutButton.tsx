@@ -1,8 +1,8 @@
 import React from "react";
-import { useThemeStore } from "../../stores/themeStore";
+import { useSettingsStore } from "../../stores/settingsStore";
 import StrobeBlur from "../ui/misc/StrobeBlur";
 import { Text } from "react-native";
-import hexToRGBA from "../../hooks/HEXtoRGB";
+import hexToRGBA from "../../features/HEXtoRGB";
 import BounceButton from "../ui/buttons/BounceButton";
 
 interface StartWorkoutButtonProps {
@@ -14,7 +14,7 @@ export default function StartWorkoutButton({
   style,
   onPress,
 }: StartWorkoutButtonProps) {
-  const { theme } = useThemeStore();
+  const { theme } = useSettingsStore();
 
   return (
     <BounceButton

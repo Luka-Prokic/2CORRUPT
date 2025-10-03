@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, ViewStyle } from 'react-native';
-import { useThemeStore } from '../../stores/themeStore';
+import { useSettingsStore } from '../../../stores/settingsStore';
 import WidgetContainer from './WidgetContainer';
 
 interface ProgressChartWidgetProps {
@@ -16,7 +16,7 @@ export default function ProgressChartWidget({
   style,
   variant = 'linear'
 }: ProgressChartWidgetProps) {
-  const { theme } = useThemeStore();
+  const { theme } = useSettingsStore();
 
   const getVariantStyles = () => {
     switch (variant) {

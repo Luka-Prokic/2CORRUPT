@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, ViewStyle } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useThemeStore } from "../../stores/themeStore";
+import { useSettingsStore } from "../../../stores/settingsStore";
 import WidgetContainer from "./WidgetContainer";
 
 interface PlanWidgetProps {
@@ -15,7 +15,7 @@ interface WorkoutData {
 }
 
 export default function PlanWidget({ style }: PlanWidgetProps) {
-  const { theme } = useThemeStore();
+  const { theme } = useSettingsStore();
 
   // Hardcoded training split data - just workout names
   const workouts: WorkoutData[] = [

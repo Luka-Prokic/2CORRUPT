@@ -8,8 +8,8 @@ import {
   FlatList,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useThemeStore } from "../../stores/themeStore";
-import hexToRGBA from "../../hooks/HEXtoRGB";
+import { useSettingsStore } from "../../../stores/settingsStore";
+import hexToRGBA from "../../../features/HEXtoRGB";
 
 const { width } = Dimensions.get("window");
 const widgetSize = (width - 40) / 2;
@@ -33,7 +33,7 @@ const TemplateWidget: React.FC<TemplateWidgetProps> = ({
   onAddTemplate,
   onTemplatePress,
 }) => {
-  const { theme } = useThemeStore();
+  const { theme } = useSettingsStore();
   const scrollX = useRef(new Animated.Value(0)).current;
   const [currentIndex, setCurrentIndex] = useState(0);
   const [lastScrollDirection, setLastScrollDirection] = useState<

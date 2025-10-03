@@ -6,7 +6,7 @@ import {
   ViewStyle,
   DimensionValue,
 } from "react-native";
-import { useThemeStore } from "../../../stores/themeStore"; import Colors from "../../../config/constants/Colors";
+import { useSettingsStore } from "../../../stores/settingsStore"; import Colors from "../../../config/constants/Colors";
 
 interface IListProps {
   width?: DimensionValue;
@@ -25,7 +25,7 @@ const IList: React.FC<IListProps> = ({
   label,
   hrStart = "Standard",
 }) => {
-  const { themeName } = useThemeStore(); const theme = Colors[themeName];
+  const { themeName } = useSettingsStore(); const theme = Colors[themeName];
 
   const childrenWithBreaks = React.Children.toArray(children).map(
     (child, index, array) => (

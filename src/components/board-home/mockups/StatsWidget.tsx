@@ -1,9 +1,9 @@
 import React from "react";
 import { View, Text, ViewStyle } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useThemeStore } from "../../stores/themeStore";
+import { useSettingsStore } from "../../../stores/settingsStore";
 import WidgetContainer from "./WidgetContainer";
-import hexToRGBA from "../../hooks/HEXtoRGB";
+import hexToRGBA from "../../../features/HEXtoRGB";
 
 interface StatsWidgetProps {
   onPress?: () => void;
@@ -11,7 +11,7 @@ interface StatsWidgetProps {
 }
 
 export default function StatsWidget({ onPress, style }: StatsWidgetProps) {
-  const { theme } = useThemeStore();
+  const { theme } = useSettingsStore();
 
   // Mock data for workout durations (in minutes) over the past 2 weeks
   const workoutDurations = [

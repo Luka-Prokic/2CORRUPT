@@ -1,16 +1,20 @@
 import React from "react";
-import { Animated } from "react-native";
-import { useThemeStore } from "../../stores/themeStore";
+import { Animated, TextStyle, StyleProp } from "react-native";
+import { useSettingsStore } from "../../stores/settingsStore";
 import { useTranslation } from "react-i18next";
 import useFlickerAnim from "../../animations/useFlickerAnim";
-import { useDracoFont } from "../../hooks/useDracoFont";
+import { useDracoFont } from "../../features/fonts/useDracoFont";
 
 interface StashTittleProps {
   fontSize?: number;
+  style?: StyleProp<TextStyle>;
 }
 
-export default function StashTittle({ fontSize = 28 }: StashTittleProps) {
-  const { theme, themeName } = useThemeStore();
+export default function StashTittle({
+  fontSize = 28,
+  style,
+}: StashTittleProps) {
+  const { theme, themeName } = useSettingsStore();
   const { t } = useTranslation();
   const { fontFamily } = useDracoFont();
   const flickerAnim = useFlickerAnim();
@@ -36,6 +40,7 @@ export default function StashTittle({ fontSize = 28 }: StashTittleProps) {
         opacity,
         color,
         textAlign: "center",
+        ...(style as TextStyle),
       }}
     >
       {t("app.corrupt")}

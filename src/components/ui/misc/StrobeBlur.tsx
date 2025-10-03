@@ -13,6 +13,7 @@ interface StrobeBlurProps {
   colors?: [string, string, string, string];
   duration?: number;
   children?: React.ReactNode;
+  tint?: "default" | "light" | "dark";
 }
 
 const { width } = Dimensions.get("window");
@@ -22,6 +23,7 @@ export default function StrobeBlur({
   colors = ["#ff0000", "#00ff00", "#0000ff", "#ff00ff"],
   duration = 6000,
   children,
+  tint = "default",
 }: StrobeBlurProps) {
   const animValues = useRef(
     Array.from({ length: 4 }, () => new Animated.Value(0))
@@ -116,7 +118,7 @@ export default function StrobeBlur({
       {renderBlobs(true)}
       <BlurView
         intensity={100}
-        tint="default"
+        tint={tint}
         style={[
           StyleSheet.absoluteFill,
           { justifyContent: "center", alignItems: "center" },
