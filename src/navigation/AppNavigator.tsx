@@ -11,7 +11,7 @@ import { useSettingsStore } from "../stores/settingsStore";
 import { useTranslation } from "react-i18next";
 import "../config/i18n";
 import { TouchableOpacity } from "react-native";
-import CorruptHeader from "../components/board-home/CorruptHeader";
+import CorruptHeader from "../components/corrupt/CorruptHeader";
 import WorkoutBoardMockup from "../components/board-workout/mockups/WorkoutBoardMockup";
 import HomeBoard from "../screens/HomeBoard";
 

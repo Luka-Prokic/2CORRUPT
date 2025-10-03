@@ -7,7 +7,7 @@ import TextButton from "../ui/buttons/TextButton";
 import { useTranslation } from "react-i18next";
 import Container from "../ui/containers/Container";
 
-import CorruptTittle from "../board-home/CorruptTittle";
+import CorruptTittle from "../corrupt/CorruptTittle";
 
 interface UserLoginProps {
   onLoginSuccess?: () => void;

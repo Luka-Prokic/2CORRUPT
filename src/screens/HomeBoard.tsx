@@ -3,7 +3,7 @@ import { View, ScrollView, StyleSheet, Dimensions } from "react-native";
 import { useSettingsStore } from "../stores/settingsStore";
 import AwardsWidget from "../components/board-home/mockups/AwardsWidget";
 import StreakCounterWidget from "../components/board-home/mockups/StreakCounterWidget";
-import ProfileWidget from "../components/board-home/mockups/ProfileWidget";
+import ProfileWidget from "../components/board-home/widgets/profile-widget/ProfileWidget";
 import TemplateWidget from "../components/board-home/mockups/TemplateWidget";
 import StatsWidget from "../components/board-home/mockups/StatsWidget";
 import ActiveSplitWidget from "../components/board-home/mockups/ActiveSplitWidget";
@@ -25,15 +25,7 @@ export default function HomeBoard() {
       showsVerticalScrollIndicator={false}
     >
       <View style={styles.grid}>
-        <ProfileWidget
-          style={{
-            ...styles.widget,
-            width: widgetSize,
-            height: widgetSize,
-            borderRadius: 44,
-            backgroundColor: hexToRGBA(theme.fourthBackground, 0.2),
-          }}
-        />
+        <ProfileWidget />
 
         {/* Awards Widget */}
         <AwardsWidget size="large" />

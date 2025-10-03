@@ -4,7 +4,7 @@ import { useSettingsStore } from "../stores/settingsStore";
 import WorkoutView from "../components/view-workout/WorkoutView";
 import { SafeAreaView } from "react-native-safe-area-context";
 import HomeView from "../components/view-home/HomeView";
-import CorruptButton from "../components/board-home/CorruptButton";
+import CorruptButton from "../components/corrupt/CorruptButton";
 
 export default function HomeScreen() {
   const { theme } = useSettingsStore();

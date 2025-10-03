@@ -156,6 +156,10 @@
     "evening": "Dobro veče"
   },
   "app": {
-    "corrupt": "Corrupt"
+    "corrupt": "Corrupt",
+    "no-username": "Nema username",
+    "no-date": "Nema godine",
+    "workouts": "Treninzi",
+    "since": "Od"
   }
 }

@@ -155,6 +155,10 @@
     "evening": "Good evening"
   },
   "app": {
-    "corrupt": "Corrupt"
+    "corrupt": "Corrupt",
+    "no-username": "No username",
+    "no-date": "No year",
+    "workouts": "Workouts",
+    "since": "Since"
   }
 }
