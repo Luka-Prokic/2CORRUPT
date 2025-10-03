@@ -15,7 +15,7 @@ import hexToRGBA from "../features/HEXtoRGB";
 const { width } = Dimensions.get("window");
 const widgetSize = (width - 40) / 2; // 2 columns with padding
 
-export default function StashScreen() {
+export default function HomeBoard() {
   const { theme } = useSettingsStore();
   const [selectedDate, setSelectedDate] = useState(new Date());
   return (

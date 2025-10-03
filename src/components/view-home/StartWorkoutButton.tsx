@@ -4,14 +4,13 @@ import StrobeBlur from "../ui/misc/StrobeBlur";
 import { Text } from "react-native";
 import hexToRGBA from "../../features/HEXtoRGB";
 import BounceButton from "../ui/buttons/BounceButton";
+import { HEIGHT } from "../../features/Dimensions";
 
 interface StartWorkoutButtonProps {
-  style?: any;
   onPress?: () => void;
 }
 
 export default function StartWorkoutButton({
-  style,
   onPress,
 }: StartWorkoutButtonProps) {
   const { theme } = useSettingsStore();
@@ -19,7 +18,16 @@ export default function StartWorkoutButton({
   return (
     <BounceButton
       onPress={onPress}
-      style={[style, { height: 64, borderRadius: 100 }]}
+      style={{
+        height: 64,
+        borderRadius: 100,
+        marginHorizontal: 16,
+        bottom: HEIGHT / 2 - 64,
+        position: "absolute",
+        left: 0,
+        right: 0,
+        alignItems: "center",
+      }}
       color={hexToRGBA(theme.accent, 0.2)}
     >
       <StrobeBlur

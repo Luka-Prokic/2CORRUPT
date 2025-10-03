@@ -1,6 +1,11 @@
 // Types for the modular UI store
 
-export type UIStore = WorkoutViewSlice & ModalSlice & WidgetSlice & NavigationSlice & LoadingSlice & GeneralSlice;
+export type UIStore = WorkoutViewSlice &
+  ModalSlice &
+  WidgetSlice &
+  NavigationSlice &
+  LoadingSlice &
+  GeneralSlice;
 
 // Workout view slice contract
 export interface WorkoutViewSlice {
@@ -29,6 +34,8 @@ export interface WidgetSlice {
 export interface NavigationSlice {
   currentScreen: string;
   setCurrentScreen: (screen: string) => void;
+  navigationHandler: (() => void) | null;
+  setNavigationHandler: (handler: (() => void) | null) => void;
 }
 
 // Loading states slice contract

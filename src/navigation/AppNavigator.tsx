@@ -4,7 +4,6 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
 import HomeScreen from "../screens/HomeScreen";
 import ProfileScreen from "../screens/ProfileScreen";
-import StashScreen from "../screens/StashScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 import WorkoutScreen from "../screens/WorkoutScreen";
 import { Ionicons } from "@expo/vector-icons";
@@ -13,12 +12,12 @@ import { useTranslation } from "react-i18next";
 import "../config/i18n";
 import { TouchableOpacity } from "react-native";
 import StashHeader from "../components/board-home/StashHeader";
-import WorkoutBoardScreen from "../screens/WorkoutBoardScreen";
 import WorkoutBoardMockup from "../components/board-workout/mockups/WorkoutBoardMockup";
+import HomeBoard from "../screens/HomeBoard";
 
 export type RootStackParamList = {
   Home: undefined;
-  Stash: undefined;
+  HomeBoard: undefined;
   Settings: undefined;
   Profile: undefined;
   Workout: undefined;
@@ -74,8 +73,8 @@ export default function AppNavigator() {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="Stash"
-          component={StashScreen}
+          name="HomeBoard"
+          component={HomeBoard}
           options={{
             presentation: "card",
             headerStyle: { backgroundColor: theme.navBackground },

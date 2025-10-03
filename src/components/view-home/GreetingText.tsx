@@ -1,14 +1,10 @@
 import React, { Fragment } from "react";
-import { Text, View, ViewStyle } from "react-native";
+import { Text } from "react-native";
 import { useSettingsStore } from "../../stores/settingsStore";
 import { username } from "../../config/constants/defaults";
 import { useTranslation } from "react-i18next";
 
-interface GreetingTextProps {
-  style?: ViewStyle;
-}
-
-export default function GreetingText({ style }: GreetingTextProps) {
+export default function HomeView() {
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
 
@@ -28,7 +24,7 @@ export default function GreetingText({ style }: GreetingTextProps) {
   const greeting = getGreeting();
 
   return (
-    <View style={[style, { position: "absolute", top: 0, left: 0 }]}>
+    <Fragment>
       <Text
         style={{
           fontSize: 24,
@@ -52,6 +48,6 @@ export default function GreetingText({ style }: GreetingTextProps) {
       >
         {username}
       </Text>
-    </View>
+    </Fragment>
   );
 }
