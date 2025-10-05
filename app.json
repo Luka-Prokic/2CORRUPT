@@ -1,7 +1,8 @@
 {
   "expo": {
-    "name": "2CORRUPT",
+    "name": "Corrupt",
     "slug": "two-corrupt",
+    "scheme": "corrupt",
     "version": "2.0.0",
     "orientation": "portrait",
     "icon": "./assets/2CORRUPT-icon.png",

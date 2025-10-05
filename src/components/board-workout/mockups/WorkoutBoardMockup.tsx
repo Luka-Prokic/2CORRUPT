@@ -1,445 +1,248 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
   View,
   Text,
-  TextInput,
   TouchableOpacity,
   ScrollView,
-  Dimensions,
+  Animated,
 } from "react-native";
-import { useSettingsStore } from "../../../stores/settingsStore";
 import { Ionicons } from "@expo/vector-icons";
+import StrobeBlur from "../../ui/misc/StrobeBlur";
+import { useSettingsStore } from "../../../stores/settingsStore";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { HEIGHT } from "../../../features/Dimensions";
 import { LinearGradient } from "expo-linear-gradient";
 import hexToRGBA from "../../../features/HEXtoRGB";
-import { SafeAreaView } from "react-native-safe-area-context";
-import OptionButton from "../../ui/buttons/OptionButton";
-import DropDownButton from "../../ui/buttons/DropDownButton";
-import StrobeBlur from "../../ui/misc/StrobeBlur";
+import useFadeInAnim from "../../../animations/useFadeInAnim";
 
-const { width, height } = Dimensions.get("window");
+const FOCUS_HEIGHT = HEIGHT - 120; // focused exercise height
 
-// Types for dummy data
 interface Exercise {
   id: string;
   name: string;
-  sets: number;
-  reps: number;
-  weight: number;
-  rir: number; // Reps in Reserve
-  rpe: number; // Rate of Perceived Exertion
   notes: string;
-  isActive: boolean;
-  isCompleted: boolean;
-  isSuperset?: boolean;
-  restSeconds: number;
 }
 
-interface WorkoutBoardMockupProps {}
+const exercisesDummy: Exercise[] = [
+  { id: "1", name: "Bench Press", notes: "Focus on controlled movement" },
+  { id: "2", name: "Incline Dumbbell Press", notes: "Keep shoulders back" },
+  { id: "3", name: "Dips", notes: "Bodyweight exercise" },
+  { id: "4", name: "Cable Flyes", notes: "Slow and controlled" },
+];
 
-const WorkoutBoardMockup: React.FC<WorkoutBoardMockupProps> = () => {
+const WorkoutBoardMockup: React.FC = () => {
   const { theme, themeName } = useSettingsStore();
+  const [selectedExercise, setSelectedExercise] = useState(exercisesDummy[0]);
+  const [listOpen, setListOpen] = useState(false);
+  const { fadeIn } = useFadeInAnim();
+  const animatedY = useRef(new Animated.Value(0)).current;
 
-  const [exercises] = useState<Exercise[]>([
-    {
-      id: "1",
-      name: "Bench Press",
-      sets: 4,
-      reps: 10,
-      weight: 135,
-      rir: 2,
-      rpe: 8,
-      notes: "Focus on controlled movement",
-      isActive: true,
-      isCompleted: false,
-      restSeconds: 180,
-    },
-    {
-      id: "2",
-      name: "Incline Dumbbell Press",
-      sets: 3,
-      reps: 12,
-      weight: 80,
-      rir: 1,
-      rpe: 9,
-      notes: "Keep shoulders back",
-      isActive: false,
-      isCompleted: false,
-      restSeconds: 180,
-    },
-    {
-      id: "3",
-      name: "Dips",
-      sets: 3,
-      reps: 15,
-      weight: 0,
-      rir: 0,
-      rpe: 8,
-      notes: "Bodyweight exercise",
-      isActive: false,
-      isCompleted: false,
-      restSeconds: 180,
-    },
-    {
-      id: "4",
-      name: "Cable Flyes",
-      sets: 4,
-      reps: 15,
-      weight: 45,
-      rir: 3,
-      rpe: 7,
-      notes: "Slow and controlled",
-      isActive: false,
-      isCompleted: false,
-      isSuperset: true,
-      restSeconds: 180,
-    },
-    {
-      id: "5",
-      name: "Push-ups",
-      sets: 2,
-      reps: 20,
-      weight: 0,
-      rir: 1,
-      rpe: 8,
-      notes: "Perfect form",
-      isActive: false,
-      isCompleted: false,
-      restSeconds: 180,
-    },
-    {
-      id: "6",
-      name: "Tricep Extensions",
-      sets: 3,
-      reps: 12,
-      weight: 35,
-      rir: 2,
-      rpe: 7,
-      notes: "Elbows in",
-      isActive: false,
-      isCompleted: false,
-      restSeconds: 180,
-    },
-  ]);
-
-  const [selectedExercise, setSelectedExercise] = useState<Exercise>(
-    exercises[0]
-  );
-  const [showRIR, setShowRIR] = useState(false);
-  const [showRPE, setShowRPE] = useState(true);
-  const [restTime, setRestTime] = useState(3); // in minutes
-  const [notes, setNotes] = useState(selectedExercise.notes);
+  const togglePanel = () => {
+    const toValue = listOpen ? 0 : -FOCUS_HEIGHT + 80;
+    Animated.spring(animatedY, { toValue, useNativeDriver: true }).start();
+    setListOpen(!listOpen);
+  };
 
   const handleExerciseSelect = (exercise: Exercise) => {
     setSelectedExercise(exercise);
-    setRestTime(Math.floor(exercise.restSeconds / 60));
-    setNotes(exercise.notes);
+    togglePanel();
   };
 
   return (
     <SafeAreaView
-      style={{
-        flex: 1,
-        backgroundColor: theme.background,
-      }}
+      edges={["top"]}
+      style={{ flex: 1, backgroundColor: theme.background }}
     >
-      {/*  Selected Exercise Card */}
-      <View
-        style={{
-          backgroundColor: theme.navBackground,
-          shadowColor: theme.shadow,
-          shadowOffset: { width: 0, height: 4 },
-          shadowOpacity: 0.1,
-          shadowRadius: 12,
-          elevation: 6,
-          borderWidth: 1,
-          borderColor: theme.border,
-        }}
-      >
-        {/* Exercise Header */}
+      <View style={{ flex: 1, backgroundColor: theme.background }}>
+        {/* Top header */}
         <View
           style={{
             flexDirection: "row",
             justifyContent: "space-between",
-            alignItems: "flex-start",
-            padding: 16,
+            alignItems: "center",
+            paddingHorizontal: 16,
+            zIndex: 1,
           }}
         >
-          <Text
-            style={{
-              fontSize: 36,
-              fontWeight: "bold",
-              color: theme.text,
-              marginBottom: 4,
-            }}
-          >
-            {selectedExercise.name}
+          <TouchableOpacity>
+            <Ionicons name="close-circle" size={44} color={theme.error} />
+          </TouchableOpacity>
+          <Text style={{ color: listOpen ? theme.secondaryText : theme.grayText, fontSize: 18, fontWeight: "700" }}>
+            Workout - {new Date().toLocaleDateString()}
           </Text>
+          <TouchableOpacity>
+            <Ionicons name="checkmark-circle" size={44} color={theme.text} />
+          </TouchableOpacity>
         </View>
 
-        {/* Notes */}
-        <View style={{ marginHorizontal: 16, marginBottom: 16 }}>
-          <Text
-            style={{
-              fontSize: 14,
-              fontWeight: "500",
-              color: theme.grayText,
-              marginBottom: 8,
-            }}
-          >
-            Notes
-          </Text>
-          <TextInput
-            style={{
-              backgroundColor: theme.secondaryBackground,
-              borderRadius: 12,
-              paddingHorizontal: 16,
-              paddingVertical: 12,
-              fontSize: 16,
-              color: theme.text,
-              borderWidth: 1,
-              borderColor: theme.border,
-              minHeight: 60,
-              textAlignVertical: "top",
-            }}
-            value={notes}
-            onChangeText={setNotes}
-            placeholder="Add exercise notes..."
-            placeholderTextColor={theme.grayText}
-            multiline
-          />
-        </View>
-
-        {/* All Options List */}
-        <DropDownButton
-          snapPoints={[44, 44 + 34 * 6]}
+        {/* Focused Exercise */}
+        <Animated.View
           style={{
-            width: "100%",
-            backgroundColor: theme.navBackground,
-            borderWidth: 0,
+            flex: 1,
+            transform: [{ translateY: animatedY }],
           }}
         >
-          {/* Remove Exercise */}
-          <OptionButton
-            title="Remove Exercise"
-            color={theme.error}
-            icon={
-              <Ionicons name="remove-circle" color={theme.error} size={20} />
+          <StrobeBlur
+            colors={[
+              theme.border,
+              theme.background,
+              theme.grayText,
+              theme.handle,
+            ]}
+            tint={
+              ["light", "peachy", "oldschool"].includes(themeName)
+                ? "light"
+                : "dark"
             }
-            onPress={() => {}} // replace with your handler
-          />
-
-          {/* Swap Exercise */}
-          <OptionButton
-            title="Swap Exercise"
-            color={theme.text}
-            icon={
-              <Ionicons name="swap-horizontal" color={theme.text} size={20} />
-            }
-            onPress={() => {}} // replace with your handler
-          />
-
-          {/* Add Exercise */}
-          <OptionButton
-            title="Add Exercise"
-            color={theme.tint}
-            icon={<Ionicons name="add-circle" color={theme.tint} size={20} />}
-            onPress={() => {}} // replace with your handler
-          />
-
-          {/* Show/Hide RIR */}
-          <OptionButton
-            title={showRIR ? "Hide RIR" : "Show RIR"}
-            color={showRIR ? theme.accent : theme.grayText}
-            icon={
-              <Ionicons
-                name={showRIR ? "eye" : "eye-off"}
-                color={showRIR ? theme.accent : theme.grayText}
-                size={20}
-              />
-            }
-            onPress={() => setShowRIR(!showRIR)}
-          />
-
-          {/* Show/Hide RPE */}
-          <OptionButton
-            title={showRPE ? "Hide RPE" : "Show RPE"}
-            color={showRPE ? theme.accent : theme.grayText}
-            icon={
-              <Ionicons
-                name={showRPE ? "eye" : "eye-off"}
-                color={showRPE ? theme.accent : theme.grayText}
-                size={20}
-              />
-            }
-            onPress={() => setShowRPE(!showRPE)}
-          />
-
-          {/* Rest Time */}
-          <OptionButton
-            title={`Rest Time: ${restTime} min`}
-            color={theme.grayText}
-            icon={
-              <Ionicons name="stopwatch" color={theme.grayText} size={20} />
-            }
-            onPress={() => {}} // replace with your handler
-          />
-        </DropDownButton>
-      </View>
-
-      <ScrollView
-        style={{
-          flex: 1,
-          paddingBottom: 84,
-        }}
-        showsVerticalScrollIndicator={false}
-      >
-        {exercises.map((exercise:any) => {
-          const isSelected = exercise.id === selectedExercise.id;
-          const formatRestTime = (seconds: number) => {
-            const minutes = Math.floor(seconds / 60);
-            const remainingSeconds = seconds % 60;
-            if (minutes === 0) {
-              return `${remainingSeconds}s`;
-            }
-            return remainingSeconds === 0
-              ? `${minutes}m`
-              : `${minutes}m ${remainingSeconds}s`;
-          };
-
-          return (
-            <TouchableOpacity
-              key={exercise.id}
-              style={{}}
-              onPress={() => handleExerciseSelect(exercise)}
-              activeOpacity={0.7}
+            size={HEIGHT / 2}
+            style={{
+              height: FOCUS_HEIGHT,
+              backgroundColor: theme.tint,
+            }}
+          >
+            <LinearGradient
+              colors={[
+                theme.background,
+                theme.background,
+                hexToRGBA(theme.background, 0),
+              ]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 0, y: 1 }}
+              style={{
+                height: "100%",
+                width: "100%",
+                padding: 16,
+                alignItems: "center",
+              }}
             >
-              <StrobeBlur
-                colors={
-                  isSelected?[
-                  theme.caka,
-                  theme.primaryBackground,
-                  theme.accent,
-                  theme.tint,
-                ]:[
-                  theme.secondaryText,
-                  theme.border,
-                  theme.grayText,
-                  theme.handle,
-                ]}
-                tint={
-                  ["light", "peachy", "oldschool"].includes(themeName)||isSelected
-                    ? "light"
-                    : "dark"
-                }
-                style={{
-                  height: 88,
-                  backgroundColor: isSelected
-                    ? hexToRGBA(theme.accent, 0.1)
-                    : theme.secondaryBackground,
-                  // marginBottom: 12,
-                  borderColor: isSelected ? theme.accent : theme.border,
-                  shadowColor: theme.text,
-                  shadowOffset: {
-                    width: 0,
-                    height: 2,
-                  },
-                  shadowOpacity: 0.1,
-                  shadowRadius: 4,
-                  elevation: 3,
-                }}
+              <Text
+                style={{ fontSize: 32, fontWeight: "700", color: theme.text }}
               >
-                {/* Exercise Header */}
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    paddingHorizontal: 16,
-                  }}
+                {selectedExercise.name}
+              </Text>
+              <Text
+                style={{ fontSize: 16, color: theme.grayText, marginTop: 12 }}
+              >
+                {selectedExercise.notes}
+              </Text>
+            </LinearGradient>
+          </StrobeBlur>
+
+          {/* Toggle list */}
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={togglePanel}
+            style={{
+              alignItems: "center",
+              position: "absolute",
+              height: 88,
+              padding: 10,
+              bottom: 0,
+              right: 0,
+              left: 0,
+              backgroundColor: theme.background,
+              borderRadius: 16,
+            }}
+          >
+            <Ionicons
+              name={listOpen ? "chevron-down" : "chevron-up"}
+              size={32}
+              color={theme.tint}
+            />
+          </TouchableOpacity>
+
+          {/* Exercise list */}
+          {listOpen && (
+            <Animated.View
+              style={{
+                paddingHorizontal: 16,
+                paddingBottom: 80,
+                height: "100%",
+                ...fadeIn,
+              }}
+            >
+              <ScrollView showsVerticalScrollIndicator={false}>
+                {exercisesDummy.map((exercise) => (
+                  <ExerciseCard
+                    key={exercise.id}
+                    exercise={exercise}
+                    compact={false}
+                    onSelect={handleExerciseSelect}
+                    isSelected={selectedExercise.id === exercise.id}
+                  />
+                ))}
+
+                {/* + Add Exercise card */}
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  onPress={() => console.log("Add exercise tapped")}
+                  style={{ marginBottom: 24, height: 64 }}
                 >
-                  <View style={{ flex: 1 }}>
-                    <Text
-                      style={{
-                        fontSize: 18,
-                        fontWeight: "bold",
-                        color: theme.text,
-                      }}
-                    >
-                      {exercise.name}
-                    </Text>
-                  </View>
-                  {/* Rest Time */}
-                  <View
+                  <StrobeBlur
+                    colors={[theme.tint, theme.caka, theme.accent, theme.tint]}
                     style={{
-                      flexDirection: "row",
-                      alignItems: "center",
-                      gap: 6,
-                      backgroundColor: hexToRGBA(theme.grayText, 0.1),
-                      paddingHorizontal: 10,
-                      paddingVertical: 6,
-                      borderRadius: 12,
+                      borderColor: theme.tint,
+                      borderRadius: 32,
+                      height: 64,
+                      backgroundColor: theme.primaryBackground,
                     }}
                   >
-                    <Ionicons
-                      name="stopwatch-outline"
-                      size={16}
-                      color={theme.grayText}
-                    />
-                    <Text
-                      style={{
-                        fontSize: 14,
-                        color: theme.grayText,
-                        fontWeight: "500",
-                      }}
-                    >
-                      {formatRestTime(exercise.restSeconds)}
-                    </Text>
-                  </View>
-                </View>
-
-                {/* Notes (if any) */}
-                {exercise.notes && (
-                  <View
-                    style={{
-                      paddingHorizontal: 16,
-                      width: "100%",
-                    }}
-                  >
-                    <Text
-                      style={{
-                        fontSize: 13,
-                        color: theme.grayText,
-                        fontStyle: "italic",
-                        lineHeight: 18,
-                      }}
-                    >
-                      {exercise.notes}
-                    </Text>
-                  </View>
-                )}
-
-                {/* Status Indicator */}
-                <View
-                  style={{
-                    position: "absolute",
-                    top: 16,
-                    right: 16,
-                    width: 8,
-                    height: 8,
-                    borderRadius: 4,
-                    backgroundColor: exercise.isActive
-                      ? theme.accent
-                      : exercise.isCompleted
-                      ? "#4CAF50"
-                      : theme.border,
-                  }}
-                />
-              </StrobeBlur>
-            </TouchableOpacity>
-          );
-        })}
-      </ScrollView>
+                    <Ionicons name="add" size={32} color={theme.background} />
+                  </StrobeBlur>
+                </TouchableOpacity>
+              </ScrollView>
+            </Animated.View>
+          )}
+        </Animated.View>
+      </View>
     </SafeAreaView>
+  );
+};
+
+// ExerciseCard component
+const ExerciseCard: React.FC<{
+  exercise: Exercise;
+  compact?: boolean;
+  onSelect: (exercise: Exercise) => void;
+  isSelected: boolean;
+}> = ({ exercise, compact = false, onSelect, isSelected }) => {
+  const { theme } = useSettingsStore();
+
+  return (
+    <TouchableOpacity
+      activeOpacity={0.8}
+      onPress={() => onSelect(exercise)}
+      style={{
+        marginBottom: 8,
+        height: 64,
+        borderRadius: 16,
+        borderWidth: 1,
+        borderColor: isSelected ? theme.tint : theme.border,
+        paddingHorizontal: 10,
+        justifyContent: "center",
+        backgroundColor: isSelected ? theme.tint : theme.primaryBackground,
+      }}
+    >
+      <Text
+        style={{
+          fontSize: 18,
+          fontWeight: "700",
+          color: isSelected ? theme.secondaryText : theme.text,
+        }}
+      >
+        {exercise.name}
+      </Text>
+      {!compact && exercise.notes && (
+        <Text
+          style={{
+            fontSize: 13,
+            color: isSelected ? theme.secondaryText : theme.grayText,
+          }}
+        >
+          {exercise.notes}
+        </Text>
+      )}
+    </TouchableOpacity>
   );
 };
 

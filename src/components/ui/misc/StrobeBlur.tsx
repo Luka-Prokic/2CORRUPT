@@ -5,6 +5,7 @@ import {
   ViewStyle,
   StyleSheet,
   Dimensions,
+  Easing,
 } from "react-native";
 import { BlurView } from "expo-blur";
 
@@ -14,6 +15,7 @@ interface StrobeBlurProps {
   duration?: number;
   children?: React.ReactNode;
   tint?: "default" | "light" | "dark";
+  size?: number;
 }
 
 const { width } = Dimensions.get("window");
@@ -24,6 +26,7 @@ export default function StrobeBlur({
   duration = 6000,
   children,
   tint = "default",
+  size = 100,
 }: StrobeBlurProps) {
   const animValues = useRef(
     Array.from({ length: 4 }, () => new Animated.Value(0))
@@ -34,13 +37,13 @@ export default function StrobeBlur({
     () =>
       Array.from({ length: 4 }, () => ({
         offset: Math.random(), // start point of motion
-        radius: 50 + Math.random() * 80, // how far they travel
-        size: 80 + Math.random() * 60, // blob size
+        radius: 50 + Math.random() * size, // how far they travel
+        size: size + Math.random() * 60, // blob size
         borderRadii: {
-          borderTopLeftRadius: 30 + Math.random() * 40,
-          borderTopRightRadius: 30 + Math.random() * 40,
-          borderBottomLeftRadius: 30 + Math.random() * 40,
-          borderBottomRightRadius: 30 + Math.random() * 40,
+          borderTopLeftRadius: size / 2.5 + Math.random() * 40,
+          borderTopRightRadius: size / 2.5 + Math.random() * 40,
+          borderBottomLeftRadius: size / 2.5 + Math.random() * 40,
+          borderBottomRightRadius: size / 2.5 + Math.random() * 40,
         },
       })),
     []
@@ -53,8 +56,10 @@ export default function StrobeBlur({
       Animated.loop(
         Animated.timing(anim, {
           toValue: 1 + blobSettings[i].offset,
-          duration, // 👈 same duration for everyone
+          duration,
+          easing: Easing.linear, // smooth continuous
           useNativeDriver: true,
+          isInteraction: false,
         })
       ).start();
     });
@@ -65,25 +70,13 @@ export default function StrobeBlur({
       const { radius, size, borderRadii } = blob;
 
       const translateX = animValues[i].interpolate({
-        inputRange: [
-          0, 0.25, 0.5, 0.75, 1,
-          1.25, 1.5, 1.75, 2,
-        ],
-        outputRange: [
-          0, radius, 0, -radius, 0,
-          radius, 0, -radius, 0,
-        ],
+        inputRange: [0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2],
+        outputRange: [0, radius, 0, -radius, 0, radius, 0, -radius, 0],
       });
 
       const translateY = animValues[i].interpolate({
-        inputRange: [
-          0, 0.25, 0.5, 0.75, 1,
-          1.25, 1.5, 1.75, 2,
-        ],
-        outputRange: [
-          -radius, 0, radius, 0, -radius,
-          0, radius, 0, -radius,
-        ],
+        inputRange: [0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2],
+        outputRange: [-radius, 0, radius, 0, -radius, 0, radius, 0, -radius],
       });
 
       return (
