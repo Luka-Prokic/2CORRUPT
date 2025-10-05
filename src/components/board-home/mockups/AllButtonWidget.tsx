@@ -4,14 +4,15 @@ import { useSettingsStore } from "../../../stores/settingsStore";
 import { useTranslation } from "react-i18next";
 import useWidgetUnit from "../../../features/widgets/useWidgetUnit";
 import hexToRGBA from "../../../features/HEXtoRGB";
-import { useNavigation } from "@react-navigation/native";
 import BounceButton from "../../ui/buttons/BounceButton";
+import { useNavigation } from "@react-navigation/native";
 
 export default function AllButtonWidget() {
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
   const { halfWidget } = useWidgetUnit();
   const navigation = useNavigation();
+
   return (
     <BounceButton
       style={{
