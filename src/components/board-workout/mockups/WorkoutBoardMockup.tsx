@@ -12,11 +12,12 @@ import { Ionicons } from "@expo/vector-icons";
 import StrobeBlur from "../../ui/misc/StrobeBlur";
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { HEIGHT } from "../../../features/Dimensions";
+import { HEIGHT, WIDTH } from "../../../features/Dimensions";
 import { LinearGradient } from "expo-linear-gradient";
 import hexToRGBA from "../../../features/HEXtoRGB";
 import useFadeInAnim from "../../../animations/useFadeInAnim";
-import OptionButton from "../../ui/buttons/OptionButton";
+import BounceButton from "../../ui/buttons/BounceButton";
+import IButton from "../../ui/buttons/IButton";
 
 const FOCUS_HEIGHT = HEIGHT - 120; // focused exercise height
 
@@ -24,13 +25,29 @@ interface Exercise {
   id: string;
   name: string;
   notes: string;
+  inSuperSet: boolean;
 }
 
 const exercisesDummy: Exercise[] = [
-  { id: "1", name: "Bench Press", notes: "Focus on controlled movement" },
-  { id: "2", name: "Incline Dumbbell Press", notes: "Keep shoulders back" },
-  { id: "3", name: "Dips", notes: "Bodyweight exercise" },
-  { id: "4", name: "Cable Flyes", notes: "Slow and controlled" },
+  {
+    id: "1",
+    name: "Bench Press",
+    notes: "Focus on controlled movement",
+    inSuperSet: true,
+  },
+  {
+    id: "2",
+    name: "Incline Dumbbell Press",
+    notes: "Keep shoulders back",
+    inSuperSet: false,
+  },
+  { id: "3", name: "Dips", notes: "Bodyweight exercise", inSuperSet: false },
+  {
+    id: "4",
+    name: "Cable Flyes",
+    notes: "Slow and controlled",
+    inSuperSet: false,
+  },
 ];
 
 const WorkoutBoardMockup: React.FC = () => {
@@ -119,7 +136,10 @@ const WorkoutBoardMockup: React.FC = () => {
                 alignItems: "center",
               }}
             >
-              <ExerciseProfile key={selectedExercise.id} exercise={selectedExercise} />
+              <ExerciseProfile
+                key={selectedExercise.id}
+                exercise={selectedExercise}
+              />
             </LinearGradient>
           </StrobeBlur>
 
@@ -129,13 +149,14 @@ const WorkoutBoardMockup: React.FC = () => {
             style={{
               alignItems: "center",
               position: "absolute",
-              height: 88,
+              height: 86,
               padding: 10,
               bottom: 0,
               right: 0,
               left: 0,
               backgroundColor: theme.background,
-              borderRadius: 16,
+              borderTopLeftRadius: 32,
+              borderTopRightRadius: 32,
             }}
           >
             <Ionicons
@@ -151,7 +172,7 @@ const WorkoutBoardMockup: React.FC = () => {
               style={{
                 paddingHorizontal: 16,
                 paddingBottom: 80,
-                height: "100%",
+                height: HEIGHT - 120,
                 ...fadeIn,
               }}
             >
@@ -211,17 +232,20 @@ const ExerciseCard: React.FC<{
         height: 64,
         borderRadius: 16,
         borderWidth: 1,
-        borderColor: isSelected ? theme.tint : theme.border,
+        borderColor: isSelected ? theme.background : theme.border,
         paddingHorizontal: 10,
         justifyContent: "center",
-        backgroundColor: isSelected ? theme.tint : theme.primaryBackground,
+        backgroundColor: isSelected
+          ? theme.background
+          : theme.primaryBackground,
       }}
+      disabled={isSelected}
     >
       <Text
         style={{
           fontSize: 18,
           fontWeight: "700",
-          color: isSelected ? theme.secondaryText : theme.text,
+          color: isSelected ? theme.tint : theme.text,
         }}
       >
         {exercise.name}
@@ -230,7 +254,7 @@ const ExerciseCard: React.FC<{
         <Text
           style={{
             fontSize: 13,
-            color: isSelected ? theme.secondaryText : theme.grayText,
+            color: isSelected ? theme.tint : theme.grayText,
           }}
         >
           {exercise.notes}
@@ -245,9 +269,8 @@ const ExerciseProfile: React.FC<{
   exercise: Exercise;
 }> = ({ exercise }) => {
   const { theme } = useSettingsStore();
-  const [showRIR, setShowRIR] = useState(false);
-  const [showRPE, setShowRPE] = useState(true);
   const [restTime, setRestTime] = useState(3);
+  const [disableRest, setDisableRest] = useState(false);
   const [notes, setNotes] = useState(exercise.notes);
   const { fadeIn } = useFadeInAnim();
 
@@ -255,76 +278,125 @@ const ExerciseProfile: React.FC<{
     <Animated.View
       style={{
         flex: 1,
+        width: WIDTH,
+        paddingHorizontal: 16,
         ...fadeIn,
       }}
     >
-      <Text style={{ fontSize: 32, fontWeight: "bold", color: theme.text }}>
-        {exercise.name}
-      </Text>
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: 16,
+          height: 44,
+        }}
+      >
+        <Text
+          style={{
+            fontSize: 32,
+            fontWeight: "bold",
+            color: theme.text,
+          }}
+        >
+          {exercise.name}
+        </Text>
+        <IButton
+          style={{
+            height: 44,
+            width: WIDTH * 0.2,
+            justifyContent: "flex-end",
+            alignItems: "center",
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 18,
+              fontWeight: "bold",
+              color: theme.grayText,
+            }}
+          >
+            Edit
+          </Text>
+        </IButton>
+      </View>
 
-      {/* Remove Exercise */}
-      <OptionButton
-        title="Remove Exercise"
-        color={theme.error}
-        icon={<Ionicons name="remove-circle" color={theme.error} size={20} />}
-        onPress={() => {}}
-      />
-      {/* Swap Exercise */}
-      <OptionButton
-        title="Swap Exercise"
-        color={theme.text}
-        icon={<Ionicons name="swap-horizontal" color={theme.text} size={20} />}
-        onPress={() => {}}
-      />
-      {/* Add Exercise */}
-      <OptionButton
-        title="Add Exercise"
-        color={theme.tint}
-        icon={<Ionicons name="add-circle" color={theme.tint} size={20} />}
-        onPress={() => {}}
-      />
-      {/* Show/Hide RIR */}
-      <OptionButton
-        title={showRIR ? "Hide RIR" : "Show RIR"}
-        color={showRIR ? theme.accent : theme.grayText}
-        icon={
-          <Ionicons
-            name={showRIR ? "eye" : "eye-off"}
-            color={showRIR ? theme.accent : theme.grayText}
-            size={20}
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+          marginBottom: 16,
+        }}
+      >
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+            width: WIDTH * 0.4 + 4,
+            gap: 4,
+            height: 34,
+            borderRadius: 17,
+            overflow: "hidden",
+          }}
+        >
+          <BounceButton
+            style={{
+              height: 34,
+              width: WIDTH * 0.1,
+              backgroundColor: disableRest
+                ? theme.grayText
+                : hexToRGBA(theme.text, 0.1),
+              borderTopLeftRadius: 17,
+              borderBottomLeftRadius: 17,
+            }}
+            onPress={() => setDisableRest(!disableRest)}
+          >
+            <Ionicons
+              name={disableRest ? "checkmark" : "close"}
+              color={disableRest ? theme.secondaryText : theme.grayText}
+              size={20}
+            />
+          </BounceButton>
+          <BounceButton
+            style={{
+              height: 34,
+              width: WIDTH * 0.3,
+              backgroundColor: hexToRGBA(theme.text, 0.1),
+              borderTopRightRadius: 17,
+              borderBottomRightRadius: 17,
+            }}
+            disabled={disableRest}
+          >
+            <Ionicons name="stopwatch" color={theme.grayText} size={20} />
+            <Text
+              style={{
+                fontSize: 16,
+                fontWeight: "bold",
+                color: theme.grayText,
+              }}
+            >
+              {restTime} min
+            </Text>
+          </BounceButton>
+        </View>
+        {exercise.inSuperSet && (
+          <ExerciseSettings
+            exercise={exercise}
+            width={WIDTH * 0.4 + 4}
+            height={34}
           />
-        }
-        onPress={() => setShowRIR(!showRIR)}
-      />
-      {/* Show/Hide RPE */}
-      <OptionButton
-        title={showRPE ? "Hide RPE" : "Show RPE"}
-        color={showRPE ? theme.accent : theme.grayText}
-        icon={
-          <Ionicons
-            name={showRPE ? "eye" : "eye-off"}
-            color={showRPE ? theme.accent : theme.grayText}
-            size={20}
-          />
-        }
-        onPress={() => setShowRPE(!showRPE)}
-      />
-      {/* Rest Time */}
-      <OptionButton
-        title={`Rest Time: ${restTime} min`}
-        color={theme.grayText}
-        icon={<Ionicons name="stopwatch" color={theme.grayText} size={20} />}
-        onPress={() => {}}
-      />
+        )}
+      </View>
+
       {/* Notes */}
-
       <TextInput
         style={{
           backgroundColor: theme.input,
           borderRadius: 16,
           paddingHorizontal: 16,
           paddingVertical: 12,
-          marginVertical: 16,
           fontSize: 16,
           color: theme.text,
           borderWidth: 1,
@@ -336,6 +408,7 @@ const ExerciseProfile: React.FC<{
           shadowOpacity: 0.1,
           shadowRadius: 16,
           elevation: 4,
+          marginBottom: 16,
         }}
         value={notes}
         onChangeText={setNotes}
@@ -343,6 +416,85 @@ const ExerciseProfile: React.FC<{
         placeholderTextColor={theme.grayText}
         multiline
       />
+      {!exercise.inSuperSet && (
+        <ExerciseSettings exercise={exercise} width={WIDTH - 32} />
+      )}
+    </Animated.View>
+  );
+};
+
+const ExerciseSettings: React.FC<{
+  exercise: Exercise;
+  width?: number;
+  height?: number;
+}> = ({ exercise, width = WIDTH, height = 64 }) => {
+  const { theme } = useSettingsStore();
+  const { fadeIn } = useFadeInAnim();
+  return (
+    <Animated.View
+      style={{
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        height: height,
+        width: width,
+        borderRadius: height / 2,
+        overflow: "hidden",
+        ...fadeIn,
+      }}
+    >
+      {/* Remove Exercise */}
+      <BounceButton
+        title="Remove Exercise"
+        color={theme.error}
+        style={{
+          width: width * 0.32,
+          height: height,
+          backgroundColor: theme.error,
+          borderTopLeftRadius: height / 2,
+          borderBottomLeftRadius: height / 2,
+        }}
+        onPress={() => {}}
+      >
+        <Ionicons name="remove-circle" color={theme.glow} size={height / 2} />
+      </BounceButton>
+
+      {/* Swap Exercise */}
+      <BounceButton
+        title="Swap Exercise"
+        color={theme.text}
+        style={{
+          width: width * 0.32,
+          height: height,
+          backgroundColor: theme.text,
+        }}
+        onPress={() => {}}
+      >
+        <Ionicons
+          name="swap-horizontal"
+          color={theme.secondaryText}
+          size={height / 2}
+        />
+      </BounceButton>
+      {/* Add Exercise */}
+      <BounceButton
+        title="Add Exercise"
+        color={theme.tint}
+        style={{
+          width: width * 0.32,
+          height: height,
+          backgroundColor: theme.tint,
+          borderTopRightRadius: height / 2,
+          borderBottomRightRadius: height / 2,
+        }}
+        onPress={() => {}}
+      >
+        <Ionicons
+          name="add-circle"
+          color={theme.secondaryText}
+          size={height / 2}
+        />
+      </BounceButton>
     </Animated.View>
   );
 };
