@@ -1,51 +1,45 @@
-import React from "react";
-import { View, Text, TouchableOpacity, ViewStyle } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import React, { Fragment } from "react";
+import { Text } from "react-native";
 import { useSettingsStore } from "../../../stores/settingsStore";
-import WidgetContainer from "./WidgetContainer";
+import { useTranslation } from "react-i18next";
+import useWidgetUnit from "../../../features/widgets/useWidgetUnit";
 import hexToRGBA from "../../../features/HEXtoRGB";
+import { useNavigation } from "@react-navigation/native";
+import BounceButton from "../../ui/buttons/BounceButton";
 
-interface AllButtonWidgetProps {
-  onPress?: () => void;
-  style?: ViewStyle;
-}
-
-export default function AllButtonWidget({
-  onPress,
-  style,
-}: AllButtonWidgetProps) {
+export default function AllButtonWidget() {
   const { theme } = useSettingsStore();
-
+  const { t } = useTranslation();
+  const { halfWidget } = useWidgetUnit();
+  const navigation = useNavigation();
   return (
-    <WidgetContainer style={style} variant="inset">
-      <TouchableOpacity
+    <BounceButton
+      style={{
+        width: halfWidget,
+        height: halfWidget,
+        marginRight: 4,
+        backgroundColor: hexToRGBA(theme.fourthBackground, 0.2),
+        borderRadius: 24,
+        borderWidth: 1,
+        borderColor: theme.border,
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+      onPress={() => {
+        navigation.navigate("All" as never);
+      }}
+    >
+      <Text
         style={{
-          flex: 1,
-          borderRadius: 12,
-          padding: 12,
-          alignItems: "center",
-          justifyContent: "center",
+          fontSize: 18,
+          fontWeight: "bold",
+          color: theme.grayText,
+          textTransform: "uppercase",
+          letterSpacing: 0.5,
         }}
-        activeOpacity={0.8}
       >
-        <Ionicons
-          name="grid-outline"
-          size={24}
-          color={theme.grayText}
-          style={{ marginBottom: 4 }}
-        />
-        <Text
-          style={{
-            fontSize: 12,
-            fontWeight: "700",
-            color: theme.grayText,
-            textTransform: "uppercase",
-            letterSpacing: 0.5,
-          }}
-        >
-          ALL
-        </Text>
-      </TouchableOpacity>
-    </WidgetContainer>
+        {t("app.all")}
+      </Text>
+    </BounceButton>
   );
 }

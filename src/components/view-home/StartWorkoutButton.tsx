@@ -5,6 +5,7 @@ import { Text } from "react-native";
 import hexToRGBA from "../../features/HEXtoRGB";
 import BounceButton from "../ui/buttons/BounceButton";
 import { HEIGHT } from "../../features/Dimensions";
+import { useTranslation } from "react-i18next";
 
 interface StartWorkoutButtonProps {
   onPress?: () => void;
@@ -14,7 +15,7 @@ export default function StartWorkoutButton({
   onPress,
 }: StartWorkoutButtonProps) {
   const { theme } = useSettingsStore();
-
+  const { t } = useTranslation();
   return (
     <BounceButton
       onPress={onPress}
@@ -36,7 +37,7 @@ export default function StartWorkoutButton({
         duration={5000}
       >
         <Text style={{ fontSize: 24, fontWeight: "bold", color: theme.text }}>
-          Start Workout
+          {t("app.start-workout")}
         </Text>
       </StrobeBlur>
     </BounceButton>

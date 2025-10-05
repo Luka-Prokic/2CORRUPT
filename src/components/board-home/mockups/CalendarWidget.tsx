@@ -13,16 +13,7 @@ import StrobeBlur from "../../ui/misc/StrobeBlur";
 import BounceButton from "../../ui/buttons/BounceButton";
 
 const { width: screenWidth } = Dimensions.get("window");
-const DAY_LABELS = ["M", "T", "W", "T", "F", "S", "S"];
-const DAY_NAMES = [
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-  "Sunday",
-];
+import { useDayLabels, useDayNames } from "../../../features/Labels";
 
 const { width } = Dimensions.get("window");
 const widgetSize = width - 32;
@@ -45,6 +36,8 @@ const CalendarWidget: React.FC<CalendarWidgetProps> = ({
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const [dayData, setDayData] = useState<any>(new Date()); // Will store workout/rest day data
+  const dayLabels = useDayLabels();
+  const dayNames = useDayNames();
 
   const animatedTranslateX = useRef(new Animated.Value(0)).current;
   const buttonWidth = useRef(0);
@@ -476,7 +469,7 @@ const CalendarWidget: React.FC<CalendarWidgetProps> = ({
                     fontWeight: isTodayDate ? "bold" : "normal",
                   }}
                 >
-                  {DAY_LABELS[index]}
+                  {dayLabels[index]}
                 </Text>
                 <Text
                   style={{

@@ -14,6 +14,7 @@ import { TouchableOpacity } from "react-native";
 import CorruptHeader from "../components/corrupt/CorruptHeader";
 import WorkoutBoardMockup from "../components/board-workout/mockups/WorkoutBoardMockup";
 import HomeBoard from "../screens/HomeBoard";
+import AllScreen from "../screens/AllScreen";
 
 export type RootStackParamList = {
   Home: undefined;
@@ -22,6 +23,7 @@ export type RootStackParamList = {
   Profile: undefined;
   Workout: undefined;
   WorkoutBoard: undefined;
+  All: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -127,6 +129,14 @@ export default function AppNavigator() {
           component={WorkoutBoardMockup}
           options={{
             presentation: "card",
+            header: () => <Fragment />,
+          }}
+        />
+        <Stack.Screen
+          name="All"
+          component={AllScreen}
+          options={{
+            presentation: "modal",
             header: () => <Fragment />,
           }}
         />

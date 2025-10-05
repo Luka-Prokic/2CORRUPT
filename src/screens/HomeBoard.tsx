@@ -9,7 +9,7 @@ import StatsWidget from "../components/board-home/mockups/StatsWidget";
 import ActiveSplitWidget from "../components/board-home/mockups/ActiveSplitWidget";
 import AllButtonWidget from "../components/board-home/mockups/AllButtonWidget";
 import WorkoutStreakWidget from "../components/board-home/mockups/WorkoutStreakWidget";
-import CalendarWidget from "../components/board-home/mockups/CalendarWidget";
+import CalendarWidget from "../components/board-home/widgets/calendar-widget/CalendarWidget";
 import hexToRGBA from "../features/HEXtoRGB";
 
 const { width } = Dimensions.get("window");
@@ -25,12 +25,13 @@ export default function HomeBoard() {
       showsVerticalScrollIndicator={false}
     >
       <View style={styles.grid}>
+        {/* semi-mock */}
         <ProfileWidget />
 
-        {/* Awards Widget */}
+        {/* full-mock */}
         <AwardsWidget size="large" />
 
-        {/* Quote Card Widget - Full width */}
+        {/* semi-mock */}
         <CalendarWidget
           onDateChange={(dateLabel, dateObj) => {
             console.log("Selected:", dateLabel, dateObj);
@@ -39,7 +40,7 @@ export default function HomeBoard() {
           onSharedDateChange={(date) => setSelectedDate(date)}
         />
 
-        {/* Streak Counter Widget */}
+        {/* mock */}
         <StreakCounterWidget
           style={{
             ...styles.widget,
@@ -54,7 +55,6 @@ export default function HomeBoard() {
 
         <TemplateWidget />
 
-        {/* Dashboard Layout - 3 widgets in 1x1 space */}
         <View
           style={{
             width: widgetSize,
@@ -62,40 +62,32 @@ export default function HomeBoard() {
             marginBottom: 8,
           }}
         >
-          {/* Top Row - Active Split (full width, half height) */}
+          {/* full-mock */}
           <ActiveSplitWidget
             style={{
               ...styles.lilWidget,
               width: widgetSize,
-              height: (widgetSize - 8) / 2, // Half height minus gap
-              marginBottom: 4,
+              height: (widgetSize - 8) / 2,
+              marginBottom: 8,
               backgroundColor: hexToRGBA(theme.fourthBackground, 0.2),
             }}
           />
 
-          {/* Bottom Row - All Button & Streak (each half width, half height) */}
           <View
             style={{
               flexDirection: "row",
               justifyContent: "space-between",
-              height: (widgetSize - 8) / 2, // Half height minus gap
+              height: (widgetSize - 8) / 2,
             }}
           >
-            <AllButtonWidget
-              style={{
-                ...styles.lilWidget,
-                width: (widgetSize - 8) / 2, // Half width minus gap
-                height: (widgetSize - 8) / 2, // Half height minus gap
-                marginBottom: 0,
-                marginRight: 4,
-                backgroundColor: hexToRGBA(theme.fourthBackground, 0.2),
-              }}
-            />
+            {/* not-mock */}
+            <AllButtonWidget />
+            {/* mock */}
             <WorkoutStreakWidget
               style={{
                 ...styles.lilWidget,
-                width: (widgetSize - 8) / 2, // Half width minus gap
-                height: (widgetSize - 8) / 2, // Half height minus gap
+                width: (widgetSize - 8) / 2,
+                height: (widgetSize - 8) / 2,
                 marginBottom: 0,
                 marginLeft: 4,
                 backgroundColor: hexToRGBA(theme.fourthBackground, 0.2),
@@ -104,7 +96,7 @@ export default function HomeBoard() {
           </View>
         </View>
 
-        {/* Stats Widget */}
+        {/* ful-mock */}
         <StatsWidget
           style={{ ...styles.widget, width: widgetSize, height: widgetSize }}
         />

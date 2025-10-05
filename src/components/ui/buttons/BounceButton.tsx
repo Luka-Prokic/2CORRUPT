@@ -34,7 +34,7 @@ export default function BounceButton({
   const { bounceAnim, bounceIt } = useBounceScaleAnim();
 
   const handlePress = () => {
-    bounceIt();
+    // bounceIt();
     onPress?.();
   };
 
@@ -64,6 +64,7 @@ export default function BounceButton({
         ]}
         hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
         onPress={handlePress}
+        onPressIn={bounceIt}
         {...rest}
       >
         {children ? (

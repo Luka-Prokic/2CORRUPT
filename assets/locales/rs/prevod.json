@@ -157,9 +157,23 @@
   },
   "app": {
     "corrupt": "Corrupt",
-    "no-username": "Nema username",
-    "no-date": "Nema godine",
-    "workouts": "Treninzi",
-    "since": "Od"
+    "no-username": "Nema Username",
+    "no-date": "Nema Godine",
+    "workouts": "Treninga",
+    "since": "Od",
+    "start-workout": "Započni Trening",
+    "all": "Sve"
+  },
+  "calendar": {
+    "start-workout": "Započni Trening",
+    "rest-day": "Rest Day",
+    "workout": "Trening",
+    "days": {
+      "short": ["P", "U", "S", "Č", "P", "S", "N"],
+      "long": ["Ponedeljak", "Utorak", "Sreda", "Četvrtak", "Petak", "Subota", "Nedelja"]
+    },
+    "months": {
+      "long": ["Januar", "Februar", "Mart", "April", "Maj", "Jun", "Jul", "Avgust", "Septembar", "Oktobar", "Novembar", "Decembar"]
+    }
   }
 }
