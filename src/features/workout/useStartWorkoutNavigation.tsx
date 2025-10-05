@@ -7,7 +7,7 @@ export function useStartWorkoutNavigation() {
   const { setWorkoutView } = useUIStore();
 
   return () => {
-    navigation.navigate("Home" as never); // Go back instead of navigating to "Home"
+    navigation.goBack(); // Go back instead of navigating to "Home"
     setTimeout(() => {
       setWorkoutView(true);
     }, 100);

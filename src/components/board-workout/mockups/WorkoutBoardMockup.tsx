@@ -5,6 +5,8 @@ import {
   TouchableOpacity,
   ScrollView,
   Animated,
+  Pressable,
+  TextInput,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import StrobeBlur from "../../ui/misc/StrobeBlur";
@@ -14,6 +16,7 @@ import { HEIGHT } from "../../../features/Dimensions";
 import { LinearGradient } from "expo-linear-gradient";
 import hexToRGBA from "../../../features/HEXtoRGB";
 import useFadeInAnim from "../../../animations/useFadeInAnim";
+import OptionButton from "../../ui/buttons/OptionButton";
 
 const FOCUS_HEIGHT = HEIGHT - 120; // focused exercise height
 
@@ -67,7 +70,13 @@ const WorkoutBoardMockup: React.FC = () => {
           <TouchableOpacity>
             <Ionicons name="close-circle" size={44} color={theme.error} />
           </TouchableOpacity>
-          <Text style={{ color: listOpen ? theme.secondaryText : theme.grayText, fontSize: 18, fontWeight: "700" }}>
+          <Text
+            style={{
+              color: listOpen ? theme.glow : theme.grayText,
+              fontSize: 18,
+              fontWeight: "700",
+            }}
+          >
             Workout - {new Date().toLocaleDateString()}
           </Text>
           <TouchableOpacity>
@@ -83,18 +92,13 @@ const WorkoutBoardMockup: React.FC = () => {
           }}
         >
           <StrobeBlur
-            colors={[
-              theme.border,
-              theme.background,
-              theme.grayText,
-              theme.handle,
-            ]}
+            colors={[theme.caka, theme.text, theme.handle, theme.border]}
             tint={
               ["light", "peachy", "oldschool"].includes(themeName)
                 ? "light"
                 : "dark"
             }
-            size={HEIGHT / 2}
+            size={HEIGHT}
             style={{
               height: FOCUS_HEIGHT,
               backgroundColor: theme.tint,
@@ -115,22 +119,12 @@ const WorkoutBoardMockup: React.FC = () => {
                 alignItems: "center",
               }}
             >
-              <Text
-                style={{ fontSize: 32, fontWeight: "700", color: theme.text }}
-              >
-                {selectedExercise.name}
-              </Text>
-              <Text
-                style={{ fontSize: 16, color: theme.grayText, marginTop: 12 }}
-              >
-                {selectedExercise.notes}
-              </Text>
+              <ExerciseProfile key={selectedExercise.id} exercise={selectedExercise} />
             </LinearGradient>
           </StrobeBlur>
 
           {/* Toggle list */}
-          <TouchableOpacity
-            activeOpacity={0.8}
+          <Pressable
             onPress={togglePanel}
             style={{
               alignItems: "center",
@@ -149,7 +143,7 @@ const WorkoutBoardMockup: React.FC = () => {
               size={32}
               color={theme.tint}
             />
-          </TouchableOpacity>
+          </Pressable>
 
           {/* Exercise list */}
           {listOpen && (
@@ -187,7 +181,7 @@ const WorkoutBoardMockup: React.FC = () => {
                       backgroundColor: theme.primaryBackground,
                     }}
                   >
-                    <Ionicons name="add" size={32} color={theme.background} />
+                    <Ionicons name="add" size={32} color={theme.text} />
                   </StrobeBlur>
                 </TouchableOpacity>
               </ScrollView>
@@ -243,6 +237,113 @@ const ExerciseCard: React.FC<{
         </Text>
       )}
     </TouchableOpacity>
+  );
+};
+
+//ExerciseProfile for exercise info/settings
+const ExerciseProfile: React.FC<{
+  exercise: Exercise;
+}> = ({ exercise }) => {
+  const { theme } = useSettingsStore();
+  const [showRIR, setShowRIR] = useState(false);
+  const [showRPE, setShowRPE] = useState(true);
+  const [restTime, setRestTime] = useState(3);
+  const [notes, setNotes] = useState(exercise.notes);
+  const { fadeIn } = useFadeInAnim();
+
+  return (
+    <Animated.View
+      style={{
+        flex: 1,
+        ...fadeIn,
+      }}
+    >
+      <Text style={{ fontSize: 32, fontWeight: "bold", color: theme.text }}>
+        {exercise.name}
+      </Text>
+
+      {/* Remove Exercise */}
+      <OptionButton
+        title="Remove Exercise"
+        color={theme.error}
+        icon={<Ionicons name="remove-circle" color={theme.error} size={20} />}
+        onPress={() => {}}
+      />
+      {/* Swap Exercise */}
+      <OptionButton
+        title="Swap Exercise"
+        color={theme.text}
+        icon={<Ionicons name="swap-horizontal" color={theme.text} size={20} />}
+        onPress={() => {}}
+      />
+      {/* Add Exercise */}
+      <OptionButton
+        title="Add Exercise"
+        color={theme.tint}
+        icon={<Ionicons name="add-circle" color={theme.tint} size={20} />}
+        onPress={() => {}}
+      />
+      {/* Show/Hide RIR */}
+      <OptionButton
+        title={showRIR ? "Hide RIR" : "Show RIR"}
+        color={showRIR ? theme.accent : theme.grayText}
+        icon={
+          <Ionicons
+            name={showRIR ? "eye" : "eye-off"}
+            color={showRIR ? theme.accent : theme.grayText}
+            size={20}
+          />
+        }
+        onPress={() => setShowRIR(!showRIR)}
+      />
+      {/* Show/Hide RPE */}
+      <OptionButton
+        title={showRPE ? "Hide RPE" : "Show RPE"}
+        color={showRPE ? theme.accent : theme.grayText}
+        icon={
+          <Ionicons
+            name={showRPE ? "eye" : "eye-off"}
+            color={showRPE ? theme.accent : theme.grayText}
+            size={20}
+          />
+        }
+        onPress={() => setShowRPE(!showRPE)}
+      />
+      {/* Rest Time */}
+      <OptionButton
+        title={`Rest Time: ${restTime} min`}
+        color={theme.grayText}
+        icon={<Ionicons name="stopwatch" color={theme.grayText} size={20} />}
+        onPress={() => {}}
+      />
+      {/* Notes */}
+
+      <TextInput
+        style={{
+          backgroundColor: theme.input,
+          borderRadius: 16,
+          paddingHorizontal: 16,
+          paddingVertical: 12,
+          marginVertical: 16,
+          fontSize: 16,
+          color: theme.text,
+          borderWidth: 1,
+          borderColor: theme.border,
+          minHeight: 192,
+          textAlignVertical: "top",
+          shadowColor: theme.shadow,
+          shadowOffset: { width: 0, height: 2 },
+          shadowOpacity: 0.1,
+          shadowRadius: 16,
+          elevation: 4,
+        }}
+        value={notes}
+        onChangeText={setNotes}
+        placeholder="Add exercise notes..."
+        placeholderTextColor={theme.grayText}
+        multiline
+      />
+    </Animated.View>
   );
 };
 
