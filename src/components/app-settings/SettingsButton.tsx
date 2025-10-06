@@ -1,9 +1,9 @@
 import React from "react";
-import { TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useSettingsStore } from "../../stores/settingsStore";
 import Colors from "../../config/constants/Colors";
 import { useNavigation } from "@react-navigation/native";
+import BounceButton from "../ui/buttons/BounceButton";
 
 interface SettingsButtonProps {
   onPress?: () => void;
@@ -23,14 +23,18 @@ export default function SettingsButton({ onPress }: SettingsButtonProps) {
   };
 
   return (
-    <TouchableOpacity
+    <BounceButton
       onPress={handlePress}
       style={{
-        paddingTop: 22,
-        paddingRight: 22,
+        marginTop: 22,
+        marginRight: 22,
+        backgroundColor: "transparent",
+        borderRadius: 24,
+        width: 44,
+        height: 44,
       }}
     >
       <Ionicons name="cog-outline" size={44} color={theme.grayText} />
-    </TouchableOpacity>
+    </BounceButton>
   );
 }

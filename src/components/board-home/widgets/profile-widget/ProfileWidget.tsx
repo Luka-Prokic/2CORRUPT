@@ -50,6 +50,7 @@ export default function ProfileWidget() {
         style={{
           flex: 1,
           margin: 4,
+          marginTop: 24,
         }}
       >
         {/* Username */}

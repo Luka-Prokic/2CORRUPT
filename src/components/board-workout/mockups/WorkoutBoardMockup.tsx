@@ -446,54 +446,43 @@ const ExerciseSettings: React.FC<{
       {/* Remove Exercise */}
       <BounceButton
         title="Remove Exercise"
-        color={theme.error}
+        color={theme.primaryBackground}
         style={{
           width: width * 0.32,
           height: height,
-          backgroundColor: theme.error,
           borderTopLeftRadius: height / 2,
           borderBottomLeftRadius: height / 2,
         }}
         onPress={() => {}}
       >
-        <Ionicons name="remove-circle" color={theme.glow} size={height / 2} />
+        <Ionicons name="remove" color={theme.error} size={height / 2} />
       </BounceButton>
 
       {/* Swap Exercise */}
       <BounceButton
         title="Swap Exercise"
-        color={theme.text}
+        color={theme.primaryBackground}
         style={{
           width: width * 0.32,
           height: height,
-          backgroundColor: theme.text,
         }}
         onPress={() => {}}
       >
-        <Ionicons
-          name="swap-horizontal"
-          color={theme.secondaryText}
-          size={height / 2}
-        />
+        <Ionicons name="swap-horizontal" color={theme.text} size={height / 2} />
       </BounceButton>
       {/* Add Exercise */}
       <BounceButton
         title="Add Exercise"
-        color={theme.tint}
+        color={theme.primaryBackground}
         style={{
           width: width * 0.32,
           height: height,
-          backgroundColor: theme.tint,
           borderTopRightRadius: height / 2,
           borderBottomRightRadius: height / 2,
         }}
         onPress={() => {}}
       >
-        <Ionicons
-          name="add-circle"
-          color={theme.secondaryText}
-          size={height / 2}
-        />
+        <Ionicons name="add" color={theme.tint} size={height / 2} />
       </BounceButton>
     </Animated.View>
   );

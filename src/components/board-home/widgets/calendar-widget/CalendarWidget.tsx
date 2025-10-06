@@ -156,7 +156,7 @@ const CalendarWidget: React.FC<CalendarWidgetProps> = ({
 
     // Check if the new week is in the future
     const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    // today.setHours(0, 0, 0, 0);
 
     // If the new week starts after today, don't navigate
     if (newWeekStart > today) {
@@ -283,7 +283,7 @@ const CalendarWidget: React.FC<CalendarWidgetProps> = ({
     nextWeekStart.setDate(currentWeek[0].getDate() + 7);
 
     const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    
 
     return nextWeekStart > today;
   };
@@ -301,6 +301,7 @@ const CalendarWidget: React.FC<CalendarWidgetProps> = ({
       }}
     >
       <DayPicker
+        key={selectedIndex}
         currentWeek={currentWeek}
         selectedIndex={selectedIndex}
         buttonSize={buttonSize}

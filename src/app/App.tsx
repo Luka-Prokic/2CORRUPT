@@ -9,10 +9,7 @@ function Main() {
   const { theme, themeName } = useSettingsStore();
 
   return (
-    <SafeAreaView
-      edges={[]}
-      style={{ backgroundColor: theme.navBackground, flex: 1 }}
-    >
+    <SafeAreaView edges={[]} style={{ flex: 1 }}>
       <StatusBar
         style={
           ["dark", "preworkout", "Corrupted"].includes(themeName)

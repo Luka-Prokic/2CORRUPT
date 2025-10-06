@@ -39,6 +39,7 @@ interface SetRowProps {
   onRemoveSet: (setId: string) => void;
   onAddDropSet: (setId: string) => void;
   onUncheck: (setId: string) => void;
+  setIndex: number;
 }
 
 const HEIGHT = Dimensions.get("window").height;
@@ -50,8 +51,10 @@ const SetRow: React.FC<SetRowProps> = ({
   onRemoveSet,
   onAddDropSet,
   onUncheck,
+  setIndex,
 }) => {
   const { theme, themeName } = useSettingsStore();
+  const swipeableRef = React.useRef<Swipeable>(null);
 
   const handleToggleComplete = () => {
     onUpdateSet(set.id, { isCompleted: !set.isCompleted });
@@ -87,7 +90,10 @@ const SetRow: React.FC<SetRowProps> = ({
             minWidth: 80,
             backgroundColor: theme.secondaryText,
           }}
-          onPress={() => onUncheck(set.id)}
+          onPress={() => {
+            onUncheck(set.id);
+            swipeableRef.current?.close();
+          }}
         >
           <Text
             style={{
@@ -148,7 +154,7 @@ const SetRow: React.FC<SetRowProps> = ({
   );
 
   return (
-    <Swipeable renderRightActions={renderRightActions}>
+    <Swipeable ref={swipeableRef} renderRightActions={renderRightActions}>
       <View>
         {/* ✅ Main Set Row */}
         <StrobeBlur
@@ -200,7 +206,7 @@ const SetRow: React.FC<SetRowProps> = ({
                     color: theme.text,
                   }}
                 >
-                  {set.setNumber}
+                  {setIndex + 1}
                 </Text>
               </View>
             </View>
@@ -267,6 +273,7 @@ const SetRow: React.FC<SetRowProps> = ({
                   height: 44,
                 }}
                 onPress={handleToggleComplete}
+                disabled={set.isCompleted}
               >
                 <Ionicons
                   name={
@@ -366,9 +373,7 @@ const SetRow: React.FC<SetRowProps> = ({
                 >
                   <Ionicons
                     name={
-                      set.isCompleted
-                        ? "close-circle"
-                        : "close-circle-outline"
+                      set.isCompleted ? "remove-circle" : "remove-circle-outline"
                     }
                     size={22}
                     color={set.isCompleted ? theme.error : theme.grayText}
@@ -596,13 +601,14 @@ const WorkoutScreenMockup: React.FC = () => {
           keyExtractor={(item: DummySet, index: number) =>
             `${item.id}-${index}`
           }
-          renderItem={({ item }) => (
+          renderItem={({ item, index }) => (
             <SetRow
               set={item}
               onUpdateSet={updateSet}
               onRemoveSet={removeSet}
               onAddDropSet={addDropSet}
               onUncheck={uncheckSet}
+              setIndex={index}
             />
           )}
           contentContainerStyle={{ paddingBottom: 96 }}
@@ -618,10 +624,7 @@ const WorkoutScreenMockup: React.FC = () => {
           left: 0,
           right: 0,
         }}
-        colors={[
-          hexToRGBA(theme.background, 1),
-          hexToRGBA(theme.background, 0),
-        ]}
+        colors={[theme.background, hexToRGBA(theme.background, 0)]}
         start={{ x: 0, y: 1 }}
         end={{ x: 0, y: 0 }}
       >
