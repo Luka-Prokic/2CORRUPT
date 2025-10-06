@@ -3,8 +3,8 @@ import { Animated, Pressable, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useSettingsStore } from "../../stores/settingsStore";
 import Colors from "../../config/constants/Colors";
-import { useNavigation } from "@react-navigation/native";
 import useBounceScaleAnim from "../../animations/useBounceScaleAnim";
+import { useRouter } from "expo-router";
 
 interface ProfileButtonProps {
   onPress?: () => void;
@@ -13,14 +13,14 @@ interface ProfileButtonProps {
 export default function ProfileButton({ onPress }: ProfileButtonProps) {
   const { themeName } = useSettingsStore();
   const theme = Colors[themeName];
-  const navigation = useNavigation();
+  const router = useRouter();
   const { bounceAnim, bounceIt } = useBounceScaleAnim();
 
   const handlePress = () => {
     if (onPress) {
       onPress();
     } else {
-      navigation.navigate("Profile" as never);
+      router.push("profile");
     }
   };
 

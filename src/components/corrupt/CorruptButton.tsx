@@ -6,12 +6,12 @@ import IButton from "../ui/buttons/IButton";
 import StashTittle from "./CorruptTittle";
 import { Animated } from "react-native";
 import { HEIGHT } from "../../features/Dimensions";
-import { useNavigation } from "@react-navigation/native";
+import { useRouter } from "expo-router";
 
 export default function CorruptButton() {
   const { theme } = useSettingsStore();
   const { isWorkoutView } = useUIStore();
-  const navigation = useNavigation();
+  const router = useRouter();
 
   const CorruptButtonBottom = React.useRef(
     new Animated.Value(HEIGHT / 2 - 136)
@@ -46,9 +46,9 @@ export default function CorruptButton() {
 
   const handleCorruptPress = () => {
     if (isWorkoutView) {
-      navigation.navigate("WorkoutBoard" as never);
+      router.push("workout-board");
     } else {
-      navigation.navigate("HomeBoard" as never);
+      router.push("home-board");
     }
   };
 

@@ -1,17 +1,17 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { Text } from "react-native";
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { useTranslation } from "react-i18next";
 import useWidgetUnit from "../../../features/widgets/useWidgetUnit";
 import hexToRGBA from "../../../features/HEXtoRGB";
 import BounceButton from "../../ui/buttons/BounceButton";
-import { useNavigation } from "@react-navigation/native";
+import { useRouter } from "expo-router";
 
 export default function AllButtonWidget() {
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
   const { halfWidget } = useWidgetUnit();
-  const navigation = useNavigation();
+  const router = useRouter();
 
   return (
     <BounceButton
@@ -27,7 +27,7 @@ export default function AllButtonWidget() {
         justifyContent: "center",
       }}
       onPress={() => {
-        navigation.navigate("All" as never);
+        router.push("all");
       }}
     >
       <Text
