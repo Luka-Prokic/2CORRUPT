@@ -40,7 +40,11 @@ export function SessionExerciseListHeader({
     });
     setSelectedExercises([]);
     setSelectMode(false);
-    if (!activeExercise) setActiveExercise(activeSession.layout[0].id);
+    const firstExercise =
+      activeSession.layout[0].type === "exercise"
+        ? activeSession.layout[0].exercise.id
+        : activeSession.layout[0].exercises[0].id;
+    if (!activeExercise) setActiveExercise(firstExercise);
   }
 
   function handleSelectAllExercises() {
