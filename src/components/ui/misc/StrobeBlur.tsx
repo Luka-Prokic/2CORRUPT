@@ -16,6 +16,7 @@ interface StrobeBlurProps {
   children?: React.ReactNode;
   tint?: "default" | "light" | "dark";
   size?: number;
+  disable?: boolean;
 }
 
 const { width } = Dimensions.get("window");
@@ -27,6 +28,7 @@ export function StrobeBlur({
   children,
   tint = "default",
   size = 100,
+  disable = false,
 }: StrobeBlurProps) {
   const animValues = useRef(
     Array.from({ length: 4 }, () => new Animated.Value(0))
@@ -105,6 +107,10 @@ export function StrobeBlur({
       );
     });
 
+  if (disable) {
+    return <View style={[{ overflow: "hidden" }, style]}>{children}</View>;
+  }
+  
   return (
     <View style={[{ overflow: "hidden" }, style]}>
       {renderBlobs(false)}

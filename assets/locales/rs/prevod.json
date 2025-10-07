@@ -205,5 +205,11 @@
     "cancel": "Otkaži",
     "remove": "Obriši",
     "add-to-superset": "Dodaj u Super Set"
+  },
+  "add-exercise": {
+    "add-exercise": "Dodaj Vežbu",
+    "add-to-superset": "Dodaj u Super Set",
+    "super-set": "Super Set",
+    "add": "Dodaj"
   }
 }

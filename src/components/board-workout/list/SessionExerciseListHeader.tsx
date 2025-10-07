@@ -122,7 +122,7 @@ export function SessionExerciseListHeader({
             borderRadius: 17,
           }}
           color={theme.grayText}
-          textColor={theme.glow}
+          textColor={theme.secondaryText}
         />
 
         {selectMode && selectModeButtons()}

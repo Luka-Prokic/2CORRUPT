@@ -183,5 +183,11 @@
     "cancel": "Cancel",
     "remove": "Remove",
     "add-to-superset": "Add to Super Set"
+  },
+  "add-exercise": {
+    "add-exercise": "Add Exercise",
+    "add-to-superset": "Add to Super Set",
+    "super-set": "Super Set",
+    "add": "Add"
   }
 }
