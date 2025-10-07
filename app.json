@@ -8,9 +8,7 @@
     "icon": "./assets/2CORRUPT-icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
-    "assetBundlePatterns": [
-      "assets/**/*"
-    ],
+    "assetBundlePatterns": ["assets/**/*"],
     "splash": {
       "image": "./assets/2CORRUPT-icon.png",
       "resizeMode": "contain",
@@ -34,9 +32,9 @@
       "favicon": "./assets/2CORRUPT-icon.png",
       "backgroundColor": "black"
     },
-    "plugins": [
-      "expo-asset",
-      "expo-router"
-    ]
+    "plugins": ["expo-asset", "expo-router"],
+    "experiments": {
+      "typedRoutes": true
+    }
   }
 }

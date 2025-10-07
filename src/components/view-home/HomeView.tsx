@@ -1,15 +1,17 @@
-import React from "react";
+import { useRef, useEffect } from "react";
 import { Animated } from "react-native";
 import { useUIStore } from "../../stores/ui";
-import StartWorkoutButton from "./StartWorkoutButton";
-import GreetingText from "./GreetingText";
+import { StartWorkoutButton } from "./StartWorkoutButton";
+import { GreetingText } from "./GreetingText";
+import { useStartBlankSession } from "../../features/workout/useStartBlankSession";
 
-export default function HomeView() {
+export function HomeView() {
   const { isWorkoutView, setWorkoutView } = useUIStore();
+  const { startBlankSession } = useStartBlankSession();
 
-  const homeViewOpacity = React.useRef(new Animated.Value(1)).current;
+  const homeViewOpacity = useRef(new Animated.Value(1)).current;
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isWorkoutView) {
       showWorkoutView();
     } else {
@@ -34,6 +36,11 @@ export default function HomeView() {
     }).start();
   };
 
+  const handleStartWorkout = () => {
+    startBlankSession();
+    setWorkoutView(true);
+  };
+
   return (
     <Animated.View
       style={[
@@ -50,7 +57,7 @@ export default function HomeView() {
     >
       <GreetingText />
 
-      <StartWorkoutButton onPress={() => setWorkoutView(true)} />
+      <StartWorkoutButton onPress={handleStartWorkout} />
     </Animated.View>
   );
 }

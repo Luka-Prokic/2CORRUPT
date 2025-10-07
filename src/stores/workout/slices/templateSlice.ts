@@ -1,5 +1,5 @@
 import { StateCreator } from "zustand";
-import { WorkoutStore, WorkoutTemplate, LayoutItem, TemplateSlice } from "../types";
+import { WorkoutStore, WorkoutTemplate, SessionLayoutItem, TemplateSlice } from "../types";
 
 /**
  * Template slice: manages workout templates and selection
@@ -8,7 +8,7 @@ export const createTemplateSlice: StateCreator<WorkoutStore, [], [], TemplateSli
   templates: [],
   activeTemplateId: null,
 
-  createTemplate: (name: string, description: string | undefined, layout: LayoutItem[]) => {
+  createTemplate: (name: string, description: string | undefined, layout: SessionLayoutItem[]) => {
     const newTemplate: WorkoutTemplate = {
       id: Date.now().toString(),
       name,
@@ -17,12 +17,13 @@ export const createTemplateSlice: StateCreator<WorkoutStore, [], [], TemplateSli
       createdAt: new Date().toISOString(),
       layout,
     };
-    set((state: any) => ({ templates: [...state.templates, newTemplate] }));
+    set((state) => ({ templates: [...state.templates, newTemplate] }));
+    return newTemplate.id;
   },
 
-  updateTemplate: (templateId: string, updates: any) => {
-    set((state: any) => ({
-      templates: state.templates.map((template: any) =>
+  updateTemplate: (templateId: string, updates: Partial<WorkoutTemplate>) => {
+    set((state) => ({
+      templates: state.templates.map((template: WorkoutTemplate) =>
         template.id === templateId
           ? {
               ...template,
@@ -36,11 +37,17 @@ export const createTemplateSlice: StateCreator<WorkoutStore, [], [], TemplateSli
   },
 
   deleteTemplate: (templateId: string) => {
-    set((state: any) => ({
-      templates: state.templates.filter((template: any) => template.id !== templateId),
+    set((state) => ({
+      templates: state.templates.filter((template: WorkoutTemplate) => template.id !== templateId),
       activeTemplateId: state.activeTemplateId === templateId ? null : state.activeTemplateId,
     }));
   },
+
+  getTemplateById: (templateId: string) => {
+    const { templates } = get();
+    return templates.find((template: WorkoutTemplate) => template.id === templateId) || null;
+  },
+  
 
   setActiveTemplate: (templateId: string) => set({ activeTemplateId: templateId }),
 });

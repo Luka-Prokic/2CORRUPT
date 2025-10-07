@@ -1,16 +1,14 @@
-import React from "react";
 import { View, Text, TouchableOpacity, ViewStyle } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useSettingsStore } from "../../../stores/settingsStore";
-import WidgetContainer from "./WidgetContainer";
-import hexToRGBA from "../../../features/HEXtoRGB";
+import { WidgetContainer } from "./WidgetContainer";
 
 interface WorkoutStreakWidgetProps {
   onPress?: () => void;
   style?: ViewStyle;
 }
 
-export default function WorkoutStreakWidget({
+export function WorkoutStreakWidget({
   onPress,
   style,
 }: WorkoutStreakWidgetProps) {

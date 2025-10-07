@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { Mesh } from "three";
 
@@ -9,7 +9,7 @@ interface TriangleModelProps {
   onClick?: () => void;
 }
 
-export default function TriangleModel({
+export function TriangleModel({
   color,
   size,
   rotationSpeed = 0.5,

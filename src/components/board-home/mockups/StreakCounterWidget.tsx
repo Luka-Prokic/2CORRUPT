@@ -1,18 +1,17 @@
-import React from "react";
 import { View, Text, StyleSheet, ViewStyle } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useSettingsStore } from "../../../stores/settingsStore";
-import WidgetContainer from "./WidgetContainer";
-import hexToRGBA from "../../../features/HEXtoRGB";
+import { WidgetContainer } from "./WidgetContainer";
+import { hexToRGBA } from "../../../features/HEXtoRGB";
 
 interface StreakCounterWidgetProps {
   streak?: number;
   maxStreak?: number;
-  style?: ViewStyle | ViewStyle[];
+  style?: ViewStyle;
   variant?: "default" | "compact" | "detailed";
 }
 
-export default function StreakCounterWidget({
+export function StreakCounterWidget({
   streak = 7,
   maxStreak = 30,
   style,

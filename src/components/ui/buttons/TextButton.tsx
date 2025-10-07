@@ -1,22 +1,27 @@
-import React from "react";
-import { TouchableOpacity, Text, ViewStyle, TouchableOpacityProps } from "react-native";
-import { useSettingsStore } from "../../../stores/settingsStore"; import Colors from "../../../config/constants/Colors";
+import {
+  TouchableOpacity,
+  Text,
+  ViewStyle,
+  TextStyle,
+  TouchableOpacityProps,
+} from "react-native";
+import { useSettingsStore } from "../../../stores/settingsStore";
 
 interface TextButtonProps extends Omit<TouchableOpacityProps, "style"> {
   title: string;
   style?: ViewStyle | ViewStyle[];
-  textStyle?: ViewStyle;
+  textStyle?: TextStyle;
   color?: string;
 }
 
-export default function TextButton({
+export function TextButton({
   title,
   style,
   textStyle,
   color,
   ...rest
 }: TextButtonProps) {
-  const { themeName } = useSettingsStore(); const theme = Colors[themeName];
+  const { theme } = useSettingsStore();
 
   return (
     <TouchableOpacity

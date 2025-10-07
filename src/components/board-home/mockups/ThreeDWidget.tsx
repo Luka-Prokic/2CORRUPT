@@ -1,22 +1,20 @@
-import React, { ReactNode } from "react";
-import { View, StyleSheet, ViewStyle, Text } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import { Canvas } from "@react-three/fiber";
 import { LinearGradient } from "expo-linear-gradient";
 import { BlurView } from "expo-blur";
 import { useSettingsStore } from "../../../stores/settingsStore";
-import WidgetContainer from "./WidgetContainer";
-import hexToRGBA from "../../../features/HEXtoRGB";
-import BounceButton from "../../ui/buttons/BounceButton";
+import { WidgetContainer } from "./WidgetContainer";
+import { hexToRGBA } from "../../../features/HEXtoRGB";
+import { BounceButton } from "../../ui/buttons/BounceButton";
 
 interface ThreeDWidgetProps {
-  children: ReactNode;
+  children: React.ReactNode;
   width?: number;
   height?: number;
   variant?: "default" | "compact" | "detailed" | "expanded";
   elevation?: number;
 }
 
-// Lighting Component for 3D scenes
 function SceneLights() {
   return (
     <>
@@ -31,7 +29,7 @@ function SceneLights() {
   );
 }
 
-export default function ThreeDWidget({
+export function ThreeDWidget({
   children,
   width = 150,
   height = 150,
@@ -40,24 +38,9 @@ export default function ThreeDWidget({
 }: ThreeDWidgetProps) {
   const { theme } = useSettingsStore();
 
-  const getVariantStyle = (): ViewStyle => {
-    switch (variant) {
-      case "compact":
-        return styles.compact;
-      case "detailed":
-        return styles.detailed;
-      case "expanded":
-        return styles.expanded;
-      case "default":
-      default:
-        return styles.default;
-    }
-  };
-
   return (
     <WidgetContainer
       style={[
-        getVariantStyle(),
         {
           width,
           height,

@@ -1,9 +1,8 @@
-import React from "react";
 import { Animated } from "react-native";
 import { useSettingsStore } from "../../stores/settingsStore";
-import CorruptTittle from "./CorruptTittle";
+import { CorruptTittle } from "./CorruptTittle";
 
-export default function CorruptHeader() {
+export function CorruptHeader() {
   const { theme } = useSettingsStore();
 
   return (

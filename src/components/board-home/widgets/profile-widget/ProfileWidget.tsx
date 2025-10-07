@@ -1,19 +1,20 @@
-import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { useSettingsStore } from "../../../../stores/settingsStore";
-import ProfileButton from "../../../profile-settings/ProfileButton";
-import SettingsButton from "../../../app-settings/SettingsButton";
-import hexToRGBA from "../../../../features/HEXtoRGB";
+import { ProfileButton } from "../../../profile-settings/ProfileButton";
+import { SettingsButton } from "../../../app-settings/SettingsButton";
+import { hexToRGBA } from "../../../../features/HEXtoRGB";
 import { useWidgetUnit } from "../../../../features/widgets/useWidgetUnit";
 import { useUserStore } from "../../../../stores/userStore";
 import { useStatsStore } from "../../../../stores/stats";
 import { useTranslation } from "react-i18next";
+import { useWorkoutStore } from "../../../../stores/workout/useWorkoutStore";
 
-export default function ProfileWidget() {
+export function ProfileWidget() {
   const { theme } = useSettingsStore();
   const { widgetUnit } = useWidgetUnit();
   const { user } = useUserStore();
   const { totalWorkouts } = useStatsStore();
+  const { completedSessions } = useWorkoutStore();
   const { t } = useTranslation();
 
   return (
@@ -112,7 +113,7 @@ export default function ProfileWidget() {
                 marginBottom: 2,
               }}
             >
-              {totalWorkouts || 0}
+              {totalWorkouts || completedSessions.length || 0}
             </Text>
             <Text
               style={{

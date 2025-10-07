@@ -1,28 +1,27 @@
-import React from 'react';
-import { View, StyleSheet, ViewStyle, DimensionValue } from 'react-native';
-import { useSettingsStore } from '../../../stores/settingsStore';
-import hexToRGBA from '../../../features/HEXtoRGB';
+import { View, StyleSheet, ViewStyle, DimensionValue } from "react-native";
+import { useSettingsStore } from "../../../stores/settingsStore";
+import { hexToRGBA } from "../../../features/HEXtoRGB";
 
 interface WidgetContainerProps {
   children: React.ReactNode;
   width?: DimensionValue;
   height?: DimensionValue;
   style?: ViewStyle | ViewStyle[];
-  variant?: 'default' | 'elevated' | 'inset';
+  variant?: "default" | "elevated" | "inset";
 }
 
-export default function WidgetContainer({ 
-  children, 
-  width = '100%', 
-  height = '100%', 
+export function WidgetContainer({
+  children,
+  width = "100%",
+  height = "100%",
   style,
-  variant = 'default'
+  variant = "default",
 }: WidgetContainerProps) {
   const { theme } = useSettingsStore();
 
   const getVariantStyle = () => {
     switch (variant) {
-      case 'elevated':
+      case "elevated":
         return {
           shadowColor: theme.shadow,
           shadowOffset: { width: 0, height: 8 },
@@ -30,7 +29,7 @@ export default function WidgetContainer({
           shadowRadius: 8,
           elevation: 6,
         };
-      case 'inset':
+      case "inset":
         return {
           shadowColor: theme.shadow,
           shadowOffset: { width: 0, height: -2 },
@@ -50,7 +49,7 @@ export default function WidgetContainer({
   };
 
   return (
-    <View 
+    <View
       style={[
         styles.container,
         {
@@ -72,7 +71,7 @@ const styles = StyleSheet.create({
   container: {
     borderRadius: 32,
     borderWidth: 1,
-    overflow: 'hidden',
-    position: 'relative',
+    overflow: "hidden",
+    position: "relative",
   },
 });

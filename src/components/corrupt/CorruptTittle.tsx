@@ -1,8 +1,8 @@
-import React from "react";
+
 import { Animated, TextStyle, StyleProp } from "react-native";
 import { useSettingsStore } from "../../stores/settingsStore";
 import { useTranslation } from "react-i18next";
-import useFlickerAnim from "../../animations/useFlickerAnim";
+import {useFlickerAnim} from "../../animations/useFlickerAnim";
 import { useDracoFont } from "../../features/fonts/useDracoFont";
 
 interface CorruptTittleProps {
@@ -10,10 +10,7 @@ interface CorruptTittleProps {
   style?: StyleProp<TextStyle>;
 }
 
-export default function CorruptTittle({
-  fontSize = 28,
-  style,
-}: CorruptTittleProps) {
+export function CorruptTittle({ fontSize = 28, style }: CorruptTittleProps) {
   const { theme, themeName } = useSettingsStore();
   const { t } = useTranslation();
   const { fontFamily } = useDracoFont();

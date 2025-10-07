@@ -1,21 +1,21 @@
-import React, { useState } from "react";
-import { View, ScrollView, StyleSheet, Dimensions } from "react-native";
+import { useState } from "react";
+import { View, ScrollView, StyleSheet } from "react-native";
+import { WIDTH } from "../features/Dimensions";
 import { useSettingsStore } from "../stores/settingsStore";
-import AwardsWidget from "../components/board-home/mockups/AwardsWidget";
-import StreakCounterWidget from "../components/board-home/mockups/StreakCounterWidget";
-import ProfileWidget from "../components/board-home/widgets/profile-widget/ProfileWidget";
-import TemplateWidget from "../components/board-home/mockups/TemplateWidget";
-import StatsWidget from "../components/board-home/mockups/StatsWidget";
-import ActiveSplitWidget from "../components/board-home/mockups/ActiveSplitWidget";
-import AllButtonWidget from "../components/board-home/mockups/AllButtonWidget";
-import WorkoutStreakWidget from "../components/board-home/mockups/WorkoutStreakWidget";
-import CalendarWidget from "../components/board-home/widgets/calendar-widget/CalendarWidget";
-import hexToRGBA from "../features/HEXtoRGB";
+import { AwardsWidget } from "../components/board-home/mockups/AwardsWidget";
+import { StreakCounterWidget } from "../components/board-home/mockups/StreakCounterWidget";
+import { ProfileWidget } from "../components/board-home/widgets/profile-widget/ProfileWidget";
+import { TemplateWidget } from "../components/board-home/mockups/TemplateWidget";
+import { StatsWidget } from "../components/board-home/mockups/StatsWidget";
+import { ActiveSplitWidget } from "../components/board-home/mockups/ActiveSplitWidget";
+import { AllButtonWidget } from "../components/board-home/mockups/AllButtonWidget";
+import { WorkoutStreakWidget } from "../components/board-home/mockups/WorkoutStreakWidget";
+import { CalendarWidget } from "../components/board-home/widgets/calendar-widget/CalendarWidget";
+import { hexToRGBA } from "../features/HEXtoRGB";
 
-const { width } = Dimensions.get("window");
-const widgetSize = (width - 40) / 2; // 2 columns with padding
+const widgetSize = (WIDTH - 40) / 2; // 2 columns with padding
 
-export default function HomeBoard() {
+export function HomeBoard() {
   const { theme } = useSettingsStore();
   const [selectedDate, setSelectedDate] = useState(new Date());
   return (
@@ -29,7 +29,7 @@ export default function HomeBoard() {
         <ProfileWidget />
 
         {/* full-mock */}
-        <AwardsWidget size="large" />
+        <AwardsWidget />
 
         {/* semi-mock */}
         <CalendarWidget

@@ -1,25 +1,21 @@
-import React from "react";
 import { View, Text, ViewStyle } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
 import { useSettingsStore } from "../../../stores/settingsStore";
-import WidgetContainer from "./WidgetContainer";
-import hexToRGBA from "../../../features/HEXtoRGB";
+import { WidgetContainer } from "./WidgetContainer";
+import { hexToRGBA } from "../../../features/HEXtoRGB";
 
 interface StatsWidgetProps {
   onPress?: () => void;
   style?: ViewStyle;
 }
 
-export default function StatsWidget({ onPress, style }: StatsWidgetProps) {
+export function StatsWidget({ onPress, style }: StatsWidgetProps) {
   const { theme } = useSettingsStore();
 
   // Mock data for workout durations (in minutes) over the past 2 weeks
   const workoutDurations = [
     45, 0, 30, 75, 50, 90, 35, 65, 0, 80, 55, 70, 45, 60,
   ]; // Last 14 days (0 = no workout)
-  const totalWorkouts = workoutDurations.filter(
-    (duration) => duration > 0
-  ).length;
+
   const maxDuration = 120; // 2 hours max for scaling
   const maxHeight = 80; // Max bar height in pixels
 

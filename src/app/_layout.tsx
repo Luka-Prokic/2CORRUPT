@@ -1,11 +1,12 @@
-import React, { Fragment } from "react";
+import { Fragment } from "react";
 import { Stack, useRouter } from "expo-router";
 import { TouchableOpacity } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { Ionicons } from "@expo/vector-icons";
 import { useSettingsStore } from "../stores/settingsStore";
-import CorruptHeader from "../components/corrupt/CorruptHeader";
+import { CorruptHeader } from "../components/corrupt/CorruptHeader";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { useTranslation } from "react-i18next";
 
 function ModalBackButton() {
   const { theme } = useSettingsStore();
@@ -31,6 +32,7 @@ function ModalExitButton() {
 
 export default function Layout() {
   const { theme, themeName } = useSettingsStore();
+  const { t } = useTranslation();
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -65,7 +67,7 @@ export default function Layout() {
           name="settings"
           options={{
             presentation: "modal",
-            title: "Settings",
+            title: t("navigation.settings"),
             headerStyle: { backgroundColor: theme.navBackground },
             headerTintColor: theme.text,
             headerTitleStyle: { fontWeight: "bold" },
@@ -79,7 +81,7 @@ export default function Layout() {
           name="profile"
           options={{
             presentation: "modal",
-            title: "Profile",
+            title: t("navigation.profile"),
             headerStyle: { backgroundColor: theme.background },
             headerTintColor: theme.text,
             headerTitleStyle: { fontWeight: "bold" },

@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity } from "react-native";
-import WorkoutInDayCard from "./WorkoutInDayCard";
+import {WorkoutInDayCard} from "./WorkoutInDayCard";
 import { useSettingsStore } from "../../../../stores/settingsStore";
 import { useSessionsByDate } from "../../../../features/workout/useSessionHistory";
 import { Fragment } from "react/jsx-runtime";
@@ -10,7 +10,7 @@ interface CalendarListProps {
   selectedDate: Date;
 }
 
-const CalendarList = ({ selectedDate }: CalendarListProps) => {
+export function CalendarList({ selectedDate }: CalendarListProps) {
   const { theme } = useSettingsStore();
   const startWorkoutNavigation = useStartWorkoutNavigation();
   const { t } = useTranslation();
@@ -55,6 +55,4 @@ const CalendarList = ({ selectedDate }: CalendarListProps) => {
       )}
     </View>
   );
-};
-
-export default CalendarList;
+}

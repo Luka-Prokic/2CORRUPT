@@ -1,18 +1,15 @@
-import React from "react";
 import { Animated, Pressable, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useSettingsStore } from "../../stores/settingsStore";
-import Colors from "../../config/constants/Colors";
-import useBounceScaleAnim from "../../animations/useBounceScaleAnim";
+import { useBounceScaleAnim } from "../../animations/useBounceScaleAnim";
 import { useRouter } from "expo-router";
 
 interface ProfileButtonProps {
   onPress?: () => void;
 }
 
-export default function ProfileButton({ onPress }: ProfileButtonProps) {
-  const { themeName } = useSettingsStore();
-  const theme = Colors[themeName];
+export function ProfileButton({ onPress }: ProfileButtonProps) {
+  const { theme } = useSettingsStore();
   const router = useRouter();
   const { bounceAnim, bounceIt } = useBounceScaleAnim();
 
@@ -20,7 +17,7 @@ export default function ProfileButton({ onPress }: ProfileButtonProps) {
     if (onPress) {
       onPress();
     } else {
-      router.push("profile");
+      router.push("/profile");
     }
   };
 

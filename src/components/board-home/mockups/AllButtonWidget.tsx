@@ -2,12 +2,12 @@ import React from "react";
 import { Text } from "react-native";
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { useTranslation } from "react-i18next";
-import useWidgetUnit from "../../../features/widgets/useWidgetUnit";
-import hexToRGBA from "../../../features/HEXtoRGB";
-import BounceButton from "../../ui/buttons/BounceButton";
+import { useWidgetUnit } from "../../../features/widgets/useWidgetUnit";
+import { hexToRGBA } from "../../../features/HEXtoRGB";
+import { BounceButton } from "../../ui/buttons/BounceButton";
 import { useRouter } from "expo-router";
 
-export default function AllButtonWidget() {
+export function AllButtonWidget() {
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
   const { halfWidget } = useWidgetUnit();
@@ -27,7 +27,7 @@ export default function AllButtonWidget() {
         justifyContent: "center",
       }}
       onPress={() => {
-        router.push("all");
+        router.push("/all");
       }}
     >
       <Text

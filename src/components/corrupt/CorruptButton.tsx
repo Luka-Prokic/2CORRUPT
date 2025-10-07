@@ -1,23 +1,23 @@
-import React from "react";
+import { useRef, useEffect } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { useSettingsStore } from "../../stores/settingsStore";
 import { useUIStore } from "../../stores/ui";
-import IButton from "../ui/buttons/IButton";
-import StashTittle from "./CorruptTittle";
+import {IButton} from "../ui/buttons/IButton";
+import {CorruptTittle} from "./CorruptTittle";
 import { Animated } from "react-native";
 import { HEIGHT } from "../../features/Dimensions";
 import { useRouter } from "expo-router";
 
-export default function CorruptButton() {
+export function CorruptButton() {
   const { theme } = useSettingsStore();
   const { isWorkoutView } = useUIStore();
   const router = useRouter();
 
-  const CorruptButtonBottom = React.useRef(
+  const CorruptButtonBottom = useRef(
     new Animated.Value(HEIGHT / 2 - 136)
   ).current;
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isWorkoutView) {
       showWorkoutView();
     } else {
@@ -46,9 +46,9 @@ export default function CorruptButton() {
 
   const handleCorruptPress = () => {
     if (isWorkoutView) {
-      router.push("workout-board");
+      router.push("/workout-board");
     } else {
-      router.push("home-board");
+      router.push("/home-board");
     }
   };
 
@@ -80,7 +80,7 @@ export default function CorruptButton() {
           borderColor: theme.border,
         }}
       >
-        <StashTittle style={{ color: theme.border, fontSize: 22 }} />
+        <CorruptTittle style={{ color: theme.border, fontSize: 22 }} />
         <Ionicons name="chevron-forward" size={28} color={theme.border} />
       </IButton>
     </Animated.View>

@@ -20,7 +20,7 @@ interface StrobeBlurProps {
 
 const { width } = Dimensions.get("window");
 
-export default function StrobeBlur({
+export function StrobeBlur({
   style,
   colors = ["#ff0000", "#00ff00", "#0000ff", "#ff00ff"],
   duration = 6000,

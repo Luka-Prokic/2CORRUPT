@@ -1,2 +1,2 @@
-import WorkoutBoard from "../screens/WorkoutBoard";
+import { WorkoutBoard } from "../screens/WorkoutBoard";
 export default WorkoutBoard;

@@ -1,6 +1,5 @@
-import React from "react";
-import WorkoutBoardMockup from "../components/board-workout/mockups/WorkoutBoardMockup";
+import { WorkoutBoardMockup } from "../components/board-workout/mockups/WorkoutBoardMockup";
 
-export default function WorkoutBoard() {
+export function WorkoutBoard() {
   return <WorkoutBoardMockup />;
 }

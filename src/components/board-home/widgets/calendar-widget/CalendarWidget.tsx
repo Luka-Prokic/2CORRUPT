@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import { View, Animated } from "react-native";
 import { useSettingsStore } from "../../../../stores/settingsStore";
-import hexToRGBA from "../../../../features/HEXtoRGB";
+import { hexToRGBA } from "../../../../features/HEXtoRGB";
 import { WIDTH } from "../../../../features/Dimensions";
-import useWidgetUnit from "../../../../features/widgets/useWidgetUnit";
-import CalendarList from "./CalendarList";
-import DayPicker from "./DayPicker";
+import { useWidgetUnit } from "../../../../features/widgets/useWidgetUnit";
+import { CalendarList } from "./CalendarList";
+import {DayPicker} from "./DayPicker";
 
 interface CalendarWidgetProps {
   onDateChange?: (dateLabel: string, dateObj?: Date) => void;
@@ -14,12 +14,12 @@ interface CalendarWidgetProps {
   onSharedDateChange?: (date: Date) => void;
 }
 
-const CalendarWidget: React.FC<CalendarWidgetProps> = ({
+export function CalendarWidget({
   onDateChange,
   navigateToDate,
   sharedSelectedDate,
   onSharedDateChange,
-}) => {
+}: CalendarWidgetProps) {
   const { theme } = useSettingsStore();
   const [currentWeek, setCurrentWeek] = useState<Date[]>([]);
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
@@ -283,7 +283,6 @@ const CalendarWidget: React.FC<CalendarWidgetProps> = ({
     nextWeekStart.setDate(currentWeek[0].getDate() + 7);
 
     const today = new Date();
-    
 
     return nextWeekStart > today;
   };
@@ -318,6 +317,4 @@ const CalendarWidget: React.FC<CalendarWidgetProps> = ({
       <CalendarList selectedDate={selectedDate} />
     </View>
   );
-};
-
-export default CalendarWidget;
+}

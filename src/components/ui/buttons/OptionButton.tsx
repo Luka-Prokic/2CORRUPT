@@ -1,13 +1,12 @@
-import React from "react";
 import {
-  View,
-  Text,
   StyleSheet,
-  TouchableOpacity,
   DimensionValue,
   ViewStyle,
+  TouchableOpacity,
+  Text,
+  View,
 } from "react-native";
-import { useSettingsStore } from "../../../stores/settingsStore"; import Colors from "../../../config/constants/Colors";
+import { useSettingsStore } from "../../../stores/settingsStore";
 
 interface OptionButtonProps {
   title: string;
@@ -20,7 +19,7 @@ interface OptionButtonProps {
   disabled?: boolean;
 }
 
-const OptionButton: React.FC<OptionButtonProps> = ({
+export function OptionButton({
   title,
   onPress,
   icon,
@@ -29,8 +28,8 @@ const OptionButton: React.FC<OptionButtonProps> = ({
   style,
   color,
   disabled,
-}) => {
-  const { themeName } = useSettingsStore(); const theme = Colors[themeName];
+}: OptionButtonProps) {
+  const { theme } = useSettingsStore();
 
   return (
     <TouchableOpacity
@@ -45,7 +44,7 @@ const OptionButton: React.FC<OptionButtonProps> = ({
       <View style={styles.icon}>{icon}</View>
     </TouchableOpacity>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -66,5 +65,3 @@ const styles = StyleSheet.create({
     gap: 8,
   },
 });
-
-export default OptionButton;

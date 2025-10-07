@@ -1,5 +1,5 @@
-import { useMemo } from 'react';
-import { WIDTH } from '../Dimensions';
+import { useMemo } from "react";
+import { WIDTH } from "../Dimensions";
 
 interface WidgetUnitOptions {
   columns?: number;
@@ -12,9 +12,9 @@ interface WidgetUnitOptions {
  * @param options Configuration for widget calculations
  * @returns Object containing various widget size calculations
  */
-export const useWidgetUnit = (options: WidgetUnitOptions = {}) => {
-  const { columns = 2, padding = 40, margin = 8 } = options;
 
+export function useWidgetUnit(options: WidgetUnitOptions = {}) {
+  const { columns = 2, padding = 40, margin = 8 } = options;
 
   const widgetUnit = useMemo(() => {
     return (WIDTH - padding) / columns;
@@ -38,6 +38,4 @@ export const useWidgetUnit = (options: WidgetUnitOptions = {}) => {
     quarterWidget,
     fullWidth,
   };
-};
-
-export default useWidgetUnit;
+}

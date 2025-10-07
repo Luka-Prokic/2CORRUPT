@@ -1,9 +1,9 @@
 import { useFonts } from "expo-font";
 
-export const useDracoFont = () => {
-    const [fontsLoaded] = useFonts({
-        "Draco": require("../../../assets/fonts/Draco.otf"),
-    });
+export function useDracoFont() {
+  const [fontsLoaded] = useFonts({
+    Draco: require("../../../assets/fonts/Draco.otf"),
+  });
 
-    return fontsLoaded ? { fontFamily: "Draco" } : {};
-};
+  return fontsLoaded ? { fontFamily: "Draco" } : {};
+}

@@ -1,7 +1,6 @@
-import React, { useState } from "react";
 import { TextInput, View, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useSettingsStore } from "../../stores/settingsStore"; import Colors from "../../config/constants/Colors";
+import { useSettingsStore } from "../../stores/settingsStore";
 
 interface InputProps {
   placeholder?: string;
@@ -17,7 +16,7 @@ interface InputProps {
   onTogglePassword?: () => void;
 }
 
-export default function Input({
+export function Input({
   placeholder,
   value,
   onChangeText,
@@ -30,7 +29,7 @@ export default function Input({
   showPassword = false,
   onTogglePassword,
 }: InputProps) {
-  const { themeName } = useSettingsStore(); const theme = Colors[themeName];
+  const { theme } = useSettingsStore();
 
   return (
     <View style={{ position: "relative" }}>

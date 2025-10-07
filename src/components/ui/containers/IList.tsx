@@ -6,7 +6,7 @@ import {
   ViewStyle,
   DimensionValue,
 } from "react-native";
-import { useSettingsStore } from "../../../stores/settingsStore"; import Colors from "../../../config/constants/Colors";
+import { useSettingsStore } from "../../../stores/settingsStore";
 
 interface IListProps {
   width?: DimensionValue;
@@ -17,15 +17,15 @@ interface IListProps {
   hrStart?: "Standard" | "Custom" | "None";
 }
 
-const IList: React.FC<IListProps> = ({
+export function IList({
   width = "100%",
   background = "transparent",
   children,
   style,
   label,
   hrStart = "Standard",
-}) => {
-  const { themeName } = useSettingsStore(); const theme = Colors[themeName];
+}: IListProps) {
+  const { theme } = useSettingsStore();
 
   const childrenWithBreaks = React.Children.toArray(children).map(
     (child, index, array) => (
@@ -69,7 +69,7 @@ const IList: React.FC<IListProps> = ({
       </View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -105,5 +105,3 @@ const styles = StyleSheet.create({
     width: "100%",
   },
 });
-
-export default IList;

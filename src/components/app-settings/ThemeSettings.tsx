@@ -1,13 +1,12 @@
-import React from "react";
 import { useSettingsStore } from "../../stores/settingsStore";
 import { useTranslation } from "react-i18next";
 import { Themes } from "../../config/constants/Colors";
-import DropDownButton from "../ui/buttons/DropDownButton";
-import OptionButton from "../ui/buttons/OptionButton";
-import hexToRGBA from "../../features/HEXtoRGB";
-import IList from "../ui/containers/IList";
+import { DropDownButton } from "../ui/buttons/DropDownButton";
+import { OptionButton } from "../ui/buttons/OptionButton";
+import { hexToRGBA } from "../../features/HEXtoRGB";
+import { IList } from "../ui/containers/IList";
 
-export default function ThemeSettings() {
+export function ThemeSettings() {
   const { themeName, setTheme, theme } = useSettingsStore();
   const { t } = useTranslation();
 

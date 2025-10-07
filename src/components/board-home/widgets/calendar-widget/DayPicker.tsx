@@ -1,10 +1,10 @@
-import React, { Fragment } from "react";
+import { Fragment } from "react";
 import { View, Text, TouchableOpacity, Animated } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useSettingsStore } from "../../../../stores/settingsStore";
-import BounceButton from "../../../ui/buttons/BounceButton";
+import { BounceButton } from "../../../ui/buttons/BounceButton";
 import { useDayLabels } from "../../../../features/Labels";
-import IButton from "../../../ui/buttons/IButton";
+import { IButton } from "../../../ui/buttons/IButton";
 
 interface DayPickerProps {
   currentWeek: Date[];
@@ -19,7 +19,7 @@ interface DayPickerProps {
   isToday: (date: Date) => boolean;
 }
 
-const DayPicker: React.FC<DayPickerProps> = ({
+export function DayPicker({
   currentWeek,
   selectedIndex,
   buttonSize,
@@ -30,7 +30,7 @@ const DayPicker: React.FC<DayPickerProps> = ({
   isNextWeekDisabled,
   isFutureDate,
   isToday,
-}) => {
+}: DayPickerProps) {
   const { theme } = useSettingsStore();
   const dayLabels = useDayLabels();
 
@@ -185,6 +185,4 @@ const DayPicker: React.FC<DayPickerProps> = ({
       )}
     </Fragment>
   );
-};
-
-export default DayPicker;
+}

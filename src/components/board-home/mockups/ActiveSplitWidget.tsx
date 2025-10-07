@@ -1,32 +1,19 @@
-import React from "react";
 import { View, Text, TouchableOpacity, ViewStyle } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
 import { useSettingsStore } from "../../../stores/settingsStore";
-import WidgetContainer from "./WidgetContainer";
-import hexToRGBA from "../../../features/HEXtoRGB";
-import StrobeBlur from "../../ui/misc/StrobeBlur";
+import { WidgetContainer } from "./WidgetContainer";
+import { hexToRGBA } from "../../../features/HEXtoRGB";
+import { StrobeBlur } from "../../ui/misc/StrobeBlur";
 
 interface ActiveSplitWidgetProps {
   onPress?: () => void;
   style?: ViewStyle;
 }
 
-export default function ActiveSplitWidget({
-  onPress,
-  style,
-}: ActiveSplitWidgetProps) {
+export function ActiveSplitWidget({ onPress, style }: ActiveSplitWidgetProps) {
   const { theme } = useSettingsStore();
 
-  // Mock data
-  const activeSplit = {
-    name: "Push Pull Legs",
-    days: 6,
-    currentDay: 3,
-    icon: "skull-outline",
-  };
-
   return (
-    <WidgetContainer style={style} variant="inset">
+    <WidgetContainer style={style}>
       <StrobeBlur
         style={{
           flex: 1,
@@ -49,6 +36,7 @@ export default function ActiveSplitWidget({
             justifyContent: "center",
           }}
           activeOpacity={0.8}
+          onPress={onPress}
         >
           <View
             style={{
@@ -78,7 +66,7 @@ export default function ActiveSplitWidget({
               marginBottom: 6,
             }}
           >
-            {activeSplit.name}
+            Push Pull Legs
           </Text>
         </TouchableOpacity>
       </StrobeBlur>

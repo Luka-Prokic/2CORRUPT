@@ -1,7 +1,6 @@
-import React from "react";
 import { ViewStyle, DimensionValue, Animated } from "react-native";
-import { useSettingsStore } from "../../../stores/settingsStore"; import Colors from "../../../config/constants/Colors";
-import useFadeInAnim from "../../../animations/useFadeInAnim";
+import { useSettingsStore } from "../../../stores/settingsStore";
+import { useFadeInAnim } from "../../../animations/useFadeInAnim";
 
 interface ContainerProps {
   children: React.ReactNode;
@@ -9,12 +8,12 @@ interface ContainerProps {
   paddingHorizontal?: DimensionValue;
 }
 
-export default function Container({
+export function Container({
   children,
   style,
   paddingHorizontal = "5%",
 }: ContainerProps) {
-  const { themeName } = useSettingsStore(); const theme = Colors[themeName];
+  const { theme } = useSettingsStore();
   const { fadeIn } = useFadeInAnim(true);
 
   return (

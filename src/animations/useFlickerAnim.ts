@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { Animated, Easing } from "react-native";
 
-const useFlickerAnim = () => {
+export function useFlickerAnim() {
   const flickerAnim = useRef(new Animated.Value(1)).current;
   const flickerActive = useRef(false);
 
@@ -50,6 +50,4 @@ const useFlickerAnim = () => {
   }, [flickerAnim]);
 
   return flickerAnim;
-};
-
-export default useFlickerAnim;
+}
