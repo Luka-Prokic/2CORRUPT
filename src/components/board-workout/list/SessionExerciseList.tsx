@@ -106,7 +106,11 @@ export function SessionExerciseList({
             )}
 
             {/* Add Exercise */}
-            <SessionExerciseListAddNewButton />
+            <SessionExerciseListAddNewButton
+              style={{
+                opacity: selectMode ? 0 : 1,
+              }}
+            />
           </View>
         </ScrollView>
       </Animated.View>

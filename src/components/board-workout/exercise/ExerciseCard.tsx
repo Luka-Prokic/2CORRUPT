@@ -45,7 +45,7 @@ export function ExerciseCard({
         paddingHorizontal: 10,
         justifyContent: "center",
         backgroundColor:
-          !isActive || multipleSelect ? theme.secondaryBackground : "transparent",
+          !isActive || multipleSelect ? theme.thirdBackground : "transparent",
       }}
       disabled={isActive && !multipleSelect}
     >
