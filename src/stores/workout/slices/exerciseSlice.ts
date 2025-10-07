@@ -6,6 +6,7 @@ import {
   DropSet,
   SessionLayoutItem,
 } from "../types";
+import { exerciseLibrary } from "../../../config/constants/defaults";
 
 /**
  * Exercise slice: manages the active exercise (single source of truth during editing)
@@ -16,13 +17,13 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
   get
 ) => ({
   activeExercise: null,
-
+  exercises: exerciseLibrary,
   /**
    * Set the active exercise by finding it in the session layout and creating a copy
    */
   setActiveExercise: (exerciseId: string) => {
     const { activeSession, syncActiveExerciseToSession } = get();
-    
+
     // First, sync any existing active exercise before switching
     if (get().activeExercise) {
       syncActiveExerciseToSession();
@@ -139,7 +140,10 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
   /**
    * Add a set to the active exercise (and auto-sync)
    */
-  addSetToActiveExercise: (reps: number | null = 0, weight: number | null = 0) => {
+  addSetToActiveExercise: (
+    reps: number | null = 0,
+    weight: number | null = 0
+  ) => {
     const { activeExercise, syncActiveExerciseToSession } = get();
     if (!activeExercise) return;
 

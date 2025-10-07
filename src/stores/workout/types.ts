@@ -132,6 +132,7 @@ export interface SessionSlice {
 
 export interface ExerciseSlice {
   activeExercise: SessionExercise | null;
+  exercises: ExerciseInfo[];
   setActiveExercise: (exerciseId: string) => void;
   clearActiveExercise: () => void;
   syncActiveExerciseToSession: () => void;

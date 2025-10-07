@@ -6,12 +6,11 @@ import {IButton} from "../ui/buttons/IButton";
 import {CorruptTittle} from "./CorruptTittle";
 import { Animated } from "react-native";
 import { HEIGHT } from "../../features/Dimensions";
-import { useRouter } from "expo-router";
+import { router } from "expo-router";
 
 export function CorruptButton() {
   const { theme } = useSettingsStore();
   const { isWorkoutView } = useUIStore();
-  const router = useRouter();
 
   const CorruptButtonBottom = useRef(
     new Animated.Value(HEIGHT / 2 - 136)

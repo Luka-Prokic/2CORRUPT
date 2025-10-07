@@ -5,13 +5,12 @@ import { useTranslation } from "react-i18next";
 import { useWidgetUnit } from "../../../features/widgets/useWidgetUnit";
 import { hexToRGBA } from "../../../features/HEXtoRGB";
 import { BounceButton } from "../../ui/buttons/BounceButton";
-import { useRouter } from "expo-router";
+import { router } from "expo-router";
 
 export function AllButtonWidget() {
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
   const { halfWidget } = useWidgetUnit();
-  const router = useRouter();
 
   return (
     <BounceButton

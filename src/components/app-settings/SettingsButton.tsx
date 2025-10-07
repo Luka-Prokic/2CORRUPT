@@ -1,7 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useSettingsStore } from "../../stores/settingsStore";
 import { BounceButton } from "../ui/buttons/BounceButton";
-import { useRouter } from "expo-router";
+import { router } from "expo-router";
 
 interface SettingsButtonProps {
   onPress?: () => void;
@@ -9,7 +9,6 @@ interface SettingsButtonProps {
 
 export function SettingsButton({ onPress }: SettingsButtonProps) {
   const { theme } = useSettingsStore();
-  const router = useRouter();
 
   const handlePress = () => {
     if (onPress) {

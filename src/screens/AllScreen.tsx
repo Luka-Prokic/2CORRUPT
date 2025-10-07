@@ -28,16 +28,19 @@ function SessionItem({ session }: { session: WorkoutSession }) {
   const { theme } = useSettingsStore();
   return (
     <View style={{ padding: 16 }}>
-      <Text style={{ fontSize: 20, fontWeight: "bold" }}>{session.name}</Text>
-      {session.layout.map((item: SessionLayoutItem) => {
+      <Text style={{ fontSize: 20, fontWeight: "bold", color: theme.text }}>
+        {session.name}
+      </Text>
+      {session.layout.map((item: SessionLayoutItem, index: number) => {
         if (item.type === "exercise")
           return (
-            <Fragment>
-              <Text style={{ fontSize: 16 , marginTop: 12}}>
-                {item.exercise.prefix??''}{item.exercise.name}
+            <Fragment key={`${index}-${item.exercise.id}`}>
+              <Text style={{ fontSize: 16, marginTop: 12, color: theme.text }}>
+                {item.exercise.prefix ?? ""}
+                {item.exercise.name}
               </Text>
               {item.exercise.sets.map((set: Set, index: number) => (
-                <Fragment>
+                <Fragment key={`${index}-${set.id}`}>
                   <Text
                     style={{
                       fontSize: 14,
@@ -47,7 +50,10 @@ function SessionItem({ session }: { session: WorkoutSession }) {
                     {index + 1}. {set.reps} x {set.weight}
                   </Text>
                   {set.dropSets?.map((dropSet: DropSet, index: number) => (
-                    <Text style={{ fontSize: 12, color: theme.grayText }}>
+                    <Text
+                      key={`${index}-${dropSet.id}`}
+                      style={{ fontSize: 12, color: theme.grayText }}
+                    >
                       {index + 1}' {dropSet.reps} x {dropSet.weight}
                     </Text>
                   ))}

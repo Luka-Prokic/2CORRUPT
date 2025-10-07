@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { Stack, useRouter } from "expo-router";
+import { Stack, router } from "expo-router";
 import { TouchableOpacity } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { Ionicons } from "@expo/vector-icons";
@@ -10,7 +10,6 @@ import { useTranslation } from "react-i18next";
 
 function ModalBackButton() {
   const { theme } = useSettingsStore();
-  const router = useRouter();
 
   return (
     <TouchableOpacity onPress={() => router.back()} style={{ padding: 10 }}>
@@ -21,7 +20,6 @@ function ModalBackButton() {
 
 function ModalExitButton() {
   const { theme } = useSettingsStore();
-  const router = useRouter();
 
   return (
     <TouchableOpacity onPress={() => router.back()} style={{ padding: 10 }}>
@@ -106,6 +104,16 @@ export default function Layout() {
           options={{
             presentation: "card",
             header: () => <Fragment />,
+          }}
+        />
+
+        {/* Add Exercise */}
+        <Stack.Screen
+          name="add-exercise"
+          options={{
+            presentation: "modal",
+            title: t("navigation.addExercise"),
+            headerLeft: () => <ModalBackButton />,
           }}
         />
 

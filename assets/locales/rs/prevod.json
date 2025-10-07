@@ -127,7 +127,8 @@
     "render": "Render",
     "stash": "Štek",
     "profile": "Nalog",
-    "settings": "Podešavanja"
+    "settings": "Podešavanja",
+    "addExercise": "Dodaj Vežbu"
   },
   "theme": {
     "dark": "Tamna",
@@ -170,10 +171,39 @@
     "workout": "Trening",
     "days": {
       "short": ["P", "U", "S", "Č", "P", "S", "N"],
-      "long": ["Ponedeljak", "Utorak", "Sreda", "Četvrtak", "Petak", "Subota", "Nedelja"]
+      "long": [
+        "Ponedeljak",
+        "Utorak",
+        "Sreda",
+        "Četvrtak",
+        "Petak",
+        "Subota",
+        "Nedelja"
+      ]
     },
     "months": {
-      "long": ["Januar", "Februar", "Mart", "April", "Maj", "Jun", "Jul", "Avgust", "Septembar", "Oktobar", "Novembar", "Decembar"]
+      "long": [
+        "Januar",
+        "Februar",
+        "Mart",
+        "April",
+        "Maj",
+        "Jun",
+        "Jul",
+        "Avgust",
+        "Septembar",
+        "Oktobar",
+        "Novembar",
+        "Decembar"
+      ]
     }
+  },
+  "workout-board": {
+    "exercises": "Vežbe",
+    "add-exercise": "Dodaj Vežbu",
+    "select": "Izaberi",
+    "cancel": "Otkaži",
+    "remove": "Obriši",
+    "add-to-superset": "Dodaj u Super Set"
   }
 }

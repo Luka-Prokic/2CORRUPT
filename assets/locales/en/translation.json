@@ -126,7 +126,8 @@
     "render": "Render",
     "stash": "Stash",
     "profile": "Profile",
-    "settings": "Settings"
+    "settings": "Settings",
+    "addExercise": "Add Exercise"
   },
   "theme": {
     "dark": "Dark",
@@ -174,5 +175,13 @@
     "months": {
       "long": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
     }
+  },
+  "workout-board": {
+    "exercises": "Exercises",
+    "add-exercise": "Add Exercise",
+    "select": "Select",
+    "cancel": "Cancel",
+    "remove": "Remove",
+    "add-to-superset": "Add to Super Set"
   }
 }

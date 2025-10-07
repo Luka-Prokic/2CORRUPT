@@ -2,7 +2,7 @@ import { Animated, Pressable, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useSettingsStore } from "../../stores/settingsStore";
 import { useBounceScaleAnim } from "../../animations/useBounceScaleAnim";
-import { useRouter } from "expo-router";
+import { router } from "expo-router";
 
 interface ProfileButtonProps {
   onPress?: () => void;
@@ -10,7 +10,6 @@ interface ProfileButtonProps {
 
 export function ProfileButton({ onPress }: ProfileButtonProps) {
   const { theme } = useSettingsStore();
-  const router = useRouter();
   const { bounceAnim, bounceIt } = useBounceScaleAnim();
 
   const handlePress = () => {
