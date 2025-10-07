@@ -1,9 +1,12 @@
-import { View } from "react-native";
+import { View, Text } from "react-native";
 import { WIDTH } from "../../../features/Dimensions";
 import { IButton } from "../../ui/buttons/IButton";
 import { hexToRGBA } from "../../../features/HEXtoRGB";
 import { useWorkoutStore } from "../../../stores/workout/useWorkoutStore";
 import { useSettingsStore } from "../../../stores/settings/useSettingsStore";
+import { Fragment } from "react";
+import { Ionicons } from "@expo/vector-icons";
+import { useTranslation } from "react-i18next";
 
 interface SessionExerciseListHeaderProps {
   selectMode: boolean;
@@ -28,6 +31,7 @@ export function SessionExerciseListHeader({
     removeItemFromSession,
   } = useWorkoutStore();
   const { theme } = useSettingsStore();
+  const { t } = useTranslation();
 
   function handleRemoveSelectedExercises() {
     selectedExercises.forEach((exerciseId) => {
@@ -38,6 +42,58 @@ export function SessionExerciseListHeader({
     setSelectMode(false);
     if (!activeExercise) setActiveExercise(activeSession.layout[0].id);
   }
+
+  function handleSelectAllExercises() {
+    setSelectedExercises(activeSession.layout.map((item) => item.id));
+  }
+  const selectModeButtons = () => {
+    const isAllSelected =
+      selectedExercises.length === activeSession.layout.length;
+    const isSomeSelected = selectedExercises.length > 0;
+    return (
+      <Fragment>
+        <IButton
+          title={t("app.all")}
+          onPress={handleSelectAllExercises}
+          style={{
+            height: 24,
+            opacity: isAllSelected ? 0 : 1,
+          }}
+          textColor={theme.grayText}
+          disabled={isAllSelected}
+        />
+        <IButton
+          onPress={handleRemoveSelectedExercises}
+          style={{
+            height: 24,
+            width: 24,
+          }}
+          disabled={!isSomeSelected}
+        >
+          <Ionicons
+            name="trash-outline"
+            size={24}
+            color={!isSomeSelected ? theme.grayText : theme.error}
+          />
+        </IButton>
+        <IButton
+          title={`${t("workout-board.add-to-superset")} (${
+            selectedExercises.length
+          })`}
+          onPress={() => {
+            //TODO: Add selected exercises to superset
+          }}
+          style={{
+            paddingHorizontal: 8,
+            height: 24,
+            borderRadius: 17,
+          }}
+          textColor={!isSomeSelected ? theme.grayText : theme.accent}
+          disabled={!isSomeSelected}
+        />
+      </Fragment>
+    );
+  };
 
   if (activeSession.layout.length > 0)
     return (
@@ -52,44 +108,20 @@ export function SessionExerciseListHeader({
         }}
       >
         <IButton
-          title={selectMode ? "Cancel" : "Select"}
+          title={
+            selectMode ? t("workout-board.cancel") : t("workout-board.select")
+          }
           onPress={toggleSelectMode}
           style={{
             paddingHorizontal: 8,
             height: 24,
             borderRadius: 17,
           }}
-          color={hexToRGBA(theme.grayText, 0.5)}
+          color={theme.grayText}
           textColor={theme.glow}
         />
 
-        {selectMode && (
-          <IButton
-            title="Add to Super Set"
-            onPress={() => {
-              //TODO: Add selected exercises to superset
-            }}
-            style={{
-              paddingHorizontal: 8,
-              height: 24,
-              borderRadius: 17,
-            }}
-            textColor={theme.tint}
-          />
-        )}
-        {selectMode && (
-          <IButton
-            title="Remove"
-            onPress={handleRemoveSelectedExercises}
-            style={{
-              paddingHorizontal: 8,
-              height: 24,
-              borderRadius: 17,
-            }}
-            color={theme.error}
-            textColor={theme.glow}
-          />
-        )}
+        {selectMode && selectModeButtons()}
       </View>
     );
 
