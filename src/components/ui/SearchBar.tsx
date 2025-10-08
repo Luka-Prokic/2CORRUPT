@@ -22,11 +22,17 @@ export function SearchBar({
       style={{
         flexDirection: "row",
         alignItems: "center",
+        height: 44,
         backgroundColor: theme.input,
         borderRadius: 12,
         paddingHorizontal: 12,
         paddingVertical: 8,
         marginVertical: 8,
+        shadowColor: theme.shadow,
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 8,
+        elevation: 4,
         ...style,
       }}
     >
@@ -48,14 +54,13 @@ export function SearchBar({
         onChangeText={onChangeText}
         autoCapitalize="none"
         autoCorrect={false}
-        clearButtonMode="while-editing"
       />
       {value.length > 0 && (
         <TouchableOpacity
           onPress={() => onChangeText("")}
           style={{ position: "absolute", right: 12 }}
         >
-          <Ionicons name="close-circle" size={20} color={theme.error} />
+          <Ionicons name="close-circle" size={20} color={theme.grayText} />
         </TouchableOpacity>
       )}
     </View>

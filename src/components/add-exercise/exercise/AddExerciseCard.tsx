@@ -77,6 +77,16 @@ export function AddExerciseCard({
                 }}
               >
                 {exercise.primaryMuscles.join(", ")}
+
+                <Text
+                  style={{
+                    color: theme.grayText,
+                    opacity: exercise.secondaryMuscles?.length ? 1 : 0,
+                  }}
+                >
+                  {" - "}
+                  {exercise.secondaryMuscles?.join(", ")}
+                </Text>
               </Text>
             )}
           </View>

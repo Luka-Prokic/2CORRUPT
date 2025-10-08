@@ -7,6 +7,7 @@ import { useSettingsStore } from "../stores/settingsStore";
 import { CorruptHeader } from "../components/corrupt/CorruptHeader";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useTranslation } from "react-i18next";
+import { CreateNewExerciseButton } from "../components/add-exercise/header/CreateNewExerciseButton";
 
 function ModalBackButton() {
   const { theme } = useSettingsStore();
@@ -111,9 +112,10 @@ export default function Layout() {
         <Stack.Screen
           name="add-exercise"
           options={{
-            presentation: "modal",
+            presentation: "fullScreenModal",
             title: t("navigation.addExercise"),
             headerLeft: () => <ModalBackButton />,
+            headerRight: () => <CreateNewExerciseButton />,
           }}
         />
 
