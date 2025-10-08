@@ -40,20 +40,6 @@ export function WorkoutView() {
         { opacity: workoutViewOpacity },
       ]}
     >
-      {/* Dev Back Button */}
-      <TouchableOpacity
-        onPress={() => setWorkoutView(false)}
-        style={{
-          position: "absolute",
-          top: 22,
-          left: 22,
-          padding: 10,
-          zIndex: 1,
-        }}
-      >
-        <Ionicons name="chevron-back" size={24} color={theme.border} />
-      </TouchableOpacity>
-
       <WorkoutScreenMockup />
     </Animated.View>
   );

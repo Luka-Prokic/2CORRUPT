@@ -148,7 +148,7 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
     if (!activeExercise) return;
 
     const newSet: Set = {
-      id: `set-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+      id: `set-${Date.now()}-${Math.random().toString(36)}`,
       reps,
       weight,
       isCompleted: false,
@@ -216,7 +216,7 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
     if (!activeExercise) return;
 
     const newDropSet: DropSet = {
-      id: `drop-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+      id: `drop-${Date.now()}-${Math.random().toString(36)}`,
       reps,
       weight,
     };

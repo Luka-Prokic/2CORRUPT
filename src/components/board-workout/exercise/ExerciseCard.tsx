@@ -1,6 +1,6 @@
 import { useSettingsStore } from "../../../stores/settings/useSettingsStore";
 import { SessionExercise } from "../../../stores/workout/types";
-import { TouchableOpacity } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import { WIDTH } from "../../../features/Dimensions";
 import { Text } from "react-native";
 import { IButton } from "../../ui/buttons/IButton";
@@ -37,15 +37,15 @@ export function ExerciseCard({
       activeOpacity={0.8}
       onPress={handlePress}
       style={{
-        height: 64,
-        width: WIDTH - 32,
-        borderRadius: 16,
-        borderWidth: 1,
-        borderColor: !isActive || multipleSelect ? theme.border : "transparent",
+        minHeight: 72,
+        marginBottom: 1,
+        width: WIDTH,
         paddingHorizontal: 10,
         justifyContent: "center",
         backgroundColor:
-          !isActive || multipleSelect ? theme.thirdBackground : "transparent",
+          !isActive || multipleSelect
+            ? theme.secondaryBackground
+            : theme.primaryBackground,
       }}
       disabled={isActive && !multipleSelect}
     >
@@ -56,19 +56,10 @@ export function ExerciseCard({
           color: isActive ? theme.tint : theme.text,
         }}
       >
+        {exercise.prefix ? `${exercise.prefix} ` : ""}
         {exercise.name}
       </Text>
-      {exercise.notes && (
-        <Text
-          style={{
-            fontSize: 13,
-            color: isActive ? theme.tint : theme.grayText,
-          }}
-        >
-          {exercise.notes}
-        </Text>
-      )}
-      {multipleSelect && (
+      {multipleSelect ? (
         <IButton
           onPress={() => onSelect(exercise.id)}
           style={{
@@ -77,6 +68,8 @@ export function ExerciseCard({
             top: 10,
             height: 44,
             width: 44,
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
           {isSelected ? (
@@ -85,6 +78,24 @@ export function ExerciseCard({
             <Ionicons name="square-outline" size={34} color={theme.grayText} />
           )}
         </IButton>
+      ) : (
+        <View
+          style={{
+            position: "absolute",
+            right: 10,
+            top: 10,
+            height: 44,
+            width: 44,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Ionicons
+            name="reorder-two-outline"
+            size={34}
+            color={theme.grayText}
+          />
+        </View>
       )}
     </TouchableOpacity>
   );

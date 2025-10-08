@@ -1,7 +1,6 @@
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import { WIDTH } from "../../../features/Dimensions";
 import { IButton } from "../../ui/buttons/IButton";
-import { hexToRGBA } from "../../../features/HEXtoRGB";
 import { useWorkoutStore } from "../../../stores/workout/useWorkoutStore";
 import { useSettingsStore } from "../../../stores/settings/useSettingsStore";
 import { Fragment } from "react";
@@ -44,7 +43,7 @@ export function SessionExerciseListHeader({
       activeSession.layout[0].type === "exercise"
         ? activeSession.layout[0].exercise.id
         : activeSession.layout[0].exercises[0].id;
-    if (!activeExercise) setActiveExercise(firstExercise);
+    if (!activeExercise && firstExercise) setActiveExercise(firstExercise);
   }
 
   function handleSelectAllExercises() {
@@ -104,10 +103,11 @@ export function SessionExerciseListHeader({
       <View
         style={{
           height: 24,
-          width: WIDTH - 32,
+          width: WIDTH - 16,
           flexDirection: "row-reverse",
           justifyContent: "space-between",
           gap: 16,
+          margin: 8,
           marginBottom: 16,
         }}
       >

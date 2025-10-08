@@ -27,7 +27,7 @@ export function SessionExerciseListAddNewButton({
           justifyContent: "center",
           alignItems: "center",
           width: WIDTH - 32,
-          backgroundColor: theme.thirdBackground,
+          backgroundColor: theme.secondaryBackground,
         }}
       >
         <Ionicons name="add" size={32} color={theme.text} />

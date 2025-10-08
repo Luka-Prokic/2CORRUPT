@@ -60,7 +60,7 @@ export function AddExerciseCard({
             <Text
               style={{
                 color: theme.text,
-                fontSize: 18,
+                fontSize: 16,
                 fontWeight: "600",
                 marginBottom: 2,
               }}

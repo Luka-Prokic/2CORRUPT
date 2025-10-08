@@ -516,7 +516,7 @@ export function WorkoutScreenMockup() {
       {/* Sets Table */}
       <FlatList
         data={sets}
-        keyExtractor={(item) => `${item.id}-${sets.length}`}
+        keyExtractor={(item) => `${item.id}`}
         renderItem={({ item, index }) => (
           <SetRow set={item} exercise={activeExercise} setIndex={index} />
         )}
