@@ -3,7 +3,6 @@ import { Animated, View, ScrollView } from "react-native";
 import { useFadeInAnim } from "../../../animations/useFadeInAnim";
 import { useWorkoutStore } from "../../../stores/workout/useWorkoutStore";
 import { ExerciseCard } from "../exercise/ExerciseCard";
-import { SuperSetCard } from "../superset/SuperSetCard";
 import { SessionLayoutItem } from "../../../stores/workout/types";
 import { useEffect, useState } from "react";
 import { SessionExerciseListHeader } from "./SessionExerciseListHeader";
@@ -51,7 +50,6 @@ export function SessionExerciseList({
     return (
       <Animated.View
         style={{
-          paddingHorizontal: 16,
           paddingBottom: 80,
           height: HEIGHT - 120,
           ...fadeIn,
@@ -82,24 +80,6 @@ export function SessionExerciseList({
                       multipleSelect={selectMode}
                     />
                   );
-                } else if (item.type === "superset") {
-                  {
-                    /* supersets not implemented yet*/
-                  }
-                  return (
-                    <SuperSetCard
-                      key={`${item.id}-${index}`}
-                      superSet={item}
-                      onUse={handleExerciseUse}
-                      onSelect={handleExerciseSelect}
-                      isActive={activeExercise?.id === item.id}
-                      isSelected={selectedExercises.some(
-                        (i: string) => i === item.id
-                      )}
-                      selectedExerciseId={activeExercise?.id || null}
-                      multipleSelect={selectMode}
-                    />
-                  );
                 }
                 return null;
               }
@@ -109,6 +89,7 @@ export function SessionExerciseList({
             <SessionExerciseListAddNewButton
               style={{
                 opacity: selectMode ? 0 : 1,
+                marginTop: 16,
               }}
             />
           </View>

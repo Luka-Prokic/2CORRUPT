@@ -137,15 +137,29 @@ export interface ExerciseSlice {
   clearActiveExercise: () => void;
   syncActiveExerciseToSession: () => void;
   updateActiveExercise: (updates: Partial<SessionExercise>) => void;
-  addSetToActiveExercise: (reps?: number | null, weight?: number | null) => void;
+  addSetToActiveExercise: (
+    reps?: number | null,
+    weight?: number | null
+  ) => void;
   updateSetInActiveExercise: (setId: string, updates: Partial<Set>) => void;
   removeSetFromActiveExercise: (setId: string) => void;
-  addDropSetToActiveExercise: (setId: string, reps: number | null, weight: number | null) => void;
-  updateDropSetInActiveExercise: (setId: string, dropSetId: string, updates: Partial<DropSet>) => void;
+  addDropSetToActiveExercise: (
+    setId: string,
+    reps: number | null,
+    weight: number | null
+  ) => void;
+  updateDropSetInActiveExercise: (
+    setId: string,
+    dropSetId: string,
+    updates: Partial<DropSet>
+  ) => void;
   removeDropSetFromActiveExercise: (setId: string, dropSetId: string) => void;
-  addExerciseToSession: (exercise: SessionExercise, afterItemId?: string) => void;
+  addExerciseToSession: (
+    exercise: SessionExercise,
+    afterItemId?: string
+  ) => void;
   removeItemFromSession: (layoutItemId: string) => void;
-  reorderSessionItems: (fromIndex: number, toIndex: number) => void;
+  reorderSessionItems: (newOrder: SessionLayoutItem[]) => void;
 }
 
 export interface TimerSlice {

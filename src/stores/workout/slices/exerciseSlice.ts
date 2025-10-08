@@ -344,16 +344,16 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
   /**
    * Reorder items in the session layout
    */
-  reorderSessionItems: (fromIndex: number, toIndex: number) => {
+  reorderSessionItems: (newOrder: SessionLayoutItem[]) => {
     const { activeSession } = get();
     if (!activeSession) return;
-
-    const layout = [...activeSession.layout];
-    const [movedItem] = layout.splice(fromIndex, 1);
-    layout.splice(toIndex, 0, movedItem);
-
+  
     set((state) => ({
-      activeSession: { ...state.activeSession!, layout },
+      activeSession: {
+        ...state.activeSession!,
+        layout: newOrder,
+      },
     }));
   },
+  
 });
