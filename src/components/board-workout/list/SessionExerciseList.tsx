@@ -89,7 +89,7 @@ export function SessionExerciseList({
             <SessionExerciseListAddNewButton
               style={{
                 opacity: selectMode ? 0 : 1,
-                marginTop: 16,
+                margin: 16,
               }}
             />
           </View>
