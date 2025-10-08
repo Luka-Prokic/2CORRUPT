@@ -1,6 +1,19 @@
-import { ExerciseInfo, SessionLayoutItem } from "../../stores/workout/types";
+import {
+  ExerciseInfo,
+  SessionLayoutItem,
+  WorkoutSession,
+} from "../../stores/workout/types";
 
 export const username = "Pencil Neck";
+
+export const defaultSession: WorkoutSession = {
+  id: Date.now().toString(),
+  name: `Workout ${new Date().toLocaleDateString("en-GB")}`, // e.g. "07/10/2025"
+  startTime: new Date().toISOString(),
+  isActive: false,
+  layout: [],
+  createdAt: new Date().toISOString(),
+};
 
 export const exerciseLibrary: ExerciseInfo[] = [
   {

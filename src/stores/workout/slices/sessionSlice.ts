@@ -8,6 +8,7 @@ import {
   SessionLayoutItem,
   WorkoutTemplate,
 } from "../types";
+import { defaultSession } from "../../../config/constants/defaults";
 
 /**
  * Session slice: manages active workout sessions
@@ -16,7 +17,7 @@ export const createSessionSlice: StateCreator<WorkoutStore, [], [], {}> = (
   set,
   get
 ) => ({
-  activeSession: null,
+  activeSession: defaultSession,
   isWorkoutActive: false,
   completedSessions: [],
 
@@ -139,7 +140,7 @@ export const createSessionSlice: StateCreator<WorkoutStore, [], [], {}> = (
     };
 
     set((state) => ({
-      activeSession: null,
+      activeSession: defaultSession,
       isWorkoutActive: false,
       completedSessions: [...state.completedSessions, completedSession],
     }));
@@ -148,6 +149,6 @@ export const createSessionSlice: StateCreator<WorkoutStore, [], [], {}> = (
   cancelSession: () => {
     const { clearActiveExercise } = get();
     clearActiveExercise();
-    set({ activeSession: null, isWorkoutActive: false });
+    set({ activeSession: defaultSession, isWorkoutActive: false });
   },
 });

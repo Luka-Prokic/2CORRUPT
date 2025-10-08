@@ -3,43 +3,27 @@ import { Animated } from "react-native";
 import { useUIStore } from "../../stores/ui";
 import { StartWorkoutButton } from "./StartWorkoutButton";
 import { GreetingText } from "./GreetingText";
-import { useStartBlankSession } from "../../features/workout/useStartBlankSession";
 
 export function HomeView() {
-  const { isWorkoutView, setWorkoutView } = useUIStore();
-  const { startBlankSession } = useStartBlankSession();
+  const { isWorkoutView } = useUIStore();
 
   const homeViewOpacity = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
     if (isWorkoutView) {
-      showWorkoutView();
+      Animated.timing(homeViewOpacity, {
+        toValue: 0,
+        duration: 300,
+        useNativeDriver: true,
+      }).start();
     } else {
-      showHomeView();
+      Animated.timing(homeViewOpacity, {
+        toValue: 1,
+        duration: 300,
+        useNativeDriver: true,
+      }).start();
     }
   }, [isWorkoutView]);
-
-  // Transition functions
-  const showWorkoutView = () => {
-    Animated.timing(homeViewOpacity, {
-      toValue: 0,
-      duration: 300,
-      useNativeDriver: true,
-    }).start();
-  };
-
-  const showHomeView = () => {
-    Animated.timing(homeViewOpacity, {
-      toValue: 1,
-      duration: 300,
-      useNativeDriver: true,
-    }).start();
-  };
-
-  const handleStartWorkout = () => {
-    startBlankSession();
-    setWorkoutView(true);
-  };
 
   return (
     <Animated.View
@@ -57,7 +41,7 @@ export function HomeView() {
     >
       <GreetingText />
 
-      <StartWorkoutButton onPress={handleStartWorkout} />
+      <StartWorkoutButton />
     </Animated.View>
   );
 }

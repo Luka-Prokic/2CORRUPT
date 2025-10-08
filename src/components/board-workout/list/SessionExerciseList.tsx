@@ -65,7 +65,7 @@ export function SessionExerciseList({
           setSelectMode={setSelectMode}
         />
         <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={{ flex: 1, gap: 8 }}>
+          <View style={{ flex: 1, gap: 4 }}>
             {activeSession.layout.map(
               (item: SessionLayoutItem, index: number) => {
                 if (item.type === "exercise") {

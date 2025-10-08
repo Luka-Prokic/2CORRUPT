@@ -1,23 +1,24 @@
 import { useSettingsStore } from "../../stores/settingsStore";
-import {StrobeBlur} from "../ui/misc/StrobeBlur";
+import { StrobeBlur } from "../ui/misc/StrobeBlur";
 import { Text } from "react-native";
-import {hexToRGBA} from "../../features/HEXtoRGB";
-import {BounceButton} from "../ui/buttons/BounceButton";
+import { hexToRGBA } from "../../features/HEXtoRGB";
+import { BounceButton } from "../ui/buttons/BounceButton";
 import { HEIGHT } from "../../features/Dimensions";
 import { useTranslation } from "react-i18next";
+import { useUIStore } from "../../stores/ui";
 
-interface StartWorkoutButtonProps {
-  onPress?: () => void;
-}
-
-export function StartWorkoutButton({
-  onPress,
-}: StartWorkoutButtonProps) {
+export function StartWorkoutButton() {
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
+  const { setWorkoutView } = useUIStore();
+
+  function handleStartWorkout() {
+    setWorkoutView(true);
+  }
+
   return (
     <BounceButton
-      onPress={onPress}
+      onPress={handleStartWorkout}
       style={{
         height: 64,
         borderRadius: 100,

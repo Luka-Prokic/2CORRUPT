@@ -13,28 +13,19 @@ export function WorkoutView() {
 
   useEffect(() => {
     if (isWorkoutView) {
-      showWorkoutView();
+      Animated.timing(workoutViewOpacity, {
+        toValue: 1,
+        duration: 300,
+        useNativeDriver: true,
+      }).start();
     } else {
-      showHomeView();
+      Animated.timing(workoutViewOpacity, {
+        toValue: 0,
+        duration: 300,
+        useNativeDriver: true,
+      }).start();
     }
   }, [isWorkoutView]);
-
-  // Transition functions
-  const showWorkoutView = () => {
-    Animated.timing(workoutViewOpacity, {
-      toValue: 1,
-      duration: 300,
-      useNativeDriver: true,
-    }).start();
-  };
-
-  const showHomeView = () => {
-    Animated.timing(workoutViewOpacity, {
-      toValue: 0,
-      duration: 300,
-      useNativeDriver: true,
-    }).start();
-  };
 
   return (
     <Animated.View

@@ -12,8 +12,7 @@ export const useStartBlankSession = () => {
   const startBlankSession = () => {
     const template: WorkoutTemplate = {
       id: Date.now().toString(),
-      name: `Workout ${new Date().toLocaleDateString("en-GB")}`, // e.g. "07/10/2025"
-      description: "Custom workout",
+      name: `Workout ${new Date().toLocaleDateString("en-GB")}`,
       version: 1,
       layout: dummySessionLayout,
       createdAt: new Date().toISOString(),

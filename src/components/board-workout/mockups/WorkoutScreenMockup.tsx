@@ -20,6 +20,8 @@ import {
   SessionExercise,
 } from "../../../stores/workoutStore";
 import { IButton } from "../../ui/buttons/IButton";
+import { WIDTH } from "../../../features/Dimensions";
+import { router } from "expo-router";
 
 const HEIGHT = Dimensions.get("window").height;
 
@@ -391,7 +393,14 @@ export function WorkoutScreenMockup() {
   if (!activeSession) return <Text>No active session</Text>;
 
   if (!activeSession.layout.length)
-    return <IButton title="Add Exercise" onPress={() => {}} />;
+    return (
+      <IButton
+        title="Add Exercise"
+        onPress={() => {
+          router.push("/add-exercise");
+        }}
+      />
+    );
 
   // Select first exercise if none is active
   if (!activeExercise && activeSession.layout[0]) {
@@ -534,20 +543,37 @@ export function WorkoutScreenMockup() {
             alignItems: "center",
             justifyContent: "center",
             height: 64,
+            width: WIDTH - 32,
             borderRadius: 32,
           }}
           color={theme.tint}
           onPress={handleAddSet}
         >
-          <Text
+          <StrobeBlur
+            colors={[
+              theme.text,
+              theme.secondaryText,
+              theme.background,
+              theme.primaryBackground,
+            ]}
+            tint="light"
             style={{
-              color: theme.secondaryText,
-              fontSize: 24,
-              fontWeight: "bold",
+              height: 64,
+              width: WIDTH - 32,
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
-            Add Set
-          </Text>
+            <Text
+              style={{
+                color: theme.secondaryText,
+                fontSize: 24,
+                fontWeight: "bold",
+              }}
+            >
+              Add Set
+            </Text>
+          </StrobeBlur>
         </BounceButton>
       </LinearGradient>
     </View>

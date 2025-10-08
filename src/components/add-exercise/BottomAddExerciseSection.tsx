@@ -14,21 +14,16 @@ import { StrobeBlur } from "../ui/misc/StrobeBlur";
 
 interface BottomAddExerciseSectionProps {
   selectedExercises: ExerciseInfo[];
-  setSelectedExercises: (exercises: ExerciseInfo[]) => void;
 }
 
 export function BottomAddExerciseSection({
   selectedExercises,
-  setSelectedExercises,
 }: BottomAddExerciseSectionProps) {
   const { theme } = useSettingsStore();
   const { addExerciseToSession, setActiveExercise } = useWorkoutStore();
   const { t } = useTranslation();
 
   const animatedOpacity = useRef(new Animated.Value(0)).current;
-  function handleRemoveSelectedExercises() {
-    setSelectedExercises([]);
-  }
 
   function handleAddExercise() {
     selectedExercises.forEach((exercise: ExerciseInfo) => {
@@ -98,8 +93,13 @@ export function BottomAddExerciseSection({
                 theme.primaryBackground,
               ]}
               tint="light"
-              style={{ width: "100%", height: "100%" }}
-              duration={5000}
+              style={{
+                width: "100%",
+                height: "100%",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              disable
             >
               <Text
                 style={{
@@ -132,8 +132,13 @@ export function BottomAddExerciseSection({
               theme.tint,
             ]}
             tint="light"
-            style={{ width: "100%", height: "100%" }}
-            duration={5000}
+            style={{
+              width: "100%",
+              height: "100%",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+            disable
           >
             <Text
               style={{
