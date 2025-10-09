@@ -210,12 +210,20 @@
     "sets-completed-none": "No sets completed"
   },
   "workout-board": {
+    "workout": "Workout",
     "exercises": "Exercises",
     "add-exercise": "Add Exercise",
     "select": "Select",
     "cancel": "Cancel",
     "remove": "Remove",
-    "add-to-superset": "Add to Super Set"
+    "delete": "Delete",
+    "continue": "Continue",
+    "add-to-superset": "Add to Super Set",
+    "exit-workout": "Exit Workout",
+    "exit-workout-message": "You’re about to cancel your workout. You can also save it as a template before exiting.",
+    "save-as-template": "Save as Template",
+    "complete-workout": "Finish Workout",
+    "complete-workout-message": "Are you sure you want to complete this workout? You won’t be able to make changes to it later."
   },
   "add-exercise": {
     "add-exercise": "Add Exercise",
@@ -225,7 +233,7 @@
     "equipment": "Equipment",
     "body-part": "Body Part",
     "search": "Search exercises",
-    "create": "Create"  
+    "create": "Create"
   },
 
   "categories": {

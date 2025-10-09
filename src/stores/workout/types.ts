@@ -47,6 +47,8 @@ export interface WorkoutTemplate {
   metadata?: Record<string, any>;
 }
 
+export type ExerciseColumns = ["Reps", "Weight", "RIR", "RPE"];
+
 // Session snapshot of an exercise with sets
 export interface SessionExercise {
   readonly id: string; // snapshot id for session level
@@ -58,6 +60,8 @@ export interface SessionExercise {
   equipment?: string[];
   notes?: string | null;
   sets: Set[];
+  columns?: ExerciseColumns[];
+  restTime?: number | null;
   inSuperSet?: boolean;
 }
 
@@ -160,6 +164,7 @@ export interface ExerciseSlice {
   ) => void;
   removeItemFromSession: (layoutItemId: string) => void;
   reorderSessionItems: (newOrder: SessionLayoutItem[]) => void;
+  checkActiveExercise: () => void;
 }
 
 export interface TimerSlice {

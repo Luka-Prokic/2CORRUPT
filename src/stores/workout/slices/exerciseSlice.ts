@@ -308,6 +308,7 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
       activeExercise,
       setActiveExercise,
       updateNavigationFlags,
+      checkActiveExercise,
     } = get();
     if (!activeSession) return;
 
@@ -349,7 +350,7 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
    * Remove an item from the session layout
    */
   removeItemFromSession: (layoutItemId: string) => {
-    const { activeSession, updateNavigationFlags } = get();
+    const { activeSession, updateNavigationFlags, checkActiveExercise } = get();
     if (!activeSession) return;
 
     const layout = activeSession.layout.filter(
@@ -360,6 +361,7 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
       activeSession: { ...state.activeSession!, layout },
     }));
 
+    checkActiveExercise();
     //update navigation flags in flowSlice
     updateNavigationFlags();
   },
@@ -377,5 +379,47 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
         layout: newOrder,
       },
     }));
+  },
+
+  /**
+   * Check if the active exercise still exists in the session layout
+   */
+  checkActiveExercise: () => {
+    const {
+      activeSession,
+      activeExercise,
+      setActiveExercise,
+      clearActiveExercise,
+    } = get();
+    if (!activeSession) return;
+
+    const layout = activeSession.layout;
+    // Check if current activeExercise still exists
+    const isThereActiveExercise = layout.some((item: SessionLayoutItem) => {
+      if (item.type === "exercise")
+        return item.exercise.id === activeExercise?.id;
+      // For supersets/circuits, check exercises array
+      if (item.type === "superset" || item.type === "circuit") {
+        return item.exercises.some((ex) => ex.id === activeExercise?.id);
+      }
+      return false;
+    });
+
+    if (!isThereActiveExercise) {
+      // Find the first available exercise in layout
+      for (const item of layout) {
+        if (item.type === "exercise") {
+          setActiveExercise(item.exercise.id);
+          return;
+        }
+        if (item.type === "superset" || item.type === "circuit") {
+          if (item.exercises.length > 0) {
+            setActiveExercise(item.exercises[0].id);
+            return;
+          }
+        }
+      }
+    }
+    clearActiveExercise();
   },
 });

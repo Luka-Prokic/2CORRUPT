@@ -211,12 +211,19 @@
     "sets-completed-none": "Nijedan set nije završen"
   },
   "workout-board": {
+    "workout": "Trening",
     "exercises": "Vežbe",
     "add-exercise": "Dodaj Vežbu",
     "select": "Izaberi",
     "cancel": "Otkaži",
     "remove": "Obriši",
-    "add-to-superset": "Dodaj u Super Set"
+    "add-to-superset": "Dodaj u Super Set",
+    "continue": "Nastavi",
+    "exit-workout": "Izađi iz Treninga",
+    "exit-workout-message": "Ovo će otkazati tvoj trening. Možeš ga sačuvati kao template pre nego što izađeš.",
+    "save-as-template": "Sačuvaj kao Template",
+    "complete-workout": "Završi Trening",
+    "complete-workout-message": "Da li si siguran da želiš da završiš ovaj trening? Nećeš moći da radiš izmene na njemu kasnije."
   },
   "add-exercise": {
     "add-exercise": "Dodaj Vežbu",
