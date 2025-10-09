@@ -296,7 +296,7 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
    * Add a new exercise to the session layout
    */
   addExerciseToSession: (exercise: SessionExercise, afterItemId?: string) => {
-    const { activeSession } = get();
+    const { activeSession, activeExercise, setActiveExercise } = get();
     if (!activeSession) return;
 
     const newExercise: SessionExercise = {
@@ -323,6 +323,10 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
     set((state) => ({
       activeSession: { ...state.activeSession!, layout: updatedLayout },
     }));
+
+    if (!activeExercise) {
+      setActiveExercise(newExercise.id);
+    }
   },
 
   /**
@@ -347,7 +351,7 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
   reorderSessionItems: (newOrder: SessionLayoutItem[]) => {
     const { activeSession } = get();
     if (!activeSession) return;
-  
+
     set((state) => ({
       activeSession: {
         ...state.activeSession!,
@@ -355,5 +359,4 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
       },
     }));
   },
-  
 });

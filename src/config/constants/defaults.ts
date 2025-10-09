@@ -83,7 +83,7 @@ export const exercisesDefList: ExerciseInfo[] = [
   {
     id: "ex-pullups",
     slug: "pullups",
-    defaultName: "Pull-Ups",
+    defaultName: "Pull Up",
     category: "back",
     primaryMuscles: ["lats"],
     secondaryMuscles: ["biceps", "rear delts"],
@@ -384,7 +384,7 @@ export const exercisesDefList: ExerciseInfo[] = [
     category: "arms",
     primaryMuscles: ["biceps"],
     secondaryMuscles: [],
-    equipment: ["barbell", "preacher bench"],
+    equipment: ["barbell", "preacher-bench"],
   },
   {
     id: "ex-incline-bicep-curl",

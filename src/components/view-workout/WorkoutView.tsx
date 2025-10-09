@@ -1,13 +1,15 @@
 import { useRef, useEffect } from "react";
-import { TouchableOpacity, Animated } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { useSettingsStore } from "../../stores/settingsStore";
-import { WorkoutScreenMockup } from "../board-workout/mockups/WorkoutScreenMockup";
+import { Animated } from "react-native";
+import { HEIGHT } from "../../features/Dimensions";
 import { useUIStore } from "../../stores/ui";
+import { useWorkoutStore } from "../../stores/workoutStore";
+import { ExerciseListView } from "./ExerciseListView";
+import { NoSessionView } from "./NoSessionView";
+import { NoExerciseView } from "./NoExerciseView";
 
 export function WorkoutView() {
-  const { theme } = useSettingsStore();
-  const { setWorkoutView, isWorkoutView } = useUIStore();
+  const { isWorkoutView } = useUIStore();
+  const { activeSession, activeExercise } = useWorkoutStore();
 
   const workoutViewOpacity = useRef(new Animated.Value(0)).current;
 
@@ -27,6 +29,14 @@ export function WorkoutView() {
     }
   }, [isWorkoutView]);
 
+  const content = !activeSession ? (
+    <NoSessionView />
+  ) : !activeExercise ? (
+    <NoExerciseView />
+  ) : (
+    <ExerciseListView />
+  );
+
   return (
     <Animated.View
       style={[
@@ -35,12 +45,13 @@ export function WorkoutView() {
           top: 0,
           left: 0,
           right: 0,
-          bottom: 0,
+          height: HEIGHT - 162,
+          width: "100%",
         },
         { opacity: workoutViewOpacity },
       ]}
     >
-      <WorkoutScreenMockup />
+      {content}
     </Animated.View>
   );
 }
