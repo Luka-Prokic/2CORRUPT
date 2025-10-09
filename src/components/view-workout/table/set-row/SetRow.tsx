@@ -42,7 +42,7 @@ export function SetRow({ set, setIndex }: { set: any; setIndex: number }) {
                 theme.handle,
               ]
         }
-        tint="auto"
+        tint={set.isCompleted ? "light" : "auto"}
         style={{ flexDirection: "row", width: "100%", height: 66 }}
       >
         <View style={{ flexDirection: "row", width: "100%", height: 66 }}>

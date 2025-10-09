@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next";
-import { ExerciseInfo } from "../../stores/workout/types";
+import { ExerciseInfo, SessionExercise } from "../../stores/workout/types";
+import { useWorkoutStore } from "../../stores/workoutStore";
 
 export function useTranslatedExercisesNames(exercises: ExerciseInfo[]) {
   const { t } = useTranslation();
@@ -20,6 +21,25 @@ export function useTranslatedExerciseName(exercise: ExerciseInfo) {
     t(`exercises.${exercise.slug}`) !== `exercises.${exercise.slug}`
       ? t(`exercises.${exercise.slug}`)
       : exercise.defaultName;
+
+  return { translatedName };
+}
+
+export function useTranslatedSessionExerciseName(exercise: SessionExercise) {
+  const { t } = useTranslation();
+  const { exercises } = useWorkoutStore(); // all canonical exercises
+
+  // Try to find canonical exercise by id
+  const canonical: ExerciseInfo | undefined = exercises.find(
+    (e) => e.id === exercise.exerciseInfoId
+  );
+
+  const translatedName =
+    canonical &&
+    canonical.slug &&
+    t(`exercises.${canonical.slug}`) !== `exercises.${canonical.slug}`
+      ? t(`exercises.${canonical.slug}`)
+      : exercise.name; // fallback to session exercise name
 
   return { translatedName };
 }

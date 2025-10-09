@@ -22,7 +22,11 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
    * Set the active exercise by finding it in the session layout and creating a copy
    */
   setActiveExercise: (exerciseId: string) => {
-    const { activeSession, syncActiveExerciseToSession } = get();
+    const {
+      activeSession,
+      syncActiveExerciseToSession,
+      updateNavigationFlags,
+    } = get();
 
     // First, sync any existing active exercise before switching
     if (get().activeExercise) {
@@ -59,6 +63,9 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
         },
       });
     }
+
+    //update navigation flags in flowSlice
+    updateNavigationFlags();
   },
 
   /**

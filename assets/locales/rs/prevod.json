@@ -198,6 +198,18 @@
       ]
     }
   },
+
+  "workout-view": {
+    "set": "Setovi",
+    "reps": "Repovi",
+    "kg": "KG",
+    "lbs": "LBS",
+    "done": "Gotovo",
+    "completed": "Završeno",
+    "sets-completed": "{{count}} od {{total}} setova završeno",
+    "sets-completed-all": "Svi setovi završeni",
+    "sets-completed-none": "Nijedan set nije završen"
+  },
   "workout-board": {
     "exercises": "Vežbe",
     "add-exercise": "Dodaj Vežbu",
@@ -213,7 +225,7 @@
     "add": "Dodaj",
     "equipment": "Oprema",
     "body-part": "Delovi tela",
-    "search": "Pretraži vežbe", 
+    "search": "Pretraži vežbe",
     "create": "Kreiraj"
   },
 

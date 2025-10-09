@@ -197,6 +197,18 @@
       ]
     }
   },
+
+  "workout-view": {
+    "set": "Sets",
+    "reps": "Reps",
+    "kg": "KG",
+    "lbs": "LBS",
+    "done": "Done",
+    "completed": "Completed",
+    "sets-completed": "{{count}} of {{total}} sets completed",
+    "sets-completed-all": "All sets completed",
+    "sets-completed-none": "No sets completed"
+  },
   "workout-board": {
     "exercises": "Exercises",
     "add-exercise": "Add Exercise",
