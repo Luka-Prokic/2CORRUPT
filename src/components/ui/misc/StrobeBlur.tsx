@@ -4,22 +4,21 @@ import {
   Animated,
   ViewStyle,
   StyleSheet,
-  Dimensions,
   Easing,
 } from "react-native";
 import { BlurView } from "expo-blur";
+import { useSettingsStore } from "../../../stores/settingsStore";
+import { WIDTH } from "../../../features/Dimensions";
 
 interface StrobeBlurProps {
   style?: ViewStyle;
   colors?: [string, string, string, string];
   duration?: number;
   children?: React.ReactNode;
-  tint?: "default" | "light" | "dark";
+  tint?: "default" | "light" | "dark" | "auto";
   size?: number;
   disable?: boolean;
 }
-
-const { width } = Dimensions.get("window");
 
 export function StrobeBlur({
   style,
@@ -30,6 +29,7 @@ export function StrobeBlur({
   size = 100,
   disable = false,
 }: StrobeBlurProps) {
+  const { themeName } = useSettingsStore();
   const animValues = useRef(
     Array.from({ length: 4 }, () => new Animated.Value(0))
   ).current;
@@ -95,7 +95,7 @@ export function StrobeBlur({
                 translateX: Animated.add(
                   translateX,
                   new Animated.Value(
-                    mirror ? width / 2 - size / 2 : -width / 2 + size / 2
+                    mirror ? WIDTH / 2 - size / 2 : -WIDTH / 2 + size / 2
                   )
                 ),
               },
@@ -110,14 +110,20 @@ export function StrobeBlur({
   if (disable) {
     return <View style={[{ overflow: "hidden" }, style]}>{children}</View>;
   }
-  
+
   return (
     <View style={[{ overflow: "hidden" }, style]}>
       {renderBlobs(false)}
       {renderBlobs(true)}
       <BlurView
         intensity={100}
-        tint={tint}
+        tint={
+          tint === "auto"
+            ? ["light", "peachy", "oldschool"].includes(themeName)
+              ? "light"
+              : "dark"
+            : tint
+        }
         style={[
           StyleSheet.absoluteFill,
           { justifyContent: "center", alignItems: "center" },

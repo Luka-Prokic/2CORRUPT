@@ -180,8 +180,23 @@ export interface StatsSlice {
   } | null;
 }
 
+export interface FlowSlice {
+  // Computed flags for UI
+  isThereNext: boolean;
+  isTherePrev: boolean;
+
+  // Navigation actions
+  goToNextExercise: () => void;
+  goToPreviousExercise: () => void;
+
+  updateNavigationFlags: () => void;
+  // Optional utility function
+  getActiveExerciseIndex: () => number | null;
+}
+
 export type WorkoutStore = TemplateSlice &
   SessionSlice &
   ExerciseSlice &
   TimerSlice &
-  StatsSlice;
+  StatsSlice &
+  FlowSlice;

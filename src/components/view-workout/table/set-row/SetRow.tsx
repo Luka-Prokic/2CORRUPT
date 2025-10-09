@@ -9,11 +9,9 @@ import { SetSwipeActions } from "./SetSwipeActions";
 import { DropSetRow } from "./DropSetRow";
 
 export function SetRow({ set, setIndex }: { set: any; setIndex: number }) {
-  const { theme, themeName } = useSettingsStore();
+  const { theme } = useSettingsStore();
   const swipeableRef = useRef<Swipeable>(null);
-  const {
-    updateSetInActiveExercise,
-  } = useWorkoutStore();
+  const { updateSetInActiveExercise } = useWorkoutStore();
 
   const handleToggleComplete = () => {
     console.log("handleToggleComplete", set.id);
@@ -44,12 +42,7 @@ export function SetRow({ set, setIndex }: { set: any; setIndex: number }) {
                 theme.handle,
               ]
         }
-        tint={
-          ["light", "peachy", "oldschool"].includes(themeName) ||
-          set.isCompleted
-            ? "light"
-            : "dark"
-        }
+        tint="auto"
         style={{ flexDirection: "row", width: "100%", height: 66 }}
       >
         <View style={{ flexDirection: "row", width: "100%", height: 66 }}>

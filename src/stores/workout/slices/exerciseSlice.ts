@@ -296,7 +296,12 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
    * Add a new exercise to the session layout
    */
   addExerciseToSession: (exercise: SessionExercise, afterItemId?: string) => {
-    const { activeSession, activeExercise, setActiveExercise } = get();
+    const {
+      activeSession,
+      activeExercise,
+      setActiveExercise,
+      updateNavigationFlags,
+    } = get();
     if (!activeSession) return;
 
     const newExercise: SessionExercise = {
@@ -324,16 +329,20 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
       activeSession: { ...state.activeSession!, layout: updatedLayout },
     }));
 
+    //if layout has no active exercise, set the new exercise as active
     if (!activeExercise) {
       setActiveExercise(newExercise.id);
     }
+
+    //update navigation flags in flowSlice
+    updateNavigationFlags();
   },
 
   /**
    * Remove an item from the session layout
    */
   removeItemFromSession: (layoutItemId: string) => {
-    const { activeSession } = get();
+    const { activeSession, updateNavigationFlags } = get();
     if (!activeSession) return;
 
     const layout = activeSession.layout.filter(
@@ -343,6 +352,9 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
     set((state) => ({
       activeSession: { ...state.activeSession!, layout },
     }));
+
+    //update navigation flags in flowSlice
+    updateNavigationFlags();
   },
 
   /**

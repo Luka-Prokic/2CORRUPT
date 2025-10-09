@@ -1,10 +1,11 @@
-import { Fragment } from "react";
-import { ExerciseTableHeader } from "./table/ExerciseTableHeader";
+import { Fragment } from "react"; 
 import { ExerciseSetList } from "./table/ExerciseSetList";
 import { LinearGradient } from "expo-linear-gradient";
 import { hexToRGBA } from "../../features/HEXtoRGB";
 import { AddSetButton } from "./table/AddSetButton";
 import { useSettingsStore } from "../../stores/settingsStore";
+import { SlideableExerciseHeader } from "./table/header/SlideableExerciseHeader";
+import { ExerciseTableHeader } from "./table/header/ExerciseTableHeader";
 
 export function ExerciseListView() {
   const { theme } = useSettingsStore();
@@ -12,6 +13,7 @@ export function ExerciseListView() {
   return (
     <Fragment>
       {/* Header */}
+      {/* <SlideableExerciseHeader /> */}
       <ExerciseTableHeader />
 
       {/* Sets Table */}

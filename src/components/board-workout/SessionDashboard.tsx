@@ -22,7 +22,7 @@ export function SessionDashboard({
   listOpen,
   setListOpen,
 }: SessionDashboardProps) {
-  const { theme, themeName } = useSettingsStore();
+  const { theme } = useSettingsStore();
   const { activeExercise } = useWorkoutStore();
 
   const animatedY = useRef(new Animated.Value(0)).current;
@@ -37,11 +37,7 @@ export function SessionDashboard({
     <Animated.View style={{ flex: 1, transform: [{ translateY: animatedY }] }}>
       <StrobeBlur
         colors={[theme.caka, theme.text, theme.handle, theme.border]}
-        tint={
-          ["light", "peachy", "oldschool"].includes(themeName)
-            ? "light"
-            : "dark"
-        }
+        tint="auto"
         size={HEIGHT}
         style={{ height: FOCUS_HEIGHT, backgroundColor: theme.tint }}
       >
