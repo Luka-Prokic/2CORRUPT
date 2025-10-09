@@ -5,6 +5,7 @@ import { hexToRGBA } from "../../../features/HEXtoRGB";
 import { TouchableOpacity, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { StrobeBlur } from "../../ui/misc/StrobeBlur";
+import { useTranslatedExerciseName } from "../../../features/workout/useTranslatedExercisesNames";
 
 interface AddExerciseCardProps {
   exercise: ExerciseInfo;
@@ -20,6 +21,7 @@ export function AddExerciseCard({
   selectedTotal,
 }: AddExerciseCardProps) {
   const { theme } = useSettingsStore();
+  const { translatedName } = useTranslatedExerciseName(exercise);
 
   return (
     <TouchableOpacity
@@ -65,7 +67,7 @@ export function AddExerciseCard({
                 marginBottom: 2,
               }}
             >
-              {exercise.defaultName}
+              {translatedName}
             </Text>
 
             {/* optional detail line */}

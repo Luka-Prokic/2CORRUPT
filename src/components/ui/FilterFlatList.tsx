@@ -5,9 +5,12 @@ import {
   NativeScrollEvent,
   NativeSyntheticEvent,
   ViewStyle,
+  Animated,
+  Pressable,
 } from "react-native";
 import { useRef, useState } from "react";
 import { useSettingsStore } from "../../stores/settingsStore";
+import { useBobheadAnim } from "../../animations/useBobheadAnim";
 
 interface FilterFlatListProps {
   title?: string;
@@ -28,6 +31,8 @@ export function FilterFlatList({
   const [selectedIndex, setSelectedIndex] = useState(0);
   const { theme } = useSettingsStore();
 
+  const { triggerShake, bobheadAnim } = useBobheadAnim();
+
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const offsetY = event.nativeEvent.contentOffset.y;
     const index = Math.round(offsetY / itemHeight);
@@ -40,23 +45,28 @@ export function FilterFlatList({
   const renderItem = ({ item, index }: { item: any; index: number }) => {
     const isSelected = index === selectedIndex;
     return (
-      <View
-        style={{
-          height: itemHeight,
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Text
-          style={{
-            fontSize: 16, // keep fixed
-            fontWeight: isSelected ? "bold" : "normal",
-            color: isSelected ? theme.text : theme.grayText,
-          }}
+      <Pressable onPress={triggerShake}>
+        <Animated.View
+          style={[
+            {
+              height: itemHeight,
+              justifyContent: "center",
+              alignItems: "center",
+            },
+            bobheadAnim,
+          ]}
         >
-          {item}
-        </Text>
-      </View>
+          <Text
+            style={{
+              fontSize: 16,
+              fontWeight: isSelected ? "bold" : "normal",
+              color: isSelected ? theme.text : theme.grayText,
+            }}
+          >
+            {item}
+          </Text>
+        </Animated.View>
+      </Pressable>
     );
   };
 

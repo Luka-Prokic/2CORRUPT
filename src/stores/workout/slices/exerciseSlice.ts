@@ -6,7 +6,7 @@ import {
   DropSet,
   SessionLayoutItem,
 } from "../types";
-import { exerciseLibrary } from "../../../config/constants/defaults";
+import { exercisesDefList } from "../../../config/constants/defaults";
 
 /**
  * Exercise slice: manages the active exercise (single source of truth during editing)
@@ -17,7 +17,7 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
   get
 ) => ({
   activeExercise: null,
-  exercises: exerciseLibrary,
+  exercises: exercisesDefList,
   /**
    * Set the active exercise by finding it in the session layout and creating a copy
    */
