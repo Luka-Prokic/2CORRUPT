@@ -1,9 +1,9 @@
-import { StrobeBlur } from "../../ui/misc/StrobeBlur";
+import { StrobeBlur } from "../../../ui/misc/StrobeBlur";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import { useSettingsStore } from "../../../stores/settings/useSettingsStore";
-import { IButton } from "../../ui/buttons/IButton";
-import { WIDTH } from "../../../features/Dimensions";
+import { useSettingsStore } from "../../../../stores/settingsStore";
+import { IButton } from "../../../ui/buttons/IButton";
+import { WIDTH } from "../../../../features/Dimensions";
 import { ViewStyle } from "react-native";
 
 interface SessionExerciseListAddNewButtonProps {
