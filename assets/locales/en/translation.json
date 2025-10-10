@@ -127,7 +127,8 @@
     "stash": "Stash",
     "profile": "Profile",
     "settings": "Settings",
-    "addExercise": "Add Exercise"
+    "addExercise": "Add Exercise",
+    "swapExercise": "Swap Exercise"
   },
   "theme": {
     "dark": "Dark",

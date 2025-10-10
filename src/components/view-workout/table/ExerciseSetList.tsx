@@ -10,7 +10,7 @@ export function ExerciseSetList() {
   return (
     <FlatList
       data={sets}
-      keyExtractor={(item) => `${item.id}`}
+      keyExtractor={(item) => `${item.id}-${activeExercise?.id}`}
       renderItem={({ item, index }) => <SetRow set={item} setIndex={index} />}
       contentContainerStyle={{ paddingBottom: 96 }}
       showsVerticalScrollIndicator={false}

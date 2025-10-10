@@ -110,6 +110,17 @@ export default function Layout() {
           }}
         />
 
+        {/* Swap Exercise */}
+        <Stack.Screen
+          name="swap-exercise"
+          options={{
+            presentation: "fullScreenModal",
+            title: t("navigation.swapExercise"),
+            headerLeft: () => <Fragment />,
+            headerRight: () => <ModalExitButton />,
+          }}
+        />
+
         {/* All */}
         <Stack.Screen
           name="all"

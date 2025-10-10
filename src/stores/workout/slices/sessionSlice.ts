@@ -6,9 +6,7 @@ import {
   DropSet,
   SessionExercise,
   WorkoutTemplate,
-  ExerciseColumns,
 } from "../types";
-import { defaultSession, EmptySet } from "../../../config/constants/defaults";
 import { nanoid } from "nanoid/non-secure";
 
 /**
@@ -18,7 +16,7 @@ export const createSessionSlice: StateCreator<WorkoutStore, [], [], {}> = (
   set,
   get
 ) => ({
-  activeSession: defaultSession,
+  activeSession: null,
   isWorkoutActive: false,
   completedSessions: [],
 
@@ -28,7 +26,13 @@ export const createSessionSlice: StateCreator<WorkoutStore, [], [], {}> = (
       id: `session-${nanoid()}`,
       templateId: template?.id || null,
       templateVersion: template?.version || null,
-      name: template?.name || `Workout ${now.toLocaleDateString("en-GB")}`,
+      name: `${new Date().toLocaleDateString(
+        "en-GB"
+      )} - ${new Date().toLocaleTimeString("en-GB", {
+        hour: "2-digit",
+        minute: "2-digit",
+      })}`,
+      // e.g. "07/10/2025 10:00"
       startTime: now.toISOString(),
       isActive: true,
       layout: template
@@ -89,7 +93,7 @@ export const createSessionSlice: StateCreator<WorkoutStore, [], [], {}> = (
     };
 
     set((state) => ({
-      activeSession: defaultSession,
+      activeSession: null,
       isWorkoutActive: false,
       completedSessions: [...state.completedSessions, completedSession],
     }));
@@ -98,7 +102,8 @@ export const createSessionSlice: StateCreator<WorkoutStore, [], [], {}> = (
   cancelSession: () => {
     const { clearActiveExercise } = get();
     clearActiveExercise();
-    set({ activeSession: defaultSession, isWorkoutActive: false });
+
+    set({ activeSession: null, isWorkoutActive: false });
   },
 
   /**
@@ -113,17 +118,8 @@ export const createSessionSlice: StateCreator<WorkoutStore, [], [], {}> = (
     } = get();
     if (!activeSession) return;
 
-    const newColumns: ExerciseColumns[] = exercise.equipment.includes(
-      "bodyweight"
-    )
-      ? ["Reps"]
-      : exercise.columns || ["Reps", "Weight"];
-
     const newExercise: SessionExercise = {
       ...exercise,
-      id: exercise.id || `exercise-${nanoid()}`,
-      sets: exercise.sets || [EmptySet],
-      columns: newColumns,
     };
 
     const layout = activeSession.layout;

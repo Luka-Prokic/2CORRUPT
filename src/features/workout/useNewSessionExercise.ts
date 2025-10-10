@@ -15,6 +15,9 @@ export function createSessionExercise(exercise: ExerciseInfo): SessionExercise {
     equipment: exercise.equipment ? [...exercise.equipment] : undefined,
     notes: null,
     sets: [EmptySet],
+    columns: exercise.equipment?.includes("bodyweight")
+      ? ["Reps"]
+      : ["Reps", "Weight"], 
   };
 }
 

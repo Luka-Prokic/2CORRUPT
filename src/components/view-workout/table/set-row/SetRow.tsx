@@ -32,13 +32,26 @@ export function SetRow({ set, setIndex }: SetRowProps) {
 
   function input(column: SetColumns) {
     if (column === "Set") {
-      return <SetIndex setIndex={setIndex} />;
+      return (
+        <SetIndex
+          setIndex={setIndex}
+        />
+      );
     }
     if (column === "Done") {
-      return <DoneInput set={set} />;
+      return (
+        <DoneInput
+          set={set}
+        />
+      );
     }
     if (column === "Reps" || column === "Weight") {
-      return <NumericInput set={set} column={column} />;
+      return (
+        <NumericInput
+          set={set}
+          column={column}
+        />
+      );
     }
   }
 
@@ -67,7 +80,7 @@ export function SetRow({ set, setIndex }: SetRowProps) {
         <View style={{ flexDirection: "row", width: WIDTH, height: 66 }}>
           {columns.map((column: SetColumns, index: number) => (
             <View
-              key={`${column}-${index}-${setIndex}`}
+              key={`${column}-${index}`}
               style={{
                 flex: 1,
                 justifyContent: "center",

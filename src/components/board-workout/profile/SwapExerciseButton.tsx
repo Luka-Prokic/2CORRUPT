@@ -1,6 +1,7 @@
 import { OptionButton } from "../../ui/buttons/OptionButton";
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
 
 export function SwapExerciseButton() {
   const { theme } = useSettingsStore();
@@ -11,7 +12,9 @@ export function SwapExerciseButton() {
       icon={
         <Ionicons name="swap-vertical-outline" size={24} color={theme.text} />
       }
-      onPress={() => {}}
+      onPress={() => {
+        router.push("/swap-exercise");
+      }}
     />
   );
 }

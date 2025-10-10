@@ -7,29 +7,34 @@ import { Ionicons } from "@expo/vector-icons";
 import { StrobeBlur } from "../ui/misc/StrobeBlur";
 import { useTranslatedExerciseName } from "../../features/translate/useTranslatedExercisesNames";
 import { useTranslatedBodyPart } from "../../features/translate/useTranslatedBodyPart";
+import { useWorkoutStore } from "../../stores/workoutStore";
+import { router } from "expo-router";
 
-interface AddExerciseCardProps {
+interface SwapExerciseCardProps {
   exercise: ExerciseInfo;
+  isSelected: boolean;
   onSelect: (exercise: ExerciseInfo) => void;
-  unSelect: (exercise: ExerciseInfo) => void;
-  selectedTotal: number;
 }
 
-export function AddExerciseCard({
+export function SwapExerciseCard({
   exercise,
   onSelect,
-  unSelect,
-  selectedTotal,
-}: AddExerciseCardProps) {
+  isSelected,
+}: SwapExerciseCardProps) {
   const { theme } = useSettingsStore();
   const { translatedName } = useTranslatedExerciseName(exercise);
-
+  const { activeExercise, swapExerciseInActiveExercise } = useWorkoutStore();
   const translatedPrimary = exercise.primaryMuscles?.map((m) =>
     useTranslatedBodyPart(m).toLowerCase()
   );
   const translatedSecondary = exercise.secondaryMuscles?.map((m) =>
     useTranslatedBodyPart(m).toLowerCase()
   );
+
+  function handleSwapExercise() {
+    swapExerciseInActiveExercise(exercise.id);
+    router.back();
+  }
 
   return (
     <TouchableOpacity
@@ -38,13 +43,17 @@ export function AddExerciseCard({
       style={{
         height: 72,
         marginBottom: 1,
-        backgroundColor: theme.secondaryBackground,
+        backgroundColor:
+          activeExercise?.exerciseInfoId === exercise.id
+            ? theme.handle
+            : theme.secondaryBackground,
         shadowColor: theme.shadow,
         shadowOffset: { width: 0, height: 1 },
         shadowOpacity: 0.4,
         shadowRadius: 2,
         elevation: 4,
       }}
+      disabled={activeExercise?.exerciseInfoId === exercise.id}
     >
       <StrobeBlur
         colors={[theme.caka, theme.primaryBackground, theme.accent, theme.tint]}
@@ -53,7 +62,7 @@ export function AddExerciseCard({
           height: 72,
           width: WIDTH,
         }}
-        disable={selectedTotal === 0}
+        disable={!isSelected}
       >
         <View
           style={{
@@ -98,82 +107,27 @@ export function AddExerciseCard({
               </Text>
             </Text>
           </View>
-          
+
           {/* Selection button section */}
-          <SelectionButton
-            unSelect={unSelect}
-            selectedTotal={selectedTotal}
-            exercise={exercise}
-          />
+          <TouchableOpacity
+            onPress={handleSwapExercise}
+            style={{
+              backgroundColor: hexToRGBA(theme.handle, 0.8),
+              width: 44,
+              height: 44,
+              borderRadius: 22,
+              alignItems: "center",
+              justifyContent: "center",
+              opacity: isSelected ? 1 : 0,
+              position: "absolute",
+              right: 16,
+              top: 16,
+            }}
+          >
+            <Ionicons name="swap-horizontal" size={24} color={theme.text} />
+          </TouchableOpacity>
         </View>
       </StrobeBlur>
     </TouchableOpacity>
-  );
-}
-
-interface SelectionButtonProps {
-  unSelect: (exercise: ExerciseInfo) => void;
-  selectedTotal: number;
-  exercise: ExerciseInfo;
-}
-
-function SelectionButton({
-  unSelect,
-  selectedTotal,
-  exercise,
-}: SelectionButtonProps) {
-  const { theme } = useSettingsStore();
-
-  if (selectedTotal <= 0) return null;
-
-  return (
-    <View
-      style={{
-        flexDirection: "row",
-        alignItems: "center",
-        gap: 8,
-        position: "absolute",
-        right: 16,
-        top: 16,
-      }}
-    >
-      {/* Selected count pill */}
-      <View
-        style={{
-          backgroundColor: hexToRGBA(theme.handle, 0.8),
-          padding: 10,
-          minWidth: 44,
-          height: 44,
-          borderRadius: 22,
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Text
-          style={{
-            color: theme.text,
-            fontWeight: "600",
-            fontSize: 18,
-          }}
-        >
-          {selectedTotal}x
-        </Text>
-      </View>
-
-      {/* Unselect button */}
-      <TouchableOpacity
-        onPress={() => unSelect(exercise)}
-        style={{
-          backgroundColor: hexToRGBA(theme.handle, 0.8),
-          width: 44,
-          height: 44,
-          borderRadius: 22,
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Ionicons name="close" size={24} color={theme.text} />
-      </TouchableOpacity>
-    </View>
   );
 }

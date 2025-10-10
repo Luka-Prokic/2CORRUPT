@@ -9,7 +9,7 @@ import { NoExerciseView } from "./NoExerciseView";
 
 export function WorkoutView() {
   const { isWorkoutView } = useUIStore();
-  const { activeSession, activeExercise } = useWorkoutStore();
+  const { activeSession, activeExercise, startSession } = useWorkoutStore();
 
   const workoutViewOpacity = useRef(new Animated.Value(0)).current;
 
@@ -28,6 +28,12 @@ export function WorkoutView() {
       }).start();
     }
   }, [isWorkoutView]);
+
+  useEffect(() => {
+    if (!activeSession) {
+      startSession();
+    }
+  }, [activeSession]);
 
   const content = !activeSession ? (
     <NoSessionView />

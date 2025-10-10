@@ -1,5 +1,11 @@
 import { StateCreator } from "zustand";
-import { WorkoutStore, SessionExercise, Set, DropSet } from "../types";
+import {
+  WorkoutStore,
+  SessionExercise,
+  Set,
+  DropSet,
+  ExerciseInfo,
+} from "../types";
 import { exercisesDefList } from "../../../config/constants/defaults";
 import { nanoid } from "nanoid/non-secure";
 
@@ -265,6 +271,45 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
               }
             : s
         ),
+      },
+    });
+
+    // Auto-sync after update
+    syncActiveExerciseToSession();
+  },
+
+  /**
+   * Swap an exercise in the active exercise (and auto-sync)
+   */
+  swapExerciseInActiveExercise: (exerciseId: ExerciseInfo["id"]) => {
+    const { activeExercise, exercises, syncActiveExerciseToSession } = get();
+    if (!activeExercise) return;
+
+    const exerciseInfo = exercises.find((e) => e.id === exerciseId);
+
+    const isBodyweight = exerciseInfo?.equipment?.includes("bodyweight");
+
+    const newSets = activeExercise.sets.map((set) => ({
+      ...set,
+      weight: isBodyweight ? null : set.weight,
+      dropSets: isBodyweight ? [] : set.dropSets,
+    }));
+
+    set({
+      activeExercise: {
+        ...activeExercise,
+        exerciseInfoId: exerciseInfo?.id,
+        name: exerciseInfo?.defaultName,
+        prefix: undefined,
+        primaryMuscles: [...exerciseInfo?.primaryMuscles],
+        secondaryMuscles: exerciseInfo?.secondaryMuscles
+          ? [...exerciseInfo?.secondaryMuscles]
+          : undefined,
+        equipment: exerciseInfo?.equipment
+          ? [...exerciseInfo?.equipment]
+          : undefined,
+        sets: newSets,
+        columns: isBodyweight ? ["Reps"] : ["Reps", "Weight"],
       },
     });
 

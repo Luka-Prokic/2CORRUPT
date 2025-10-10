@@ -1,9 +1,9 @@
+import { useState } from "react";
 import { TextInput } from "react-native";
 import { useSettingsStore } from "../../../../stores/settingsStore";
 import { useWorkoutStore } from "../../../../stores/workoutStore";
 import { ExerciseColumns, Set } from "../../../../stores/workout/types";
 import { useDisplayedWeight } from "../../../../features/translate/useDisplayedWightUnit";
-import { useValidateRepsAndWeight } from "../../../../features/validate/useValidateRepsAndWight";
 
 interface NumericInputProps {
   set: Set;
@@ -13,8 +13,8 @@ interface NumericInputProps {
 export function NumericInput({ set, column }: NumericInputProps) {
   const { theme } = useSettingsStore();
   const { updateSetInActiveExercise } = useWorkoutStore();
-  const [value, handleChange] = useValidateRepsAndWeight(set[column] || 0);
   const { fromKg, toKg } = useDisplayedWeight();
+  const [value, setValue] = useState(set[column] || 0);
 
   const handleUpdateSet = (setId: string, updates: any) => {
     updateSetInActiveExercise(setId, updates);
@@ -31,8 +31,8 @@ export function NumericInput({ set, column }: NumericInputProps) {
           color: theme.text,
         }}
         value={fromKg(value)}
-        onChangeText={handleChange}
         onBlur={() => handleUpdateSet(set.id, { [column]: toKg(value) })}
+        onChangeText={(text) => setValue(Number(text))}
         placeholder="0"
         placeholderTextColor={theme.grayText}
         keyboardType="numeric"
@@ -49,7 +49,7 @@ export function NumericInput({ set, column }: NumericInputProps) {
         color: theme.text,
       }}
       value={value.toString()}
-      onChangeText={handleChange}
+      onChangeText={(text) => setValue(Number(text))}
       onBlur={() => handleUpdateSet(set.id, { [column]: value })}
       placeholder="0"
       placeholderTextColor={theme.grayText}

@@ -28,7 +28,7 @@ export function ExerciseProfile() {
       <View style={{ width: WIDTH - 32, marginBottom: 16 }}>
         <RemoveExerciseButton />
         <SwapExerciseButton />
-        <AddToSupersetButton />
+        {/* <AddToSupersetButton /> */}
         <ExerciseColumnOptions />
       </View>
 

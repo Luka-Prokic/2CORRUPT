@@ -128,7 +128,8 @@
     "stash": "Štek",
     "profile": "Nalog",
     "settings": "Podešavanja",
-    "addExercise": "Dodaj Vežbu"
+    "addExercise": "Dodaj Vežbu",
+    "swapExercise": "Zameni Vežbu"
   },
   "theme": {
     "dark": "Tamna",

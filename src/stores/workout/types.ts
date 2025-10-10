@@ -52,7 +52,7 @@ export type ExerciseColumns = "Reps" | "Weight" | "RIR" | "RPE";
 // Session snapshot of an exercise with sets
 export interface SessionExercise {
   readonly id: string; // snapshot id for session level
-  readonly exerciseInfoId?: string | null;
+  exerciseInfoId?: string | null;
   name: string;
   prefix?: string; // new prefix field
   primaryMuscles: string[];
@@ -143,6 +143,7 @@ export interface ExerciseSlice {
     updates: Partial<DropSet>
   ) => void;
   removeDropSetFromActiveExercise: (setId: string, dropSetId: string) => void;
+  swapExerciseInActiveExercise: (exerciseId: string) => void;
 }
 
 export interface TimerSlice {
