@@ -7,7 +7,7 @@ import { useSettingsStore } from "../stores/settingsStore";
 import { CorruptHeader } from "../components/corrupt/CorruptHeader";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useTranslation } from "react-i18next";
-import { CreateNewExerciseButton } from "../components/add-exercise/header/CreateNewExerciseButton";
+import { CreateNewExerciseButton } from "../components/add-exercise/CreateNewExerciseButton";
 
 function ModalBackButton() {
   const { theme } = useSettingsStore();
@@ -89,16 +89,6 @@ export default function Layout() {
             headerRight: () => <ModalExitButton />,
           }}
         />
-
-        {/* Workout */}
-        {/* <Stack.Screen
-        name="workout"
-        options={{
-          title: "Workout",
-          animation: "slide_from_right",
-          headerLeft: () => <ModalBackButton />,
-        }}
-      /> */}
 
         {/* WorkoutBoard */}
         <Stack.Screen

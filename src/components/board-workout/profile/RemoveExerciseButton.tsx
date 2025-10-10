@@ -1,5 +1,5 @@
-import { OptionButton } from "../../../ui/buttons/OptionButton";
-import { useSettingsStore } from "../../../../stores/settingsStore";
+import { OptionButton } from "../../ui/buttons/OptionButton";
+import { useSettingsStore } from "../../../stores/settingsStore";
 import { Ionicons } from "@expo/vector-icons";
 
 export function RemoveExerciseButton() {

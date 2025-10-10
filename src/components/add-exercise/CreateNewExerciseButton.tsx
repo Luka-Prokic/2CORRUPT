@@ -1,6 +1,6 @@
 import { TouchableOpacity } from "react-native";
 import { Text } from "react-native";
-import { useSettingsStore } from "../../../stores/settingsStore";
+import { useSettingsStore } from "../../stores/settingsStore";
 import { useTranslation } from "react-i18next";
 
 export function CreateNewExerciseButton() {

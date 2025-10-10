@@ -1,5 +1,5 @@
-import { useFadeInAnim } from "../../../../animations/useFadeInAnim";
-import { HEIGHT, WIDTH } from "../../../../features/Dimensions";
+import { useFadeInAnim } from "../../../animations/useFadeInAnim";
+import { HEIGHT, WIDTH } from "../../../features/Dimensions";
 import { Animated, View } from "react-native";
 import { SwapExerciseButton } from "./SwapExerciseButton";
 import { ExerciseColumnOptions } from "./ExerciseColumnOptions";

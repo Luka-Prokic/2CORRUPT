@@ -1,10 +1,10 @@
 import { Text, View } from "react-native";
-import { IButton } from "../../../ui/buttons/IButton";
-import { WIDTH } from "../../../../features/Dimensions";
-import { ExerciseName } from "../../../view-workout/table/header/ExerciseName";
-import { useSettingsStore } from "../../../../stores/settingsStore";
+import { IButton } from "../../ui/buttons/IButton";
+import { WIDTH } from "../../../features/Dimensions";
+import { ExerciseName } from "../../view-workout/table/header/ExerciseName";
+import { useSettingsStore } from "../../../stores/settingsStore";
 import { useTranslation } from "react-i18next";
-import { useWorkoutStore } from "../../../../stores/workout/useWorkoutStore";
+import { useWorkoutStore } from "../../../stores/workout/useWorkoutStore";
 
 export function ExerciseHeader() {
   const { theme } = useSettingsStore();

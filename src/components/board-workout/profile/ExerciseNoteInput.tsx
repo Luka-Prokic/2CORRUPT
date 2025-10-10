@@ -1,7 +1,7 @@
 import { Keyboard, TextInput } from "react-native";
-import { useSettingsStore } from "../../../../stores/settingsStore";
+import { useSettingsStore } from "../../../stores/settingsStore";
 import { useState } from "react";
-import { useWorkoutStore } from "../../../../stores/workout/useWorkoutStore";
+import { useWorkoutStore } from "../../../stores/workout/useWorkoutStore";
 
 export function ExerciseNoteInput() {
   const { theme } = useSettingsStore();

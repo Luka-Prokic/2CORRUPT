@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { BounceButton } from "../../../ui/buttons/BounceButton";
+import { BounceButton } from "../../ui/buttons/BounceButton";
 import { Text, View } from "react-native";
-import { WIDTH } from "../../../../features/Dimensions";
-import { hexToRGBA } from "../../../../features/HEXtoRGB";
-import { useSettingsStore } from "../../../../stores/settingsStore";
+import { WIDTH } from "../../../features/Dimensions";
+import { hexToRGBA } from "../../../features/HEXtoRGB";
+import { useSettingsStore } from "../../../stores/settingsStore";
 import { Ionicons } from "@expo/vector-icons";
 
 export function RestTimerSettings() {
