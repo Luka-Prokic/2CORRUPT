@@ -1,12 +1,12 @@
-import { useSettingsStore } from "../../../stores/settingsStore";
-import { ExerciseInfo } from "../../../stores/workout/types";
-import { WIDTH } from "../../../features/Dimensions";
-import { hexToRGBA } from "../../../features/HEXtoRGB";
+import { useSettingsStore } from "../../stores/settingsStore";
+import { ExerciseInfo } from "../../stores/workout/types";
+import { WIDTH } from "../../features/Dimensions";
+import { hexToRGBA } from "../../features/HEXtoRGB";
 import { TouchableOpacity, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { StrobeBlur } from "../../ui/misc/StrobeBlur";
-import { useTranslatedExerciseName } from "../../../features/translate/useTranslatedExercisesNames";
-import { useTranslatedBodyPart } from "../../../features/translate/useTranslatedBodyPart";
+import { StrobeBlur } from "../ui/misc/StrobeBlur";
+import { useTranslatedExerciseName } from "../../features/translate/useTranslatedExercisesNames";
+import { useTranslatedBodyPart } from "../../features/translate/useTranslatedBodyPart";
 
 interface AddExerciseCardProps {
   exercise: ExerciseInfo;

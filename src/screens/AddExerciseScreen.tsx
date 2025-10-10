@@ -1,16 +1,10 @@
 import { useEffect, useState } from "react";
-import { FlatList, View } from "react-native";
+import { FlatList } from "react-native";
 import { ExerciseInfo } from "../stores/workout/types";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useSettingsStore } from "../stores/settingsStore";
 import { BottomAddExerciseSection } from "../components/add-exercise/BottomAddExerciseSection";
-import { AddExerciseCard } from "../components/add-exercise/exercise/AddExerciseCard";
-import { SearchBar } from "../components/ui/SearchBar";
-import { FilterFlatList } from "../components/ui/FilterFlatList";
-import { WIDTH } from "../features/Dimensions";
-import { useTranslation } from "react-i18next";
-import { useFilterAddExercise } from "../features/workout/useFilterAddExercise";
-import * as Haptics from "expo-haptics";
+import { AddExerciseCard } from "../components/add-exercise/AddExerciseCard";
 import { ExerciseFilter } from "../components/add-exercise/ExerciseFilter";
 
 export function AddExerciseScreen() {
@@ -18,7 +12,6 @@ export function AddExerciseScreen() {
   const [selectedExercises, setSelectedExercises] = useState<ExerciseInfo[]>(
     []
   );
-
   const [filteredExercises, setFilteredExercises] = useState<ExerciseInfo[]>(
     []
   );
