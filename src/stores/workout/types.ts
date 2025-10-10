@@ -111,6 +111,12 @@ export interface SessionSlice {
   startSession: (template?: WorkoutTemplate) => void;
   completeSession: () => void;
   cancelSession: () => void;
+  addExerciseToSession: (
+    exercise: SessionExercise,
+    afterItemId?: string
+  ) => void;
+  removeExercisesFromSession: (exerciseIds: string[]) => void;
+  reorderSessionItems: (newOrder: SessionExercise[]) => void;
 }
 
 export interface ExerciseSlice {
@@ -137,13 +143,6 @@ export interface ExerciseSlice {
     updates: Partial<DropSet>
   ) => void;
   removeDropSetFromActiveExercise: (setId: string, dropSetId: string) => void;
-  addExerciseToSession: (
-    exercise: SessionExercise,
-    afterItemId?: string
-  ) => void;
-  removeItemFromSession: (layoutItemId: string) => void;
-  reorderSessionItems: (newOrder: SessionExercise[]) => void;
-  checkActiveExercise: () => void;
 }
 
 export interface TimerSlice {

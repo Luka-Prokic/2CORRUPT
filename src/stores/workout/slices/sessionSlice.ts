@@ -6,8 +6,9 @@ import {
   DropSet,
   SessionExercise,
   WorkoutTemplate,
+  ExerciseColumns,
 } from "../types";
-import { defaultSession } from "../../../config/constants/defaults";
+import { defaultSession, EmptySet } from "../../../config/constants/defaults";
 import { nanoid } from "nanoid/non-secure";
 
 /**
@@ -98,5 +99,95 @@ export const createSessionSlice: StateCreator<WorkoutStore, [], [], {}> = (
     const { clearActiveExercise } = get();
     clearActiveExercise();
     set({ activeSession: defaultSession, isWorkoutActive: false });
+  },
+
+  /**
+   * Add a new exercise to the session layout
+   */
+  addExerciseToSession: (exercise: SessionExercise, afterItemId?: string) => {
+    const {
+      activeSession,
+      activeExercise,
+      setActiveExercise,
+      updateNavigationFlags,
+    } = get();
+    if (!activeSession) return;
+
+    const newColumns: ExerciseColumns[] = exercise.equipment.includes(
+      "bodyweight"
+    )
+      ? ["Reps"]
+      : exercise.columns || ["Reps", "Weight"];
+
+    const newExercise: SessionExercise = {
+      ...exercise,
+      id: exercise.id || `exercise-${nanoid()}`,
+      sets: exercise.sets || [EmptySet],
+      columns: newColumns,
+    };
+
+    const layout = activeSession.layout;
+    const insertIndex = afterItemId
+      ? layout.findIndex((item: SessionExercise) => item.id === afterItemId) + 1
+      : layout.length;
+
+    const updatedLayout = [...layout];
+    updatedLayout.splice(insertIndex, 0, newExercise);
+
+    set((state) => ({
+      activeSession: { ...state.activeSession!, layout: updatedLayout },
+    }));
+
+    //if layout has no active exercise, set the new exercise as active
+    if (!activeExercise) {
+      setActiveExercise(newExercise.id);
+    }
+
+    //update navigation flags in flowSlice
+    updateNavigationFlags();
+  },
+
+  /**
+   * Remove multiple exercises from the session layout
+   */
+  removeExercisesFromSession: (exerciseIds: string[]) => {
+    const {
+      activeSession,
+      activeExercise,
+      updateNavigationFlags,
+      setActiveExercise,
+    } = get();
+    if (!activeSession) return;
+
+    const newLayout = activeSession.layout.filter(
+      (item: SessionExercise) => !exerciseIds.includes(item.id)
+    );
+
+    let newActiveExerciseId = activeExercise?.id;
+    if (exerciseIds.includes(activeExercise?.id ?? "")) {
+      newActiveExerciseId = newLayout.length > 0 ? newLayout[0].id : null;
+    }
+
+    set({
+      activeSession: { ...activeSession, layout: newLayout },
+    });
+    setActiveExercise(newActiveExerciseId);
+
+    updateNavigationFlags();
+  },
+
+  /**
+   * Reorder items in the session layout
+   */
+  reorderSessionItems: (newOrder: SessionExercise[]) => {
+    const { activeSession } = get();
+    if (!activeSession) return;
+
+    set((state) => ({
+      activeSession: {
+        ...state.activeSession!,
+        layout: newOrder,
+      },
+    }));
   },
 });

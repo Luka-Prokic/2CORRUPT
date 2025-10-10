@@ -1,12 +1,6 @@
 import { StateCreator } from "zustand";
-import {
-  WorkoutStore,
-  SessionExercise,
-  Set,
-  DropSet,
-  ExerciseColumns,
-} from "../types";
-import { exercisesDefList, EmptySet } from "../../../config/constants/defaults";
+import { WorkoutStore, SessionExercise, Set, DropSet } from "../types";
+import { exercisesDefList } from "../../../config/constants/defaults";
 import { nanoid } from "nanoid/non-secure";
 
 /**
@@ -276,106 +270,5 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
 
     // Auto-sync after update
     syncActiveExerciseToSession();
-  },
-
-  /**
-   * Add a new exercise to the session layout
-   */
-  addExerciseToSession: (exercise: SessionExercise, afterItemId?: string) => {
-    const {
-      activeSession,
-      activeExercise,
-      setActiveExercise,
-      updateNavigationFlags,
-    } = get();
-    if (!activeSession) return;
-
-    const newColumns: ExerciseColumns[] = exercise.equipment.includes(
-      "bodyweight"
-    )
-      ? ["Reps"]
-      : exercise.columns || ["Reps", "Weight"];
-
-    const newExercise: SessionExercise = {
-      ...exercise,
-      id: exercise.id || `exercise-${nanoid()}`,
-      sets: exercise.sets || [EmptySet],
-      columns: newColumns,
-    };
-
-    const layout = activeSession.layout;
-    const insertIndex = afterItemId
-      ? layout.findIndex((item: SessionExercise) => item.id === afterItemId) + 1
-      : layout.length;
-
-    const updatedLayout = [...layout];
-    updatedLayout.splice(insertIndex, 0, newExercise);
-
-    set((state) => ({
-      activeSession: { ...state.activeSession!, layout: updatedLayout },
-    }));
-
-    //if layout has no active exercise, set the new exercise as active
-    if (!activeExercise) {
-      setActiveExercise(newExercise.id);
-    }
-
-    //update navigation flags in flowSlice
-    updateNavigationFlags();
-  },
-
-  /**
-   * Remove an item from the session layout
-   */
-  removeItemFromSession: (layoutItemId: string) => {
-    const { activeSession, updateNavigationFlags, checkActiveExercise } = get();
-    if (!activeSession) return;
-
-    const layout = activeSession.layout.filter(
-      (i: SessionExercise) => i.id !== layoutItemId
-    );
-
-    set((state) => ({
-      activeSession: { ...state.activeSession!, layout },
-    }));
-
-    //check if the active exercise still exists in the session layout after removal
-    checkActiveExercise();
-
-    //update navigation flags in flowSlice
-    updateNavigationFlags();
-  },
-
-  /**
-   * Reorder items in the session layout
-   */
-  reorderSessionItems: (newOrder: SessionExercise[]) => {
-    const { activeSession } = get();
-    if (!activeSession) return;
-
-    set((state) => ({
-      activeSession: {
-        ...state.activeSession!,
-        layout: newOrder,
-      },
-    }));
-  },
-
-  /**
-   * Check if the active exercise still exists in the session layout
-   */
-  checkActiveExercise: () => {
-    const { activeSession, activeExercise, setActiveExercise } = get();
-    if (!activeSession) return;
-
-    const layout = activeSession.layout;
-    // Check if current activeExercise still exists
-    const isThereActiveExercise = layout.some((item: SessionExercise) => {
-      return item.id === activeExercise?.id;
-    });
-
-    if (!isThereActiveExercise && layout.length > 0) {
-      setActiveExercise(layout[0].id);
-    }
   },
 });

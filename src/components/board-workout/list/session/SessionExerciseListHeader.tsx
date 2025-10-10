@@ -22,12 +22,7 @@ export function SessionExerciseListHeader({
   setSelectMode,
   toggleSelectMode,
 }: SessionExerciseListHeaderProps) {
-  const {
-    activeSession,
-    activeExercise,
-    clearActiveExercise,
-    removeItemFromSession,
-  } = useWorkoutStore();
+  const { activeSession, removeExercisesFromSession } = useWorkoutStore();
   const { theme } = useSettingsStore();
   const { showActionSheet, t } = useActionSheet();
 
@@ -58,10 +53,7 @@ export function SessionExerciseListHeader({
   }
 
   function removeSelectedExercises() {
-    selectedExercises.forEach((exerciseId) => {
-      if (activeExercise.id === exerciseId) clearActiveExercise();
-      removeItemFromSession(exerciseId);
-    });
+    removeExercisesFromSession(selectedExercises);
     setSelectedExercises([]);
     setSelectMode(false);
   }
