@@ -1,5 +1,5 @@
 import { StateCreator } from "zustand";
-import { WorkoutStore, Set, DropSet, SessionLayoutItem, SessionExercise } from "../types";
+import { WorkoutStore, Set, DropSet, SessionExercise } from "../types";
 
 /**
  * Stats slice: provides computed statistics for workout sessions
@@ -14,10 +14,8 @@ export const createStatsSlice: StateCreator<WorkoutStore, [], [], {}> = (set, ge
     let totalVolumeKg = 0;
 
     // Calculate stats from all exercises in the session
-    activeSession.layout.forEach((item: SessionLayoutItem) => {
-      const exercises = item.type === "exercise" ? [item.exercise] : item.exercises;
+    activeSession.layout.forEach((exercise: SessionExercise) => {
       
-      exercises.forEach((exercise: SessionExercise) => {
         exercise.sets.forEach((set: Set) => {
           if (set.isCompleted) {
             totalSets++;
@@ -32,7 +30,6 @@ export const createStatsSlice: StateCreator<WorkoutStore, [], [], {}> = (set, ge
             });
           }
         });
-      });
     });
     
     const startTime = new Date(activeSession.startTime);

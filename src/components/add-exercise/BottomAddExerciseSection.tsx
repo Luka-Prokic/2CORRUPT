@@ -6,14 +6,10 @@ import { WIDTH } from "../../features/Dimensions";
 import { IButton } from "../ui/buttons/IButton";
 import { router } from "expo-router";
 import { useEffect, useRef } from "react";
-import {
-  createGroupSessionExercise,
-  createSessionExercise,
-} from "../../features/workout/useNewSessionExercise";
+import { createSessionExercise } from "../../features/workout/useNewSessionExercise";
 import { ExerciseInfo, SessionExercise } from "../../stores/workout/types";
 import { useWorkoutStore } from "../../stores/workout/useWorkoutStore";
 import { useTranslation } from "react-i18next";
-import { StrobeBlur } from "../ui/misc/StrobeBlur";
 
 interface BottomAddExerciseSectionProps {
   selectedExercises: ExerciseInfo[];
@@ -23,12 +19,8 @@ export function BottomAddExerciseSection({
   selectedExercises,
 }: BottomAddExerciseSectionProps) {
   const { theme } = useSettingsStore();
-  const {
-    addExerciseToSession,
-    setActiveExercise,
-    addGroupToSession,
-    activeExercise,
-  } = useWorkoutStore();
+  const { addExerciseToSession, setActiveExercise, activeExercise } =
+    useWorkoutStore();
   const { t } = useTranslation();
 
   const animatedOpacity = useRef(new Animated.Value(0)).current;
@@ -43,10 +35,8 @@ export function BottomAddExerciseSection({
 
   function handleAddSuperSet() {
     const groupExercises: SessionExercise[] = selectedExercises.map(
-      (exercise) => createGroupSessionExercise(exercise, true)
+      (exercise) => createSessionExercise(exercise)
     );
-
-    addGroupToSession("superset", groupExercises, { name: "Superset" });
     if (!activeExercise) {
       setActiveExercise(groupExercises[0].id);
     }
@@ -100,33 +90,17 @@ export function BottomAddExerciseSection({
               borderBottomLeftRadius: 32,
             }}
             color={theme.accent}
+            disabled
           >
-            <StrobeBlur
-              colors={[
-                theme.text,
-                theme.secondaryText,
-                theme.background,
-                theme.primaryBackground,
-              ]}
-              tint="light"
+            <Text
               style={{
-                width: "100%",
-                height: "100%",
-                justifyContent: "center",
-                alignItems: "center",
+                color: theme.secondaryText,
+                fontSize: 24,
+                fontWeight: "bold",
               }}
-              disable
             >
-              <Text
-                style={{
-                  color: theme.secondaryText,
-                  fontSize: 24,
-                  fontWeight: "bold",
-                }}
-              >
-                {t("add-exercise.super-set")}
-              </Text>
-            </StrobeBlur>
+              {t("add-exercise.super-set")}
+            </Text>
           </IButton>
         )}
         <IButton
@@ -140,32 +114,15 @@ export function BottomAddExerciseSection({
           }}
           color={theme.tint}
         >
-          <StrobeBlur
-            colors={[
-              theme.caka,
-              theme.primaryBackground,
-              theme.accent,
-              theme.tint,
-            ]}
-            tint="light"
+          <Text
             style={{
-              width: "100%",
-              height: "100%",
-              justifyContent: "center",
-              alignItems: "center",
+              color: theme.secondaryText,
+              fontSize: 24,
+              fontWeight: "bold",
             }}
-            disable
           >
-            <Text
-              style={{
-                color: theme.secondaryText,
-                fontSize: 24,
-                fontWeight: "bold",
-              }}
-            >
-              {t("add-exercise.add")} {selectedExercises.length.toString()}
-            </Text>
-          </StrobeBlur>
+            {t("add-exercise.add")} {selectedExercises.length.toString()}
+          </Text>
         </IButton>
       </LinearGradient>
     </Animated.View>

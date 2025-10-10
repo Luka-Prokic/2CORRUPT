@@ -25,7 +25,7 @@ export function ExerciseCard({
 }: ExerciseCardProps) {
   const { theme } = useSettingsStore();
   const { translatedName } = useTranslatedSessionExerciseName(exercise);
-  const {activeExercise} = useWorkoutStore();
+  const { activeExercise } = useWorkoutStore();
 
   const isActive = activeExercise?.id === exercise.id;
   const isSelected = selectedExercises.includes(exercise.id);

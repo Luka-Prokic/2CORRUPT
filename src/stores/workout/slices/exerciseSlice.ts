@@ -339,7 +339,9 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
       activeSession: { ...state.activeSession!, layout },
     }));
 
+    //check if the active exercise still exists in the session layout after removal
     checkActiveExercise();
+
     //update navigation flags in flowSlice
     updateNavigationFlags();
   },
@@ -372,12 +374,8 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
       return item.id === activeExercise?.id;
     });
 
-    if (!isThereActiveExercise) {
-      // Find the first available exercise in layout
-      for (const item of layout) {
-        setActiveExercise(item.id);
-        return;
-      }
+    if (!isThereActiveExercise && layout.length > 0) {
+      setActiveExercise(layout[0].id);
     }
   },
 });

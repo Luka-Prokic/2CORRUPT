@@ -1,5 +1,6 @@
 import { StateCreator } from "zustand";
-import { WorkoutStore, WorkoutTemplate, SessionLayoutItem, TemplateSlice } from "../types";
+import { WorkoutStore, WorkoutTemplate,  TemplateSlice, SessionExercise } from "../types";
+import { nanoid } from "nanoid/non-secure";
 
 /**
  * Template slice: manages workout templates and selection
@@ -8,9 +9,9 @@ export const createTemplateSlice: StateCreator<WorkoutStore, [], [], TemplateSli
   templates: [],
   activeTemplateId: null,
 
-  createTemplate: (name: string, description: string | undefined, layout: SessionLayoutItem[]) => {
+  createTemplate: (name: string, description: string | undefined, layout: SessionExercise[]) => {
     const newTemplate: WorkoutTemplate = {
-      id: Date.now().toString(),
+      id: `template-${nanoid()}`,
       name,
       description,
       version: 1,

@@ -62,13 +62,6 @@ export interface SessionExercise {
   sets: Set[];
   columns?: ExerciseColumns[];
   restTime?: number | null;
-  group?: ExerciseGroup;
-}
-
-export interface ExerciseGroup {
-  readonly id: string;
-  type: "superset" | "circuit";
-  name?: string;
 }
 
 // Workout session (single source of truth for a performed workout)
@@ -185,24 +178,9 @@ export interface FlowSlice {
   getActiveExerciseIndex: () => number | null;
 }
 
-export interface GroupSlice {
-  addGroupToSession: (
-    type: "superset" | "circuit",
-    exercises: SessionExercise[],
-    options?: { name?: string; rounds?: number }
-  ) => void;
-
-  removeGroupFromSession: (groupId: string) => void;
-
-  updateGroupInSession: (
-    groupId: string,
-    updates: Partial<SessionExercise>
-  ) => void;
-}
 export type WorkoutStore = TemplateSlice &
   SessionSlice &
   ExerciseSlice &
   TimerSlice &
   StatsSlice &
-  FlowSlice &
-  GroupSlice;
+  FlowSlice;

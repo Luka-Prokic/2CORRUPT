@@ -26,7 +26,6 @@ export function SessionDashboard({
 }: SessionDashboardProps) {
   const { theme } = useSettingsStore();
   const { activeExercise } = useWorkoutStore();
-  const [listType, setListType] = useState<SessionListType>("session");
 
   const animatedY = useRef(new Animated.Value(0)).current;
 
@@ -65,27 +64,10 @@ export function SessionDashboard({
       </StrobeBlur>
 
       {/* Toggle Panel */}
-      <ListHeader
-        listOpen={listOpen}
-        listType={listType}
-        setListType={setListType}
-        togglePanel={togglePanel}
-      />
+      <ListHeader listOpen={listOpen} togglePanel={togglePanel} />
 
       {/* List */}
-      {listType === "session" && (
-        <SessionExerciseList listOpen={listOpen} togglePanel={togglePanel} />
-      )}
-      {/* Supersets Exercises */}
-      {listType === "superset" && (
-        <></>
-        // <SupersetList listOpen={listOpen} togglePanel={togglePanel} />
-      )}
-      {/* Circuits Exercises  */}
-      {listType === "circuit" && (
-        <></>
-        // <CircuitList listOpen={listOpen} togglePanel={togglePanel} />
-      )}
+      <SessionExerciseList listOpen={listOpen} togglePanel={togglePanel} />
     </Animated.View>
   );
 }

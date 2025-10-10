@@ -6,16 +6,18 @@ import { ExerciseCard } from "../../cards/ExerciseCard";
 import { useEffect, useState } from "react";
 import { SessionExerciseListHeader } from "./SessionExerciseListHeader";
 import { SessionExerciseListAddNewButton } from "./SessionExerciseListAddNewButton";
+
 interface SessionExerciseListProps {
   listOpen: boolean;
   togglePanel: () => void;
 }
+
 export function SessionExerciseList({
   listOpen,
   togglePanel,
 }: SessionExerciseListProps) {
   const { activeSession } = useWorkoutStore();
-  const { activeExercise, setActiveExercise } = useWorkoutStore();
+  const { setActiveExercise } = useWorkoutStore();
   const { fadeIn } = useFadeInAnim();
 
   const [selectMode, setSelectMode] = useState(false);
@@ -44,44 +46,49 @@ export function SessionExerciseList({
     setSelectMode(false);
   }, [listOpen]);
 
-  if (listOpen)
+  const renderCard = (item: any) => {
     return (
-      <Animated.View
-        style={{
-          paddingBottom: 80,
-          height: HEIGHT - 120,
-          ...fadeIn,
-        }}
-      >
-        <SessionExerciseListHeader
-          selectMode={selectMode}
-          toggleSelectMode={toggleSelectMode}
-          selectedExercises={selectedExercises}
-          setSelectedExercises={setSelectedExercises}
-          setSelectMode={setSelectMode}
-        />
-        <FlatList
-          data={activeSession.layout}
-          keyExtractor={(item, index) => `${item.id}-${index}`}
-          renderItem={({ item }) => (
-            <ExerciseCard
-              exercise={item}
-              onUse={handleExerciseUse}
-              onSelect={handleExerciseSelect}
-              selectedExercises={selectedExercises}
-              multipleSelect={selectMode}
-            />
-          )}
-          ListFooterComponent={() => (
-            <SessionExerciseListAddNewButton
-              style={{
-                opacity: selectMode ? 0 : 1,
-              }}
-            />
-          )}
-        />
-      </Animated.View>
+      <ExerciseCard
+        exercise={item}
+        onUse={handleExerciseUse}
+        onSelect={handleExerciseSelect}
+        selectedExercises={selectedExercises}
+        multipleSelect={selectMode}
+      />
     );
+  };
 
-  return null;
+  if (!listOpen) return null;
+
+  return (
+    <Animated.View
+      style={{
+        paddingBottom: 80,
+        height: HEIGHT - 120,
+        ...fadeIn,
+      }}
+    >
+      <SessionExerciseListHeader
+        selectMode={selectMode}
+        toggleSelectMode={toggleSelectMode}
+        selectedExercises={selectedExercises}
+        setSelectedExercises={setSelectedExercises}
+        setSelectMode={setSelectMode}
+      />
+      <FlatList
+        data={activeSession?.layout}
+        keyExtractor={(item) =>
+          "group" in item ? `group-${item.group}` : item.id
+        }
+        renderItem={({ item }) => renderCard(item)}
+        ListFooterComponent={() => (
+          <SessionExerciseListAddNewButton
+            style={{
+              opacity: selectMode ? 0 : 1,
+            }}
+          />
+        )}
+      />
+    </Animated.View>
+  );
 }
