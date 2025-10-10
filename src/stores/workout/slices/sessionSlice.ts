@@ -34,7 +34,6 @@ export const createSessionSlice: StateCreator<WorkoutStore, [], [], {}> = (
         ? template.layout.map((layoutItem: SessionExercise) => {
             return {
               ...layoutItem,
-              group: layoutItem.group || undefined,
             };
           })
         : [],

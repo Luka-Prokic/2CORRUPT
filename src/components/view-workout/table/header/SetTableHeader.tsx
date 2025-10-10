@@ -7,6 +7,7 @@ import { WIDTH } from "../../../../features/Dimensions";
 export function SetTableHeader() {
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
+  const { units, setUnits } = useSettingsStore();
 
   const { activeExercise } = useWorkoutStore();
 
@@ -43,12 +44,11 @@ export function SetTableHeader() {
   }
 
   function ButtonLabel({ label }: { label: string }) {
-    const weightUnit = "KG";
     return (
       <TouchableOpacity
         key={label}
         onPress={() => {
-          //TODO: Toggle weight unit for whole app
+          setUnits({ ...units, weight: units.weight === "kg" ? "lbs" : "kg" });
         }}
         style={{
           width: WIDTH / columns.length,
@@ -69,7 +69,7 @@ export function SetTableHeader() {
           adjustsFontSizeToFit
           minimumFontScale={0.6}
         >
-          {t(`workout-view.${weightUnit.toLowerCase()}`).toUpperCase()}
+          {t(`workout-view.${units.weight.toLowerCase()}`).toUpperCase()}
         </Text>
       </TouchableOpacity>
     );
