@@ -198,6 +198,12 @@
     }
   },
 
+  "set": {
+    "add-drop-set": "Add Drop",
+    "remove": "Remove",
+    "un-check": "Uncheck"
+  },
+
   "workout-view": {
     "set": "Sets",
     "reps": "Reps",
@@ -220,7 +226,7 @@
     "delete": "Delete",
     "complete": "Complete",
     "continue": "Continue",
-    "add-to-superset": "Add to Super Set",
+    "add-to-superset": "Add to Superset",
     "exit-workout": "Exit Workout",
     "exit-workout-message": "You’re about to cancel your workout. You can also save it as a template before exiting.",
     "save-as-template": "Save as Template",
@@ -233,8 +239,8 @@
   },
   "add-exercise": {
     "add-exercise": "Add Exercise",
-    "add-to-superset": "Add to Super Set",
-    "super-set": "Super Set",
+    "add-to-superset": "Add to Superset",
+    "super-set": "Superset",
     "add": "Add",
     "equipment": "Equipment",
     "body-part": "Body Part",
@@ -306,7 +312,7 @@
     "back-squat": "Barbell Back Squat",
     "deadlift": "Conventional Deadlift",
     "ohp": "Overhead Press",
-    "pullups": "Pull-Ups",
+    "pullups": "Pull Up",
     "incline-bench": "Incline Barbell Bench Press",
     "decline-bench": "Decline Barbell Bench Press",
     "db-bench": "Dumbbell Bench Press",

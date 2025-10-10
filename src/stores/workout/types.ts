@@ -47,7 +47,7 @@ export interface WorkoutTemplate {
   metadata?: Record<string, any>;
 }
 
-export type ExerciseColumns = ["Reps", "Weight", "RIR", "RPE"];
+export type ExerciseColumns = "Reps" | "Weight" | "RIR" | "RPE";
 
 // Session snapshot of an exercise with sets
 export interface SessionExercise {

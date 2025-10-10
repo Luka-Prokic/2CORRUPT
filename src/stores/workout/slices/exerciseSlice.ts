@@ -5,6 +5,7 @@ import {
   Set,
   DropSet,
   SessionLayoutItem,
+  ExerciseColumns,
 } from "../types";
 import { exercisesDefList, EmptySet } from "../../../config/constants/defaults";
 
@@ -311,10 +312,17 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
     } = get();
     if (!activeSession) return;
 
+    const newColumns: ExerciseColumns[] = exercise.equipment.includes(
+      "bodyweight"
+    )
+      ? ["Reps"]
+      : exercise.columns || ["Reps", "Weight"];
+
     const newExercise: SessionExercise = {
       ...exercise,
       id: exercise.id || Date.now().toString(),
       sets: exercise.sets || [EmptySet],
+      columns: newColumns,
     };
 
     const newLayoutItem: SessionLayoutItem = {
@@ -384,12 +392,7 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
    * Check if the active exercise still exists in the session layout
    */
   checkActiveExercise: () => {
-    const {
-      activeSession,
-      activeExercise,
-      setActiveExercise,
-      clearActiveExercise,
-    } = get();
+    const { activeSession, activeExercise, setActiveExercise } = get();
     if (!activeSession) return;
 
     const layout = activeSession.layout;
@@ -419,6 +422,5 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
         }
       }
     }
-    clearActiveExercise();
   },
 });

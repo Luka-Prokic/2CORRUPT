@@ -199,6 +199,12 @@
     }
   },
 
+  "set": {
+    "add-drop-set": "Dodaj Drop",
+    "remove": "Obriši",
+    "un-check": "Poništi"
+  },
+
   "workout-view": {
     "set": "Setovi",
     "reps": "Repovi",
@@ -221,7 +227,7 @@
     "delete": "Obriši",
     "continue": "Nastavi",
     "complete": "Završi",
-    "add-to-superset": "Dodaj u Super Set",
+    "add-to-superset": "Dodaj u Superset",
     "exit-workout": "Izađi iz Treninga",
     "exit-workout-message": "Ovo će otkazati tvoj trening. Možeš ga sačuvati kao template pre nego što izađeš.",
     "save-as-template": "Sačuvaj kao Template",
@@ -234,8 +240,8 @@
   },
   "add-exercise": {
     "add-exercise": "Dodaj Vežbu",
-    "add-to-superset": "Dodaj u Super Set",
-    "super-set": "Super Set",
+    "add-to-superset": "Dodaj u Superset",
+    "super-set": "Superset",
     "add": "Dodaj",
     "equipment": "Oprema",
     "body-part": "Delovi tela",

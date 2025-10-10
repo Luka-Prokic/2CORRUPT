@@ -2,6 +2,7 @@ import { View, TouchableOpacity, Text } from "react-native";
 import { useSettingsStore } from "../../../../stores/settingsStore";
 import { Swipeable } from "react-native-gesture-handler";
 import { Set, useWorkoutStore } from "../../../../stores/workoutStore";
+import { useTranslation } from "react-i18next";
 
 export function SetSwipeActions({
   set,
@@ -15,7 +16,9 @@ export function SetSwipeActions({
     updateSetInActiveExercise,
     addDropSetToActiveExercise,
     removeSetFromActiveExercise,
+    activeExercise,
   } = useWorkoutStore();
+  const { t } = useTranslation();
 
   const handleAddDropSet = (setId: string) => {
     addDropSetToActiveExercise(setId, 0, 0);
@@ -28,6 +31,8 @@ export function SetSwipeActions({
   const handleRemoveSet = (setId: string) => {
     removeSetFromActiveExercise(setId);
   };
+
+  const isDropSetAllowed = activeExercise?.columns.includes("Weight");
 
   return (
     <View style={{ flexDirection: "row", alignItems: "flex-start" }}>
@@ -53,32 +58,34 @@ export function SetSwipeActions({
               marginTop: 4,
             }}
           >
-            Uncheck
+            {t("set.un-check")}
           </Text>
         </TouchableOpacity>
       )}
 
-      <TouchableOpacity
-        style={{
-          height: 66,
-          alignItems: "center",
-          justifyContent: "center",
-          minWidth: 80,
-          backgroundColor: theme.fifthBackground,
-        }}
-        onPress={() => handleAddDropSet(set.id)}
-      >
-        <Text
+      {isDropSetAllowed && (
+        <TouchableOpacity
           style={{
-            color: theme.secondaryText,
-            fontSize: 14,
-            fontWeight: "600",
-            marginTop: 4,
+            height: 66,
+            alignItems: "center",
+            justifyContent: "center",
+            minWidth: 80,
+            backgroundColor: theme.fifthBackground,
           }}
+          onPress={() => handleAddDropSet(set.id)}
         >
-          Add Drop
-        </Text>
-      </TouchableOpacity>
+          <Text
+            style={{
+              color: theme.secondaryText,
+              fontSize: 14,
+              fontWeight: "600",
+              marginTop: 4,
+            }}
+          >
+            {t("set.add-drop-set")}
+          </Text>
+        </TouchableOpacity>
+      )}
 
       <TouchableOpacity
         style={{
@@ -98,7 +105,7 @@ export function SetSwipeActions({
             marginTop: 4,
           }}
         >
-          Remove
+          {t("set.remove")}
         </Text>
       </TouchableOpacity>
     </View>

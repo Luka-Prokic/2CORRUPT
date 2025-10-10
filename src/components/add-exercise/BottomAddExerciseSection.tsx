@@ -34,7 +34,7 @@ export function BottomAddExerciseSection({
   }
 
   function handleAddSuperSet() {
-    //TODO: Add super set to session
+    //TODO: Add superset to session
   }
 
   useEffect(() => {

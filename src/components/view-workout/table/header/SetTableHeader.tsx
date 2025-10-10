@@ -1,10 +1,80 @@
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { useSettingsStore } from "../../../../stores/settingsStore";
 import { useTranslation } from "react-i18next";
+import { useWorkoutStore } from "../../../../stores/workoutStore";
+import { WIDTH } from "../../../../features/Dimensions";
 
 export function SetTableHeader() {
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
+
+  const { activeExercise } = useWorkoutStore();
+
+  const exerciseColumns = activeExercise?.columns || ["Reps", "Weight"];
+  const columns = ["Set", ...exerciseColumns, "Done"];
+
+  function TextLabel({ label }: { label: string }) {
+    return (
+      <View
+        key={label}
+        style={{
+          width: WIDTH / columns.length,
+          height: 34,
+          justifyContent: "center",
+          alignItems: "center",
+          paddingHorizontal: 4,
+        }}
+      >
+        <Text
+          style={{
+            fontSize: 16,
+            fontWeight: "bold",
+            textAlign: "center",
+            color: theme.grayText,
+          }}
+          numberOfLines={1}
+          adjustsFontSizeToFit
+          minimumFontScale={0.6}
+        >
+          {t(`workout-view.${label.toLowerCase()}`).toUpperCase()}
+        </Text>
+      </View>
+    );
+  }
+
+  function ButtonLabel({ label }: { label: string }) {
+    const weightUnit = "KG";
+    return (
+      <TouchableOpacity
+        key={label}
+        onPress={() => {
+          //TODO: Toggle weight unit for whole app
+        }}
+        style={{
+          width: WIDTH / columns.length,
+          height: 34,
+          justifyContent: "center",
+          alignItems: "center",
+          paddingHorizontal: 4,
+        }}
+      >
+        <Text
+          style={{
+            fontSize: 16,
+            fontWeight: "bold",
+            textAlign: "center",
+            color: theme.grayText,
+          }}
+          numberOfLines={1}
+          adjustsFontSizeToFit
+          minimumFontScale={0.6}
+        >
+          {t(`workout-view.${weightUnit.toLowerCase()}`).toUpperCase()}
+        </Text>
+      </TouchableOpacity>
+    );
+  }
+
   return (
     <View
       style={{
@@ -17,20 +87,12 @@ export function SetTableHeader() {
         alignItems: "center",
       }}
     >
-      {["SET", "REPS", "KG", "DONE"].map((label) => (
-        <Text
-          key={label}
-          style={{
-            fontSize: 16,
-            fontWeight: "bold",
-            flex: 1,
-            textAlign: "center",
-            color: theme.grayText,
-          }}
-        >
-          {t(`workout-view.${label.toLowerCase()}`).toUpperCase()}
-        </Text>
-      ))}
+      {columns.map((label: string) => {
+        if (label === "Weight") {
+          return ButtonLabel({ label });
+        }
+        return TextLabel({ label });
+      })}
     </View>
   );
 }

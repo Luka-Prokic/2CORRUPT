@@ -1,27 +1,46 @@
 import { useRef } from "react";
 import { useSettingsStore } from "../../../../stores/settingsStore";
 import { Swipeable } from "react-native-gesture-handler";
+import { SetIndex } from "../set-inputs/SetIndex";
+import { DoneInput } from "../set-inputs/DoneInput";
+import {
+  ExerciseColumns,
+  DropSet,
+  Set,
+} from "../../../../stores/workout/types";
+import { View } from "react-native";
 import { useWorkoutStore } from "../../../../stores/workoutStore";
-import { View, TouchableOpacity, Text, TextInput } from "react-native";
-import { StrobeBlur } from "../../../ui/misc/StrobeBlur";
-import { Ionicons } from "@expo/vector-icons";
 import { SetSwipeActions } from "./SetSwipeActions";
+import { StrobeBlur } from "../../../ui/misc/StrobeBlur";
+import { WIDTH } from "../../../../features/Dimensions";
 import { DropSetRow } from "./DropSetRow";
+import { NumericInput } from "../set-inputs/NumericInput";
 
-export function SetRow({ set, setIndex }: { set: any; setIndex: number }) {
+export type SetColumns = ExerciseColumns | "Set" | "Done";
+interface SetRowProps {
+  set: Set;
+  setIndex: number;
+}
+
+export function SetRow({ set, setIndex }: SetRowProps) {
   const { theme } = useSettingsStore();
+  const { activeExercise } = useWorkoutStore();
   const swipeableRef = useRef<Swipeable>(null);
-  const { updateSetInActiveExercise } = useWorkoutStore();
 
-  const handleToggleComplete = () => {
-    console.log("handleToggleComplete", set.id);
-    updateSetInActiveExercise(set.id, { isCompleted: !set.isCompleted });
-  };
+  const exerciseColumns = activeExercise?.columns || ["Reps", "Weight"];
+  const columns = ["Set", ...exerciseColumns, "Done"];
 
-  const handleUpdateSet = (setId: string, updates: any) => {
-    console.log("handleUpdateSet", setId, updates);
-    updateSetInActiveExercise(setId, updates);
-  };
+  function input(column: SetColumns) {
+    if (column === "Set") {
+      return <SetIndex setIndex={setIndex} />;
+    }
+    if (column === "Done") {
+      return <DoneInput set={set} />;
+    }
+    if (column === "Reps" || column === "Weight") {
+      return <NumericInput set={set} column={column} />;
+    }
+  }
 
   return (
     <Swipeable
@@ -43,117 +62,34 @@ export function SetRow({ set, setIndex }: { set: any; setIndex: number }) {
               ]
         }
         tint={set.isCompleted ? "light" : "auto"}
-        style={{ flexDirection: "row", width: "100%", height: 66 }}
+        style={{ width: WIDTH, height: 66 }}
       >
-        <View style={{ flexDirection: "row", width: "100%", height: 66 }}>
-          <View
-            style={{
-              flex: 1,
-              justifyContent: "center",
-              alignItems: "center",
-              width: "25%",
-            }}
-          >
+        <View style={{ flexDirection: "row", width: WIDTH, height: 66 }}>
+          {columns.map((column: SetColumns, index: number) => (
             <View
+              key={`${column}-${index}-${setIndex}`}
               style={{
-                width: 44,
-                height: 44,
-                borderRadius: 22,
-                backgroundColor: theme.secondaryBackground,
+                flex: 1,
                 justifyContent: "center",
                 alignItems: "center",
+                width: WIDTH / columns.length,
               }}
             >
-              <Text
-                style={{
-                  fontSize: 16,
-                  fontWeight: "bold",
-                  color: theme.text,
-                }}
-              >
-                {setIndex + 1}
-              </Text>
+              {input(column)}
             </View>
-          </View>
-
-          <View
-            style={{
-              flex: 1,
-              width: "25%",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <TextInput
-              style={{
-                height: 66,
-                fontSize: 16,
-                textAlign: "center",
-                color: theme.text,
-              }}
-              value={set.reps}
-              onChangeText={(text) => handleUpdateSet(set.id, { reps: text })}
-              placeholder="0"
-              placeholderTextColor={theme.grayText}
-              keyboardType="numeric"
-            />
-          </View>
-
-          <View
-            style={{
-              flex: 1,
-              width: "25%",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <TextInput
-              style={{
-                height: 66,
-                fontSize: 16,
-                textAlign: "center",
-                color: theme.text,
-              }}
-              value={set.weight}
-              onChangeText={(text) => handleUpdateSet(set.id, { weight: text })}
-              placeholder="0"
-              placeholderTextColor={theme.grayText}
-              keyboardType="numeric"
-            />
-          </View>
-
-          <View
-            style={{
-              flex: 1,
-              width: "25%",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <TouchableOpacity
-              style={{
-                alignItems: "center",
-                justifyContent: "center",
-                width: 44,
-                height: 44,
-              }}
-              onPress={handleToggleComplete}
-              disabled={set.isCompleted}
-            >
-              <Ionicons
-                name={set.isCompleted ? "checkmark-circle" : "ellipse-outline"}
-                size={44}
-                color={set.isCompleted ? theme.text : theme.grayText}
-              />
-            </TouchableOpacity>
-          </View>
+          ))}
         </View>
       </StrobeBlur>
 
       {/* Drop Sets */}
       {set.dropSets?.length > 0 &&
-        set.dropSets.map((drop: any, index: number) => (
-          <DropSetRow set={set} drop={drop} index={index} />
+        set.dropSets.map((drop: DropSet, index: number) => (
+          <DropSetRow
+            key={`${drop.id}-${index}-${setIndex}`}
+            set={set}
+            drop={drop}
+            index={index}
+          />
         ))}
     </Swipeable>
   );
