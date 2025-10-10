@@ -1,6 +1,11 @@
 import { WorkoutStore, FlowSlice, SessionExercise } from "../types";
 import { StateCreator } from "zustand";
 
+export type FlatItem = {
+  exercise: SessionExercise;
+  parentGroupId?: string; // present if part of superset/circuit
+};
+
 export const createFlowSlice: StateCreator<WorkoutStore, [], [], FlowSlice> = (
   set,
   get
@@ -12,17 +17,11 @@ export const createFlowSlice: StateCreator<WorkoutStore, [], [], FlowSlice> = (
     const { activeSession, activeExercise, setActiveExercise } = get();
     if (!activeSession || !activeExercise) return;
 
-    const flatExercises: SessionExercise[] = [];
-    activeSession.layout.forEach((item) => {
-      if (item.type === "exercise") flatExercises.push(item.exercise);
-      else if (item.type === "superset" || item.type === "circuit")
-        flatExercises.push(...item.exercises);
-    });
+    const flat = activeSession.layout;
+    const currentIndex = flat.findIndex((f) => f.id === activeExercise.id);
+    if (currentIndex < 0 || currentIndex === flat.length - 1) return;
 
-    const index = flatExercises.findIndex((ex) => ex.id === activeExercise.id);
-    if (index < 0 || index === flatExercises.length - 1) return;
-
-    setActiveExercise(flatExercises[index + 1].id);
+    setActiveExercise(flat[currentIndex + 1].id);
     get().updateNavigationFlags();
   },
 
@@ -30,17 +29,11 @@ export const createFlowSlice: StateCreator<WorkoutStore, [], [], FlowSlice> = (
     const { activeSession, activeExercise, setActiveExercise } = get();
     if (!activeSession || !activeExercise) return;
 
-    const flatExercises: SessionExercise[] = [];
-    activeSession.layout.forEach((item) => {
-      if (item.type === "exercise") flatExercises.push(item.exercise);
-      else if (item.type === "superset" || item.type === "circuit")
-        flatExercises.push(...item.exercises);
-    });
+    const flat = activeSession.layout;
+    const currentIndex = flat.findIndex((f) => f.id === activeExercise.id);
+    if (currentIndex <= 0) return;
 
-    const index = flatExercises.findIndex((ex) => ex.id === activeExercise.id);
-    if (index <= 0) return;
-
-    setActiveExercise(flatExercises[index - 1].id);
+    setActiveExercise(flat[currentIndex - 1].id);
     get().updateNavigationFlags();
   },
 
@@ -51,17 +44,12 @@ export const createFlowSlice: StateCreator<WorkoutStore, [], [], FlowSlice> = (
       return;
     }
 
-    const flatExercises: SessionExercise[] = [];
-    activeSession.layout.forEach((item) => {
-      if (item.type === "exercise") flatExercises.push(item.exercise);
-      else if (item.type === "superset" || item.type === "circuit")
-        flatExercises.push(...item.exercises);
-    });
+    const flat = activeSession.layout;
+    const currentIndex = flat.findIndex((f) => f.id === activeExercise.id);
 
-    const index = flatExercises.findIndex((ex) => ex.id === activeExercise.id);
     set({
-      isTherePrev: index > 0,
-      isThereNext: index >= 0 && index < flatExercises.length - 1,
+      isTherePrev: currentIndex > 0,
+      isThereNext: currentIndex >= 0 && currentIndex < flat.length - 1,
     });
   },
 
@@ -69,12 +57,7 @@ export const createFlowSlice: StateCreator<WorkoutStore, [], [], FlowSlice> = (
     const { activeSession, activeExercise } = get();
     if (!activeSession || !activeExercise) return null;
 
-    const flatExercises: SessionExercise[] = [];
-    activeSession.layout.forEach((item) => {
-      if (item.type === "exercise") flatExercises.push(item.exercise);
-      else if (item.type === "superset" || item.type === "circuit")
-        flatExercises.push(...item.exercises);
-    });
-    return flatExercises.findIndex((ex) => ex.id === activeExercise.id);
+    const flat = activeSession.layout;
+    return flat.findIndex((f) => f.id === activeExercise.id);
   },
 });

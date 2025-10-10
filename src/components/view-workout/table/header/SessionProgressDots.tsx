@@ -1,10 +1,10 @@
 import { View } from "react-native";
 import {
   useWorkoutStore,
-  SessionLayoutItem,
   Set,
 } from "../../../../stores/workoutStore";
 import { useSettingsStore } from "../../../../stores/settingsStore";
+import { SessionExercise } from "../../../../stores/workout/types";
 
 export function SessionProgressDots() {
   const { theme } = useSettingsStore();
@@ -12,25 +12,16 @@ export function SessionProgressDots() {
 
   if (!activeSession) return null;
 
-  const getDotColor = (item: SessionLayoutItem) => {
-    if (item.type === "exercise") {
-      if (item.exercise.id === activeExercise?.id) return theme.accent;
-      if (item.exercise.sets.length === 0) return theme.grayText;
-      const allSetsCompleted = item.exercise.sets.every(
-        (s: Set) => s.isCompleted
-      );
-      return allSetsCompleted ? theme.tint : theme.grayText;
-    } else if (item.type === "superset" || item.type === "circuit") {
-      // Group is considered "completed" if all exercises inside have all sets completed
-      const allCompleted = item.exercises.every((ex) =>
-        ex.sets.every((s) => s.isCompleted)
-      );
-      const isActive = item.exercises.some(
-        (ex) => ex.id === activeExercise?.id
-      );
-      if (isActive) return theme.caka;
-      return allCompleted ? theme.tint : theme.grayText;
-    }
+  const flatItems = activeSession.layout;
+
+  const getDotColor = (item: SessionExercise) => {
+    if (item.id === activeExercise?.id) return theme.accent;
+    if (item.sets.length === 0) return theme.grayText;
+    const allSetsCompleted = item.sets.every(
+      (s: Set) => s.isCompleted
+    );
+    if (allSetsCompleted) return theme.tint;
+
     return theme.grayText;
   };
 
@@ -44,10 +35,10 @@ export function SessionProgressDots() {
         marginBottom: 4,
       }}
     >
-      {activeSession.layout.length > 1 &&
-        activeSession.layout.map((item) => (
+      {flatItems.length > 1 &&
+        flatItems.map((item: SessionExercise, index: number) => (
           <View
-            key={item.id}
+            key={index}
             style={{
               width: 8,
               height: 8,

@@ -5,10 +5,10 @@ import {
   Set,
   DropSet,
   SessionExercise,
-  SessionLayoutItem,
   WorkoutTemplate,
 } from "../types";
 import { defaultSession } from "../../../config/constants/defaults";
+import { nanoid } from "nanoid/non-secure";
 
 /**
  * Session slice: manages active workout sessions
@@ -24,64 +24,18 @@ export const createSessionSlice: StateCreator<WorkoutStore, [], [], {}> = (
   startSession: (template?: WorkoutTemplate) => {
     const now = new Date();
     const newSession: WorkoutSession = {
-      id: Date.now().toString(),
+      id: `session-${nanoid()}`,
       templateId: template?.id || null,
       templateVersion: template?.version || null,
       name: template?.name || `Workout ${now.toLocaleDateString("en-GB")}`,
       startTime: now.toISOString(),
       isActive: true,
       layout: template
-        ? template.layout.map((layoutItem: SessionLayoutItem) => {
-            if (layoutItem.type === "exercise") {
-              return {
-                type: "exercise",
-                id: layoutItem.id,
-                exercise: {
-                  id: layoutItem.id,
-                  exerciseInfoId: layoutItem.exercise.exerciseInfoId,
-                  name: layoutItem.exercise.name || "Unknown Exercise",
-                  primaryMuscles: layoutItem.exercise.primaryMuscles || [],
-                  secondaryMuscles: layoutItem.exercise.secondaryMuscles || [],
-                  equipment: layoutItem.exercise.equipment || [],
-                  sets: layoutItem.exercise.sets || [],
-                },
-              };
-            } else if (layoutItem.type === "superset") {
-              return {
-                type: "superset",
-                id: layoutItem.id,
-                name: layoutItem.name,
-                exercises: layoutItem.exercises.map(
-                  (exercise: SessionExercise) => ({
-                    id: exercise.id,
-                    exerciseInfoId: exercise.exerciseInfoId,
-                    name: exercise.name || "Unknown Exercise",
-                    primaryMuscles: exercise.primaryMuscles || [],
-                    secondaryMuscles: exercise.secondaryMuscles || [],
-                    equipment: exercise.equipment || [],
-                    sets: exercise.sets || [],
-                  })
-                ),
-              };
-            } else {
-              // circuit
-              return {
-                type: "circuit",
-                id: layoutItem.id,
-                exercises: layoutItem.exercises.map(
-                  (exercise: SessionExercise) => ({
-                    id: exercise.id,
-                    exerciseInfoId: exercise.exerciseInfoId,
-                    name: exercise.name || "Unknown Exercise",
-                    primaryMuscles: exercise.primaryMuscles || [],
-                    secondaryMuscles: exercise.secondaryMuscles || [],
-                    equipment: exercise.equipment || [],
-                    sets: exercise.sets || [],
-                  })
-                ),
-                rounds: layoutItem.rounds || 1,
-              };
-            }
+        ? template.layout.map((layoutItem: SessionExercise) => {
+            return {
+              ...layoutItem,
+              group: layoutItem.group || undefined,
+            };
           })
         : [],
       createdAt: now.toISOString(),
@@ -110,24 +64,19 @@ export const createSessionSlice: StateCreator<WorkoutStore, [], [], {}> = (
     let totalReps = 0;
     let totalVolumeKg = 0;
 
-    activeSession.layout.forEach((item: SessionLayoutItem) => {
-      const exercises =
-        item.type === "exercise" ? [item.exercise] : item.exercises;
+    activeSession.layout.forEach((exercise: SessionExercise) => {
+      exercise.sets.forEach((set: Set) => {
+        if (set.isCompleted) {
+          totalSets++;
+          totalReps += set.reps || 0;
+          totalVolumeKg += (set.weight || 0) * (set.reps || 0);
 
-      exercises.forEach((exercise: SessionExercise) => {
-        exercise.sets.forEach((set: Set) => {
-          if (set.isCompleted) {
+          set.dropSets?.forEach((dropSet: DropSet) => {
             totalSets++;
-            totalReps += set.reps || 0;
-            totalVolumeKg += (set.weight || 0) * (set.reps || 0);
-
-            set.dropSets?.forEach((dropSet: DropSet) => {
-              totalSets++;
-              totalReps += dropSet.reps || 0;
-              totalVolumeKg += (dropSet.weight || 0) * (dropSet.reps || 0);
-            });
-          }
-        });
+            totalReps += dropSet.reps || 0;
+            totalVolumeKg += (dropSet.weight || 0) * (dropSet.reps || 0);
+          });
+        }
       });
     });
 

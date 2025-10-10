@@ -1,3 +1,4 @@
+import { nanoid } from "nanoid/non-secure";
 import { ExerciseInfo, WorkoutSession, Set } from "../../stores/workout/types";
 
 export const username = "Pencil Neck";
@@ -18,10 +19,11 @@ export const defaultSession: WorkoutSession = {
 };
 
 export const EmptySet: Set = {
-  id: `set-${Date.now()}-${Math.random().toString(36)}`,
-  reps: 0,
-  weight: 0,
+  id: `set-${nanoid()}`,
+  reps: null,
+  weight: null,
   dropSets: [],
+  isCompleted: false,
 };
 
 export const bodyPartsTemplate = {

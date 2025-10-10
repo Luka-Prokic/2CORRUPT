@@ -6,8 +6,11 @@ import { WIDTH } from "../../features/Dimensions";
 import { IButton } from "../ui/buttons/IButton";
 import { router } from "expo-router";
 import { useEffect, useRef } from "react";
-import { createSessionExercise } from "../../features/workout/useNewSessionExercise";
-import { ExerciseInfo } from "../../stores/workout/types";
+import {
+  createGroupSessionExercise,
+  createSessionExercise,
+} from "../../features/workout/useNewSessionExercise";
+import { ExerciseInfo, SessionExercise } from "../../stores/workout/types";
 import { useWorkoutStore } from "../../stores/workout/useWorkoutStore";
 import { useTranslation } from "react-i18next";
 import { StrobeBlur } from "../ui/misc/StrobeBlur";
@@ -20,7 +23,12 @@ export function BottomAddExerciseSection({
   selectedExercises,
 }: BottomAddExerciseSectionProps) {
   const { theme } = useSettingsStore();
-  const { addExerciseToSession, setActiveExercise } = useWorkoutStore();
+  const {
+    addExerciseToSession,
+    setActiveExercise,
+    addGroupToSession,
+    activeExercise,
+  } = useWorkoutStore();
   const { t } = useTranslation();
 
   const animatedOpacity = useRef(new Animated.Value(0)).current;
@@ -34,7 +42,15 @@ export function BottomAddExerciseSection({
   }
 
   function handleAddSuperSet() {
-    //TODO: Add superset to session
+    const groupExercises: SessionExercise[] = selectedExercises.map(
+      (exercise) => createGroupSessionExercise(exercise, true)
+    );
+
+    addGroupToSession("superset", groupExercises, { name: "Superset" });
+    if (!activeExercise) {
+      setActiveExercise(groupExercises[0].id);
+    }
+    router.back();
   }
 
   useEffect(() => {

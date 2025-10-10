@@ -6,13 +6,13 @@ import { Text } from "react-native";
 import { IButton } from "../../ui/buttons/IButton";
 import { Ionicons } from "@expo/vector-icons";
 import { useTranslatedSessionExerciseName } from "../../../features/translate/useTranslatedExercisesNames";
+import { useWorkoutStore } from "../../../stores/workout/useWorkoutStore";
 
 interface ExerciseCardProps {
   exercise: SessionExercise;
   onUse: (id: string) => void;
   onSelect: (id: string) => void;
-  isActive: boolean;
-  isSelected: boolean;
+  selectedExercises: string[];
   multipleSelect: boolean;
 }
 
@@ -20,12 +20,15 @@ export function ExerciseCard({
   exercise,
   onUse,
   onSelect,
-  isActive,
-  isSelected,
+  selectedExercises,
   multipleSelect,
 }: ExerciseCardProps) {
   const { theme } = useSettingsStore();
   const { translatedName } = useTranslatedSessionExerciseName(exercise);
+  const {activeExercise} = useWorkoutStore();
+
+  const isActive = activeExercise?.id === exercise.id;
+  const isSelected = selectedExercises.includes(exercise.id);
 
   function handlePress() {
     if (multipleSelect) {
@@ -39,7 +42,7 @@ export function ExerciseCard({
       activeOpacity={0.8}
       onPress={handlePress}
       style={{
-        minHeight: 72,
+        height: 72,
         marginBottom: 1,
         width: WIDTH,
         paddingHorizontal: 10,

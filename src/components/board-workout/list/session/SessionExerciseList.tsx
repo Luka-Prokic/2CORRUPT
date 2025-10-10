@@ -6,8 +6,6 @@ import { ExerciseCard } from "../../cards/ExerciseCard";
 import { useEffect, useState } from "react";
 import { SessionExerciseListHeader } from "./SessionExerciseListHeader";
 import { SessionExerciseListAddNewButton } from "./SessionExerciseListAddNewButton";
-import { SessionLayoutItem } from "../../../../stores/workout/types";
-
 interface SessionExerciseListProps {
   listOpen: boolean;
   togglePanel: () => void;
@@ -46,23 +44,6 @@ export function SessionExerciseList({
     setSelectMode(false);
   }, [listOpen]);
 
-  function card({ item }: { item: SessionLayoutItem }) {
-    if (item.type === "exercise")
-      return (
-        <ExerciseCard
-          exercise={item.exercise}
-          onUse={handleExerciseUse}
-          onSelect={handleExerciseSelect}
-          isActive={activeExercise?.id === item.exercise.id}
-          isSelected={selectedExercises.some(
-            (i: string) => i === item.exercise.id
-          )}
-          multipleSelect={selectMode}
-        />
-      );
-    return null;
-  }
-
   if (listOpen)
     return (
       <Animated.View
@@ -82,7 +63,15 @@ export function SessionExerciseList({
         <FlatList
           data={activeSession.layout}
           keyExtractor={(item, index) => `${item.id}-${index}`}
-          renderItem={({ item }) => card({ item })}
+          renderItem={({ item }) => (
+            <ExerciseCard
+              exercise={item}
+              onUse={handleExerciseUse}
+              onSelect={handleExerciseSelect}
+              selectedExercises={selectedExercises}
+              multipleSelect={selectMode}
+            />
+          )}
           ListFooterComponent={() => (
             <SessionExerciseListAddNewButton
               style={{

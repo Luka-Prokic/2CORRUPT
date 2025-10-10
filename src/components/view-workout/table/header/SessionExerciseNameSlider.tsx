@@ -4,7 +4,10 @@ import {
   NativeSyntheticEvent,
   View,
 } from "react-native";
-import { useWorkoutStore } from "../../../../stores/workoutStore";
+import {
+  SessionExercise,
+  useWorkoutStore,
+} from "../../../../stores/workoutStore";
 import { useSettingsStore } from "../../../../stores/settingsStore";
 import { ExerciseName } from "./ExerciseName";
 import { WIDTH } from "../../../../features/Dimensions";
@@ -21,7 +24,7 @@ export function SessionExerciseNameSlider() {
 
   if (!activeSession) return null;
 
-  const exercises = activeSession.layout;
+  const exercises = activeSession.layout; // flattenLayouts is used, bc activeSession.layout stores groups as one element
 
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     if (!isUserScrolling) return;
@@ -29,14 +32,15 @@ export function SessionExerciseNameSlider() {
     const offsetX = event.nativeEvent.contentOffset.x;
     const index = Math.round(offsetX / WIDTH);
 
-    if (index !== selectedIndex && index >= 0 && index < exercises.length) {
-      setSelectedIndex(index);
-
-      const item = exercises[index];
-      const exerciseId =
-        item.type === "exercise" ? item.exercise.id : item.exercises[0].id;
-
-      setActiveExercise(exerciseId);
+    if (index >= 0 && index < exercises.length) {
+      setSelectedIndex((prevIndex) => {
+        if (prevIndex !== index) {
+          const exerciseId = exercises[index].id;
+          setActiveExercise(exerciseId);
+          return index;
+        }
+        return prevIndex;
+      });
     }
   };
 
@@ -44,10 +48,8 @@ export function SessionExerciseNameSlider() {
   useEffect(() => {
     if (!activeExercise) return;
 
-    const index = exercises.findIndex((item) => {
-      if (item.type === "exercise")
-        return item.exercise.id === activeExercise.id;
-      return item.exercises.some((ex) => ex.id === activeExercise.id);
+    const index = exercises.findIndex((item: SessionExercise) => {
+      return item.id === activeExercise.id;
     });
 
     if (index === -1 || index === selectedIndex) return;
@@ -68,7 +70,7 @@ export function SessionExerciseNameSlider() {
       ref={flatListRef}
       horizontal
       data={exercises}
-      keyExtractor={(item) => item.id}
+      keyExtractor={(item: SessionExercise) => item.id}
       snapToInterval={WIDTH}
       decelerationRate="fast"
       showsHorizontalScrollIndicator={false}
@@ -77,9 +79,7 @@ export function SessionExerciseNameSlider() {
       renderItem={({ item, index }) => (
         <View style={{ width: WIDTH, alignItems: "center" }}>
           <ExerciseName
-            exercise={
-              item.type === "exercise" ? item.exercise : item.exercises[0]
-            }
+            exercise={item}
             textColor={selectedIndex === index ? theme.text : theme.grayText}
           />
         </View>

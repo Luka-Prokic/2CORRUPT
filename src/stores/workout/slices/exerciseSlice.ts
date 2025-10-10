@@ -4,10 +4,10 @@ import {
   SessionExercise,
   Set,
   DropSet,
-  SessionLayoutItem,
   ExerciseColumns,
 } from "../types";
 import { exercisesDefList, EmptySet } from "../../../config/constants/defaults";
+import { nanoid } from "nanoid/non-secure";
 
 /**
  * Exercise slice: manages the active exercise (single source of truth during editing)
@@ -36,36 +36,37 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
 
     if (!activeSession) return;
 
-    // Find the exercise in the session layout (could be top-level or nested)
-    let foundExercise: SessionExercise | null = null;
+    // Helper to deep-copy a SessionExercise safely
+    function copyExercise(ex: SessionExercise): SessionExercise {
+      return {
+        ...ex,
+        sets: ex.sets.map((s) => ({
+          ...s,
+          dropSets: s.dropSets ? s.dropSets.map((ds) => ({ ...ds })) : [],
+        })),
+        columns: ex.columns ? [...ex.columns] : ["Reps", "Weight"], // safe fallback
+        primaryMuscles: [...ex.primaryMuscles],
+        secondaryMuscles: ex.secondaryMuscles
+          ? [...ex.secondaryMuscles]
+          : undefined,
+        equipment: ex.equipment ? [...ex.equipment] : undefined,
+      };
+    }
 
+    // Find the exercise in the layout (top-level or nested)
+    let foundExercise: SessionExercise | null = null;
     for (const item of activeSession.layout) {
-      if (item.type === "exercise" && item.exercise.id === exerciseId) {
-        foundExercise = item.exercise;
+      if (item.id === exerciseId) {
+        foundExercise = item;
         break;
-      } else if (item.type === "superset" || item.type === "circuit") {
-        const nested = item.exercises.find((ex) => ex.id === exerciseId);
-        if (nested) {
-          foundExercise = nested;
-          break;
-        }
       }
     }
 
     if (foundExercise) {
-      // Create a deep copy to edit independently
-      set({
-        activeExercise: {
-          ...foundExercise,
-          sets: foundExercise.sets.map((s) => ({
-            ...s,
-            dropSets: s.dropSets ? [...s.dropSets] : undefined,
-          })),
-        },
-      });
+      set({ activeExercise: copyExercise(foundExercise) });
     }
 
-    //update navigation flags in flowSlice
+    // Update navigation flags for flowSlice
     updateNavigationFlags();
   },
 
@@ -85,38 +86,15 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
     const { activeExercise, activeSession } = get();
     if (!activeExercise || !activeSession) return;
 
-    const layout = activeSession.layout.map((item: SessionLayoutItem) => {
-      if (item.type === "exercise" && item.exercise.id === activeExercise.id) {
+    const layout = activeSession.layout.map((item: SessionExercise) => {
+      if (item.id === activeExercise.id) {
         return {
-          ...item,
-          exercise: {
-            ...activeExercise,
-            sets: activeExercise.sets.map((s) => ({
-              ...s,
-              dropSets: s.dropSets ? [...s.dropSets] : undefined,
-            })),
-          },
+          ...activeExercise,
+          sets: activeExercise.sets.map((s) => ({
+            ...s,
+            dropSets: s.dropSets ? [...s.dropSets] : undefined,
+          })),
         };
-      } else if (item.type === "superset" || item.type === "circuit") {
-        const hasExercise = item.exercises.some(
-          (ex) => ex.id === activeExercise.id
-        );
-        if (hasExercise) {
-          return {
-            ...item,
-            exercises: item.exercises.map((ex: SessionExercise) =>
-              ex.id === activeExercise.id
-                ? {
-                    ...activeExercise,
-                    sets: activeExercise.sets.map((s) => ({
-                      ...s,
-                      dropSets: s.dropSets ? [...s.dropSets] : undefined,
-                    })),
-                  }
-                : ex
-            ),
-          };
-        }
       }
       return item;
     });
@@ -156,7 +134,7 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
     if (!activeExercise) return;
 
     const newSet: Set = {
-      id: `set-${Date.now()}-${Math.random().toString(36)}`,
+      id: `set-${nanoid()}`,
       reps,
       weight,
       isCompleted: false,
@@ -224,7 +202,7 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
     if (!activeExercise) return;
 
     const newDropSet: DropSet = {
-      id: `drop-${Date.now()}-${Math.random().toString(36)}`,
+      id: `drop-${nanoid()}`,
       reps,
       weight,
     };
@@ -320,25 +298,18 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
 
     const newExercise: SessionExercise = {
       ...exercise,
-      id: exercise.id || Date.now().toString(),
+      id: exercise.id || `exercise-${nanoid()}`,
       sets: exercise.sets || [EmptySet],
       columns: newColumns,
     };
 
-    const newLayoutItem: SessionLayoutItem = {
-      type: "exercise",
-      id: newExercise.id,
-      exercise: newExercise,
-    };
-
     const layout = activeSession.layout;
     const insertIndex = afterItemId
-      ? layout.findIndex((item: SessionLayoutItem) => item.id === afterItemId) +
-        1
+      ? layout.findIndex((item: SessionExercise) => item.id === afterItemId) + 1
       : layout.length;
 
     const updatedLayout = [...layout];
-    updatedLayout.splice(insertIndex, 0, newLayoutItem);
+    updatedLayout.splice(insertIndex, 0, newExercise);
 
     set((state) => ({
       activeSession: { ...state.activeSession!, layout: updatedLayout },
@@ -361,7 +332,7 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
     if (!activeSession) return;
 
     const layout = activeSession.layout.filter(
-      (i: SessionLayoutItem) => i.id !== layoutItemId
+      (i: SessionExercise) => i.id !== layoutItemId
     );
 
     set((state) => ({
@@ -376,7 +347,7 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
   /**
    * Reorder items in the session layout
    */
-  reorderSessionItems: (newOrder: SessionLayoutItem[]) => {
+  reorderSessionItems: (newOrder: SessionExercise[]) => {
     const { activeSession } = get();
     if (!activeSession) return;
 
@@ -397,29 +368,15 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
 
     const layout = activeSession.layout;
     // Check if current activeExercise still exists
-    const isThereActiveExercise = layout.some((item: SessionLayoutItem) => {
-      if (item.type === "exercise")
-        return item.exercise.id === activeExercise?.id;
-      // For supersets/circuits, check exercises array
-      if (item.type === "superset" || item.type === "circuit") {
-        return item.exercises.some((ex) => ex.id === activeExercise?.id);
-      }
-      return false;
+    const isThereActiveExercise = layout.some((item: SessionExercise) => {
+      return item.id === activeExercise?.id;
     });
 
     if (!isThereActiveExercise) {
       // Find the first available exercise in layout
       for (const item of layout) {
-        if (item.type === "exercise") {
-          setActiveExercise(item.exercise.id);
-          return;
-        }
-        if (item.type === "superset" || item.type === "circuit") {
-          if (item.exercises.length > 0) {
-            setActiveExercise(item.exercises[0].id);
-            return;
-          }
-        }
+        setActiveExercise(item.id);
+        return;
       }
     }
   },

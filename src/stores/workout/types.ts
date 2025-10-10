@@ -41,7 +41,7 @@ export interface WorkoutTemplate {
   version: number;
   readonly createdAt: IsoDateString;
   updatedAt?: IsoDateString;
-  layout: SessionLayoutItem[];
+  layout: SessionExercise[];
   tags?: readonly string[];
   isPublic?: boolean;
   metadata?: Record<string, any>;
@@ -62,28 +62,14 @@ export interface SessionExercise {
   sets: Set[];
   columns?: ExerciseColumns[];
   restTime?: number | null;
-  inSuperSet?: boolean;
+  group?: ExerciseGroup;
 }
 
-// Items in an active session (snapshot of layout)
-export type SessionLayoutItem =
-  | {
-      readonly type: "exercise";
-      readonly id: string;
-      exercise: SessionExercise;
-    }
-  | {
-      readonly type: "superset";
-      readonly id: string;
-      exercises: SessionExercise[];
-      name?: string;
-    }
-  | {
-      readonly type: "circuit";
-      readonly id: string;
-      exercises: SessionExercise[];
-      rounds?: number;
-    };
+export interface ExerciseGroup {
+  readonly id: string;
+  type: "superset" | "circuit";
+  name?: string;
+}
 
 // Workout session (single source of truth for a performed workout)
 export interface WorkoutSession {
@@ -95,7 +81,7 @@ export interface WorkoutSession {
   readonly startTime: IsoDateString;
   endTime?: IsoDateString | null;
   isActive: boolean;
-  layout: SessionLayoutItem[];
+  layout: SessionExercise[];
   totals?: {
     totalSets?: number;
     totalReps?: number;
@@ -114,7 +100,7 @@ export interface TemplateSlice {
   createTemplate: (
     name: string,
     description: string | undefined,
-    layout: SessionLayoutItem[]
+    layout: SessionExercise[]
   ) => string;
   updateTemplate: (
     templateId: string,
@@ -163,7 +149,7 @@ export interface ExerciseSlice {
     afterItemId?: string
   ) => void;
   removeItemFromSession: (layoutItemId: string) => void;
-  reorderSessionItems: (newOrder: SessionLayoutItem[]) => void;
+  reorderSessionItems: (newOrder: SessionExercise[]) => void;
   checkActiveExercise: () => void;
 }
 
@@ -199,9 +185,24 @@ export interface FlowSlice {
   getActiveExerciseIndex: () => number | null;
 }
 
+export interface GroupSlice {
+  addGroupToSession: (
+    type: "superset" | "circuit",
+    exercises: SessionExercise[],
+    options?: { name?: string; rounds?: number }
+  ) => void;
+
+  removeGroupFromSession: (groupId: string) => void;
+
+  updateGroupInSession: (
+    groupId: string,
+    updates: Partial<SessionExercise>
+  ) => void;
+}
 export type WorkoutStore = TemplateSlice &
   SessionSlice &
   ExerciseSlice &
   TimerSlice &
   StatsSlice &
-  FlowSlice;
+  FlowSlice &
+  GroupSlice;
