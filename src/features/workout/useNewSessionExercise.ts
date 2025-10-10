@@ -1,4 +1,5 @@
 import { ExerciseInfo, SessionExercise } from "../../stores/workout/types";
+import { EmptySet } from "../../config/constants/defaults";
 
 export function createSessionExercise(exercise: ExerciseInfo): SessionExercise {
   return {
@@ -12,7 +13,7 @@ export function createSessionExercise(exercise: ExerciseInfo): SessionExercise {
       : undefined,
     equipment: exercise.equipment ? [...exercise.equipment] : undefined,
     notes: null,
-    sets: [],
+    sets: [EmptySet],
     inSuperSet: false,
   };
 }

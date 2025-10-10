@@ -208,7 +208,8 @@
     "completed": "Završeno",
     "sets-completed": "{{count}} od {{total}} setova završeno",
     "sets-completed-all": "Svi setovi završeni",
-    "sets-completed-none": "Nijedan set nije završen"
+    "sets-completed-none": "Nijedan set nije završen",
+    "add-set": "Dodaj Set"
   },
   "workout-board": {
     "workout": "Trening",
@@ -217,13 +218,19 @@
     "select": "Izaberi",
     "cancel": "Otkaži",
     "remove": "Obriši",
-    "add-to-superset": "Dodaj u Super Set",
+    "delete": "Obriši",
     "continue": "Nastavi",
+    "complete": "Završi",
+    "add-to-superset": "Dodaj u Super Set",
     "exit-workout": "Izađi iz Treninga",
     "exit-workout-message": "Ovo će otkazati tvoj trening. Možeš ga sačuvati kao template pre nego što izađeš.",
     "save-as-template": "Sačuvaj kao Template",
     "complete-workout": "Završi Trening",
-    "complete-workout-message": "Da li si siguran da želiš da završiš ovaj trening? Nećeš moći da radiš izmene na njemu kasnije."
+    "complete-workout-message": "Da li si siguran da želiš da završiš ovaj trening? Nećeš moći da radiš izmene na njemu kasnije.",
+    "delete-exercises": "Obriši Vežbe",
+    "delete-exercises-message": "Da li si siguran da želiš da obrišeš ove vežbe? Ova akcija ne može biti vraćena.",
+    "delete-exercise": "Obriši Vežbu",
+    "delete-exercise-message": "Da li si siguran da želiš da obrišeš ovu vežbu? Ova akcija ne može biti vraćena."
   },
   "add-exercise": {
     "add-exercise": "Dodaj Vežbu",

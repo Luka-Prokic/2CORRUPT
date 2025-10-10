@@ -17,7 +17,7 @@ export function SessionExerciseListAddNewButton({
   return (
     <IButton
       onPress={() => router.push("/add-exercise")}
-      style={{ height: 64, width: WIDTH - 32, ...style }}
+      style={{ height: 64, width: WIDTH - 32, margin: 16, ...style }}
     >
       <StrobeBlur
         colors={[theme.tint, theme.caka, theme.accent, theme.tint]}

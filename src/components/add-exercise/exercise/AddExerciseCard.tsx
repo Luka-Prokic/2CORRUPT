@@ -5,7 +5,8 @@ import { hexToRGBA } from "../../../features/HEXtoRGB";
 import { TouchableOpacity, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { StrobeBlur } from "../../ui/misc/StrobeBlur";
-import { useTranslatedExerciseName } from "../../../features/workout/useTranslatedExercisesNames";
+import { useTranslatedExerciseName } from "../../../features/translate/useTranslatedExercisesNames";
+import { useTranslatedBodyPart } from "../../../features/translate/useTranslatedBodyPart";
 
 interface AddExerciseCardProps {
   exercise: ExerciseInfo;
@@ -22,6 +23,13 @@ export function AddExerciseCard({
 }: AddExerciseCardProps) {
   const { theme } = useSettingsStore();
   const { translatedName } = useTranslatedExerciseName(exercise);
+
+  const translatedPrimary = exercise.primaryMuscles?.map((m) =>
+    useTranslatedBodyPart(m).toLowerCase()
+  );
+  const translatedSecondary = exercise.secondaryMuscles?.map((m) =>
+    useTranslatedBodyPart(m).toLowerCase()
+  );
 
   return (
     <TouchableOpacity
@@ -70,28 +78,27 @@ export function AddExerciseCard({
               {translatedName}
             </Text>
 
-            {/* optional detail line */}
-            {exercise.primaryMuscles?.length > 0 && (
+            {/* body parts detail line */}
+            <Text
+              style={{
+                color: theme.text,
+                fontSize: 14,
+              }}
+            >
+              {translatedPrimary?.join(", ")}
+
               <Text
                 style={{
-                  color: theme.text,
-                  fontSize: 14,
+                  color: theme.grayText,
+                  opacity: translatedSecondary?.length ? 1 : 0,
                 }}
               >
-                {exercise.primaryMuscles.join(", ")}
-
-                <Text
-                  style={{
-                    color: theme.grayText,
-                    opacity: exercise.secondaryMuscles?.length ? 1 : 0,
-                  }}
-                >
-                  {" - "}
-                  {exercise.secondaryMuscles?.join(", ")}
-                </Text>
+                {" - "}
+                {translatedSecondary?.join(", ")}
               </Text>
-            )}
+            </Text>
           </View>
+          
           {/* Selection button section */}
           <SelectionButton
             unSelect={unSelect}

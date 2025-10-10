@@ -5,6 +5,7 @@ import { WIDTH } from "../../../features/Dimensions";
 import { Text } from "react-native";
 import { IButton } from "../../ui/buttons/IButton";
 import { Ionicons } from "@expo/vector-icons";
+import { useTranslatedSessionExerciseName } from "../../../features/translate/useTranslatedExercisesNames";
 
 interface ExerciseCardProps {
   exercise: SessionExercise;
@@ -24,6 +25,7 @@ export function ExerciseCard({
   multipleSelect,
 }: ExerciseCardProps) {
   const { theme } = useSettingsStore();
+  const { translatedName } = useTranslatedSessionExerciseName(exercise);
 
   function handlePress() {
     if (multipleSelect) {
@@ -57,7 +59,7 @@ export function ExerciseCard({
         }}
       >
         {exercise.prefix ? `${exercise.prefix} ` : ""}
-        {exercise.name}
+        {translatedName}
       </Text>
       {multipleSelect ? (
         <IButton

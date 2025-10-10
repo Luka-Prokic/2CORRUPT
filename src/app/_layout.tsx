@@ -47,6 +47,7 @@ export default function Layout() {
           headerStyle: { backgroundColor: theme.background },
           headerTintColor: theme.text,
           headerTitleStyle: { fontWeight: "bold" },
+          headerShadowVisible: false,
         }}
       >
         {/* Home */}

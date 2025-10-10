@@ -1,7 +1,7 @@
 import { Text } from "react-native";
 import { useSettingsStore } from "../../../../stores/settingsStore";
 import { SessionExercise } from "../../../../stores/workoutStore";
-import { useTranslatedSessionExerciseName } from "../../../../features/workout/useTranslatedExercisesNames";
+import { useTranslatedSessionExerciseName } from "../../../../features/translate/useTranslatedExercisesNames";
 
 interface ExerciseNameProps {
   exercise: SessionExercise;

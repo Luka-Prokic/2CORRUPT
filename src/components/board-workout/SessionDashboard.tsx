@@ -1,17 +1,19 @@
-import { Animated, Pressable } from "react-native";
-import { SessionExerciseList } from "./list/SessionExerciseList";
+import { Animated } from "react-native";
+import { SessionExerciseList } from "./list/session/SessionExerciseList";
 import { StrobeBlur } from "../ui/misc/StrobeBlur";
 import { useSettingsStore } from "../../stores/settingsStore";
 import { HEIGHT } from "../../features/Dimensions";
 import { LinearGradient } from "expo-linear-gradient";
 import { hexToRGBA } from "../../features/HEXtoRGB";
-import { Ionicons } from "@expo/vector-icons";
-import { useRef } from "react";
-import { ExerciseProfile } from "./exercise/ExerciseProfile";
+import { useRef, useState } from "react";
+import { ExerciseProfile } from "./profile/ExerciseProfile";
 import { useWorkoutStore } from "../../stores/workoutStore";
+import { ListHeader } from "./list/ListHeader";
 
 // Constants
 const FOCUS_HEIGHT = HEIGHT - 120;
+
+export type SessionListType = "session" | "superset" | "circuit";
 
 interface SessionDashboardProps {
   listOpen: boolean;
@@ -24,6 +26,7 @@ export function SessionDashboard({
 }: SessionDashboardProps) {
   const { theme } = useSettingsStore();
   const { activeExercise } = useWorkoutStore();
+  const [listType, setListType] = useState<SessionListType>("session");
 
   const animatedY = useRef(new Animated.Value(0)).current;
 
@@ -35,6 +38,7 @@ export function SessionDashboard({
 
   return (
     <Animated.View style={{ flex: 1, transform: [{ translateY: animatedY }] }}>
+      {/* Exercise Profile */}
       <StrobeBlur
         colors={[theme.caka, theme.text, theme.handle, theme.border]}
         tint="auto"
@@ -52,39 +56,36 @@ export function SessionDashboard({
           style={{
             height: "100%",
             width: "100%",
-            padding: 16,
             alignItems: "center",
           }}
         >
-          {activeExercise && <ExerciseProfile exercise={activeExercise} />}
+          {/* <SessionTimer /> */}
+          {activeExercise && <ExerciseProfile />}
         </LinearGradient>
       </StrobeBlur>
 
       {/* Toggle Panel */}
-      <Pressable
-        onPress={togglePanel}
-        style={{
-          alignItems: "center",
-          position: "absolute",
-          height: 88,
-          padding: 10,
-          bottom: 0,
-          right: 0,
-          left: 0,
-          backgroundColor: theme.background,
-          borderTopLeftRadius: 32,
-          borderTopRightRadius: 32,
-        }}
-      >
-        <Ionicons
-          name={listOpen ? "chevron-down" : "chevron-up"}
-          size={32}
-          color={theme.tint}
-        />
-      </Pressable>
+      <ListHeader
+        listOpen={listOpen}
+        listType={listType}
+        setListType={setListType}
+        togglePanel={togglePanel}
+      />
 
-      {/* Exercise List */}
-      <SessionExerciseList listOpen={listOpen} togglePanel={togglePanel} />
+      {/* List */}
+      {listType === "session" && (
+        <SessionExerciseList listOpen={listOpen} togglePanel={togglePanel} />
+      )}
+      {/* Supersets Exercises */}
+      {listType === "superset" && (
+        <></>
+        // <SupersetList listOpen={listOpen} togglePanel={togglePanel} />
+      )}
+      {/* Circuits Exercises  */}
+      {listType === "circuit" && (
+        <></>
+        // <CircuitList listOpen={listOpen} togglePanel={togglePanel} />
+      )}
     </Animated.View>
   );
 }

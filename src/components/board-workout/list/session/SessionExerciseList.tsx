@@ -1,12 +1,12 @@
-import { HEIGHT } from "../../../features/Dimensions";
-import { Animated, View, ScrollView } from "react-native";
-import { useFadeInAnim } from "../../../animations/useFadeInAnim";
-import { useWorkoutStore } from "../../../stores/workout/useWorkoutStore";
-import { ExerciseCard } from "../exercise/ExerciseCard";
-import { SessionLayoutItem } from "../../../stores/workout/types";
+import { HEIGHT } from "../../../../features/Dimensions";
+import { Animated, FlatList } from "react-native";
+import { useFadeInAnim } from "../../../../animations/useFadeInAnim";
+import { useWorkoutStore } from "../../../../stores/workout/useWorkoutStore";
+import { ExerciseCard } from "../../cards/ExerciseCard";
 import { useEffect, useState } from "react";
 import { SessionExerciseListHeader } from "./SessionExerciseListHeader";
 import { SessionExerciseListAddNewButton } from "./SessionExerciseListAddNewButton";
+import { SessionLayoutItem } from "../../../../stores/workout/types";
 
 interface SessionExerciseListProps {
   listOpen: boolean;
@@ -46,6 +46,23 @@ export function SessionExerciseList({
     setSelectMode(false);
   }, [listOpen]);
 
+  function card({ item }: { item: SessionLayoutItem }) {
+    if (item.type === "exercise")
+      return (
+        <ExerciseCard
+          exercise={item.exercise}
+          onUse={handleExerciseUse}
+          onSelect={handleExerciseSelect}
+          isActive={activeExercise?.id === item.exercise.id}
+          isSelected={selectedExercises.some(
+            (i: string) => i === item.exercise.id
+          )}
+          multipleSelect={selectMode}
+        />
+      );
+    return null;
+  }
+
   if (listOpen)
     return (
       <Animated.View
@@ -62,38 +79,18 @@ export function SessionExerciseList({
           setSelectedExercises={setSelectedExercises}
           setSelectMode={setSelectMode}
         />
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={{ flex: 1, gap: 4 }}>
-            {activeSession.layout.map(
-              (item: SessionLayoutItem, index: number) => {
-                if (item.type === "exercise") {
-                  return (
-                    <ExerciseCard
-                      key={`${item.id}-${index}`}
-                      exercise={item.exercise}
-                      onUse={handleExerciseUse}
-                      onSelect={handleExerciseSelect}
-                      isActive={activeExercise?.id === item.exercise.id}
-                      isSelected={selectedExercises.some(
-                        (i: string) => i === item.exercise.id
-                      )}
-                      multipleSelect={selectMode}
-                    />
-                  );
-                }
-                return null;
-              }
-            )}
-
-            {/* Add Exercise */}
+        <FlatList
+          data={activeSession.layout}
+          keyExtractor={(item, index) => `${item.id}-${index}`}
+          renderItem={({ item }) => card({ item })}
+          ListFooterComponent={() => (
             <SessionExerciseListAddNewButton
               style={{
                 opacity: selectMode ? 0 : 1,
-                margin: 16,
               }}
             />
-          </View>
-        </ScrollView>
+          )}
+        />
       </Animated.View>
     );
 

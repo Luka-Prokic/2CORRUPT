@@ -4,9 +4,12 @@ import { StrobeBlur } from "../../ui/misc/StrobeBlur";
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { Text } from "react-native";
 import { useWorkoutStore } from "../../../stores/workout/useWorkoutStore";
+import { useTranslation } from "react-i18next";
+
 export function AddSetButton() {
   const { theme } = useSettingsStore();
   const { addSetToActiveExercise } = useWorkoutStore();
+  const { t } = useTranslation();
 
   const handleAddSet = () => {
     addSetToActiveExercise();
@@ -47,7 +50,7 @@ export function AddSetButton() {
             fontWeight: "bold",
           }}
         >
-          Add Set
+          {t("workout-view.add-set")}
         </Text>
       </StrobeBlur>
     </BounceButton>

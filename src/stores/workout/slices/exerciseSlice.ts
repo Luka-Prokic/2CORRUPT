@@ -6,7 +6,7 @@ import {
   DropSet,
   SessionLayoutItem,
 } from "../types";
-import { exercisesDefList } from "../../../config/constants/defaults";
+import { exercisesDefList, EmptySet } from "../../../config/constants/defaults";
 
 /**
  * Exercise slice: manages the active exercise (single source of truth during editing)
@@ -308,14 +308,13 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
       activeExercise,
       setActiveExercise,
       updateNavigationFlags,
-      checkActiveExercise,
     } = get();
     if (!activeSession) return;
 
     const newExercise: SessionExercise = {
       ...exercise,
       id: exercise.id || Date.now().toString(),
-      sets: exercise.sets || [],
+      sets: exercise.sets || [EmptySet],
     };
 
     const newLayoutItem: SessionLayoutItem = {

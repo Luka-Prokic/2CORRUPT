@@ -44,18 +44,19 @@ export function SessionProgressDots() {
         marginBottom: 4,
       }}
     >
-      {activeSession.layout.map((item) => (
-        <View
-          key={item.id}
-          style={{
-            width: 8,
-            height: 8,
-            borderRadius: 4,
-            marginHorizontal: 4,
-            backgroundColor: getDotColor(item),
-          }}
-        />
-      ))}
+      {activeSession.layout.length > 1 &&
+        activeSession.layout.map((item) => (
+          <View
+            key={item.id}
+            style={{
+              width: 8,
+              height: 8,
+              borderRadius: 4,
+              marginHorizontal: 4,
+              backgroundColor: getDotColor(item),
+            }}
+          />
+        ))}
     </View>
   );
 }

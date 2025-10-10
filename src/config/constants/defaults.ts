@@ -1,4 +1,4 @@
-import { ExerciseInfo, WorkoutSession } from "../../stores/workout/types";
+import { ExerciseInfo, WorkoutSession, Set } from "../../stores/workout/types";
 
 export const username = "Pencil Neck";
 
@@ -15,6 +15,13 @@ export const defaultSession: WorkoutSession = {
   isActive: false,
   layout: [],
   createdAt: new Date().toISOString(),
+};
+
+export const EmptySet: Set = {
+  id: `set-${Date.now()}-${Math.random().toString(36)}`,
+  reps: 0,
+  weight: 0,
+  dropSets: [],
 };
 
 export const bodyPartsTemplate = {

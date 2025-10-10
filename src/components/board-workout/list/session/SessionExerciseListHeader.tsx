@@ -5,7 +5,7 @@ import { useWorkoutStore } from "../../../stores/workout/useWorkoutStore";
 import { useSettingsStore } from "../../../stores/settings/useSettingsStore";
 import { Fragment } from "react";
 import { Ionicons } from "@expo/vector-icons";
-import { useTranslation } from "react-i18next";
+import { useActionSheet } from "../../../features/useActionSheet";
 
 interface SessionExerciseListHeaderProps {
   selectMode: boolean;
@@ -26,29 +26,50 @@ export function SessionExerciseListHeader({
     activeSession,
     activeExercise,
     clearActiveExercise,
-    setActiveExercise,
     removeItemFromSession,
   } = useWorkoutStore();
   const { theme } = useSettingsStore();
-  const { t } = useTranslation();
+  const { showActionSheet, t } = useActionSheet();
 
   function handleRemoveSelectedExercises() {
+    const count = selectedExercises.length;
+    const title =
+      count > 1
+        ? t("workout-board.delete-exercises")
+        : t("workout-board.delete-exercise");
+    const message =
+      count > 1
+        ? t("workout-board.delete-exercises-message")
+        : t("workout-board.delete-exercise-message");
+
+    showActionSheet({
+      title: `${title}?`,
+      message,
+      options: [
+        t("workout-board.cancel"),
+        `${t("workout-board.delete")} ${count}`,
+      ],
+      destructiveIndex: 1,
+      cancelIndex: 0,
+      onSelect: (index) => {
+        if (index === 1) removeSelectedExercises();
+      },
+    });
+  }
+
+  function removeSelectedExercises() {
     selectedExercises.forEach((exerciseId) => {
       if (activeExercise.id === exerciseId) clearActiveExercise();
       removeItemFromSession(exerciseId);
     });
     setSelectedExercises([]);
     setSelectMode(false);
-    const firstExercise =
-      activeSession.layout[0].type === "exercise"
-        ? activeSession.layout[0].exercise.id
-        : activeSession.layout[0].exercises[0].id;
-    if (!activeExercise && firstExercise) setActiveExercise(firstExercise);
   }
 
   function handleSelectAllExercises() {
     setSelectedExercises(activeSession.layout.map((item) => item.id));
   }
+
   const selectModeButtons = () => {
     const isAllSelected =
       selectedExercises.length === activeSession.layout.length;
@@ -107,7 +128,7 @@ export function SessionExerciseListHeader({
           flexDirection: "row-reverse",
           justifyContent: "space-between",
           gap: 16,
-          margin: 8,
+          marginHorizontal: 8,
           marginBottom: 16,
         }}
       >

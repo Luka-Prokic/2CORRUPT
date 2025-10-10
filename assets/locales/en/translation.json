@@ -207,7 +207,8 @@
     "completed": "Completed",
     "sets-completed": "{{count}} of {{total}} sets completed",
     "sets-completed-all": "All sets completed",
-    "sets-completed-none": "No sets completed"
+    "sets-completed-none": "No sets completed",
+    "add-set": "Add Set"
   },
   "workout-board": {
     "workout": "Workout",
@@ -217,13 +218,18 @@
     "cancel": "Cancel",
     "remove": "Remove",
     "delete": "Delete",
+    "complete": "Complete",
     "continue": "Continue",
     "add-to-superset": "Add to Super Set",
     "exit-workout": "Exit Workout",
     "exit-workout-message": "You’re about to cancel your workout. You can also save it as a template before exiting.",
     "save-as-template": "Save as Template",
     "complete-workout": "Finish Workout",
-    "complete-workout-message": "Are you sure you want to complete this workout? You won’t be able to make changes to it later."
+    "complete-workout-message": "Are you sure you want to complete this workout? You won’t be able to make changes to it later.",
+    "delete-exercises": "Delete Exercises",
+    "delete-exercises-message": "Are you sure you want to delete these exercises? This action cannot be undone.",
+    "delete-exercise": "Delete Exercise",
+    "delete-exercise-message": "Are you sure you want to delete this exercise? This action cannot be undone."
   },
   "add-exercise": {
     "add-exercise": "Add Exercise",
