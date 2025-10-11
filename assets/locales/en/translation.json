@@ -274,6 +274,10 @@
     "search": "Search exercises",
     "create": "Create"
   },
+  "recap": {
+    "session": "Session",
+    "session-not-found": "Session not found"
+  },
 
   "categories": {
     "chest": "Chest",

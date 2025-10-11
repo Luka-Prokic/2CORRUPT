@@ -275,6 +275,10 @@
     "search": "Pretraži vežbe",
     "create": "Kreiraj"
   },
+  "recap": {
+    "session": "Trening",
+    "session-not-found": "Trening nije pronađen"
+  },
 
   "categories": {
     "all": "Sve",

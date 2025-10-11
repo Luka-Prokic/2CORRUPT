@@ -1,73 +1,69 @@
-import { View } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { StrobeBlur } from "../../../../ui/misc/StrobeBlur";
 import { useSettingsStore } from "../../../../../stores/settings";
 import { Ionicons } from "@expo/vector-icons";
-import { Text } from "react-native";
-import { useTranslation } from "react-i18next";
-import { WorkoutSession } from "../../../../../stores/workout";
 import { hexToRGBA } from "../../../../../features/HEXtoRGB";
+import { WorkoutSession } from "../../../../../stores/workout";
+import { router } from "expo-router";
 
 interface WorkoutInDayCardProps {
-  session?: WorkoutSession;
+  session: WorkoutSession;
 }
 
 export function WorkoutInDayCard({ session }: WorkoutInDayCardProps) {
   const { theme } = useSettingsStore();
-  const { t } = useTranslation();
-  const isRestDay = !session;
-  const title = isRestDay
-    ? t("calendar.rest-day")
-    : session.name || t("calendar.workout");
-  const description = isRestDay ? "" : session.notes || "";
-  const exerciseCount = !isRestDay ? session.layout?.length || 0 : 0;
+  const exerciseCount = session.layout?.length || 0;
+
+  function handlePress() {
+    router.push({
+      pathname: "/recap/[sessionId]",
+      params: { sessionId: session.id },
+    });
+  }
 
   return (
-    <StrobeBlur
-      style={{
-        padding: 16,
-        borderRadius: 24,
-        borderWidth: 1,
-        borderColor: theme.border,
-        height: 64,
-      }}
-      colors={[theme.caka, theme.primaryBackground, theme.accent, theme.tint]}
-    >
-      <View
+    <TouchableOpacity onPress={handlePress}>
+      <StrobeBlur
         style={{
-          flexDirection: "row",
-          alignItems: "center",
-          padding: 8,
+          padding: 16,
+          borderRadius: 24,
+          borderWidth: 1,
+          borderColor: theme.border,
+          height: 64,
         }}
+        colors={[theme.caka, theme.primaryBackground, theme.accent, theme.tint]}
       >
         <View
           style={{
-            width: 48,
-            height: 48,
-            borderRadius: 24,
-            backgroundColor: hexToRGBA(theme.handle, 0.8),
-            justifyContent: "center",
+            flexDirection: "row",
             alignItems: "center",
-            marginRight: 12,
+            padding: 8,
           }}
         >
-          <Ionicons
-            name={isRestDay ? "bandage" : "barbell"}
-            size={32}
-            color={isRestDay ? theme.grayText : theme.accent}
-          />
-        </View>
-        <View style={{ flex: 1 }}>
-          <Text
+          <View
             style={{
-              fontSize: 16,
-              fontWeight: "bold",
-              marginBottom: 4,
-              color: theme.text,
+              width: 48,
+              height: 48,
+              borderRadius: 24,
+              backgroundColor: hexToRGBA(theme.handle, 0.8),
+              justifyContent: "center",
+              alignItems: "center",
+              marginRight: 12,
             }}
           >
-            {title}
-          </Text>
-          {!isRestDay && (
+            <Ionicons name="barbell" size={32} color={theme.accent} />
+          </View>
+          <View style={{ flex: 1 }}>
+            <Text
+              style={{
+                fontSize: 16,
+                fontWeight: "bold",
+                marginBottom: 4,
+                color: theme.text,
+              }}
+            >
+              {session.name}
+            </Text>
             <Text
               style={{
                 fontSize: 12,
@@ -76,25 +72,25 @@ export function WorkoutInDayCard({ session }: WorkoutInDayCardProps) {
                 color: theme.grayText,
               }}
             >
-              {exerciseCount} {t("calendar.exercises")}
+              {exerciseCount} exercises
             </Text>
-          )}
+          </View>
         </View>
-      </View>
 
-      {!isRestDay && description !== "" && (
-        <Text
-          style={{
-            fontSize: 12,
-            marginTop: 8,
-            lineHeight: 16,
-            opacity: 0.7,
-            color: theme.grayText,
-          }}
-        >
-          {description}
-        </Text>
-      )}
-    </StrobeBlur>
+        {session.notes && (
+          <Text
+            style={{
+              fontSize: 12,
+              marginTop: 8,
+              lineHeight: 16,
+              opacity: 0.7,
+              color: theme.grayText,
+            }}
+          >
+            {session.notes}
+          </Text>
+        )}
+      </StrobeBlur>
+    </TouchableOpacity>
   );
 }

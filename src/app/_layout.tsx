@@ -8,6 +8,7 @@ import { CorruptHeader } from "../components/corrupt/CorruptHeader";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useTranslation } from "react-i18next";
 import { CreateNewExerciseButton } from "../components/add-exercise/CreateNewExerciseButton";
+import { SessionRecapHeader } from "../components/recap/SessionRecapHeader";
 
 function ModalBackButton() {
   const { theme } = useSettingsStore();
@@ -119,6 +120,22 @@ export default function Layout() {
             headerLeft: () => <Fragment />,
             headerRight: () => <ModalExitButton />,
           }}
+        />
+
+        {/* Session Recap */}
+
+        <Stack.Screen
+          name="recap/[sessionId]"
+          options={({ route }) => ({
+            presentation: "fullScreenModal",
+            headerLeft: () => <Fragment />,
+            headerTitle: () => (
+              <SessionRecapHeader
+                sessionId={(route.params as { sessionId: string }).sessionId}
+              />
+            ),
+            headerRight: () => <ModalExitButton />,
+          })}
         />
 
         {/* All */}

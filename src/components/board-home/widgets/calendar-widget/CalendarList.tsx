@@ -3,6 +3,7 @@ import { WorkoutInDayCard } from "./cards/WorkoutInDayCard";
 import { NoWorkoutTodayCard } from "./cards/NoWorkoutTodayCard";
 import { useSessionsByDate } from "../../../../features/workout/useSessionHistory";
 import { Fragment } from "react/jsx-runtime";
+import { RestDayCard } from "./cards/RestDayCard";
 
 interface CalendarListProps {
   selectedDate: Date;
@@ -35,7 +36,7 @@ export function CalendarList({ selectedDate }: CalendarListProps) {
               <WorkoutInDayCard key={session.id} session={session} />
             ))
           ) : (
-            <WorkoutInDayCard />
+            <RestDayCard />
           )}
         </Fragment>
       )}
