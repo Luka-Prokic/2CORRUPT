@@ -7,9 +7,15 @@ interface ExerciseNameProps {
   exercise: SessionExercise;
   fontSize?: number;
   textColor?: string;
+  prefixColor?: string;
 }
 
-export function ExerciseName({ exercise, fontSize, textColor }: ExerciseNameProps) {
+export function ExerciseName({
+  exercise,
+  fontSize,
+  textColor,
+  prefixColor,
+}: ExerciseNameProps) {
   const { theme } = useSettingsStore();
   const { translatedName } = useTranslatedSessionExerciseName(exercise);
 
@@ -24,7 +30,11 @@ export function ExerciseName({ exercise, fontSize, textColor }: ExerciseNameProp
       adjustsFontSizeToFit
       minimumFontScale={0.6}
     >
-      {exercise.prefix ? `${exercise.prefix} ` : ""}
+      {prefixColor ? (
+        <Text style={{ color: prefixColor }}>{exercise.prefix} </Text>
+      ) : (
+        ""
+      )}
       {translatedName}
     </Text>
   );

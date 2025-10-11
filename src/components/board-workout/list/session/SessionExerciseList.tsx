@@ -8,12 +8,10 @@ import { SessionExerciseListHeader } from "./SessionExerciseListHeader";
 import { SessionExerciseListAddNewButton } from "./SessionExerciseListAddNewButton";
 
 interface SessionExerciseListProps {
-  listOpen: boolean;
   togglePanel: () => void;
 }
 
 export function SessionExerciseList({
-  listOpen,
   togglePanel,
 }: SessionExerciseListProps) {
   const { activeSession } = useWorkoutStore();
@@ -41,11 +39,6 @@ export function SessionExerciseList({
     setSelectedExercises([]);
   };
 
-  useEffect(() => {
-    setSelectedExercises([]);
-    setSelectMode(false);
-  }, [listOpen]);
-
   const renderCard = (item: any) => {
     return (
       <ExerciseCard
@@ -57,8 +50,6 @@ export function SessionExerciseList({
       />
     );
   };
-
-  if (!listOpen) return null;
 
   return (
     <Animated.View

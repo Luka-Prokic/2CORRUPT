@@ -7,11 +7,11 @@ import { RestTimerSettings } from "./RestTimerSettings";
 import { ExerciseHeader } from "./ExerciseHeader";
 import { RemoveExerciseButton } from "./RemoveExerciseButton";
 import { ExerciseNoteInput } from "./ExerciseNoteInput";
-import { SessionListType } from "../SessionDashboard";
+import { SessionSheetType } from "../SessionDashboard";
 
 interface ExerciseProfileProps {
   openPanel: () => void;
-  setListType: (listType: SessionListType) => void;
+  setListType: (listType: SessionSheetType) => void;
 }
 
 export function ExerciseProfile({ openPanel, setListType }: ExerciseProfileProps) {

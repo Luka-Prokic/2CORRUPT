@@ -9,19 +9,19 @@ import { useRef } from "react";
 import { ExerciseProfile } from "./profile/ExerciseProfile";
 import { useWorkoutStore } from "../../stores/workoutStore";
 import { ListHeader } from "./list/ListHeader";
-import { RestTimerSheet } from "./RestTimerSheet";
-import { ExerciseNameSheet } from "./ExerciseNameSheet";
+import { RestTimerSheet } from "./list/rest/RestTimerSheet";
+import { ExerciseNameSheet } from "./list/name/ExerciseNameSheet";
 
 // Constants
 const FOCUS_HEIGHT = HEIGHT - 120;
 
-export type SessionListType = "session" | "rest" | "name";
+export type SessionSheetType = "session" | "rest" | "name";
 
 interface SessionDashboardProps {
   listOpen: boolean;
-  listType: SessionListType;
+  listType: SessionSheetType;
   setListOpen: (listOpen: boolean) => void;
-  setListType: (listType: SessionListType) => void;
+  setListType: (listType: SessionSheetType) => void;
 }
 
 export function SessionDashboard({
@@ -46,6 +46,13 @@ export function SessionDashboard({
     const toValue = listOpen ? 0 : -FOCUS_HEIGHT + 80;
     Animated.spring(animatedY, { toValue, useNativeDriver: true }).start();
     setListOpen(!listOpen);
+  }
+
+  function visibleSheet() {
+    if (listType === "session")
+      return <SessionExerciseList togglePanel={togglePanel} />;
+    if (listType === "rest") return <RestTimerSheet />;
+    if (listType === "name") return <ExerciseNameSheet />;
   }
 
   return (
@@ -82,15 +89,7 @@ export function SessionDashboard({
       <ListHeader listOpen={listOpen} togglePanel={togglePanel} />
 
       {/* List */}
-      {listType === "session" && (
-        <SessionExerciseList listOpen={listOpen} togglePanel={togglePanel} />
-      )}
-      {listType === "rest" && (
-        <RestTimerSheet listOpen={listOpen} togglePanel={togglePanel} />
-      )}
-      {listType === "name" && (
-        <ExerciseNameSheet listOpen={listOpen} togglePanel={togglePanel} />
-      )}
+      {listOpen && visibleSheet()}
     </Animated.View>
   );
 }

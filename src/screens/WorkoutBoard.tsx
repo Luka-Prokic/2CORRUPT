@@ -8,14 +8,14 @@ import { useWorkoutStore } from "../stores/workoutStore";
 import { WorkoutBoardHeader } from "../components/board-workout/WorkoutBoardHeader";
 import {
   SessionDashboard,
-  SessionListType,
+  SessionSheetType,
 } from "../components/board-workout/SessionDashboard";
 
 export function WorkoutBoard() {
   const { theme } = useSettingsStore();
   const { activeSession } = useWorkoutStore();
   const [listOpen, setListOpen] = useState(false);
-  const [listType, setListType] = useState<SessionListType>("session");
+  const [listType, setListType] = useState<SessionSheetType>("session");
 
   if (!activeSession || !activeSession.layout)
     return (

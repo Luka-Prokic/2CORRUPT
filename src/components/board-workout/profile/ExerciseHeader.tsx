@@ -5,11 +5,11 @@ import { ExerciseName } from "../../view-workout/table/header/ExerciseName";
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { useTranslation } from "react-i18next";
 import { useWorkoutStore } from "../../../stores/workout/useWorkoutStore";
-import { SessionListType } from "../SessionDashboard";
+import { SessionSheetType } from "../SessionDashboard";
 
 interface ExerciseHeaderProps {
   openPanel: () => void;
-  setListType: (listType: SessionListType) => void;
+  setListType: (listType: SessionSheetType) => void;
 }
 
 export function ExerciseHeader({
@@ -42,7 +42,8 @@ export function ExerciseHeader({
         onPress={handleEditExercise}
         style={{
           height: 44,
-          width: 44,
+          alignItems: "flex-end",
+          paddingBottom: 4,
         }}
       >
         <Text

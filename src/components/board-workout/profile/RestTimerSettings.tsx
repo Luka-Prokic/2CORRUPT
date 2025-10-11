@@ -6,11 +6,11 @@ import { hexToRGBA } from "../../../features/HEXtoRGB";
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { Ionicons } from "@expo/vector-icons";
 import { useWorkoutStore } from "../../../stores/workoutStore";
-import { SessionListType } from "../SessionDashboard";
+import { SessionSheetType } from "../SessionDashboard";
 
 interface RestTimerSettingsProps {
   openPanel: () => void;
-  setListType: (listType: SessionListType) => void;
+  setListType: (listType: SessionSheetType) => void;
 }
 
 export function RestTimerSettings({
@@ -43,7 +43,7 @@ export function RestTimerSettings({
     <View
       style={{
         flexDirection: "row",
-        gap: 8,
+        gap: 4,
         alignItems: "center",
         height: 34,
         width: WIDTH * 0.5 - 20,
@@ -70,7 +70,7 @@ export function RestTimerSettings({
       <BounceButton
         style={{
           height: 34,
-          width: WIDTH * 0.5 - 72,
+          width: WIDTH * 0.5 - 68,
           borderTopRightRadius: 22,
           borderBottomRightRadius: 22,
           backgroundColor: hexToRGBA(theme.grayText, 0.4),

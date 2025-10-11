@@ -2,11 +2,13 @@ import { Keyboard, TextInput } from "react-native";
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { useState } from "react";
 import { useWorkoutStore } from "../../../stores/workout/useWorkoutStore";
+import { useTranslation } from "react-i18next";
 
 export function ExerciseNoteInput() {
   const { theme } = useSettingsStore();
   const { activeExercise, updateActiveExercise } = useWorkoutStore();
   const [notes, setNotes] = useState(activeExercise.notes);
+  const { t } = useTranslation();
 
   function handleNotesChange(text: string) {
     setNotes(text);
@@ -31,7 +33,7 @@ export function ExerciseNoteInput() {
         elevation: 4,
       }}
       value={notes}
-      placeholder="Add notes..."
+      placeholder={t("workout-board.add-notes-placeholder")}
       placeholderTextColor={theme.grayText}
       onChangeText={handleNotesChange}
       multiline

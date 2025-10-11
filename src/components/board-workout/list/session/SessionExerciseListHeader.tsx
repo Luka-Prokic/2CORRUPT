@@ -105,7 +105,7 @@ export function SessionExerciseListHeader({
             borderRadius: 17,
           }}
           textColor={!isSomeSelected ? theme.grayText : theme.accent}
-          disabled={!isSomeSelected}
+          disabled={!isSomeSelected || true}//TODO: Remove this when u add superset feature
         />
       </Fragment>
     );

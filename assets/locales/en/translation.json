@@ -46,7 +46,7 @@
     "show-less": "Show less",
     "welcome-to": "Welcome to",
     "lets-get-started": "Let's get started",
-     "show": "Show",
+    "show": "Show",
     "hide": "Hide"
   },
   "auth-form": {
@@ -208,7 +208,7 @@
   },
 
   "workout-view": {
-    "set": "Sets",
+    "set": "Set",
     "reps": "Reps",
     "rpe": "RPE",
     "rir": "RIR",
@@ -241,7 +241,22 @@
     "delete-exercises": "Delete Exercises",
     "delete-exercises-message": "Are you sure you want to delete these exercises? This action cannot be undone.",
     "delete-exercise": "Delete Exercise",
-    "delete-exercise-message": "Are you sure you want to delete this exercise? This action cannot be undone."
+    "delete-exercise-message": "Are you sure you want to delete this exercise? This action cannot be undone.",
+    "prefix-description": "Use this field to mark or customize exercises for this session. It won’t change the original exercise name.",
+    "custom-label": "Custom label (optional)",
+    "create-exercise-copy": "Create a New Exercise Using This One...",
+    "create-exercise-copy-description": "Creating a new exercise will use this one as a base. You can edit the name, sets, and other details on the next screen. This helps you quickly add personalized variations without starting from scratch. The changes will only affect the new exercise, keeping your original one intact.",
+    "rest-timer-description": "Adjust the rest duration between sets. After you finish a set, the timer will start automatically using this value. You can tweak it in 15-second steps to match how much recovery you need.",
+    "typical-rest-times": "Typical Rest Times:",
+    "heavy-lifts": "Heavy lifts: 3–4+ min",
+    "compound-lifts": "Compound lifts: 2–3 min",
+    "accessory-lifts": "Accessory lifts (Normal sets): 30–60 sec",
+    "accessory-lifts-supersets": "Accessory lifts (Supersets/Drop sets): 1-2+ min",
+    "cardio-or-warm-up-sets": "Cardio or warm-up sets: 15–60 sec",
+    "rest-time": "Rest Time",
+    "remove-exercise": "Remove Exercise",
+    "swap-exercise": "Swap Exercise",
+    "add-notes-placeholder": "Add notes... (optional)"
   },
   "add-exercise": {
     "add-exercise": "Add Exercise",

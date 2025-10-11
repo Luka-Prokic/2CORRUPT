@@ -1,19 +1,18 @@
 import { Text, View } from "react-native";
-import { HEIGHT, WIDTH } from "../../features/Dimensions";
-import { useSettingsStore } from "../../stores/settingsStore";
-import { useWorkoutStore } from "../../stores/workout/useWorkoutStore";
-import { ExerciseName } from "./../view-workout/table/header/ExerciseName";
-import { StrobeBlur } from "../ui/misc/StrobeBlur";
-import { BounceButton } from "../ui/buttons/BounceButton";
+import { HEIGHT, WIDTH } from "../../../../features/Dimensions";
+import { useSettingsStore } from "../../../../stores/settingsStore";
+import { useWorkoutStore } from "../../../../stores/workout/useWorkoutStore";
+import { ExerciseName } from "../../../view-workout/table/header/ExerciseName";
+import { StrobeBlur } from "../../../ui/misc/StrobeBlur";
+import { BounceButton } from "../../../ui/buttons/BounceButton";
+import { useTranslation } from "react-i18next";
+import { RestCheatSheet } from "./RestCheatSheet";
 
-interface RestTimerSheetProps {
-  listOpen: boolean;
-  togglePanel: () => void;
-}
-
-export function RestTimerSheet({ listOpen, togglePanel }: RestTimerSheetProps) {
+export function RestTimerSheet() {
   const { theme } = useSettingsStore();
   const { activeExercise, updateActiveExercise } = useWorkoutStore();
+  const { t } = useTranslation();
+
   const restTime = activeExercise?.restTime ?? 180;
 
   const minutes = String(Math.floor(restTime / 60));
@@ -27,14 +26,16 @@ export function RestTimerSheet({ listOpen, togglePanel }: RestTimerSheetProps) {
       style={{
         width: WIDTH,
         height: HEIGHT - 200,
-        padding: 16,
-        paddingTop: 88,
+        paddingHorizontal: 16,
+        paddingTop: 34,
         gap: 8,
         alignItems: "center",
       }}
     >
       <ExerciseName exercise={activeExercise} textColor={theme.accent} />
-      <Text style={{ fontSize: 24, color: theme.grayText }}>Rest Time</Text>
+      <Text style={{ fontSize: 18, color: theme.grayText }}>
+        {t("workout-board.rest-time")}
+      </Text>
 
       <Text style={{ fontSize: 52, fontWeight: "bold", color: theme.text }}>
         {minutes}min {seconds}s
@@ -64,6 +65,7 @@ export function RestTimerSheet({ listOpen, togglePanel }: RestTimerSheetProps) {
               overflow: "hidden",
             }}
             onPress={() => handleChangeRestTime(label === "-15" ? -15 : 15)}
+            disabled={restTime === 0 && label === "-15"}
           >
             <StrobeBlur
               colors={[
@@ -87,6 +89,18 @@ export function RestTimerSheet({ listOpen, togglePanel }: RestTimerSheetProps) {
           </BounceButton>
         ))}
       </View>
+      <Text
+        style={{
+          fontSize: 14,
+          color: theme.grayText,
+          textAlign: "justify",
+          marginBottom: 12,
+        }}
+      >
+        {t("workout-board.rest-timer-description")}
+      </Text>
+
+      <RestCheatSheet />
     </View>
   );
 }
