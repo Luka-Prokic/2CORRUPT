@@ -6,6 +6,7 @@ import { useSettingsStore } from "../stores/settingsStore";
 import { BottomAddExerciseSection } from "../components/add-exercise/BottomAddExerciseSection";
 import { AddExerciseCard } from "../components/add-exercise/AddExerciseCard";
 import { ExerciseFilter } from "../components/add-exercise/ExerciseFilter";
+import { EmptyFooter } from "../components/ui/containers/EmptyFooter";
 
 export function AddExerciseScreen() {
   const { theme } = useSettingsStore();
@@ -70,6 +71,9 @@ export function AddExerciseScreen() {
         maxToRenderPerBatch={20}
         windowSize={10}
         removeClippedSubviews={true}
+        ListFooterComponent={() => {
+          return <EmptyFooter />;
+        }}
       />
 
       <BottomAddExerciseSection selectedExercises={selectedExercises} />
