@@ -9,6 +9,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useTranslation } from "react-i18next";
 import { CreateNewExerciseButton } from "../components/add-exercise/CreateNewExerciseButton";
 import { SessionRecapHeader } from "../components/recap/SessionRecapHeader";
+import { CopyWorkoutButton } from "../components/recap/workout/CopyWorkoutButton";
 
 function ModalBackButton() {
   const { theme } = useSettingsStore();
@@ -128,7 +129,11 @@ export default function Layout() {
           name="recap/[sessionId]"
           options={({ route }) => ({
             presentation: "fullScreenModal",
-            headerLeft: () => <Fragment />,
+            headerLeft: () => (
+              <CopyWorkoutButton
+                sessionId={(route.params as { sessionId: string }).sessionId}
+              />
+            ),
             headerTitle: () => (
               <SessionRecapHeader
                 sessionId={(route.params as { sessionId: string }).sessionId}

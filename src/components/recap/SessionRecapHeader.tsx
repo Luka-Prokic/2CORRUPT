@@ -1,5 +1,4 @@
-// components/SessionRecapHeader.tsx
-import { Text, View } from "react-native";
+import { Text } from "react-native";
 import { useSettingsStore } from "../../stores/settingsStore";
 import { useWorkoutStore } from "../../stores/workout/useWorkoutStore";
 

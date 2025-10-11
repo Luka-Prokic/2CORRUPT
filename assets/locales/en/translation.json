@@ -276,7 +276,8 @@
   },
   "recap": {
     "session": "Session",
-    "session-not-found": "Session not found"
+    "session-not-found": "Session not found",
+    "exercises": "Exercises"
   },
 
   "categories": {

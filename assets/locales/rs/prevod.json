@@ -277,7 +277,8 @@
   },
   "recap": {
     "session": "Trening",
-    "session-not-found": "Trening nije pronađen"
+    "session-not-found": "Trening nije pronađen",
+    "exercises": "Vežbe"
   },
 
   "categories": {
