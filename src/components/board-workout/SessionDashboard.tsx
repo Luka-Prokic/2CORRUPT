@@ -11,6 +11,7 @@ import { useWorkoutStore } from "../../stores/workoutStore";
 import { ListHeader } from "./list/ListHeader";
 import { RestTimerSheet } from "./list/rest/RestTimerSheet";
 import { ExerciseNameSheet } from "./list/name/ExerciseNameSheet";
+import { NoExerciseBoard } from "./NoExerciseBoard";
 
 // Constants
 const FOCUS_HEIGHT = HEIGHT - 120;
@@ -79,8 +80,10 @@ export function SessionDashboard({
           }}
         >
           {/* <SessionTimer /> */}
-          {activeExercise && (
+          {activeExercise ? (
             <ExerciseProfile openPanel={openPanel} setListType={setListType} />
+          ) : (
+            <NoExerciseBoard />
           )}
         </LinearGradient>
       </StrobeBlur>

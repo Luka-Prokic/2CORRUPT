@@ -3,7 +3,6 @@ import { useLocalSearchParams } from "expo-router";
 import { useSettingsStore } from "../stores/settingsStore";
 import { useWorkoutStore } from "../stores/workout/useWorkoutStore";
 import { FlatList, Text, View } from "react-native";
-import { Fragment } from "react";
 import { SessionExercise, DropSet, Set } from "../stores/workout/types";
 import { useTranslation } from "react-i18next";
 import { DashLine } from "../components/ui/misc/DashLine";
@@ -46,55 +45,75 @@ export function SessionRecapScreen() {
 }
 
 function SessionHeader({ session }: { session: any }) {
-  const { theme } = useSettingsStore();
-  return (
-    <View style={{ padding: 16 }}>
-      <Text style={{ fontSize: 16, fontWeight: "bold", color: theme.text }}>
-        {session.totals?.totalSets} sets
-      </Text>
-      <Text style={{ fontSize: 16, fontWeight: "bold", color: theme.text }}>
-        {session.totals?.totalReps} reps
-      </Text>
-      <Text style={{ fontSize: 16, fontWeight: "bold", color: theme.text }}>
-        {session.totals?.totalVolumeKg} kg
-      </Text>
-      <Text style={{ fontSize: 20, fontWeight: "bold", color: theme.text }}>
-        Exercises -----------------------
-      </Text>
-      
-      <DashLine />
-    </View>
-  );
-}
-
-function ExerciseItem({ exercise }: { exercise: SessionExercise }) {
-  const { theme } = useSettingsStore();
-  return (
-    <View style={{ paddingHorizontal: 16, marginBottom: 8 }}>
-      <Text style={{ fontSize: 16, marginTop: 12, color: theme.text }}>
-        {exercise.prefix ?? ""}
-        {exercise.name}
-      </Text>
-      {exercise.sets.map((set: Set, index: number) => (
-        <Fragment key={`${exercise.id}-${set.id}`}>
-          <Text
-            style={{
-              fontSize: 14,
-              color: set.isCompleted ? theme.tint : theme.text,
-            }}
-          >
-            {index + 1}. {set.reps} x {set.weight} | {set.rpe} | {set.rir}
-          </Text>
-          {set.dropSets?.map((dropSet: DropSet, dropIndex: number) => (
+    const { theme } = useSettingsStore();
+    return (
+      <View style={{ padding: 16 }}>
+        <Text style={{ fontSize: 16, fontWeight: "bold", color: theme.text }}>
+          {session.totals?.totalSets} sets | {session.totals?.totalReps} reps | {session.totals?.totalVolumeKg} kg
+        </Text>
+  
+        <Text
+          style={{
+            fontSize: 18,
+            fontWeight: "bold",
+            color: theme.text,
+            marginTop: 16,
+            marginBottom: 8,
+          }}
+        >
+          Exercises
+        </Text>
+  
+        <DashLine />
+      </View>
+    );
+  }
+  
+  function ExerciseItem({ exercise }: { exercise: SessionExercise }) {
+    const { theme } = useSettingsStore();
+    return (
+      <View style={{ paddingHorizontal: 16, marginBottom: 16 }}>
+        <Text
+          style={{
+            fontSize: 16,
+            fontWeight: "600",
+            color: theme.text,
+            fontFamily: "monospace",
+          }}
+        >
+          {exercise.prefix ?? ""}{exercise.name}
+        </Text>
+  
+        {exercise.sets.map((set: Set, index: number) => (
+          <View key={`${exercise.id}-${set.id}`} style={{ marginLeft: 8, marginTop: 4 }}>
             <Text
-              key={`${exercise.id}-${dropSet.id}-${dropIndex}`}
-              style={{ fontSize: 12, color: theme.grayText }}
+              style={{
+                fontSize: 14,
+                color: theme.text,
+                fontFamily: "monospace",
+              }}
             >
-              {dropIndex + 1}' {dropSet.reps} x {dropSet.weight}
+              {index + 1}. {set.reps} x {set.weight} | {set.rpe} | {set.rir}
             </Text>
-          ))}
-        </Fragment>
-      ))}
-    </View>
-  );
-}
+  
+            {set.dropSets?.map((dropSet: DropSet, dropIndex: number) => (
+              <Text
+                key={`${exercise.id}-${dropSet.id}-${dropIndex}`}
+                style={{
+                  fontSize: 12,
+                  color: theme.grayText,
+                  marginLeft: 12,
+                  fontFamily: "monospace",
+                }}
+              >
+                {dropIndex + 1}' {dropSet.reps} x {dropSet.weight}
+              </Text>
+            ))}
+          </View>
+        ))}
+  
+        <DashLine />
+      </View>
+    );
+  }
+  

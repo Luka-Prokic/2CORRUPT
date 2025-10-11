@@ -1,6 +1,7 @@
 import { View, Pressable } from "react-native";
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { Ionicons } from "@expo/vector-icons";
+import { useWorkoutStore } from "../../../stores/workout/useWorkoutStore";
 
 interface ListHeaderProps {
   listOpen: boolean;
@@ -9,6 +10,7 @@ interface ListHeaderProps {
 
 export function ListHeader({ listOpen, togglePanel }: ListHeaderProps) {
   const { theme } = useSettingsStore();
+  const { activeExercise } = useWorkoutStore();
 
   return (
     <View
@@ -31,11 +33,12 @@ export function ListHeader({ listOpen, togglePanel }: ListHeaderProps) {
           flex: 1,
           alignItems: "center",
         }}
+        disabled={!listOpen || !activeExercise}
       >
         <Ionicons
           name={listOpen ? "chevron-down" : "chevron-up"}
           size={34}
-          color={theme.text}
+          color={!listOpen || !activeExercise ? theme.grayText : theme.text}
         />
       </Pressable>
     </View>

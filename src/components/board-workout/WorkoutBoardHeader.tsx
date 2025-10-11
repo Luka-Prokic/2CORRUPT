@@ -15,28 +15,30 @@ export function WorkoutBoardHeader({ listOpen }: WorkoutBoardHeaderProps) {
   const { setWorkoutView } = useUIStore();
   const { t, showActionSheet } = useActionSheet();
 
-  const handleCancelSession = () => {
+  const isItEmpty = !activeSession?.layout.length;
+
+  function handleCancelSession() {
     showActionSheet({
       title: `${t("workout-board.exit-workout")}?`,
       message: t("workout-board.exit-workout-message"),
       options: [
         t("workout-board.continue"),
         t("workout-board.exit-workout"),
-        t("workout-board.save-as-template"),
+        !isItEmpty && t("workout-board.save-as-template"),
       ],
       destructiveIndex: 1,
       cancelIndex: 0,
       onSelect: (buttonIndex) => {
-        if (buttonIndex === 1 || buttonIndex === 2) {
+        if (buttonIndex === 1 || (buttonIndex === 2 && !isItEmpty)) {
           setWorkoutView(false);
           cancelSession();
           router.back();
         }
       },
     });
-  };
+  }
 
-  const handleCompleteSession = () => {
+  function handleCompleteSession() {
     showActionSheet({
       title: `${t("workout-board.complete-workout")}?`,
       message: t("workout-board.complete-workout-message"),
@@ -53,7 +55,7 @@ export function WorkoutBoardHeader({ listOpen }: WorkoutBoardHeaderProps) {
         }
       },
     });
-  };
+  }
 
   return (
     <View
@@ -75,10 +77,14 @@ export function WorkoutBoardHeader({ listOpen }: WorkoutBoardHeaderProps) {
           fontWeight: "700",
         }}
       >
-        {activeSession.name || t("workout-board.workout")}
+        {activeSession?.name || t("workout-board.workout")}
       </Text>
-      <TouchableOpacity onPress={handleCompleteSession}>
-        <Ionicons name="checkmark-circle" size={44} color={theme.text} />
+      <TouchableOpacity onPress={handleCompleteSession} disabled={isItEmpty}>
+        <Ionicons
+          name="checkmark-circle"
+          size={44}
+          color={isItEmpty ? theme.grayText : theme.text}
+        />
       </TouchableOpacity>
     </View>
   );
