@@ -30,7 +30,20 @@ function SessionItem({ session }: { session: WorkoutSession }) {
   return (
     <View style={{ padding: 16 }}>
       <Text style={{ fontSize: 20, fontWeight: "bold", color: theme.text }}>
-        {session.name}
+        {session.name}--------------
+      </Text>
+
+      <Text style={{ fontSize: 16, fontWeight: "bold", color: theme.text }}>
+        {session.totals?.totalSets} sets
+      </Text>
+      <Text style={{ fontSize: 16, fontWeight: "bold", color: theme.text }}>
+        {session.totals?.totalReps} reps
+      </Text>
+      <Text style={{ fontSize: 16, fontWeight: "bold", color: theme.text }}>
+        {session.totals?.totalVolumeKg} kg
+      </Text>
+      <Text style={{ fontSize: 20, fontWeight: "bold", color: theme.text }}>
+        Exercises-----------------------
       </Text>
       {session.layout.map((item: SessionExercise, index: number) => {
         return (
@@ -47,14 +60,14 @@ function SessionItem({ session }: { session: WorkoutSession }) {
                     color: set.isCompleted ? theme.tint : theme.text,
                   }}
                 >
-                  {index + 1}. {set.reps || 0} x {set.weight || 0}
+                  {index + 1}. {set.reps} x {set.weight} | {set.rpe} | {set.rir}
                 </Text>
                 {set.dropSets?.map((dropSet: DropSet, index: number) => (
                   <Text
                     key={`${item.id}-${dropSet.id}-${index}`}
                     style={{ fontSize: 12, color: theme.grayText }}
                   >
-                    {index + 1}' {dropSet.reps || 0} x {dropSet.weight || 0}
+                    {index + 1}' {dropSet.reps} x {dropSet.weight}
                   </Text>
                 ))}
               </Fragment>
@@ -62,6 +75,9 @@ function SessionItem({ session }: { session: WorkoutSession }) {
           </Fragment>
         );
       })}
+      <Text style={{ fontSize: 20, fontWeight: "bold", color: theme.text }}>
+        ---------------------------------
+      </Text>
     </View>
   );
 }

@@ -6,10 +6,15 @@ import { ExerciseColumnOptions } from "./ExerciseColumnOptions";
 import { RestTimerSettings } from "./RestTimerSettings";
 import { ExerciseHeader } from "./ExerciseHeader";
 import { RemoveExerciseButton } from "./RemoveExerciseButton";
-import { AddToSupersetButton } from "./AddToSupersetButton";
 import { ExerciseNoteInput } from "./ExerciseNoteInput";
+import { SessionListType } from "../SessionDashboard";
 
-export function ExerciseProfile() {
+interface ExerciseProfileProps {
+  openPanel: () => void;
+  setListType: (listType: SessionListType) => void;
+}
+
+export function ExerciseProfile({ openPanel, setListType }: ExerciseProfileProps) {
   const { fadeIn } = useFadeInAnim();
 
   return (
@@ -22,8 +27,8 @@ export function ExerciseProfile() {
         ...fadeIn,
       }}
     >
-      <ExerciseHeader />
-      <RestTimerSettings />
+      <ExerciseHeader openPanel={openPanel} setListType={setListType} />
+      <RestTimerSettings openPanel={openPanel} setListType={setListType} />
 
       <View style={{ width: WIDTH - 32, marginBottom: 16 }}>
         <RemoveExerciseButton />

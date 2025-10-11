@@ -9,7 +9,7 @@ import {
   Pressable,
   TextStyle,
 } from "react-native";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSettingsStore } from "../../stores/settingsStore";
 import { useSideheadAnim } from "../../animations/useSideheadAnim";
 
@@ -17,6 +17,7 @@ interface FilterFlatSliderProps {
   title?: string;
   data: string[];
   onSelect: (item: any) => void;
+  startIndex?: number;
   itemWidth?: number;
   contentContainerStyle?: ViewStyle | ViewStyle[];
   itemStyle?: ViewStyle | ViewStyle[];
@@ -27,13 +28,14 @@ export function FilterFlatSlider({
   title,
   data,
   onSelect,
+  startIndex = 0,
   itemWidth = 60,
   contentContainerStyle,
   itemStyle,
   textStyle,
 }: FilterFlatSliderProps) {
   const flatListRef = useRef<FlatList>(null);
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState(startIndex);
   const { theme } = useSettingsStore();
 
   const { triggerSideShake, sideheadAnim } = useSideheadAnim();
@@ -77,6 +79,24 @@ export function FilterFlatSlider({
       </Pressable>
     );
   };
+
+  function scrollToIndex(index: number) {
+    if (flatListRef.current && index < data.length) {
+      flatListRef.current.scrollToOffset({
+        offset: index * itemWidth,
+        animated: true,
+      });
+      setSelectedIndex(index);
+      onSelect(data[index]);
+    }
+  }
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      scrollToIndex(startIndex);
+    }, 10); 
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <View style={{ gap: 4, justifyContent: "center", alignItems: "center" }}>

@@ -5,11 +5,25 @@ import { ExerciseName } from "../../view-workout/table/header/ExerciseName";
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { useTranslation } from "react-i18next";
 import { useWorkoutStore } from "../../../stores/workout/useWorkoutStore";
+import { SessionListType } from "../SessionDashboard";
 
-export function ExerciseHeader() {
+interface ExerciseHeaderProps {
+  openPanel: () => void;
+  setListType: (listType: SessionListType) => void;
+}
+
+export function ExerciseHeader({
+  openPanel,
+  setListType,
+}: ExerciseHeaderProps) {
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
   const { activeExercise } = useWorkoutStore();
+
+  function handleEditExercise() {
+    setListType("name");
+    openPanel();
+  }
 
   return (
     <View
@@ -25,8 +39,7 @@ export function ExerciseHeader() {
         <ExerciseName exercise={activeExercise} />
       </View>
       <IButton
-        title="Edit"
-        onPress={() => {}}
+        onPress={handleEditExercise}
         style={{
           height: 44,
           width: 44,

@@ -5,6 +5,7 @@ import {
   Set,
   DropSet,
   ExerciseInfo,
+  ExerciseColumns,
 } from "../types";
 import { exercisesDefList } from "../../../config/constants/defaults";
 import { nanoid } from "nanoid/non-secure";
@@ -92,16 +93,16 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
           ...activeExercise,
           sets: activeExercise.sets.map((s) => ({
             ...s,
-            dropSets: s.dropSets ? [...s.dropSets] : undefined,
+            dropSets: s.dropSets ? s.dropSets.map((ds) => ({ ...ds })) : [],
           })),
         };
       }
       return item;
     });
 
-    set((state) => ({
-      activeSession: { ...state.activeSession!, layout },
-    }));
+    set({
+      activeSession: { ...activeSession, layout },
+    });
   },
 
   /**
@@ -111,13 +112,32 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
     const { activeExercise, syncActiveExerciseToSession } = get();
     if (!activeExercise) return;
 
-    set({
-      activeExercise: {
-        ...activeExercise,
-        ...updates,
-        id: activeExercise.id, // Preserve immutable id
-      },
-    });
+    // Merge updates
+    const updatedExercise = {
+      ...activeExercise,
+      ...updates,
+      id: activeExercise.id, // Preserve immutable id
+    };
+
+    // If the exercise has sets, clean up values for disabled columns
+    if (updatedExercise.sets && Array.isArray(updatedExercise.sets)) {
+      const activeCols = updatedExercise.columns || [];
+
+      updatedExercise.sets = updatedExercise.sets.map((set) => {
+        const newSet = { ...set };
+
+        // Remove data if column is not enabled
+        if (!activeCols.includes("Weight")) delete newSet.weight;
+        if (!activeCols.includes("Reps")) delete newSet.reps;
+        if (!activeCols.includes("RPE")) delete newSet.rpe;
+        if (!activeCols.includes("RIR")) delete newSet.rir;
+
+        return newSet;
+      });
+    }
+
+    // Apply updated exercise
+    set({ activeExercise: updatedExercise });
 
     // Auto-sync after update
     syncActiveExerciseToSession();
@@ -240,9 +260,10 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
           s.id === setId
             ? {
                 ...s,
-                dropSets: s.dropSets?.map((ds) =>
-                  ds.id === dropSetId ? { ...ds, ...updates, id: ds.id } : ds
-                ),
+                dropSets:
+                  s.dropSets?.map((ds) =>
+                    ds.id === dropSetId ? { ...ds, ...updates, id: ds.id } : ds
+                  ),
               }
             : s
         ),
@@ -286,34 +307,52 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
     if (!activeExercise) return;
 
     const exerciseInfo = exercises.find((e) => e.id === exerciseId);
+    if (!exerciseInfo) return;
 
-    const isBodyweight = exerciseInfo?.equipment?.includes("bodyweight");
+    const isBodyweight = exerciseInfo.equipment?.includes("bodyweight");
 
-    const newSets = activeExercise.sets.map((set) => ({
-      ...set,
-      weight: isBodyweight ? null : set.weight,
-      dropSets: isBodyweight ? [] : set.dropSets,
-    }));
+    // Define the new columns for this exercise type
+    const newColumns: ExerciseColumns[] = isBodyweight
+      ? ["Reps"]
+      : ["Reps", "Weight"];
 
+    // Start by mapping sets with conditional cleanup
+    const newSets = activeExercise.sets.map((set) => {
+      const newSet = {
+        ...set,
+        weight: isBodyweight ? null : set.weight,
+        dropSets: isBodyweight ? [] : set.dropSets,
+      };
+
+      // Clean up irrelevant columns dynamically
+      if (!newColumns.includes("Weight")) delete newSet.weight;
+      if (!newColumns.includes("Reps")) delete newSet.reps;
+      if (!newColumns.includes("RPE")) delete newSet.rpe;
+      if (!newColumns.includes("RIR")) delete newSet.rir;
+
+      return newSet;
+    });
+
+    // Update the active exercise
     set({
       activeExercise: {
         ...activeExercise,
-        exerciseInfoId: exerciseInfo?.id,
-        name: exerciseInfo?.defaultName,
+        exerciseInfoId: exerciseInfo.id,
+        name: exerciseInfo.defaultName,
         prefix: undefined,
-        primaryMuscles: [...exerciseInfo?.primaryMuscles],
-        secondaryMuscles: exerciseInfo?.secondaryMuscles
-          ? [...exerciseInfo?.secondaryMuscles]
+        primaryMuscles: [...exerciseInfo.primaryMuscles],
+        secondaryMuscles: exerciseInfo.secondaryMuscles
+          ? [...exerciseInfo.secondaryMuscles]
           : undefined,
-        equipment: exerciseInfo?.equipment
-          ? [...exerciseInfo?.equipment]
+        equipment: exerciseInfo.equipment
+          ? [...exerciseInfo.equipment]
           : undefined,
         sets: newSets,
-        columns: isBodyweight ? ["Reps"] : ["Reps", "Weight"],
+        columns: newColumns,
       },
     });
 
-    // Auto-sync after update
+    // Sync after swap
     syncActiveExerciseToSession();
   },
 });

@@ -1,13 +1,12 @@
-import { useState } from "react";
-import { TextInput, ViewStyle, View } from "react-native";
+import { TextInput, View, ViewStyle } from "react-native";
 import { useSettingsStore } from "../../../../stores/settingsStore";
+import { useWorkoutStore } from "../../../../stores/workoutStore";
 import {
   ExerciseColumns,
   DropSet,
   Set,
 } from "../../../../stores/workout/types";
 import { useDisplayedWeight } from "../../../../features/translate/useDisplayedWightUnit";
-import { useWorkoutStore } from "../../../../stores/workoutStore";
 
 interface NumericDropInputProps {
   set: Set;
@@ -23,48 +22,35 @@ export function NumericDropInput({
   style,
 }: NumericDropInputProps) {
   const { theme } = useSettingsStore();
-  const { fromKg, toKg } = useDisplayedWeight();
   const { updateDropSetInActiveExercise } = useWorkoutStore();
-  const [value, setValue] = useState(drop[column] || 0);
+  const { fromKg, toKg } = useDisplayedWeight();
 
-  const handleUpdateSet = (dropId: string, updates: any) => {
-    updateDropSetInActiveExercise(set.id, dropId, updates);
+  const handleUpdateDropSet = (text: string) => {
+    const num = Number(text) || 0;
+    if (column === "Weight") {
+      updateDropSetInActiveExercise(set.id, drop.id, { weight: toKg(num) });
+    } else {
+      updateDropSetInActiveExercise(set.id, drop.id, { reps: num });
+    }
   };
 
-  if (column === "Weight") {
-    return (
-      <View style={{ height: 44, width: "100%", ...style }}>
-        <TextInput
-          style={{
-            height: 44,
-            width: "100%",
-            fontSize: 16,
-            textAlign: "center",
-            color: set.isCompleted ? theme.secondaryText : theme.grayText,
-          }}
-          value={fromKg(value)}
-          onBlur={() => handleUpdateSet(set.id, { [column]: value })}
-          onChangeText={(text) => setValue(toKg(Number(text)))}
-          placeholder="0"
-          placeholderTextColor={theme.grayText}
-          keyboardType="numeric"
-        />
-      </View>
-    );
-  }
+  const displayValue =
+    column === "Weight"
+      ? fromKg(drop.weight || 0)
+      : (drop.reps ?? 0).toString();
+
   return (
     <View style={{ height: 44, width: "100%", ...style }}>
       <TextInput
         style={{
-          height: 44,
           width: "100%",
+          height: 44,
           fontSize: 16,
           textAlign: "center",
-          color: set.isCompleted ? theme.secondaryText : theme.grayText,
+          color: theme.text,
         }}
-        value={value.toString()}
-        onChangeText={(text) => setValue(Number(text))}
-        onBlur={() => handleUpdateSet(set.id, { [column]: value })}
+        value={displayValue.toString()}
+        onChangeText={handleUpdateDropSet}
         placeholder="0"
         placeholderTextColor={theme.grayText}
         keyboardType="numeric"

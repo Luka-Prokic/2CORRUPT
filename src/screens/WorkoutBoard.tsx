@@ -6,12 +6,16 @@ import { useWorkoutStore } from "../stores/workoutStore";
 
 //parts##
 import { WorkoutBoardHeader } from "../components/board-workout/WorkoutBoardHeader";
-import { SessionDashboard } from "../components/board-workout/SessionDashboard";
+import {
+  SessionDashboard,
+  SessionListType,
+} from "../components/board-workout/SessionDashboard";
 
 export function WorkoutBoard() {
   const { theme } = useSettingsStore();
   const { activeSession } = useWorkoutStore();
   const [listOpen, setListOpen] = useState(false);
+  const [listType, setListType] = useState<SessionListType>("session");
 
   if (!activeSession || !activeSession.layout)
     return (
@@ -29,7 +33,12 @@ export function WorkoutBoard() {
       <WorkoutBoardHeader listOpen={listOpen} />
 
       {/* Main Body */}
-      <SessionDashboard listOpen={listOpen} setListOpen={setListOpen} />
+      <SessionDashboard
+        listOpen={listOpen}
+        listType={listType}
+        setListOpen={setListOpen}
+        setListType={setListType}
+      />
     </SafeAreaView>
   );
 }

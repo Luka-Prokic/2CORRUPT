@@ -96,7 +96,7 @@ export function SetRow({ set, setIndex }: SetRowProps) {
         <View style={{ flexDirection: "row", width: WIDTH, height: 66 }}>
           {columns.map((column: SetColumns, index: number) => (
             <View
-              key={`${column}-${index}`}
+              key={`${column}-${index}-${activeExercise?.exerciseInfoId}`}
               style={{
                 flex: 1,
                 justifyContent: "center",

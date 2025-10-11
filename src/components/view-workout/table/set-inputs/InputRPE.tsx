@@ -21,6 +21,7 @@ export function InputRPE({ set }: InputRPEProps) {
   return (
     <FilterFlatSlider
       data={scale}
+      startIndex={set.rpe ? set.rpe - 1 : 0}
       itemWidth={54}
       onSelect={handleSelect}
       contentContainerStyle={{

@@ -16,7 +16,7 @@ export function InputRIR({ set }: InputRIRProps) {
 
   const handleSelect = (item: string) => {
     updateSetInActiveExercise(set.id, {
-      rir: item === "5+" ? 6 : parseInt(item),
+      rir: item === "5+" ? 5 : parseInt(item),
     });
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Rigid);
   };
@@ -24,6 +24,7 @@ export function InputRIR({ set }: InputRIRProps) {
   return (
     <FilterFlatSlider
       data={scale}
+      startIndex={set.rir ?? 0}
       itemWidth={54}
       onSelect={handleSelect}
       contentContainerStyle={{

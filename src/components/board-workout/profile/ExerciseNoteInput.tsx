@@ -5,8 +5,13 @@ import { useWorkoutStore } from "../../../stores/workout/useWorkoutStore";
 
 export function ExerciseNoteInput() {
   const { theme } = useSettingsStore();
-  const { activeExercise } = useWorkoutStore();
+  const { activeExercise, updateActiveExercise } = useWorkoutStore();
   const [notes, setNotes] = useState(activeExercise.notes);
+
+  function handleNotesChange(text: string) {
+    setNotes(text);
+    updateActiveExercise({ ...activeExercise, notes: text });
+  }
 
   return (
     <TextInput
@@ -28,7 +33,7 @@ export function ExerciseNoteInput() {
       value={notes}
       placeholder="Add notes..."
       placeholderTextColor={theme.grayText}
-      onChangeText={setNotes}
+      onChangeText={handleNotesChange}
       multiline
       textAlignVertical="top"
       returnKeyType="done"

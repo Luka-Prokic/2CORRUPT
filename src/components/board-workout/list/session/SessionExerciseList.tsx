@@ -1,4 +1,4 @@
-import { HEIGHT } from "../../../../features/Dimensions";
+import { HEIGHT, WIDTH } from "../../../../features/Dimensions";
 import { Animated, FlatList } from "react-native";
 import { useFadeInAnim } from "../../../../animations/useFadeInAnim";
 import { useWorkoutStore } from "../../../../stores/workout/useWorkoutStore";
@@ -63,8 +63,8 @@ export function SessionExerciseList({
   return (
     <Animated.View
       style={{
-        paddingBottom: 80,
-        height: HEIGHT - 120,
+        width: WIDTH,
+        height: HEIGHT - 200,
         ...fadeIn,
       }}
     >

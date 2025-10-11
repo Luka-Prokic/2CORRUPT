@@ -5,35 +5,48 @@ import { useSettingsStore } from "../../stores/settingsStore";
 import { HEIGHT } from "../../features/Dimensions";
 import { LinearGradient } from "expo-linear-gradient";
 import { hexToRGBA } from "../../features/HEXtoRGB";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { ExerciseProfile } from "./profile/ExerciseProfile";
 import { useWorkoutStore } from "../../stores/workoutStore";
 import { ListHeader } from "./list/ListHeader";
+import { RestTimerSheet } from "./RestTimerSheet";
+import { ExerciseNameSheet } from "./ExerciseNameSheet";
 
 // Constants
 const FOCUS_HEIGHT = HEIGHT - 120;
 
-export type SessionListType = "session" | "superset" | "circuit";
+export type SessionListType = "session" | "rest" | "name";
 
 interface SessionDashboardProps {
   listOpen: boolean;
+  listType: SessionListType;
   setListOpen: (listOpen: boolean) => void;
+  setListType: (listType: SessionListType) => void;
 }
 
 export function SessionDashboard({
   listOpen,
+  listType,
   setListOpen,
+  setListType,
 }: SessionDashboardProps) {
   const { theme } = useSettingsStore();
   const { activeExercise } = useWorkoutStore();
 
   const animatedY = useRef(new Animated.Value(0)).current;
 
-  const togglePanel = () => {
+  function togglePanel() {
     const toValue = listOpen ? 0 : -FOCUS_HEIGHT + 80;
     Animated.spring(animatedY, { toValue, useNativeDriver: true }).start();
     setListOpen(!listOpen);
-  };
+    setListType("session");
+  }
+
+  function openPanel() {
+    const toValue = listOpen ? 0 : -FOCUS_HEIGHT + 80;
+    Animated.spring(animatedY, { toValue, useNativeDriver: true }).start();
+    setListOpen(!listOpen);
+  }
 
   return (
     <Animated.View style={{ flex: 1, transform: [{ translateY: animatedY }] }}>
@@ -59,7 +72,9 @@ export function SessionDashboard({
           }}
         >
           {/* <SessionTimer /> */}
-          {activeExercise && <ExerciseProfile />}
+          {activeExercise && (
+            <ExerciseProfile openPanel={openPanel} setListType={setListType} />
+          )}
         </LinearGradient>
       </StrobeBlur>
 
@@ -67,7 +82,15 @@ export function SessionDashboard({
       <ListHeader listOpen={listOpen} togglePanel={togglePanel} />
 
       {/* List */}
-      <SessionExerciseList listOpen={listOpen} togglePanel={togglePanel} />
+      {listType === "session" && (
+        <SessionExerciseList listOpen={listOpen} togglePanel={togglePanel} />
+      )}
+      {listType === "rest" && (
+        <RestTimerSheet listOpen={listOpen} togglePanel={togglePanel} />
+      )}
+      {listType === "name" && (
+        <ExerciseNameSheet listOpen={listOpen} togglePanel={togglePanel} />
+      )}
     </Animated.View>
   );
 }

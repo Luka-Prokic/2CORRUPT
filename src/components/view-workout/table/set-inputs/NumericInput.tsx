@@ -1,8 +1,8 @@
-import { useState } from "react";
 import { TextInput } from "react-native";
 import { useSettingsStore } from "../../../../stores/settingsStore";
-import { useWorkoutStore } from "../../../../stores/workoutStore";
-import { ExerciseColumns, Set } from "../../../../stores/workout/types";
+import { useWorkoutStore } from "../../../../stores/workout/useWorkoutStore";
+import { ExerciseColumns } from "../../../../stores/workout/types";
+import { Set } from "../../../../stores/workout/types";
 import { useDisplayedWeight } from "../../../../features/translate/useDisplayedWightUnit";
 
 interface NumericInputProps {
@@ -14,31 +14,19 @@ export function NumericInput({ set, column }: NumericInputProps) {
   const { theme } = useSettingsStore();
   const { updateSetInActiveExercise } = useWorkoutStore();
   const { fromKg, toKg } = useDisplayedWeight();
-  const [value, setValue] = useState(set[column] || 0);
 
-  const handleUpdateSet = (setId: string, updates: any) => {
-    updateSetInActiveExercise(setId, updates);
+  const handleUpdateSet = (text: string) => {
+    const num = Number(text) || 0;
+    if (column === "Weight") {
+      updateSetInActiveExercise(set.id, { weight: toKg(num) });
+    } else {
+      updateSetInActiveExercise(set.id, { reps: num });
+    }
   };
 
-  if (column === "Weight") {
-    return (
-      <TextInput
-        style={{
-          width: "100%",
-          height: 66,
-          fontSize: 16,
-          textAlign: "center",
-          color: theme.text,
-        }}
-        value={fromKg(value)}
-        onBlur={() => handleUpdateSet(set.id, { [column]: value })}
-        onChangeText={(text) => setValue(toKg(Number(text)))}
-        placeholder="0"
-        placeholderTextColor={theme.grayText}
-        keyboardType="numeric"
-      />
-    );
-  }
+  const displayValue =
+    column === "Weight" ? fromKg(set.weight || 0) : (set.reps ?? 0).toString();
+
   return (
     <TextInput
       style={{
@@ -48,9 +36,8 @@ export function NumericInput({ set, column }: NumericInputProps) {
         textAlign: "center",
         color: theme.text,
       }}
-      value={value.toString()}
-      onChangeText={(text) => setValue(Number(text))}
-      onBlur={() => handleUpdateSet(set.id, { [column]: value })}
+      value={displayValue.toString()}
+      onChangeText={handleUpdateSet}
       placeholder="0"
       placeholderTextColor={theme.grayText}
       keyboardType="numeric"

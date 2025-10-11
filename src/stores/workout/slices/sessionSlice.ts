@@ -90,6 +90,7 @@ export const createSessionSlice: StateCreator<WorkoutStore, [], [], {}> = (
       isActive: false,
       totals: { totalSets, totalReps, totalVolumeKg, durationSeconds },
       updatedAt: endTime,
+      layout: activeSession.layout,
     };
 
     set((state) => ({

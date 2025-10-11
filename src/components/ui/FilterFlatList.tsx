@@ -8,13 +8,14 @@ import {
   Animated,
   Pressable,
 } from "react-native";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSettingsStore } from "../../stores/settingsStore";
 import { useBobheadAnim } from "../../animations/useBobheadAnim";
 
 interface FilterFlatListProps {
   title?: string;
   data: string[];
+  startIndex?: number;
   onSelect: (item: any) => void;
   itemHeight?: number;
   contentContainerStyle?: ViewStyle | ViewStyle[];
@@ -23,12 +24,13 @@ interface FilterFlatListProps {
 export function FilterFlatList({
   title,
   data,
+  startIndex = 0,
   onSelect,
   itemHeight = 60,
   contentContainerStyle,
 }: FilterFlatListProps) {
   const flatListRef = useRef<FlatList>(null);
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState(startIndex);
   const { theme } = useSettingsStore();
 
   const { triggerShake, bobheadAnim } = useBobheadAnim();
@@ -69,6 +71,24 @@ export function FilterFlatList({
       </Pressable>
     );
   };
+
+  function scrollToIndex(index: number) {
+    if (flatListRef.current && index < data.length) {
+      flatListRef.current.scrollToOffset({
+        offset: index * itemHeight,
+        animated: true,
+      });
+      setSelectedIndex(index);
+      onSelect(data[index]);
+    }
+  }
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      scrollToIndex(startIndex);
+    }, 10);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <View style={{ gap: 4, justifyContent: "center", alignItems: "center" }}>

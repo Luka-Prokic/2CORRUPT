@@ -62,6 +62,7 @@ export interface SessionExercise {
   sets: Set[];
   columns?: ExerciseColumns[];
   restTime?: number | null;
+  noRest?: boolean;
 }
 
 // Workout session (single source of truth for a performed workout)

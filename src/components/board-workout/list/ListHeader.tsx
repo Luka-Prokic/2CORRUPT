@@ -1,6 +1,6 @@
-import { View, Pressable, Text } from "react-native";
+import { View, Pressable } from "react-native";
 import { useSettingsStore } from "../../../stores/settingsStore";
-import { useTranslation } from "react-i18next";
+import { Ionicons } from "@expo/vector-icons";
 
 interface ListHeaderProps {
   listOpen: boolean;
@@ -9,7 +9,6 @@ interface ListHeaderProps {
 
 export function ListHeader({ listOpen, togglePanel }: ListHeaderProps) {
   const { theme } = useSettingsStore();
-  const { t } = useTranslation();
 
   return (
     <View
@@ -33,15 +32,11 @@ export function ListHeader({ listOpen, togglePanel }: ListHeaderProps) {
           alignItems: "center",
         }}
       >
-        <Text
-          style={{
-            fontSize: 18,
-            fontWeight: "bold",
-            color: listOpen ? theme.text : theme.grayText,
-          }}
-        >
-          {t("workout-board.up-next")}
-        </Text>
+        <Ionicons
+          name={listOpen ? "chevron-down" : "chevron-up"}
+          size={34}
+          color={theme.text}
+        />
       </Pressable>
     </View>
   );
