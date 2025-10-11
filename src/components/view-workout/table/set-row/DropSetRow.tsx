@@ -4,6 +4,7 @@ import { useSettingsStore } from "../../../../stores/settingsStore";
 import { Set, useWorkoutStore } from "../../../../stores/workoutStore";
 import { DropSet } from "../../../../stores/workoutStore";
 import { Ionicons } from "@expo/vector-icons";
+import { WIDTH } from "../../../../features/Dimensions";
 
 export function DropSetRow({
   set,
@@ -15,8 +16,11 @@ export function DropSetRow({
   index: number;
 }) {
   const { theme } = useSettingsStore();
-  const { updateDropSetInActiveExercise, removeDropSetFromActiveExercise } =
-    useWorkoutStore();
+  const {
+    updateDropSetInActiveExercise,
+    removeDropSetFromActiveExercise,
+    activeExercise,
+  } = useWorkoutStore();
 
   const handleDropUpdate = (dropId: string, update: any) => {
     updateDropSetInActiveExercise(set.id, dropId, update);
@@ -25,29 +29,32 @@ export function DropSetRow({
   const handleRemoveDrop = (dropId: string) => {
     removeDropSetFromActiveExercise(set.id, dropId);
   };
+
+  const columns = activeExercise?.columns ?? ["Reps", "Weight"];
+  const columnWidth = WIDTH / (columns.length + 2);
+
   return (
     <View
-      key={`${set.id}-${drop.id}-${index}`}
       style={{
         flexDirection: "row",
-        alignItems: "center",
         backgroundColor: hexToRGBA(
           theme.fifthBackground,
           set.isCompleted ? 1 : 0.2
         ),
         height: 44,
+        width: WIDTH,
       }}
     >
       <View
         style={{
-          width: "25%",
+          width: columnWidth,
+          height: 44,
           alignItems: "center",
           justifyContent: "center",
         }}
       >
         <Text
           style={{
-            width: 28,
             fontSize: 16,
             fontWeight: "700",
             color: set.isCompleted ? theme.secondaryText : theme.grayText,
@@ -60,11 +67,11 @@ export function DropSetRow({
 
       <TextInput
         style={{
-          flex: 1,
           textAlign: "center",
           fontSize: 16,
           color: set.isCompleted ? theme.secondaryText : theme.grayText,
-          width: "25%",
+          height: 44,
+          width: columnWidth,
         }}
         value={drop.reps?.toString() ?? ""}
         onChangeText={(text) => handleDropUpdate(drop.id, { reps: text })}
@@ -75,11 +82,11 @@ export function DropSetRow({
 
       <TextInput
         style={{
-          flex: 1,
           textAlign: "center",
           fontSize: 16,
           color: set.isCompleted ? theme.secondaryText : theme.grayText,
-          width: "25%",
+          height: 44,
+          width: columnWidth,
         }}
         value={drop.weight?.toString() ?? ""}
         onChangeText={(text) => handleDropUpdate(drop.id, { weight: text })}
@@ -91,9 +98,12 @@ export function DropSetRow({
       <TouchableOpacity
         onPress={() => handleRemoveDrop(drop.id)}
         style={{
-          width: "25%",
+          width: columnWidth,
+          height: 44,
           alignItems: "center",
           justifyContent: "center",
+          position: "absolute",
+          right: 0,
         }}
       >
         <Ionicons

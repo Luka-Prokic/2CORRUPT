@@ -45,7 +45,9 @@
     "show-more": "Show more",
     "show-less": "Show less",
     "welcome-to": "Welcome to",
-    "lets-get-started": "Let's get started"
+    "lets-get-started": "Let's get started",
+     "show": "Show",
+    "hide": "Hide"
   },
   "auth-form": {
     "required": "Required",
@@ -208,6 +210,8 @@
   "workout-view": {
     "set": "Sets",
     "reps": "Reps",
+    "rpe": "RPE",
+    "rir": "RIR",
     "kg": "KG",
     "lbs": "LBS",
     "done": "Done",

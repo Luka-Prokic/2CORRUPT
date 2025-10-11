@@ -15,6 +15,8 @@ import { StrobeBlur } from "../../../ui/misc/StrobeBlur";
 import { WIDTH } from "../../../../features/Dimensions";
 import { DropSetRow } from "./DropSetRow";
 import { NumericInput } from "../set-inputs/NumericInput";
+import { InputRPE } from "../set-inputs/InputRPE";
+import { InputRIR } from "../set-inputs/InputRIR";
 
 export type SetColumns = ExerciseColumns | "Set" | "Done";
 interface SetRowProps {
@@ -50,6 +52,20 @@ export function SetRow({ set, setIndex }: SetRowProps) {
         <NumericInput
           set={set}
           column={column}
+        />
+      );
+    }
+    if (column === "RPE") {
+      return (
+        <InputRPE
+          set={set}
+        />
+      );
+    }
+    if (column === "RIR") {
+      return (
+        <InputRIR
+          set={set}
         />
       );
     }

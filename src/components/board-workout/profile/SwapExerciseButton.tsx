@@ -12,6 +12,7 @@ export function SwapExerciseButton() {
       icon={
         <Ionicons name="swap-vertical-outline" size={24} color={theme.text} />
       }
+      height={44}
       onPress={() => {
         router.push("/swap-exercise");
       }}

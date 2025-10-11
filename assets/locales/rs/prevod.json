@@ -45,7 +45,9 @@
     "show-more": "Pokaži više",
     "show-less": "Pokaži manje",
     "welcome-to": "Dobrodošao u",
-    "lets-get-started": "Hajde da krenemo"
+    "lets-get-started": "Hajde da krenemo",
+    "show": "Pokaži",
+    "hide": "Sakrij"
   },
   "auth-form": {
     "required": "Obavezno polje",
@@ -209,6 +211,8 @@
   "workout-view": {
     "set": "Setovi",
     "reps": "Repovi",
+    "rpe": "RPE",
+    "rir": "RIR",
     "kg": "KG",
     "lbs": "LBS",
     "done": "Gotovo",
