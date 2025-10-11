@@ -31,8 +31,8 @@ export function NumericInput({ set, column }: NumericInputProps) {
           color: theme.text,
         }}
         value={fromKg(value)}
-        onBlur={() => handleUpdateSet(set.id, { [column]: toKg(value) })}
-        onChangeText={(text) => setValue(Number(text))}
+        onBlur={() => handleUpdateSet(set.id, { [column]: value })}
+        onChangeText={(text) => setValue(toKg(Number(text)))}
         placeholder="0"
         placeholderTextColor={theme.grayText}
         keyboardType="numeric"

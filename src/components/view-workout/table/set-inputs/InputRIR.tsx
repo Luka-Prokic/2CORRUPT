@@ -1,7 +1,6 @@
 import { Set } from "../../../../stores/workout/types";
 import { useWorkoutStore } from "../../../../stores/workoutStore";
 import { FilterFlatSlider } from "../../../ui/FilterFlatSlider";
-import { useSettingsStore } from "../../../../stores/settingsStore";
 import * as Haptics from "expo-haptics";
 
 interface InputRIRProps {
@@ -10,11 +9,15 @@ interface InputRIRProps {
 
 export function InputRIR({ set }: InputRIRProps) {
   const { updateSetInActiveExercise } = useWorkoutStore();
-  const scale = Array.from({ length: 10 }, (_, index) => index.toString());
-  const { theme } = useSettingsStore();
+  const scale = Array.from({ length: 6 }, (_, index) => {
+    if (index === 5) return "5+";
+    return index.toString();
+  });
 
   const handleSelect = (item: string) => {
-    updateSetInActiveExercise(set.id, { rir: parseInt(item) });
+    updateSetInActiveExercise(set.id, {
+      rir: item === "5+" ? 6 : parseInt(item),
+    });
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Rigid);
   };
 

@@ -2,7 +2,6 @@ import { Set } from "../../../../stores/workout/types";
 import { FilterFlatSlider } from "../../../ui/FilterFlatSlider";
 import { useWorkoutStore } from "../../../../stores/workoutStore";
 import * as Haptics from "expo-haptics";
-import { useSettingsStore } from "../../../../stores/settingsStore";
 
 interface InputRPEProps {
   set: Set;
@@ -10,8 +9,9 @@ interface InputRPEProps {
 
 export function InputRPE({ set }: InputRPEProps) {
   const { updateSetInActiveExercise } = useWorkoutStore();
-  const scale = Array.from({ length: 10 }, (_, index) => index.toString());
-  const { theme } = useSettingsStore();
+  const scale = Array.from({ length: 10 }, (_, index) =>
+    (index + 1).toString()
+  );
 
   const handleSelect = (item: string) => {
     updateSetInActiveExercise(set.id, { rpe: parseInt(item) });

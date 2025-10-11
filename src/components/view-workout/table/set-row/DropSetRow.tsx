@@ -1,10 +1,11 @@
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { hexToRGBA } from "../../../../features/HEXtoRGB";
 import { useSettingsStore } from "../../../../stores/settingsStore";
 import { Set, useWorkoutStore } from "../../../../stores/workoutStore";
 import { DropSet } from "../../../../stores/workoutStore";
 import { Ionicons } from "@expo/vector-icons";
 import { WIDTH } from "../../../../features/Dimensions";
+import { NumericDropInput } from "../set-inputs/NumericDropInput";
 
 export function DropSetRow({
   set,
@@ -21,10 +22,6 @@ export function DropSetRow({
     removeDropSetFromActiveExercise,
     activeExercise,
   } = useWorkoutStore();
-
-  const handleDropUpdate = (dropId: string, update: any) => {
-    updateDropSetInActiveExercise(set.id, dropId, update);
-  };
 
   const handleRemoveDrop = (dropId: string) => {
     removeDropSetFromActiveExercise(set.id, dropId);
@@ -65,7 +62,25 @@ export function DropSetRow({
         </Text>
       </View>
 
-      <TextInput
+      <NumericDropInput
+        set={set}
+        drop={drop}
+        column="Reps"
+        style={{
+          width: columnWidth,
+        }}
+      />
+
+      <NumericDropInput
+        set={set}
+        drop={drop}
+        column="Weight"
+        style={{
+          width: columnWidth,
+        }}
+      />
+
+      {/* <TextInput
         style={{
           textAlign: "center",
           fontSize: 16,
@@ -78,9 +93,9 @@ export function DropSetRow({
         placeholder="0"
         placeholderTextColor={theme.grayText}
         keyboardType="numeric"
-      />
+      /> */}
 
-      <TextInput
+      {/* <TextInput
         style={{
           textAlign: "center",
           fontSize: 16,
@@ -93,7 +108,7 @@ export function DropSetRow({
         placeholder="0"
         placeholderTextColor={theme.grayText}
         keyboardType="numeric"
-      />
+      /> */}
 
       <TouchableOpacity
         onPress={() => handleRemoveDrop(drop.id)}
