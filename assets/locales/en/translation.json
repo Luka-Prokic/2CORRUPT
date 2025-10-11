@@ -169,8 +169,14 @@
   },
   "calendar": {
     "start-workout": "Start Workout",
+    "exercises": "exercises",
     "rest-day": "Rest Day",
+    "start-now": "Start Now",
     "workout": "Workout",
+    "no-workout": "No Workout",
+    "no-workout-today": "No Workout Today",
+    "no-workout-today-description": "You haven’t trained today",
+    "no-workout-description": "No workout. Start a new workout.",
     "days": {
       "short": ["M", "T", "W", "T", "F", "S", "S"],
       "long": [

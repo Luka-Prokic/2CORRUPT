@@ -1,10 +1,11 @@
 import { View } from "react-native";
-import { StrobeBlur } from "../../../ui/misc/StrobeBlur";
-import { useSettingsStore } from "../../../../stores/settingsStore";
+import { StrobeBlur } from "../../../../ui/misc/StrobeBlur";
+import { useSettingsStore } from "../../../../../stores/settings";
 import { Ionicons } from "@expo/vector-icons";
 import { Text } from "react-native";
-import { WorkoutSession } from "../../../../stores/workout/types";
 import { useTranslation } from "react-i18next";
+import { WorkoutSession } from "../../../../../stores/workout";
+import { hexToRGBA } from "../../../../../features/HEXtoRGB";
 
 interface WorkoutInDayCardProps {
   session?: WorkoutSession;
@@ -30,7 +31,6 @@ export function WorkoutInDayCard({ session }: WorkoutInDayCardProps) {
         height: 64,
       }}
       colors={[theme.caka, theme.primaryBackground, theme.accent, theme.tint]}
-      duration={5000}
     >
       <View
         style={{
@@ -44,7 +44,7 @@ export function WorkoutInDayCard({ session }: WorkoutInDayCardProps) {
             width: 48,
             height: 48,
             borderRadius: 24,
-            backgroundColor: "rgba(255, 255, 255, 0.05)",
+            backgroundColor: hexToRGBA(theme.handle, 0.8),
             justifyContent: "center",
             alignItems: "center",
             marginRight: 12,
@@ -53,7 +53,7 @@ export function WorkoutInDayCard({ session }: WorkoutInDayCardProps) {
           <Ionicons
             name={isRestDay ? "bandage" : "barbell"}
             size={32}
-            color={isRestDay ? theme.tabIconDefault : theme.accent}
+            color={isRestDay ? theme.grayText : theme.accent}
           />
         </View>
         <View style={{ flex: 1 }}>
@@ -76,7 +76,7 @@ export function WorkoutInDayCard({ session }: WorkoutInDayCardProps) {
                 color: theme.grayText,
               }}
             >
-              {exerciseCount} exercises
+              {exerciseCount} {t("calendar.exercises")}
             </Text>
           )}
         </View>

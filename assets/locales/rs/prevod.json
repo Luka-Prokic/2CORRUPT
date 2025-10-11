@@ -170,8 +170,14 @@
   },
   "calendar": {
     "start-workout": "Započni Trening",
+    "exercises": "vežbe",
     "rest-day": "Rest Day",
+    "start-now": "Započni Sada",
     "workout": "Trening",
+    "no-workout": "Nema Treninga",
+    "no-workout-today": "Nema Treninga Danas",
+    "no-workout-today-description": "Nisi treanirao danas",
+    "no-workout-description": "Nema treninga. Započni novi trening.",
     "days": {
       "short": ["P", "U", "S", "Č", "P", "S", "N"],
       "long": [
