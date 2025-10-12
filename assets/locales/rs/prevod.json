@@ -226,7 +226,13 @@
     "sets-completed": "{{count}} od {{total}} setova završeno",
     "sets-completed-all": "Svi setovi završeni",
     "sets-completed-none": "Nijedan set nije završen",
-    "add-set": "Dodaj Set"
+    "add-set": "Dodaj Set",
+    "create-template": "Kreiraj Template",
+    "quick-start": "Brza Početna",
+    "add-exercise": "Dodaj Vežbu",
+    "got-back-empty-handed": "Vratio si se bez vežbi?",
+    "select-exercises": "Da bi započeo, izaberi par vežbi.",
+    "template-name": "Naziv za Template..."
   },
   "workout-board": {
     "workout": "Trening",
@@ -278,7 +284,9 @@
   "recap": {
     "session": "Trening",
     "session-not-found": "Trening nije pronađen",
-    "exercises": "Vežbe"
+    "exercises": "Vežbe",
+    "copied": "Kopirano!",
+    "copied-to-clipboard": "Trening recenzija kopirana u clipboard sa legendom."
   },
 
   "categories": {

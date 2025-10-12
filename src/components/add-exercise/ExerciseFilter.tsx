@@ -1,5 +1,5 @@
 import { Fragment, useEffect } from "react";
-import { SearchBar } from "../ui/SearchBar";
+import { SearchBar } from "../ui/input/SearchBar";
 import { FilterFlatList } from "../ui/FilterFlatList";
 import { WIDTH } from "../../features/Dimensions";
 import { useSettingsStore } from "../../stores/settingsStore";

@@ -6,6 +6,7 @@ import {
   WorkoutSession,
 } from "../../stores/workout/types";
 import { useSettingsStore } from "../../stores/settingsStore";
+import { useTranslation } from "react-i18next";
 
 interface CopyWorkoutRecapProps {
   session: WorkoutSession;
@@ -13,6 +14,7 @@ interface CopyWorkoutRecapProps {
 
 export async function copyWorkoutRecap({ session }: CopyWorkoutRecapProps) {
   const { units } = useSettingsStore.getState();
+  const { t } = useTranslation();
 
   let text = "";
 
@@ -31,7 +33,6 @@ export async function copyWorkoutRecap({ session }: CopyWorkoutRecapProps) {
 
   // add legend / guide at top
   text += "------------------------\n";
-  text += "Legend:\n";
   text += "1. - Set\n";
   text += `0 - Reps\n`;
   if (isWeightUsed) text += `x 0 - Weight (${units.weight.toUpperCase()})\n`;
@@ -58,5 +59,5 @@ export async function copyWorkoutRecap({ session }: CopyWorkoutRecapProps) {
   });
 
   await Clipboard.setStringAsync(text);
-  Alert.alert("Copied!", "Session recap copied to clipboard with legend.");
+  Alert.alert(t("recap.copied"), t("recap.copied-to-clipboard"));
 }

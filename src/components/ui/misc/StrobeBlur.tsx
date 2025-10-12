@@ -1,11 +1,5 @@
 import React, { useEffect, useRef, useMemo } from "react";
-import {
-  View,
-  Animated,
-  ViewStyle,
-  StyleSheet,
-  Easing,
-} from "react-native";
+import { View, Animated, ViewStyle, StyleSheet, Easing } from "react-native";
 import { BlurView } from "expo-blur";
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { WIDTH } from "../../../features/Dimensions";
@@ -108,7 +102,20 @@ export function StrobeBlur({
     });
 
   if (disable) {
-    return <View style={[{ overflow: "hidden" }, style]}>{children}</View>;
+    return (
+      <View
+        style={[
+          {
+            overflow: "hidden",
+            justifyContent: "center",
+            alignItems: "center",
+          },
+          style,
+        ]}
+      >
+        {children}
+      </View>
+    );
   }
 
   return (

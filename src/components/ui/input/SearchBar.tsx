@@ -1,7 +1,7 @@
 import React from "react";
 import { View, TextInput, ViewStyle, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useSettingsStore } from "../../stores/settingsStore";
+import { useSettingsStore } from "../../../stores/settingsStore";
 
 interface SearchBarProps {
   value: string;
@@ -30,7 +30,7 @@ export function SearchBar({
         marginVertical: 8,
         shadowColor: theme.shadow,
         shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.2,
+        shadowOpacity: 0.1,
         shadowRadius: 8,
         elevation: 4,
         ...style,

@@ -41,6 +41,7 @@
     "react-native-expo-swipe-button": "^1.0.2",
     "react-native-ico-flags": "^6.4.1",
     "react-native-ios-search-bar": "^1.0.2",
+    "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-reanimated": "~3.17.4",
     "react-native-safe-area-context": "^5.6.1",
     "react-native-screens": "^4.16.0",

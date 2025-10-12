@@ -1,6 +1,6 @@
 import { TextInput, View, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useSettingsStore } from "../../stores/settingsStore";
+import { useSettingsStore } from "../../../stores/settingsStore";
 
 interface InputProps {
   placeholder?: string;
@@ -53,7 +53,7 @@ export function Input({
           backgroundColor: theme.input || theme.background,
           shadowColor: theme.shadow || "#000",
           shadowOffset: { width: 0, height: 2 },
-          shadowOpacity: 0.2,
+          shadowOpacity: 0.1,
           shadowRadius: 8,
           fontSize: 16,
           paddingVertical: 8,

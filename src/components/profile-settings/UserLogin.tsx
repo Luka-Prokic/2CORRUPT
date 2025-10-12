@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, Alert } from "react-native";
 import { useSettingsStore } from "../../stores/settingsStore";
-import {Input} from "../ui/Input";
+import {Input} from "../ui/input/Input";
 import {BounceButton} from "../ui/buttons/BounceButton";
 import {TextButton} from "../ui/buttons/TextButton";
 import { useTranslation } from "react-i18next";

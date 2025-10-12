@@ -1,16 +1,41 @@
-import { router } from "expo-router";
-import { IButton } from "../ui/buttons/IButton";
-import { useSettingsStore } from "../../stores/settings";
+import { useState, useEffect } from "react";
+import { PlanedSessionSelect } from "./no-exercise/PlanedSessionSelect";
+import { QuickStartSelect } from "./no-exercise/QuickStartSelect";
+import { CreateTemplateSelect } from "./no-exercise/CreateTemplateSelect";
+import { View } from "react-native";
+import { useUIStore } from "../../stores/ui";
+
+export type NoExerciseViewSelected =
+  | "planed-session"
+  | "quick-start"
+  | "create-template"
+  | "none";
 
 export function NoExerciseView() {
-  const { theme } = useSettingsStore();
+  const [selected, setSelected] = useState<NoExerciseViewSelected>("none");
+  const { isWorkoutView } = useUIStore();
+  function handleSelect(selected: NoExerciseViewSelected) {
+    setSelected(selected);
+  }
+
+  useEffect(() => {
+    if (!isWorkoutView) {
+      setSelected("none");
+    }
+  }, [isWorkoutView]);
+
   return (
-    <IButton
-      title="Add Exercise"
-      onPress={() => {
-        router.push("/add-exercise");
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "flex-end",
+        alignItems: "center",
+        paddingBottom: 16,
       }}
-      textColor={theme.text}
-    />
+    >
+      <PlanedSessionSelect onSelect={handleSelect} selected={selected} />
+      <QuickStartSelect onSelect={handleSelect} selected={selected} />
+      <CreateTemplateSelect onSelect={handleSelect} selected={selected} />
+    </View>
   );
 }

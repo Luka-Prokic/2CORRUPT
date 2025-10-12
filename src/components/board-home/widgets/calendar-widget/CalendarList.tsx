@@ -13,10 +13,6 @@ export function CalendarList({ selectedDate }: CalendarListProps) {
   const sessionsForDay = useSessionsByDate(selectedDate);
   const isToday = new Date().toDateString() === selectedDate.toDateString();
 
-  console.log(sessionsForDay.map((session) => session.name));
-  console.log("selected date", selectedDate);
-  console.log("isToday", isToday);
-
   return (
     <View style={{ flex: 1, paddingTop: 16 }}>
       {isToday ? (

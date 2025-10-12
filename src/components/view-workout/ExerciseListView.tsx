@@ -4,7 +4,6 @@ import { LinearGradient } from "expo-linear-gradient";
 import { hexToRGBA } from "../../features/HEXtoRGB";
 import { AddSetButton } from "./table/AddSetButton";
 import { useSettingsStore } from "../../stores/settingsStore";
-import { SlideableExerciseHeader } from "./table/header/SlideableExerciseHeader";
 import { ExerciseTableHeader } from "./table/header/ExerciseTableHeader";
 
 export function ExerciseListView() {

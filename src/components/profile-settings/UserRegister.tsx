@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { View, Text, Alert } from "react-native";
-import { useSettingsStore } from "../../stores/settingsStore"; import Colors from "../../config/constants/Colors";
-import Input from "../ui/Input";
-import BounceButton from "../ui/buttons/BounceButton";
-import CenterContainer from "../ui/containers/CenterContainer";
-import TextButton from "../ui/buttons/TextButton";
+import { useSettingsStore } from "../../stores/settingsStore";
+import { Input } from "../ui/input/Input";
+import { BounceButton } from "../ui/buttons/BounceButton";
+import { CenterContainer } from "../ui/containers/CenterContainer";
+import { TextButton } from "../ui/buttons/TextButton";
 import { useTranslation } from "react-i18next";
 
 interface UserRegisterProps {
@@ -16,14 +16,13 @@ export function UserRegister({
   onRegisterSuccess,
   onSwitchToLogin,
 }: UserRegisterProps) {
-  const { themeName } = useSettingsStore(); const theme = Colors[themeName];
+  const { theme } = useSettingsStore();
   const { t } = useTranslation();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleRegister = async () => {
@@ -145,9 +144,7 @@ export function UserRegister({
         />
 
         <TextButton
-          title={`${t("auth-form.haveAccount")} ${t(
-            "auth-form.signIn"
-          )}...`}
+          title={`${t("auth-form.haveAccount")} ${t("auth-form.signIn")}...`}
           onPress={onSwitchToLogin}
           style={{
             marginTop: 22,

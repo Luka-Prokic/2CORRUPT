@@ -225,7 +225,13 @@
     "sets-completed": "{{count}} of {{total}} sets completed",
     "sets-completed-all": "All sets completed",
     "sets-completed-none": "No sets completed",
-    "add-set": "Add Set"
+    "add-set": "Add Set",
+    "create-template": "Create Template",
+    "quick-start": "Quick Start",
+    "add-exercise": "Add Exercise",
+    "got-back-empty-handed": "Got back empty handed?",
+    "select-exercises": "To get started, select some exercises.",
+    "template-name": "Template Name..."
   },
   "workout-board": {
     "workout": "Workout",
@@ -277,7 +283,9 @@
   "recap": {
     "session": "Session",
     "session-not-found": "Session not found",
-    "exercises": "Exercises"
+    "exercises": "Exercises",
+    "copied": "Copied!",
+    "copied-to-clipboard": "Session recap copied to clipboard with legend."
   },
 
   "categories": {

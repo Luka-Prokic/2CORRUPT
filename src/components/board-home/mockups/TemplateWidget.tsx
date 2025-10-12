@@ -429,7 +429,7 @@ export function TemplateWidget({
               width: 0,
               height: 2,
             },
-            shadowOpacity: 0.2,
+            shadowOpacity: 0.1,
             shadowRadius: 4,
             elevation: 4,
             backgroundColor: theme.tint,

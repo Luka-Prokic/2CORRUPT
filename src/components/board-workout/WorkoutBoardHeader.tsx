@@ -57,6 +57,25 @@ export function WorkoutBoardHeader({ listOpen }: WorkoutBoardHeaderProps) {
     });
   }
 
+  function handleGoBack() {
+    setWorkoutView(false);
+    router.back();
+  }
+
+  function rightHeader() {
+    if (isItEmpty)
+      return (
+        <TouchableOpacity onPress={handleGoBack}>
+          <Ionicons name="arrow-undo-circle" size={44} color={theme.text} />
+        </TouchableOpacity>
+      );
+    return (
+      <TouchableOpacity onPress={handleCancelSession}>
+        <Ionicons name="close-circle" size={44} color={theme.error} />
+      </TouchableOpacity>
+    );
+  }
+
   return (
     <View
       style={{
@@ -67,9 +86,7 @@ export function WorkoutBoardHeader({ listOpen }: WorkoutBoardHeaderProps) {
         zIndex: 1,
       }}
     >
-      <TouchableOpacity onPress={handleCancelSession}>
-        <Ionicons name="close-circle" size={44} color={theme.error} />
-      </TouchableOpacity>
+      {rightHeader()}
       <Text
         style={{
           color: listOpen ? theme.glow : theme.grayText,

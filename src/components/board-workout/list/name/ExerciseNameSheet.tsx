@@ -34,7 +34,7 @@ export function ExerciseNameSheet() {
           marginVertical: 4,
           shadowColor: theme.shadow,
           shadowOffset: { width: 0, height: 2 },
-          shadowOpacity: 0.2,
+          shadowOpacity: 0.1,
           shadowRadius: 8,
           elevation: 4,
           fontSize: 18,
