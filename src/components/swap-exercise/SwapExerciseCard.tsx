@@ -1,14 +1,13 @@
 import { useSettingsStore } from "../../stores/settingsStore";
 import { ExerciseInfo } from "../../stores/workout/types";
-import { WIDTH } from "../../features/Dimensions";
 import { hexToRGBA } from "../../features/HEXtoRGB";
 import { TouchableOpacity, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { StrobeBlur } from "../ui/misc/StrobeBlur";
 import { useTranslatedExerciseName } from "../../features/translate/useTranslatedExercisesNames";
 import { useTranslatedBodyPart } from "../../features/translate/useTranslatedBodyPart";
 import { useWorkoutStore } from "../../stores/workoutStore";
 import { router } from "expo-router";
+import { StrobeButton } from "../ui/buttons/StrobeButton";
 
 interface SwapExerciseCardProps {
   exercise: ExerciseInfo;
@@ -37,8 +36,7 @@ export function SwapExerciseCard({
   }
 
   return (
-    <TouchableOpacity
-      activeOpacity={0.8}
+    <StrobeButton
       onPress={() => onSelect(exercise)}
       style={{
         height: 72,
@@ -53,81 +51,71 @@ export function SwapExerciseCard({
         shadowRadius: 2,
         elevation: 4,
       }}
-      disabled={activeExercise?.exerciseInfoId === exercise.id}
+      strobeDisabled={!isSelected}
     >
-      <StrobeBlur
-        colors={[theme.caka, theme.primaryBackground, theme.accent, theme.tint]}
-        tint="light"
+      <View
         style={{
-          height: 72,
-          width: WIDTH,
+          flex: 1,
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+          paddingHorizontal: 16,
+          paddingVertical: 12,
         }}
-        disable={!isSelected}
       >
-        <View
-          style={{
-            flex: 1,
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
-            paddingHorizontal: 16,
-            paddingVertical: 12,
-          }}
-        >
-          {/* Exercise info section */}
-          <View style={{ flex: 1 }}>
-            <Text
-              style={{
-                color: theme.text,
-                fontSize: 16,
-                fontWeight: "600",
-                marginBottom: 2,
-              }}
-            >
-              {translatedName}
-            </Text>
-
-            {/* body parts detail line */}
-            <Text
-              style={{
-                color: theme.text,
-                fontSize: 14,
-              }}
-            >
-              {translatedPrimary?.join(", ")}
-
-              <Text
-                style={{
-                  color: theme.grayText,
-                  opacity: translatedSecondary?.length ? 1 : 0,
-                }}
-              >
-                {" - "}
-                {translatedSecondary?.join(", ")}
-              </Text>
-            </Text>
-          </View>
-
-          {/* Selection button section */}
-          <TouchableOpacity
-            onPress={handleSwapExercise}
+        {/* Exercise info section */}
+        <View style={{ flex: 1 }}>
+          <Text
             style={{
-              backgroundColor: hexToRGBA(theme.handle, 0.8),
-              width: 44,
-              height: 44,
-              borderRadius: 22,
-              alignItems: "center",
-              justifyContent: "center",
-              opacity: isSelected ? 1 : 0,
-              position: "absolute",
-              right: 16,
-              top: 16,
+              color: theme.text,
+              fontSize: 16,
+              fontWeight: "600",
+              marginBottom: 2,
             }}
           >
-            <Ionicons name="swap-horizontal" size={24} color={theme.text} />
-          </TouchableOpacity>
+            {translatedName}
+          </Text>
+
+          {/* body parts detail line */}
+          <Text
+            style={{
+              color: theme.text,
+              fontSize: 14,
+            }}
+          >
+            {translatedPrimary?.join(", ")}
+
+            <Text
+              style={{
+                color: theme.grayText,
+                opacity: translatedSecondary?.length ? 1 : 0,
+              }}
+            >
+              {" - "}
+              {translatedSecondary?.join(", ")}
+            </Text>
+          </Text>
         </View>
-      </StrobeBlur>
-    </TouchableOpacity>
+
+        {/* Selection button section */}
+        <TouchableOpacity
+          onPress={handleSwapExercise}
+          style={{
+            backgroundColor: hexToRGBA(theme.handle, 0.8),
+            width: 44,
+            height: 44,
+            borderRadius: 22,
+            alignItems: "center",
+            justifyContent: "center",
+            opacity: isSelected ? 1 : 0,
+            position: "absolute",
+            right: 16,
+            top: 16,
+          }}
+        >
+          <Ionicons name="swap-horizontal" size={24} color={theme.text} />
+        </TouchableOpacity>
+      </View>
+    </StrobeButton>
   );
 }

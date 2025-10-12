@@ -1,12 +1,11 @@
 import { useSettingsStore } from "../../stores/settingsStore";
 import { ExerciseInfo } from "../../stores/workout/types";
-import { WIDTH } from "../../features/Dimensions";
 import { hexToRGBA } from "../../features/HEXtoRGB";
 import { TouchableOpacity, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { StrobeBlur } from "../ui/misc/StrobeBlur";
 import { useTranslatedExerciseName } from "../../features/translate/useTranslatedExercisesNames";
 import { useTranslatedBodyPart } from "../../features/translate/useTranslatedBodyPart";
+import { StrobeButton } from "../ui/buttons/StrobeButton";
 
 interface AddExerciseCardProps {
   exercise: ExerciseInfo;
@@ -32,8 +31,7 @@ export function AddExerciseCard({
   );
 
   return (
-    <TouchableOpacity
-      activeOpacity={0.8}
+    <StrobeButton
       onPress={() => onSelect(exercise)}
       style={{
         height: 72,
@@ -45,69 +43,60 @@ export function AddExerciseCard({
         shadowRadius: 2,
         elevation: 4,
       }}
+      strobeDisabled={selectedTotal === 0}
     >
-      <StrobeBlur
-        colors={[theme.caka, theme.primaryBackground, theme.accent, theme.tint]}
-        tint="light"
+      <View
         style={{
-          height: 72,
-          width: WIDTH,
+          flex: 1,
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+          paddingHorizontal: 16,
+          paddingVertical: 12,
         }}
-        disable={selectedTotal === 0}
       >
-        <View
-          style={{
-            flex: 1,
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
-            paddingHorizontal: 16,
-            paddingVertical: 12,
-          }}
-        >
-          {/* Exercise info section */}
-          <View style={{ flex: 1 }}>
+        {/* Exercise info section */}
+        <View style={{ flex: 1 }}>
+          <Text
+            style={{
+              color: theme.text,
+              fontSize: 16,
+              fontWeight: "600",
+              marginBottom: 2,
+            }}
+          >
+            {translatedName}
+          </Text>
+
+          {/* body parts detail line */}
+          <Text
+            style={{
+              color: theme.text,
+              fontSize: 14,
+            }}
+          >
+            {translatedPrimary?.join(", ")}
+
             <Text
               style={{
-                color: theme.text,
-                fontSize: 16,
-                fontWeight: "600",
-                marginBottom: 2,
+                color: theme.grayText,
+                opacity: translatedSecondary?.length ? 1 : 0,
               }}
             >
-              {translatedName}
+              {" - "}
+              {translatedSecondary?.join(", ")}
             </Text>
-
-            {/* body parts detail line */}
-            <Text
-              style={{
-                color: theme.text,
-                fontSize: 14,
-              }}
-            >
-              {translatedPrimary?.join(", ")}
-
-              <Text
-                style={{
-                  color: theme.grayText,
-                  opacity: translatedSecondary?.length ? 1 : 0,
-                }}
-              >
-                {" - "}
-                {translatedSecondary?.join(", ")}
-              </Text>
-            </Text>
-          </View>
-          
-          {/* Selection button section */}
-          <SelectionButton
-            unSelect={unSelect}
-            selectedTotal={selectedTotal}
-            exercise={exercise}
-          />
+          </Text>
         </View>
-      </StrobeBlur>
-    </TouchableOpacity>
+
+        {/* Selection button section */}
+        <SelectionButton
+          unSelect={unSelect}
+          selectedTotal={selectedTotal}
+          exercise={exercise}
+        />
+      </View>
+    </StrobeButton>
   );
 }
 

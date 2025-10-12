@@ -11,7 +11,7 @@ interface StrobeBlurProps {
   children?: React.ReactNode;
   tint?: "default" | "light" | "dark" | "auto";
   size?: number;
-  disable?: boolean;
+  disabled?: boolean;
 }
 
 export function StrobeBlur({
@@ -21,7 +21,7 @@ export function StrobeBlur({
   children,
   tint = "default",
   size = 100,
-  disable = false,
+  disabled = false,
 }: StrobeBlurProps) {
   const { themeName } = useSettingsStore();
   const animValues = useRef(
@@ -101,7 +101,7 @@ export function StrobeBlur({
       );
     });
 
-  if (disable) {
+  if (disabled) {
     return (
       <View
         style={[

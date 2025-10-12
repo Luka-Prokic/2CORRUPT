@@ -1,9 +1,9 @@
 import { useTranslation } from "react-i18next";
 import { useStartWorkoutNavigation } from "../../../../../features/workout/useStartWorkoutNavigation";
 import { useSettingsStore } from "../../../../../stores/settings";
-import { Text, TouchableOpacity } from "react-native";
-import { StrobeBlur } from "../../../../ui/misc/StrobeBlur";
+import { Text } from "react-native";
 import { useWorkoutStore } from "../../../../../stores/workout";
+import { StrobeButton } from "../../../../ui/buttons/StrobeButton";
 
 export function NoWorkoutTodayCard() {
   const { theme } = useSettingsStore();
@@ -15,7 +15,7 @@ export function NoWorkoutTodayCard() {
   //TODO: needs polish
 
   return (
-    <TouchableOpacity
+    <StrobeButton
       style={{
         backgroundColor: theme.fifthBackground,
         height: 64,
@@ -27,30 +27,18 @@ export function NoWorkoutTodayCard() {
       }}
       onPress={startWorkoutNavigation}
     >
-      <StrobeBlur
+      <Text style={{ fontSize: 12, fontWeight: "bold", color: theme.border }}>
+        {t("calendar.no-workout-today-description")}
+      </Text>
+      <Text
         style={{
-          padding: 16,
-          borderRadius: 24,
-          borderWidth: 1,
-          borderColor: theme.border,
-          height: 64,
-          width: "100%",
+          fontSize: 24,
+          fontWeight: "bold",
+          color: theme.secondaryText,
         }}
-        colors={[theme.caka, theme.primaryBackground, theme.accent, theme.tint]}
       >
-        <Text style={{ fontSize: 12, fontWeight: "bold", color: theme.border }}>
-          {t("calendar.no-workout-today-description")}
-        </Text>
-        <Text
-          style={{
-            fontSize: 24,
-            fontWeight: "bold",
-            color: theme.secondaryText,
-          }}
-        >
-          {isItActive ? t("app.continue-workout") : t("calendar.start-now")}
-        </Text>
-      </StrobeBlur>
-    </TouchableOpacity>
+        {isItActive ? t("app.continue-workout") : t("calendar.start-now")}
+      </Text>
+    </StrobeButton>
   );
 }
