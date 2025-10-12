@@ -2,27 +2,27 @@ import { useRef, useEffect } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { useSettingsStore } from "../../stores/settingsStore";
 import { useUIStore } from "../../stores/ui";
-import {IButton} from "../ui/buttons/IButton";
-import {CorruptTittle} from "./CorruptTittle";
+import { IButton } from "../ui/buttons/IButton";
+import { CorruptTittle } from "./CorruptTittle";
 import { Animated } from "react-native";
 import { HEIGHT } from "../../features/Dimensions";
 import { router } from "expo-router";
 
 export function CorruptButton() {
   const { theme } = useSettingsStore();
-  const { isWorkoutView } = useUIStore();
+  const { typeOfView } = useUIStore();
 
   const CorruptButtonBottom = useRef(
     new Animated.Value(HEIGHT / 2 - 136)
   ).current;
 
   useEffect(() => {
-    if (isWorkoutView) {
+    if (typeOfView === "workout" || typeOfView === "template") {
       showWorkoutView();
     } else {
       showHomeView();
     }
-  }, [isWorkoutView]);
+  }, [typeOfView]);
 
   // Transition functions
   const showWorkoutView = () => {
@@ -44,8 +44,10 @@ export function CorruptButton() {
   };
 
   const handleCorruptPress = () => {
-    if (isWorkoutView) {
+    if (typeOfView === "workout") {
       router.push("/workout-board");
+    } else if (typeOfView === "template") {
+      // router.push("/template-board");
     } else {
       router.push("/home-board");
     }

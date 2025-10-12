@@ -12,7 +12,6 @@ export function ExerciseListView() {
   return (
     <Fragment>
       {/* Header */}
-      {/* <SlideableExerciseHeader /> */}
       <ExerciseTableHeader />
 
       {/* Sets Table */}

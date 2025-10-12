@@ -5,12 +5,12 @@ import { StartWorkoutButton } from "./StartWorkoutButton";
 import { GreetingText } from "./GreetingText";
 
 export function HomeView() {
-  const { isWorkoutView } = useUIStore();
+  const { typeOfView } = useUIStore();
 
   const homeViewOpacity = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
-    if (isWorkoutView) {
+    if (typeOfView === "workout" || typeOfView === "template") {
       Animated.timing(homeViewOpacity, {
         toValue: 0,
         duration: 300,
@@ -23,7 +23,7 @@ export function HomeView() {
         useNativeDriver: true,
       }).start();
     }
-  }, [isWorkoutView]);
+  }, [typeOfView]);
 
   return (
     <Animated.View

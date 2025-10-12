@@ -6,7 +6,7 @@ import { UIStore, GeneralSlice } from "../types";
  */
 export const createGeneralSlice: StateCreator<UIStore, [], [], GeneralSlice> = (set, get) => ({
   resetUI: () => set({
-    isWorkoutView: false,
+    typeOfView: "home",
     isModalOpen: false,
     modalType: null,
     activeWidgetId: null,

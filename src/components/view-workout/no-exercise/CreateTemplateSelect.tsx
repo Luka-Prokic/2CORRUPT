@@ -3,11 +3,44 @@ import { IButton } from "../../ui/buttons/IButton";
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { WIDTH } from "../../../features/Dimensions";
 import { NoExerciseViewSelected } from "../NoExerciseView";
-import { Animated, Text } from "react-native";
+import { Text } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useTranslation } from "react-i18next";
 import { StrobeBlur } from "../../ui/misc/StrobeBlur";
 import { TemplateNameInput } from "../../ui/input/TemplateNameInput";
+import { router } from "expo-router";
+import { TagTextLayout } from "../../view-template/TagTextLayout";
+
+const mockTags = [
+  "Push", // push exercises
+  "Pull", // pull exercises
+  "Legs", // lower body
+  "Core", // abs / core work
+  "Chest",
+  "Back",
+  "Shoulders",
+  "Arms",
+  "Glutes",
+  "Hamstrings",
+  "Quads",
+  "Biceps",
+  "Triceps",
+  "Warmup",
+  "Cooldown",
+  "Strength",
+  "Hypertrophy",
+  "Endurance",
+  "Mobility",
+  "Power",
+  "Cardio",
+  "Accessory",
+  "Full Body",
+  "Isolation",
+  "Compound",
+  "HIIT",
+  "Stretching",
+  "Balance",
+];
 
 interface CreateTemplateSelectProps {
   onSelect: (selected: NoExerciseViewSelected) => void;
@@ -25,6 +58,7 @@ export function CreateTemplateSelect({
 
   function handlePress() {
     onSelect("create-template");
+    if (selected === "create-template") router.push("/add-exercise");
   }
 
   function mainButton() {
@@ -33,6 +67,7 @@ export function CreateTemplateSelect({
         onPress={handlePress}
         color={theme.primaryBackground}
         style={{ width: WIDTH - 32, height: 64, borderRadius: 32 }}
+        disabled={selected === "create-template" && templateName.length === 0}
       >
         <StrobeBlur
           colors={[
@@ -58,25 +93,14 @@ export function CreateTemplateSelect({
   if (selected === "create-template")
     return (
       <Fragment>
-        <KeyboardAwareScrollView
-          contentContainerStyle={{
-            flexGrow: 1,
-            width: WIDTH,
-            paddingHorizontal: 12,
-            justifyContent: "flex-end",
-          }}
-          enableOnAndroid
-          enableAutomaticScroll={true}
-          extraScrollHeight={0}
-          keyboardOpeningTime={0}
-          scrollEnabled={false}
-        >
-          <TemplateNameInput
-            value={templateName}
-            onChangeText={setTemplateName}
-            placeholder={t("workout-view.template-name")}
-          />
-        </KeyboardAwareScrollView>
+        <TagTextLayout tags={mockTags} />
+
+        <TemplateNameInput
+          value={templateName}
+          onChangeText={setTemplateName}
+          placeholder={t("workout-view.template-name")}
+        />
+
         {mainButton()}
       </Fragment>
     );

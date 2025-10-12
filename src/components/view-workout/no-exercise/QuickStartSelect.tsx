@@ -65,8 +65,6 @@ export function QuickStartSelect({
           style={{
             width: WIDTH - 32,
             height: 64,
-            backgroundColor: theme.handle,
-            borderRadius: 32,
             justifyContent: "center",
             alignItems: "center",
           }}

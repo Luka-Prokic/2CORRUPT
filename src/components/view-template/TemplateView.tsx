@@ -3,19 +3,17 @@ import { Animated } from "react-native";
 import { HEIGHT, WIDTH } from "../../features/Dimensions";
 import { useUIStore } from "../../stores/ui";
 import { useWorkoutStore } from "../../stores/workoutStore";
-import { ExerciseListView } from "./ExerciseListView";
-import { NoSessionView } from "./NoSessionView";
-import { NoExerciseView } from "./NoExerciseView";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { NoExerciseView } from "../view-workout/NoExerciseView";
 
-export function WorkoutView() {
+export function TemplateView() {
   const { typeOfView } = useUIStore();
   const { activeSession, activeExercise, startSession } = useWorkoutStore();
 
   const workoutViewOpacity = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    if (typeOfView === "workout") {
+    if (typeOfView === "template") {
       Animated.timing(workoutViewOpacity, {
         toValue: 1,
         duration: 300,
@@ -36,25 +34,6 @@ export function WorkoutView() {
     }
   }, [activeSession]);
 
-  const content = !activeSession ? (
-    <NoSessionView />
-  ) : !activeExercise ? (
-    <KeyboardAwareScrollView
-      contentContainerStyle={{
-        flexGrow: 1,
-      }}
-      enableOnAndroid
-      enableAutomaticScroll={true}
-      extraScrollHeight={0}
-      keyboardOpeningTime={0}
-      scrollEnabled={false}
-    >
-      <NoExerciseView />
-    </KeyboardAwareScrollView>
-  ) : (
-    <ExerciseListView />
-  );
-
   return (
     <Animated.View
       style={[
@@ -69,7 +48,18 @@ export function WorkoutView() {
         { opacity: workoutViewOpacity },
       ]}
     >
-      {content}
+      <KeyboardAwareScrollView
+        contentContainerStyle={{
+          flexGrow: 1,
+        }}
+        enableOnAndroid
+        enableAutomaticScroll={true}
+        extraScrollHeight={0}
+        keyboardOpeningTime={0}
+        scrollEnabled={false}
+      >
+        <NoExerciseView />
+      </KeyboardAwareScrollView>
     </Animated.View>
   );
 }
