@@ -153,6 +153,7 @@ export const createSessionSlice: StateCreator<WorkoutStore, [], [], {}> = (
       activeExercise,
       updateNavigationFlags,
       setActiveExercise,
+      clearActiveExercise,
     } = get();
     if (!activeSession) return;
 
@@ -168,7 +169,9 @@ export const createSessionSlice: StateCreator<WorkoutStore, [], [], {}> = (
     set({
       activeSession: { ...activeSession, layout: newLayout },
     });
-    setActiveExercise(newActiveExerciseId);
+
+    if (newActiveExerciseId) setActiveExercise(newActiveExerciseId);
+    else clearActiveExercise();
 
     updateNavigationFlags();
   },

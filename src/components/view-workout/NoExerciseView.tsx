@@ -1,62 +1,63 @@
-import { useState, useEffect, useRef } from "react";
-import { PlanedSessionSelect } from "./no-exercise/PlanedSessionSelect";
-import { QuickStartSelect } from "./no-exercise/QuickStartSelect";
-import { CreateTemplateSelect } from "./no-exercise/CreateTemplateSelect";
-import { Animated } from "react-native";
-import { useUIStore } from "../../stores/ui";
-
-export type NoExerciseViewSelected =
-  | "planed-session"
-  | "quick-start"
-  | "create-template"
-  | "none";
+import { IButton } from "../ui/buttons/IButton";
+import { useSettingsStore } from "../../stores/settingsStore";
+import { router } from "expo-router";
+import { WIDTH } from "../../features/Dimensions";
+import { Text, View } from "react-native";
+import { StrobeBlur } from "../ui/misc/StrobeBlur";
+import { useTranslation } from "react-i18next";
 
 export function NoExerciseView() {
-  const [selected, setSelected] = useState<NoExerciseViewSelected>("none");
-  const { typeOfView } = useUIStore();
+  const { theme } = useSettingsStore();
+  const { t } = useTranslation();
 
-  const blinkAnim = useRef(new Animated.Value(1)).current;
-
-  function handleSelect(newSelected: NoExerciseViewSelected) {
-    Animated.timing(blinkAnim, {
-      toValue: 0,
-      duration: 100,
-      useNativeDriver: false,
-    }).start(() => {
-      setSelected(newSelected);
-
-      Animated.timing(blinkAnim, {
-        toValue: 1,
-        duration: 400,
-        useNativeDriver: false,
-      }).start();
-    });
+  function handlePress() {
+    router.push("/add-exercise");
   }
 
-  useEffect(() => {
-    if (typeOfView !== "workout") {
-      setSelected("none");
-    }
-  }, [typeOfView]);
-
-  const opacity = blinkAnim.interpolate({
-    inputRange: [0, 1],
-    outputRange: [0, 1],
-  });
-
   return (
-    <Animated.View
-      style={{
-        flex: 1,
-        justifyContent: "flex-end",
-        alignItems: "center",
-        paddingBottom: 16,
-        opacity,
-      }}
-    >
-      <PlanedSessionSelect onSelect={handleSelect} selected={selected} />
-      <QuickStartSelect onSelect={handleSelect} selected={selected} />
-      <CreateTemplateSelect onSelect={handleSelect} selected={selected} />
-    </Animated.View>
+    <View style={{ flex: 1, padding: 16, justifyContent: "flex-end" }}>
+      <IButton
+        onPress={handlePress}
+        color={theme.primaryBackground}
+        style={{
+          width: WIDTH - 32,
+          height: 64,
+          borderRadius: 32,
+          marginBottom: 8,
+        }}
+      >
+        <StrobeBlur
+          colors={[
+            theme.caka,
+            theme.primaryBackground,
+            theme.accent,
+            theme.tint,
+          ]}
+          tint="light"
+          style={{ width: WIDTH - 32, height: 64, borderRadius: 32 }}
+        >
+          <Text style={{ color: theme.text, fontSize: 24, fontWeight: "bold" }}>
+            {t("workout-view.add-exercise")}
+          </Text>
+        </StrobeBlur>
+      </IButton>
+      <View
+        style={{
+          width: WIDTH - 32,
+          height: 64,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Text
+          style={{ color: theme.grayText, fontSize: 16, fontWeight: "bold" }}
+        >
+          {t("workout-view.got-back-empty-handed")}
+        </Text>
+        <Text style={{ color: theme.grayText, fontSize: 16 }}>
+          {t("workout-view.select-exercises")}
+        </Text>
+      </View>
+    </View>
   );
 }

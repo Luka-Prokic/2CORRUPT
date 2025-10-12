@@ -17,37 +17,32 @@ export function CorruptButton() {
   ).current;
 
   useEffect(() => {
-    if (typeOfView === "workout" || typeOfView === "template") {
-      showWorkoutView();
+    if (typeOfView === "home") {
+      Animated.spring(CorruptButtonBottom, {
+        toValue: HEIGHT / 2 - 156,
+        speed: 2,
+        bounciness: 5,
+        useNativeDriver: false,
+      }).start();
     } else {
-      showHomeView();
+      Animated.spring(CorruptButtonBottom, {
+        toValue: 22,
+        speed: 2,
+        bounciness: 5,
+        useNativeDriver: false,
+      }).start();
     }
   }, [typeOfView]);
-
-  // Transition functions
-  const showWorkoutView = () => {
-    Animated.spring(CorruptButtonBottom, {
-      toValue: 22,
-      speed: 2,
-      bounciness: 5,
-      useNativeDriver: false,
-    }).start();
-  };
-
-  const showHomeView = () => {
-    Animated.spring(CorruptButtonBottom, {
-      toValue: HEIGHT / 2 - 136,
-      speed: 2,
-      bounciness: 5,
-      useNativeDriver: false,
-    }).start();
-  };
 
   const handleCorruptPress = () => {
     if (typeOfView === "workout") {
       router.push("/workout-board");
     } else if (typeOfView === "template") {
-      // router.push("/template-board");
+      // router.push("/template-board"); TODO: add new boeard only if needed
+      router.push("/workout-board");
+    } else if (typeOfView === "start") {
+      // router.push("/start-board");  TODO: add new boeard only if needed
+      router.push("/workout-board");
     } else {
       router.push("/home-board");
     }

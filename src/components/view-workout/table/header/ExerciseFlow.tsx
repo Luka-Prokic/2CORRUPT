@@ -20,7 +20,7 @@ export function ExerciseFlow() {
     activeExercise,
   } = useWorkoutStore();
   const { t } = useTranslation();
-  const { setWorkoutView } = useUIStore();
+  const { setTypeOfView } = useUIStore();
 
   const sets = activeExercise?.sets ?? [];
   const completedSets = sets.filter((s: Set) => s.isCompleted).length;
@@ -56,7 +56,7 @@ export function ExerciseFlow() {
             justifyContent: "center",
           }}
           onPress={() => {
-            setWorkoutView(false);
+            setTypeOfView("home");
           }}
         >
           <Ionicons name="chevron-back-circle" size={44} color={theme.text} />

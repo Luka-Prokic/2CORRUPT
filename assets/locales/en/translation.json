@@ -165,7 +165,9 @@
     "workouts": "Workouts",
     "since": "Since",
     "start-workout": "Start Workout",
-    "all": "All"
+    "all": "All",
+    "continue-workout": "Continue Workout",
+    "continue-template": "Continue Template"
   },
   "calendar": {
     "start-workout": "Start Workout",
@@ -231,7 +233,8 @@
     "add-exercise": "Add Exercise",
     "got-back-empty-handed": "Got back empty handed?",
     "select-exercises": "To get started, select some exercises.",
-    "template-name": "Template Name..."
+    "template-name": "Template Name...",
+    "planned-session": "Planned Session"
   },
   "workout-board": {
     "workout": "Workout",

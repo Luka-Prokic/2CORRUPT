@@ -3,11 +3,16 @@ import { useStartWorkoutNavigation } from "../../../../../features/workout/useSt
 import { useSettingsStore } from "../../../../../stores/settings";
 import { Text, TouchableOpacity } from "react-native";
 import { StrobeBlur } from "../../../../ui/misc/StrobeBlur";
+import { useWorkoutStore } from "../../../../../stores/workout";
 
 export function NoWorkoutTodayCard() {
   const { theme } = useSettingsStore();
   const startWorkoutNavigation = useStartWorkoutNavigation();
   const { t } = useTranslation();
+  const { activeSession } = useWorkoutStore();
+  const isItActive = activeSession !== null;
+
+  //TODO: needs polish
 
   return (
     <TouchableOpacity
@@ -43,7 +48,7 @@ export function NoWorkoutTodayCard() {
             color: theme.secondaryText,
           }}
         >
-          {t("calendar.start-now")}
+          {isItActive ? t("app.continue-workout") : t("calendar.start-now")}
         </Text>
       </StrobeBlur>
     </TouchableOpacity>

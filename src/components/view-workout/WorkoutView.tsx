@@ -1,44 +1,17 @@
-import { useRef, useEffect } from "react";
-import { Animated } from "react-native";
+import { useRef, useEffect, useState } from "react";
+import { Animated, View } from "react-native";
 import { HEIGHT, WIDTH } from "../../features/Dimensions";
 import { useUIStore } from "../../stores/ui";
 import { useWorkoutStore } from "../../stores/workoutStore";
 import { ExerciseListView } from "./ExerciseListView";
-import { NoSessionView } from "./NoSessionView";
 import { NoExerciseView } from "./NoExerciseView";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { UIView } from "../ui/UIView";
 
 export function WorkoutView() {
-  const { typeOfView } = useUIStore();
-  const { activeSession, activeExercise, startSession } = useWorkoutStore();
+  const { activeSession, activeExercise } = useWorkoutStore();
 
-  const workoutViewOpacity = useRef(new Animated.Value(0)).current;
-
-  useEffect(() => {
-    if (typeOfView === "workout") {
-      Animated.timing(workoutViewOpacity, {
-        toValue: 1,
-        duration: 300,
-        useNativeDriver: true,
-      }).start();
-    } else {
-      Animated.timing(workoutViewOpacity, {
-        toValue: 0,
-        duration: 300,
-        useNativeDriver: true,
-      }).start();
-    }
-  }, [typeOfView]);
-
-  useEffect(() => {
-    if (!activeSession) {
-      startSession();
-    }
-  }, [activeSession]);
-
-  const content = !activeSession ? (
-    <NoSessionView />
-  ) : !activeExercise ? (
+  const content = !activeExercise ? (
     <KeyboardAwareScrollView
       contentContainerStyle={{
         flexGrow: 1,
@@ -56,20 +29,21 @@ export function WorkoutView() {
   );
 
   return (
-    <Animated.View
-      style={[
-        {
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          height: HEIGHT - 162,
-          width: WIDTH,
-        },
-        { opacity: workoutViewOpacity },
-      ]}
-    >
-      {content}
-    </Animated.View>
+    <UIView type="workout">
+      <View
+        style={[
+          {
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            height: HEIGHT - 162,
+            width: WIDTH,
+          },
+        ]}
+      >
+        {content}
+      </View>
+    </UIView>
   );
 }

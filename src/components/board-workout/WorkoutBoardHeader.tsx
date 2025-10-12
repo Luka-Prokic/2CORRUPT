@@ -12,7 +12,7 @@ interface WorkoutBoardHeaderProps {
 export function WorkoutBoardHeader({ listOpen }: WorkoutBoardHeaderProps) {
   const { theme } = useSettingsStore();
   const { activeSession, cancelSession, completeSession } = useWorkoutStore();
-  const { setWorkoutView } = useUIStore();
+  const { setTypeOfView } = useUIStore();
   const { t, showActionSheet } = useActionSheet();
 
   const isItEmpty = !activeSession?.layout.length;
@@ -30,7 +30,7 @@ export function WorkoutBoardHeader({ listOpen }: WorkoutBoardHeaderProps) {
       cancelIndex: 0,
       onSelect: (buttonIndex) => {
         if (buttonIndex === 1 || (buttonIndex === 2 && !isItEmpty)) {
-          setWorkoutView(false);
+          setTypeOfView("home");
           cancelSession();
           router.back();
         }
@@ -50,7 +50,7 @@ export function WorkoutBoardHeader({ listOpen }: WorkoutBoardHeaderProps) {
       onSelect: (buttonIndex) => {
         if (buttonIndex === 1) {
           completeSession();
-          setWorkoutView(false);
+          setTypeOfView("home");
           router.back();
         }
       },
@@ -58,7 +58,7 @@ export function WorkoutBoardHeader({ listOpen }: WorkoutBoardHeaderProps) {
   }
 
   function handleGoBack() {
-    setWorkoutView(false);
+    setTypeOfView("home");
     router.back();
   }
 

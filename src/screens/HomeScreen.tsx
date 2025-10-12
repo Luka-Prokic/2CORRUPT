@@ -5,6 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { HomeView } from "../components/view-home/HomeView";
 import { CorruptButton } from "../components/corrupt/CorruptButton";
 import { TemplateView } from "../components/view-template/TemplateView";
+import { StartView } from "../components/view-start/StartView";
 
 export function HomeScreen() {
   const { theme } = useSettingsStore();
@@ -14,6 +15,7 @@ export function HomeScreen() {
       <View style={{ flex: 1, position: "relative" }}>
         <CorruptButton />
         <HomeView />
+        <StartView />
         <WorkoutView />
         <TemplateView />
       </View>

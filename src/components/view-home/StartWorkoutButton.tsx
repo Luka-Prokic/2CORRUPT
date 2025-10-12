@@ -6,14 +6,22 @@ import { BounceButton } from "../ui/buttons/BounceButton";
 import { HEIGHT } from "../../features/Dimensions";
 import { useTranslation } from "react-i18next";
 import { useUIStore } from "../../stores/ui";
+import { useWorkoutStore } from "../../stores/workout";
 
 export function StartWorkoutButton() {
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
-  const { setWorkoutView } = useUIStore();
+  const { setTypeOfView } = useUIStore();
+  const { activeSession } = useWorkoutStore();
+
+  const isItActive = activeSession !== null;
 
   function handleStartWorkout() {
-    setWorkoutView(true);
+    if (isItActive) {
+      setTypeOfView("workout");
+    } else {
+      setTypeOfView("start");
+    }
   }
 
   return (
@@ -23,7 +31,7 @@ export function StartWorkoutButton() {
         height: 64,
         borderRadius: 100,
         marginHorizontal: 16,
-        bottom: HEIGHT / 2 - 64,
+        bottom: HEIGHT / 2,
         position: "absolute",
         left: 0,
         right: 0,
@@ -37,7 +45,7 @@ export function StartWorkoutButton() {
         duration={5000}
       >
         <Text style={{ fontSize: 24, fontWeight: "bold", color: theme.text }}>
-          {t("app.start-workout")}
+          {isItActive ? t("app.continue-workout") : t("app.start-workout")}
         </Text>
       </StrobeBlur>
     </BounceButton>

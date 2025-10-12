@@ -166,7 +166,9 @@
     "workouts": "Treninga",
     "since": "Od",
     "start-workout": "Započni Trening",
-    "all": "Sve"
+    "all": "Sve",
+    "continue-workout": "Nastavi Trening",
+    "continue-template": "Nastavi Template"
   },
   "calendar": {
     "start-workout": "Započni Trening",
@@ -232,7 +234,8 @@
     "add-exercise": "Dodaj Vežbu",
     "got-back-empty-handed": "Vratio si se bez vežbi?",
     "select-exercises": "Da bi započeo, izaberi par vežbi.",
-    "template-name": "Naziv za Template..."
+    "template-name": "Naziv za Template...",
+    "planned-session": "Planirani Trening"
   },
   "workout-board": {
     "workout": "Trening",

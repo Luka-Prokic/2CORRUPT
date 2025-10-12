@@ -14,7 +14,7 @@ export interface HomeViewSlice {
 }
 
 // Types of home modes
-export type HomeViewType = "home" | "workout" | "template";
+export type HomeViewType = "home" | "workout" | "template" | "start";
 
 // Modal management slice contract
 export interface ModalSlice {
