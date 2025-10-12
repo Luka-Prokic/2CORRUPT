@@ -1,5 +1,8 @@
 import { useTranslation } from "react-i18next";
-import { useStartWorkoutNavigation } from "../../../../../features/workout/useStartWorkoutNavigation";
+import {
+  useStartWorkoutNavigation,
+  useWorkoutNavigation,
+} from "../../../../../features/workout/useStartWorkoutNavigation";
 import { useSettingsStore } from "../../../../../stores/settings";
 import { Text } from "react-native";
 import { useWorkoutStore } from "../../../../../stores/workout";
@@ -7,12 +10,19 @@ import { StrobeButton } from "../../../../ui/buttons/StrobeButton";
 
 export function NoWorkoutTodayCard() {
   const { theme } = useSettingsStore();
-  const startWorkoutNavigation = useStartWorkoutNavigation();
+  const navToWorkoutAndStartIt = useStartWorkoutNavigation();
+  const navToWorkout = useWorkoutNavigation();
   const { t } = useTranslation();
   const { activeSession } = useWorkoutStore();
   const isItActive = activeSession !== null;
 
-  //TODO: needs polish
+  function handlePress() {
+    if (isItActive) {
+      navToWorkoutAndStartIt();
+    } else {
+      navToWorkout();
+    }
+  }
 
   return (
     <StrobeButton
@@ -25,7 +35,7 @@ export function NoWorkoutTodayCard() {
         borderWidth: 1,
         borderColor: theme.border,
       }}
-      onPress={startWorkoutNavigation}
+      onPress={handlePress}
     >
       <Text style={{ fontSize: 12, fontWeight: "bold", color: theme.border }}>
         {t("calendar.no-workout-today-description")}
