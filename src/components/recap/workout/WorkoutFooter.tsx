@@ -5,13 +5,13 @@ import { DashLine } from "../../ui/misc/DashLine";
 import { useTranslation } from "react-i18next";
 import { WIDTH } from "../../../features/Dimensions";
 
-interface WorkoutHeaderProps {
+interface WorkoutFooterProps {
   session: WorkoutSession;
 }
 
-export function WorkoutHeader({ session }: WorkoutHeaderProps) {
+export function WorkoutFooter({ session }: WorkoutFooterProps) {
   const { t } = useTranslation();
-  const { theme } = useSettingsStore();
+  const { theme, units } = useSettingsStore();
   const fontFamily = Platform.OS === "ios" ? "Menlo" : "monospace";
 
   return (
@@ -30,19 +30,19 @@ export function WorkoutHeader({ session }: WorkoutHeaderProps) {
             fontWeight: "bold",
             color: theme.text,
             textAlign: "left",
-            width: WIDTH * 0.5 - 16,
+            width: WIDTH * 0.45 - 16,
             fontFamily,
           }}
           numberOfLines={1}
           adjustsFontSizeToFit={true}
           minimumFontScale={0.5}
         >
-          {t("recap.exercises")}
+          TOTAL/{units.weight.toUpperCase()}
         </Text>
-        <DashLine width={WIDTH * 0.4} />
+        <DashLine width={WIDTH * 0.3} />
         <Text
           style={{
-            width: WIDTH * 0.1 - 16,
+            width: WIDTH * 0.25 - 16,
             fontSize: 32,
             fontWeight: "bold",
             textAlign: "right",
@@ -53,7 +53,7 @@ export function WorkoutHeader({ session }: WorkoutHeaderProps) {
           adjustsFontSizeToFit={true}
           minimumFontScale={0.5}
         >
-          {session.layout.length}
+          {session.totals?.totalVolumeKg}
         </Text>
       </View>
     </View>

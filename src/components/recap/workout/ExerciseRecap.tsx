@@ -5,6 +5,7 @@ import { Set, DropSet } from "../../../stores/workout/types";
 import { DashLine } from "../../ui/misc/DashLine";
 import { ExerciseName } from "../../view-workout/table/header/ExerciseName";
 import { WIDTH } from "../../../features/Dimensions";
+import { Fragment } from "react";
 
 interface ExerciseRecapProps {
   exercise: SessionExercise;
@@ -22,108 +23,174 @@ export function ExerciseRecap({ exercise }: ExerciseRecapProps) {
     rir: 40,
   };
 
+  const totalWeight = exercise.sets.reduce(
+    (acc, set) => acc + (set.reps ?? 0) * (set.weight ?? 0),
+    0
+  );
+
   return (
-    <View style={{ paddingHorizontal: 16, marginBottom: 16 }}>
-      <View style={{ width: WIDTH * 0.6 }}>
-        <ExerciseName exercise={exercise} fontSize={28} />
+    <View
+      style={{
+        marginHorizontal: 16,
+        marginBottom: 16,
+        gap: 4,
+      }}
+    >
+      <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <View style={{ width: WIDTH * 0.6 }}>
+          <ExerciseName exercise={exercise} fontSize={28} />
+        </View>
+        <DashLine width={WIDTH * 0.2 - 16} />
+        <Text
+          style={{
+            width: WIDTH * 0.2 - 16,
+            fontSize: 24,
+            fontWeight: "bold",
+            textAlign: "right",
+            color: theme.text,
+            fontFamily,
+          }}
+          numberOfLines={1}
+          adjustsFontSizeToFit={true}
+          minimumFontScale={0.5}
+        >
+          {totalWeight}
+        </Text>
       </View>
 
-      {exercise.sets.map((set: Set, idx: number) => (
-        <View key={`${exercise.id}-${set.id}`} style={{ marginBottom: 16 }}>
-          <View style={{ flexDirection: "row", marginLeft: 8 }}>
-            <Text
-              style={{
-                width: colWidths.index,
-                fontFamily,
-                color: theme.text,
-                fontSize: 18,
-              }}
-            >
-              {idx + 1}
-            </Text>
-            <Text
-              style={{
-                width: colWidths.reps,
-                fontFamily,
-                color: theme.text,
-                fontSize: 18,
-              }}
-            >
-              {set.reps ?? 0} x
-            </Text>
-            <Text
-              style={{
-                width: colWidths.weight,
-                fontFamily,
-                color: theme.text,
-                fontSize: 18,
-              }}
-            >
-              {set.weight ?? 0}
-            </Text>
-            <Text
-              style={{
-                width: colWidths.rpe,
-                fontFamily,
-                color: theme.text,
-                fontSize: 18,
-              }}
-            >
-              {set.rpe ?? ""}
-            </Text>
-            <Text
-              style={{
-                width: colWidths.rir,
-                fontFamily,
-                color: theme.text,
-                fontSize: 18,
-              }}
-            >
-              {set.rir ?? ""}
-            </Text>
-          </View>
-
-          {set.dropSets?.map((dropSet: DropSet, dropIdx: number) => (
+      {exercise.sets.map((set: Set, idx: number) => {
+        const color = set?.isCompleted ? theme.text : theme.grayText;
+        return (
+          <Fragment key={`${exercise.id}-${set.id}`}>
             <View
-              key={`${exercise.id}-${dropSet.id}-${dropIdx}`}
-              style={{ flexDirection: "row", marginLeft: 8, marginTop: 2 }}
+              style={{
+                flexDirection: "row",
+                height: 20,
+                marginBottom: 4,
+              }}
             >
               <Text
                 style={{
                   width: colWidths.index,
                   fontFamily,
-                  color: theme.grayText,
-                  fontSize: 16,
+                  color,
+                  textAlign: "center",
+                  fontSize: 18,
                 }}
               >
-                {dropIdx + 1}'
+                {idx + 1}.
               </Text>
               <Text
                 style={{
                   width: colWidths.reps,
                   fontFamily,
-                  color: theme.grayText,
-                  fontSize: 16,
+                  color,
+                  textAlign: "center",
+                  fontSize: 18,
                 }}
               >
-                {dropSet.reps} x
+                {set.reps ?? 0}
+              </Text>
+              <Text
+                style={{
+                  width: colWidths.index,
+                  fontFamily,
+                  color,
+                  textAlign: "center",
+                  fontSize: 18,
+                }}
+              >
+                x
               </Text>
               <Text
                 style={{
                   width: colWidths.weight,
                   fontFamily,
-                  color: theme.grayText,
-                  fontSize: 16,
+                  color,
+                  textAlign: "center",
+                  fontSize: 18,
                 }}
               >
-                {dropSet.weight}
+                {set.weight ?? 0}
+              </Text>
+              <Text
+                style={{
+                  width: colWidths.rpe,
+                  fontFamily,
+                  color,
+                  textAlign: "center",
+                  fontSize: 18,
+                }}
+              >
+                {set.rpe ?? ""}
+              </Text>
+              <Text
+                style={{
+                  width: colWidths.rir,
+                  fontFamily,
+                  color,
+                  textAlign: "center",
+                  fontSize: 18,
+                }}
+              >
+                {set.rir ?? ""}
               </Text>
             </View>
-          ))}
-        </View>
-      ))}
 
-      <DashLine />
+            {set.dropSets?.map((dropSet: DropSet, dropIdx: number) => (
+              <View
+                key={`${exercise.id}-${dropSet.id}-${dropIdx}`}
+                style={{ flexDirection: "row", height: 24, borderWidth: 0 }}
+              >
+                <Text
+                  style={{
+                    width: colWidths.index,
+                    fontFamily,
+                    color,
+                    fontSize: 16,
+                    textAlign: "center",
+                  }}
+                >
+                  {dropIdx + 1}'
+                </Text>
+                <Text
+                  style={{
+                    width: colWidths.reps,
+                    fontFamily,
+                    color,
+                    fontSize: 16,
+                    textAlign: "center",
+                  }}
+                >
+                  {dropSet.reps}
+                </Text>
+                <Text
+                  style={{
+                    width: colWidths.index,
+                    fontFamily,
+                    color,
+                    textAlign: "center",
+                    fontSize: 18,
+                  }}
+                >
+                  x
+                </Text>
+                <Text
+                  style={{
+                    width: colWidths.weight,
+                    fontFamily,
+                    color,
+                    fontSize: 16,
+                    textAlign: "center",
+                  }}
+                >
+                  {dropSet.weight}
+                </Text>
+              </View>
+            ))}
+          </Fragment>
+        );
+      })}
     </View>
   );
 }

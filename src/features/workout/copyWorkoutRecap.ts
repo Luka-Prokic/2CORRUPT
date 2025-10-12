@@ -43,6 +43,7 @@ export async function copyWorkoutRecap({ session }: CopyWorkoutRecapProps) {
   // add session details
   session.layout.forEach((exercise: SessionExercise) => {
     text += `${exercise.prefix ?? ""}${exercise.name}\n`;
+    text += `${exercise.notes ?? ""}${exercise.notes ? "\n" : ""}`;
     exercise.sets.forEach((set, idx) => {
       text += `${idx + 1}. ${set.reps ?? 0} x ${set.weight ?? 0}`;
       if (set.rpe) text += ` | RPE: ${set.rpe}`;

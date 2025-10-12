@@ -1,22 +1,22 @@
-import { Text } from "react-native";
-import { WIDTH } from "../../../features/Dimensions";
+import { View } from "react-native";
 import { useSettingsStore } from "../../../stores/settingsStore";
 
-export function DashLine({ char = "-", fontSize = 20 }) {
-  const charWidth = fontSize * 0.5; // approximate width of one character
-  const count = Math.floor(WIDTH / charWidth);
+interface DashLineProps {
+  width?: number;
+}
+
+export function DashLine({ width }: DashLineProps) {
   const { theme } = useSettingsStore();
 
   return (
-    <Text
+    <View
       style={{
-        color: theme.text,
-        fontSize,
-        fontWeight: "bold",
-        textAlign: "center",
+        borderBottomWidth: 3,
+        borderColor: theme.text,
+        borderStyle: "dashed",
+        height: 0,
+        width,
       }}
-    >
-      {char.repeat(count)}
-    </Text>
+    />
   );
 }

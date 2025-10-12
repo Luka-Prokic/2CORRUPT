@@ -129,6 +129,7 @@ export default function Layout() {
           name="recap/[sessionId]"
           options={({ route }) => ({
             presentation: "fullScreenModal",
+            headerStyle: { backgroundColor: theme.primaryBackground },
             headerLeft: () => (
               <CopyWorkoutButton
                 sessionId={(route.params as { sessionId: string }).sessionId}

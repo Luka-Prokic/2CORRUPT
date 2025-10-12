@@ -6,6 +6,7 @@ import { FlatList, Text } from "react-native";
 import { useTranslation } from "react-i18next";
 import { WorkoutHeader } from "../components/recap/workout/WorkoutHeader";
 import { ExerciseRecap } from "../components/recap/workout/ExerciseRecap";
+import { WorkoutFooter } from "../components/recap/workout/WorkoutFooter";
 
 export function SessionRecapScreen() {
   const { theme } = useSettingsStore();
@@ -33,12 +34,13 @@ export function SessionRecapScreen() {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: theme.background }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: theme.primaryBackground }}>
       <FlatList
         data={session.layout}
         keyExtractor={(item) => item.id}
         ListHeaderComponent={<WorkoutHeader session={session} />}
         renderItem={({ item }) => <ExerciseRecap exercise={item} />}
+        ListFooterComponent={<WorkoutFooter session={session} />}
       />
     </SafeAreaView>
   );

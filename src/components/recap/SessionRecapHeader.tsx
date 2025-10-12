@@ -14,7 +14,6 @@ export function SessionRecapHeader({ sessionId }: SessionRecapHeaderProps) {
   const session = completedSessions.find((s) => s.id === sessionId);
   const sessionName = session?.name;
 
-  console.log("sessionId", sessionId);
   return (
     <Text style={{ fontSize: 18, fontWeight: "bold", color: theme.text }}>
       {sessionName || "ses"}
