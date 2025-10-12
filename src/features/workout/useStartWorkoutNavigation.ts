@@ -8,14 +8,11 @@ export function useStartWorkoutNavigation() {
 
   return () => {
     startSession();
-
-    setTimeout(() => {
-      router.back(); // Go back instead of navigating to "Home"
-    }, 20);
+    router.back(); // Go back instead of navigating to "Home"
 
     setTimeout(() => {
       setTypeOfView("workout");
-    }, 180);
+    }, 100);
   };
 }
 
@@ -23,12 +20,10 @@ export function useWorkoutNavigation() {
   const { setTypeOfView } = useUIStore();
 
   return () => {
-    setTimeout(() => {
-      router.back(); // Go back instead of navigating to "Home"
-    }, 20);
+    router.back(); // Go back instead of navigating to "Home"
 
     setTimeout(() => {
       setTypeOfView("workout");
-    }, 180);
+    }, 100);
   };
 }

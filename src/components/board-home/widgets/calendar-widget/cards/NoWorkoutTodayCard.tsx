@@ -18,9 +18,9 @@ export function NoWorkoutTodayCard() {
 
   function handlePress() {
     if (isItActive) {
-      navToWorkoutAndStartIt();
-    } else {
       navToWorkout();
+    } else {
+      navToWorkoutAndStartIt();
     }
   }
 
