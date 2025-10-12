@@ -33,12 +33,12 @@ export function ListHeader({ listOpen, togglePanel }: ListHeaderProps) {
           flex: 1,
           alignItems: "center",
         }}
-        disabled={!listOpen || !activeExercise}
+        disabled={!activeExercise}
       >
         <Ionicons
           name={listOpen ? "chevron-down" : "chevron-up"}
           size={34}
-          color={!listOpen || !activeExercise ? theme.grayText : theme.text}
+          color={!activeExercise ? theme.grayText : theme.text}
         />
       </Pressable>
     </View>
