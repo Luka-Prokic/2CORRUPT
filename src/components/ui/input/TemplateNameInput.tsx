@@ -1,11 +1,17 @@
 import React from "react";
-import { View, TextInput, ViewStyle, TouchableOpacity } from "react-native";
+import {
+  View,
+  TextInput,
+  ViewStyle,
+  TouchableOpacity,
+  TextInputProps,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { useTranslation } from "react-i18next";
 import { WIDTH } from "../../../features/Dimensions";
 
-interface TemplateNameInputProps {
+interface TemplateNameInputProps extends Omit<TextInputProps, "style"> {
   value: string;
   onChangeText: (text: string) => void;
   placeholder?: string;

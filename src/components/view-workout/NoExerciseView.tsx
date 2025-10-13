@@ -4,6 +4,7 @@ import { WIDTH } from "../../features/Dimensions";
 import { Text, View } from "react-native";
 import { useTranslation } from "react-i18next";
 import { StrobeButton } from "../ui/buttons/StrobeButton";
+import { BackHomeButton } from "../view-home/BackHomeButton";
 
 export function NoExerciseView() {
   const { theme } = useSettingsStore();
@@ -15,6 +16,7 @@ export function NoExerciseView() {
 
   return (
     <View style={{ flex: 1, padding: 16, justifyContent: "flex-end" }}>
+      <BackHomeButton />
       <StrobeButton
         onPress={handlePress}
         style={{

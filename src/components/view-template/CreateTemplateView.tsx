@@ -9,10 +9,10 @@ import { Text, View } from "react-native";
 import { StrobeButton } from "../ui/buttons/StrobeButton";
 
 const mockTags = [
-  "Push", // push exercises
-  "Pull", // pull exercises
-  "Legs", // lower body
-  "Core", // abs / core work
+  "Push",
+  "Pull",
+  "Legs",
+  "Core",
   "Chest",
   "Back",
   "Shoulders",
@@ -55,7 +55,8 @@ export function CreateTemplateView() {
       <TemplateNameInput
         value={templateName}
         onChangeText={setTemplateName}
-        placeholder={t("workout-view.template-name")}
+        placeholder={t("template-view.template-name")}
+        autoFocus={true}
       />
 
       <StrobeButton

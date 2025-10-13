@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { useSettingsStore } from "../stores/settingsStore";
-import { UserLogin } from "../components/profile-settings/UserLogin";
-import { UserRegister } from "../components/profile-settings/UserRegister";
+import { UserLogin } from "../components/settings-profile/UserLogin";
+import { UserRegister } from "../components/settings-profile/UserRegister";
 
 export function ProfileScreen() {
   const { theme } = useSettingsStore();

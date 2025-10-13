@@ -7,7 +7,7 @@ import { useSettingsStore } from "../stores/settingsStore";
 import { CorruptHeader } from "../components/corrupt/CorruptHeader";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useTranslation } from "react-i18next";
-import { CreateNewExerciseButton } from "../components/add-exercise/CreateNewExerciseButton";
+import { CreateNewExerciseButton } from "../components/exercise-add/CreateNewExerciseButton";
 import { SessionRecapHeader } from "../components/recap/SessionRecapHeader";
 import { CopyWorkoutButton } from "../components/recap/workout/CopyWorkoutButton";
 

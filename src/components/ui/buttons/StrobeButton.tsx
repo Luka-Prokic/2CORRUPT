@@ -39,16 +39,14 @@ export function StrobeButton({
   return (
     <TouchableOpacity
       style={{
-        borderRadius: 8,
         alignItems: "center",
         justifyContent: "center",
-        flexDirection: "row",
         overflow: "hidden",
-        zIndex: 1,
         opacity: rest.disabled ? 0.6 : 1,
         ...style,
       }}
       hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+      activeOpacity={0.5}
       {...rest}
     >
       <StrobeBlur

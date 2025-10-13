@@ -18,14 +18,16 @@ export function WorkoutBoardHeader({ listOpen }: WorkoutBoardHeaderProps) {
   const isItEmpty = !activeSession?.layout.length;
 
   function handleCancelSession() {
+    const options = [
+      t("workout-board.continue"),
+      t("workout-board.exit-workout"),
+      !isItEmpty && t("workout-board.save-as-template"),
+    ].filter(Boolean);
+
     showActionSheet({
       title: `${t("workout-board.exit-workout")}?`,
       message: t("workout-board.exit-workout-message"),
-      options: [
-        t("workout-board.continue"),
-        t("workout-board.exit-workout"),
-        !isItEmpty && t("workout-board.save-as-template"),
-      ],
+      options,
       destructiveIndex: 1,
       cancelIndex: 0,
       onSelect: (buttonIndex) => {
@@ -57,25 +59,6 @@ export function WorkoutBoardHeader({ listOpen }: WorkoutBoardHeaderProps) {
     });
   }
 
-  function handleGoBack() {
-    setTypeOfView("home");
-    router.back();
-  }
-
-  function rightHeader() {
-    if (isItEmpty)
-      return (
-        <TouchableOpacity onPress={handleGoBack}>
-          <Ionicons name="arrow-undo-circle" size={44} color={theme.text} />
-        </TouchableOpacity>
-      );
-    return (
-      <TouchableOpacity onPress={handleCancelSession}>
-        <Ionicons name="close-circle" size={44} color={theme.error} />
-      </TouchableOpacity>
-    );
-  }
-
   return (
     <View
       style={{
@@ -86,7 +69,9 @@ export function WorkoutBoardHeader({ listOpen }: WorkoutBoardHeaderProps) {
         zIndex: 1,
       }}
     >
-      {rightHeader()}
+      <TouchableOpacity onPress={handleCancelSession}>
+        <Ionicons name="close-circle" size={44} color={theme.error} />
+      </TouchableOpacity>
       <Text
         style={{
           color: listOpen ? theme.glow : theme.grayText,
@@ -100,7 +85,7 @@ export function WorkoutBoardHeader({ listOpen }: WorkoutBoardHeaderProps) {
         <Ionicons
           name="checkmark-circle"
           size={44}
-          color={isItEmpty ? theme.grayText : theme.text}
+          color={isItEmpty ? theme.handle : theme.text}
         />
       </TouchableOpacity>
     </View>

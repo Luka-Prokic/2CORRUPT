@@ -3,6 +3,7 @@ import { QuickStartSelect } from "./QuickStartSelect";
 import { CreateTemplateSelect } from "./CreateTemplateSelect";
 import { UIView } from "../ui/UIView";
 import { View } from "react-native";
+import { BackHomeButton } from "../view-home/BackHomeButton";
 
 export function StartView() {
   return (
@@ -16,6 +17,7 @@ export function StartView() {
           gap: 8,
         }}
       >
+        <BackHomeButton />
         <PlanedSessionSelect />
         <QuickStartSelect />
         <CreateTemplateSelect />

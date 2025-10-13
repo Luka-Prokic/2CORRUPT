@@ -273,6 +273,12 @@
     "swap-exercise": "Swap Exercise",
     "add-notes-placeholder": "Add notes... (optional)"
   },
+
+  "template-view": {
+    "add-tags": "Add tags that describe your template.",
+    "template-name": "Template Name..."
+  },
+
   "add-exercise": {
     "add-exercise": "Add Exercise",
     "add-to-superset": "Add to Superset",

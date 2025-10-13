@@ -12,6 +12,8 @@ export function ListHeader({ listOpen, togglePanel }: ListHeaderProps) {
   const { theme } = useSettingsStore();
   const { activeExercise } = useWorkoutStore();
 
+  const isDisabled = !activeExercise && !listOpen;
+
   return (
     <View
       style={{
@@ -33,12 +35,12 @@ export function ListHeader({ listOpen, togglePanel }: ListHeaderProps) {
           flex: 1,
           alignItems: "center",
         }}
-        disabled={!activeExercise}
+        disabled={isDisabled}
       >
         <Ionicons
           name={listOpen ? "chevron-down" : "chevron-up"}
           size={34}
-          color={!activeExercise ? theme.grayText : theme.text}
+          color={isDisabled ? theme.grayText : theme.text}
         />
       </Pressable>
     </View>

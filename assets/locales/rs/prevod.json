@@ -274,6 +274,10 @@
     "swap-exercise": "Zameni Vežbu",
     "add-notes-placeholder": "Dodaj beleške... (neobavezno)"
   },
+  "template-view": {
+    "add-tags": "Dodaj oznake koje opisuju tvoj template.",
+    "template-name": "Naziv za Template..."
+  },
   "add-exercise": {
     "add-exercise": "Dodaj Vežbu",
     "add-to-superset": "Dodaj u Superset",

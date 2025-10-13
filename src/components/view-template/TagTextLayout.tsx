@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { Text, View, TouchableOpacity } from "react-native";
 import { useSettingsStore } from "../../stores/settingsStore";
 import { WIDTH } from "../../features/Dimensions";
+import { useTranslation } from "react-i18next";
 
 export function TagTextLayout({ tags }: { tags: string[] }) {
   const { theme } = useSettingsStore();
+  const { t } = useTranslation();
   const [selectedTags, setSelectedTags] = useState<Record<string, boolean>>({});
 
   const handleToggle = (tag: string) => {
@@ -19,9 +21,9 @@ export function TagTextLayout({ tags }: { tags: string[] }) {
       style={{
         position: "absolute",
         top: 16,
-        left: 16,
-        right: 16,
-        width: WIDTH - 32,
+        left: 0,
+        right: 0,
+        width: WIDTH - 0,
         gap: 16,
       }}
     >
@@ -29,30 +31,21 @@ export function TagTextLayout({ tags }: { tags: string[] }) {
         style={{
           flexDirection: "row",
           flexWrap: "wrap",
+          justifyContent: "space-between",
         }}
       >
-        {tags.map((tag, index) => (
+        {tags.map((tag: string) => (
           <TouchableOpacity key={tag} onPress={() => handleToggle(tag)}>
             <Text
               style={{
                 color: selectedTags[tag] ? theme.accent : theme.handle,
                 fontWeight: "bold",
-                fontSize: 28,
+                fontSize: 32,
+                letterSpacing: -0.5,
+                fontFamily: "Anton-Regular"
               }}
             >
               {tag}
-              {/* Add comma except after the last tag */}
-              {index < tags.length - 1 && (
-                <Text
-                  style={{
-                    color: theme.handle,
-                    fontWeight: "bold",
-                    fontSize: 28,
-                  }}
-                >
-                  {", "}
-                </Text>
-              )}
             </Text>
           </TouchableOpacity>
         ))}
@@ -63,9 +56,10 @@ export function TagTextLayout({ tags }: { tags: string[] }) {
           fontWeight: "400",
           fontSize: 18,
           textAlign: "center",
+          marginHorizontal: 16,
         }}
       >
-        Tap to add tags that describe your template.
+        {t("template-view.add-tags")}
       </Text>
     </View>
   );

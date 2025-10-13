@@ -3,8 +3,8 @@ import { FlatList } from "react-native";
 import { ExerciseInfo } from "../stores/workout/types";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useSettingsStore } from "../stores/settingsStore";
-import { ExerciseFilter } from "../components/add-exercise/ExerciseFilter";
-import { SwapExerciseCard } from "../components/swap-exercise/SwapExerciseCard";
+import { ExerciseFilter } from "../components/exercise-add/ExerciseFilter";
+import { SwapExerciseCard } from "../components/exercise-swap/SwapExerciseCard";
 
 export function SwapExerciseScreen() {
   const { theme } = useSettingsStore();
@@ -16,7 +16,6 @@ export function SwapExerciseScreen() {
   function handleSelectExercise(exercise: ExerciseInfo) {
     setSelectedExercise(exercise);
   }
-
 
   const PAGE_SIZE = 20; // number of items per "page"
   const [page, setPage] = useState(1);
@@ -43,7 +42,7 @@ export function SwapExerciseScreen() {
         data={pagedExercises}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => {
-         return (
+          return (
             <SwapExerciseCard
               exercise={item}
               onSelect={handleSelectExercise}

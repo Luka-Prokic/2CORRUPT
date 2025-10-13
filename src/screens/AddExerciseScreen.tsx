@@ -3,9 +3,9 @@ import { FlatList } from "react-native";
 import { ExerciseInfo } from "../stores/workout/types";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useSettingsStore } from "../stores/settingsStore";
-import { BottomAddExerciseSection } from "../components/add-exercise/BottomAddExerciseSection";
-import { AddExerciseCard } from "../components/add-exercise/AddExerciseCard";
-import { ExerciseFilter } from "../components/add-exercise/ExerciseFilter";
+import { BottomAddExerciseSection } from "../components/exercise-add/BottomAddExerciseSection";
+import { AddExerciseCard } from "../components/exercise-add/AddExerciseCard";
+import { ExerciseFilter } from "../components/exercise-add/ExerciseFilter";
 import { EmptyFooter } from "../components/ui/containers/EmptyFooter";
 
 export function AddExerciseScreen() {
