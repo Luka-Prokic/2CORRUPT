@@ -1,4 +1,4 @@
-import Icon from "react-native-ico-flags";
+// import Icon from "react-native-ico-flags";
 import { useSettingsStore } from "../../stores/settingsStore";
 import { useTranslation } from "react-i18next";
 import { i18n, LANGUAGES_COUNT, languageArray } from "../../config/i18n";
@@ -33,13 +33,13 @@ export function LanguageSettings() {
                 : {}
             }
             color={item.code === i18n.language ? theme.tint : theme.text}
-            icon={
-              <Icon
-                name={item.code === "en" ? "united-kingdom" : "serbia"}
-                width={24}
-                height={24}
-              />
-            }
+            // icon={
+            //   <Icon
+            //     name={item.code === "en" ? "united-kingdom" : "serbia"}
+            //     width={24}
+            //     height={24}
+            //   />
+            // }
           />
         ))}
       </DropDownButton>

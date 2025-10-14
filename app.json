@@ -12,25 +12,25 @@
     "splash": {
       "image": "./assets/2CORRUPT-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "black"
+      "backgroundColor": "#000000"
     },
     "ios": {
       "supportsTablet": true,
       "splash": {
-        "backgroundColor": "black"
+        "backgroundColor": "#000000"
       }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/2CORRUPT-icon.png",
-        "backgroundColor": "black"
+        "backgroundColor": "#000000"
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false
     },
     "web": {
       "favicon": "./assets/2CORRUPT-icon.png",
-      "backgroundColor": "black"
+      "backgroundColor": "#000000"
     },
     "plugins": ["expo-asset", "expo-router"],
     "experiments": {
