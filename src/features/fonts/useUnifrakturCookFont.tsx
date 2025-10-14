@@ -1,9 +1,9 @@
 import { useFonts } from "expo-font";
 
-export const useUnifrakturCookFont = () => {
+export function useUnifrakturCookFont() {
   const [fontsLoaded] = useFonts({
     "UnifrakturCook-Bold": require("../../../assets/fonts/UnifrakturCook-Bold.ttf"),
   });
 
   return fontsLoaded ? { fontFamily: "UnifrakturCook-Bold" } : {};
-};
+}

@@ -1,20 +1,20 @@
 import React, { useState } from "react";
 import { View, Text, Alert } from "react-native";
 import { useSettingsStore } from "../../stores/settingsStore";
-import Input from "../ui/Input";
-import BounceButton from "../ui/buttons/BounceButton";
-import TextButton from "../ui/buttons/TextButton";
+import {Input} from "../ui/Input";
+import {BounceButton} from "../ui/buttons/BounceButton";
+import {TextButton} from "../ui/buttons/TextButton";
 import { useTranslation } from "react-i18next";
-import Container from "../ui/containers/Container";
+import {Container} from "../ui/containers/Container";
 
-import CorruptTittle from "../corrupt/CorruptTittle";
+import {CorruptTittle} from "../corrupt/CorruptTittle";
 
 interface UserLoginProps {
   onLoginSuccess?: () => void;
   onSwitchToRegister?: () => void;
 }
 
-export default function UserLogin({
+export function UserLogin({
   onLoginSuccess,
   onSwitchToRegister,
 }: UserLoginProps) {

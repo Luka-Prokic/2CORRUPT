@@ -1,8 +1,8 @@
-import React, { useRef, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import { ViewStyle, Animated, Easing, StyleSheet } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useSettingsStore } from "../../../stores/settingsStore";
-import hexToRGBA from "../../../features/HEXtoRGB";
+import { hexToRGBA } from "../../../features/HEXtoRGB";
 
 interface AnimatedLinearGradientBoxProps {
   style?: ViewStyle;
@@ -10,7 +10,7 @@ interface AnimatedLinearGradientBoxProps {
   children?: React.ReactNode;
 }
 
-export default function AnimatedLinearGradientBox({
+export function AnimatedLinearGradientBox({
   style,
   duration = 4000,
   children,

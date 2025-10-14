@@ -1,7 +1,6 @@
-import React from "react";
 import { ViewStyle, DimensionValue, Animated } from "react-native";
-import { useSettingsStore } from "../../../stores/settingsStore"; import Colors from "../../../config/constants/Colors";
-import useFadeInAnim from "../../../animations/useFadeInAnim";
+import { useSettingsStore } from "../../../stores/settingsStore";
+import { useFadeInAnim } from "../../../animations/useFadeInAnim";
 
 interface CenterContainerProps {
   children: React.ReactNode;
@@ -9,12 +8,12 @@ interface CenterContainerProps {
   paddingHorizontal?: DimensionValue;
 }
 
-export default function CenterContainer({
+export function CenterContainer({
   children,
   style,
   paddingHorizontal = "5%",
 }: CenterContainerProps) {
-  const { themeName } = useSettingsStore(); const theme = Colors[themeName];
+  const { theme } = useSettingsStore();
   const { fadeIn } = useFadeInAnim(true);
 
   return (

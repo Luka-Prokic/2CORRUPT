@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Text,
   ViewStyle,
@@ -7,8 +6,7 @@ import {
   Pressable,
 } from "react-native";
 import { useSettingsStore } from "../../../stores/settingsStore";
-import Colors from "../../../config/constants/Colors";
-import useBounceScaleAnim from "../../../animations/useBounceScaleAnim";
+import { useBounceScaleAnim } from "../../../animations/useBounceScaleAnim";
 
 interface BounceButtonProps
   extends Omit<TouchableOpacityProps, "style" | "onPress"> {
@@ -20,7 +18,7 @@ interface BounceButtonProps
   onPress?: () => void;
 }
 
-export default function BounceButton({
+export function BounceButton({
   title,
   children,
   color,
@@ -29,8 +27,7 @@ export default function BounceButton({
   onPress,
   ...rest
 }: BounceButtonProps) {
-  const { themeName } = useSettingsStore();
-  const theme = Colors[themeName];
+  const { theme } = useSettingsStore();
   const { bounceAnim, bounceIt } = useBounceScaleAnim();
 
   const handlePress = () => {

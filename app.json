@@ -32,6 +32,9 @@
       "favicon": "./assets/2CORRUPT-icon.png",
       "backgroundColor": "black"
     },
-    "plugins": ["expo-asset"]
+    "plugins": ["expo-asset", "expo-router"],
+    "experiments": {
+      "typedRoutes": true
+    }
   }
 }

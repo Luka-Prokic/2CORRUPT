@@ -1,15 +1,14 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import {
   View,
   Text,
   TouchableOpacity,
   Dimensions,
   Animated,
-  FlatList,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useSettingsStore } from "../../../stores/settingsStore";
-import hexToRGBA from "../../../features/HEXtoRGB";
+import { hexToRGBA } from "../../../features/HEXtoRGB";
 
 const { width } = Dimensions.get("window");
 const widgetSize = (width - 40) / 2;
@@ -29,10 +28,10 @@ interface TemplateWidgetProps {
   onTemplatePress?: (template: TemplateCard) => void;
 }
 
-const TemplateWidget: React.FC<TemplateWidgetProps> = ({
+export function TemplateWidget({
   onAddTemplate,
   onTemplatePress,
-}) => {
+}: TemplateWidgetProps) {
   const { theme } = useSettingsStore();
   const scrollX = useRef(new Animated.Value(0)).current;
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -529,6 +528,4 @@ const TemplateWidget: React.FC<TemplateWidgetProps> = ({
       </View>
     </View>
   );
-};
-
-export default TemplateWidget;
+}

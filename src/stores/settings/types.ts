@@ -1,9 +1,8 @@
 // Types for the modular settings store
 
-import { Themes } from '../../config/constants/Colors';
-import Colors from '../../config/constants/Colors';
+import { Themes, Colors } from "../../config/constants/Colors";
 
-export type Language = 'en' | 'rs';
+export type Language = "en" | "rs";
 
 export type SettingsStore = ThemeSlice & LanguageSlice & GeneralSlice;
 
@@ -29,7 +28,7 @@ export interface GeneralSlice {
 
 export const themeOrder: readonly Themes[] = [
   "light",
-  "oldschool", 
+  "oldschool",
   "peachy",
   "dark",
   "preworkout",

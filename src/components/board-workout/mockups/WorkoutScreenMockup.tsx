@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import { useRef } from "react";
 import {
   View,
   Text,
@@ -8,79 +8,78 @@ import {
   Dimensions,
 } from "react-native";
 import { Swipeable } from "react-native-gesture-handler";
-import { useSettingsStore } from "../../../stores/settingsStore";
 import { Ionicons } from "@expo/vector-icons";
-import StrobeBlur from "../../ui/misc/StrobeBlur";
-import BounceButton from "../../ui/buttons/BounceButton";
 import { LinearGradient } from "expo-linear-gradient";
-import hexToRGBA from "../../../features/HEXtoRGB";
-
-// Types for dummy data
-
-interface DropSet {
-  id: string;
-  reps: string;
-  weight: string;
-}
-
-interface DummySet {
-  id: string;
-  setNumber: number;
-  reps: string;
-  weight: string;
-  dropSets: DropSet[];
-  isCompleted: boolean;
-  isDropSet?: boolean;
-}
-
-interface SetRowProps {
-  set: DummySet;
-  onUpdateSet: (setId: string, updates: Partial<DummySet>) => void;
-  onRemoveSet: (setId: string) => void;
-  onAddDropSet: (setId: string) => void;
-  onUncheck: (setId: string) => void;
-  setIndex: number;
-}
+import { StrobeBlur } from "../../ui/misc/StrobeBlur";
+import { BounceButton } from "../../ui/buttons/BounceButton";
+import { hexToRGBA } from "../../../features/HEXtoRGB";
+import { useSettingsStore } from "../../../stores/settingsStore";
+import {
+  useWorkoutStore,
+  Set,
+  SessionExercise,
+} from "../../../stores/workoutStore";
+import { IButton } from "../../ui/buttons/IButton";
 
 const HEIGHT = Dimensions.get("window").height;
 
 // Individual Set Row Component
-const SetRow: React.FC<SetRowProps> = ({
+function SetRow({
   set,
-  onUpdateSet,
-  onRemoveSet,
-  onAddDropSet,
-  onUncheck,
+  exercise,
   setIndex,
-}) => {
+}: {
+  set: any;
+  exercise: SessionExercise;
+  setIndex: number;
+}) {
   const { theme, themeName } = useSettingsStore();
-  const swipeableRef = React.useRef<Swipeable>(null);
+  const swipeableRef = useRef<Swipeable>(null);
+  const {
+    updateSetInActiveExercise,
+    addDropSetToActiveExercise,
+    removeSetFromActiveExercise,
+    updateDropSetInActiveExercise,
+    removeDropSetFromActiveExercise,
+  } = useWorkoutStore();
 
   const handleToggleComplete = () => {
-    onUpdateSet(set.id, { isCompleted: !set.isCompleted });
+    console.log("handleToggleComplete", set.id);
+    updateSetInActiveExercise(set.id, { isCompleted: !set.isCompleted });
   };
 
-  const handleDropUpdate = (dropId: string, update: Partial<DropSet>) => {
-    onUpdateSet(set.id, {
-      dropSets: set.dropSets.map((d) =>
-        d.id === dropId ? { ...d, ...update } : d
-      ),
-    });
+  const handleDropUpdate = (dropId: string, update: any) => {
+    console.log("handleDropUpdate", dropId, update);
+    updateDropSetInActiveExercise(set.id, dropId, update);
   };
 
   const handleRemoveDrop = (dropId: string) => {
-    onUpdateSet(set.id, {
-      dropSets: set.dropSets.filter((d) => d.id !== dropId),
-    });
+    console.log("handleRemoveDrop", dropId);
+    removeDropSetFromActiveExercise(set.id, dropId);
+  };
+
+  const handleAddDropSet = (setId: string) => {
+    console.log("handleAddDropSet", setId);
+    addDropSetToActiveExercise(setId, 0, 0);
+  };
+
+  const handleUncheckSet = (setId: string) => {
+    console.log("handleUncheckSet", setId);
+    updateSetInActiveExercise(setId, { isCompleted: false });
+  };
+
+  const handleRemoveSet = (setId: string) => {
+    console.log("handleRemoveSet", setId);
+    removeSetFromActiveExercise(setId);
+  };
+
+  const handleUpdateSet = (setId: string, updates: any) => {
+    console.log("handleUpdateSet", setId, updates);
+    updateSetInActiveExercise(setId, updates);
   };
 
   const renderRightActions = () => (
-    <View
-      style={{
-        flexDirection: "row",
-        alignItems: "flex-start",
-      }}
-    >
+    <View style={{ flexDirection: "row", alignItems: "flex-start" }}>
       {set.isCompleted && (
         <TouchableOpacity
           style={{
@@ -91,7 +90,7 @@ const SetRow: React.FC<SetRowProps> = ({
             backgroundColor: theme.secondaryText,
           }}
           onPress={() => {
-            onUncheck(set.id);
+            handleUncheckSet(set.id);
             swipeableRef.current?.close();
           }}
         >
@@ -107,6 +106,7 @@ const SetRow: React.FC<SetRowProps> = ({
           </Text>
         </TouchableOpacity>
       )}
+
       <TouchableOpacity
         style={{
           height: 66,
@@ -115,7 +115,7 @@ const SetRow: React.FC<SetRowProps> = ({
           minWidth: 80,
           backgroundColor: theme.fifthBackground,
         }}
-        onPress={() => onAddDropSet(set.id)}
+        onPress={() => handleAddDropSet(set.id)}
       >
         <Text
           style={{
@@ -137,7 +137,7 @@ const SetRow: React.FC<SetRowProps> = ({
           minWidth: 80,
           backgroundColor: theme.error,
         }}
-        onPress={() => onRemoveSet(set.id)}
+        onPress={() => handleRemoveSet(set.id)}
       >
         <Text
           style={{
@@ -156,7 +156,7 @@ const SetRow: React.FC<SetRowProps> = ({
   return (
     <Swipeable ref={swipeableRef} renderRightActions={renderRightActions}>
       <View>
-        {/* ✅ Main Set Row */}
+        {/* Main Set Row */}
         <StrobeBlur
           colors={
             set.isCompleted
@@ -174,11 +174,7 @@ const SetRow: React.FC<SetRowProps> = ({
               ? "light"
               : "dark"
           }
-          style={{
-            flexDirection: "row",
-            width: "100%",
-            height: 66,
-          }}
+          style={{ flexDirection: "row", width: "100%", height: 66 }}
         >
           <View style={{ flexDirection: "row", width: "100%", height: 66 }}>
             <View
@@ -227,8 +223,8 @@ const SetRow: React.FC<SetRowProps> = ({
                   color: theme.text,
                 }}
                 value={set.reps}
-                onChangeText={(text) => onUpdateSet(set.id, { reps: text })}
-                placeholder="Reps"
+                onChangeText={(text) => handleUpdateSet(set.id, { reps: text })}
+                placeholder="0"
                 placeholderTextColor={theme.grayText}
                 keyboardType="numeric"
               />
@@ -250,8 +246,10 @@ const SetRow: React.FC<SetRowProps> = ({
                   color: theme.text,
                 }}
                 value={set.weight}
-                onChangeText={(text) => onUpdateSet(set.id, { weight: text })}
-                placeholder="Weight"
+                onChangeText={(text) =>
+                  handleUpdateSet(set.id, { weight: text })
+                }
+                placeholder="0"
                 placeholderTextColor={theme.grayText}
                 keyboardType="numeric"
               />
@@ -287,193 +285,137 @@ const SetRow: React.FC<SetRowProps> = ({
           </View>
         </StrobeBlur>
 
-        {/* ✅ Drop Sets (if any) */}
-        {set.dropSets?.length > 0 && (
-          <Fragment>
-            {set.dropSets.map((drop: DropSet, index: number) => (
+        {/* Drop Sets */}
+        {set.dropSets?.length > 0 &&
+          set.dropSets.map((drop: any, index: number) => (
+            <View
+              key={`${set.id}-${drop.id}-${index}`}
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                backgroundColor: hexToRGBA(
+                  theme.fifthBackground,
+                  set.isCompleted ? 1 : 0.2
+                ),
+                height: 44,
+              }}
+            >
               <View
-                key={`${set.id}-${drop.id}-${index}`}
                 style={{
-                  flexDirection: "row",
+                  width: "25%",
                   alignItems: "center",
-                  backgroundColor: hexToRGBA(
-                    theme.fifthBackground,
-                    set.isCompleted ? 1 : 0.2
-                  ),
-                  height: 44,
+                  justifyContent: "center",
                 }}
               >
-                <View
+                <Text
                   style={{
-                    width: "25%",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Text
-                    style={{
-                      width: 28,
-                      fontSize: 16,
-                      fontWeight: "700",
-                      color: set.isCompleted
-                        ? theme.secondaryText
-                        : theme.grayText,
-                      textAlign: "center",
-                    }}
-                  >
-                    {index + 1}'
-                  </Text>
-                </View>
-
-                <TextInput
-                  style={{
-                    flex: 1,
-                    textAlign: "center",
+                    width: 28,
                     fontSize: 16,
+                    fontWeight: "700",
                     color: set.isCompleted
                       ? theme.secondaryText
                       : theme.grayText,
-                    width: "25%",
-                  }}
-                  value={drop.reps}
-                  onChangeText={(text) =>
-                    handleDropUpdate(drop.id, { reps: text })
-                  }
-                  placeholder="Reps"
-                  placeholderTextColor={theme.grayText}
-                  keyboardType="numeric"
-                />
-
-                <TextInput
-                  style={{
-                    flex: 1,
                     textAlign: "center",
-                    fontSize: 16,
-                    color: set.isCompleted
-                      ? theme.secondaryText
-                      : theme.grayText,
-                    width: "25%",
-                  }}
-                  value={drop.weight}
-                  onChangeText={(text) =>
-                    handleDropUpdate(drop.id, { weight: text })
-                  }
-                  placeholder="Weight"
-                  placeholderTextColor={theme.grayText}
-                  keyboardType="numeric"
-                />
-
-                <TouchableOpacity
-                  onPress={() => handleRemoveDrop(drop.id)}
-                  style={{
-                    width: "25%",
-                    alignItems: "center",
-                    justifyContent: "center",
                   }}
                 >
-                  <Ionicons
-                    name={
-                      set.isCompleted ? "remove-circle" : "remove-circle-outline"
-                    }
-                    size={22}
-                    color={set.isCompleted ? theme.error : theme.grayText}
-                  />
-                </TouchableOpacity>
+                  {index + 1}'
+                </Text>
               </View>
-            ))}
-          </Fragment>
-        )}
+
+              <TextInput
+                style={{
+                  flex: 1,
+                  textAlign: "center",
+                  fontSize: 16,
+                  color: set.isCompleted ? theme.secondaryText : theme.grayText,
+                  width: "25%",
+                }}
+                value={drop.reps}
+                onChangeText={(text) =>
+                  handleDropUpdate(drop.id, { reps: text })
+                }
+                placeholder="0"
+                placeholderTextColor={theme.grayText}
+                keyboardType="numeric"
+              />
+
+              <TextInput
+                style={{
+                  flex: 1,
+                  textAlign: "center",
+                  fontSize: 16,
+                  color: set.isCompleted ? theme.secondaryText : theme.grayText,
+                  width: "25%",
+                }}
+                value={drop.weight}
+                onChangeText={(text) =>
+                  handleDropUpdate(drop.id, { weight: text })
+                }
+                placeholder="0"
+                placeholderTextColor={theme.grayText}
+                keyboardType="numeric"
+              />
+
+              <TouchableOpacity
+                onPress={() => handleRemoveDrop(drop.id)}
+                style={{
+                  width: "25%",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Ionicons
+                  name={
+                    set.isCompleted ? "remove-circle" : "remove-circle-outline"
+                  }
+                  size={22}
+                  color={set.isCompleted ? theme.error : theme.grayText}
+                />
+              </TouchableOpacity>
+            </View>
+          ))}
       </View>
     </Swipeable>
   );
-};
+}
 
-// Main Workout Screen Mockup Component
-const WorkoutScreenMockup: React.FC = () => {
+export function WorkoutScreenMockup() {
   const { theme, themeName } = useSettingsStore();
-  const [sets, setSets] = useState<DummySet[]>([
-    {
-      id: "1",
-      setNumber: 1,
-      reps: "10",
-      weight: "135",
-      isCompleted: false,
-      dropSets: [],
-    },
-    {
-      id: "2",
-      setNumber: 2,
-      reps: "8",
-      weight: "145",
-      isCompleted: true,
-      dropSets: [],
-    },
-    {
-      id: "3",
-      setNumber: 3,
-      reps: "6",
-      weight: "155",
-      isCompleted: false,
-      dropSets: [],
-    },
-    {
-      id: "4",
-      setNumber: 4,
-      reps: "4",
-      weight: "165",
-      isCompleted: false,
-      dropSets: [],
-    },
-  ]);
+  const {
+    activeSession,
+    activeExercise,
+    addSetToActiveExercise,
+    setActiveExercise,
+  } = useWorkoutStore();
 
-  const updateSet = (setId: string, updates: Partial<DummySet>) => {
-    setSets((prevSets) =>
-      prevSets.map((set) => (set.id === setId ? { ...set, ...updates } : set))
-    );
-  };
+  if (!activeSession) return <Text>No active session</Text>;
 
-  const removeSet = (setId: string) => {
-    setSets((prevSets) => prevSets.filter((set) => set.id !== setId));
-  };
+  if (!activeSession.layout.length)
+    return <IButton title="Add Exercise" onPress={() => {}} />;
 
-  const addDropSet = (setId: string) => {
-    setSets((prevSets) =>
-      prevSets.map((set) => {
-        if (set.id === setId) {
-          const newDrop: DropSet = {
-            id: `${setId}-drop-${Date.now()}`,
-            reps: set.reps,
-            weight: set.weight,
-          };
-          return {
-            ...set,
-            dropSets: [...(set.dropSets || []), newDrop],
-          };
-        }
-        return set;
-      })
-    );
-  };
+  // Select first exercise if none is active
+  if (!activeExercise && activeSession.layout[0]) {
+    const firstItem = activeSession.layout[0];
+    const firstExerciseId =
+      firstItem.type === "exercise"
+        ? firstItem.exercise.id
+        : firstItem.type === "superset" || firstItem.type === "circuit"
+        ? firstItem.exercises[0]?.id
+        : null;
+    if (firstExerciseId) setActiveExercise(firstExerciseId);
+  }
 
-  const uncheckSet = (setId: string) => {
-    updateSet(setId, { isCompleted: false });
-  };
+  if (!activeExercise) return <Text>No active exercise</Text>;
 
-  const addSet = () => {
-    const nextSetNumber = Math.max(...sets.map((s) => s.setNumber)) + 1;
-    const newSet: DummySet = {
-      id: `set-${Date.now()}`,
-      setNumber: nextSetNumber,
-      reps: "0",
-      weight: "0",
-      isCompleted: false,
-      dropSets: [],
-    };
-    setSets((prevSets) => [...prevSets, newSet]);
-  };
+  const sets = activeExercise?.sets ?? [];
 
-  const completedSets = sets.filter((set) => set.isCompleted).length;
+  const completedSets = sets.filter((s: Set) => s.isCompleted).length;
   const totalSets = sets.length;
+
+  const handleAddSet = () => {
+    console.log("handleAddSet");
+    addSetToActiveExercise();
+  };
 
   return (
     <View
@@ -486,7 +428,6 @@ const WorkoutScreenMockup: React.FC = () => {
       }}
     >
       {/* Header */}
-
       <StrobeBlur
         colors={[theme.caka, theme.primaryBackground, theme.accent, theme.tint]}
         tint={
@@ -530,8 +471,11 @@ const WorkoutScreenMockup: React.FC = () => {
               fontWeight: "bold",
               color: theme.text,
             }}
+            numberOfLines={1}
+            adjustsFontSizeToFit
+            minimumFontScale={0.6}
           >
-            Bench Press
+            {activeExercise.name}
           </Text>
           <View
             style={{
@@ -542,79 +486,35 @@ const WorkoutScreenMockup: React.FC = () => {
               right: 0,
             }}
           >
-            <Text
-              style={{
-                fontSize: 16,
-                fontWeight: "bold",
-                flex: 1,
-                textAlign: "center",
-                color: theme.grayText,
-              }}
-            >
-              SET
-            </Text>
-            <Text
-              style={{
-                fontSize: 16,
-                fontWeight: "bold",
-                flex: 1,
-                textAlign: "center",
-                color: theme.grayText,
-              }}
-            >
-              REPS
-            </Text>
-            <Text
-              style={{
-                fontSize: 16,
-                fontWeight: "bold",
-                flex: 1,
-                textAlign: "center",
-                color: theme.grayText,
-              }}
-            >
-              KG
-            </Text>
-            <Text
-              style={{
-                fontSize: 16,
-                fontWeight: "bold",
-                flex: 1,
-                textAlign: "center",
-                color: theme.grayText,
-              }}
-            >
-              DONE
-            </Text>
+            {["SET", "REPS", "KG", "DONE"].map((label) => (
+              <Text
+                key={label}
+                style={{
+                  fontSize: 16,
+                  fontWeight: "bold",
+                  flex: 1,
+                  textAlign: "center",
+                  color: theme.grayText,
+                }}
+              >
+                {label}
+              </Text>
+            ))}
           </View>
         </LinearGradient>
       </StrobeBlur>
 
       {/* Sets Table */}
-      <View
-        style={{
-          flex: 1,
-        }}
-      >
-        <FlatList
-          data={sets}
-          keyExtractor={(item: DummySet, index: number) =>
-            `${item.id}-${index}`
-          }
-          renderItem={({ item, index }) => (
-            <SetRow
-              set={item}
-              onUpdateSet={updateSet}
-              onRemoveSet={removeSet}
-              onAddDropSet={addDropSet}
-              onUncheck={uncheckSet}
-              setIndex={index}
-            />
-          )}
-          contentContainerStyle={{ paddingBottom: 96 }}
-          showsVerticalScrollIndicator={false}
-        />
-      </View>
+      <FlatList
+        data={sets}
+        keyExtractor={(item) => `${item.id}-${sets.length}`}
+        renderItem={({ item, index }) => (
+          <SetRow set={item} exercise={activeExercise} setIndex={index} />
+        )}
+        contentContainerStyle={{ paddingBottom: 96 }}
+        showsVerticalScrollIndicator={false}
+      />
+
       {/* Add Set Button */}
       <LinearGradient
         style={{
@@ -637,7 +537,7 @@ const WorkoutScreenMockup: React.FC = () => {
             borderRadius: 32,
           }}
           color={theme.tint}
-          onPress={addSet}
+          onPress={handleAddSet}
         >
           <Text
             style={{
@@ -652,6 +552,4 @@ const WorkoutScreenMockup: React.FC = () => {
       </LinearGradient>
     </View>
   );
-};
-
-export default WorkoutScreenMockup;
+}

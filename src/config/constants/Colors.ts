@@ -6,7 +6,7 @@ export type Themes =
   | "preworkout"
   | "Corrupted";
 
-export default {
+export const Colors = {
   light: {
     text: "#1C1C1E",
     secondaryText: "#FFFFFF",

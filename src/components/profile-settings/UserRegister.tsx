@@ -12,7 +12,7 @@ interface UserRegisterProps {
   onSwitchToLogin?: () => void;
 }
 
-export default function UserRegister({
+export function UserRegister({
   onRegisterSuccess,
   onSwitchToLogin,
 }: UserRegisterProps) {

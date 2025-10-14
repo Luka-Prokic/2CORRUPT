@@ -3,7 +3,7 @@ import { Animated } from "react-native";
 
 
 
-const useFadeInAnim = (trigger?: any) => {
+export function useFadeInAnim(trigger?: any) {
 
     const opacityAnim = useRef(new Animated.Value(0)).current;
 
@@ -27,5 +27,3 @@ const useFadeInAnim = (trigger?: any) => {
         fadeIn
     };
 };
-
-export default useFadeInAnim;

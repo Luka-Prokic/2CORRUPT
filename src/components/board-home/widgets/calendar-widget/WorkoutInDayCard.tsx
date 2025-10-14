@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import StrobeBlur from "../../../ui/misc/StrobeBlur";
+import { StrobeBlur } from "../../../ui/misc/StrobeBlur";
 import { useSettingsStore } from "../../../../stores/settingsStore";
 import { Ionicons } from "@expo/vector-icons";
 import { Text } from "react-native";
@@ -10,13 +10,15 @@ interface WorkoutInDayCardProps {
   session?: WorkoutSession;
 }
 
-const WorkoutInDayCard = ({ session }: WorkoutInDayCardProps) => {
+export function WorkoutInDayCard({ session }: WorkoutInDayCardProps) {
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
   const isRestDay = !session;
-  const title = isRestDay ? t("calendar.rest-day") : session.name || t("calendar.workout");
+  const title = isRestDay
+    ? t("calendar.rest-day")
+    : session.name || t("calendar.workout");
   const description = isRestDay ? "" : session.notes || "";
-  const exerciseCount = !isRestDay ? session.items?.length || 0 : 0;
+  const exerciseCount = !isRestDay ? session.layout?.length || 0 : 0;
 
   return (
     <StrobeBlur
@@ -95,6 +97,4 @@ const WorkoutInDayCard = ({ session }: WorkoutInDayCardProps) => {
       )}
     </StrobeBlur>
   );
-};
-
-export default WorkoutInDayCard;
+}

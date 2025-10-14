@@ -1,10 +1,10 @@
-import React, { Fragment } from "react";
+import { Fragment } from "react";
 import { Text } from "react-native";
 import { useSettingsStore } from "../../stores/settingsStore";
 import { username } from "../../config/constants/defaults";
 import { useTranslation } from "react-i18next";
 
-export default function HomeView() {
+export function GreetingText() {
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
 

@@ -1,11 +1,10 @@
-import React from "react";
 import { ScrollView } from "react-native";
 import { useSettingsStore } from "../stores/settingsStore";
-import ThemeSettings from "../components/app-settings/ThemeSettings";
-import IList from "../components/ui/containers/IList";
-import LanguageSettings from "../components/app-settings/LanguageSettings";
+import { ThemeSettings } from "../components/app-settings/ThemeSettings";
+import { IList } from "../components/ui/containers/IList";
+import { LanguageSettings } from "../components/app-settings/LanguageSettings";
 
-export default function SettingsScreen() {
+export function SettingsScreen() {
   const { theme } = useSettingsStore();
 
   return (

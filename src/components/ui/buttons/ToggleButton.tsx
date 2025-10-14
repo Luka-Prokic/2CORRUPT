@@ -1,6 +1,11 @@
-import React from "react";
-import { TouchableOpacity, Text, StyleSheet, ViewStyle, TextStyle } from "react-native";
-import { useSettingsStore } from "../../../stores/settingsStore"; import Colors from "../../../config/constants/Colors";
+import {
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+  ViewStyle,
+  TextStyle,
+} from "react-native";
+import { useSettingsStore } from "../../../stores/settingsStore";
 
 interface ToggleButtonProps {
   isActive: boolean;
@@ -12,7 +17,7 @@ interface ToggleButtonProps {
   disabled?: boolean;
 }
 
-export default function ToggleButton({
+export function ToggleButton({
   isActive,
   onToggle,
   activeText = "ON",
@@ -21,7 +26,7 @@ export default function ToggleButton({
   textStyle,
   disabled = false,
 }: ToggleButtonProps) {
-  const { themeName } = useSettingsStore(); const theme = Colors[themeName];
+  const { theme } = useSettingsStore();
 
   const buttonStyle = [
     styles.button,

@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { Animated } from "react-native";
 
-const useBounceScaleAnim = () => {
+export function useBounceScaleAnim() {
 
     const scaleAnim = useRef(new Animated.Value(1)).current;
 
@@ -31,5 +31,3 @@ const useBounceScaleAnim = () => {
         bounceIt
     };
 };
-
-export default useBounceScaleAnim;

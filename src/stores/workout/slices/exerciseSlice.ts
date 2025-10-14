@@ -1,161 +1,355 @@
 import { StateCreator } from "zustand";
-import { WorkoutStore, SessionExercise, WorkoutSet } from "../types";
+import {
+  WorkoutStore,
+  SessionExercise,
+  Set,
+  DropSet,
+  SessionLayoutItem,
+} from "../types";
 
 /**
- * Exercise slice: manages exercises within workout sessions
+ * Exercise slice: manages the active exercise (single source of truth during editing)
+ * and syncs it back to the session layout
  */
-export const createExerciseSlice: StateCreator<WorkoutStore, [], [], any> = (set, get) => ({
-  addExerciseToSession: (exercise: any, afterItemId?: any) => {
-    const { activeSession } = get();
-    if (!activeSession) return;
+export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
+  set,
+  get
+) => ({
+  activeExercise: null,
 
-    const newExercise: SessionExercise = {
-      id: exercise.id || Date.now().toString(),
-      exerciseInfoId: exercise.exerciseInfoId || exercise.id,
-      name: exercise.name,
-      primaryMuscles: exercise.primaryMuscles || [],
-      secondaryMuscles: exercise.secondaryMuscles || [],
-      equipment: exercise.equipment || [],
-      sets: [], // Start with empty sets
-    };
-
-    const newLayoutItem = {
-      type: "exercise" as const,
-      id: newExercise.id,
-      exercise: newExercise,
-    };
-
-    const items = activeSession.items;
-    const insertIndex = afterItemId ? items.findIndex((item: any) => item.id === afterItemId) + 1 : items.length;
+  /**
+   * Set the active exercise by finding it in the session layout and creating a copy
+   */
+  setActiveExercise: (exerciseId: string) => {
+    const { activeSession, syncActiveExerciseToSession } = get();
     
-    const updatedItems = [...items];
-    updatedItems.splice(insertIndex, 0, newLayoutItem);
+    // First, sync any existing active exercise before switching
+    if (get().activeExercise) {
+      syncActiveExerciseToSession();
+    }
 
-    set((state: any) => ({
-      activeSession: { ...state.activeSession, items: updatedItems },
-    }));
-  },
-
-  removeItemFromSession: (layoutItemId: any) => {
-    const { activeSession } = get();
     if (!activeSession) return;
 
-    const items = activeSession.items.filter((i: any) => i.id !== layoutItemId);
+    // Find the exercise in the session layout (could be top-level or nested)
+    let foundExercise: SessionExercise | null = null;
 
-    set((state: any) => ({
-      activeSession: { ...state.activeSession, items },
-    }));
-  },
-
-  reorderSessionItems: (fromIndex: any, toIndex: any) => {
-    const { activeSession } = get();
-    if (!activeSession) return;
-
-    const items = [...activeSession.items];
-    const [movedItem] = items.splice(fromIndex, 1);
-    items.splice(toIndex, 0, movedItem);
-
-    set((state: any) => ({
-      activeSession: { ...state.activeSession, items },
-    }));
-  },
-
-  updateSessionItemNotes: (layoutItemId: any, notes: any) => {
-    const { activeSession } = get();
-    if (!activeSession) return;
-
-    const items = activeSession.items.map((i: any) => {
-      if (i.id === layoutItemId && i.type === "exercise") {
-        return {
-          ...i,
-          exercise: { ...i.exercise, notes },
-        };
+    for (const item of activeSession.layout) {
+      if (item.type === "exercise" && item.exercise.id === exerciseId) {
+        foundExercise = item.exercise;
+        break;
+      } else if (item.type === "superset" || item.type === "circuit") {
+        const nested = item.exercises.find((ex) => ex.id === exerciseId);
+        if (nested) {
+          foundExercise = nested;
+          break;
+        }
       }
-      return i;
+    }
+
+    if (foundExercise) {
+      // Create a deep copy to edit independently
+      set({
+        activeExercise: {
+          ...foundExercise,
+          sets: foundExercise.sets.map((s) => ({
+            ...s,
+            dropSets: s.dropSets ? [...s.dropSets] : undefined,
+          })),
+        },
+      });
+    }
+  },
+
+  /**
+   * Clear the active exercise (syncing first)
+   */
+  clearActiveExercise: () => {
+    const { syncActiveExerciseToSession } = get();
+    syncActiveExerciseToSession();
+    set({ activeExercise: null });
+  },
+
+  /**
+   * Sync the active exercise back to the session layout
+   */
+  syncActiveExerciseToSession: () => {
+    const { activeExercise, activeSession } = get();
+    if (!activeExercise || !activeSession) return;
+
+    const layout = activeSession.layout.map((item: SessionLayoutItem) => {
+      if (item.type === "exercise" && item.exercise.id === activeExercise.id) {
+        return {
+          ...item,
+          exercise: {
+            ...activeExercise,
+            sets: activeExercise.sets.map((s) => ({
+              ...s,
+              dropSets: s.dropSets ? [...s.dropSets] : undefined,
+            })),
+          },
+        };
+      } else if (item.type === "superset" || item.type === "circuit") {
+        const hasExercise = item.exercises.some(
+          (ex) => ex.id === activeExercise.id
+        );
+        if (hasExercise) {
+          return {
+            ...item,
+            exercises: item.exercises.map((ex: SessionExercise) =>
+              ex.id === activeExercise.id
+                ? {
+                    ...activeExercise,
+                    sets: activeExercise.sets.map((s) => ({
+                      ...s,
+                      dropSets: s.dropSets ? [...s.dropSets] : undefined,
+                    })),
+                  }
+                : ex
+            ),
+          };
+        }
+      }
+      return item;
     });
 
-    set((state: any) => ({
-      activeSession: { ...state.activeSession, items },
+    set((state) => ({
+      activeSession: { ...state.activeSession!, layout },
     }));
   },
 
-  addSetToExercise: (layoutItemId: any, reps?: any, weight?: any) => {
-    const { activeSession } = get();
-    if (!activeSession) return;
+  /**
+   * Update properties of the active exercise (and auto-sync)
+   */
+  updateActiveExercise: (updates: Partial<SessionExercise>) => {
+    const { activeExercise, syncActiveExerciseToSession } = get();
+    if (!activeExercise) return;
 
-    const newSet: WorkoutSet = {
-      id: Date.now().toString(),
-      reps: reps || 10,
-      weight: weight || 135,
+    set({
+      activeExercise: {
+        ...activeExercise,
+        ...updates,
+        id: activeExercise.id, // Preserve immutable id
+      },
+    });
+
+    // Auto-sync after update
+    syncActiveExerciseToSession();
+  },
+
+  /**
+   * Add a set to the active exercise (and auto-sync)
+   */
+  addSetToActiveExercise: (reps: number | null = 0, weight: number | null = 0) => {
+    const { activeExercise, syncActiveExerciseToSession } = get();
+    if (!activeExercise) return;
+
+    const newSet: Set = {
+      id: `set-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+      reps,
+      weight,
       isCompleted: false,
       dropSets: [],
     };
 
-    set((state: any) => ({
-      activeSession: {
-        ...state.activeSession,
-        items: state.activeSession.items.map((item: any) => {
-          if (item.id === layoutItemId && item.type === "exercise") {
-            return {
-              ...item,
-              exercise: {
-                ...item.exercise,
-                sets: [...item.exercise.sets, newSet],
-              },
-            };
-          } else if (item.type === "superset" || item.type === "circuit") {
-            return {
-              ...item,
-              exercises: item.exercises.map((exercise: any) => {
-                if (exercise.id === layoutItemId) {
-                  return {
-                    ...exercise,
-                    sets: [...exercise.sets, newSet],
-                  };
-                }
-                return exercise;
-              }),
-            };
-          }
-          return item;
-        }),
+    set({
+      activeExercise: {
+        ...activeExercise,
+        sets: [...activeExercise.sets, newSet],
       },
-    }));
+    });
+
+    // Auto-sync after update
+    syncActiveExerciseToSession();
   },
 
-  removeSetFromExercise: (layoutItemId: any, setId: any) => {
+  /**
+   * Update a specific set in the active exercise (and auto-sync)
+   */
+  updateSetInActiveExercise: (setId: string, updates: Partial<Set>) => {
+    const { activeExercise, syncActiveExerciseToSession } = get();
+    if (!activeExercise) return;
+
+    set({
+      activeExercise: {
+        ...activeExercise,
+        sets: activeExercise.sets.map((s) =>
+          s.id === setId ? { ...s, ...updates, id: s.id } : s
+        ),
+      },
+    });
+
+    // Auto-sync after update
+    syncActiveExerciseToSession();
+  },
+
+  /**
+   * Remove a set from the active exercise (and auto-sync)
+   */
+  removeSetFromActiveExercise: (setId: string) => {
+    const { activeExercise, syncActiveExerciseToSession } = get();
+    if (!activeExercise) return;
+
+    set({
+      activeExercise: {
+        ...activeExercise,
+        sets: activeExercise.sets.filter((s) => s.id !== setId),
+      },
+    });
+
+    // Auto-sync after update
+    syncActiveExerciseToSession();
+  },
+
+  /**
+   * Add a drop set to a specific set in the active exercise (and auto-sync)
+   */
+  addDropSetToActiveExercise: (
+    setId: string,
+    reps: number | null,
+    weight: number | null
+  ) => {
+    const { activeExercise, syncActiveExerciseToSession } = get();
+    if (!activeExercise) return;
+
+    const newDropSet: DropSet = {
+      id: `drop-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+      reps,
+      weight,
+    };
+
+    set({
+      activeExercise: {
+        ...activeExercise,
+        sets: activeExercise.sets.map((s) =>
+          s.id === setId
+            ? { ...s, dropSets: [...(s.dropSets || []), newDropSet] }
+            : s
+        ),
+      },
+    });
+
+    // Auto-sync after update
+    syncActiveExerciseToSession();
+  },
+
+  /**
+   * Update a drop set in the active exercise (and auto-sync)
+   */
+  updateDropSetInActiveExercise: (
+    setId: string,
+    dropSetId: string,
+    updates: Partial<DropSet>
+  ) => {
+    const { activeExercise, syncActiveExerciseToSession } = get();
+    if (!activeExercise) return;
+
+    set({
+      activeExercise: {
+        ...activeExercise,
+        sets: activeExercise.sets.map((s) =>
+          s.id === setId
+            ? {
+                ...s,
+                dropSets: s.dropSets?.map((ds) =>
+                  ds.id === dropSetId ? { ...ds, ...updates, id: ds.id } : ds
+                ),
+              }
+            : s
+        ),
+      },
+    });
+
+    // Auto-sync after update
+    syncActiveExerciseToSession();
+  },
+
+  /**
+   * Remove a drop set from the active exercise (and auto-sync)
+   */
+  removeDropSetFromActiveExercise: (setId: string, dropSetId: string) => {
+    const { activeExercise, syncActiveExerciseToSession } = get();
+    if (!activeExercise) return;
+
+    set({
+      activeExercise: {
+        ...activeExercise,
+        sets: activeExercise.sets.map((s) =>
+          s.id === setId
+            ? {
+                ...s,
+                dropSets: s.dropSets?.filter((ds) => ds.id !== dropSetId),
+              }
+            : s
+        ),
+      },
+    });
+
+    // Auto-sync after update
+    syncActiveExerciseToSession();
+  },
+
+  /**
+   * Add a new exercise to the session layout
+   */
+  addExerciseToSession: (exercise: SessionExercise, afterItemId?: string) => {
     const { activeSession } = get();
     if (!activeSession) return;
 
-    set((state: any) => ({
-      activeSession: {
-        ...state.activeSession,
-        items: state.activeSession.items.map((item: any) => {
-          if (item.id === layoutItemId && item.type === "exercise") {
-            return {
-              ...item,
-              exercise: {
-                ...item.exercise,
-                sets: item.exercise.sets.filter((set: WorkoutSet) => set.id !== setId),
-              },
-            };
-          } else if (item.type === "superset" || item.type === "circuit") {
-            return {
-              ...item,
-              exercises: item.exercises.map((exercise: any) => {
-                if (exercise.id === layoutItemId) {
-                  return {
-                    ...exercise,
-                    sets: exercise.sets.filter((set: WorkoutSet) => set.id !== setId),
-                  };
-                }
-                return exercise;
-              }),
-            };
-          }
-          return item;
-        }),
-      },
+    const newExercise: SessionExercise = {
+      ...exercise,
+      id: exercise.id || Date.now().toString(),
+      sets: exercise.sets || [],
+    };
+
+    const newLayoutItem: SessionLayoutItem = {
+      type: "exercise",
+      id: newExercise.id,
+      exercise: newExercise,
+    };
+
+    const layout = activeSession.layout;
+    const insertIndex = afterItemId
+      ? layout.findIndex((item: SessionLayoutItem) => item.id === afterItemId) +
+        1
+      : layout.length;
+
+    const updatedLayout = [...layout];
+    updatedLayout.splice(insertIndex, 0, newLayoutItem);
+
+    set((state) => ({
+      activeSession: { ...state.activeSession!, layout: updatedLayout },
+    }));
+  },
+
+  /**
+   * Remove an item from the session layout
+   */
+  removeItemFromSession: (layoutItemId: string) => {
+    const { activeSession } = get();
+    if (!activeSession) return;
+
+    const layout = activeSession.layout.filter(
+      (i: SessionLayoutItem) => i.id !== layoutItemId
+    );
+
+    set((state) => ({
+      activeSession: { ...state.activeSession!, layout },
+    }));
+  },
+
+  /**
+   * Reorder items in the session layout
+   */
+  reorderSessionItems: (fromIndex: number, toIndex: number) => {
+    const { activeSession } = get();
+    if (!activeSession) return;
+
+    const layout = [...activeSession.layout];
+    const [movedItem] = layout.splice(fromIndex, 1);
+    layout.splice(toIndex, 0, movedItem);
+
+    set((state) => ({
+      activeSession: { ...state.activeSession!, layout },
     }));
   },
 });

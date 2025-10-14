@@ -1,13 +1,12 @@
-
-import { useNavigation } from "@react-navigation/native";
+import { useRouter } from "expo-router";
 import { useUIStore } from "../../stores/uiStore";
 
 export function useStartWorkoutNavigation() {
-  const navigation = useNavigation();
-  const { setWorkoutView } = useUIStore();
+ const { setWorkoutView } = useUIStore();
+ const router = useRouter();
 
   return () => {
-    navigation.goBack(); // Go back instead of navigating to "Home"
+    router.back(); // Go back instead of navigating to "Home"
     setTimeout(() => {
       setWorkoutView(true);
     }, 100);

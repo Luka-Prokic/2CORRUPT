@@ -1,9 +1,8 @@
-import React from "react";
 import { useSettingsStore } from "../../stores/settingsStore";
-import StrobeBlur from "../ui/misc/StrobeBlur";
+import {StrobeBlur} from "../ui/misc/StrobeBlur";
 import { Text } from "react-native";
-import hexToRGBA from "../../features/HEXtoRGB";
-import BounceButton from "../ui/buttons/BounceButton";
+import {hexToRGBA} from "../../features/HEXtoRGB";
+import {BounceButton} from "../ui/buttons/BounceButton";
 import { HEIGHT } from "../../features/Dimensions";
 import { useTranslation } from "react-i18next";
 
@@ -11,7 +10,7 @@ interface StartWorkoutButtonProps {
   onPress?: () => void;
 }
 
-export default function StartWorkoutButton({
+export function StartWorkoutButton({
   onPress,
 }: StartWorkoutButtonProps) {
   const { theme } = useSettingsStore();

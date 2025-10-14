@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { useSettingsStore } from "../stores/settingsStore";
-import Colors from "../config/constants/Colors";
-import UserLogin from "../components/profile-settings/UserLogin";
-import UserRegister from "../components/profile-settings/UserRegister";
+import { UserLogin } from "../components/profile-settings/UserLogin";
+import { UserRegister } from "../components/profile-settings/UserRegister";
 
-export default function ProfileScreen() {
-  const { themeName } = useSettingsStore();
-  const theme = Colors[themeName];
+export function ProfileScreen() {
+  const { theme } = useSettingsStore();
   const [isLogin, setIsLogin] = useState(true);
 
   const handleLoginSuccess = () => {
@@ -36,7 +34,7 @@ export default function ProfileScreen() {
     <View style={[styles.container, { backgroundColor: theme.background }]}>
       {isLogin ? (
         <UserLogin
-        onLoginSuccess={handleLoginSuccess}
+          onLoginSuccess={handleLoginSuccess}
           onSwitchToRegister={handleSwitchToRegister}
         />
       ) : (

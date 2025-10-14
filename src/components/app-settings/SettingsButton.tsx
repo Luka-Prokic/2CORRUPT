@@ -1,24 +1,21 @@
-import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { useSettingsStore } from "../../stores/settingsStore";
-import Colors from "../../config/constants/Colors";
-import { useNavigation } from "@react-navigation/native";
-import BounceButton from "../ui/buttons/BounceButton";
+import { BounceButton } from "../ui/buttons/BounceButton";
+import { useRouter } from "expo-router";
 
 interface SettingsButtonProps {
   onPress?: () => void;
 }
 
-export default function SettingsButton({ onPress }: SettingsButtonProps) {
-  const { themeName } = useSettingsStore();
-  const theme = Colors[themeName];
-  const navigation = useNavigation();
+export function SettingsButton({ onPress }: SettingsButtonProps) {
+  const { theme } = useSettingsStore();
+  const router = useRouter();
 
   const handlePress = () => {
     if (onPress) {
       onPress();
     } else {
-      navigation.navigate("Settings" as never);
+      router.push("/settings");
     }
   };
 

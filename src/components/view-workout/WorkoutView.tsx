@@ -1,17 +1,17 @@
-import React from "react";
+import { useRef, useEffect } from "react";
 import { TouchableOpacity, Animated } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useSettingsStore } from "../../stores/settingsStore";
-import WorkoutScreenMockup from "../board-workout/mockups/WorkoutScreenMockup";
+import { WorkoutScreenMockup } from "../board-workout/mockups/WorkoutScreenMockup";
 import { useUIStore } from "../../stores/ui";
 
-export default function WorkoutView() {
+export function WorkoutView() {
   const { theme } = useSettingsStore();
   const { setWorkoutView, isWorkoutView } = useUIStore();
 
-  const workoutViewOpacity = React.useRef(new Animated.Value(0)).current;
+  const workoutViewOpacity = useRef(new Animated.Value(0)).current;
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isWorkoutView) {
       showWorkoutView();
     } else {

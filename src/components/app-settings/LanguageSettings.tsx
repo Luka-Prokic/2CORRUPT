@@ -1,14 +1,13 @@
-import React from "react";
+import Icon from "react-native-ico-flags";
 import { useSettingsStore } from "../../stores/settingsStore";
 import { useTranslation } from "react-i18next";
-import i18n, { LANGUAGES_COUNT, languageArray } from "../../config/i18n";
-import DropDownButton from "../ui/buttons/DropDownButton";
-import OptionButton from "../ui/buttons/OptionButton";
-import Icon from "react-native-ico-flags";
-import hexToRGBA from "../../features/HEXtoRGB";
-import IList from "../ui/containers/IList";
+import { i18n, LANGUAGES_COUNT, languageArray } from "../../config/i18n";
+import { DropDownButton } from "../ui/buttons/DropDownButton";
+import { OptionButton } from "../ui/buttons/OptionButton";
+import { hexToRGBA } from "../../features/HEXtoRGB";
+import { IList } from "../ui/containers/IList";
 
-export default function PickLanguageSettings() {
+export function LanguageSettings() {
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
 
