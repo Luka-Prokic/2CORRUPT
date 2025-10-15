@@ -4,11 +4,15 @@ import { Themes, Colors } from "../../config/constants/Colors";
 
 export type Language = "en" | "rs";
 
-export type SettingsStore = ThemeSlice & LanguageSlice & GeneralSlice;
+export type SettingsStore = ThemeSlice &
+  LanguageSlice &
+  GeneralSlice &
+  UnitsSlice;
 
 // Theme slice contract
 export interface ThemeSlice {
   themeName: Themes;
+  themeMode: "light" | "dark";
   theme: (typeof Colors)[Themes];
   setTheme: (themeName: Themes) => void;
   toggleTheme: () => void;
@@ -34,3 +38,12 @@ export const themeOrder: readonly Themes[] = [
   "preworkout",
   "Corrupted",
 ] as const;
+
+export type WeightUnit = "kg" | "lbs";
+
+export interface UnitsSlice {
+  units: {
+    weight: WeightUnit;
+  };
+  setUnits: (units: { weight: WeightUnit }) => void;
+}

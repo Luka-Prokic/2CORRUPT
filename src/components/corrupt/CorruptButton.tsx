@@ -1,56 +1,56 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useMemo } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { useSettingsStore } from "../../stores/settingsStore";
 import { useUIStore } from "../../stores/ui";
-import {IButton} from "../ui/buttons/IButton";
-import {CorruptTittle} from "./CorruptTittle";
+import { IButton } from "../ui/buttons/IButton";
+import { CorruptTittle } from "./CorruptTittle";
 import { Animated } from "react-native";
-import { HEIGHT } from "../../features/Dimensions";
-import { useRouter } from "expo-router";
+import { HEIGHT, WIDTH } from "../../features/Dimensions";
+import { router } from "expo-router";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+
+export const CORRUPT_BUTTON_FROM_BOTTOM = 22;
+export const CORRUPT_BUTTON_HEIGHT = 64;
+
+const CORRUPT_GAP = 8;
+
+export const CORRUPT_BUTTON_HEIGHT_FROM_BOTTOM =
+  CORRUPT_BUTTON_FROM_BOTTOM + CORRUPT_BUTTON_HEIGHT;
 
 export function CorruptButton() {
   const { theme } = useSettingsStore();
-  const { isWorkoutView } = useUIStore();
-  const router = useRouter();
-
-  const CorruptButtonBottom = useRef(
-    new Animated.Value(HEIGHT / 2 - 136)
-  ).current;
+  const { typeOfView } = useUIStore();
+  const insets = useSafeAreaInsets();
+  const CorruptButtonBottom = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    if (isWorkoutView) {
-      showWorkoutView();
+    const toValue =
+      typeOfView === "home"
+        ? HEIGHT / 2 - CORRUPT_BUTTON_HEIGHT - CORRUPT_GAP
+        : CORRUPT_BUTTON_FROM_BOTTOM + insets.bottom;
+    if (typeOfView === "home") {
+      Animated.spring(CorruptButtonBottom, {
+        toValue: toValue,
+        speed: 2,
+        bounciness: 5,
+        useNativeDriver: false,
+      }).start();
     } else {
-      showHomeView();
+      Animated.spring(CorruptButtonBottom, {
+        toValue: toValue,
+        speed: 2,
+        bounciness: 5,
+        useNativeDriver: false,
+      }).start();
     }
-  }, [isWorkoutView]);
+  }, [typeOfView]);
 
-  // Transition functions
-  const showWorkoutView = () => {
-    Animated.spring(CorruptButtonBottom, {
-      toValue: 22,
-      speed: 2,
-      bounciness: 5,
-      useNativeDriver: false,
-    }).start();
-  };
-
-  const showHomeView = () => {
-    Animated.spring(CorruptButtonBottom, {
-      toValue: HEIGHT / 2 - 136,
-      speed: 2,
-      bounciness: 5,
-      useNativeDriver: false,
-    }).start();
-  };
-
-  const handleCorruptPress = () => {
-    if (isWorkoutView) {
-      router.push("/workout-board");
-    } else {
-      router.push("/home-board");
-    }
-  };
+  const handleCorruptPress = useMemo(
+    () => () => {
+      router.push(`/${typeOfView}-board`);
+    },
+    [typeOfView]
+  );
 
   return (
     <Animated.View
@@ -59,12 +59,11 @@ export function CorruptButton() {
           position: "absolute",
           left: 0,
           right: 0,
-          width: "100%",
+          width: WIDTH,
+          height: CORRUPT_BUTTON_HEIGHT,
           alignItems: "center",
           paddingHorizontal: 16,
           zIndex: 10,
-        },
-        {
           bottom: CorruptButtonBottom,
         },
       ]}
@@ -72,8 +71,8 @@ export function CorruptButton() {
       <IButton
         onPress={handleCorruptPress}
         style={{
-          width: "100%",
-          height: 64,
+          width: WIDTH - 32,
+          height: CORRUPT_BUTTON_HEIGHT,
           borderRadius: 100,
           backgroundColor: theme.accent,
           borderWidth: 1,

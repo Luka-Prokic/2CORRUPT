@@ -5,9 +5,9 @@ import {
   Set,
   DropSet,
   SessionExercise,
-  SessionLayoutItem,
   WorkoutTemplate,
 } from "../types";
+import { nanoid } from "nanoid/non-secure";
 
 /**
  * Session slice: manages active workout sessions
@@ -23,64 +23,23 @@ export const createSessionSlice: StateCreator<WorkoutStore, [], [], {}> = (
   startSession: (template?: WorkoutTemplate) => {
     const now = new Date();
     const newSession: WorkoutSession = {
-      id: Date.now().toString(),
+      id: `session-${nanoid()}`,
       templateId: template?.id || null,
       templateVersion: template?.version || null,
-      name: template?.name || `Workout ${now.toLocaleDateString("en-GB")}`,
+      name: `${new Date().toLocaleDateString(
+        "en-GB"
+      )} - ${new Date().toLocaleTimeString("en-GB", {
+        hour: "2-digit",
+        minute: "2-digit",
+      })}`,
+      // e.g. "07/10/2025 10:00"
       startTime: now.toISOString(),
       isActive: true,
       layout: template
-        ? template.layout.map((layoutItem: SessionLayoutItem) => {
-            if (layoutItem.type === "exercise") {
-              return {
-                type: "exercise",
-                id: layoutItem.id,
-                exercise: {
-                  id: layoutItem.id,
-                  exerciseInfoId: layoutItem.exercise.exerciseInfoId,
-                  name: layoutItem.exercise.name || "Unknown Exercise",
-                  primaryMuscles: layoutItem.exercise.primaryMuscles || [],
-                  secondaryMuscles: layoutItem.exercise.secondaryMuscles || [],
-                  equipment: layoutItem.exercise.equipment || [],
-                  sets: layoutItem.exercise.sets || [],
-                },
-              };
-            } else if (layoutItem.type === "superset") {
-              return {
-                type: "superset",
-                id: layoutItem.id,
-                name: layoutItem.name,
-                exercises: layoutItem.exercises.map(
-                  (exercise: SessionExercise) => ({
-                    id: exercise.id,
-                    exerciseInfoId: exercise.exerciseInfoId,
-                    name: exercise.name || "Unknown Exercise",
-                    primaryMuscles: exercise.primaryMuscles || [],
-                    secondaryMuscles: exercise.secondaryMuscles || [],
-                    equipment: exercise.equipment || [],
-                    sets: exercise.sets || [],
-                  })
-                ),
-              };
-            } else {
-              // circuit
-              return {
-                type: "circuit",
-                id: layoutItem.id,
-                exercises: layoutItem.exercises.map(
-                  (exercise: SessionExercise) => ({
-                    id: exercise.id,
-                    exerciseInfoId: exercise.exerciseInfoId,
-                    name: exercise.name || "Unknown Exercise",
-                    primaryMuscles: exercise.primaryMuscles || [],
-                    secondaryMuscles: exercise.secondaryMuscles || [],
-                    equipment: exercise.equipment || [],
-                    sets: exercise.sets || [],
-                  })
-                ),
-                rounds: layoutItem.rounds || 1,
-              };
-            }
+        ? template.layout.map((layoutItem: SessionExercise) => {
+            return {
+              ...layoutItem,
+            };
           })
         : [],
       createdAt: now.toISOString(),
@@ -109,24 +68,19 @@ export const createSessionSlice: StateCreator<WorkoutStore, [], [], {}> = (
     let totalReps = 0;
     let totalVolumeKg = 0;
 
-    activeSession.layout.forEach((item: SessionLayoutItem) => {
-      const exercises =
-        item.type === "exercise" ? [item.exercise] : item.exercises;
+    activeSession.layout.forEach((exercise: SessionExercise) => {
+      exercise.sets.forEach((set: Set) => {
+        if (set.isCompleted) {
+          totalSets++;
+          totalReps += set.reps || 0;
+          totalVolumeKg += (set.weight || 0) * (set.reps || 0);
 
-      exercises.forEach((exercise: SessionExercise) => {
-        exercise.sets.forEach((set: Set) => {
-          if (set.isCompleted) {
+          set.dropSets?.forEach((dropSet: DropSet) => {
             totalSets++;
-            totalReps += set.reps || 0;
-            totalVolumeKg += (set.weight || 0) * (set.reps || 0);
-
-            set.dropSets?.forEach((dropSet: DropSet) => {
-              totalSets++;
-              totalReps += dropSet.reps || 0;
-              totalVolumeKg += (dropSet.weight || 0) * (dropSet.reps || 0);
-            });
-          }
-        });
+            totalReps += dropSet.reps || 0;
+            totalVolumeKg += (dropSet.weight || 0) * (dropSet.reps || 0);
+          });
+        }
       });
     });
 
@@ -136,6 +90,7 @@ export const createSessionSlice: StateCreator<WorkoutStore, [], [], {}> = (
       isActive: false,
       totals: { totalSets, totalReps, totalVolumeKg, durationSeconds },
       updatedAt: endTime,
+      layout: activeSession.layout,
     };
 
     set((state) => ({
@@ -148,6 +103,119 @@ export const createSessionSlice: StateCreator<WorkoutStore, [], [], {}> = (
   cancelSession: () => {
     const { clearActiveExercise } = get();
     clearActiveExercise();
+
     set({ activeSession: null, isWorkoutActive: false });
   },
+
+  /**
+   * Add a new exercise to the session layout
+   */
+  addExerciseToSession: (exercise: SessionExercise, afterItemId?: string) => {
+    const {
+      activeSession,
+      activeExercise,
+      setActiveExercise,
+      updateNavigationFlags,
+    } = get();
+    if (!activeSession) return;
+
+    const newExercise: SessionExercise = {
+      ...exercise,
+    };
+
+    const layout = activeSession.layout;
+    const insertIndex = afterItemId
+      ? layout.findIndex((item: SessionExercise) => item.id === afterItemId) + 1
+      : layout.length;
+
+    const updatedLayout = [...layout];
+    updatedLayout.splice(insertIndex, 0, newExercise);
+
+    set((state) => ({
+      activeSession: { ...state.activeSession!, layout: updatedLayout },
+    }));
+
+    //if layout has no active exercise, set the new exercise as active
+    if (!activeExercise) {
+      setActiveExercise(newExercise.id);
+    }
+
+    //update navigation flags in flowSlice
+    updateNavigationFlags();
+  },
+
+  /**
+   * Remove multiple exercises from the session layout
+   */
+  removeExercisesFromSession: (exerciseIds: string[]) => {
+    const {
+      activeSession,
+      activeExercise,
+      updateNavigationFlags,
+      setActiveExercise,
+      clearActiveExercise,
+    } = get();
+    if (!activeSession) return;
+
+    const newLayout = activeSession.layout.filter(
+      (item: SessionExercise) => !exerciseIds.includes(item.id)
+    );
+
+    let newActiveExerciseId = activeExercise?.id;
+    if (exerciseIds.includes(activeExercise?.id ?? "")) {
+      newActiveExerciseId = newLayout.length > 0 ? newLayout[0].id : null;
+    }
+
+    set({
+      activeSession: { ...activeSession, layout: newLayout },
+    });
+
+    if (newActiveExerciseId) setActiveExercise(newActiveExerciseId);
+    else clearActiveExercise();
+
+    updateNavigationFlags();
+  },
+
+  /**
+   * Reorder items in the session layout
+   */
+  reorderSessionItems: (newOrder: SessionExercise[]) => {
+    const { activeSession } = get();
+    if (!activeSession) return;
+
+    set((state) => ({
+      activeSession: {
+        ...state.activeSession!,
+        layout: newOrder,
+      },
+    }));
+  },
+
+  updateSessionField: (
+    sessionId: string,
+    field: keyof WorkoutSession,
+    value: WorkoutSession[keyof WorkoutSession]
+  ) =>
+    set((state) => {
+      const updatedSessions = state.completedSessions.map((s) =>
+        s.id === sessionId
+          ? { ...s, [field]: value, updatedAt: new Date().toISOString() }
+          : s
+      );
+
+      // Handle active session too
+      const updatedActiveSession =
+        state.activeSession?.id === sessionId
+          ? {
+              ...state.activeSession,
+              [field]: value,
+              updatedAt: new Date().toISOString(),
+            }
+          : state.activeSession;
+
+      return {
+        completedSessions: updatedSessions,
+        activeSession: updatedActiveSession,
+      };
+    }),
 });

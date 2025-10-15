@@ -41,16 +41,18 @@ export interface WorkoutTemplate {
   version: number;
   readonly createdAt: IsoDateString;
   updatedAt?: IsoDateString;
-  layout: SessionLayoutItem[];
+  layout: SessionExercise[];
   tags?: readonly string[];
   isPublic?: boolean;
   metadata?: Record<string, any>;
 }
 
+export type ExerciseColumns = "Reps" | "Weight" | "RIR" | "RPE";
+
 // Session snapshot of an exercise with sets
 export interface SessionExercise {
   readonly id: string; // snapshot id for session level
-  readonly exerciseInfoId?: string | null;
+  exerciseInfoId?: string | null;
   name: string;
   prefix?: string; // new prefix field
   primaryMuscles: string[];
@@ -58,28 +60,10 @@ export interface SessionExercise {
   equipment?: string[];
   notes?: string | null;
   sets: Set[];
-  inSuperSet?: boolean;
+  columns?: ExerciseColumns[];
+  restTime?: number | null;
+  noRest?: boolean;
 }
-
-// Items in an active session (snapshot of layout)
-export type SessionLayoutItem =
-  | {
-      readonly type: "exercise";
-      readonly id: string;
-      exercise: SessionExercise;
-    }
-  | {
-      readonly type: "superset";
-      readonly id: string;
-      exercises: SessionExercise[];
-      name?: string;
-    }
-  | {
-      readonly type: "circuit";
-      readonly id: string;
-      exercises: SessionExercise[];
-      rounds?: number;
-    };
 
 // Workout session (single source of truth for a performed workout)
 export interface WorkoutSession {
@@ -91,7 +75,7 @@ export interface WorkoutSession {
   readonly startTime: IsoDateString;
   endTime?: IsoDateString | null;
   isActive: boolean;
-  layout: SessionLayoutItem[];
+  layout: SessionExercise[];
   totals?: {
     totalSets?: number;
     totalReps?: number;
@@ -106,19 +90,16 @@ export interface WorkoutSession {
 // Slice contracts
 export interface TemplateSlice {
   templates: WorkoutTemplate[];
-  activeTemplateId: string | null;
+  activeTemplate: WorkoutTemplate | null;
   createTemplate: (
     name: string,
     description: string | undefined,
-    layout: SessionLayoutItem[]
+    layout: SessionExercise[]
   ) => string;
-  updateTemplate: (
-    templateId: string,
-    updates: Partial<WorkoutTemplate>
-  ) => void;
+  updateTemplate: (updates: Partial<WorkoutTemplate>) => void;
   deleteTemplate: (templateId: string) => void;
   getTemplateById: (templateId: string) => WorkoutTemplate | null;
-  setActiveTemplate: (templateId: string) => void;
+  setActiveTemplate: (template: WorkoutTemplate) => void;
 }
 
 export interface SessionSlice {
@@ -128,23 +109,44 @@ export interface SessionSlice {
   startSession: (template?: WorkoutTemplate) => void;
   completeSession: () => void;
   cancelSession: () => void;
+  addExerciseToSession: (
+    exercise: SessionExercise,
+    afterItemId?: string
+  ) => void;
+  removeExercisesFromSession: (exerciseIds: string[]) => void;
+  reorderSessionItems: (newOrder: SessionExercise[]) => void;
+  updateSessionField: <K extends keyof WorkoutSession>(
+    sessionId: string,
+    field: K,
+    value: WorkoutSession[K]
+  ) => void;
 }
 
 export interface ExerciseSlice {
   activeExercise: SessionExercise | null;
+  exercises: ExerciseInfo[];
   setActiveExercise: (exerciseId: string) => void;
   clearActiveExercise: () => void;
   syncActiveExerciseToSession: () => void;
   updateActiveExercise: (updates: Partial<SessionExercise>) => void;
-  addSetToActiveExercise: (reps?: number | null, weight?: number | null) => void;
+  addSetToActiveExercise: (
+    reps?: number | null,
+    weight?: number | null
+  ) => void;
   updateSetInActiveExercise: (setId: string, updates: Partial<Set>) => void;
   removeSetFromActiveExercise: (setId: string) => void;
-  addDropSetToActiveExercise: (setId: string, reps: number | null, weight: number | null) => void;
-  updateDropSetInActiveExercise: (setId: string, dropSetId: string, updates: Partial<DropSet>) => void;
+  addDropSetToActiveExercise: (
+    setId: string,
+    reps: number | null,
+    weight: number | null
+  ) => void;
+  updateDropSetInActiveExercise: (
+    setId: string,
+    dropSetId: string,
+    updates: Partial<DropSet>
+  ) => void;
   removeDropSetFromActiveExercise: (setId: string, dropSetId: string) => void;
-  addExerciseToSession: (exercise: SessionExercise, afterItemId?: string) => void;
-  removeItemFromSession: (layoutItemId: string) => void;
-  reorderSessionItems: (fromIndex: number, toIndex: number) => void;
+  swapExerciseInActiveExercise: (exerciseId: string) => void;
 }
 
 export interface TimerSlice {
@@ -165,8 +167,23 @@ export interface StatsSlice {
   } | null;
 }
 
+export interface FlowSlice {
+  // Computed flags for UI
+  isThereNext: boolean;
+  isTherePrev: boolean;
+
+  // Navigation actions
+  goToNextExercise: () => void;
+  goToPreviousExercise: () => void;
+
+  updateNavigationFlags: () => void;
+  // Optional utility function
+  getActiveExerciseIndex: () => number | null;
+}
+
 export type WorkoutStore = TemplateSlice &
   SessionSlice &
   ExerciseSlice &
   TimerSlice &
-  StatsSlice;
+  StatsSlice &
+  FlowSlice;

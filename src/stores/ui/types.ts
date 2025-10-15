@@ -1,18 +1,20 @@
 // Types for the modular UI store
 
-export type UIStore = WorkoutViewSlice &
+export type UIStore = HomeViewSlice &
   ModalSlice &
   WidgetSlice &
   NavigationSlice &
   LoadingSlice &
   GeneralSlice;
 
-// Workout view slice contract
-export interface WorkoutViewSlice {
-  isWorkoutView: boolean;
-  setWorkoutView: (isActive: boolean) => void;
-  toggleWorkoutView: () => void;
+// Home view slice contract
+export interface HomeViewSlice {
+  typeOfView: HomeViewType;
+  setTypeOfView: (type: HomeViewType) => void;
 }
+
+// Types of home modes
+export type HomeViewType = "home" | "workout" | "template" | "start";
 
 // Modal management slice contract
 export interface ModalSlice {

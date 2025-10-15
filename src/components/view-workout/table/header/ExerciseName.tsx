@@ -1,0 +1,41 @@
+import { Text } from "react-native";
+import { useSettingsStore } from "../../../../stores/settingsStore";
+import { SessionExercise } from "../../../../stores/workoutStore";
+import { useTranslatedSessionExerciseName } from "../../../../features/translate/useTranslatedExercisesNames";
+
+interface ExerciseNameProps {
+  exercise: SessionExercise;
+  fontSize?: number;
+  textColor?: string;
+  prefixColor?: string;
+}
+
+export function ExerciseName({
+  exercise,
+  fontSize,
+  textColor,
+  prefixColor,
+}: ExerciseNameProps) {
+  const { theme } = useSettingsStore();
+  const { translatedName } = useTranslatedSessionExerciseName(exercise);
+
+  return (
+    <Text
+      style={{
+        fontSize: fontSize ?? 56,
+        fontWeight: "bold",
+        color: textColor ?? theme.text,
+      }}
+      numberOfLines={1}
+      adjustsFontSizeToFit
+      minimumFontScale={0.6}
+    >
+      {prefixColor ? (
+        <Text style={{ color: prefixColor }}>{exercise.prefix} </Text>
+      ) : (
+        ""
+      )}
+      {translatedName}
+    </Text>
+  );
+}
