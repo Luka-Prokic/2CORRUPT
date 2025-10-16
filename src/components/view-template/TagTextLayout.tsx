@@ -1,7 +1,6 @@
 import React, { Fragment, useState } from "react";
 import { Text, View, TouchableOpacity } from "react-native";
 import { useSettingsStore } from "../../stores/settingsStore";
-import { WIDTH } from "../../features/Dimensions";
 import { useTranslation } from "react-i18next";
 
 const mockTags = [

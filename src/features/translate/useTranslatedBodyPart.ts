@@ -1,9 +1,6 @@
-import { useTranslation } from "react-i18next";
+import i18next from "i18next"; // import your i18n instance directly
 
-export function useTranslatedBodyPart(bodyPart: string) {
-  const { t } = useTranslation();
-
+export function translateBodyPart(bodyPart: string) {
   const normalizedBodyPart = bodyPart.toLowerCase().replace(/\s+/g, "-");
-
-  return t(`body-parts.${normalizedBodyPart}`);
+  return i18next.t(`body-parts.${normalizedBodyPart}`);
 }

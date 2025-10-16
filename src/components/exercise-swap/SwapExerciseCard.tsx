@@ -4,16 +4,19 @@ import { hexToRGBA } from "../../features/HEXtoRGB";
 import { TouchableOpacity, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useTranslatedExerciseName } from "../../features/translate/useTranslatedExercisesNames";
-import { useTranslatedBodyPart } from "../../features/translate/useTranslatedBodyPart";
+import { translateBodyPart } from "../../features/translate/useTranslatedBodyPart";
 import { useWorkoutStore } from "../../stores/workoutStore";
 import { router } from "expo-router";
 import { StrobeButton } from "../ui/buttons/StrobeButton";
+import { memo, useMemo } from "react";
 
 interface SwapExerciseCardProps {
   exercise: ExerciseInfo;
   isSelected: boolean;
   onSelect: (exercise: ExerciseInfo) => void;
 }
+
+export const MemoizedSwapExerciseCard = memo(SwapExerciseCard);
 
 export function SwapExerciseCard({
   exercise,
@@ -23,12 +26,20 @@ export function SwapExerciseCard({
   const { theme } = useSettingsStore();
   const { translatedName } = useTranslatedExerciseName(exercise);
   const { activeExercise, swapExerciseInActiveExercise } = useWorkoutStore();
-  const translatedPrimary = exercise.primaryMuscles?.map((m) =>
-    useTranslatedBodyPart(m).toLowerCase()
+
+  const translatedPrimary = useMemo(
+    () =>
+      exercise.primaryMuscles?.map((m) => translateBodyPart(m).toLowerCase()),
+    [exercise.primaryMuscles]
   );
-  const translatedSecondary = exercise.secondaryMuscles?.map((m) =>
-    useTranslatedBodyPart(m).toLowerCase()
+
+  const translatedSecondary = useMemo(
+    () =>
+      exercise.secondaryMuscles?.map((m) => translateBodyPart(m).toLowerCase()),
+    [exercise.secondaryMuscles]
   );
+
+  const itsActive = activeExercise.exerciseInfoId === exercise.id;
 
   function handleSwapExercise() {
     swapExerciseInActiveExercise(exercise.id);
@@ -40,18 +51,13 @@ export function SwapExerciseCard({
       onPress={() => onSelect(exercise)}
       style={{
         height: 72,
-        marginBottom: 1,
         backgroundColor:
           activeExercise?.exerciseInfoId === exercise.id
             ? theme.handle
             : theme.secondaryBackground,
-        shadowColor: theme.shadow,
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.4,
-        shadowRadius: 2,
-        elevation: 4,
       }}
       strobeDisabled={!isSelected}
+      disabled={itsActive}
     >
       <View
         style={{

@@ -1,28 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { FlatList } from "react-native";
 import { ExerciseInfo } from "../../stores/workout";
-import { MemoizedAddExerciseCard } from "./AddExerciseCard";
 import { EmptyFooter } from "../ui/containers/EmptyFooter";
+import { MemoizedSwapExerciseCard } from "./SwapExerciseCard";
 
 const PAGE_SIZE = 20;
 
-interface AddExerciseListProps {
+interface SwapExerciseListProps {
   filteredExercises: ExerciseInfo[];
-  selectedExercises: ExerciseInfo[];
-  setSelectedExercises: (exercises: ExerciseInfo[]) => void;
+  selectedExercise: ExerciseInfo;
+  setSelectedExercise: (exercise: ExerciseInfo) => void;
 }
 
-export function AddExerciseList({
+export function SwapExerciseList({
   filteredExercises,
-  selectedExercises,
-  setSelectedExercises,
-}: AddExerciseListProps) {
+  selectedExercise,
+  setSelectedExercise,
+}: SwapExerciseListProps) {
   const [page, setPage] = useState(1);
 
-  const pagedExercises = React.useMemo(
-    () => filteredExercises.slice(0, page * PAGE_SIZE),
-    [filteredExercises, page]
-  );
+  const pagedExercises = filteredExercises.slice(0, page * PAGE_SIZE);
 
   function handleLoadMore() {
     if (page * PAGE_SIZE < filteredExercises.length) {
@@ -31,13 +28,7 @@ export function AddExerciseList({
   }
 
   function handleSelectExercise(exercise: ExerciseInfo) {
-    setSelectedExercises([...selectedExercises, exercise]);
-  }
-
-  function handleUnselectExercise(exercise: ExerciseInfo) {
-    setSelectedExercises(
-      selectedExercises.filter((ex) => ex.id !== exercise.id)
-    );
+    setSelectedExercise(exercise);
   }
 
   useEffect(() => {
@@ -50,19 +41,18 @@ export function AddExerciseList({
       keyExtractor={(item) => item.id}
       renderItem={({ item }) => {
         return (
-          <MemoizedAddExerciseCard
+          <MemoizedSwapExerciseCard
             exercise={item}
             onSelect={handleSelectExercise}
-            unSelect={handleUnselectExercise}
-            selectedExercises={selectedExercises}
+            isSelected={selectedExercise?.id === item.id}
           />
         );
       }}
       onEndReached={handleLoadMore}
       onEndReachedThreshold={0.5}
-      initialNumToRender={10} // lower
-      maxToRenderPerBatch={10} // lower
-      windowSize={5} // smaller = smoother
+      initialNumToRender={20}
+      maxToRenderPerBatch={20}
+      windowSize={10}
       removeClippedSubviews
       ListFooterComponent={<EmptyFooter />}
     />

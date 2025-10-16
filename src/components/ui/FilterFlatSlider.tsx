@@ -40,8 +40,6 @@ export const FilterFlatSlider = React.memo(function FilterFlatSlider({
 
   const { triggerSideShake, sideheadAnim } = useSideheadAnim();
 
-  console.log(3);
-
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const offsetX = event.nativeEvent.contentOffset.x;
     const index = Math.round(offsetX / itemWidth);

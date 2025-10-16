@@ -4,30 +4,48 @@ import { hexToRGBA } from "../../features/HEXtoRGB";
 import { TouchableOpacity, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useTranslatedExerciseName } from "../../features/translate/useTranslatedExercisesNames";
-import { useTranslatedBodyPart } from "../../features/translate/useTranslatedBodyPart";
+import { translateBodyPart } from "../../features/translate/useTranslatedBodyPart";
 import { StrobeButton } from "../ui/buttons/StrobeButton";
+import { memo, useMemo } from "react";
 
 interface AddExerciseCardProps {
   exercise: ExerciseInfo;
   onSelect: (exercise: ExerciseInfo) => void;
   unSelect: (exercise: ExerciseInfo) => void;
-  selectedTotal: number;
+  selectedExercises: ExerciseInfo[];
 }
 
+export const MemoizedAddExerciseCard = memo(AddExerciseCard, (prev, next) => {
+  return (
+    prev.exercise.id === next.exercise.id &&
+    prev.selectedExercises.filter((ex) => ex.id === prev.exercise.id).length ===
+      next.selectedExercises.filter((ex) => ex.id === next.exercise.id).length
+  );
+});
 export function AddExerciseCard({
   exercise,
   onSelect,
   unSelect,
-  selectedTotal,
+  selectedExercises,
 }: AddExerciseCardProps) {
   const { theme } = useSettingsStore();
   const { translatedName } = useTranslatedExerciseName(exercise);
 
-  const translatedPrimary = exercise.primaryMuscles?.map((m) =>
-    useTranslatedBodyPart(m).toLowerCase()
+  const translatedPrimary = useMemo(
+    () =>
+      exercise.primaryMuscles?.map((m) => translateBodyPart(m).toLowerCase()),
+    [exercise.primaryMuscles]
   );
-  const translatedSecondary = exercise.secondaryMuscles?.map((m) =>
-    useTranslatedBodyPart(m).toLowerCase()
+
+  const translatedSecondary = useMemo(
+    () =>
+      exercise.secondaryMuscles?.map((m) => translateBodyPart(m).toLowerCase()),
+    [exercise.secondaryMuscles]
+  );
+
+  const selectedTotal = useMemo(
+    () => selectedExercises.filter((ex) => ex.id === exercise.id).length,
+    [selectedExercises.length, exercise.id]
   );
 
   return (
@@ -35,13 +53,7 @@ export function AddExerciseCard({
       onPress={() => onSelect(exercise)}
       style={{
         height: 72,
-        marginBottom: 1,
         backgroundColor: theme.secondaryBackground,
-        shadowColor: theme.shadow,
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.4,
-        shadowRadius: 2,
-        elevation: 4,
       }}
       strobeDisabled={selectedTotal === 0}
     >
