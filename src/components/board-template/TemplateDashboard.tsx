@@ -1,50 +1,15 @@
-import { Animated } from "react-native";
 import { TemplateExerciseList } from "./sheets/exercises/TemplateExerciseList";
-import { StrobeBlur } from "../ui/misc/StrobeBlur";
-import { useSettingsStore } from "../../stores/settingsStore";
-import { HEIGHT, WIDTH } from "../../features/Dimensions";
-import { LinearGradient } from "expo-linear-gradient";
-import { hexToRGBA } from "../../features/HEXtoRGB";
-import { useRef } from "react";
-import { SheetHeader } from "../board-workout/SheetHeader";
 import { TagTextLayout } from "../view-template/TagTextLayout";
-
-// Constants
-const FOCUS_HEIGHT = HEIGHT - 120;
+import { DashBoard } from "../ui/DashBoard";
+import { useSettingsStore } from "../../stores/settings";
+import { Fragment } from "react";
+import { StrobeButton } from "../ui/buttons/StrobeButton";
+import { WIDTH } from "../../features/Dimensions";
+import { Text } from "react-native";
+import { useTranslation } from "react-i18next";
+import { router } from "expo-router";
 
 export type TemplateSheetType = "exercises" | "template";
-
-const mockTags = [
-  "Push",
-  "Pull",
-  "Legs",
-  "Core",
-  "Chest",
-  "Back",
-  "Shoulders",
-  "Arms",
-  "Glutes",
-  "Hamstrings",
-  "Quads",
-  "Biceps",
-  "Triceps",
-  "Warmup",
-  "Cooldown",
-  "Strength",
-  "Hypertrophy",
-  "Endurance",
-  "Mobility",
-  "Power",
-  "Cardio",
-  "Accessory",
-  "Full Body",
-  "Isolation",
-  "Compound",
-  "HIIT",
-  "Stretching",
-  "Balance",
-];
-
 interface TemplateDashboardProps {
   listOpen: boolean;
   listType: TemplateSheetType;
@@ -59,20 +24,35 @@ export function TemplateDashboard({
   setListType,
 }: TemplateDashboardProps) {
   const { theme } = useSettingsStore();
-
-  const animatedY = useRef(new Animated.Value(0)).current;
+  const { t } = useTranslation();
 
   function togglePanel() {
-    const toValue = listOpen ? 0 : -FOCUS_HEIGHT + 80;
-    Animated.spring(animatedY, { toValue, useNativeDriver: true }).start();
     setListOpen(!listOpen);
     setListType("exercises");
   }
+  function handlePress() {
+    router.push("/add-exercise");
+  }
 
-  function openPanel() {
-    const toValue = listOpen ? 0 : -FOCUS_HEIGHT + 80;
-    Animated.spring(animatedY, { toValue, useNativeDriver: true }).start();
-    setListOpen(!listOpen);
+  function upperSection() {
+    return (
+      <Fragment>
+        <StrobeButton
+          onPress={handlePress}
+          style={{
+            width: WIDTH - 32,
+            height: 64,
+            borderRadius: 32,
+            backgroundColor: theme.primaryBackground,
+            marginTop: 32,
+          }}
+        >
+          <Text style={{ color: theme.text, fontSize: 24, fontWeight: "bold" }}>
+            {t("workout-view.add-exercise")}
+          </Text>
+        </StrobeButton>
+      </Fragment>
+    );
   }
 
   function visibleSheet() {
@@ -82,35 +62,17 @@ export function TemplateDashboard({
   }
 
   return (
-    <Animated.View style={{ flex: 1, transform: [{ translateY: animatedY }] }}>
-      <StrobeBlur
-        colors={[theme.caka, theme.text, theme.handle, theme.border]}
-        tint="auto"
-        size={HEIGHT}
-        style={{ height: FOCUS_HEIGHT, backgroundColor: theme.tint }}
-      >
-        <LinearGradient
-          colors={[
-            theme.background,
-            theme.background,
-            hexToRGBA(theme.background, 0),
-          ]}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 0, y: 1 }}
-          style={{
-            height: HEIGHT,
-            width: WIDTH,
-          }}
-        >
-          <TagTextLayout tags={mockTags} />
-        </LinearGradient>
-      </StrobeBlur>
-
-      {/* Toggle Panel */}
-      <SheetHeader listOpen={listOpen} togglePanel={togglePanel} />
-
-      {/* List */}
-      {listOpen && visibleSheet()}
-    </Animated.View>
+    <DashBoard
+      listOpen={listOpen}
+      togglePanel={togglePanel}
+      upperSection={upperSection()}
+      lowerSection={listOpen && visibleSheet()}
+      colors={[
+        theme.secondaryText,
+        theme.secondaryText,
+        theme.secondaryText,
+        theme.secondaryText,
+      ]}
+    />
   );
 }

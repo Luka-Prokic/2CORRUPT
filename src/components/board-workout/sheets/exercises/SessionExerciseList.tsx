@@ -49,6 +49,8 @@ export function SessionExerciseList({ togglePanel }: SessionExerciseListProps) {
     );
   };
 
+  if (!activeSession) return null;
+
   return (
     <Animated.View
       style={{

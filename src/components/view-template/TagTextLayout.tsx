@@ -4,7 +4,38 @@ import { useSettingsStore } from "../../stores/settingsStore";
 import { WIDTH } from "../../features/Dimensions";
 import { useTranslation } from "react-i18next";
 
-export function TagTextLayout({ tags }: { tags: string[] }) {
+const mockTags = [
+  "Push",
+  "Pull",
+  "Legs",
+  "Core",
+  "Chest",
+  "Back",
+  "Shoulders",
+  "Arms",
+  "Glutes",
+  "Hamstrings",
+  "Quads",
+  "Biceps",
+  "Triceps",
+  "Warmup",
+  "Cooldown",
+  "Strength",
+  "Hypertrophy",
+  "Endurance",
+  "Mobility",
+  "Power",
+  "Cardio",
+  "Accessory",
+  "Full Body",
+  "Isolation",
+  "Compound",
+  "HIIT",
+  "Stretching",
+  "Balance",
+];
+
+export function TagTextLayout({ tags = mockTags }: { tags?: string[] }) {
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
   const [selectedTags, setSelectedTags] = useState<Record<string, boolean>>({});
@@ -19,11 +50,7 @@ export function TagTextLayout({ tags }: { tags: string[] }) {
   return (
     <View
       style={{
-        position: "absolute",
-        top: 16,
-        left: 0,
-        right: 0,
-        width: WIDTH - 0,
+        width: WIDTH,
         gap: 16,
       }}
     >
@@ -42,7 +69,7 @@ export function TagTextLayout({ tags }: { tags: string[] }) {
                 fontWeight: "bold",
                 fontSize: 32,
                 letterSpacing: -0.5,
-                fontFamily: "Anton-Regular"
+                fontFamily: "Anton-Regular",
               }}
             >
               {tag}

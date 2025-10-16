@@ -17,7 +17,7 @@ export default function TemplateBoard() {
         options={{ headerLeft: () => <TemplateBoardHeaderLeft /> }}
       />
 
-      <ScreenContent edges={["top", "bottom"]}>
+      <ScreenContent edges={["top", "bottom"]} scroll={false}>
         <TemplateDashboard
           listOpen={listOpen}
           listType={listType}

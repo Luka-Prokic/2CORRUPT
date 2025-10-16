@@ -4,9 +4,10 @@ import { BlurView } from "expo-blur";
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { WIDTH } from "../../../features/Dimensions";
 
+export type StrobeColors = [string, string, string, string];
 interface StrobeBlurProps {
   style?: ViewStyle;
-  colors?: [string, string, string, string];
+  colors?: StrobeColors;
   duration?: number;
   children?: React.ReactNode;
   tint?: "default" | "light" | "dark" | "auto";

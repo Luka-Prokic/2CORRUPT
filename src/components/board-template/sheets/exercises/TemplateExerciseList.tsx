@@ -12,7 +12,7 @@ interface TemplateExerciseListProps {
 }
 
 export function TemplateExerciseList({ togglePanel }: TemplateExerciseListProps) {
-  const { activeSession } = useWorkoutStore();
+  const { activeTemplate } = useWorkoutStore();
   const { setActiveExercise } = useWorkoutStore();
   const { fadeIn } = useFadeInAnim();
 
@@ -49,6 +49,8 @@ export function TemplateExerciseList({ togglePanel }: TemplateExerciseListProps)
     );
   };
 
+  if(!activeTemplate) return null;
+
   return (
     <Animated.View
       style={{
@@ -65,7 +67,7 @@ export function TemplateExerciseList({ togglePanel }: TemplateExerciseListProps)
         setSelectMode={setSelectMode}
       />
       <FlatList
-        data={activeSession?.layout}
+        data={activeTemplate?.layout}
         keyExtractor={(item) =>
           "group" in item ? `group-${item.group}` : item.id
         }

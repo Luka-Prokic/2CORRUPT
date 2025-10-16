@@ -1,5 +1,5 @@
 import { useFadeInAnim } from "../../../animations/useFadeInAnim";
-import { HEIGHT, WIDTH } from "../../../features/Dimensions";
+import { WIDTH } from "../../../features/Dimensions";
 import { Animated, View } from "react-native";
 import { SwapExerciseButton } from "./SwapExerciseButton";
 import { ExerciseColumnOptions } from "./ExerciseColumnOptions";
@@ -14,14 +14,16 @@ interface ExerciseProfileProps {
   setListType: (listType: SessionSheetType) => void;
 }
 
-export function ExerciseProfile({ openPanel, setListType }: ExerciseProfileProps) {
+export function ExerciseProfile({
+  openPanel,
+  setListType,
+}: ExerciseProfileProps) {
   const { fadeIn } = useFadeInAnim();
 
   return (
     <Animated.View
       style={{
-        width: WIDTH,
-        height: HEIGHT - 360,
+        flex: 1,
         paddingHorizontal: 16,
         gap: 8,
         ...fadeIn,
