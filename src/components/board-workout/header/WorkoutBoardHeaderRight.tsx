@@ -1,11 +1,10 @@
-import { View, TouchableOpacity } from "react-native";
+import { TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { useWorkoutStore } from "../../../stores/workoutStore";
 import { useUIStore } from "../../../stores/ui";
 import { router } from "expo-router";
 import { useActionSheet } from "../../../features/useActionSheet";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Fragment } from "react";
 
 export function WorkoutBoardHeaderRight() {
@@ -13,7 +12,6 @@ export function WorkoutBoardHeaderRight() {
   const { activeSession, cancelSession, completeSession } = useWorkoutStore();
   const { setTypeOfView } = useUIStore();
   const { t, showActionSheet } = useActionSheet();
-  const insets = useSafeAreaInsets();
   const isItEmpty = !activeSession?.layout.length;
 
   function handleCancelSession() {

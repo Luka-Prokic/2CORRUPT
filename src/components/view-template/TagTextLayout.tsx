@@ -59,7 +59,6 @@ export function TagTextLayout({ tags = mockTags }: { tags?: string[] }) {
       >
         {t("template-view.add-tags")}
       </Text>
-      s
       <View
         style={{
           flexDirection: "row",

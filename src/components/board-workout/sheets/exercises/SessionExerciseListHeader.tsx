@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { View, Text } from "react-native";
 import { WIDTH } from "../../../../features/Dimensions";
 import { IButton } from "../../../ui/buttons/IButton";
 import { useWorkoutStore } from "../../../../stores/workout/useWorkoutStore";
@@ -73,11 +73,28 @@ export function SessionExerciseListHeader({
           onPress={handleSelectAllExercises}
           style={{
             height: 24,
-            opacity: isAllSelected ? 0 : 1,
           }}
-          textColor={theme.grayText}
+          textColor={isAllSelected ? theme.handle : theme.grayText}
           disabled={isAllSelected}
         />
+
+        <View
+          style={{
+            height: 24,
+            justifyContent: "center",
+            alignItems: "flex-end",
+          }}
+        >
+          <Text
+            style={{
+              color: !isSomeSelected ? theme.handle : theme.grayText,
+              fontSize: 16,
+              fontWeight: "bold",
+            }}
+          >
+            ({selectedExercises.length}) {t("workout-board.exercises-selected")}
+          </Text>
+        </View>
         <IButton
           onPress={handleRemoveSelectedExercises}
           style={{
@@ -92,21 +109,6 @@ export function SessionExerciseListHeader({
             color={!isSomeSelected ? theme.grayText : theme.error}
           />
         </IButton>
-        <IButton
-          title={`${t("workout-board.add-to-superset")} (${
-            selectedExercises.length
-          })`}
-          onPress={() => {
-            //TODO: Add selected exercises to superset
-          }}
-          style={{
-            paddingHorizontal: 8,
-            height: 24,
-            borderRadius: 17,
-          }}
-          textColor={!isSomeSelected ? theme.grayText : theme.accent}
-          disabled={!isSomeSelected || true}//TODO: Remove this when u add superset feature
-        />
       </Fragment>
     );
   };

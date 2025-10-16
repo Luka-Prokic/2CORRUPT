@@ -7,7 +7,7 @@ import { IButton } from "../ui/buttons/IButton";
 import { router } from "expo-router";
 import { useEffect, useRef } from "react";
 import { createSessionExercise } from "../../features/workout/useNewSessionExercise";
-import { ExerciseInfo, SessionExercise } from "../../stores/workout/types";
+import { ExerciseInfo } from "../../stores/workout/types";
 import { useWorkoutStore } from "../../stores/workout/useWorkoutStore";
 import { useTranslation } from "react-i18next";
 
@@ -19,7 +19,7 @@ export function BottomAddExerciseSection({
   selectedExercises,
 }: BottomAddExerciseSectionProps) {
   const { theme } = useSettingsStore();
-  const { addExerciseToSession, setActiveExercise, activeExercise } =
+  const { addExerciseToSession, setActiveExercise } =
     useWorkoutStore();
   const { t } = useTranslation();
 
@@ -30,16 +30,6 @@ export function BottomAddExerciseSection({
       addExerciseToSession(createSessionExercise(exercise));
     });
     setActiveExercise(selectedExercises[0].id);
-    router.back();
-  }
-
-  function handleAddSuperSet() {
-    const groupExercises: SessionExercise[] = selectedExercises.map(
-      (exercise) => createSessionExercise(exercise)
-    );
-    if (!activeExercise) {
-      setActiveExercise(groupExercises[0].id);
-    }
     router.back();
   }
 
@@ -79,38 +69,12 @@ export function BottomAddExerciseSection({
           gap: 8,
         }}
       >
-        {selectedExercises.length > 1 && (
-          <IButton
-            onPress={handleAddSuperSet}
-            style={{
-              height: 64,
-              width: WIDTH * 0.5 - 20,
-              //   borderRadius: 22,
-              borderTopLeftRadius: 32,
-              borderBottomLeftRadius: 32,
-            }}
-            color={theme.accent}
-            disabled
-          >
-            <Text
-              style={{
-                color: theme.secondaryText,
-                fontSize: 24,
-                fontWeight: "bold",
-              }}
-            >
-              {t("add-exercise.super-set")}
-            </Text>
-          </IButton>
-        )}
         <IButton
           onPress={handleAddExercise}
           style={{
             height: 64,
-            width: selectedExercises.length > 1 ? WIDTH * 0.5 - 20 : WIDTH - 32,
-            borderRadius: selectedExercises.length > 1 ? 8 : 32,
-            borderTopRightRadius: 32,
-            borderBottomRightRadius: 32,
+            width: WIDTH - 32,
+            borderRadius: 32,
           }}
           color={theme.tint}
         >

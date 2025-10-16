@@ -15,13 +15,6 @@ interface AddExerciseCardProps {
   selectedExercises: ExerciseInfo[];
 }
 
-export const MemoizedAddExerciseCard = memo(AddExerciseCard, (prev, next) => {
-  return (
-    prev.exercise.id === next.exercise.id &&
-    prev.selectedExercises.filter((ex) => ex.id === prev.exercise.id).length ===
-      next.selectedExercises.filter((ex) => ex.id === next.exercise.id).length
-  );
-});
 export function AddExerciseCard({
   exercise,
   onSelect,

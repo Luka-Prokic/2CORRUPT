@@ -240,6 +240,7 @@
   "workout-board": {
     "workout": "Workout",
     "exercises": "Exercises",
+    "exercises-selected": "Exercises selected",
     "add-exercise": "Add Exercise",
     "up-next": "UP NEXT",
     "select": "Select",

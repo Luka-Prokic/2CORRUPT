@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FlatList } from "react-native";
 import { ExerciseInfo } from "../../stores/workout";
-import { MemoizedAddExerciseCard } from "./AddExerciseCard";
+import { AddExerciseCard } from "./AddExerciseCard";
 import { EmptyFooter } from "../ui/containers/EmptyFooter";
 
 const PAGE_SIZE = 20;
@@ -50,7 +50,7 @@ export function AddExerciseList({
       keyExtractor={(item) => item.id}
       renderItem={({ item }) => {
         return (
-          <MemoizedAddExerciseCard
+          <AddExerciseCard
             exercise={item}
             onSelect={handleSelectExercise}
             unSelect={handleUnselectExercise}
@@ -60,9 +60,9 @@ export function AddExerciseList({
       }}
       onEndReached={handleLoadMore}
       onEndReachedThreshold={0.5}
-      initialNumToRender={10} // lower
-      maxToRenderPerBatch={10} // lower
-      windowSize={5} // smaller = smoother
+      initialNumToRender={20}
+      maxToRenderPerBatch={20}
+      windowSize={10}
       removeClippedSubviews
       ListFooterComponent={<EmptyFooter />}
     />

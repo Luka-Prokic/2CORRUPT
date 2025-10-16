@@ -2,8 +2,8 @@ import { TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { router } from "expo-router";
-import { SessionSheetType } from "../SessionDashboard";
 import { Fragment } from "react";
+import { SessionSheetType } from "../../../app/workout-board";
 
 interface WorkoutBoardHeaderLeftProps {
   listOpen: boolean;

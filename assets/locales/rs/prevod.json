@@ -241,6 +241,7 @@
   "workout-board": {
     "workout": "Trening",
     "exercises": "Vežbe",
+    "exercises-selected": "Vežbe obeležene",
     "add-exercise": "Dodaj Vežbu",
     "up-next": "SLEDEĆE",
     "select": "Izaberi",
