@@ -109,7 +109,7 @@ export function DashBoard({
       </View>
 
       {/*Lower Section */}
-      {lowerSection}
+      {listOpen && lowerSection}
     </Animated.View>
   );
 }

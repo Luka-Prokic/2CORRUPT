@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import { Text, View, TouchableOpacity } from "react-native";
 import { useSettingsStore } from "../../stores/settingsStore";
 import { WIDTH } from "../../features/Dimensions";
@@ -48,12 +48,19 @@ export function TagTextLayout({ tags = mockTags }: { tags?: string[] }) {
   };
 
   return (
-    <View
-      style={{
-        width: WIDTH,
-        gap: 16,
-      }}
-    >
+    <Fragment>
+      <Text
+        style={{
+          color: theme.grayText,
+          fontWeight: "400",
+          fontSize: 16,
+          textAlign: "center",
+          marginHorizontal: 16,
+        }}
+      >
+        {t("template-view.add-tags")}
+      </Text>
+      s
       <View
         style={{
           flexDirection: "row",
@@ -77,17 +84,6 @@ export function TagTextLayout({ tags = mockTags }: { tags?: string[] }) {
           </TouchableOpacity>
         ))}
       </View>
-      <Text
-        style={{
-          color: theme.grayText,
-          fontWeight: "400",
-          fontSize: 16,
-          textAlign: "center",
-          marginHorizontal: 16,
-        }}
-      >
-        {t("template-view.add-tags")}
-      </Text>
-    </View>
+    </Fragment>
   );
 }

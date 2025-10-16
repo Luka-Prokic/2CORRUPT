@@ -14,8 +14,10 @@ export function CreateTemplateView() {
       style={{
         flex: 1,
         justifyContent: "flex-end",
-        paddingBottom: CORRUPT_BUTTON_HEIGHT_FROM_BOTTOM + 8,
-        paddingHorizontal: 16,
+        alignItems: "center",
+        paddingBottom: CORRUPT_BUTTON_HEIGHT_FROM_BOTTOM + 32,
+        // paddingHorizontal: 16,
+        gap: 16,
       }}
     >
       <TemplateNameInput
@@ -23,8 +25,8 @@ export function CreateTemplateView() {
         onChangeText={setTemplateName}
         placeholder={t("template-view.template-name")}
         autoFocus={true}
-      /> 
-      <TagTextLayout  />
+      />
+      <TagTextLayout />
     </View>
   );
 }
