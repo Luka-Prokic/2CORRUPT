@@ -25,7 +25,6 @@ export function WorkoutInDayCard({ session }: WorkoutInDayCardProps) {
     <StrobeButton
       onPress={handlePress}
       style={{
-        padding: 16,
         borderRadius: 24,
         borderWidth: 1,
         borderColor: theme.border,

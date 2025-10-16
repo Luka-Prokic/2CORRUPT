@@ -1,21 +1,16 @@
 import { Ionicons } from "@expo/vector-icons";
-import { useWorkoutStore } from "../../../stores/workout/useWorkoutStore";
-import { copyWorkoutRecap } from "../../../features/workout/copyWorkoutRecap";
+import { useCopyWorkoutRecap } from "../../../features/workout/copyWorkoutRecap";
 import { WorkoutSession } from "../../../stores/workout/types";
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { BounceButton } from "../../ui/buttons/BounceButton";
 
 interface CopyWorkoutButtonProps {
-  sessionId: string | string[];
+  session: WorkoutSession;
 }
 
-export function CopyWorkoutButton({ sessionId }: CopyWorkoutButtonProps) {
-  const { completedSessions } = useWorkoutStore();
+export function CopyWorkoutButton({ session }: CopyWorkoutButtonProps) {
   const { theme } = useSettingsStore();
-
-  const session: WorkoutSession | undefined = completedSessions.find(
-    (s) => s.id === sessionId
-  );
+  const { copyWorkoutRecap } = useCopyWorkoutRecap();
 
   if (!session) {
     return null;
@@ -23,7 +18,7 @@ export function CopyWorkoutButton({ sessionId }: CopyWorkoutButtonProps) {
 
   return (
     <BounceButton
-      onPress={() => copyWorkoutRecap({ session })}
+      onPress={() => copyWorkoutRecap(session)}
       style={{ width: 44, height: 44, padding: 10 }}
       color={"transparent"}
     >

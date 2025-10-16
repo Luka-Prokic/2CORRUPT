@@ -6,6 +6,7 @@ import { Fragment } from "react";
 import { ScreenContent } from "../components/ui/utils/ScreenContent";
 import { useSettingsStore } from "../stores/settingsStore";
 import { useTranslation } from "react-i18next";
+import { ModalExitButton } from "./_layout";
 
 export default function SettingsScreen() {
   const { theme } = useSettingsStore();
@@ -17,6 +18,7 @@ export default function SettingsScreen() {
           title: t("navigation.settings"),
           headerBlurEffect: "none",
           headerTransparent: true,
+          headerRight: () => <ModalExitButton />,
         }}
       />
 

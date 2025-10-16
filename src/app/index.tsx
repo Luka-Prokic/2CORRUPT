@@ -22,16 +22,15 @@ export default function HomeScreen() {
   const { theme } = useSettingsStore();
 
   const headerShown = useMemo(() => {
-    if (typeOfView === "workout" || typeOfView === "start") return true;
-    return false;
-  }, [typeOfView, activeExercise]);
+    if (typeOfView === "home") return false;
+    return true;
+  }, [typeOfView]);
 
   function headerLeft() {
     if (typeOfView === "workout" && activeExercise) return <LeftExerciseFlow />;
-    if ((!activeExercise && typeOfView === "workout") || typeOfView === "start")
-      return <BackHomeButton />;
+    if (typeOfView === "home") return null;
 
-    return null;
+    return <BackHomeButton />;
   }
 
   function headerTitle() {

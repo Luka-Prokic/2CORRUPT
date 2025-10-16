@@ -2,16 +2,48 @@ import { Animated } from "react-native";
 import { TemplateExerciseList } from "./sheets/exercises/TemplateExerciseList";
 import { StrobeBlur } from "../ui/misc/StrobeBlur";
 import { useSettingsStore } from "../../stores/settingsStore";
-import { HEIGHT } from "../../features/Dimensions";
+import { HEIGHT, WIDTH } from "../../features/Dimensions";
 import { LinearGradient } from "expo-linear-gradient";
 import { hexToRGBA } from "../../features/HEXtoRGB";
 import { useRef } from "react";
 import { SheetHeader } from "../board-workout/SheetHeader";
+import { TagTextLayout } from "../view-template/TagTextLayout";
 
 // Constants
 const FOCUS_HEIGHT = HEIGHT - 120;
 
 export type TemplateSheetType = "exercises" | "template";
+
+const mockTags = [
+  "Push",
+  "Pull",
+  "Legs",
+  "Core",
+  "Chest",
+  "Back",
+  "Shoulders",
+  "Arms",
+  "Glutes",
+  "Hamstrings",
+  "Quads",
+  "Biceps",
+  "Triceps",
+  "Warmup",
+  "Cooldown",
+  "Strength",
+  "Hypertrophy",
+  "Endurance",
+  "Mobility",
+  "Power",
+  "Cardio",
+  "Accessory",
+  "Full Body",
+  "Isolation",
+  "Compound",
+  "HIIT",
+  "Stretching",
+  "Balance",
+];
 
 interface TemplateDashboardProps {
   listOpen: boolean;
@@ -51,7 +83,6 @@ export function TemplateDashboard({
 
   return (
     <Animated.View style={{ flex: 1, transform: [{ translateY: animatedY }] }}>
-      {/* Exercise Profile */}
       <StrobeBlur
         colors={[theme.caka, theme.text, theme.handle, theme.border]}
         tint="auto"
@@ -67,11 +98,12 @@ export function TemplateDashboard({
           start={{ x: 0, y: 0 }}
           end={{ x: 0, y: 1 }}
           style={{
-            height: "100%",
-            width: "100%",
-            alignItems: "center",
+            height: HEIGHT,
+            width: WIDTH,
           }}
-        ></LinearGradient>
+        >
+          <TagTextLayout tags={mockTags} />
+        </LinearGradient>
       </StrobeBlur>
 
       {/* Toggle Panel */}

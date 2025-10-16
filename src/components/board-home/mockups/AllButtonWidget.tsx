@@ -17,7 +17,7 @@ export function AllButtonWidget() {
       style={{
         width: halfWidget,
         height: halfWidget,
-        backgroundColor: hexToRGBA(theme.fourthBackground, 0.4),
+        backgroundColor: hexToRGBA(theme.thirdBackground, 0.4),
         borderRadius: 28,
         borderWidth: 1,
         borderColor: theme.border,

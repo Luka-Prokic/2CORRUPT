@@ -1,57 +1,36 @@
 import { TemplateNameInput } from "../ui/input/TemplateNameInput";
 import { useState } from "react";
-import { TagTextLayout } from "./TagTextLayout";
 import { router } from "expo-router";
 import { useSettingsStore } from "../../stores/settings";
 import { useTranslation } from "react-i18next";
 import { WIDTH } from "../../features/Dimensions";
 import { Text, View } from "react-native";
 import { StrobeButton } from "../ui/buttons/StrobeButton";
-
-const mockTags = [
-  "Push",
-  "Pull",
-  "Legs",
-  "Core",
-  "Chest",
-  "Back",
-  "Shoulders",
-  "Arms",
-  "Glutes",
-  "Hamstrings",
-  "Quads",
-  "Biceps",
-  "Triceps",
-  "Warmup",
-  "Cooldown",
-  "Strength",
-  "Hypertrophy",
-  "Endurance",
-  "Mobility",
-  "Power",
-  "Cardio",
-  "Accessory",
-  "Full Body",
-  "Isolation",
-  "Compound",
-  "HIIT",
-  "Stretching",
-  "Balance",
-];
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import {
+  CORRUPT_BUTTON_FROM_BOTTOM,
+  CORRUPT_BUTTON_HEIGHT_FROM_BOTTOM,
+} from "../corrupt/CorruptButton";
 
 export function CreateTemplateView() {
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
   const [templateName, setTemplateName] = useState("");
+  const inserts = useSafeAreaInsets();
 
   function handlePress() {
     router.push("/add-exercise");
   }
 
   return (
-    <View style={{ flex: 1, padding: 16, justifyContent: "flex-end" }}>
-      <TagTextLayout tags={mockTags} />
-
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "flex-end",
+        paddingBottom: CORRUPT_BUTTON_HEIGHT_FROM_BOTTOM + 8,
+        paddingHorizontal: 16,
+      }}
+    >
       <TemplateNameInput
         value={templateName}
         onChangeText={setTemplateName}

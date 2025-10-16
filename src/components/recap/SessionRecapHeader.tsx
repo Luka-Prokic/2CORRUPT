@@ -1,17 +1,18 @@
 import { Text } from "react-native";
 import { useSettingsStore } from "../../stores/settingsStore";
-import { useWorkoutStore } from "../../stores/workout/useWorkoutStore";
+import { WorkoutSession } from "../../stores/workout";
 
 interface SessionRecapHeaderProps {
-  sessionId: string | string[];
+  session: WorkoutSession;
 }
 
-export function SessionRecapHeader({ sessionId }: SessionRecapHeaderProps) {
+export function SessionRecapHeader({ session }: SessionRecapHeaderProps) {
   const { theme } = useSettingsStore();
 
-  const { completedSessions } = useWorkoutStore();
+  if (!session) {
+    return null;
+  }
 
-  const session = completedSessions.find((s) => s.id === sessionId);
   const sessionName = session?.name;
 
   return (

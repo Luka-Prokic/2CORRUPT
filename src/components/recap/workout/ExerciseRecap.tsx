@@ -1,4 +1,4 @@
-import { View, Text, Platform } from "react-native";
+import { View, Text } from "react-native";
 import { SessionExercise } from "../../../stores/workout/types";
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { Set, DropSet } from "../../../stores/workout/types";
@@ -13,7 +13,6 @@ interface ExerciseRecapProps {
 
 export function ExerciseRecap({ exercise }: ExerciseRecapProps) {
   const { theme } = useSettingsStore();
-  const fontFamily = Platform.OS === "ios" ? "Menlo" : "monospace";
 
   const colWidths = {
     index: 24,
@@ -48,7 +47,6 @@ export function ExerciseRecap({ exercise }: ExerciseRecapProps) {
             fontWeight: "bold",
             textAlign: "right",
             color: theme.text,
-            fontFamily,
           }}
           numberOfLines={1}
           adjustsFontSizeToFit={true}
@@ -72,7 +70,6 @@ export function ExerciseRecap({ exercise }: ExerciseRecapProps) {
               <Text
                 style={{
                   width: colWidths.index,
-                  fontFamily,
                   color,
                   textAlign: "center",
                   fontSize: 18,
@@ -83,7 +80,6 @@ export function ExerciseRecap({ exercise }: ExerciseRecapProps) {
               <Text
                 style={{
                   width: colWidths.reps,
-                  fontFamily,
                   color,
                   textAlign: "center",
                   fontSize: 18,
@@ -94,7 +90,6 @@ export function ExerciseRecap({ exercise }: ExerciseRecapProps) {
               <Text
                 style={{
                   width: colWidths.index,
-                  fontFamily,
                   color,
                   textAlign: "center",
                   fontSize: 18,
@@ -105,7 +100,6 @@ export function ExerciseRecap({ exercise }: ExerciseRecapProps) {
               <Text
                 style={{
                   width: colWidths.weight,
-                  fontFamily,
                   color,
                   textAlign: "center",
                   fontSize: 18,
@@ -116,7 +110,6 @@ export function ExerciseRecap({ exercise }: ExerciseRecapProps) {
               <Text
                 style={{
                   width: colWidths.rpe,
-                  fontFamily,
                   color,
                   textAlign: "center",
                   fontSize: 18,
@@ -127,7 +120,6 @@ export function ExerciseRecap({ exercise }: ExerciseRecapProps) {
               <Text
                 style={{
                   width: colWidths.rir,
-                  fontFamily,
                   color,
                   textAlign: "center",
                   fontSize: 18,
@@ -145,7 +137,6 @@ export function ExerciseRecap({ exercise }: ExerciseRecapProps) {
                 <Text
                   style={{
                     width: colWidths.index,
-                    fontFamily,
                     color,
                     fontSize: 16,
                     textAlign: "center",
@@ -156,7 +147,6 @@ export function ExerciseRecap({ exercise }: ExerciseRecapProps) {
                 <Text
                   style={{
                     width: colWidths.reps,
-                    fontFamily,
                     color,
                     fontSize: 16,
                     textAlign: "center",
@@ -167,7 +157,6 @@ export function ExerciseRecap({ exercise }: ExerciseRecapProps) {
                 <Text
                   style={{
                     width: colWidths.index,
-                    fontFamily,
                     color,
                     textAlign: "center",
                     fontSize: 18,
@@ -178,7 +167,6 @@ export function ExerciseRecap({ exercise }: ExerciseRecapProps) {
                 <Text
                   style={{
                     width: colWidths.weight,
-                    fontFamily,
                     color,
                     fontSize: 16,
                     textAlign: "center",

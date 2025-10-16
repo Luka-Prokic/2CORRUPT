@@ -2,7 +2,7 @@ import { Animated } from "react-native";
 import { SessionExerciseList } from "./sheets/exercises/SessionExerciseList";
 import { StrobeBlur } from "../ui/misc/StrobeBlur";
 import { useSettingsStore } from "../../stores/settingsStore";
-import { HEIGHT } from "../../features/Dimensions";
+import { HEIGHT, WIDTH } from "../../features/Dimensions";
 import { LinearGradient } from "expo-linear-gradient";
 import { hexToRGBA } from "../../features/HEXtoRGB";
 import { useEffect, useMemo, useRef } from "react";
@@ -92,8 +92,8 @@ export function SessionDashboard({
           start={{ x: 0, y: 0 }}
           end={{ x: 0, y: 1 }}
           style={{
-            height: "100%",
-            width: "100%",
+            height: HEIGHT,
+            width: WIDTH,
             alignItems: "center",
           }}
         >

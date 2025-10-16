@@ -1,5 +1,5 @@
 import { useSettingsStore } from "../../../stores/settingsStore";
-import { View, Text, Platform } from "react-native";
+import { View, Text } from "react-native";
 import { WorkoutSession } from "../../../stores/workout/types";
 import { DashLine } from "../../ui/misc/DashLine";
 import { useTranslation } from "react-i18next";
@@ -12,7 +12,6 @@ interface WorkoutFooterProps {
 export function WorkoutFooter({ session }: WorkoutFooterProps) {
   const { t } = useTranslation();
   const { theme, units } = useSettingsStore();
-  const fontFamily = Platform.OS === "ios" ? "Menlo" : "monospace";
 
   return (
     <View style={{ paddingHorizontal: 16 }}>
@@ -31,7 +30,6 @@ export function WorkoutFooter({ session }: WorkoutFooterProps) {
             color: theme.text,
             textAlign: "left",
             width: WIDTH * 0.45 - 16,
-            fontFamily,
           }}
           numberOfLines={1}
           adjustsFontSizeToFit={true}
@@ -47,7 +45,6 @@ export function WorkoutFooter({ session }: WorkoutFooterProps) {
             fontWeight: "bold",
             textAlign: "right",
             color: theme.text,
-            fontFamily,
           }}
           numberOfLines={1}
           adjustsFontSizeToFit={true}

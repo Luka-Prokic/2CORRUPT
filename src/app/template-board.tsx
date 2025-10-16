@@ -1,27 +1,30 @@
 import { Fragment, useState } from "react";
-import {
-  SessionDashboard,
-  SessionSheetType,
-} from "../components/board-workout/SessionDashboard";
-import { TemplateBoardHeader } from "../components/board-template/TemplateBoardHeader";
 import { Stack } from "expo-router";
+import { TemplateBoardHeaderLeft } from "../components/board-template/header/TemplateBoardHeaderLeft";
+import {
+  TemplateDashboard,
+  TemplateSheetType,
+} from "../components/board-template/TemplateDashboard";
+import { ScreenContent } from "../components/ui/utils/ScreenContent";
 
 export default function TemplateBoard() {
   const [listOpen, setListOpen] = useState(false);
-  const [listType, setListType] = useState<SessionSheetType>("session");
+  const [listType, setListType] = useState<TemplateSheetType>("template");
 
   return (
     <Fragment>
       <Stack.Screen
-        options={{ header: () => <TemplateBoardHeader listOpen={listOpen} /> }}
+        options={{ headerLeft: () => <TemplateBoardHeaderLeft /> }}
       />
 
-      <SessionDashboard
-        listOpen={listOpen}
-        listType={listType}
-        setListOpen={setListOpen}
-        setListType={setListType}
-      />
+      <ScreenContent edges={["top", "bottom"]}>
+        <TemplateDashboard
+          listOpen={listOpen}
+          listType={listType}
+          setListOpen={setListOpen}
+          setListType={setListType}
+        />
+      </ScreenContent>
     </Fragment>
   );
 }

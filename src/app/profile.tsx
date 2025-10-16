@@ -1,11 +1,11 @@
 import React, { Fragment, useState } from "react";
-import { View, StyleSheet } from "react-native";
 import { useSettingsStore } from "../stores/settingsStore";
 import { UserLogin } from "../components/settings-profile/UserLogin";
 import { UserRegister } from "../components/settings-profile/UserRegister";
 import { Stack } from "expo-router";
 import { ScreenContent } from "../components/ui/utils/ScreenContent";
 import { useTranslation } from "react-i18next";
+import { ModalExitButton } from "./_layout";
 
 export default function ProfileScreen() {
   const { theme } = useSettingsStore();
@@ -36,7 +36,13 @@ export default function ProfileScreen() {
 
   return (
     <Fragment>
-      <Stack.Screen options={{ title: t("navigation.profile"), headerBlurEffect: "none" }} />
+      <Stack.Screen
+        options={{
+          title: t("navigation.profile"),
+          headerBlurEffect: "none",
+          headerRight: () => <ModalExitButton />,
+        }}
+      />
       <ScreenContent
         edges={["top"]}
         style={{ backgroundColor: theme.background }}
@@ -56,9 +62,3 @@ export default function ProfileScreen() {
     </Fragment>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
