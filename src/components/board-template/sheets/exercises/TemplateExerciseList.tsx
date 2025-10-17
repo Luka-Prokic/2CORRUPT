@@ -50,7 +50,6 @@ export function TemplateExerciseList({
         onSelect={handleExerciseSelect}
         selectedExercises={selectedExercises}
         multipleSelect={selectMode}
-        tint={theme.grayText}
         backgroundColor={theme.background}
       />
     );

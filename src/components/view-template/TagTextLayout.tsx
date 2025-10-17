@@ -70,7 +70,7 @@ export function TagTextLayout({
         <TouchableOpacity key={tag} onPress={() => handleToggle(tag)}>
           <Text
             style={{
-              color: selectedTags.includes(tag) ? theme.text : theme.handle,
+              color: selectedTags.includes(tag) ? theme.tint : theme.handle,
               fontWeight: "bold",
               fontSize,
               letterSpacing: -0.5,

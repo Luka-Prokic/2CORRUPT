@@ -24,7 +24,7 @@ export function ExerciseNameSheet() {
     >
       <ExerciseName
         exercise={activeExercise}
-        prefixColor={activeTemplate ? theme.grayText : theme.accent}
+        prefixColor={activeTemplate ? theme.tint : theme.accent}
       />
 
       <TextInput
@@ -68,7 +68,7 @@ export function ExerciseNameSheet() {
         onPress={() => {
           //TODO: handle routing to create new exercise screen
         }}
-        color={activeTemplate && theme.text}
+        color={activeTemplate && theme.tint}
       />
 
       <Text

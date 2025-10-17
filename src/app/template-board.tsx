@@ -55,10 +55,10 @@ export default function TemplateBoard() {
           listOpen={listOpen}
           togglePanel={togglePanel}
           colors={[
-            theme.secondaryText,
-            theme.secondaryText,
-            theme.secondaryText,
-            theme.secondaryText,
+            theme.tint,
+            theme.tint,
+            theme.tint,
+            theme.tint,
           ]}
           disabled={!activeTemplate?.layout.length && !listOpen}
           upperSection={

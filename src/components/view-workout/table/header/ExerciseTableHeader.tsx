@@ -17,7 +17,7 @@ export function ExerciseTableHeader() {
   return (
     <StrobeBlur
       colors={
-        activeTemplate && [theme.text, theme.text, theme.text, theme.text]
+        activeTemplate && [theme.tint, theme.tint, theme.tint, theme.tint]
       }
       tint="auto"
       style={{

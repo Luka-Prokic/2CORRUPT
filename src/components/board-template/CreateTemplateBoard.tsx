@@ -24,7 +24,7 @@ export function CreateTemplateBoard() {
     <Fragment>
       <TemplateDescriptionInput />
       <StrobeButton
-        strobeColors={[theme.text, theme.text, theme.text, theme.text]}
+        strobeColors={[theme.tint, theme.tint, theme.tint, theme.tint]}
         onPress={handlePress}
         style={{
           width: WIDTH - 32,

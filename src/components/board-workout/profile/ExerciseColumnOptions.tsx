@@ -27,7 +27,7 @@ export function ExerciseColumnOptions() {
     updateActiveExercise({ columns: newColumns });
   };
 
-  const accent = activeTemplate ? theme.text : theme.accent;
+  const accent = activeTemplate ? theme.tint : theme.accent;
 
   return (
     <Fragment>

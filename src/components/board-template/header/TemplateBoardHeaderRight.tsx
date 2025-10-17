@@ -58,7 +58,7 @@ export function TemplateBoardHeaderRight() {
   return (
     <Fragment>
       <TouchableOpacity onPress={handleDiscardTemplate}>
-        <Ionicons name="close-circle" size={44} color={theme.grayText} />
+        <Ionicons name="close-circle" size={44} color={theme.tint} />
       </TouchableOpacity>
       <TouchableOpacity onPress={handleConfirmTemplate} disabled={isItEmpty}>
         <Ionicons

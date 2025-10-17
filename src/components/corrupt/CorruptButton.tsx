@@ -25,7 +25,7 @@ export function CorruptButton() {
   const insets = useSafeAreaInsets();
   const CorruptButtonBottom = useRef(new Animated.Value(0)).current;
   const backgroundColor =
-    activeTemplate && typeOfView === "template" ? theme.grayText : theme.accent;
+    activeTemplate && typeOfView === "template" ? theme.tint : theme.accent;
 
   useEffect(() => {
     const toValue =

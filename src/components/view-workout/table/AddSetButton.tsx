@@ -25,7 +25,7 @@ export function AddSetButton() {
         width: WIDTH - 32,
         borderRadius: 32,
       }}
-      color={activeTemplate ? theme.grayText : theme.tint}
+      color={activeTemplate ? theme.tint : theme.tint}
       onPress={handleAddSet}
     >
       <StrobeBlur

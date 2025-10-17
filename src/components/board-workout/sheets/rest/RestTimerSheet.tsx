@@ -35,7 +35,7 @@ export function RestTimerSheet() {
     >
       <ExerciseName
         exercise={activeExercise}
-        textColor={activeTemplate ? theme.grayText : theme.accent}
+        textColor={activeTemplate ? theme.tint : theme.accent}
       />
       <Text style={{ fontSize: 18, color: theme.grayText }}>
         {t("workout-board.rest-time")}

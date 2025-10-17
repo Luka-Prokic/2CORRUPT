@@ -17,36 +17,37 @@ export function TemplateDescriptionInput({
   const { activeTemplate, updateTemplateField } = useWorkoutStore();
   const { t } = useTranslation();
 
-  return (
-    <TextInput
-      style={{
-        height: 280,
-        width: WIDTH - 32,
-        backgroundColor: theme.input,
-        borderRadius: 12,
-        paddingHorizontal: 12,
-        paddingVertical: 8,
-        shadowColor: theme.shadow,
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 8,
-        elevation: 4,
-        fontSize: 16,
-        color: theme.text,
-        textAlignVertical: "top",
-        ...style,
-      }}
-      value={activeTemplate?.description}
-      onChangeText={(text) => {
-        if (activeTemplate?.id) {
+  if (activeTemplate)
+    return (
+      <TextInput
+        style={{
+          height: 280,
+          width: WIDTH - 32,
+          backgroundColor: theme.input,
+          borderRadius: 12,
+          paddingHorizontal: 12,
+          paddingVertical: 8,
+          shadowColor: theme.shadow,
+          shadowOffset: { width: 0, height: 2 },
+          shadowOpacity: 0.1,
+          shadowRadius: 8,
+          elevation: 4,
+          fontSize: 16,
+          color: theme.text,
+          textAlignVertical: "top",
+          ...style,
+        }}
+        value={activeTemplate.description}
+        onChangeText={(text) => {
           updateTemplateField(activeTemplate.id, "description", text);
-        }
-      }}
-      placeholder={t("template-board.template-description-placeholder")}
-      placeholderTextColor={theme.grayText}
-      blurOnSubmit={true}
-      onSubmitEditing={() => Keyboard.dismiss()}
-      multiline
-    />
-  );
+        }}
+        placeholder={t("template-board.template-description-placeholder")}
+        placeholderTextColor={theme.grayText}
+        blurOnSubmit={true}
+        onSubmitEditing={() => Keyboard.dismiss()}
+        multiline
+      />
+    );
+
+  return null;
 }

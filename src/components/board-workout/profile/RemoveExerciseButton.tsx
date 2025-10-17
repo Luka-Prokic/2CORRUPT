@@ -35,7 +35,7 @@ export function RemoveExerciseButton() {
     removeExercisesFromTemplate([activeExercise?.id]);
   }
 
-  const error = activeTemplate ? theme.grayText : theme.error;
+  const error = activeTemplate ? theme.tint : theme.error;
 
   return (
     <OptionButton

@@ -99,7 +99,7 @@ export function RightTemplateExerciseFlow() {
 
   return (
     <IButton onPress={handlePress}>
-      <Ionicons name="add-circle" size={44} color={theme.grayText} />
+      <Ionicons name="add-circle" size={44} color={theme.tint} />
     </IButton>
   );
 }
