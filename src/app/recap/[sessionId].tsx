@@ -9,7 +9,7 @@ import { WorkoutRecap } from "../../components/recap/workout/WorkoutRecap";
 
 export default function SessionRecapScreen() {
   const { completedSessions } = useWorkoutStore();
-  const { sessionId } = useLocalSearchParams();
+  const { sessionId } = useLocalSearchParams<{ sessionId: string }>();
 
   const session = completedSessions.find((s) => s.id === sessionId);
 

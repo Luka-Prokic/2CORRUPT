@@ -9,7 +9,7 @@ export function SetTableHeader() {
   const { t } = useTranslation();
   const { units, setUnits } = useSettingsStore();
 
-  const { activeExercise } = useWorkoutStore();
+  const { activeExercise, activeTemplate } = useWorkoutStore();
 
   const exerciseColumns = activeExercise?.columns || ["Reps", "Weight"];
   const columns = ["Set", ...exerciseColumns, "Done"];
@@ -31,7 +31,10 @@ export function SetTableHeader() {
             fontSize: 16,
             fontWeight: "bold",
             textAlign: "center",
-            color: theme.grayText,
+            color:
+              activeTemplate && label === "Done"
+                ? theme.handle
+                : theme.grayText,
           }}
           numberOfLines={1}
           adjustsFontSizeToFit

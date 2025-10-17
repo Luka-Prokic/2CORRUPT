@@ -3,13 +3,14 @@ import { useSettingsStore } from "../../../../stores/settingsStore";
 
 export function SetIndex({ setIndex }: { setIndex: number }) {
   const { theme } = useSettingsStore();
+
   return (
     <View
       style={{
         width: 44,
         height: 44,
         borderRadius: 22,
-        backgroundColor: theme.secondaryBackground,
+        backgroundColor: theme.background,
         justifyContent: "center",
         alignItems: "center",
       }}

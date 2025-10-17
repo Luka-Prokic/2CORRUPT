@@ -4,7 +4,7 @@ import { hexToRGBA } from "../../features/HEXtoRGB";
 import { useSettingsStore } from "../../stores/settingsStore";
 import { WIDTH } from "../../features/Dimensions";
 import { IButton } from "../ui/buttons/IButton";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useRef } from "react";
 import { createSessionExercise } from "../../features/workout/useNewSessionExercise";
 import { ExerciseInfo } from "../../stores/workout/types";
@@ -19,17 +19,30 @@ export function BottomAddExerciseSection({
   selectedExercises,
 }: BottomAddExerciseSectionProps) {
   const { theme } = useSettingsStore();
-  const { addExerciseToSession, setActiveExercise } =
-    useWorkoutStore();
+  const {
+    addExerciseToSession,
+    addExerciseToTemplate,
+    setActiveExercise,
+    activeTemplate,
+    activeSession,
+  } = useWorkoutStore();
   const { t } = useTranslation();
+  const { type } = useLocalSearchParams<{
+    type: string;
+  }>();
 
   const animatedOpacity = useRef(new Animated.Value(0)).current;
 
   function handleAddExercise() {
     selectedExercises.forEach((exercise: ExerciseInfo) => {
-      addExerciseToSession(createSessionExercise(exercise));
+      if (type === "template" && activeTemplate) {
+        addExerciseToTemplate(createSessionExercise(exercise));
+      }
+      if (type === "session" && activeSession) {
+        addExerciseToSession(createSessionExercise(exercise));
+      }
     });
-    setActiveExercise(selectedExercises[0].id);
+    setActiveExercise(selectedExercises[0]?.id);
     router.back();
   }
 
@@ -49,7 +62,7 @@ export function BottomAddExerciseSection({
         useNativeDriver: true,
       }).start();
     }
-  }, [selectedExercises]);
+  }, [selectedExercises.length]);
 
   return (
     <Animated.View style={{ opacity: animatedOpacity }}>

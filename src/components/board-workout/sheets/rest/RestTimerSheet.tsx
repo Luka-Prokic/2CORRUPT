@@ -10,7 +10,8 @@ import { RestCheatSheet } from "./RestCheatSheet";
 
 export function RestTimerSheet() {
   const { theme } = useSettingsStore();
-  const { activeExercise, updateActiveExercise } = useWorkoutStore();
+  const { activeExercise, updateActiveExercise, activeTemplate } =
+    useWorkoutStore();
   const { t } = useTranslation();
 
   const restTime = activeExercise?.restTime ?? 180;
@@ -32,7 +33,10 @@ export function RestTimerSheet() {
         alignItems: "center",
       }}
     >
-      <ExerciseName exercise={activeExercise} textColor={theme.accent} />
+      <ExerciseName
+        exercise={activeExercise}
+        textColor={activeTemplate ? theme.grayText : theme.accent}
+      />
       <Text style={{ fontSize: 18, color: theme.grayText }}>
         {t("workout-board.rest-time")}
       </Text>
@@ -68,12 +72,16 @@ export function RestTimerSheet() {
             disabled={restTime === 0 && label === "-15"}
           >
             <StrobeBlur
-              colors={[
-                theme.caka,
-                theme.primaryBackground,
-                theme.accent,
-                theme.tint,
-              ]}
+              colors={
+                activeTemplate
+                  ? [theme.text, theme.text, theme.text, theme.text]
+                  : [
+                      theme.caka,
+                      theme.primaryBackground,
+                      theme.accent,
+                      theme.tint,
+                    ]
+              }
               tint="light"
               style={{
                 width: WIDTH / 2 - 20,

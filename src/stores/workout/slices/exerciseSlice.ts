@@ -26,48 +26,55 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
   setActiveExercise: (exerciseId: string) => {
     const {
       activeSession,
+      activeTemplate,
       syncActiveExerciseToSession,
+      syncActiveExerciseToTemplate,
       updateNavigationFlags,
     } = get();
 
     // First, sync any existing active exercise before switching
     if (get().activeExercise) {
-      syncActiveExerciseToSession();
+      if (activeSession) syncActiveExerciseToSession();
+      else if (activeTemplate) syncActiveExerciseToTemplate?.();
     }
 
-    if (!activeSession) return;
+    let foundExercise: SessionExercise | null = null;
 
-    // Helper to deep-copy a SessionExercise safely
-    function copyExercise(ex: SessionExercise): SessionExercise {
-      return {
+    if (activeSession) {
+      for (const item of activeSession.layout) {
+        if (item.id === exerciseId) {
+          foundExercise = item;
+          break;
+        }
+      }
+    } else if (activeTemplate) {
+      for (const item of activeTemplate.layout) {
+        if (item.id === exerciseId) {
+          foundExercise = item;
+          break;
+        }
+      }
+    }
+
+    if (foundExercise) {
+      // Deep copy
+      const copyExercise = (ex: SessionExercise): SessionExercise => ({
         ...ex,
         sets: ex.sets.map((s) => ({
           ...s,
           dropSets: s.dropSets ? s.dropSets.map((ds) => ({ ...ds })) : [],
         })),
-        columns: ex.columns ? [...ex.columns] : ["Reps", "Weight"], // safe fallback
+        columns: ex.columns ? [...ex.columns] : ["Reps", "Weight"],
         primaryMuscles: [...ex.primaryMuscles],
         secondaryMuscles: ex.secondaryMuscles
           ? [...ex.secondaryMuscles]
           : undefined,
         equipment: ex.equipment ? [...ex.equipment] : undefined,
-      };
-    }
+      });
 
-    // Find the exercise in the layout (top-level or nested)
-    let foundExercise: SessionExercise | null = null;
-    for (const item of activeSession.layout) {
-      if (item.id === exerciseId) {
-        foundExercise = item;
-        break;
-      }
-    }
-
-    if (foundExercise) {
       set({ activeExercise: copyExercise(foundExercise) });
     }
 
-    // Update navigation flags for flowSlice
     updateNavigationFlags();
   },
 
@@ -105,11 +112,34 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
     });
   },
 
+  syncActiveExerciseToTemplate: () => {
+    const { activeExercise, activeTemplate, templates } = get();
+    if (!activeExercise || !activeTemplate) return;
+
+    const updatedLayout = activeTemplate.layout.map((item) =>
+      item.id === activeExercise.id ? { ...activeExercise } : item
+    );
+
+    // Update template in store
+    const updatedTemplates = templates.map((t) =>
+      t.id === activeTemplate.id ? { ...t, layout: updatedLayout } : t
+    );
+
+    set({
+      templates: updatedTemplates,
+      activeTemplate: { ...activeTemplate, layout: updatedLayout },
+    });
+  },
+
   /**
    * Update properties of the active exercise (and auto-sync)
    */
   updateActiveExercise: (updates: Partial<SessionExercise>) => {
-    const { activeExercise, syncActiveExerciseToSession } = get();
+    const {
+      activeExercise,
+      syncActiveExerciseToSession,
+      syncActiveExerciseToTemplate,
+    } = get();
     if (!activeExercise) return;
 
     // Merge updates
@@ -141,6 +171,7 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
 
     // Auto-sync after update
     syncActiveExerciseToSession();
+    syncActiveExerciseToTemplate();
   },
 
   /**
@@ -150,7 +181,11 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
     reps: number | null = 0,
     weight: number | null = 0
   ) => {
-    const { activeExercise, syncActiveExerciseToSession } = get();
+    const {
+      activeExercise,
+      syncActiveExerciseToSession,
+      syncActiveExerciseToTemplate,
+    } = get();
     if (!activeExercise) return;
 
     const newSet: Set = {
@@ -170,13 +205,18 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
 
     // Auto-sync after update
     syncActiveExerciseToSession();
+    syncActiveExerciseToTemplate();
   },
 
   /**
    * Update a specific set in the active exercise (and auto-sync)
    */
   updateSetInActiveExercise: (setId: string, updates: Partial<Set>) => {
-    const { activeExercise, syncActiveExerciseToSession } = get();
+    const {
+      activeExercise,
+      syncActiveExerciseToSession,
+      syncActiveExerciseToTemplate,
+    } = get();
     if (!activeExercise) return;
 
     set({
@@ -190,13 +230,18 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
 
     // Auto-sync after update
     syncActiveExerciseToSession();
+    syncActiveExerciseToTemplate();
   },
 
   /**
    * Remove a set from the active exercise (and auto-sync)
    */
   removeSetFromActiveExercise: (setId: string) => {
-    const { activeExercise, syncActiveExerciseToSession } = get();
+    const {
+      activeExercise,
+      syncActiveExerciseToSession,
+      syncActiveExerciseToTemplate,
+    } = get();
     if (!activeExercise) return;
 
     set({
@@ -208,6 +253,7 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
 
     // Auto-sync after update
     syncActiveExerciseToSession();
+    syncActiveExerciseToTemplate();
   },
 
   /**
@@ -218,7 +264,11 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
     reps: number | null,
     weight: number | null
   ) => {
-    const { activeExercise, syncActiveExerciseToSession } = get();
+    const {
+      activeExercise,
+      syncActiveExerciseToSession,
+      syncActiveExerciseToTemplate,
+    } = get();
     if (!activeExercise) return;
 
     const newDropSet: DropSet = {
@@ -240,6 +290,7 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
 
     // Auto-sync after update
     syncActiveExerciseToSession();
+    syncActiveExerciseToTemplate();
   },
 
   /**
@@ -250,7 +301,11 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
     dropSetId: string,
     updates: Partial<DropSet>
   ) => {
-    const { activeExercise, syncActiveExerciseToSession } = get();
+    const {
+      activeExercise,
+      syncActiveExerciseToSession,
+      syncActiveExerciseToTemplate,
+    } = get();
     if (!activeExercise) return;
 
     set({
@@ -260,10 +315,9 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
           s.id === setId
             ? {
                 ...s,
-                dropSets:
-                  s.dropSets?.map((ds) =>
-                    ds.id === dropSetId ? { ...ds, ...updates, id: ds.id } : ds
-                  ),
+                dropSets: s.dropSets?.map((ds) =>
+                  ds.id === dropSetId ? { ...ds, ...updates, id: ds.id } : ds
+                ),
               }
             : s
         ),
@@ -272,13 +326,18 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
 
     // Auto-sync after update
     syncActiveExerciseToSession();
+    syncActiveExerciseToTemplate();
   },
 
   /**
    * Remove a drop set from the active exercise (and auto-sync)
    */
   removeDropSetFromActiveExercise: (setId: string, dropSetId: string) => {
-    const { activeExercise, syncActiveExerciseToSession } = get();
+    const {
+      activeExercise,
+      syncActiveExerciseToSession,
+      syncActiveExerciseToTemplate,
+    } = get();
     if (!activeExercise) return;
 
     set({
@@ -297,13 +356,19 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
 
     // Auto-sync after update
     syncActiveExerciseToSession();
+    syncActiveExerciseToTemplate();
   },
 
   /**
    * Swap an exercise in the active exercise (and auto-sync)
    */
   swapExerciseInActiveExercise: (exerciseId: ExerciseInfo["id"]) => {
-    const { activeExercise, exercises, syncActiveExerciseToSession } = get();
+    const {
+      activeExercise,
+      exercises,
+      syncActiveExerciseToSession,
+      syncActiveExerciseToTemplate,
+    } = get();
     if (!activeExercise) return;
 
     const exerciseInfo = exercises.find((e) => e.id === exerciseId);
@@ -354,5 +419,6 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
 
     // Sync after swap
     syncActiveExerciseToSession();
+    syncActiveExerciseToTemplate();
   },
 });

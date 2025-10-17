@@ -7,7 +7,8 @@ import { useTranslation } from "react-i18next";
 
 export function ExerciseColumnOptions() {
   const { theme } = useSettingsStore();
-  const { activeExercise, updateActiveExercise } = useWorkoutStore();
+  const { activeExercise, updateActiveExercise, activeTemplate } =
+    useWorkoutStore();
   const { t } = useTranslation();
 
   const showEnabledRPE = activeExercise?.columns.includes("RPE");
@@ -26,6 +27,8 @@ export function ExerciseColumnOptions() {
     updateActiveExercise({ columns: newColumns });
   };
 
+  const accent = activeTemplate ? theme.text : theme.accent;
+
   return (
     <Fragment>
       <OptionButton
@@ -34,7 +37,7 @@ export function ExerciseColumnOptions() {
           <Ionicons
             name={showRPE ? "eye-outline" : "eye-off-outline"}
             size={24}
-            color={showRPE ? theme.accent : theme.grayText}
+            color={showRPE ? accent : theme.grayText}
           />
         }
         height={44}
@@ -42,7 +45,7 @@ export function ExerciseColumnOptions() {
           setShowRPE(!showRPE);
           handleToggleColumn("RPE");
         }}
-        color={showRPE ? theme.accent : theme.grayText}
+        color={showRPE ? accent : theme.grayText}
       />
       <OptionButton
         title={t(`dialog.${showRIR ? "hide" : "show"}`) + " RIR"}
@@ -50,7 +53,7 @@ export function ExerciseColumnOptions() {
           <Ionicons
             name={showRIR ? "eye-outline" : "eye-off-outline"}
             size={24}
-            color={showRIR ? theme.accent : theme.grayText}
+            color={showRIR ? accent : theme.grayText}
           />
         }
         height={44}
@@ -58,7 +61,7 @@ export function ExerciseColumnOptions() {
           setShowRIR(!showRIR);
           handleToggleColumn("RIR");
         }}
-        color={showRIR ? theme.accent : theme.grayText}
+        color={showRIR ? accent : theme.grayText}
       />
     </Fragment>
   );

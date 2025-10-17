@@ -6,6 +6,7 @@ import { OptionButton } from "../ui/buttons/OptionButton";
 import { hexToRGBA } from "../../features/HEXtoRGB";
 import { IList } from "../ui/containers/IList";
 import { Ionicons } from "@expo/vector-icons";
+import { Fragment } from "react";
 
 export function LanguageSettings() {
   const { theme } = useSettingsStore();
@@ -33,13 +34,7 @@ export function LanguageSettings() {
                 : {}
             }
             color={item.code === i18n.language ? theme.tint : theme.text}
-            icon={
-              <Ionicons
-                name={item.code === "en" ? "globe" : "globe-outline"}
-                width={24}
-                height={24}
-              />
-            }
+            icon={<Fragment />}
           />
         ))}
       </DropDownButton>

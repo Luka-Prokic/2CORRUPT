@@ -8,7 +8,8 @@ import { useTranslation } from "react-i18next";
 
 export function ExerciseNameSheet() {
   const { theme } = useSettingsStore();
-  const { activeExercise, updateActiveExercise } = useWorkoutStore();
+  const { activeExercise, updateActiveExercise, activeTemplate } =
+    useWorkoutStore();
   const { t } = useTranslation();
 
   return (
@@ -21,7 +22,10 @@ export function ExerciseNameSheet() {
         alignItems: "center",
       }}
     >
-      <ExerciseName exercise={activeExercise} prefixColor={theme.accent} />
+      <ExerciseName
+        exercise={activeExercise}
+        prefixColor={activeTemplate ? theme.grayText : theme.accent}
+      />
 
       <TextInput
         style={{
@@ -64,6 +68,7 @@ export function ExerciseNameSheet() {
         onPress={() => {
           //TODO: handle routing to create new exercise screen
         }}
+        color={activeTemplate && theme.text}
       />
 
       <Text

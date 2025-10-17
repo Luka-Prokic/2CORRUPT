@@ -15,6 +15,11 @@ import {
   LeftExerciseFlow,
   RightExerciseFlow,
 } from "../components/view-workout/table/header/ExerciseFlow";
+import {
+  LeftTemplateExerciseFlow,
+  RightTemplateExerciseFlow,
+  TemplateExerciseFlow,
+} from "../components/view-template/header/TemplateExerciseFlow";
 
 export default function HomeScreen() {
   const { typeOfView } = useUIStore();
@@ -28,6 +33,8 @@ export default function HomeScreen() {
 
   function headerLeft() {
     if (typeOfView === "workout" && activeExercise) return <LeftExerciseFlow />;
+    if (typeOfView === "template" && activeExercise)
+      return <LeftTemplateExerciseFlow />;
     if (typeOfView === "home") return null;
 
     return <BackHomeButton />;
@@ -35,12 +42,16 @@ export default function HomeScreen() {
 
   function headerTitle() {
     if (typeOfView === "workout" && activeExercise) return <ExerciseFlow />;
+    if (typeOfView === "template" && activeExercise)
+      return <TemplateExerciseFlow />;
     return <Fragment />;
   }
 
   function headerRight() {
     if (typeOfView === "workout" && activeExercise)
       return <RightExerciseFlow />;
+    if (typeOfView === "template" && activeExercise)
+      return <RightTemplateExerciseFlow />;
     return <Fragment />;
   }
 

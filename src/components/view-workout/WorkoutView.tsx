@@ -6,7 +6,7 @@ import { UIView } from "../ui/UIView";
 export function WorkoutView() {
   const { activeExercise } = useWorkoutStore();
 
-  const content = !activeExercise ? <NoExerciseView /> : <ExerciseListView />;
+  const content = activeExercise ? <ExerciseListView /> : <NoExerciseView />;
 
   return <UIView type="workout">{content}</UIView>;
 }

@@ -4,14 +4,17 @@ import { WIDTH } from "../../features/Dimensions";
 import { Text } from "react-native";
 import { useTranslation } from "react-i18next";
 import { useUIStore } from "../../stores/ui";
+import { useWorkoutStore } from "../../stores/workout";
 
 export function CreateTemplateSelect() {
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
   const { setTypeOfView } = useUIStore();
+  const { editTemplate } = useWorkoutStore();
 
   function handlePress() {
     setTypeOfView("template");
+    editTemplate();
   }
 
   return (

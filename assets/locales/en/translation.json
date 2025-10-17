@@ -167,7 +167,7 @@
     "start-workout": "Start Workout",
     "all": "All",
     "continue-workout": "Continue Workout",
-    "continue-template": "Continue Template",
+    "continue-template": "Continue with Template",
     "no-exercise": "No Exercise"
   },
   "calendar": {
@@ -297,6 +297,9 @@
   "template-view": {
     "add-tags": "Add tags that describe your template.",
     "template-name": "Template Name..."
+  },
+  "template-board": {
+    "template-description-placeholder": "Add template notes, goals, or toughts... (optional)"
   },
 
   "add-exercise": {

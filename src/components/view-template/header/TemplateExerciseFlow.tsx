@@ -1,23 +1,13 @@
 import { View } from "react-native";
-import { IButton } from "../../../ui/buttons/IButton";
+import { IButton } from "../../ui/buttons/IButton";
 import { Ionicons } from "@expo/vector-icons";
-import { useSettingsStore } from "../../../../stores/settingsStore";
-import { Text } from "react-native";
-import { useWorkoutStore, Set } from "../../../../stores/workoutStore";
-import { useTranslation } from "react-i18next";
+import { useSettingsStore } from "../../../stores/settingsStore";
+import { useWorkoutStore } from "../../../stores/workoutStore";
 import { router } from "expo-router";
-import { SessionProgressDots } from "./SessionProgressDots";
-import { useUIStore } from "../../../../stores/ui/useUIStore";
-import { TemplateProgressDots } from "../../../view-template/header/TemplateProgressDots";
+import { useUIStore } from "../../../stores/ui/useUIStore";
+import { TemplateProgressDots } from "./TemplateProgressDots";
 
-export function ExerciseFlow() {
-  const { theme } = useSettingsStore();
-  const { activeExercise } = useWorkoutStore();
-  const { t } = useTranslation();
-
-  const sets = activeExercise?.sets ?? [];
-  const completedSets = sets.filter((s: Set) => s.isCompleted).length;
-  const totalSets = sets.length;
+export function TemplateExerciseFlow() {
   return (
     <View
       style={{
@@ -28,27 +18,11 @@ export function ExerciseFlow() {
       }}
     >
       <TemplateProgressDots />
-      <SessionProgressDots />
-      <Text
-        style={{
-          fontSize: 16,
-          opacity: 0.7,
-          color:
-            completedSets === totalSets && completedSets !== 0
-              ? theme.tint
-              : theme.grayText,
-        }}
-      >
-        {t("workout-view.sets-completed", {
-          count: completedSets,
-          total: totalSets,
-        })}
-      </Text>
     </View>
   );
 }
 
-export function LeftExerciseFlow() {
+export function LeftTemplateExerciseFlow() {
   const { theme } = useSettingsStore();
   const { isTherePrev, goToPreviousExercise } = useWorkoutStore();
   const { setTypeOfView } = useUIStore();
@@ -77,7 +51,7 @@ export function LeftExerciseFlow() {
   );
 }
 
-export function RightExerciseFlow() {
+export function RightTemplateExerciseFlow() {
   const { theme } = useSettingsStore();
   const { isThereNext, goToNextExercise } = useWorkoutStore();
 
@@ -85,7 +59,7 @@ export function RightExerciseFlow() {
     router.push({
       pathname: "/add-exercise/[type]",
       params: {
-        type: "session",
+        type: "template",
       },
     });
   }
@@ -106,7 +80,7 @@ export function RightExerciseFlow() {
 
   return (
     <IButton onPress={handlePress}>
-      <Ionicons name="add-circle" size={44} color={theme.tint} />
+      <Ionicons name="add-circle" size={44} color={theme.grayText} />
     </IButton>
   );
 }

@@ -1,7 +1,7 @@
-import React, { Fragment, useState } from "react";
+import React from "react";
 import { Text, View, TouchableOpacity } from "react-native";
 import { useSettingsStore } from "../../stores/settingsStore";
-import { useTranslation } from "react-i18next";
+import { useWorkoutStore } from "../../stores/workout";
 
 const mockTags = [
   "Push",
@@ -34,54 +34,53 @@ const mockTags = [
   "Balance",
 ];
 
-export function TagTextLayout({ tags = mockTags }: { tags?: string[] }) {
+interface TagTextLayoutProps {
+  tags?: string[];
+  fontSize?: number;
+}
+
+export function TagTextLayout({
+  tags = mockTags,
+  fontSize = 32,
+}: TagTextLayoutProps) {
   const { theme } = useSettingsStore();
-  const { t } = useTranslation();
-  const [selectedTags, setSelectedTags] = useState<Record<string, boolean>>({});
+  const { activeTemplate, updateTemplateField } = useWorkoutStore();
+
+  const selectedTags = activeTemplate?.tags ?? [];
 
   const handleToggle = (tag: string) => {
-    setSelectedTags((prev) => ({
-      ...prev,
-      [tag]: !prev[tag],
-    }));
+    if (!activeTemplate) return;
+
+    const isSelected = selectedTags.includes(tag);
+    const newTags = isSelected
+      ? selectedTags.filter((t) => t !== tag)
+      : [...selectedTags, tag];
+    updateTemplateField(activeTemplate.id, "tags", newTags);
   };
 
   return (
-    <Fragment>
-      <Text
-        style={{
-          color: theme.grayText,
-          fontWeight: "400",
-          fontSize: 16,
-          textAlign: "center",
-          marginHorizontal: 16,
-        }}
-      >
-        {t("template-view.add-tags")}
-      </Text>
-      <View
-        style={{
-          flexDirection: "row",
-          flexWrap: "wrap",
-          justifyContent: "space-between",
-        }}
-      >
-        {tags.map((tag: string) => (
-          <TouchableOpacity key={tag} onPress={() => handleToggle(tag)}>
-            <Text
-              style={{
-                color: selectedTags[tag] ? theme.accent : theme.handle,
-                fontWeight: "bold",
-                fontSize: 32,
-                letterSpacing: -0.5,
-                fontFamily: "Anton-Regular",
-              }}
-            >
-              {tag}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </View>
-    </Fragment>
+    <View
+      style={{
+        flexDirection: "row",
+        flexWrap: "wrap",
+        justifyContent: "space-between",
+      }}
+    >
+      {tags.map((tag: string) => (
+        <TouchableOpacity key={tag} onPress={() => handleToggle(tag)}>
+          <Text
+            style={{
+              color: selectedTags.includes(tag) ? theme.text : theme.handle,
+              fontWeight: "bold",
+              fontSize,
+              letterSpacing: -0.5,
+              fontFamily: "Anton-Regular",
+            }}
+          >
+            {tag}
+          </Text>
+        </TouchableOpacity>
+      ))}
+    </View>
   );
 }

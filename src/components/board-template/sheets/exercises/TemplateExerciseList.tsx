@@ -6,15 +6,20 @@ import { ExerciseCard } from "../../../board-workout/cards/ExerciseCard";
 import { useState } from "react";
 import { TemplateExerciseListHeader } from "./TemplateExerciseListHeader";
 import { TemplateExerciseListAddNewButton } from "./TemplateExerciseListAddNewButton";
+import { useSettingsStore } from "../../../../stores/settings";
+import { SessionExercise } from "../../../../stores/workout";
 
 interface TemplateExerciseListProps {
   togglePanel: () => void;
 }
 
-export function TemplateExerciseList({ togglePanel }: TemplateExerciseListProps) {
+export function TemplateExerciseList({
+  togglePanel,
+}: TemplateExerciseListProps) {
   const { activeTemplate } = useWorkoutStore();
   const { setActiveExercise } = useWorkoutStore();
   const { fadeIn } = useFadeInAnim();
+  const { theme } = useSettingsStore();
 
   const [selectMode, setSelectMode] = useState(false);
   const [selectedExercises, setSelectedExercises] = useState<string[]>([]);
@@ -37,7 +42,7 @@ export function TemplateExerciseList({ togglePanel }: TemplateExerciseListProps)
     setSelectedExercises([]);
   };
 
-  const renderCard = (item: any) => {
+  const renderCard = (item: SessionExercise) => {
     return (
       <ExerciseCard
         exercise={item}
@@ -45,11 +50,13 @@ export function TemplateExerciseList({ togglePanel }: TemplateExerciseListProps)
         onSelect={handleExerciseSelect}
         selectedExercises={selectedExercises}
         multipleSelect={selectMode}
+        tint={theme.grayText}
+        backgroundColor={theme.background}
       />
     );
   };
 
-  if(!activeTemplate) return null;
+  if (!activeTemplate) return null;
 
   return (
     <Animated.View
@@ -68,9 +75,7 @@ export function TemplateExerciseList({ togglePanel }: TemplateExerciseListProps)
       />
       <FlatList
         data={activeTemplate?.layout}
-        keyExtractor={(item) =>
-          "group" in item ? `group-${item.group}` : item.id
-        }
+        keyExtractor={(item) => item.id}
         renderItem={({ item }) => renderCard(item)}
         ListFooterComponent={() => (
           <TemplateExerciseListAddNewButton

@@ -100,7 +100,7 @@ export default function Layout() {
 
           {/* Add Exercise */}
           <Stack.Screen
-            name="add-exercise"
+            name="add-exercise/[type]"
             options={{
               presentation: "fullScreenModal",
             }}

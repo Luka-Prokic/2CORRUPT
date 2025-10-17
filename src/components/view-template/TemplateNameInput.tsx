@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import {
   View,
   TextInput,
@@ -7,9 +7,9 @@ import {
   TextInputProps,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useSettingsStore } from "../../../stores/settingsStore";
+import { useSettingsStore } from "../../stores/settingsStore";
 import { useTranslation } from "react-i18next";
-import { WIDTH } from "../../../features/Dimensions";
+import { WIDTH } from "../../features/Dimensions";
 
 interface TemplateNameInputProps extends Omit<TextInputProps, "style"> {
   value: string;
@@ -26,11 +26,13 @@ export function TemplateNameInput({
 }: TemplateNameInputProps) {
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
+
   return (
     <View
       style={{
         width: WIDTH - 32,
         height: 64,
+        marginBottom: 32,
         backgroundColor: theme.input,
         borderWidth: 1,
         borderColor: theme.border,
@@ -50,8 +52,7 @@ export function TemplateNameInput({
     >
       <TextInput
         style={{
-          width: WIDTH - 32,
-          height: 64,
+          flex: 1,
           paddingHorizontal: 16,
           color: theme.text,
           fontSize: 24,

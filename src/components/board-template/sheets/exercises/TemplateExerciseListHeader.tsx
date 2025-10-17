@@ -22,7 +22,7 @@ export function TemplateExerciseListHeader({
   setSelectMode,
   toggleSelectMode,
 }: TemplateExerciseListHeaderProps) {
-  const { activeSession, removeExercisesFromSession } = useWorkoutStore();
+  const { activeTemplate, removeExercisesFromTemplate } = useWorkoutStore();
   const { theme } = useSettingsStore();
   const { showActionSheet, t } = useActionSheet();
 
@@ -53,18 +53,18 @@ export function TemplateExerciseListHeader({
   }
 
   function removeSelectedExercises() {
-    removeExercisesFromSession(selectedExercises);
+    removeExercisesFromTemplate(selectedExercises);
     setSelectedExercises([]);
     setSelectMode(false);
   }
 
   function handleSelectAllExercises() {
-    setSelectedExercises(activeSession.layout.map((item) => item.id));
+    setSelectedExercises(activeTemplate.layout.map((item) => item.id));
   }
 
   const selectModeButtons = () => {
     const isAllSelected =
-      selectedExercises.length === activeSession.layout.length;
+      selectedExercises.length === activeTemplate.layout.length;
     const isSomeSelected = selectedExercises.length > 0;
     return (
       <Fragment>
@@ -100,20 +100,17 @@ export function TemplateExerciseListHeader({
           style={{
             height: 24,
             width: 24,
+            marginLeft: 8,
           }}
           disabled={!isSomeSelected}
         >
-          <Ionicons
-            name="trash-outline"
-            size={24}
-            color={!isSomeSelected ? theme.grayText : theme.error}
-          />
+          <Ionicons name="trash-outline" size={24} color={theme.grayText} />
         </IButton>
       </Fragment>
     );
   };
 
-  if (activeSession.layout.length > 0)
+  if (activeTemplate.layout.length > 0)
     return (
       <View
         style={{

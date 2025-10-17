@@ -14,6 +14,8 @@ interface ExerciseCardProps {
   onSelect: (id: string) => void;
   selectedExercises: string[];
   multipleSelect: boolean;
+  tint?: string;
+  backgroundColor?: string;
 }
 
 export function ExerciseCard({
@@ -22,6 +24,8 @@ export function ExerciseCard({
   onSelect,
   selectedExercises,
   multipleSelect,
+  tint,
+  backgroundColor,
 }: ExerciseCardProps) {
   const { theme } = useSettingsStore();
   const { translatedName } = useTranslatedSessionExerciseName(exercise);
@@ -29,6 +33,12 @@ export function ExerciseCard({
 
   const isActive = activeExercise?.id === exercise.id;
   const isSelected = selectedExercises.includes(exercise.id);
+
+  const textTint = isActive ? tint ?? theme.tint : theme.text;
+  const background =
+    !isActive || multipleSelect
+      ? backgroundColor ?? theme.secondaryBackground
+      : theme.background;
 
   function handlePress() {
     if (multipleSelect) {
@@ -43,14 +53,10 @@ export function ExerciseCard({
       onPress={handlePress}
       style={{
         height: 72,
-        marginBottom: 1,
         width: WIDTH,
         paddingHorizontal: 10,
         justifyContent: "center",
-        backgroundColor:
-          !isActive || multipleSelect
-            ? theme.secondaryBackground
-            : theme.primaryBackground,
+        backgroundColor: background,
       }}
       disabled={isActive && !multipleSelect}
     >
@@ -58,7 +64,7 @@ export function ExerciseCard({
         style={{
           fontSize: 18,
           fontWeight: "700",
-          color: isActive ? theme.tint : theme.text,
+          color: textTint,
         }}
       >
         {exercise.prefix ? `${exercise.prefix} ` : ""}

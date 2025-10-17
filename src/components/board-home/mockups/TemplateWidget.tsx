@@ -9,6 +9,9 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { hexToRGBA } from "../../../features/HEXtoRGB";
+import { useWorkoutStore, WorkoutTemplate } from "../../../stores/workout";
+import { router } from "expo-router";
+import { useUIStore } from "../../../stores/ui";
 
 const { width } = Dimensions.get("window");
 const widgetSize = (width - 40) / 2;
@@ -23,235 +26,36 @@ interface TemplateCard {
   duration: string;
 }
 
-interface TemplateWidgetProps {
-  onAddTemplate?: () => void;
-  onTemplatePress?: (template: TemplateCard) => void;
-}
-
-export function TemplateWidget({
-  onAddTemplate,
-  onTemplatePress,
-}: TemplateWidgetProps) {
+export function TemplateWidget() {
   const { theme } = useSettingsStore();
   const scrollX = useRef(new Animated.Value(0)).current;
+  const { setTypeOfView } = useUIStore();
+  const { editTemplate, startSession } = useWorkoutStore();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [lastScrollDirection, setLastScrollDirection] = useState<
     "left" | "right" | null
   >(null);
   const [selectedDotIndex, setSelectedDotIndex] = useState(0);
 
-  // Mock template data - 12 templates for testing
-  const templates: TemplateCard[] = [
-    {
-      id: "1",
-      title: "Morning Cardio",
-      description: "Quick morning routine",
-      exercises: 4,
-      duration: "15 min",
-    },
-    {
-      id: "2",
-      title: "Upper Body Strength",
-      description: "Chest, shoulders, arms",
-      exercises: 6,
-      duration: "45 min",
-    },
-    {
-      id: "3",
-      title: "HIIT Workout",
-      description: "High intensity training",
-      exercises: 8,
-      duration: "30 min",
-    },
-    {
-      id: "4",
-      title: "Yoga Flow",
-      description: "Relaxing yoga session",
-      exercises: 12,
-      duration: "60 min",
-    },
-    {
-      id: "5",
-      title: "Leg Day",
-      description: "Lower body focus",
-      exercises: 7,
-      duration: "50 min",
-    },
-    {
-      id: "6",
-      title: "Core Blast",
-      description: "Abdominal workout",
-      exercises: 10,
-      duration: "20 min",
-    },
-    {
-      id: "7",
-      title: "Full Body",
-      description: "Complete workout routine",
-      exercises: 15,
-      duration: "75 min",
-    },
-    {
-      id: "8",
-      title: "Quick Abs",
-      description: "Fast core workout",
-      exercises: 5,
-      duration: "12 min",
-    },
-    {
-      id: "9",
-      title: "Push Day",
-      description: "Chest and triceps focus",
-      exercises: 9,
-      duration: "55 min",
-    },
-    {
-      id: "10",
-      title: "Pull Day",
-      description: "Back and biceps focus",
-      exercises: 8,
-      duration: "50 min",
-    },
-    {
-      id: "11",
-      title: "Cardio Blast",
-      description: "High energy cardio",
-      exercises: 6,
-      duration: "25 min",
-    },
-    {
-      id: "12",
-      title: "Stretch & Recovery",
-      description: "Relaxation and flexibility",
-      exercises: 8,
-      duration: "35 min",
-    },
-    {
-      id: "13",
-      title: "Power Yoga",
-      description: "Dynamic yoga flow",
-      exercises: 10,
-      duration: "45 min",
-    },
-    {
-      id: "14",
-      title: "Tabata Training",
-      description: "High intensity intervals",
-      exercises: 4,
-      duration: "20 min",
-    },
-    {
-      id: "15",
-      title: "Arm Sculpting",
-      description: "Arm and shoulder focus",
-      exercises: 8,
-      duration: "40 min",
-    },
-    {
-      id: "16",
-      title: "Glute Builder",
-      description: "Lower body strength",
-      exercises: 6,
-      duration: "30 min",
-    },
-    {
-      id: "17",
-      title: "CrossFit WOD",
-      description: "High intensity workout",
-      exercises: 12,
-      duration: "50 min",
-    },
-    {
-      id: "18",
-      title: "Pilates Core",
-      description: "Core stability focus",
-      exercises: 8,
-      duration: "25 min",
-    },
-    {
-      id: "19",
-      title: "Boxing Training",
-      description: "Cardio and technique",
-      exercises: 10,
-      duration: "40 min",
-    },
-    {
-      id: "20",
-      title: "Flexibility Flow",
-      description: "Stretching and mobility",
-      exercises: 6,
-      duration: "30 min",
-    },
-    {
-      id: "21",
-      title: "Dance Cardio",
-      description: "Fun cardio workout",
-      exercises: 8,
-      duration: "35 min",
-    },
-    {
-      id: "22",
-      title: "Balance Training",
-      description: "Stability and coordination",
-      exercises: 6,
-      duration: "20 min",
-    },
-    {
-      id: "23",
-      title: "Endurance Run",
-      description: "Long distance cardio",
-      exercises: 4,
-      duration: "60 min",
-    },
-    {
-      id: "24",
-      title: "Plyometric Training",
-      description: "Explosive movements",
-      exercises: 8,
-      duration: "25 min",
-    },
-    {
-      id: "25",
-      title: "Meditation Flow",
-      description: "Mindful movement",
-      exercises: 6,
-      duration: "20 min",
-    },
-    {
-      id: "26",
-      title: "Beach Body",
-      description: "Summer ready workout",
-      exercises: 12,
-      duration: "45 min",
-    },
-    {
-      id: "27",
-      title: "Power Lifting",
-      description: "Heavy weight training",
-      exercises: 5,
-      duration: "90 min",
-    },
-    {
-      id: "28",
-      title: "Morning Stretch",
-      description: "Gentle wake-up routine",
-      exercises: 8,
-      duration: "15 min",
-    },
-    {
-      id: "29",
-      title: "Evening Wind-down",
-      description: "Relaxation routine",
-      exercises: 6,
-      duration: "20 min",
-    },
-  ];
+  const { templates } = useWorkoutStore();
+
+  function handleTemplatePress(template: WorkoutTemplate) {
+    router.back();
+    setTypeOfView("workout");
+    startSession(template);
+  }
+
+  function onAddTemplate() {
+    router.back();
+    setTypeOfView("template");
+    editTemplate();
+  }
 
   const renderTemplateCard = ({
     item,
     index,
   }: {
-    item: TemplateCard;
+    item: WorkoutTemplate;
     index: number;
   }) => {
     const inputRange = [
@@ -274,6 +78,11 @@ export function TemplateWidget({
       extrapolate: "clamp",
     });
 
+    const tags = item.tags?.map((tag, i) => {
+      if (item.tags.length > i + 1) return `${tag}, `;
+      return `${tag}`;
+    });
+
     return (
       <Animated.View
         style={{
@@ -293,7 +102,7 @@ export function TemplateWidget({
             height: cardHeight,
             justifyContent: "space-between",
           }}
-          onPress={() => onTemplatePress?.(item)}
+          onPress={() => handleTemplatePress(item)}
           activeOpacity={0.7}
         >
           <View
@@ -314,18 +123,18 @@ export function TemplateWidget({
               }}
               numberOfLines={2}
             >
-              {item.title}
+              {item.name}
             </Text>
           </View>
           <Text
             style={{
-              fontSize: 9,
+              fontSize: 8,
               marginBottom: 2,
               color: theme.grayText,
             }}
-            numberOfLines={1}
+            numberOfLines={3}
           >
-            {item.description}
+            {tags}
           </Text>
           <View
             style={{
@@ -348,7 +157,7 @@ export function TemplateWidget({
                   color: theme.grayText,
                 }}
               >
-                {item.exercises} exercises
+                {item.layout?.length} exercises
               </Text>
             </View>
           </View>
@@ -445,7 +254,9 @@ export function TemplateWidget({
       <Animated.FlatList
         data={templates}
         renderItem={renderTemplateCard}
-        keyExtractor={(item: any) => item.id}
+        keyExtractor={(item: WorkoutTemplate, index: number) =>
+          `${item.id}-${index}`
+        }
         horizontal
         showsHorizontalScrollIndicator={false}
         snapToInterval={cardWidth}

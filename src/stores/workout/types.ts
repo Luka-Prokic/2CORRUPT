@@ -42,7 +42,7 @@ export interface WorkoutTemplate {
   readonly createdAt: IsoDateString;
   updatedAt?: IsoDateString;
   layout: SessionExercise[];
-  tags?: readonly string[];
+  tags?: string[];
   isPublic?: boolean;
   metadata?: Record<string, any>;
 }
@@ -88,18 +88,50 @@ export interface WorkoutSession {
 }
 
 // Slice contracts
+
 export interface TemplateSlice {
+  // Current templates
   templates: WorkoutTemplate[];
+
+  // History of all previous versions
+  historyTemplates: WorkoutTemplate[];
+
+  // Currently active template
   activeTemplate: WorkoutTemplate | null;
-  createTemplate: (
-    name: string,
-    description: string | undefined,
-    layout: SessionExercise[]
-  ) => string;
-  updateTemplate: (updates: Partial<WorkoutTemplate>) => void;
-  deleteTemplate: (templateId: string) => void;
-  getTemplateById: (templateId: string) => WorkoutTemplate | null;
+
+  /**
+   * Create a new template or a draft copy of an existing one.
+   * Returns the new template's ID.
+   */
+  createTemplate: (template?: WorkoutTemplate) => string;
+
+  // Sets an existing template (by id) or a new one as activeTemplate
+  editTemplate: (templateId?: string) => string | null;
+
+  updateTemplateField: <K extends keyof WorkoutTemplate>(
+    templateId: string,
+    field: K,
+    value: WorkoutTemplate[K]
+  ) => void;
+
+  confirmTemplate: () => void;
+
+  discardTemplate: () => void;
+
   setActiveTemplate: (template: WorkoutTemplate) => void;
+
+  addExerciseToTemplate: (
+    exercise: SessionExercise,
+    afterItemId?: string
+  ) => void;
+  removeExercisesFromTemplate: (
+    exerciseIds: string[]
+  ) => void;
+  reorderTemplateItems: (
+    newOrder: SessionExercise[]
+  ) => void;
+
+  getTemplateById: (templateId: string) => WorkoutTemplate | null;
 }
 
 export interface SessionSlice {
@@ -128,6 +160,7 @@ export interface ExerciseSlice {
   setActiveExercise: (exerciseId: string) => void;
   clearActiveExercise: () => void;
   syncActiveExerciseToSession: () => void;
+  syncActiveExerciseToTemplate: () => void;
   updateActiveExercise: (updates: Partial<SessionExercise>) => void;
   addSetToActiveExercise: (
     reps?: number | null,

@@ -6,7 +6,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useTranslatedExerciseName } from "../../features/translate/useTranslatedExercisesNames";
 import { translateBodyPart } from "../../features/translate/useTranslatedBodyPart";
 import { StrobeButton } from "../ui/buttons/StrobeButton";
-import { memo, useMemo } from "react";
+import { useMemo } from "react";
 
 interface AddExerciseCardProps {
   exercise: ExerciseInfo;

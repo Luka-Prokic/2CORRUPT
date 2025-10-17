@@ -19,7 +19,7 @@ const BLOBS = [0, 1, 2, 3, 0, 1, 2, 3];
 
 export function StrobeBlur({
   style,
-  colors,
+  colors = ["#fff", "#fff", "#fff", "#fff"],
   duration = 6000,
   children,
   tint = "default",
@@ -84,7 +84,7 @@ export function StrobeBlur({
             position: "absolute",
             width: size,
             height: size,
-            backgroundColor: colors[blob.color],
+            backgroundColor: colors?.[blob.color] ?? "rgba(255,255,255,0.2)",
             opacity: 0.2,
             transform: [
               {

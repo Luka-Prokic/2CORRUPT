@@ -168,7 +168,7 @@
     "start-workout": "Započni Trening",
     "all": "Sve",
     "continue-workout": "Nastavi Trening",
-    "continue-template": "Nastavi Template",
+    "continue-template": "Nastavi sa Templatom",
     "no-exercise": "Nema Vežbe"
   },
   "calendar": {
@@ -280,6 +280,9 @@
   "template-view": {
     "add-tags": "Dodaj oznake koje opisuju tvoj template.",
     "template-name": "Naziv za Template..."
+  },
+  "template-board": {
+    "template-description-placeholder": "Dodaj template beleške, ciljeve... (neobavezno)"
   },
   "add-exercise": {
     "add-exercise": "Dodaj Vežbu",

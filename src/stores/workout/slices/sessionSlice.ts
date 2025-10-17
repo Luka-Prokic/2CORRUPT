@@ -22,31 +22,31 @@ export const createSessionSlice: StateCreator<WorkoutStore, [], [], {}> = (
 
   startSession: (template?: WorkoutTemplate) => {
     const now = new Date();
+    const name =
+      `${template?.name} ${now.toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "2-digit",
+      })}` ||
+      `${now.toLocaleTimeString("en-GB", {
+        hour: "2-digit",
+        minute: "2-digit",
+      })}`;
+      
     const newSession: WorkoutSession = {
       id: `session-${nanoid()}`,
       templateId: template?.id || null,
       templateVersion: template?.version || null,
-      name: `${new Date().toLocaleDateString(
-        "en-GB"
-      )} - ${new Date().toLocaleTimeString("en-GB", {
-        hour: "2-digit",
-        minute: "2-digit",
-      })}`,
+      name: name,
       // e.g. "07/10/2025 10:00"
       startTime: now.toISOString(),
       isActive: true,
-      layout: template
-        ? template.layout.map((layoutItem: SessionExercise) => {
-            return {
-              ...layoutItem,
-            };
-          })
-        : [],
+      layout: template?.layout || [],
       createdAt: now.toISOString(),
     };
 
     set({
       activeSession: newSession,
+      activeExercise: newSession.layout?.[0] ?? null,
       isWorkoutActive: true,
     });
   },

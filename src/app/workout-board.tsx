@@ -55,13 +55,13 @@ export default function WorkoutBoard() {
           togglePanel={togglePanel}
           disabled={!activeExercise && !listOpen}
           upperSection={
-            !activeExercise ? (
-              <NoExerciseBoard />
-            ) : (
+            activeExercise ? (
               <ExerciseProfile
                 openPanel={() => setListOpen(true)}
                 setListType={setListType}
               />
+            ) : (
+              <NoExerciseBoard />
             )
           }
           lowerSection={

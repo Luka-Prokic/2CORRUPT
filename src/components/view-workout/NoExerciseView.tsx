@@ -11,7 +11,12 @@ export function NoExerciseView() {
   const { t } = useTranslation();
 
   function handlePress() {
-    router.push("/add-exercise");
+    router.push({
+      pathname: "/add-exercise/[type]",
+      params: {
+        type: "session",
+      },
+    });
   }
 
   return (

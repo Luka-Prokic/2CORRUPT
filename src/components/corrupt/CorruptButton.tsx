@@ -8,6 +8,7 @@ import { Animated } from "react-native";
 import { HEIGHT, WIDTH } from "../../features/Dimensions";
 import { router } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useWorkoutStore } from "../../stores/workout";
 
 export const CORRUPT_BUTTON_FROM_BOTTOM = 22;
 export const CORRUPT_BUTTON_HEIGHT = 64;
@@ -20,8 +21,11 @@ export const CORRUPT_BUTTON_HEIGHT_FROM_BOTTOM =
 export function CorruptButton() {
   const { theme } = useSettingsStore();
   const { typeOfView } = useUIStore();
+  const { activeTemplate } = useWorkoutStore();
   const insets = useSafeAreaInsets();
   const CorruptButtonBottom = useRef(new Animated.Value(0)).current;
+  const backgroundColor =
+    activeTemplate && typeOfView === "template" ? theme.grayText : theme.accent;
 
   useEffect(() => {
     const toValue =
@@ -74,7 +78,7 @@ export function CorruptButton() {
           width: WIDTH - 32,
           height: CORRUPT_BUTTON_HEIGHT,
           borderRadius: 100,
-          backgroundColor: theme.accent,
+          backgroundColor,
           borderWidth: 1,
           borderColor: theme.border,
         }}

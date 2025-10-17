@@ -100,6 +100,7 @@ export function SessionExerciseListHeader({
           style={{
             height: 24,
             width: 24,
+            marginLeft: 8,
           }}
           disabled={!isSomeSelected}
         >

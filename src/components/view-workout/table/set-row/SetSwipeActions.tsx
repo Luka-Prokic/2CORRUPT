@@ -17,6 +17,7 @@ export function SetSwipeActions({
     addDropSetToActiveExercise,
     removeSetFromActiveExercise,
     activeExercise,
+    activeTemplate,
   } = useWorkoutStore();
   const { t } = useTranslation();
 
@@ -70,7 +71,9 @@ export function SetSwipeActions({
             alignItems: "center",
             justifyContent: "center",
             minWidth: 80,
-            backgroundColor: theme.fifthBackground,
+            backgroundColor: activeTemplate
+              ? theme.handle
+              : theme.fifthBackground,
           }}
           onPress={() => handleAddDropSet(set.id)}
         >
@@ -93,7 +96,7 @@ export function SetSwipeActions({
           alignItems: "center",
           justifyContent: "center",
           minWidth: 80,
-          backgroundColor: theme.error,
+          backgroundColor: activeTemplate ? theme.grayText : theme.error,
         }}
         onPress={() => handleRemoveSet(set.id)}
       >
