@@ -15,14 +15,14 @@ export function TemplateBoardHeaderRight() {
   const { t, showActionSheet } = useActionSheet();
   const isItEmpty = !activeTemplate?.layout.length;
 
-  function handleCancelSession() {
+  function handleDiscardTemplate() {
     const options = [
       t("workout-board.continue"),
-      t("workout-board.exit-workout"),
+      t("workout-board.discard-template"),
     ].filter(Boolean);
     showActionSheet({
-      title: `${t("workout-board.exit-workout")}?`,
-      message: t("workout-board.exit-workout-message"),
+      title: `${t("workout-board.discard-template")}?`,
+      message: t("workout-board.discard-template-message"),
       options,
       destructiveIndex: 1,
       cancelIndex: 0,
@@ -36,13 +36,13 @@ export function TemplateBoardHeaderRight() {
     });
   }
 
-  function handleCompleteSession() {
+  function handleConfirmTemplate() {
     showActionSheet({
-      title: `${t("workout-board.complete-workout")}?`,
-      message: t("workout-board.complete-workout-message"),
+      title: `${t("workout-board.confirm-template")}?`,
+      message: t("workout-board.confirm-template-message"),
       options: [
         t("workout-board.continue"),
-        t("workout-board.complete-workout"),
+        t("workout-board.confirm-template"),
       ],
       cancelIndex: 0,
       onSelect: (buttonIndex) => {
@@ -57,10 +57,10 @@ export function TemplateBoardHeaderRight() {
 
   return (
     <Fragment>
-      <TouchableOpacity onPress={handleCancelSession}>
+      <TouchableOpacity onPress={handleDiscardTemplate}>
         <Ionicons name="close-circle" size={44} color={theme.grayText} />
       </TouchableOpacity>
-      <TouchableOpacity onPress={handleCompleteSession} disabled={isItEmpty}>
+      <TouchableOpacity onPress={handleConfirmTemplate} disabled={isItEmpty}>
         <Ionicons
           name="checkmark-circle"
           size={44}

@@ -64,7 +64,13 @@ export const createTemplateSlice: StateCreator<
   },
 
   editTemplate: (templateId?: string) => {
-    const { getTemplateById, createTemplate, setActiveTemplate } = get();
+    const {
+      getTemplateById,
+      createTemplate,
+      setActiveTemplate,
+      activeTemplate,
+    } = get();
+    if (activeTemplate) return;
 
     let template: WorkoutTemplate | null = null;
 
@@ -135,30 +141,37 @@ export const createTemplateSlice: StateCreator<
   /** Discard changes: restore old template and remove draft */
   discardTemplate: () => {
     const { clearActiveExercise, activeTemplate } = get();
+    if (!activeTemplate) return;
+
     set((state) => {
       const draft = activeTemplate;
-      if (!draft) return {};
 
-      // Find previous version in history
+      // Check if this template ever existed before (by version or presence in history)
       const previous = state.historyTemplates
         .filter((t) => t.name === draft.name)
         .sort((a, b) => b.version - a.version)[0];
 
+      // Always remove the current one
       const newTemplates = state.templates.filter((t) => t.id !== draft.id);
-      return {
+
+      // Build new state depending on whether it's new or existing
+      const nextState = {
         templates: previous ? [...newTemplates, previous] : newTemplates,
         activeTemplate: null,
         historyTemplates: previous
           ? state.historyTemplates
           : state.historyTemplates.filter((t) => t.id !== draft.id),
       };
+
+      return nextState;
     });
+
     clearActiveExercise();
   },
 
   /** Set active template directly */
   setActiveTemplate: (template: WorkoutTemplate) =>
-    set({ activeTemplate: template }),
+    set({ activeTemplate: template, activeSession: null }),
 
   /**
    * Add a new exercise to the session layout

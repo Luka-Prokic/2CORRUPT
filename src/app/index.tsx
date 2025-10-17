@@ -33,8 +33,7 @@ export default function HomeScreen() {
 
   function headerLeft() {
     if (typeOfView === "workout" && activeExercise) return <LeftExerciseFlow />;
-    if (typeOfView === "template" && activeExercise)
-      return <LeftTemplateExerciseFlow />;
+    if (typeOfView === "template") return <LeftTemplateExerciseFlow />;
     if (typeOfView === "home") return null;
 
     return <BackHomeButton />;

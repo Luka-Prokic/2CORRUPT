@@ -17,10 +17,12 @@ export const createSessionSlice: StateCreator<WorkoutStore, [], [], {}> = (
   get
 ) => ({
   activeSession: null,
-  isWorkoutActive: false,
   completedSessions: [],
 
   startSession: (template?: WorkoutTemplate) => {
+    const { activeSession } = get();
+    if (activeSession) return;
+
     const now = new Date();
     const name =
       `${template?.name} ${now.toLocaleDateString("en-GB", {
@@ -31,7 +33,7 @@ export const createSessionSlice: StateCreator<WorkoutStore, [], [], {}> = (
         hour: "2-digit",
         minute: "2-digit",
       })}`;
-      
+
     const newSession: WorkoutSession = {
       id: `session-${nanoid()}`,
       templateId: template?.id || null,
@@ -47,7 +49,7 @@ export const createSessionSlice: StateCreator<WorkoutStore, [], [], {}> = (
     set({
       activeSession: newSession,
       activeExercise: newSession.layout?.[0] ?? null,
-      isWorkoutActive: true,
+      activeTemplate: null,
     });
   },
 
@@ -95,7 +97,6 @@ export const createSessionSlice: StateCreator<WorkoutStore, [], [], {}> = (
 
     set((state) => ({
       activeSession: null,
-      isWorkoutActive: false,
       completedSessions: [...state.completedSessions, completedSession],
     }));
   },
@@ -104,7 +105,7 @@ export const createSessionSlice: StateCreator<WorkoutStore, [], [], {}> = (
     const { clearActiveExercise } = get();
     clearActiveExercise();
 
-    set({ activeSession: null, isWorkoutActive: false });
+    set({ activeSession: null });
   },
 
   /**

@@ -136,7 +136,6 @@ export interface TemplateSlice {
 
 export interface SessionSlice {
   activeSession: WorkoutSession | null;
-  isWorkoutActive: boolean;
   completedSessions: WorkoutSession[];
   startSession: (template?: WorkoutTemplate) => void;
   completeSession: () => void;
