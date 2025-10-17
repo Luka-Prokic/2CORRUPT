@@ -11,8 +11,8 @@ export function ModalExitButton() {
   const { theme } = useSettingsStore();
 
   return (
-    <TouchableOpacity onPress={() => router.back()} style={{ padding: 10 }}>
-      <Ionicons name="close" size={24} color={theme.text} />
+    <TouchableOpacity onPress={() => router.back()}>
+      <Ionicons name="close" size={24} color={theme.tint} />
     </TouchableOpacity>
   );
 }
@@ -21,8 +21,8 @@ export function ModalBackButton() {
   const { theme } = useSettingsStore();
 
   return (
-    <TouchableOpacity onPress={() => router.back()} style={{ padding: 10 }}>
-      <Ionicons name="chevron-back" size={24} color={theme.text} />
+    <TouchableOpacity onPress={() => router.back()}>
+      <Ionicons name="chevron-back" size={24} color={theme.tint} />
     </TouchableOpacity>
   );
 }
@@ -39,7 +39,8 @@ export default function Layout() {
         <Stack
           screenOptions={{
             headerBackButtonDisplayMode: "minimal",
-            headerTintColor: theme.text,
+            headerTintColor: theme.tint,
+            headerTitleStyle: { color: theme.text },
             headerBlurEffect: themeMode,
             headerTransparent: true,
             contentStyle: {
@@ -102,7 +103,7 @@ export default function Layout() {
           <Stack.Screen
             name="add-exercise/[type]"
             options={{
-              presentation: "fullScreenModal",
+              // presentation: "fullScreenModal",
             }}
           />
 
@@ -110,7 +111,7 @@ export default function Layout() {
           <Stack.Screen
             name="swap-exercise"
             options={{
-              presentation: "fullScreenModal",
+              // presentation: "fullScreenModal",
             }}
           />
 
@@ -119,6 +120,22 @@ export default function Layout() {
             name="recap/[sessionId]"
             options={{
               presentation: "fullScreenModal",
+            }}
+          />
+
+          {/* Sessions */}
+          <Stack.Screen
+            name="sessions"
+            options={{
+              presentation: "card",
+            }}
+          />
+
+          {/* Templates */}
+          <Stack.Screen
+            name="templates"
+            options={{
+              presentation: "card",
             }}
           />
 

@@ -17,7 +17,6 @@ export function StartView() {
           gap: 8,
         }}
       >
-        {/* <BackHomeButton /> */}
         <PlanedSessionSelect />
         <QuickStartSelect />
         <CreateTemplateSelect />

@@ -28,7 +28,6 @@ export function NoExerciseView() {
         paddingBottom: CORRUPT_BUTTON_HEIGHT_FROM_BOTTOM,
       }}
     >
-      {/* <BackHomeButton /> */}
       <StrobeButton
         onPress={handlePress}
         style={{

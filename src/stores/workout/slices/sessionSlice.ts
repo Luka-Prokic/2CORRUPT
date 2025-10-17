@@ -24,15 +24,16 @@ export const createSessionSlice: StateCreator<WorkoutStore, [], [], {}> = (
     if (activeSession) return;
 
     const now = new Date();
-    const name =
-      `${template?.name} ${now.toLocaleDateString("en-GB", {
+    const name = `${template ? template?.name : ""} ${now.toLocaleDateString(
+      "en-GB",
+      {
         day: "2-digit",
         month: "2-digit",
-      })}` ||
-      `${now.toLocaleTimeString("en-GB", {
-        hour: "2-digit",
-        minute: "2-digit",
-      })}`;
+      }
+    )} ${now.toLocaleTimeString("en-GB", {
+      hour: "2-digit",
+      minute: "2-digit",
+    })}`;
 
     const newSession: WorkoutSession = {
       id: `session-${nanoid()}`,

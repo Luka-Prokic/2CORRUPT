@@ -9,6 +9,7 @@ import { BackButtonWidget } from "./mockups/BackButtonWidget";
 import { AllButtonWidget } from "./mockups/AllButtonWidget";
 import { TemplateWidget } from "./mockups/TemplateWidget";
 import { useSettingsStore } from "../../stores/settings";
+import { CalendarLilWidget } from "./widgets/calendar-widget/CalendarLilWidget";
 
 const WIDGET_SIZE = (WIDTH - 40) / 2; // 2 columns with padding
 
@@ -31,15 +32,7 @@ export function WidgetGrid() {
       {/* full-mock */}
       <AwardsWidget />
 
-      <BlankWidget
-        style={{
-          width: WIDGET_SIZE,
-          height: WIDGET_SIZE,
-          borderRadius: 28,
-          backgroundColor: hexToRGBA(theme.thirdBackground, 0.4),
-          marginBottom: 8,
-        }}
-      />
+      <CalendarLilWidget />
 
       <TemplateWidget />
 
@@ -61,7 +54,7 @@ export function WidgetGrid() {
           width: WIDGET_SIZE,
           height: (WIDGET_SIZE - 8) / 2,
           borderRadius: 28,
-          backgroundColor: hexToRGBA(theme.thirdBackground, 0.4),
+          backgroundColor: hexToRGBA(theme.text, 0.8),
         }}
       />
 

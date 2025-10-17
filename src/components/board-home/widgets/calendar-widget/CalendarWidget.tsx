@@ -5,7 +5,7 @@ import { hexToRGBA } from "../../../../features/HEXtoRGB";
 import { WIDTH } from "../../../../features/Dimensions";
 import { useWidgetUnit } from "../../../../features/widgets/useWidgetUnit";
 import { CalendarList } from "./CalendarList";
-import {DayPicker} from "./DayPicker";
+import { DayPicker } from "../../../sessions/DayPicker";
 
 interface CalendarWidgetProps {
   onDateChange?: (dateLabel: string, dateObj?: Date) => void;
@@ -255,7 +255,6 @@ export function CalendarWidget({
       }}
     >
       <DayPicker
-        key={selectedIndex}
         currentWeek={currentWeek}
         selectedIndex={selectedIndex}
         buttonSize={buttonSize}
