@@ -46,14 +46,12 @@ export function ProfileButton({ onPress }: ProfileButtonProps) {
         <View
           style={{
             position: "absolute",
-            height: 80,
-            width: 80,
-            top: 9,
-            left: 9,
+            height: 74,
+            width: 74,
+            top: 12,
+            left: 12,
             borderRadius: "50%",
             backgroundColor: theme.glow,
-            borderWidth: 4,
-            borderColor: theme.grayText,
           }}
         />
 

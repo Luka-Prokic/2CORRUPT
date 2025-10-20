@@ -92,8 +92,8 @@ export function TemplateWidget() {
           borderWidth: 1,
           opacity,
           transform: [{ scale }],
-          backgroundColor: hexToRGBA(theme.primaryBackground, 1),
-          borderColor: theme.border,
+          backgroundColor: theme.background,
+          borderColor: theme.handle,
         }}
       >
         <TouchableOpacity

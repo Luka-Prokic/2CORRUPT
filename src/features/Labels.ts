@@ -16,6 +16,11 @@ export const useMonthNames = () => {
   return t("calendar.months.long", { returnObjects: true }) as string[];
 };
 
+export const useMonthSlugs = () => {
+  const { t } = useTranslation();
+  return t("calendar.months.short", { returnObjects: true }) as string[];
+};
+
 export const useBodyParts = () => {
   const { t } = useTranslation();
   return [
@@ -156,7 +161,7 @@ export const EQUIPMENT = [
   "Kettlebell",
   "Ab Wheel",
   "Preacher Bench",
-  "Other"
+  "Other",
 ];
 
 export const CATEGORIES = [

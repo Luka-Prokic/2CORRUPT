@@ -17,8 +17,8 @@ export function AllButtonWidget() {
       style={{
         width: halfWidget,
         height: halfWidget,
-        backgroundColor: hexToRGBA(theme.thirdBackground, 0.4),
-        borderRadius: 28,
+        backgroundColor: hexToRGBA(theme.fourthBackground, 0.2),
+        borderRadius: 32,
         borderWidth: 1,
         borderColor: theme.border,
         alignItems: "center",
@@ -32,7 +32,7 @@ export function AllButtonWidget() {
         style={{
           fontSize: 18,
           fontWeight: "bold",
-          color: theme.grayText,
+          color: theme.text,
           textTransform: "uppercase",
           letterSpacing: 0.5,
         }}
