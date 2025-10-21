@@ -1,4 +1,4 @@
-import React, { Fragment, useRef, useState } from "react";
+import React, { Fragment, useRef, useState, useEffect } from "react";
 import { FlatList, View, ViewStyle } from "react-native";
 import { Animated } from "react-native";
 import { useSettingsStore } from "../../stores/settings";
@@ -35,7 +35,6 @@ export function CardSlider<T>({
 
   const scrollX = useRef(new Animated.Value(0)).current;
 
-  const [selectedDotIndex, setSelectedDotIndex] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const onScroll = Animated.event(
@@ -49,20 +48,8 @@ export function CardSlider<T>({
           newIndex !== currentIndex &&
           newIndex >= 0 &&
           newIndex < data.length
-        ) {
-          // Track scroll direction and update selected dot index
-          if (newIndex > currentIndex) {
-            // setLastScrollDirection("right");
-            // Move dot right, but don't go beyond index 4
-            setSelectedDotIndex((prev) => Math.min(4, prev + 1));
-          } else if (newIndex < currentIndex) {
-            // setLastScrollDirection("left");
-            // Move dot left, but don't go below index 0
-            setSelectedDotIndex((prev) => Math.max(0, prev - 1));
-          }
-
+        )
           setCurrentIndex(newIndex);
-        }
       },
     }
   );
@@ -91,53 +78,12 @@ export function CardSlider<T>({
         nestedScrollEnabled
       />
       {showDots && (
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "center",
-            ...styleDots,
-          }}
-        >
-          {Array.from({ length: 5 }).map((_, dotIndex) => {
-            // No-hop dots logic: dots move adjacent positions, pin at edges
-            let actualCardIndex;
-            let isActive = false;
-
-            if (data.length <= 5) {
-              // For 7 or fewer cards: direct mapping
-              actualCardIndex = dotIndex;
-              isActive = dotIndex === currentIndex;
-            } else {
-              // For more than 7 cards: implement no-hop behavior
-
-              // Calculate window start based on current card and selected dot position
-              const windowStart = currentIndex - selectedDotIndex;
-              actualCardIndex = windowStart + dotIndex;
-
-              // Check if this is the selected dot
-              isActive = dotIndex === selectedDotIndex;
-
-              // Ensure we don't go beyond available cards
-              actualCardIndex = Math.min(actualCardIndex, data.length - 1);
-            }
-
-            return (
-              <View
-                key={`dot-${actualCardIndex}-${dotIndex}`}
-                style={{
-                  width: 6,
-                  height: 6,
-                  borderRadius: 3,
-                  marginHorizontal: 3,
-                  backgroundColor: theme.text,
-                  transform: [{ scale: isActive ? 1.2 : 0.8 }],
-                  opacity: isActive ? 1 : 0.4,
-                }}
-              />
-            );
-          })}
-        </View>
+        <ScrollableDots
+          dataLength={data.length}
+          currentIndex={currentIndex}
+          theme={theme}
+          style={{ height: 32, ...styleDots }}
+        />
       )}
     </Fragment>
   );
@@ -191,3 +137,75 @@ function renderCard({
     </Animated.View>
   );
 }
+
+interface ScrollableDotsProps {
+  dataLength: number;
+  currentIndex: number;
+  maxVisible?: number;
+  theme: any;
+  style?: ViewStyle | ViewStyle[];
+}
+
+export const ScrollableDots = ({
+  dataLength,
+  currentIndex,
+  maxVisible = 5,
+  theme,
+  style,
+}: ScrollableDotsProps) => {
+  const flatListRef = useRef<FlatList>(null);
+
+  const data = Array.from({ length: dataLength });
+
+  const dotWidth = 12;
+  const windowWidth = dotWidth * maxVisible;
+
+  useEffect(() => {
+    if (!flatListRef.current) return;
+
+    let offset = 0;
+
+    if (currentIndex >= maxVisible) {
+      offset = dotWidth * (currentIndex - maxVisible + 1);
+    } else {
+      offset = 0;
+    }
+
+    flatListRef.current.scrollToOffset({
+      offset,
+      animated: true,
+    });
+  }, [currentIndex, maxVisible]);
+
+  return (
+    <View style={style}>
+      <FlatList
+        ref={flatListRef}
+        data={data}
+        keyExtractor={(_, index) => index.toString()}
+        horizontal
+        scrollEnabled={false}
+        showsHorizontalScrollIndicator={false}
+        renderItem={({ index }) => (
+          <View
+            style={{
+              width: 6,
+              height: 6,
+              borderRadius: 3,
+              marginHorizontal: 3,
+              backgroundColor: theme.text,
+              transform: [{ scale: index === currentIndex ? 1.2 : 0.8 }],
+              opacity: index === currentIndex ? 1 : 0.4,
+            }}
+          />
+        )}
+        contentContainerStyle={{
+          alignItems: "center",
+        }}
+        style={{
+          width: windowWidth,
+        }}
+      />
+    </View>
+  );
+};

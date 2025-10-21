@@ -56,6 +56,7 @@ export function TemplatesWidget() {
         styleSlider={{ width: widgetUnit - 10, height: cardHeight }}
         styleDots={{
           width: cardWidth,
+          alignItems: "center",
           height: 32,
           position: "absolute",
           bottom: 10,
