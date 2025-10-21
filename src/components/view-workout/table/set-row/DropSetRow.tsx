@@ -17,8 +17,7 @@ export function DropSetRow({
   index: number;
 }) {
   const { theme } = useSettingsStore();
-  const { removeDropSetFromActiveExercise, activeExercise, activeTemplate } =
-    useWorkoutStore();
+  const { removeDropSetFromActiveExercise, activeExercise } = useWorkoutStore();
 
   const handleRemoveDrop = (dropId: string) => {
     removeDropSetFromActiveExercise(set.id, dropId);
@@ -32,7 +31,7 @@ export function DropSetRow({
       style={{
         flexDirection: "row",
         backgroundColor: hexToRGBA(
-          activeTemplate ? theme.grayText : theme.fifthBackground,
+          theme.fifthBackground,
           set.isCompleted ? 1 : 0.2
         ),
         height: 44,

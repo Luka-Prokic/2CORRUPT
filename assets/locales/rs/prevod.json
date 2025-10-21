@@ -224,6 +224,10 @@
       ]
     }
   },
+  "summary-widget": {
+    "footer": "Napredak se zasniva na tvom nedeljnom cilju.",
+    "header": "Pregled"
+  },
 
   "set": {
     "add-drop-set": "Dodaj Drop",

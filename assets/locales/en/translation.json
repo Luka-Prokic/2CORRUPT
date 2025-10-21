@@ -223,6 +223,10 @@
       ]
     }
   },
+  "summary-widget": {
+    "footer": "Progress is based on your weekly goal.",
+    "header": "Summary"
+  },
 
   "set": {
     "add-drop-set": "Add Drop",

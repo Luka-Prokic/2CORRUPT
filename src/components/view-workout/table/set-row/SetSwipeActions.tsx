@@ -71,9 +71,7 @@ export function SetSwipeActions({
             alignItems: "center",
             justifyContent: "center",
             minWidth: 80,
-            backgroundColor: activeTemplate
-              ? theme.handle
-              : theme.fifthBackground,
+            backgroundColor: theme.fifthBackground,
           }}
           onPress={() => handleAddDropSet(set.id)}
         >

@@ -1,30 +1,13 @@
 import { useRef, useState } from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  Dimensions,
-  Animated,
-} from "react-native";
+import { View, Text, TouchableOpacity, Animated } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { hexToRGBA } from "../../../features/HEXtoRGB";
 import { useWorkoutStore, WorkoutTemplate } from "../../../stores/workout";
 import { router } from "expo-router";
 import { useUIStore } from "../../../stores/ui";
-
-const { width } = Dimensions.get("window");
-const widgetSize = (width - 40) / 2;
-const cardWidth = widgetSize * 0.8;
-const cardHeight = 74;
-
-interface TemplateCard {
-  id: string;
-  title: string;
-  description: string;
-  exercises: number;
-  duration: string;
-}
+import { useWidgetUnit } from "../../../features/widgets/useWidgetUnit";
+import { BounceButton } from "../../ui/buttons/BounceButton";
 
 export function TemplateWidget() {
   const { theme } = useSettingsStore();
@@ -32,11 +15,12 @@ export function TemplateWidget() {
   const { setTypeOfView } = useUIStore();
   const { editTemplate, startSession } = useWorkoutStore();
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [lastScrollDirection, setLastScrollDirection] = useState<
-    "left" | "right" | null
-  >(null);
-  const [selectedDotIndex, setSelectedDotIndex] = useState(0);
 
+  const [selectedDotIndex, setSelectedDotIndex] = useState(0);
+  const { widgetUnit } = useWidgetUnit();
+
+  const cardWidth = widgetUnit * 0.8;
+  const cardHeight = widgetUnit - 84;
   const { templates } = useWorkoutStore();
 
   function handleTemplatePress(template: WorkoutTemplate) {
@@ -67,14 +51,20 @@ export function TemplateWidget() {
     // Opacity: fade in/out as cards move in/out of view
     const opacity = scrollX.interpolate({
       inputRange,
-      outputRange: [0.6, 1, 0.6],
+      outputRange: [0.8, 1, 0.8],
       extrapolate: "clamp",
     });
 
     // Scale: main card is larger, others are smaller
     const scale = scrollX.interpolate({
       inputRange,
-      outputRange: [0.9, 1, 0.9],
+      outputRange: [0.95, 1, 0.95],
+      extrapolate: "clamp",
+    });
+
+    const rotateY = scrollX.interpolate({
+      inputRange,
+      outputRange: ["-30deg", "0deg", "30deg"],
       extrapolate: "clamp",
     });
 
@@ -91,14 +81,18 @@ export function TemplateWidget() {
           borderRadius: 16,
           borderWidth: 1,
           opacity,
-          transform: [{ scale }],
-          backgroundColor: theme.background,
-          borderColor: theme.handle,
+          transform: [
+            { scale },
+            { perspective: 600 }, // important for 3D depth
+            { rotateY },
+          ],
+          backgroundColor: theme.fifthBackground,
+          borderColor: theme.border,
         }}
       >
         <TouchableOpacity
           style={{
-            padding: 6,
+            padding: 8,
             height: cardHeight,
             justifyContent: "space-between",
           }}
@@ -110,16 +104,15 @@ export function TemplateWidget() {
               flexDirection: "row",
               justifyContent: "space-between",
               alignItems: "center",
-              marginBottom: 2,
+              gap: 2,
             }}
           >
             <Text
               style={{
-                fontSize: 14,
-                fontWeight: "600",
+                fontSize: 16,
+                fontWeight: "bold",
                 flex: 1,
-                marginRight: 4,
-                color: theme.text,
+                color: theme.secondaryBackground,
               }}
               numberOfLines={2}
             >
@@ -128,11 +121,13 @@ export function TemplateWidget() {
           </View>
           <Text
             style={{
-              fontSize: 8,
-              marginBottom: 2,
-              color: theme.grayText,
+              fontSize: 12,
+              fontWeight: "500",
+              color: theme.border,
             }}
+            adjustsFontSizeToFit
             numberOfLines={3}
+            minimumFontScale={0.5}
           >
             {tags}
           </Text>
@@ -147,14 +142,15 @@ export function TemplateWidget() {
               style={{
                 flexDirection: "row",
                 alignItems: "center",
+                width: "100%",
+                justifyContent: "flex-end",
               }}
             >
-              <Ionicons name="flash-outline" size={14} color={theme.grayText} />
               <Text
                 style={{
                   fontSize: 8,
-                  marginLeft: 2,
-                  color: theme.grayText,
+                  fontWeight: "bold",
+                  color: theme.secondaryText,
                 }}
               >
                 {item.layout?.length} exercises
@@ -180,11 +176,11 @@ export function TemplateWidget() {
         ) {
           // Track scroll direction and update selected dot index
           if (newIndex > currentIndex) {
-            setLastScrollDirection("right");
+            // setLastScrollDirection("right");
             // Move dot right, but don't go beyond index 6
-            setSelectedDotIndex((prev) => Math.min(6, prev + 1));
+            setSelectedDotIndex((prev) => Math.min(4, prev + 1));
           } else if (newIndex < currentIndex) {
-            setLastScrollDirection("left");
+            // setLastScrollDirection("left");
             // Move dot left, but don't go below index 0
             setSelectedDotIndex((prev) => Math.max(0, prev - 1));
           }
@@ -195,59 +191,39 @@ export function TemplateWidget() {
     }
   );
 
-  // Dynamic counter: shows how many cards are still hidden
-  const remainingCount = Math.max(0, templates.length - 1 - currentIndex);
+  function handleWidgetPress() {
+    router.push("/templates");
+  }
 
   return (
-    <View
+    <TouchableOpacity
+      onPress={handleWidgetPress}
       style={{
         borderRadius: 32,
-        paddingVertical: 12,
-        paddingHorizontal: 2,
+        padding: 4,
         borderWidth: 1,
-        justifyContent: "space-between",
         backgroundColor: hexToRGBA(theme.fourthBackground, 0.2),
         borderColor: theme.border,
-        width: widgetSize,
-        height: widgetSize,
+        width: widgetUnit,
+        height: widgetUnit,
       }}
     >
       {/* Header */}
       <View
         style={{
-          marginBottom: 8,
           paddingHorizontal: 8,
           flexDirection: "row",
           justifyContent: "space-between",
           alignItems: "center",
+          height: 34,
+          width: widgetUnit,
+          // marginBottom: 8,
         }}
       >
         <Text style={{ fontSize: 16, fontWeight: "bold", color: theme.text }}>
           Templates
         </Text>
-        {/* Add Button */}
-        <TouchableOpacity
-          style={{
-            width: 32,
-            height: 32,
-            borderRadius: 16,
-            justifyContent: "center",
-            alignItems: "center",
-            shadowColor: theme.shadow,
-            shadowOffset: {
-              width: 0,
-              height: 2,
-            },
-            shadowOpacity: 0.1,
-            shadowRadius: 4,
-            elevation: 4,
-            backgroundColor: theme.tint,
-          }}
-          onPress={onAddTemplate}
-          activeOpacity={0.8}
-        >
-          <Ionicons name="add" size={20} color={theme.background} />
-        </TouchableOpacity>
+        <Ionicons name="chevron-forward" color={theme.accent} size={24} />
       </View>
 
       {/* Horizontal Card List */}
@@ -263,12 +239,8 @@ export function TemplateWidget() {
         decelerationRate="fast"
         onScroll={onScroll}
         scrollEventThrottle={16}
-        style={{ width: "100%" }}
+        style={{ width: widgetUnit - 10 }}
         nestedScrollEnabled={true}
-        // Center the first card
-        contentOffset={{ x: 0, y: 0 }}
-        // Ensure proper centering behavior
-        centerContent={false}
       />
 
       {/* Simple Static Dot Indicator (Max 7 dots) */}
@@ -276,16 +248,19 @@ export function TemplateWidget() {
         style={{
           flexDirection: "row",
           alignItems: "center",
-          width: "100%",
-          paddingHorizontal: 8,
+          justifyContent: "center",
+          position: "absolute",
+          bottom: 10,
+          width: widgetUnit - 42,
+          height: 32,
         }}
       >
-        {Array.from({ length: 7 }).map((_, dotIndex) => {
+        {Array.from({ length: 5 }).map((_, dotIndex) => {
           // No-hop dots logic: dots move adjacent positions, pin at edges
           let actualCardIndex;
           let isActive = false;
 
-          if (templates.length <= 7) {
+          if (templates.length <= 5) {
             // For 7 or fewer cards: direct mapping
             actualCardIndex = dotIndex;
             isActive = dotIndex === currentIndex;
@@ -311,32 +286,40 @@ export function TemplateWidget() {
                 height: 6,
                 borderRadius: 3,
                 marginHorizontal: 3,
-                backgroundColor: theme.accent,
+                backgroundColor: theme.text,
                 transform: [{ scale: isActive ? 1.2 : 0.8 }],
                 opacity: isActive ? 1 : 0.4,
               }}
             />
           );
         })}
-
-        {/* Counter */}
-        <View
-          style={{
-            marginLeft: 8,
-            paddingHorizontal: 8,
-            paddingVertical: 4,
-            borderRadius: 12,
-            backgroundColor: hexToRGBA(theme.accent, 0.2),
-            opacity: remainingCount > 0 ? 1 : 0,
-          }}
-        >
-          <Text
-            style={{ fontSize: 12, fontWeight: "600", color: theme.accent }}
-          >
-            +{remainingCount}
-          </Text>
-        </View>
       </View>
-    </View>
+      {/* Add Button */}
+      <BounceButton
+        style={{
+          position: "absolute",
+          bottom: 10,
+          right: 10,
+          width: 32,
+          height: 32,
+          borderRadius: 16,
+          justifyContent: "center",
+          alignItems: "center",
+          shadowColor: theme.shadow,
+          shadowOffset: {
+            width: 0,
+            height: 2,
+          },
+          shadowOpacity: 0.1,
+          shadowRadius: 4,
+          elevation: 4,
+          backgroundColor: theme.tint,
+        }}
+        onPress={onAddTemplate}
+        activeOpacity={0.8}
+      >
+        <Ionicons name="add" size={24} color={theme.background} />
+      </BounceButton>
+    </TouchableOpacity>
   );
 }

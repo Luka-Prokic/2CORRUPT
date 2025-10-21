@@ -31,6 +31,7 @@ export const Colors = {
     error: "#FF3B30",
     border: "#F2F2F7",
     input: "#FFFFFF",
+    info: "#8E8E93",
   },
 
   peachy: {
@@ -57,6 +58,7 @@ export const Colors = {
     error: "#FF3B30",
     border: "#F2F2F7",
     input: "#FFFFFF",
+    info: "#8E8E93",
   },
 
   oldschool: {
@@ -83,6 +85,7 @@ export const Colors = {
     error: "#FF3B30",
     border: "#F2F2F7",
     input: "#FFFFFF",
+    info: "#8E8E93",
   },
 
   dark: {
@@ -109,6 +112,7 @@ export const Colors = {
     error: "#FF3B30",
     border: "#3A3A3C",
     input: "#1C1C1E",
+    info: "#D1D1D6",
   },
 
   preworkout: {
@@ -135,6 +139,7 @@ export const Colors = {
     error: "#FF3B30",
     border: "#3A3A3C",
     input: "#1C1C1E",
+    info: "#D1D1D6",
   },
 
   Corrupted: {
@@ -161,5 +166,6 @@ export const Colors = {
     error: "#FF3B30",
     border: "#3A3A3C",
     input: "#1C1C1E",
+    info: "#D1D1D6",
   },
 };
