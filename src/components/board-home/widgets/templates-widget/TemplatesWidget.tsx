@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useSettingsStore } from "../../../../stores/settingsStore";
 import { hexToRGBA } from "../../../../features/HEXtoRGB";
@@ -8,7 +8,7 @@ import { router } from "expo-router";
 import { useUIStore } from "../../../../stores/ui";
 import { useWidgetUnit } from "../../../../features/widgets/useWidgetUnit";
 import { BounceButton } from "../../../ui/buttons/BounceButton";
-import { TemplateCard } from "./TemplateCard";
+import { TemplateCard } from "./cards/TemplateCard";
 import { CardSlider } from "../../../ui/CardSlider";
 import { TemplatesHeader } from "./TemplatesHeader";
 
@@ -63,7 +63,7 @@ export function TemplatesWidget() {
         }}
       />
 
-      {/* Add Button */}
+      {/* New Template Button */}
       <BounceButton
         style={{
           position: "absolute",

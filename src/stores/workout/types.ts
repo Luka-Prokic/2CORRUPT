@@ -124,12 +124,12 @@ export interface TemplateSlice {
     exercise: SessionExercise,
     afterItemId?: string
   ) => void;
-  removeExercisesFromTemplate: (
-    exerciseIds: string[]
-  ) => void;
-  reorderTemplateItems: (
-    newOrder: SessionExercise[]
-  ) => void;
+  removeExercisesFromTemplate: (exerciseIds: string[]) => void;
+  reorderTemplateItems: (newOrder: SessionExercise[]) => void;
+
+  deleteTemplate: (templateId: string) => void;
+
+  cloneTemplate: (templateId: string, tempName: string) => void;
 
   getTemplateById: (templateId: string) => WorkoutTemplate | null;
 }

@@ -12,6 +12,7 @@
     "upload": "Upload",
     "preview": "Preview",
     "download": "Download",
+    "clone": "Clone",
     "open": "Open",
     "view": "View"
   },
@@ -70,47 +71,6 @@
     "creatingAccount": "Creating Your Account...",
     "createAccount": "Create Your Account",
     "signIn-description": "Every workout can be logged offline, so nothing slows you down. Sign in to save your progress, share routines, and pick up where you left off on any device. Your exercises, sets, and personal records are always within reach."
-  },
-  "models": {
-    "models": "Models",
-    "my-models": "My Models",
-    "upload-model": "Upload Model",
-    "edit-model": "Edit Model",
-    "create-model": "Create Model",
-    "model-details": "Model Details",
-    "no-models": "You haven't uploaded any models yet.",
-    "open-model": "Open Model",
-    "delete-model": "Delete Model",
-    "preview-model": "Preview Model",
-    "download-model": "Download Model",
-    "last-updated": "Last Updated",
-    "created-at": "Created At",
-    "uploaded-by": "Uploaded By",
-    "tags": "Tags",
-    "file-size": "File Size",
-    "file-type": "File Type",
-    "views": "{{count}} views",
-    "views_0": "No views",
-    "views_1": "1 view",
-    "views_other": "{{count}} views",
-    "search-by-name": "Search by name",
-    "sort-by": "Sort by",
-    "sort-options": {
-      "recent": "Most Recent",
-      "popular": "Most Viewed",
-      "name": "Name"
-    }
-  },
-  "viewer": {
-    "scene": "Scene",
-    "controls": "Controls",
-    "rotate": "Rotate",
-    "zoom": "Zoom",
-    "pan": "Pan",
-    "fullscreen": "Fullscreen",
-    "background": "Background",
-    "wireframe": "Wireframe",
-    "reset-view": "Reset View"
   },
   "example": {
     "create-title": "Create Example",
@@ -228,7 +188,11 @@
     "header": "Summary"
   },
   "templates-widget": {
-    "header": "Templates"
+    "header": "Templates",
+    "main-info": "Customize your workout template — rename it, adjust details, start a session from it, make a copy for variations, or delete it if it's no longer needed.",
+    "clone-info": "Duplicate this template to create a new version while keeping the original intact. Changing the name can help you distinguish between them.",
+    "delete-info": "Deleting this template can't be undone. Your previous workouts won't be affected.",
+    "active-session-warning": "Active workout in progress. Finish it before starting a new session or editing templates."
   },
 
   "set": {

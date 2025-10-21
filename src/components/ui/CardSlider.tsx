@@ -77,7 +77,7 @@ export function CardSlider<T>({
         style={styleSlider}
         nestedScrollEnabled
       />
-      {showDots && (
+      {showDots && data.length > 1 && (
         <ScrollableDots
           dataLength={data.length}
           currentIndex={currentIndex}
@@ -146,6 +146,9 @@ interface ScrollableDotsProps {
   style?: ViewStyle | ViewStyle[];
 }
 
+const DOT_WIDTH = 6;
+const DOT_MARGIN = 3;
+
 export const ScrollableDots = ({
   dataLength,
   currentIndex,
@@ -157,8 +160,9 @@ export const ScrollableDots = ({
 
   const data = Array.from({ length: dataLength });
 
-  const dotWidth = 12;
-  const windowWidth = dotWidth * maxVisible;
+  const dotWidth = DOT_MARGIN * 2 + DOT_WIDTH; // space of one dot
+  const shownDots = dataLength > maxVisible ? maxVisible : dataLength; // count dots up to maxVisible value
+  const windowWidth = dotWidth * shownDots; // window of dots that flatlist provides
 
   useEffect(() => {
     if (!flatListRef.current) return;
@@ -189,10 +193,10 @@ export const ScrollableDots = ({
         renderItem={({ index }) => (
           <View
             style={{
-              width: 6,
-              height: 6,
-              borderRadius: 3,
-              marginHorizontal: 3,
+              width: DOT_WIDTH,
+              height: DOT_WIDTH,
+              borderRadius: DOT_MARGIN,
+              marginHorizontal: DOT_MARGIN,
               backgroundColor: theme.text,
               transform: [{ scale: index === currentIndex ? 1.2 : 0.8 }],
               opacity: index === currentIndex ? 1 : 0.4,

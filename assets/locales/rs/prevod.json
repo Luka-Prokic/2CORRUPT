@@ -12,6 +12,7 @@
     "upload": "Otpremi",
     "preview": "Pregledaj",
     "download": "Preuzmi",
+    "clone": "Dupliraj",
     "open": "Otvori",
     "view": "Pogledaj"
   },
@@ -71,47 +72,6 @@
     "creatingAccount": "Kreiranje Naloga...",
     "createAccount": "Kreiraj Nalog",
     "signIn-description": "Svaki trening možeš sačuvati offline, tako da ti ništa ne koči. Prijavi se da sačuvaš svoj napredak, podeli rutine i nastavi tačno tamo gde si stao i na drugim uređajima. Tvoje vežbe, setovi i lični rekordi su uvek na dohvatu ruke."
-  },
-  "models": {
-    "models": "Modeli",
-    "my-models": "Moji modeli",
-    "upload-model": "Otpremi model",
-    "edit-model": "Uredi model",
-    "create-model": "Kreiraj model",
-    "model-details": "Detalji modela",
-    "no-models": "Još uvek nisi otpremio nijedan model.",
-    "open-model": "Otvori model",
-    "delete-model": "Obriši model",
-    "preview-model": "Pregledaj model",
-    "download-model": "Preuzmi model",
-    "last-updated": "Poslednja izmena",
-    "created-at": "Kreirano",
-    "uploaded-by": "Otpremio",
-    "tags": "Oznake",
-    "file-size": "Veličina fajla",
-    "file-type": "Tip fajla",
-    "views": "{{count}} pregleda",
-    "views_0": "Nema pregleda",
-    "views_1": "1 pregled",
-    "views_other": "{{count}} pregleda",
-    "search-by-name": "Pretraži po nazivu",
-    "sort-by": "Sortiraj po",
-    "sort-options": {
-      "recent": "Najnovije",
-      "popular": "Najgledanije",
-      "name": "Nazivu"
-    }
-  },
-  "viewer": {
-    "scene": "Scena",
-    "controls": "Kontrole",
-    "rotate": "Rotiraj",
-    "zoom": "Zumiraj",
-    "pan": "Pomeraj",
-    "fullscreen": "Ceo ekran",
-    "background": "Pozadina",
-    "wireframe": "Wireframe",
-    "reset-view": "Resetuj pogled"
   },
   "example": {
     "create-title": "Napravi primer",
@@ -229,7 +189,11 @@
     "header": "Pregled"
   },
   "templates-widget": {
-    "header": "Šabloni"
+    "header": "Šabloni",
+    "main-info": "Prilagodite svoj šablon treninga — promenite naziv, izmenite detalje, započnite trening na osnovu njega, napravite kopiju za varijacije ili ga obrišite ako vam više nije potreban.",
+    "clone-info": "Duplirajte ovaj šablon da napravite novu verziju, dok original ostaje nepromenjen. Promena imena može vam pomoći da ih razlikujete.",
+    "delete-info": "Brisanje šablona je trajno. Tvoji prethodni treninzi neće biti obrisani.",
+    "active-session-warning": "Trening je u toku. Završite ga pre nego što započnete novi ili uređujete šablone."
   },
 
   "set": {

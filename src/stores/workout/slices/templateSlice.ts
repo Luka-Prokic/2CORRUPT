@@ -257,6 +257,52 @@ export const createTemplateSlice: StateCreator<
     }));
   },
 
+  deleteTemplate: (templateId: string) => {
+    const { clearActiveExercise, templates, historyTemplates, activeTemplate } =
+      get();
+    if (!activeTemplate) return;
+
+    set((state) => {
+      // Remove from templates
+      const newTemplates = templates.filter((t) => t.id !== templateId);
+
+      // Keep it in historyTemplates
+      const stillInHistory = historyTemplates.some((t) => t.id === templateId)
+        ? state.historyTemplates
+        : [...state.historyTemplates, activeTemplate];
+
+      return {
+        templates: newTemplates,
+        activeTemplate: null,
+        historyTemplates: stillInHistory,
+      };
+    });
+
+    clearActiveExercise();
+  },
+
+  cloneTemplate: (templateId: string, tempName: string) => {
+    const { templates } = get();
+    const templateToClone = templates.find((t) => t.id === templateId);
+    if (!templateToClone) return null;
+
+    const clonedTemplate: WorkoutTemplate = {
+      ...templateToClone,
+      id: `template-${nanoid()}`, // new unique id
+      name: tempName,
+      version: 1,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+
+    set((state) => ({
+      templates: [...state.templates, clonedTemplate],
+      // historyTemplates stays unchanged
+    }));
+
+    return clonedTemplate.id;
+  },
+
   /** Get template by id */
   getTemplateById: (templateId: string) =>
     get().templates.find((t) => t.id === templateId) || null,

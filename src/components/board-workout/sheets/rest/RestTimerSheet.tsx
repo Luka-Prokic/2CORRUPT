@@ -102,7 +102,7 @@ export function RestTimerSheet() {
           fontSize: 14,
           color: theme.grayText,
           textAlign: "justify",
-          marginBottom: 12,
+          marginBottom: 16,
         }}
       >
         {t("workout-board.rest-timer-description")}

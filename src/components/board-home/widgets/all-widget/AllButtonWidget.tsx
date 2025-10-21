@@ -1,10 +1,10 @@
 import React from "react";
 import { Text } from "react-native";
-import { useSettingsStore } from "../../../stores/settingsStore";
+import { useSettingsStore } from "../../../../stores/settingsStore";
 import { useTranslation } from "react-i18next";
-import { useWidgetUnit } from "../../../features/widgets/useWidgetUnit";
-import { hexToRGBA } from "../../../features/HEXtoRGB";
-import { BounceButton } from "../../ui/buttons/BounceButton";
+import { useWidgetUnit } from "../../../../features/widgets/useWidgetUnit";
+import { hexToRGBA } from "../../../../features/HEXtoRGB";
+import { BounceButton } from "../../../ui/buttons/BounceButton";
 import { router } from "expo-router";
 
 export function AllButtonWidget() {
