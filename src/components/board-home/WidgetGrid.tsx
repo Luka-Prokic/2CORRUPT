@@ -7,11 +7,10 @@ import { WIDTH } from "../../features/Dimensions";
 import { hexToRGBA } from "../../features/HEXtoRGB";
 import { BackButtonWidget } from "./mockups/BackButtonWidget";
 import { AllButtonWidget } from "./mockups/AllButtonWidget";
-import { TemplateWidget } from "./mockups/TemplateWidget";
 import { useSettingsStore } from "../../stores/settings";
-import { CalendarLilWidget } from "./widgets/calendar-widget/CalendarLilWidget";
 import { SplitsWidget } from "./widgets/splits-widget/SplitsWidget";
 import { SummaryWidget } from "./widgets/summary-widget/SummaryWidget";
+import { TemplatesWidget } from "./widgets/templates-widget/TemplatesWidget";
 
 const WIDGET_SIZE = (WIDTH - 40) / 2; // 2 columns with padding
 
@@ -34,10 +33,9 @@ export function WidgetGrid() {
       {/* full-mock */}
       <AwardsWidget />
 
-      {/* <CalendarLilWidget /> */}
       <SummaryWidget />
 
-      <TemplateWidget />
+      <TemplatesWidget />
 
       <View
         style={{

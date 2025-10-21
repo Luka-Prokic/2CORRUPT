@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import Svg, { Circle } from "react-native-svg";
 import Animated, {
   useSharedValue,
@@ -15,7 +15,7 @@ import { useWidgetUnit } from "../../../features/widgets/useWidgetUnit";
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
-interface ProgressRingsProps {
+interface ProgressRingProps {
   compareWith: number;
   compareTo?: number;
   content?: React.ReactNode;
@@ -25,7 +25,7 @@ export function ProgressRing({
   compareWith = 0,
   compareTo = 5,
   content,
-}: ProgressRingsProps) {
+}: ProgressRingProps) {
   const { theme } = useSettingsStore();
   const { widgetUnit } = useWidgetUnit();
 

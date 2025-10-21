@@ -227,6 +227,9 @@
     "footer": "Progress is based on your weekly goal.",
     "header": "Summary"
   },
+  "templates-widget": {
+    "header": "Templates"
+  },
 
   "set": {
     "add-drop-set": "Add Drop",

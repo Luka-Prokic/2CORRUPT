@@ -228,6 +228,9 @@
     "footer": "Napredak se zasniva na tvom nedeljnom cilju.",
     "header": "Pregled"
   },
+  "templates-widget": {
+    "header": "Šabloni"
+  },
 
   "set": {
     "add-drop-set": "Dodaj Drop",
