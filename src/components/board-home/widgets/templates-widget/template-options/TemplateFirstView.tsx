@@ -10,9 +10,8 @@ import { Text } from "react-native";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { useSettingsStore } from "../../../../../stores/settings";
 import { useUIStore } from "../../../../../stores/ui";
-import { router } from "expo-router";
+import { router, usePathname } from "expo-router";
 import { TemplateBottomSheetViews } from "./TemplateBottomSheet";
-import { t } from "i18next";
 import { useTranslation } from "react-i18next";
 
 interface TemplateFirstViewProps {
@@ -28,6 +27,7 @@ export const TemplateFirstView = forwardRef<
   const { theme } = useSettingsStore();
   const { setTypeOfView } = useUIStore();
   const { t } = useTranslation();
+  const pathname = usePathname();
 
   const closeSheet = () => {
     (ref as React.RefObject<BottomSheetModal>)?.current?.close();
@@ -37,6 +37,7 @@ export const TemplateFirstView = forwardRef<
     setTimeout(() => {
       startSession(template);
       setTypeOfView("workout");
+      if (pathname == "/templates") router.back();
       router.back();
     }, 200);
 
@@ -47,6 +48,7 @@ export const TemplateFirstView = forwardRef<
     setTimeout(() => {
       editTemplate(template.id);
       setTypeOfView("template");
+      if (pathname == "/templates") router.back();
       router.back();
     }, 200);
     closeSheet();

@@ -258,24 +258,13 @@ export const createTemplateSlice: StateCreator<
   },
 
   deleteTemplate: (templateId: string) => {
-    const { clearActiveExercise, templates, historyTemplates, activeTemplate } =
-      get();
-    if (!activeTemplate) return;
+    const { clearActiveExercise, templates } = get();
 
-    set((state) => {
-      // Remove from templates
-      const newTemplates = templates.filter((t) => t.id !== templateId);
+    const newTemplates = templates.filter((t) => t.id !== templateId);
 
-      // Keep it in historyTemplates
-      const stillInHistory = historyTemplates.some((t) => t.id === templateId)
-        ? state.historyTemplates
-        : [...state.historyTemplates, activeTemplate];
-
-      return {
-        templates: newTemplates,
-        activeTemplate: null,
-        historyTemplates: stillInHistory,
-      };
+    set({
+      templates: newTemplates,
+      activeTemplate: null,
     });
 
     clearActiveExercise();
@@ -288,7 +277,7 @@ export const createTemplateSlice: StateCreator<
 
     const clonedTemplate: WorkoutTemplate = {
       ...templateToClone,
-      id: `template-${nanoid()}`, // new unique id
+      id: `template-${nanoid()}`,
       name: tempName,
       version: 1,
       createdAt: new Date().toISOString(),

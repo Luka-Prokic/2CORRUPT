@@ -50,7 +50,9 @@ export default function Layout() {
             }}
           >
             {/* Home */}
-            <Stack.Screen name="index" />
+            <Stack.Screen
+              name="index"
+            />
 
             {/* HomeBoard */}
             <Stack.Screen

@@ -5,6 +5,7 @@
     "save": "Sačuvaj",
     "reset": "Resetuj",
     "cancel": "Otkaži",
+    "select": "Označi",
     "delete": "Obriši",
     "discard": "Odbaci",
     "search": "Pretraži",
@@ -91,7 +92,8 @@
     "profile": "Nalog",
     "settings": "Podešavanja",
     "addExercise": "Dodaj Vežbu",
-    "swapExercise": "Zameni Vežbu"
+    "swapExercise": "Zameni Vežbu",
+    "templates": "Šabloni"
   },
   "theme": {
     "dark": "Tamna",
