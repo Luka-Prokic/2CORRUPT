@@ -32,6 +32,7 @@ export const createTemplateSlice: StateCreator<
         }
       : {
           id: `template-${nanoid()}`,
+          primeId: `prime-template-${nanoid()}`,
           name: "New Template",
           description: "",
           layout: [],
@@ -75,11 +76,9 @@ export const createTemplateSlice: StateCreator<
     let template: WorkoutTemplate | null = null;
 
     if (templateId) {
-      // Get existing template
       template = getTemplateById(templateId);
       if (!template) return null; // invalid id
     } else {
-      // No id → create new template in the background
       const newId = createTemplate();
       template = getTemplateById(newId);
     }
@@ -140,30 +139,31 @@ export const createTemplateSlice: StateCreator<
 
   /** Discard changes: restore old template and remove draft */
   discardTemplate: () => {
-    const { clearActiveExercise, activeTemplate } = get();
+    const { clearActiveExercise, activeTemplate, historyTemplates, templates } =
+      get();
     if (!activeTemplate) return;
+    const draft = activeTemplate;
 
-    set((state) => {
-      const draft = activeTemplate;
+    // Check if this template ever existed before (by primeId)
+    const previous = historyTemplates
+      .filter((t) => t.primeId === draft.primeId)
+      .sort((a, b) => b.version - a.version)[0];
 
-      // Check if this template ever existed before (by version or presence in history)
-      const previous = state.historyTemplates
-        .filter((t) => t.name === draft.name)
-        .sort((a, b) => b.version - a.version)[0];
+    // Always remove the current one
+    const filteredTemplates = templates.filter((t) => t.id !== draft.id);
 
-      // Always remove the current one
-      const newTemplates = state.templates.filter((t) => t.id !== draft.id);
+    const newTemplates = previous
+      ? [...filteredTemplates, previous]
+      : filteredTemplates;
 
-      // Build new state depending on whether it's new or existing
-      const nextState = {
-        templates: previous ? [...newTemplates, previous] : newTemplates,
-        activeTemplate: null,
-        historyTemplates: previous
-          ? state.historyTemplates
-          : state.historyTemplates.filter((t) => t.id !== draft.id),
-      };
+    const newHistory = previous
+      ? historyTemplates
+      : historyTemplates.filter((t) => t.id !== draft.id);
 
-      return nextState;
+    set({
+      templates: newTemplates,
+      activeTemplate: null,
+      historyTemplates: newHistory,
     });
 
     clearActiveExercise();

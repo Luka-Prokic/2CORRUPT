@@ -2,8 +2,10 @@ import { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import { Animated } from "react-native";
 import { WIDTH } from "../Dimensions";
 import { DAY_LABELS } from "../Labels";
+import { useTranslation } from "react-i18next";
 
 export function useCalendarNavigation() {
+  const { t } = useTranslation();
   const [weeks, setWeeks] = useState<Date[][]>([]);
   const [currentWeekIndex, setCurrentWeekIndex] = useState(0);
   const [selectedDate, setSelectedDateState] = useState(new Date());
@@ -140,11 +142,16 @@ export function useCalendarNavigation() {
     };
     const formatted = date.toLocaleDateString("en-GB", options);
 
-    if (isTodayDate) return `Today, ${formatted}`;
-    if (isYesterday) return `Yesterday, ${formatted}`;
+    if (isTodayDate) return `${t("calendar.today")}, ${formatted}`;
+    if (isYesterday) return `${t("calendar.yesterday")}, ${formatted}`;
 
-    const weekday = date.toLocaleDateString("en-GB", { weekday: "long" });
-    return `${weekday}, ${formatted}`;
+    const weekday = date
+      .toLocaleDateString("en-GB", {
+        weekday: "long",
+      })
+      .toLowerCase();
+
+    return `${t(`calendar.days.long.${weekday}`)}, ${formatted}`;
   }
 
   const dateTittle = formatFriendlyDate(selectedDate);
@@ -184,7 +191,7 @@ export function useCalendarNavigation() {
 
     // Update state only if needed
     if (newDate.toDateString() !== selectedDate.toDateString()) {
-        setSelectedDateState(newDate);
+      setSelectedDateState(newDate);
       setSelectedIndex(newIndex);
     }
   }, [currentWeekIndex]);

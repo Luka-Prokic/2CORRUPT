@@ -61,13 +61,24 @@ export function TemplateSelectCard({
           backgroundColor: isSelected ? theme.text : theme.fifthBackground,
           borderColor: theme.border,
           borderRadius: 32,
-          padding: 10,
+          padding: 16,
           borderWidth: 1,
-          gap: 4,
+          justifyContent: "space-between",
         }}
         onPress={handlePress}
         activeOpacity={0.7}
       >
+        {/* Top row: select checkbox */}
+        {selectMode && (
+          <Ionicons
+            name={isSelected ? "checkbox" : "square-outline"}
+            size={24}
+            color={theme.text}
+            style={{ alignSelf: "flex-end" }}
+          />
+        )}
+
+        {/* Template name */}
         <Text
           style={{
             fontSize: 16,
@@ -78,35 +89,34 @@ export function TemplateSelectCard({
         >
           {template.name}
         </Text>
-        <Text
-          style={{
-            fontSize: 16,
-            fontWeight: "500",
-            color: theme.border,
-          }}
-          adjustsFontSizeToFit
-          numberOfLines={3}
-          minimumFontScale={0.5}
-        >
-          {tags}
-        </Text>
+
+        {/* Tags */}
+        {template.tags && template.tags.length > 0 && (
+          <Text
+            style={{
+              fontSize: 12,
+              color: theme.secondaryText,
+            }}
+            numberOfLines={2}
+            ellipsizeMode="tail"
+          >
+            {template.tags.join(", ")}
+          </Text>
+        )}
+
+        {/* Bottom: exercise count */}
         <Text
           style={{
             fontSize: 12,
             fontWeight: "bold",
             color: theme.secondaryText,
+            alignSelf: "flex-end",
           }}
         >
           {template.layout?.length} exercises
         </Text>
-        {selectMode ? (
-          isSelected ? (
-            <Ionicons name="checkbox" size={44} color={theme.text} />
-          ) : (
-            <Ionicons name="square-outline" size={44} color={theme.text} />
-          )
-        ) : null}
       </TouchableOpacity>
+
       <TemplateBottomSheet template={template} ref={bottomSheetRef} />
     </Fragment>
   );

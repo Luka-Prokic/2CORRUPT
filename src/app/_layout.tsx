@@ -39,6 +39,7 @@ export default function Layout() {
           <StatusBar style={statusBarStyle} />
           <Stack
             screenOptions={{
+              title: null,
               headerBackButtonDisplayMode: "minimal",
               headerTintColor: theme.tint,
               headerTitleStyle: { color: theme.text },
@@ -50,17 +51,10 @@ export default function Layout() {
             }}
           >
             {/* Home */}
-            <Stack.Screen
-              name="index"
-            />
+            <Stack.Screen name="index" />
 
             {/* HomeBoard */}
-            <Stack.Screen
-              name="home-board"
-              options={{
-                presentation: "card",
-              }}
-            />
+            <Stack.Screen name="home-board" />
 
             {/* Settings */}
             <Stack.Screen
@@ -79,48 +73,19 @@ export default function Layout() {
             />
 
             {/* WorkoutBoard */}
-            <Stack.Screen
-              name="workout-board"
-              options={{
-                presentation: "card",
-              }}
-            />
+            <Stack.Screen name="workout-board" />
 
             {/* TemplateBoard */}
-            <Stack.Screen
-              name="template-board"
-              options={{
-                presentation: "card",
-              }}
-            />
+            <Stack.Screen name="template-board" />
 
             {/* StartBoard */}
-            <Stack.Screen
-              name="start-board"
-              options={{
-                presentation: "card",
-              }}
-            />
+            <Stack.Screen name="start-board" />
 
             {/* Add Exercise */}
-            <Stack.Screen
-              name="add-exercise/[type]"
-              options={
-                {
-                  // presentation: "fullScreenModal",
-                }
-              }
-            />
+            <Stack.Screen name="add-exercise/[type]" />
 
             {/* Swap Exercise */}
-            <Stack.Screen
-              name="swap-exercise"
-              options={
-                {
-                  // presentation: "fullScreenModal",
-                }
-              }
-            />
+            <Stack.Screen name="swap-exercise" />
 
             {/* Session Recap */}
             <Stack.Screen
@@ -131,20 +96,13 @@ export default function Layout() {
             />
 
             {/* Sessions */}
-            <Stack.Screen
-              name="sessions"
-              options={{
-                presentation: "card",
-              }}
-            />
+            <Stack.Screen name="sessions" />
 
             {/* Templates */}
-            <Stack.Screen
-              name="templates"
-              options={{
-                presentation: "card",
-              }}
-            />
+            <Stack.Screen name="templates" />
+
+            {/* Splits */}
+            <Stack.Screen name="splits" />
 
             {/* All */}
             <Stack.Screen

@@ -1,0 +1,110 @@
+import { StateCreator } from "zustand";
+import { nanoid } from "nanoid";
+import { WorkoutStore, SplitPlanSlice, SplitPlan } from "../types";
+
+export const createSplitPlanSlice: StateCreator<
+  WorkoutStore,
+  [],
+  [],
+  SplitPlanSlice
+> = (set, get) => ({
+  splitPlans: [],
+  activeSplitPlan: null,
+
+  createSplitPlan: (plan?: Partial<SplitPlan>) => {
+    const { splitPlans } = get();
+    const id = nanoid();
+    const newPlan: SplitPlan = {
+      id,
+      name: plan?.name || "New Split Plan",
+      split: plan?.split || [],
+      description: plan?.description,
+      metadata: plan?.metadata,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+    set({ splitPlans: [...splitPlans, newPlan] });
+    return id;
+  },
+
+  editSplitPlan: (planId: string) => {
+    const plan = get().splitPlans.find((p) => p.id === planId) || null;
+    return plan;
+  },
+
+  updateSplitPlanField: <K extends keyof SplitPlan>(
+    planId: string,
+    field: K,
+    value: SplitPlan[K]
+  ) => {
+    set((state) => ({
+      splitPlans: state.splitPlans.map((p) =>
+        p.id === planId
+          ? { ...p, [field]: value, updatedAt: new Date().toISOString() }
+          : p
+      ),
+    }));
+  },
+
+  deleteSplitPlan: (planId: string) => {
+    set((state) => ({
+      splitPlans: state.splitPlans.filter((p) => p.id !== planId),
+      activeSplitPlan:
+        state.activeSplitPlan?.id === planId ? null : state.activeSplitPlan,
+    }));
+  },
+
+  addWorkoutToDay: (planId: string, dayIndex: number, templateId: string) => {
+    set((state) => ({
+      splitPlans: state.splitPlans.map((p) => {
+        if (p.id !== planId) return p;
+        const split = [...p.split];
+        if (!split[dayIndex]) split[dayIndex] = { workouts: [] };
+        split[dayIndex] = {
+          ...split[dayIndex],
+          workouts: [...split[dayIndex].workouts, templateId],
+        };
+        return { ...p, split, updatedAt: new Date().toISOString() };
+      }),
+    }));
+  },
+
+  removeWorkoutFromDay: (
+    planId: string,
+    dayIndex: number,
+    templateId: string
+  ) => {
+    set((state) => ({
+      splitPlans: state.splitPlans.map((p) => {
+        if (p.id !== planId) return p;
+        const split = [...p.split];
+        if (!split[dayIndex]) return p;
+        split[dayIndex] = {
+          ...split[dayIndex],
+          workouts: split[dayIndex].workouts.filter((w) => w !== templateId),
+        };
+        return { ...p, split, updatedAt: new Date().toISOString() };
+      }),
+    }));
+  },
+
+  reorderWorkoutsInDay: (
+    planId: string,
+    dayIndex: number,
+    newOrder: string[]
+  ) => {
+    set((state) => ({
+      splitPlans: state.splitPlans.map((p) => {
+        if (p.id !== planId) return p;
+        const split = [...p.split];
+        if (!split[dayIndex]) return p;
+        split[dayIndex] = { ...split[dayIndex], workouts: newOrder };
+        return { ...p, split, updatedAt: new Date().toISOString() };
+      }),
+    }));
+  },
+
+  setActiveSplitPlan: (plan: SplitPlan) => {
+    set(() => ({ activeSplitPlan: plan }));
+  },
+});

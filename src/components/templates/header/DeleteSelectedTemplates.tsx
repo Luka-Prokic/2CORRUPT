@@ -6,10 +6,12 @@ import { Ionicons } from "@expo/vector-icons";
 interface DeleteSelectedTemplatesProps {
   selected: WorkoutTemplate[];
   setSelected: (newSelected: WorkoutTemplate[]) => void;
+  setMode: (newMode: boolean) => void;
 }
 export function DeleteSelectedTemplates({
   selected,
   setSelected,
+  setMode,
 }: DeleteSelectedTemplatesProps) {
   const { deleteTemplate } = useWorkoutStore();
   const { theme } = useSettingsStore();
@@ -19,6 +21,7 @@ export function DeleteSelectedTemplates({
   function handleDeleteSelectedTemplates() {
     selected.map((t: WorkoutTemplate) => deleteTemplate(t.id));
     setSelected([]);
+    setMode(false);
   }
   return (
     <IButton

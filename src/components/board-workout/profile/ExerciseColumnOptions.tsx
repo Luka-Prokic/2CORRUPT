@@ -35,7 +35,7 @@ export function ExerciseColumnOptions() {
         title={t(`dialog.${showRPE ? "hide" : "show"}`) + " RPE"}
         icon={
           <Ionicons
-            name={showRPE ? "eye-outline" : "eye-off-outline"}
+            name={showRPE ? "eye" : "eye-off"}
             size={24}
             color={showRPE ? accent : theme.grayText}
           />
@@ -51,7 +51,7 @@ export function ExerciseColumnOptions() {
         title={t(`dialog.${showRIR ? "hide" : "show"}`) + " RIR"}
         icon={
           <Ionicons
-            name={showRIR ? "eye-outline" : "eye-off-outline"}
+            name={showRIR ? "eye" : "eye-off"}
             size={24}
             color={showRIR ? accent : theme.grayText}
           />

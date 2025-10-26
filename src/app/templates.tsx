@@ -13,6 +13,7 @@ import { SelectAllTemplatesButton } from "../components/templates/header/SelectA
 import { Text } from "react-native";
 import { useSettingsStore } from "../stores/settings";
 import { DeleteSelectedTemplates } from "../components/templates/header/DeleteSelectedTemplates";
+import { EmptyTemplateComponent } from "../components/templates/EmptyTemplateComponent";
 
 export default function TemplatesScreen() {
   const { t } = useTranslation();
@@ -27,6 +28,7 @@ export default function TemplatesScreen() {
         <DeleteSelectedTemplates
           selected={selected}
           setSelected={setSelected}
+          setMode={setSelectMode}
         />
       );
     return null;
@@ -42,38 +44,39 @@ export default function TemplatesScreen() {
             color: selected.length ? theme.text : theme.handle,
           }}
         >
-          Selected {selected.length}
+          {t("button.selected")} {selected.length}
         </Text>
       );
     return null;
   }
   function headerRight() {
-    return (
-      <Fragment>
-        <HeaderTemplatesToggle
-          mode={selectMode}
-          toggleMode={() => {
-            setSelectMode(!selectMode);
-            setSelected([]);
-          }}
-        />
-        {selectMode ? (
-          <SelectAllTemplatesButton
-            selected={selected}
-            setSelected={setSelected}
+    if (templates.length)
+      return (
+        <Fragment>
+          <HeaderTemplatesToggle
+            mode={selectMode}
+            toggleMode={() => {
+              setSelectMode(!selectMode);
+              setSelected([]);
+            }}
           />
-        ) : (
-          <CreateTemplateButton />
-        )}
-      </Fragment>
-    );
+          {selectMode ? (
+            <SelectAllTemplatesButton
+              selected={selected}
+              setSelected={setSelected}
+            />
+          ) : (
+            <CreateTemplateButton />
+          )}
+        </Fragment>
+      );
+    return null;
   }
 
   return (
     <Fragment>
       <Stack.Screen
         options={{
-          title: t("navigation.templates"),
           headerLeft: headerLeft,
           headerTitle: headerTitle,
           headerRight: headerRight,
@@ -101,6 +104,7 @@ export default function TemplatesScreen() {
           }}
           ListHeaderComponent={() => <EmptyHeader />}
           ListFooterComponent={() => <EmptyFooter />}
+          ListEmptyComponent={() => <EmptyTemplateComponent />}
         />
       </ScreenContent>
     </Fragment>

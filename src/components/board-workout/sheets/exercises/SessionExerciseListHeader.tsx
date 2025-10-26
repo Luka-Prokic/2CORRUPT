@@ -92,7 +92,7 @@ export function SessionExerciseListHeader({
               fontWeight: "bold",
             }}
           >
-            ({selectedExercises.length}) {t("workout-board.exercises-selected")}
+            {t("button.selected")} {selectedExercises.length}
           </Text>
         </View>
         <IButton
@@ -107,7 +107,7 @@ export function SessionExerciseListHeader({
           <Ionicons
             name="trash-outline"
             size={24}
-            color={!isSomeSelected ? theme.grayText : theme.error}
+            color={!isSomeSelected ? theme.handle : theme.error}
           />
         </IButton>
       </Fragment>

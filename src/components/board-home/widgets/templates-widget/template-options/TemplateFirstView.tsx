@@ -124,7 +124,7 @@ export const TemplateFirstView = forwardRef<
 
       <OptionButton
         title="Clone Template"
-        icon={<Ionicons name="copy" size={24} color={theme.text} />}
+        icon={<Ionicons name="duplicate" size={24} color={theme.text} />}
         onPress={handleCloneTemplate}
         height={44}
       />

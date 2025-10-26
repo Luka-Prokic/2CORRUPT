@@ -6,6 +6,7 @@
     "reset": "Reset",
     "cancel": "Cancel",
     "select": "Select",
+    "selected": "Selected",
     "delete": "Delete",
     "discard": "Discard",
     "search": "Search",
@@ -138,51 +139,61 @@
     "rest-day": "Rest Day",
     "start-now": "Start Now",
     "workout": "Workout",
+    "today": "Today",
+    "yesterday": "Yesterday",
     "no-workout": "No Workout",
     "no-workout-today": "No Workout Today",
     "no-workout-today-description": "You haven't trained today",
     "no-workout-description": "No workout. Start a new workout.",
     "days": {
-      "short": ["M", "T", "W", "T", "F", "S", "S"],
-      "long": [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-        "Sunday"
-      ]
+      "short": {
+        "monday": "M",
+        "tuesday": "T",
+        "wednesday": "W",
+        "thursday": "T",
+        "friday": "F",
+        "saturday": "S",
+        "sunday": "S"
+      },
+      "long": {
+        "monday": "Monday",
+        "tuesday": "Tuesday",
+        "wednesday": "Wednesday",
+        "thursday": "Thursday",
+        "friday": "Friday",
+        "saturday": "Saturday",
+        "sunday": "Sunday"
+      }
     },
     "months": {
-      "long": [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December"
-      ],
-      "short": [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec"
-      ]
+      "short": {
+        "january": "Jan",
+        "february": "Feb",
+        "march": "Mar",
+        "april": "Apr",
+        "may": "May",
+        "june": "Jun",
+        "july": "Jul",
+        "august": "Aug",
+        "september": "Sep",
+        "october": "Oct",
+        "november": "Nov",
+        "december": "Dec"
+      },
+      "long": {
+        "january": "January",
+        "february": "February",
+        "march": "March",
+        "april": "April",
+        "may": "May",
+        "june": "June",
+        "july": "July",
+        "august": "August",
+        "september": "September",
+        "october": "October",
+        "november": "November",
+        "december": "December"
+      }
     }
   },
   "summary-widget": {
@@ -194,7 +205,8 @@
     "main-info": "Customize your workout template — rename it, adjust details, start a session from it, make a copy for variations, or delete it if it's no longer needed.",
     "clone-info": "Duplicate this template to create a new version while keeping the original intact. Changing the name can help you distinguish between them.",
     "delete-info": "Deleting this template can't be undone. Your previous workouts won't be affected.",
-    "active-session-warning": "Active workout in progress. Finish it before starting a new session or editing templates."
+    "active-session-warning": "Active workout in progress. Finish it before starting a new session or editing templates.",
+    "footer": "You don't have any saved templates yet."
   },
 
   "set": {
@@ -310,6 +322,11 @@
     "copied": "Copied!",
     "copied-to-clipboard": "Session recap copied to clipboard with legend."
   },
+  "sessions": {},
+  "templates": {
+    "empty-info": "Templates are pre-made sets of exercises you can reuse. Tap the plus button above to start your first one. It's easy, editable, and keeps your workouts organized so you can focus on lifting."
+  },
+  "splits": {},
 
   "categories": {
     "chest": "Chest",

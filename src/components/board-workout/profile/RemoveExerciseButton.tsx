@@ -40,7 +40,7 @@ export function RemoveExerciseButton() {
   return (
     <OptionButton
       title={t("workout-board.remove-exercise")}
-      icon={<Ionicons name="remove-circle-outline" size={24} color={error} />}
+      icon={<Ionicons name="remove-circle" size={24} color={error} />}
       height={44}
       onPress={handleRemoveExercise}
       color={error}

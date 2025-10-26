@@ -36,6 +36,7 @@ export interface Set {
 // Workout template (blueprint)
 export interface WorkoutTemplate {
   readonly id: string;
+  readonly primeId: string;
   name: string;
   description?: string;
   version: number;
@@ -44,7 +45,10 @@ export interface WorkoutTemplate {
   layout: SessionExercise[];
   tags?: string[];
   isPublic?: boolean;
-  metadata?: Record<string, any>;
+  metadata?: {
+    group?: string; // e.g. "Favorites", "Push Day", "UserCreatedGroup1"
+    [key: string]: any;
+  };
 }
 
 export type ExerciseColumns = "Reps" | "Weight" | "RIR" | "RPE";
@@ -87,7 +91,61 @@ export interface WorkoutSession {
   updatedAt?: IsoDateString;
 }
 
+export interface SplitPlanDay {
+  dayName?: string; // e.g., "Monday" or "Push Day"
+  workouts: string[]; // WorkoutTemplate IDs
+  isRest?: boolean; // true if rest day
+  notes?: string; // optional notes for the day
+}
+
+export interface SplitPlan {
+  readonly id: string;
+  name: string;
+  split: SplitPlanDay[]; // array of days
+  description?: string;
+  metadata?: Record<string, any>; // e.g., group, color, difficulty, future online stuff
+  readonly createdAt: IsoDateString;
+  updatedAt?: IsoDateString;
+}
+
 // Slice contracts
+export interface SplitPlanSlice {
+  // All split plans
+  splitPlans: SplitPlan[];
+
+  // Currently active split plan
+  activeSplitPlan: SplitPlan | null;
+
+  // CRUD operations
+  createSplitPlan: (plan?: Partial<SplitPlan>) => string;
+  editSplitPlan: (planId: string) => SplitPlan | null;
+  updateSplitPlanField: <K extends keyof SplitPlan>(
+    planId: string,
+    field: K,
+    value: SplitPlan[K]
+  ) => void;
+  deleteSplitPlan: (planId: string) => void;
+
+  // Day-level operations
+  addWorkoutToDay: (
+    planId: string,
+    dayIndex: number,
+    templateId: string
+  ) => void;
+  removeWorkoutFromDay: (
+    planId: string,
+    dayIndex: number,
+    templateId: string
+  ) => void;
+  reorderWorkoutsInDay: (
+    planId: string,
+    dayIndex: number,
+    newOrder: string[]
+  ) => void;
+
+  // Set active plan
+  setActiveSplitPlan: (plan: SplitPlan) => void;
+}
 
 export interface TemplateSlice {
   // Current templates
@@ -218,4 +276,5 @@ export type WorkoutStore = TemplateSlice &
   ExerciseSlice &
   TimerSlice &
   StatsSlice &
-  FlowSlice;
+  FlowSlice &
+  SplitPlanSlice;

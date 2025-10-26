@@ -6,6 +6,7 @@
     "reset": "Resetuj",
     "cancel": "Otkaži",
     "select": "Označi",
+    "selected": "Označeno",
     "delete": "Obriši",
     "discard": "Odbaci",
     "search": "Pretraži",
@@ -138,52 +139,62 @@
     "exercises": "vežbe",
     "rest-day": "Rest Day",
     "start-now": "Započni Sada",
+    "today": "Danas",
+    "yesterday": "Juče",
     "workout": "Trening",
     "no-workout": "Nema Treninga",
     "no-workout-today": "Nema Treninga Danas",
     "no-workout-today-description": "Nisi treanirao danas",
     "no-workout-description": "Nema treninga. Započni novi trening.",
     "days": {
-      "short": ["P", "U", "S", "Č", "P", "S", "N"],
-      "long": [
-        "Ponedeljak",
-        "Utorak",
-        "Sreda",
-        "Četvrtak",
-        "Petak",
-        "Subota",
-        "Nedelja"
-      ]
+      "short": {
+        "monday": "P",
+        "tuesday": "U",
+        "wednesday": "S",
+        "thursday": "Č",
+        "friday": "P",
+        "saturday": "S",
+        "sunday": "N"
+      },
+      "long": {
+        "monday": "Ponedeljak",
+        "tuesday": "Utorak",
+        "wednesday": "Sreda",
+        "thursday": "Četvrtak",
+        "friday": "Petak",
+        "saturday": "Subota",
+        "sunday": "Nedelja"
+      }
     },
     "months": {
-      "long": [
-        "Januar",
-        "Februar",
-        "Mart",
-        "April",
-        "Maj",
-        "Jun",
-        "Jul",
-        "Avgust",
-        "Septembar",
-        "Oktobar",
-        "Novembar",
-        "Decembar"
-      ],
-      "short": [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "Maj",
-        "Jun",
-        "Jul",
-        "Avg",
-        "Sep",
-        "Okt",
-        "Nov",
-        "Dec"
-      ]
+      "short": {
+        "january": "Jan",
+        "february": "Feb",
+        "march": "Mar",
+        "april": "Apr",
+        "may": "Maj",
+        "june": "Jun",
+        "july": "Jul",
+        "august": "Avg",
+        "september": "Sep",
+        "october": "Okt",
+        "november": "Nov",
+        "december": "Dec"
+      },
+      "long": {
+        "january": "Januar",
+        "february": "Februar",
+        "march": "Mart",
+        "april": "April",
+        "may": "Maj",
+        "june": "Jun",
+        "july": "Jul",
+        "august": "Avgust",
+        "september": "Septembar",
+        "october": "Oktobar",
+        "november": "Novembar",
+        "december": "Decembar"
+      }
     }
   },
   "summary-widget": {
@@ -195,7 +206,8 @@
     "main-info": "Prilagodite svoj šablon treninga — promenite naziv, izmenite detalje, započnite trening na osnovu njega, napravite kopiju za varijacije ili ga obrišite ako vam više nije potreban.",
     "clone-info": "Duplirajte ovaj šablon da napravite novu verziju, dok original ostaje nepromenjen. Promena imena može vam pomoći da ih razlikujete.",
     "delete-info": "Brisanje šablona je trajno. Tvoji prethodni treninzi neće biti obrisani.",
-    "active-session-warning": "Trening je u toku. Završite ga pre nego što započnete novi ili uređujete šablone."
+    "active-session-warning": "Trening je u toku. Završite ga pre nego što započnete novi ili uređujete šablone.",
+    "footer": "Još uvek nemaš sačuvanih šablona."
   },
 
   "set": {
@@ -292,6 +304,11 @@
     "copied": "Kopirano!",
     "copied-to-clipboard": "Trening recenzija kopirana u clipboard sa legendom."
   },
+  "sessions": {},
+  "templates": {
+    "empty-info": "Šabloni su unapred pripremljeni setovi vežbi koje možeš ponovo koristiti. Dodirni plus dugme iznad da započneš svoj prvi šablon. Lako je, možeš ga menjati, i pomaže da tvoji treninzi budu organizovani kako bi se mogao fokusirati na vežbanje."
+  },
+  "splits": {},
 
   "categories": {
     "all": "Sve",

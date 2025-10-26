@@ -16,6 +16,7 @@ interface CardSliderProps<T> {
   showDots?: boolean;
   styleSlider?: ViewStyle | ViewStyle[];
   styleDots?: ViewStyle | ViewStyle[];
+  emptyCard?: React.ReactElement;
 }
 
 export function CardSlider<T>({
@@ -27,6 +28,7 @@ export function CardSlider<T>({
   showDots = true,
   styleSlider,
   styleDots,
+  emptyCard,
 }: CardSliderProps<T>) {
   const defaultKeyExtractor = (item: any, index: number) =>
     item.id ? `${item.id}-${index}` : `${index}`;
@@ -76,6 +78,7 @@ export function CardSlider<T>({
         scrollEventThrottle={16}
         style={styleSlider}
         nestedScrollEnabled
+        ListEmptyComponent={emptyCard}
       />
       {showDots && data.length > 1 && (
         <ScrollableDots

@@ -3,12 +3,16 @@ import { useWidgetUnit } from "../../../../features/widgets/useWidgetUnit";
 import { hexToRGBA } from "../../../../features/HEXtoRGB";
 import { useSettingsStore } from "../../../../stores/settings";
 import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
 
 export function SplitsWidget() {
   const { widgetUnit, halfWidget } = useWidgetUnit();
   const { theme } = useSettingsStore();
 
-  function handleWidgetPress() {}
+  function handleWidgetPress() {
+    router.push("/splits");
+  }
+
   return (
     <TouchableOpacity
       onPress={handleWidgetPress}
@@ -21,7 +25,6 @@ export function SplitsWidget() {
         borderColor: theme.border,
         padding: 12,
         marginBottom: 8,
-        // alignItems: "center",
         alignItems: "center",
         flexDirection: "row",
         gap: 16,

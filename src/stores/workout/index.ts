@@ -6,5 +6,4 @@ export * from "./slices/exerciseSlice";
 export * from "./slices/timerSlice";
 export * from "./slices/statsSlice";
 export * from "./slices/flowSlice";
-
-
+export * from "./slices/splitSlice";
