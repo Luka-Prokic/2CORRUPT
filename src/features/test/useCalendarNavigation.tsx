@@ -135,12 +135,15 @@ export function useCalendarNavigation() {
     const isTodayDate = date.toDateString() === today.toDateString();
     const isYesterday = date.toDateString() === yesterday.toDateString();
 
-    const options: Intl.DateTimeFormatOptions = {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-    };
-    const formatted = date.toLocaleDateString("en-GB", options);
+    const day = date.getDate().toString().padStart(2, "0");
+    const year = date.getFullYear();
+
+    const monthKey = date
+      .toLocaleDateString("en-GB", { month: "long" })
+      .toLowerCase();
+    const monthShort = t(`calendar.months.short.${monthKey}`);
+
+    const formatted = `${day} ${monthShort} ${year}`;
 
     if (isTodayDate) return `${t("calendar.today")}, ${formatted}`;
     if (isYesterday) return `${t("calendar.yesterday")}, ${formatted}`;

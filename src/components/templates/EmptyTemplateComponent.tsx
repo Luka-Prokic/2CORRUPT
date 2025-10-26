@@ -5,11 +5,13 @@ import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useUIStore } from "../../stores/ui";
 import { useWorkoutStore } from "../../stores/workout";
-import { Fragment } from "react";
 import { StrobeButton } from "../ui/buttons/StrobeButton";
 import { useTranslation } from "react-i18next";
+import { HEIGHT } from "../../features/Dimensions";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export function EmptyTemplateComponent() {
+  const insets = useSafeAreaInsets();
   const { theme } = useSettingsStore();
   const { widgetUnit, fullWidth } = useWidgetUnit();
   const { setTypeOfView } = useUIStore();
@@ -24,13 +26,18 @@ export function EmptyTemplateComponent() {
   }
 
   return (
-    <Fragment>
+    <View
+      style={{
+        height: HEIGHT - insets.top - insets.bottom - 32,
+        width: fullWidth,
+      }}
+    >
       <StrobeButton
         onPress={handlePress}
         style={{
           height: widgetUnit,
           width: widgetUnit,
-          backgroundColor: theme.fifthBackground,
+          backgroundColor: theme.tint,
           borderColor: theme.border,
           borderRadius: 32,
           borderWidth: 1,
@@ -45,6 +52,8 @@ export function EmptyTemplateComponent() {
         style={{
           height: widgetUnit,
           width: fullWidth,
+          position: "absolute",
+          bottom: 0,
         }}
       >
         <Text
@@ -57,6 +66,6 @@ export function EmptyTemplateComponent() {
           {t("templates.empty-info")}
         </Text>
       </View>
-    </Fragment>
+    </View>
   );
 }

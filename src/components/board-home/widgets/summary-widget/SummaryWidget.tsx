@@ -42,7 +42,7 @@ export function SummaryWidget() {
       <SummaryHeader />
       <ProgressRing
         compareWith={sessionsToday.length}
-        compareTo={5}
+        compareTo={5} //TODO: now its dummy goal, in future change it so user can set it
         content={
           <BounceButton
             style={{

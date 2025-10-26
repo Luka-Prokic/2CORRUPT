@@ -102,7 +102,12 @@ export default function Layout() {
             <Stack.Screen name="templates" />
 
             {/* Splits */}
-            <Stack.Screen name="splits" />
+            <Stack.Screen
+              name="splits"
+              options={{
+                presentation: "modal",
+              }}
+            />
 
             {/* All */}
             <Stack.Screen

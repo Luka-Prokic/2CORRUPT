@@ -86,6 +86,7 @@ export default function TemplatesScreen() {
         <FlatList
           data={templates}
           numColumns={2}
+          showsVerticalScrollIndicator={false}
           keyExtractor={(item, index) => `${item.createdAt}-${index}`}
           renderItem={({ item }) => (
             <TemplateSelectCard
@@ -103,7 +104,9 @@ export default function TemplatesScreen() {
             gap: 8,
           }}
           ListHeaderComponent={() => <EmptyHeader />}
-          ListFooterComponent={() => <EmptyFooter />}
+          ListFooterComponent={() =>
+            templates.length ? <EmptyFooter /> : null
+          }
           ListEmptyComponent={() => <EmptyTemplateComponent />}
         />
       </ScreenContent>

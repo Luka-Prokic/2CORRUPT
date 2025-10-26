@@ -1,6 +1,6 @@
-import { useMemo } from 'react';
-import { useWorkoutStore } from '../../stores/workout/useWorkoutStore';
-import { WorkoutSession } from '../../stores/workout/types';
+import { useMemo } from "react";
+import { useWorkoutStore } from "../../stores/workout/useWorkoutStore";
+import { WorkoutSession } from "../../stores/workout/types";
 
 /**
  * Hook to get the most recent completed session
@@ -8,13 +8,14 @@ import { WorkoutSession } from '../../stores/workout/types';
  */
 export const useLatestSession = (): WorkoutSession | null => {
   const { completedSessions } = useWorkoutStore();
-  
+
   return useMemo(() => {
     if (completedSessions.length === 0) return null;
-    
+
     // Sort by startTime descending and return the most recent
-    return [...completedSessions].sort((a, b) => 
-      new Date(b.startTime).getTime() - new Date(a.startTime).getTime()
+    return [...completedSessions].sort(
+      (a, b) =>
+        new Date(b.startTime).getTime() - new Date(a.startTime).getTime()
     )[0];
   }, [completedSessions]);
 };
@@ -26,14 +27,19 @@ export const useLatestSession = (): WorkoutSession | null => {
  */
 export const useSessionsByDate = (date: Date): WorkoutSession[] => {
   const { completedSessions } = useWorkoutStore();
-  
+
   return useMemo(() => {
-    const targetDateString = date.toISOString().split('T')[0]; // YYYY-MM-DD format
-    
-    return completedSessions.filter(session => {
+    const normalize = (d: Date) => {
+      const copy = new Date(d);
+      copy.setHours(0, 0, 0, 0);
+      return copy.getTime();
+    };
+
+    const target = normalize(date);
+
+    return completedSessions.filter((session) => {
       const sessionDate = new Date(session.startTime);
-      const sessionDateString = sessionDate.toISOString().split('T')[0];
-      return sessionDateString === targetDateString;
+      return normalize(sessionDate) === target;
     });
   }, [completedSessions, date]);
 };
@@ -44,27 +50,28 @@ export const useSessionsByDate = (date: Date): WorkoutSession[] => {
  */
 export const useSessionsGroupedByDay = (): Record<string, WorkoutSession[]> => {
   const { completedSessions } = useWorkoutStore();
-  
+
   return useMemo(() => {
     const grouped: Record<string, WorkoutSession[]> = {};
-    
-    completedSessions.forEach(session => {
+
+    completedSessions.forEach((session) => {
       const sessionDate = new Date(session.startTime);
-      const dateString = sessionDate.toISOString().split('T')[0]; // YYYY-MM-DD format
-      
+      const dateString = sessionDate.toISOString().split("T")[0]; // YYYY-MM-DD format
+
       if (!grouped[dateString]) {
         grouped[dateString] = [];
       }
       grouped[dateString].push(session);
     });
-    
+
     // Sort sessions within each day by startTime
-    Object.keys(grouped).forEach(dateString => {
-      grouped[dateString].sort((a, b) => 
-        new Date(a.startTime).getTime() - new Date(b.startTime).getTime()
+    Object.keys(grouped).forEach((dateString) => {
+      grouped[dateString].sort(
+        (a, b) =>
+          new Date(a.startTime).getTime() - new Date(b.startTime).getTime()
       );
     });
-    
+
     return grouped;
   }, [completedSessions]);
 };
@@ -75,12 +82,17 @@ export const useSessionsGroupedByDay = (): Record<string, WorkoutSession[]> => {
  * @param sessionB - Second session to compare
  * @returns True if both sessions are from the same calendar date
  */
-export const useIsSameDay = (sessionA: WorkoutSession, sessionB: WorkoutSession): boolean => {
+export const useIsSameDay = (
+  sessionA: WorkoutSession,
+  sessionB: WorkoutSession
+): boolean => {
   return useMemo(() => {
     const dateA = new Date(sessionA.startTime);
     const dateB = new Date(sessionB.startTime);
-    
-    return dateA.toISOString().split('T')[0] === dateB.toISOString().split('T')[0];
+
+    return (
+      dateA.toISOString().split("T")[0] === dateB.toISOString().split("T")[0]
+    );
   }, [sessionA.startTime, sessionB.startTime]);
 };
 
@@ -90,21 +102,29 @@ export const useIsSameDay = (sessionA: WorkoutSession, sessionB: WorkoutSession)
  * @param endDate - End of the date range
  * @returns Array of sessions within the specified date range
  */
-export const useSessionsByDateRange = (startDate: Date, endDate: Date): WorkoutSession[] => {
+export const useSessionsByDateRange = (
+  startDate: Date,
+  endDate: Date
+): WorkoutSession[] => {
   const { completedSessions } = useWorkoutStore();
-  
+
   return useMemo(() => {
     const start = new Date(startDate);
     const end = new Date(endDate);
-    
+
     // Set time to start/end of day for accurate comparison
     start.setHours(0, 0, 0, 0);
     end.setHours(23, 59, 59, 999);
-    
-    return completedSessions.filter(session => {
-      const sessionDate = new Date(session.startTime);
-      return sessionDate >= start && sessionDate <= end;
-    }).sort((a, b) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime());
+
+    return completedSessions
+      .filter((session) => {
+        const sessionDate = new Date(session.startTime);
+        return sessionDate >= start && sessionDate <= end;
+      })
+      .sort(
+        (a, b) =>
+          new Date(a.startTime).getTime() - new Date(b.startTime).getTime()
+      );
   }, [completedSessions, startDate, endDate]);
 };
 
@@ -114,10 +134,10 @@ export const useSessionsByDateRange = (startDate: Date, endDate: Date): WorkoutS
  */
 export const useSessionStats = () => {
   const { completedSessions } = useMemo(() => useWorkoutStore(), []);
-  
+
   return useMemo(() => {
     const totalSessions = completedSessions.length;
-    
+
     if (totalSessions === 0) {
       return {
         totalSessions: 0,
@@ -130,31 +150,34 @@ export const useSessionStats = () => {
         sessionsThisMonth: 0,
       };
     }
-    
+
     const now = new Date();
     const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
     const monthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
-    
-    const totalVolume = completedSessions.reduce((sum, session) => 
-      sum + (session.totals?.totalVolumeKg || 0), 0
+
+    const totalVolume = completedSessions.reduce(
+      (sum, session) => sum + (session.totals?.totalVolumeKg || 0),
+      0
     );
-    
-    const totalDuration = completedSessions.reduce((sum, session) => 
-      sum + (session.totals?.durationSeconds || 0), 0
+
+    const totalDuration = completedSessions.reduce(
+      (sum, session) => sum + (session.totals?.durationSeconds || 0),
+      0
     );
-    
-    const sessionsThisWeek = completedSessions.filter(session => 
-      new Date(session.startTime) >= weekAgo
+
+    const sessionsThisWeek = completedSessions.filter(
+      (session) => new Date(session.startTime) >= weekAgo
     ).length;
-    
-    const sessionsThisMonth = completedSessions.filter(session => 
-      new Date(session.startTime) >= monthAgo
+
+    const sessionsThisMonth = completedSessions.filter(
+      (session) => new Date(session.startTime) >= monthAgo
     ).length;
-    
-    const mostRecentSession = [...completedSessions].sort((a, b) => 
-      new Date(b.startTime).getTime() - new Date(a.startTime).getTime()
+
+    const mostRecentSession = [...completedSessions].sort(
+      (a, b) =>
+        new Date(b.startTime).getTime() - new Date(a.startTime).getTime()
     )[0];
-    
+
     return {
       totalSessions,
       totalVolume,
