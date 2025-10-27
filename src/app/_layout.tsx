@@ -12,7 +12,7 @@ export function ModalExitButton() {
 
   return (
     <TouchableOpacity onPress={() => router.back()}>
-      <Ionicons name="close" size={24} color={theme.tint} />
+      <Ionicons name="close" size={28} color={theme.tint} />
     </TouchableOpacity>
   );
 }
@@ -22,7 +22,7 @@ export function ModalBackButton() {
 
   return (
     <TouchableOpacity onPress={() => router.back()}>
-      <Ionicons name="chevron-back" size={24} color={theme.tint} />
+      <Ionicons name="chevron-back" size={28} color={theme.tint} />
     </TouchableOpacity>
   );
 }
@@ -61,6 +61,7 @@ export default function Layout() {
               name="settings"
               options={{
                 presentation: "modal",
+                headerShown: false,
               }}
             />
 
@@ -106,6 +107,7 @@ export default function Layout() {
               name="splits"
               options={{
                 presentation: "modal",
+                headerShown: false,
               }}
             />
 

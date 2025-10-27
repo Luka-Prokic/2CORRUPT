@@ -53,7 +53,8 @@ export function TemplatesFooter() {
           fontWeight: "500",
         }}
       >
-        <Ionicons name="alert-circle" color={theme.error} size={16} />{t("templates-widget.footer")}
+        <Ionicons name="alert-circle" color={theme.error} size={16} />{" "}
+        {t("templates-widget.footer")}
       </Text>
     </View>
   );

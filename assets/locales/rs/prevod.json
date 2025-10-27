@@ -16,7 +16,11 @@
     "download": "Preuzmi",
     "clone": "Dupliraj",
     "open": "Otvori",
-    "view": "Pogledaj"
+    "view": "Pogledaj",
+    "add": "Dodaj",
+    "remove": "Obriši",
+    "update": "Ažuriraj",
+    "sync": "Poveži"
   },
   "form": {
     "name": "Naziv",
@@ -203,10 +207,6 @@
   },
   "templates-widget": {
     "header": "Šabloni",
-    "main-info": "Prilagodite svoj šablon treninga — promenite naziv, izmenite detalje, započnite trening na osnovu njega, napravite kopiju za varijacije ili ga obrišite ako vam više nije potreban.",
-    "clone-info": "Duplirajte ovaj šablon da napravite novu verziju, dok original ostaje nepromenjen. Promena imena može vam pomoći da ih razlikujete.",
-    "delete-info": "Brisanje šablona je trajno. Tvoji prethodni treninzi neće biti obrisani.",
-    "active-session-warning": "Trening je u toku. Završite ga pre nego što započnete novi ili uređujete šablone.",
     "footer": "Još uvek nemaš sačuvanih šablona."
   },
 
@@ -304,9 +304,26 @@
     "copied": "Kopirano!",
     "copied-to-clipboard": "Trening recenzija kopirana u clipboard sa legendom."
   },
-  "sessions": {},
+  "sessions": {
+    "session": "Trening",
+    "repeat-workout": "Ponovi Trening",
+    "view-recap": "Pregled Treninga",
+    "add-to-templates": "Dodaj kao Šablon",
+    "update-template": "Ažuriraj Šablon",
+    "options-info": "Upravljaj svojom trening sesijom — pogledaj njen rezime, kopiraj raspored kao tekst, pretvori je u šablon koji možeš ponovo koristiti ili je ukloni ako ti više nije potrebna.",
+    "add-template-info": "Sačuvaj raspored ove sesije kao novi šablon. Daj mu prepoznatljivo ime da bi ga kasnije lakše pronašao ili koristio za slične treninge.",
+    "update-template-info": "Ažuriraj šablon korišćen u ovom treningu. Možeš da izmeniš njegov raspored, promeniš naziv i uskladiš ga sa najnovijim izmenama u treningu.",
+    "remove-info": "Uklanjanje ove sesije je trajno i ne može se poništiti. Statistike tvog napretka biće izmenjene.",
+    "active-session-warning": "Aktivan trening je u toku. Završi ga pre nego što započneš novi."
+  },
   "templates": {
-    "empty-info": "Šabloni su unapred pripremljeni setovi vežbi koje možete koristiti više puta. Pritisnite dugme plus iznad da započnete svoj prvi šablon. Kreiranje šablona je brzo i može se menjati, što vam omogućava da efikasno organizujete treninge. Kada napravite nekoliko njih, možete ih kombinovati da planirate nedelju treninga, štedeći vreme i fokusirajući se na vežbanje, umesto na planiranje svakog seta posebno."
+    "template": "Šablon",
+    "start-workout": "Započni Trening",
+    "empty-info": "Šabloni su unapred pripremljeni setovi vežbi koje možete koristiti više puta. Pritisnite dugme plus iznad da započnete svoj prvi šablon. Kreiranje šablona je brzo i može se menjati, što vam omogućava da efikasno organizujete treninge. Kada napravite nekoliko njih, možete ih kombinovati da planirate nedelju treninga, štedeći vreme i fokusirajući se na vežbanje, umesto na planiranje svakog seta posebno.",
+    "options-info": "Prilagodite svoj šablon treninga — promenite naziv, izmenite detalje, započnite trening na osnovu njega, napravite kopiju za varijacije ili ga obrišite ako vam više nije potreban.",
+    "clone-info": "Duplirajte ovaj šablon da napravite novu verziju, dok original ostaje nepromenjen. Promena imena može vam pomoći da ih razlikujete.",
+    "delete-info": "Brisanje šablona je trajno. Tvoji prethodni treninzi neće biti obrisani.",
+    "active-session-warning": "Trening je u toku. Završite ga pre nego što započnete novi ili uređujete šablone."
   },
   "splits": {},
 

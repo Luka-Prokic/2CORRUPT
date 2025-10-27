@@ -34,16 +34,14 @@ export function ProgressRing({
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
 
-  const rawProgress = compareWith / compareTo; // e.g., 2.5
-  const fullLoops = Math.floor(rawProgress); // 2
-  const fraction = rawProgress - fullLoops; // 0.5
+  const rawProgress = compareWith / compareTo;
+  const fullLoops = Math.floor(rawProgress);
+  const fraction = rawProgress - fullLoops;
 
   const loopsArray = Array.from({ length: fullLoops + (fraction > 0 ? 1 : 0) });
 
-  // Shared value for arrow scale
   const arrowScale = useSharedValue(1);
 
-  // Function to pulse arrow
   function pulseArrow() {
     arrowScale.value = withTiming(1.2, { duration: 100 }, () => {
       arrowScale.value = withTiming(1, { duration: 100 });
@@ -51,12 +49,7 @@ export function ProgressRing({
   }
 
   return (
-    <View
-      style={{
-        width: size,
-        height: size,
-      }}
-    >
+    <View style={{ width: size, height: size }}>
       <Svg width={size + 2} height={size + 2}>
         {/* Base ring */}
         <Circle
@@ -73,49 +66,17 @@ export function ProgressRing({
           const isLast = i === loopsArray.length - 1;
           const color =
             i % 2 === 0 ? theme.tint : hexToRGBA(theme.secondaryText, 0.2);
-
-          const progressValue = useSharedValue(0);
-
-          useEffect(() => {
-            async function animateLoop() {
-              await new Promise((res) => setTimeout(res, i * 420));
-
-              const easingFunction = isLast
-                ? Easing.out(Easing.cubic)
-                : Easing.linear;
-              const duration = isLast ? 600 : 400;
-
-              progressValue.value = await withTiming(
-                isLast ? (fraction ? fraction : 1) : 1,
-                {
-                  duration,
-                  easing: easingFunction,
-                }
-              );
-
-              // Pulse arrow after loop completes
-              runOnJS(pulseArrow)();
-            }
-            animateLoop();
-          }, []);
-
-          const animatedProps = useAnimatedProps(() => ({
-            strokeDashoffset: circumference * (1 - progressValue.value),
-          }));
-
           return (
-            <AnimatedCircle
+            <ProgressLoop
               key={i}
-              cx={size / 2}
-              cy={size / 2}
-              r={radius}
-              stroke={color}
-              fill="none"
-              strokeWidth={strokeWidth * 0.9}
-              strokeLinecap="round"
-              strokeDasharray={`${circumference} ${circumference}`}
-              transform={`rotate(-90 ${size / 2} ${size / 2})`}
-              animatedProps={animatedProps}
+              i={i}
+              isLast={isLast}
+              fraction={fraction}
+              radius={radius}
+              circumference={circumference}
+              strokeWidth={strokeWidth}
+              color={color}
+              pulseArrow={pulseArrow}
             />
           );
         })}
@@ -136,6 +97,8 @@ export function ProgressRing({
           />
         </Animated.View>
       </Svg>
+
+      {/* Content */}
       <View
         style={{
           position: "absolute",
@@ -152,5 +115,71 @@ export function ProgressRing({
         {content}
       </View>
     </View>
+  );
+}
+
+/* ---------------------------------------
+   ProgressLoop subcomponent (inside same file)
+---------------------------------------- */
+interface ProgressLoopProps {
+  i: number;
+  isLast: boolean;
+  fraction: number;
+  radius: number;
+  circumference: number;
+  strokeWidth: number;
+  color: string;
+  pulseArrow: () => void;
+}
+
+function ProgressLoop({
+  i,
+  isLast,
+  fraction,
+  radius,
+  circumference,
+  strokeWidth,
+  color,
+  pulseArrow,
+}: ProgressLoopProps) {
+  const progressValue = useSharedValue(0);
+
+  const animatedProps = useAnimatedProps(() => ({
+    strokeDashoffset: circumference * (1 - progressValue.value),
+  }));
+
+  useEffect(() => {
+    async function animateLoop() {
+      await new Promise((res) => setTimeout(res, i * 420));
+
+      const easingFunction = isLast ? Easing.out(Easing.cubic) : Easing.linear;
+      const duration = isLast ? 600 : 400;
+
+      progressValue.value = await withTiming(
+        isLast ? (fraction ? fraction : 1) : 1,
+        { duration, easing: easingFunction }
+      );
+
+      if (isLast) runOnJS(pulseArrow)();
+    }
+
+    animateLoop();
+  }, []);
+
+  return (
+    <AnimatedCircle
+      cx={radius + strokeWidth / 2}
+      cy={radius + strokeWidth / 2}
+      r={radius}
+      stroke={color}
+      fill="none"
+      strokeWidth={strokeWidth * 0.9}
+      strokeLinecap="round"
+      strokeDasharray={`${circumference} ${circumference}`}
+      transform={`rotate(-90 ${radius + strokeWidth / 2} ${
+        radius + strokeWidth / 2
+      })`}
+      animatedProps={animatedProps}
+    />
   );
 }

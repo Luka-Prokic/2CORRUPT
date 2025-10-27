@@ -16,7 +16,11 @@
     "download": "Download",
     "clone": "Clone",
     "open": "Open",
-    "view": "View"
+    "view": "View",
+    "add": "Add",
+    "remove": "Remove",
+    "update": "Update",
+    "sync": "Sync"
   },
   "form": {
     "name": "Name",
@@ -202,10 +206,6 @@
   },
   "templates-widget": {
     "header": "Templates",
-    "main-info": "Customize your workout template — rename it, adjust details, start a session from it, make a copy for variations, or delete it if it's no longer needed.",
-    "clone-info": "Duplicate this template to create a new version while keeping the original intact. Changing the name can help you distinguish between them.",
-    "delete-info": "Deleting this template can't be undone. Your previous workouts won't be affected.",
-    "active-session-warning": "Active workout in progress. Finish it before starting a new session or editing templates.",
     "footer": "You don't have any saved templates yet."
   },
 
@@ -322,9 +322,26 @@
     "copied": "Copied!",
     "copied-to-clipboard": "Session recap copied to clipboard with legend."
   },
-  "sessions": {},
+  "sessions": {
+    "session": "Session",
+    "repeat-workout": "Repeat Workout",
+    "view-recap": "View Recap",
+    "add-to-templates": "Add to Templates",
+    "update-template": "Update Template",
+    "options-info": "Manage your workout session — view its recap, copy the layout as text, turn it into a reusable template, or remove it if you don't need it anymore.",
+    "add-template-info": "Save this session's layout as a new template. Giving it a clear name helps you recognize it later or use it for similar workouts.",
+    "update-template-info": "Update the template used for this session. You can adjust its layout, rename it, and keep it aligned with your latest workout changes.",
+    "remove-info": "Removing this session can't be undone. Your progress stats will be affected.",
+    "active-session-warning": "Active workout in progress. Finish it before starting a new session."
+  },
   "templates": {
-    "empty-info": "Templates are pre-made sets of exercises you can reuse whenever you want. Tap the plus button above to start your first one. Creating a template is quick and editable, letting you organize your workouts efficiently. Once you have a few, you can mix and match them to plan your training week, saving time and keeping your focus on lifting rather than planning each set from scratch."
+    "template": "Template",
+    "start-workout": "Start Workout",
+    "empty-info": "Templates are pre-made sets of exercises you can reuse whenever you want. Tap the plus button above to start your first one. Creating a template is quick and editable, letting you organize your workouts efficiently. Once you have a few, you can mix and match them to plan your training week, saving time and keeping your focus on lifting rather than planning each set from scratch.",
+    "options-info": "Customize your workout template — rename it, adjust details, start a session from it, make a copy for variations, or delete it if it's no longer needed.",
+    "clone-info": "Duplicate this template to create a new version while keeping the original intact. Changing the name can help you distinguish between them.",
+    "delete-info": "Deleting this template can't be undone. Your previous workouts won't be affected.",
+    "active-session-warning": "Active workout in progress. Finish it before starting a new session or editing templates."
   },
   "splits": {},
 

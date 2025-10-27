@@ -3,9 +3,9 @@ import { Text, TouchableOpacity } from "react-native";
 import { useSettingsStore } from "../../stores/settingsStore";
 import { Fragment, useCallback, useRef } from "react";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
-import { TemplateBottomSheet } from "../board-home/widgets/templates-widget/template-options/TemplateBottomSheet";
 import { useWidgetUnit } from "../../features/widgets/useWidgetUnit";
 import { Ionicons } from "@expo/vector-icons";
+import { TemplateBottomSheet } from "./template-options/TemplateBottomSheet";
 
 interface TemplateSelectCardProps {
   template: WorkoutTemplate;

@@ -4,8 +4,8 @@ import {
   BottomSheetModal,
   BottomSheetView,
 } from "@gorhom/bottom-sheet";
-import { WorkoutTemplate } from "../../../../../stores/workout";
-import { useSettingsStore } from "../../../../../stores/settingsStore";
+import { WorkoutTemplate } from "../../../stores/workout";
+import { useSettingsStore } from "../../../stores/settingsStore";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { TemplateFirstView } from "./TemplateFirstView";
 import { TemplateDeleteView } from "./TemplateDeleteView";

@@ -195,7 +195,10 @@ export interface TemplateSlice {
 export interface SessionSlice {
   activeSession: WorkoutSession | null;
   completedSessions: WorkoutSession[];
-  startSession: (template?: WorkoutTemplate) => void;
+  startSession: (
+    template?: WorkoutTemplate,
+    layout?: SessionExercise[]
+  ) => void;
   completeSession: () => void;
   cancelSession: () => void;
   addExerciseToSession: (
@@ -203,6 +206,7 @@ export interface SessionSlice {
     afterItemId?: string
   ) => void;
   removeExercisesFromSession: (exerciseIds: string[]) => void;
+  removeSession: (sessionId: string) => void;
   reorderSessionItems: (newOrder: SessionExercise[]) => void;
   updateSessionField: <K extends keyof WorkoutSession>(
     sessionId: string,

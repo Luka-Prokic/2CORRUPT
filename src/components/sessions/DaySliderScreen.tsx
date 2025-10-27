@@ -1,25 +1,31 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
   FlatList,
+  View,
+  Text,
   NativeSyntheticEvent,
   NativeScrollEvent,
 } from "react-native";
 import { WIDTH } from "../../features/Dimensions";
+import { useSettingsStore } from "../../stores/settingsStore";
 import { DayRecapScreen } from "./DayRecapScreen";
 
 interface DaySliderScreenProps {
   weeks: Date[][];
   selectedDate: Date;
   setSelectedDate: (date: Date) => void;
+  isFutureDate: (date: Date) => boolean;
 }
 
 export function DaySliderScreen({
   weeks,
   selectedDate,
   setSelectedDate,
+  isFutureDate,
 }: DaySliderScreenProps) {
   const allDays = weeks.flat();
   const flatListRef = useRef<FlatList<Date>>(null);
+  const { theme } = useSettingsStore();
 
   const [isUserScrolling, setIsUserScrolling] = useState(false);
 
@@ -57,7 +63,7 @@ export function DaySliderScreen({
   // Reset scroll lock after a short delay
   useEffect(() => {
     if (isUserScrolling) {
-      const timeout = setTimeout(() => setIsUserScrolling(false), 0);
+      const timeout = setTimeout(() => setIsUserScrolling(false), 150);
       return () => clearTimeout(timeout);
     }
   }, [isUserScrolling]);
@@ -76,7 +82,12 @@ export function DaySliderScreen({
         offset: WIDTH * index,
         index,
       })}
-      renderItem={({ item }) => <DayRecapScreen date={item} />}
+      renderItem={({ item }) => {
+        const isFuture = isFutureDate(item);
+        if (isFuture) return null;
+
+        return <DayRecapScreen date={item} />;
+      }}
     />
   );
 }

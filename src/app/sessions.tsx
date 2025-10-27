@@ -30,6 +30,7 @@ export default function SessionssScreen() {
       />
       <ScreenContent edges={["top"]} scroll={false}>
         <DayPicker
+          key={`${currentWeek}`}
           currentWeek={currentWeek}
           weeks={weeks}
           currentWeekIndex={currentWeekIndex}
@@ -45,6 +46,7 @@ export default function SessionssScreen() {
           weeks={weeks}
           selectedDate={selectedDate}
           setSelectedDate={setSelectedDate}
+          isFutureDate={isFutureDate}
         />
       </ScreenContent>
     </Fragment>

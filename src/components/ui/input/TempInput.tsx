@@ -8,10 +8,10 @@ import {
   TextInputProps,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useSettingsStore } from "../../../../../stores/settingsStore";
+import { useSettingsStore } from "../../../stores/settingsStore";
 import { useTranslation } from "react-i18next";
 
-export interface TemplateNameCloneInputProps extends TextInputProps {
+export interface TempInputProps extends TextInputProps {
   tempName: string;
   setTempName: (newName: string) => void;
   fontSize?: number;
@@ -20,7 +20,7 @@ export interface TemplateNameCloneInputProps extends TextInputProps {
   onBlurCustom?: () => void;
 }
 
-export function TemplateNameCloneInput({
+export function TempInput({
   tempName,
   setTempName,
   fontSize = 64,
@@ -28,7 +28,7 @@ export function TemplateNameCloneInput({
   styleView,
   onBlurCustom,
   ...textInputProps
-}: TemplateNameCloneInputProps) {
+}: TempInputProps) {
   const { t } = useTranslation();
   const { theme } = useSettingsStore();
   const [isEditing, setIsEditing] = useState(false);

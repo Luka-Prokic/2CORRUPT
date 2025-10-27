@@ -2,8 +2,8 @@ import { WorkoutTemplate } from "../../../../../stores/workout";
 import { View, Text, TouchableOpacity } from "react-native";
 import { useSettingsStore } from "../../../../../stores/settingsStore";
 import { Fragment, useCallback, useRef } from "react";
-import { TemplateBottomSheet } from "../template-options/TemplateBottomSheet";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import { TemplateBottomSheet } from "../../../../templates/template-options/TemplateBottomSheet";
 
 interface TemplateCardProps {
   template: WorkoutTemplate;

@@ -1,41 +1,33 @@
-import { forwardRef, Fragment, useState } from "react";
-import {
-  useWorkoutStore,
-  WorkoutTemplate,
-} from "../../../../../stores/workout";
+import { forwardRef, Fragment } from "react";
+import { useWorkoutStore, WorkoutTemplate } from "../../../stores/workout";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
-import { useSettingsStore } from "../../../../../stores/settings";
+import { useSettingsStore } from "../../../stores/settings";
 import { TemplateBottomSheetViews } from "./TemplateBottomSheet";
-import { TemplateNameCloneInput } from "./TemplateNameCloneInput";
-import { BounceButton } from "../../../../ui/buttons/BounceButton";
-import { Text } from "react-native";
-import { WIDTH } from "../../../../../features/Dimensions";
-import { View } from "react-native";
-import { StrobeBlur } from "../../../../ui/misc/StrobeBlur";
+import { Text, View } from "react-native";
+import { WIDTH } from "../../../features/Dimensions";
+import { BounceButton } from "../../ui/buttons/BounceButton";
+import { StrobeBlur } from "../../ui/misc/StrobeBlur";
 import { useTranslation } from "react-i18next";
 
-interface TemplateCloneViewProps {
+interface TemplateDeleteViewProps {
   template: WorkoutTemplate;
   setView: (view: TemplateBottomSheetViews) => void;
 }
 
-export const TemplateCloneView = forwardRef<
+export const TemplateDeleteView = forwardRef<
   BottomSheetModal,
-  TemplateCloneViewProps
+  TemplateDeleteViewProps
 >(({ template, setView }, ref) => {
-  const { cloneTemplate } = useWorkoutStore();
+  const { deleteTemplate } = useWorkoutStore();
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
-  const [tempName, setTempName] = useState(template?.name || "");
-
-  const itsNotReady = !tempName;
 
   function closeSheet() {
     (ref as React.RefObject<BottomSheetModal>)?.current?.close();
   }
 
-  const handleCloneTemplate = () => {
-    cloneTemplate(template.id, tempName);
+  const handleDeleteTemplate = () => {
+    deleteTemplate(template.id);
     closeSheet();
   };
 
@@ -43,23 +35,28 @@ export const TemplateCloneView = forwardRef<
     setView("first");
   };
 
-  const handleFocus = () => {
-    (ref as React.RefObject<BottomSheetModal>)?.current?.snapToIndex(3);
-  };
-
-  const handleBlur = () => {
-    (ref as React.RefObject<BottomSheetModal>)?.current?.snapToIndex(1);
-  };
-
   return (
     <Fragment>
-      <TemplateNameCloneInput
-        tempName={tempName}
-        setTempName={setTempName}
-        onFocus={handleFocus}
-        onBlurCustom={handleBlur}
-        styleView={{ marginVertical: 16 }}
-      />
+      <Text
+        style={{
+          marginVertical: 16,
+          color: theme.error,
+          fontWeight: "500",
+          fontSize: 28,
+          textAlign: "center",
+        }}
+      >
+        {t("button.delete")}{" "}
+        <Text
+          style={{
+            color: theme.text,
+            fontWeight: "bold",
+          }}
+        >
+          {template.name}
+        </Text>{" "}
+        ?
+      </Text>
       <View
         style={{
           width: WIDTH - 32,
@@ -100,15 +97,14 @@ export const TemplateCloneView = forwardRef<
           style={{
             width: WIDTH / 2 - 20,
             height: 64,
-            backgroundColor: theme.tint,
+            backgroundColor: theme.error,
             borderTopLeftRadius: 8,
             borderBottomLeftRadius: 8,
             borderTopRightRadius: 32,
             borderBottomRightRadius: 32,
             overflow: "hidden",
           }}
-          onPress={handleCloneTemplate}
-          disabled={itsNotReady}
+          onPress={handleDeleteTemplate}
         >
           <StrobeBlur
             colors={[
@@ -117,7 +113,6 @@ export const TemplateCloneView = forwardRef<
               theme.accent,
               theme.tint,
             ]}
-            tint={itsNotReady ? "dark" : "light"}
             style={{
               width: WIDTH / 2 - 20,
               height: 64,
@@ -126,7 +121,7 @@ export const TemplateCloneView = forwardRef<
             <Text
               style={{ fontSize: 24, fontWeight: "bold", color: theme.text }}
             >
-              {t("button.clone")}
+              {t("button.delete")}
             </Text>
           </StrobeBlur>
         </BounceButton>
@@ -139,7 +134,7 @@ export const TemplateCloneView = forwardRef<
           textAlign: "justify",
         }}
       >
-        {t("templates-widget.clone-info")}
+        {t("templates.delete-info")}
       </Text>
     </Fragment>
   );

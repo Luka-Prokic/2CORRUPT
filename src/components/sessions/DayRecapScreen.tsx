@@ -1,8 +1,9 @@
 import { Text, View } from "react-native";
-import Svg, { Path } from "react-native-svg";
 import { WIDTH } from "../../features/Dimensions";
 import { useSettingsStore } from "../../stores/settings";
 import { useSessionsByDate } from "../../features/workout";
+import { FlatList } from "react-native-gesture-handler";
+import { SessionRecapCard } from "./cards/SessionRecapCard";
 
 interface DayRecapScreenProps {
   date: Date;
@@ -19,7 +20,7 @@ export function DayRecapScreen({ date }: DayRecapScreenProps) {
         width: WIDTH,
         justifyContent: "center",
         alignItems: "center",
-        paddingVertical: 20,
+        paddingVertical: 16,
       }}
     >
       <Text
@@ -31,8 +32,15 @@ export function DayRecapScreen({ date }: DayRecapScreenProps) {
           marginBottom: 20,
         }}
       >
-        {sessionsOnThisDate.length} Sessions done
+        {sessionsOnThisDate?.length ?? 0} Sessions done
       </Text>
+      <FlatList
+        data={sessionsOnThisDate ?? []}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => <SessionRecapCard session={item} />}
+        contentContainerStyle={{ width: WIDTH, padding: 16, gap: 8 }}
+        scrollEnabled={false}
+      />
     </View>
   );
 }

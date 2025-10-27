@@ -41,6 +41,7 @@ export function SummaryWidget() {
     >
       <SummaryHeader />
       <ProgressRing
+        // key={`${sessionsToday.length}-${5}`}
         compareWith={sessionsToday.length}
         compareTo={5} //TODO: now its dummy goal, in future change it so user can set it
         content={

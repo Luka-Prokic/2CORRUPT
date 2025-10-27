@@ -9,6 +9,7 @@ import { StrobeButton } from "../ui/buttons/StrobeButton";
 import { useTranslation } from "react-i18next";
 import { HEIGHT } from "../../features/Dimensions";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Fragment } from "react";
 
 export function EmptyTemplateComponent() {
   const insets = useSafeAreaInsets();
@@ -26,12 +27,7 @@ export function EmptyTemplateComponent() {
   }
 
   return (
-    <View
-      style={{
-        height: HEIGHT - insets.top - insets.bottom - 32,
-        width: fullWidth,
-      }}
-    >
+    <Fragment>
       <StrobeButton
         onPress={handlePress}
         style={{
@@ -52,8 +48,7 @@ export function EmptyTemplateComponent() {
         style={{
           height: widgetUnit,
           width: fullWidth,
-          position: "absolute",
-          bottom: 0,
+          marginTop: 16,
         }}
       >
         <Text
@@ -66,6 +61,6 @@ export function EmptyTemplateComponent() {
           {t("templates.empty-info")}
         </Text>
       </View>
-    </View>
+    </Fragment>
   );
 }

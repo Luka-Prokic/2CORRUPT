@@ -19,9 +19,27 @@ export const createSessionSlice: StateCreator<WorkoutStore, [], [], {}> = (
   activeSession: null,
   completedSessions: [],
 
-  startSession: (template?: WorkoutTemplate) => {
+  startSession: (template?: WorkoutTemplate, layout?: SessionExercise[]) => {
     const { activeSession } = get();
     if (activeSession) return;
+
+    const newLayout = layout
+      ? layout.map((ex) => ({
+          ...ex,
+          sets: ex.sets.map((set) => ({
+            ...set,
+            isCompleted: false,
+          })),
+        }))
+      : template
+      ? template.layout.map((ex) => ({
+          ...ex,
+          sets: ex.sets.map((set) => ({
+            ...set,
+            isCompleted: false,
+          })),
+        }))
+      : [];
 
     const now = new Date();
     const name = `${template ? template?.name : ""} ${now.toLocaleDateString(
@@ -40,11 +58,11 @@ export const createSessionSlice: StateCreator<WorkoutStore, [], [], {}> = (
       templateId: template?.id || null,
       templateVersion: template?.version || null,
       name: name,
-      // e.g. "07/10/2025 10:00"
       startTime: now.toISOString(),
       isActive: true,
-      layout: template?.layout || [],
+      layout: newLayout,
       createdAt: now.toISOString(),
+      notes: template?.description || "",
     };
 
     set({
@@ -191,6 +209,18 @@ export const createSessionSlice: StateCreator<WorkoutStore, [], [], {}> = (
         layout: newOrder,
       },
     }));
+  },
+
+  removeSession: (sessionId: string) => {
+    const { clearActiveExercise, completedSessions } = get();
+
+    const newSessions = completedSessions.filter((s) => s.id !== sessionId);
+
+    set({
+      completedSessions: newSessions,
+      activeSession: null,
+    });
+    clearActiveExercise();
   },
 
   updateSessionField: (
