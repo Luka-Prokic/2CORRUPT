@@ -51,25 +51,6 @@ export interface WorkoutTemplate {
   };
 }
 
-export type ExerciseColumns = "Reps" | "Weight" | "RIR" | "RPE";
-
-// Session snapshot of an exercise with sets
-export interface SessionExercise {
-  readonly id: string; // snapshot id for session level
-  exerciseInfoId?: string | null;
-  name: string;
-  prefix?: string; // new prefix field
-  primaryMuscles: string[];
-  secondaryMuscles?: string[];
-  equipment?: string[];
-  notes?: string | null;
-  sets: Set[];
-  columns?: ExerciseColumns[];
-  restTime?: number | null;
-  noRest?: boolean;
-}
-
-// Workout session (single source of truth for a performed workout)
 export interface WorkoutSession {
   readonly id: string;
   readonly userId?: string | null;
@@ -89,6 +70,24 @@ export interface WorkoutSession {
   notes?: string | null;
   readonly createdAt: IsoDateString;
   updatedAt?: IsoDateString;
+}
+
+export type ExerciseColumns = "Reps" | "Weight" | "RIR" | "RPE";
+
+// Session snapshot of an exercise with sets
+export interface SessionExercise {
+  readonly id: string; // snapshot id for session level
+  exerciseInfoId?: string | null;
+  name: string;
+  prefix?: string; // new prefix field
+  primaryMuscles: string[];
+  secondaryMuscles?: string[];
+  equipment?: string[];
+  notes?: string | null;
+  sets: Set[];
+  columns?: ExerciseColumns[];
+  restTime?: number | null;
+  noRest?: boolean;
 }
 
 export interface SplitPlanDay {

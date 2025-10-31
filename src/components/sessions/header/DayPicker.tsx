@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef } from "react";
 import {
   View,
   Text,
@@ -8,10 +8,11 @@ import {
   NativeSyntheticEvent,
   NativeScrollEvent,
 } from "react-native";
-import { useSettingsStore } from "../../stores/settingsStore";
-import { useDayLabels } from "../../features/Labels";
-import { WIDTH } from "../../features/Dimensions";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useSettingsStore } from "../../../stores/settingsStore";
+import { useDayLabels } from "../../../features/Labels";
+import { WIDTH } from "../../../features/Dimensions";
+import { useSessionsByDate } from "../../../features/workout";
+import { WeekDay } from "./WeekDay";
 
 interface DayPickerProps {
   currentWeek: Date[];
@@ -41,7 +42,6 @@ export function DayPicker({
   const { theme } = useSettingsStore();
   const dayLabels = useDayLabels();
   const flatListRef = useRef<FlatList>(null);
-  const insets = useSafeAreaInsets();
 
   const handleWeekScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const offsetX = event.nativeEvent.contentOffset.x;
@@ -53,12 +53,11 @@ export function DayPicker({
     (d) => d.toDateString() === selectedDate.toDateString()
   );
 
-  
   return (
     <View
       style={{
         width: WIDTH,
-        marginTop: insets.top,
+        height: WIDTH / 7,
       }}
     >
       {/* Animated selected day circle */}
@@ -66,14 +65,15 @@ export function DayPicker({
         style={[
           {
             position: "absolute",
-            borderRadius: 50,
+            borderRadius: "50%",
             width: buttonSize,
             height: buttonSize,
-            backgroundColor: theme.accent,
+            backgroundColor: theme.tint,
           },
           animatedBackgroundStyle,
         ]}
       />
+      {/* Week Days*/}
       <FlatList
         ref={flatListRef}
         horizontal
@@ -100,60 +100,17 @@ export function DayPicker({
               position: "relative",
             }}
           >
-            {week.map((date: Date, dayIndex: number) => {
-              const isSelected = dayIndex === selectedIndexInWeek;
-              const isFuture = isFutureDate(date);
-              const isTodayDate = isToday(date);
-
-              return (
-                <TouchableOpacity
-                  key={`day-${dayIndex}-${date.toDateString()}`}
-                  style={{
-                    justifyContent: "center",
-                    alignItems: "center",
-                    borderRadius: 25,
-                    zIndex: 2,
-                    width: buttonSize,
-                    height: buttonSize,
-                  }}
-                  onPress={() => onDayPress(date, dayIndex)}
-                  disabled={isFuture}
-                  activeOpacity={0.7}
-                >
-                  <Text
-                    style={{
-                      fontSize: 12,
-                      marginBottom: 2,
-                      color: isFuture
-                        ? theme.grayText
-                        : isSelected
-                        ? theme.background
-                        : isTodayDate
-                        ? theme.accent
-                        : theme.text,
-                      fontWeight: isTodayDate ? "bold" : "normal",
-                    }}
-                  >
-                    {dayLabels[dayIndex]}
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 14,
-                      color: isFuture
-                        ? theme.grayText
-                        : isSelected
-                        ? theme.background
-                        : isTodayDate
-                        ? theme.accent
-                        : theme.text,
-                      fontWeight: isSelected || isTodayDate ? "bold" : "normal",
-                    }}
-                  >
-                    {date.getDate()}
-                  </Text>
-                </TouchableOpacity>
-              );
-            })}
+            {week.map((date: Date, dayIndex: number) => (
+              <WeekDay
+                key={`week-day-${dayIndex}`}
+                date={date}
+                dayIndex={dayIndex}
+                size={buttonSize}
+                onDayPress={onDayPress}
+                selectedDate={selectedDate}
+                currentWeek={currentWeek}
+              />
+            ))}
           </View>
         )}
       />

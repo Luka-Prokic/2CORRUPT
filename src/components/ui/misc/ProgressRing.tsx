@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { View, ViewStyle } from "react-native";
 import Svg, { Circle } from "react-native-svg";
 import Animated, {
   useSharedValue,
@@ -19,17 +19,21 @@ interface ProgressRingProps {
   compareWith: number;
   compareTo?: number;
   content?: React.ReactNode;
+  ringSize?: number;
+  style?: ViewStyle | ViewStyle[];
 }
 
 export function ProgressRing({
   compareWith = 0,
   compareTo = 5,
   content,
+  ringSize,
+  style,
 }: ProgressRingProps) {
   const { theme } = useSettingsStore();
   const { widgetUnit } = useWidgetUnit();
 
-  const size = widgetUnit - 78;
+  const size = ringSize ?? widgetUnit - 78;
   const strokeWidth = size / 5;
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
@@ -49,7 +53,7 @@ export function ProgressRing({
   }
 
   return (
-    <View style={{ width: size, height: size }}>
+    <View style={{ width: size, height: size, ...style }}>
       <Svg width={size + 2} height={size + 2}>
         {/* Base ring */}
         <Circle

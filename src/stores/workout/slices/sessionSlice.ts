@@ -9,6 +9,75 @@ import {
 } from "../types";
 import { nanoid } from "nanoid/non-secure";
 
+// Workout session (single source of truth for a performed workout)
+const now = new Date();
+const start = new Date(now.getTime() - 80 * 60 * 1000).toISOString(); // 1h 20m later
+const end = now.toISOString();
+
+const start2 = new Date(now.getTime() - 1090 * 60 * 1000).toISOString();
+const end2 = new Date(now.getTime() - 1000 * 60 * 1000).toISOString();
+
+const start3 = new Date(now.getTime() - 990 * 60 * 1000).toISOString();
+const end3 = new Date(now.getTime() - 920 * 60 * 1000).toISOString();
+
+const overheadPressExample: SessionExercise = {
+  id: "ex-ohp-23123123", // snapshot id
+  exerciseInfoId: "ex-ohp", // optional
+  name: "Overhead Press",
+  prefix: "Barbell", // new field
+  primaryMuscles: ["front delts", "side delts"],
+  secondaryMuscles: ["triceps", "rear delts"],
+  equipment: ["barbell"],
+  notes: "Focus on strict form, avoid arching back",
+  sets: [
+    {
+      id: "set-1",
+      reps: 8,
+      weight: 60, // in kg
+      isCompleted: true,
+    },
+  ],
+  columns: ["Reps", "Weight"], // optional
+  restTime: 90, // default rest in seconds
+  noRest: false, // this exercise has rest
+};
+
+const mockSession: WorkoutSession = {
+  id: "mock-sesh",
+  name: "Mock 1h20m Workout",
+  startTime: start,
+  endTime: end,
+  isActive: true,
+  layout: [overheadPressExample],
+  notes: "Mock session for testing",
+  createdAt: now.toISOString(),
+  updatedAt: now.toISOString(),
+};
+
+const mockSessionTwo: WorkoutSession = {
+  id: "mock-two",
+  name: "Mock 2 Workout",
+  startTime: start2,
+  endTime: end2,
+  isActive: true,
+  layout: [],
+  notes: "Mock session for testing",
+  createdAt: now.toISOString(),
+  updatedAt: now.toISOString(),
+};
+
+const mockSessionThree: WorkoutSession = {
+  id: "mock-three",
+  name: "Mock 3 Workout",
+  startTime: start3,
+  endTime: end3,
+  isActive: true,
+  layout: [],
+  notes: "Mock session for testing",
+  createdAt: now.toISOString(),
+  updatedAt: now.toISOString(),
+};
+
 /**
  * Session slice: manages active workout sessions
  */
@@ -17,7 +86,7 @@ export const createSessionSlice: StateCreator<WorkoutStore, [], [], {}> = (
   get
 ) => ({
   activeSession: null,
-  completedSessions: [],
+  completedSessions: [mockSession, mockSessionThree, mockSessionTwo],
 
   startSession: (template?: WorkoutTemplate, layout?: SessionExercise[]) => {
     const { activeSession } = get();
@@ -42,16 +111,15 @@ export const createSessionSlice: StateCreator<WorkoutStore, [], [], {}> = (
       : [];
 
     const now = new Date();
-    const name = `${template ? template?.name : ""} ${now.toLocaleDateString(
-      "en-GB",
-      {
-        day: "2-digit",
-        month: "2-digit",
-      }
-    )} ${now.toLocaleTimeString("en-GB", {
-      hour: "2-digit",
-      minute: "2-digit",
-    })}`;
+    const name = template
+      ? `${template?.name}`
+      : `${now.toLocaleDateString("en-GB", {
+          day: "2-digit",
+          month: "2-digit",
+        })} ${now.toLocaleTimeString("en-GB", {
+          hour: "2-digit",
+          minute: "2-digit",
+        })}`;
 
     const newSession: WorkoutSession = {
       id: `session-${nanoid()}`,

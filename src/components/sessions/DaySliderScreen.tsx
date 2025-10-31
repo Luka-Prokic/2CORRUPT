@@ -25,7 +25,6 @@ export function DaySliderScreen({
 }: DaySliderScreenProps) {
   const allDays = weeks.flat();
   const flatListRef = useRef<FlatList<Date>>(null);
-  const { theme } = useSettingsStore();
 
   const [isUserScrolling, setIsUserScrolling] = useState(false);
 
@@ -82,12 +81,7 @@ export function DaySliderScreen({
         offset: WIDTH * index,
         index,
       })}
-      renderItem={({ item }) => {
-        const isFuture = isFutureDate(item);
-        if (isFuture) return null;
-
-        return <DayRecapScreen date={item} />;
-      }}
+      renderItem={({ item }) => <DayRecapScreen date={item} />}
     />
   );
 }
