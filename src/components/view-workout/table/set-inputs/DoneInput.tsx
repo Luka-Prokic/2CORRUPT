@@ -6,9 +6,10 @@ import { Set } from "../../../../stores/workout/types";
 
 interface DoneInputProps {
   set: Set;
+  disabled?: boolean;
 }
 
-export function DoneInput({ set }: DoneInputProps) {
+export function DoneInput({ set, disabled }: DoneInputProps) {
   const { theme } = useSettingsStore();
   const { updateSetInActiveExercise, activeTemplate } = useWorkoutStore();
 
@@ -24,7 +25,7 @@ export function DoneInput({ set }: DoneInputProps) {
         height: 44,
       }}
       onPress={handleToggleComplete}
-      disabled={set.isCompleted || !!activeTemplate}
+      disabled={set.isCompleted || !!activeTemplate || disabled}
     >
       <Ionicons
         name={set.isCompleted ? "checkmark-circle" : "ellipse-outline"}
@@ -32,7 +33,7 @@ export function DoneInput({ set }: DoneInputProps) {
         color={
           set.isCompleted
             ? theme.text
-            : activeTemplate
+            : activeTemplate || disabled
             ? theme.handle
             : theme.grayText
         }

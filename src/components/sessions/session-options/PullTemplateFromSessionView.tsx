@@ -10,6 +10,7 @@ import { View } from "react-native";
 import { StrobeBlur } from "../../ui/misc/StrobeBlur";
 import { useTranslation } from "react-i18next";
 import { TempInput } from "../../ui/input/TempInput";
+import { TwoOptionStrobeButtons } from "../../ui/buttons/TwoOptionStrobeButtons";
 
 interface PullTemplateFromSessionViewProps {
   session: WorkoutSession;
@@ -52,7 +53,7 @@ export const PullTemplateFromSessionView = forwardRef<
   };
 
   const handleCancel = () => {
-    setView("first");
+    setView("options");
   };
 
   const handleFocus = () => {
@@ -72,77 +73,14 @@ export const PullTemplateFromSessionView = forwardRef<
         onBlurCustom={handleBlur}
         styleView={{ marginVertical: 16 }}
       />
-      <View
-        style={{
-          width: WIDTH - 32,
-          height: 68,
-          paddingVertical: 2,
-          flexDirection: "row",
-          gap: 8,
-        }}
-      >
-        <BounceButton
-          style={{
-            width: WIDTH / 2 - 20,
-            height: 64,
-            backgroundColor: theme.handle,
-            borderTopLeftRadius: 32,
-            borderBottomLeftRadius: 32,
-            borderTopRightRadius: 8,
-            borderBottomRightRadius: 8,
-            overflow: "hidden",
-          }}
-          onPress={handleCancel}
-        >
-          <StrobeBlur
-            tint="light"
-            style={{
-              width: WIDTH / 2 - 20,
-              height: 64,
-            }}
-          >
-            <Text
-              style={{ fontSize: 24, fontWeight: "bold", color: theme.text }}
-            >
-              {t("button.cancel")}
-            </Text>
-          </StrobeBlur>
-        </BounceButton>
-        <BounceButton
-          style={{
-            width: WIDTH / 2 - 20,
-            height: 64,
-            backgroundColor: theme.tint,
-            borderTopLeftRadius: 8,
-            borderBottomLeftRadius: 8,
-            borderTopRightRadius: 32,
-            borderBottomRightRadius: 32,
-            overflow: "hidden",
-          }}
-          onPress={handlePullTemplate}
-          disabled={itsNotReady}
-        >
-          <StrobeBlur
-            colors={[
-              theme.caka,
-              theme.primaryBackground,
-              theme.accent,
-              theme.tint,
-            ]}
-            tint={itsNotReady ? "dark" : "light"}
-            style={{
-              width: WIDTH / 2 - 20,
-              height: 64,
-            }}
-          >
-            <Text
-              style={{ fontSize: 24, fontWeight: "bold", color: theme.text }}
-            >
-              {t("button.add")}
-            </Text>
-          </StrobeBlur>
-        </BounceButton>
-      </View>
+      <TwoOptionStrobeButtons
+        labelOne={t("button.cancel")}
+        labelTwo={t("button.add")}
+        onOptionOne={handleCancel}
+        onOptionTwo={handlePullTemplate}
+        styleTwo={{ backgroundColor: theme.tint }}
+        disabledTwo={itsNotReady}
+      />
       <Text
         style={{
           marginVertical: 16,

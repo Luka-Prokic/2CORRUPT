@@ -9,6 +9,8 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { EmptyFooter } from "../ui/containers/EmptyFooter";
 import { MuscleRadarChartDay } from "./stats/MuscleRadarChartDay";
 import { StaticDailyActivityBar } from "./day-activity-bar/StaticDailyActivityBar";
+import { DaySummary } from "./day-ui/DaySummary";
+import { SummaryEmptyHeader } from "./header/SummaryEmptyHeader";
 
 interface DayRecapScreenProps {
   date: Date;
@@ -17,17 +19,13 @@ interface DayRecapScreenProps {
 export function DayRecapScreen({ date }: DayRecapScreenProps) {
   const sessionsOnThisDate = useSessionsByDate(date);
   const { isFutureDate } = useCalendarNavigation();
-  const insets = useSafeAreaInsets();
 
   if (isFutureDate(date)) return null;
   return (
     <ScreenContent>
-      <View style={{ height: WIDTH / 7 + 34 + insets.top }} />
-      {/* <DayBadge
-        date={date}
-        style={{ marginTop: WIDTH / 7 + 34 + insets.top }}
-      /> */}
-      <MuscleRadarChartDay date={date} />
+      <SummaryEmptyHeader />
+      <DaySummary date={date} />
+
       <StaticDailyActivityBar date={date} />
       <FlatList
         data={sessionsOnThisDate ?? []}

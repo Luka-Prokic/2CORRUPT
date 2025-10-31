@@ -1,49 +1,33 @@
 import { forwardRef, Fragment } from "react";
-import { useWorkoutStore, WorkoutSession } from "../../../stores/workout";
+import { WorkoutSession } from "../../../stores/workout";
 import { OptionButton } from "../../ui/buttons/OptionButton";
 import { Ionicons } from "@expo/vector-icons";
 import { Text } from "react-native";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { useSettingsStore } from "../../../stores/settings";
-import { useUIStore } from "../../../stores/ui";
 import { router } from "expo-router";
 import { SessionBottomSheetViews } from "./SessionBottomSheet";
 import { useTranslation } from "react-i18next";
 import { SessionNameInput } from "../../board-workout/sheets/session/SessionNameInput";
 
-interface SessionFirstViewProps {
+interface SessionOptionsViewProps {
   session: WorkoutSession;
   setView: (view: SessionBottomSheetViews) => void;
 }
 
-export const SessionFirstView = forwardRef<
+export const SessionOptionsView = forwardRef<
   BottomSheetModal,
-  SessionFirstViewProps
+  SessionOptionsViewProps
 >(({ session, setView }, ref) => {
-  const { startSession, activeSession, getTemplateById } = useWorkoutStore();
   const { theme } = useSettingsStore();
-  const { setTypeOfView } = useUIStore();
   const { t } = useTranslation();
-
-  function closeSheet() {
-    (ref as React.RefObject<BottomSheetModal>)?.current?.close();
-  }
-
-  function handleStartWorkout() {
-    const template = getTemplateById(session.templateId);
-
-    setTimeout(() => {
-      if (template) startSession(template);
-      else startSession(null, session.layout);
-      setTypeOfView("workout");
-      router.dismissTo("/");
-    }, 200);
-
-    closeSheet();
-  }
 
   function handleViewRecap() {
     router.push(`/recap/${session.id}`);
+  }
+
+  function handleBack() {
+    setView("preview");
   }
 
   function handleMakeTemplate() {
@@ -66,33 +50,13 @@ export const SessionFirstView = forwardRef<
           styleView={{ marginVertical: 16 }}
           disabled
         />
-        {activeSession && (
-          <Text
-            style={{
-              marginVertical: 4,
-              color: theme.info,
-              fontSize: 14,
-              fontWeight: "500",
-            }}
-          >
-            <Ionicons name="alert-circle" size={14} color={theme.error} />{" "}
-            {t("sessions.active-session-warning")}
-          </Text>
-        )}
-
         <OptionButton
-          title={t("sessions.repeat-workout")}
+          title={t("sessions.preview")}
           icon={
-            <Ionicons
-              name="play-circle"
-              size={24}
-              color={activeSession ? theme.handle : theme.accent}
-            />
+            <Ionicons name="chevron-back-circle" size={24} color={theme.text} />
           }
-          color={activeSession ? theme.handle : theme.accent}
-          onPress={handleStartWorkout}
+          onPress={handleBack}
           height={44}
-          disabled={!!activeSession}
         />
         <OptionButton
           title={t("sessions.view-recap")}
@@ -103,18 +67,23 @@ export const SessionFirstView = forwardRef<
           color={theme.info}
           height={44}
         />
+
         <OptionButton
           title={t("sessions.add-to-templates")}
-          icon={<Ionicons name="add-circle" size={24} color={theme.text} />}
+          icon={<Ionicons name="add-circle" size={24} color={theme.tint} />}
           onPress={handleMakeTemplate}
+          color={theme.tint}
           height={44}
         />
 
         {session.templateId && (
           <OptionButton
             title={t("sessions.update-template")}
-            icon={<Ionicons name="sync-circle" size={24} color={theme.text} />}
+            icon={
+              <Ionicons name="sync-circle" size={24} color={theme.accent} />
+            }
             onPress={handleUpdateTemplate}
+            color={theme.accent}
             height={44}
           />
         )}

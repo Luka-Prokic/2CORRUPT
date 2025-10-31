@@ -13,6 +13,7 @@ interface NumericDropInputProps {
   drop: DropSet;
   column: Extract<ExerciseColumns, "Weight" | "Reps">;
   style?: ViewStyle | ViewStyle[];
+  disabled?: boolean;
 }
 
 export function NumericDropInput({
@@ -20,6 +21,7 @@ export function NumericDropInput({
   drop,
   column,
   style,
+  disabled,
 }: NumericDropInputProps) {
   const { theme } = useSettingsStore();
   const { updateDropSetInActiveExercise } = useWorkoutStore();
@@ -47,13 +49,14 @@ export function NumericDropInput({
           height: 44,
           fontSize: 16,
           textAlign: "center",
-          color: set.isCompleted? theme.secondaryText : theme.grayText,
+          color: set.isCompleted ? theme.secondaryText : theme.grayText,
         }}
         value={displayValue.toString()}
         onChangeText={handleUpdateDropSet}
         placeholder="0"
         placeholderTextColor={theme.grayText}
         keyboardType="numeric"
+        pointerEvents={disabled ? "none" : "auto"}
       />
     </View>
   );

@@ -88,7 +88,11 @@ export function SessionRecapCard({ session, zoom }: SessionRecapCardProps) {
           </StrobeBlur>
         </Animated.View>
 
-        <SessionBottomSheet session={session} ref={bottomSheetRef} />
+        <SessionBottomSheet
+          session={session}
+          ref={bottomSheetRef}
+          startView="preview"
+        />
       </Fragment>
     );
   return null;

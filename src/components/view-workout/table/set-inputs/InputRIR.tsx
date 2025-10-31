@@ -5,9 +5,10 @@ import * as Haptics from "expo-haptics";
 
 interface InputRIRProps {
   set: Set;
+  disabled?: boolean;
 }
 
-export function InputRIR({ set }: InputRIRProps) {
+export function InputRIR({ set, disabled }: InputRIRProps) {
   const { updateSetInActiveExercise } = useWorkoutStore();
   const scale = Array.from({ length: 6 }, (_, index) => {
     if (index === 5) return "5+";
@@ -33,6 +34,7 @@ export function InputRIR({ set }: InputRIRProps) {
       }}
       itemStyle={{ height: 54 }}
       textStyle={{ fontSize: 16 }}
+      disabled={disabled}
     />
   );
 }

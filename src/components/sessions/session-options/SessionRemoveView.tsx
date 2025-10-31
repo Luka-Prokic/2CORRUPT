@@ -9,6 +9,7 @@ import { BounceButton } from "../../ui/buttons/BounceButton";
 import { StrobeBlur } from "../../ui/misc/StrobeBlur";
 import { useTranslation } from "react-i18next";
 import { Ionicons } from "@expo/vector-icons";
+import { TwoOptionStrobeButtons } from "../../ui/buttons/TwoOptionStrobeButtons";
 
 interface SessionRemoveViewProps {
   session: WorkoutSession;
@@ -23,17 +24,13 @@ export const SessionRemoveView = forwardRef<
   const { t } = useTranslation();
   const { removeSession } = useWorkoutStore();
 
-  function closeSheet() {
-    (ref as React.RefObject<BottomSheetModal>)?.current?.close();
-  }
-
   const handleRemoveSession = () => {
     removeSession(session.id);
-    closeSheet();
+    (ref as React.RefObject<BottomSheetModal>)?.current?.close();
   };
 
   const handleCancel = () => {
-    setView("first");
+    setView("options");
   };
 
   if (session)
@@ -48,7 +45,7 @@ export const SessionRemoveView = forwardRef<
             textAlign: "center",
           }}
         >
-          {t("button.remove")}{" "}
+          {t("button.remove")}
           <Text
             style={{
               color: theme.text,
@@ -59,75 +56,15 @@ export const SessionRemoveView = forwardRef<
           </Text>{" "}
           ?
         </Text>
-        <View
-          style={{
-            width: WIDTH - 32,
-            height: 68,
-            paddingVertical: 2,
-            flexDirection: "row",
-            gap: 8,
-          }}
-        >
-          <BounceButton
-            style={{
-              width: WIDTH / 2 - 20,
-              height: 64,
-              backgroundColor: theme.handle,
-              borderTopLeftRadius: 32,
-              borderBottomLeftRadius: 32,
-              borderTopRightRadius: 8,
-              borderBottomRightRadius: 8,
-              overflow: "hidden",
-            }}
-            onPress={handleCancel}
-          >
-            <StrobeBlur
-              tint="light"
-              style={{
-                width: WIDTH / 2 - 20,
-                height: 64,
-              }}
-            >
-              <Text
-                style={{ fontSize: 24, fontWeight: "bold", color: theme.text }}
-              >
-                {t("button.cancel")}
-              </Text>
-            </StrobeBlur>
-          </BounceButton>
-          <BounceButton
-            style={{
-              width: WIDTH / 2 - 20,
-              height: 64,
-              backgroundColor: theme.error,
-              borderTopLeftRadius: 8,
-              borderBottomLeftRadius: 8,
-              borderTopRightRadius: 32,
-              borderBottomRightRadius: 32,
-              overflow: "hidden",
-            }}
-            onPress={handleRemoveSession}
-          >
-            <StrobeBlur
-              colors={[
-                theme.caka,
-                theme.primaryBackground,
-                theme.accent,
-                theme.tint,
-              ]}
-              style={{
-                width: WIDTH / 2 - 20,
-                height: 64,
-              }}
-            >
-              <Text
-                style={{ fontSize: 24, fontWeight: "bold", color: theme.text }}
-              >
-                {t("button.remove")}
-              </Text>
-            </StrobeBlur>
-          </BounceButton>
-        </View>
+
+        <TwoOptionStrobeButtons
+          labelOne={t("button.cancel")}
+          labelTwo={t("button.remove")}
+          onOptionOne={handleCancel}
+          onOptionTwo={handleRemoveSession}
+          styleTwo={{ backgroundColor: theme.error }}
+        />
+
         <Text
           style={{
             marginVertical: 16,

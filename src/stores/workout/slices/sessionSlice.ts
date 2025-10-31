@@ -177,12 +177,12 @@ export const createSessionSlice: StateCreator<WorkoutStore, [], [], {}> = (
   activeSession: null,
   completedSessions: [mockSession, mockSessionThree, mockSessionTwo],
 
-  startSession: (template?: WorkoutTemplate, layout?: SessionExercise[]) => {
+  startSession: (template?: WorkoutTemplate, session?: WorkoutSession) => {
     const { activeSession } = get();
     if (activeSession) return;
 
-    const newLayout = layout
-      ? layout.map((ex) => ({
+    const newLayout = session
+      ? session.layout.map((ex) => ({
           ...ex,
           sets: ex.sets.map((set) => ({
             ...set,
@@ -199,15 +199,18 @@ export const createSessionSlice: StateCreator<WorkoutStore, [], [], {}> = (
         }))
       : [];
 
+    const newNotes = session
+      ? session.notes
+      : template
+      ? template.description
+      : "";
+
     const now = new Date();
     const name = template
       ? `${template?.name}`
       : `${now.toLocaleDateString("en-GB", {
           day: "2-digit",
           month: "2-digit",
-        })} ${now.toLocaleTimeString("en-GB", {
-          hour: "2-digit",
-          minute: "2-digit",
         })}`;
 
     const newSession: WorkoutSession = {
@@ -219,7 +222,7 @@ export const createSessionSlice: StateCreator<WorkoutStore, [], [], {}> = (
       isActive: true,
       layout: newLayout,
       createdAt: now.toISOString(),
-      notes: template?.description || "",
+      notes: newNotes,
     };
 
     set({

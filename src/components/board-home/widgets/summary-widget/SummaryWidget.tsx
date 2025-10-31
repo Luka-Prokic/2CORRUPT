@@ -9,7 +9,7 @@ import { ProgressRing } from "../../../ui/misc/ProgressRing";
 import { BounceButton } from "../../../ui/buttons/BounceButton";
 import { Text } from "react-native";
 import { useDracoFont } from "../../../../features/fonts/useDracoFont";
-import { useSessionsByDate } from "../../../../features/workout";
+import { useSessionsByDateRange } from "../../../../features/workout";
 import { SummaryWeek } from "./SummaryWeek";
 
 export function SummaryWidget() {
@@ -18,7 +18,23 @@ export function SummaryWidget() {
   const { fontFamily } = useDracoFont();
 
   const today = new Date();
-  const sessionsToday = useSessionsByDate(today);
+
+  // Get Monday of current week
+  const firstDayOfWeek = new Date(today);
+  const dayOfWeek = today.getDay(); // Sunday=0 ... Saturday=6
+  const diffToMonday = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
+  firstDayOfWeek.setDate(today.getDate() + diffToMonday);
+  firstDayOfWeek.setHours(0, 0, 0, 0);
+
+  // Get Sunday (end of week)
+  const lastDayOfWeek = new Date(firstDayOfWeek);
+  lastDayOfWeek.setDate(firstDayOfWeek.getDate() + 6);
+  lastDayOfWeek.setHours(23, 59, 59, 999);
+
+  const sessionsThisWeek = useSessionsByDateRange(
+    firstDayOfWeek,
+    lastDayOfWeek
+  );
 
   function handleWidgetPress() {
     router.push("/sessions");
@@ -41,8 +57,7 @@ export function SummaryWidget() {
     >
       <SummaryHeader />
       <ProgressRing
-        // key={`${sessionsToday.length}-${5}`}
-        compareWith={sessionsToday.length}
+        compareWith={sessionsThisWeek.length}
         compareTo={5} //TODO: now its dummy goal, in future change it so user can set it
         content={
           <BounceButton
@@ -61,7 +76,7 @@ export function SummaryWidget() {
               numberOfLines={1}
               minimumFontScale={0.5}
             >
-              {sessionsToday.length}
+              {sessionsThisWeek.length}
             </Text>
           </BounceButton>
         }

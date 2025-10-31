@@ -20,7 +20,10 @@
     "add": "Add",
     "remove": "Remove",
     "update": "Update",
-    "sync": "Sync"
+    "sync": "Sync",
+    "start": "Start",
+    "repeat": "Repeat",
+    "continue": "Continue"
   },
   "form": {
     "name": "Name",
@@ -324,6 +327,8 @@
   },
   "sessions": {
     "session": "Session",
+    "back-to-preview": "Back to Preview",
+    "preview": "View Preview",
     "repeat-workout": "Repeat Workout",
     "view-recap": "View Recap",
     "add-to-templates": "Add to Templates",
@@ -332,18 +337,24 @@
     "add-template-info": "Save this session's layout as a new template. Giving it a clear name helps you recognize it later or use it for similar workouts.",
     "update-template-info": "Update the template used for this session. You can adjust its layout, rename it, and keep it aligned with your latest workout changes.",
     "remove-info": "Removing this session can't be undone. Your progress stats will be affected.",
-    "active-session-warning": "Active workout in progress. Finish it before starting a new session."
+    "active-session-warning": "Active workout in progress. Finish it before starting a new session, or cencel it."
   },
   "templates": {
     "template": "Template",
     "start-workout": "Start Workout",
+    "back-to-preview": "Back to Preview",
     "empty-info": "Templates are pre-made sets of exercises you can reuse whenever you want. Tap the plus button above to start your first one. Creating a template is quick and editable, letting you organize your workouts efficiently. Once you have a few, you can mix and match them to plan your training week, saving time and keeping your focus on lifting rather than planning each set from scratch.",
     "options-info": "Customize your workout template — rename it, adjust details, start a session from it, make a copy for variations, or delete it if it's no longer needed.",
     "clone-info": "Duplicate this template to create a new version while keeping the original intact. Changing the name can help you distinguish between them.",
     "delete-info": "Deleting this template can't be undone. Your previous workouts won't be affected.",
-    "active-session-warning": "Active workout in progress. Finish it before starting a new session or editing templates."
+    "active-session-warning": "Active workout in progress. Finish it before starting a new session or editing templates, or cencel it."
   },
   "splits": {},
+
+  "alert": {
+    "end-workout": "End Workout",
+    "end-workout-message": "You're about to end your workout. You can finish it and save it or save it as template, or just ending it without saving."
+  },
 
   "categories": {
     "chest": "Chest",

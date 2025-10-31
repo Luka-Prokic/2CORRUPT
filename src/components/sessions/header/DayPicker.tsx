@@ -68,7 +68,7 @@ export function DayPicker({
             borderRadius: "50%",
             width: buttonSize,
             height: buttonSize,
-            backgroundColor: theme.tint,
+            backgroundColor: theme.accent,
           },
           animatedBackgroundStyle,
         ]}

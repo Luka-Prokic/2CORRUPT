@@ -3,11 +3,9 @@ import { useWorkoutStore, WorkoutTemplate } from "../../../stores/workout";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { useSettingsStore } from "../../../stores/settings";
 import { TemplateBottomSheetViews } from "./TemplateBottomSheet";
-import { Text, View } from "react-native";
-import { WIDTH } from "../../../features/Dimensions";
-import { BounceButton } from "../../ui/buttons/BounceButton";
-import { StrobeBlur } from "../../ui/misc/StrobeBlur";
+import { Text } from "react-native";
 import { useTranslation } from "react-i18next";
+import { TwoOptionStrobeButtons } from "../../ui/buttons/TwoOptionStrobeButtons";
 
 interface TemplateDeleteViewProps {
   template: WorkoutTemplate;
@@ -32,7 +30,7 @@ export const TemplateDeleteView = forwardRef<
   };
 
   const handleCancel = () => {
-    setView("first");
+    setView("options");
   };
 
   return (
@@ -57,75 +55,14 @@ export const TemplateDeleteView = forwardRef<
         </Text>{" "}
         ?
       </Text>
-      <View
-        style={{
-          width: WIDTH - 32,
-          height: 68,
-          paddingVertical: 2,
-          flexDirection: "row",
-          gap: 8,
-        }}
-      >
-        <BounceButton
-          style={{
-            width: WIDTH / 2 - 20,
-            height: 64,
-            backgroundColor: theme.handle,
-            borderTopLeftRadius: 32,
-            borderBottomLeftRadius: 32,
-            borderTopRightRadius: 8,
-            borderBottomRightRadius: 8,
-            overflow: "hidden",
-          }}
-          onPress={handleCancel}
-        >
-          <StrobeBlur
-            tint="light"
-            style={{
-              width: WIDTH / 2 - 20,
-              height: 64,
-            }}
-          >
-            <Text
-              style={{ fontSize: 24, fontWeight: "bold", color: theme.text }}
-            >
-              {t("button.cancel")}
-            </Text>
-          </StrobeBlur>
-        </BounceButton>
-        <BounceButton
-          style={{
-            width: WIDTH / 2 - 20,
-            height: 64,
-            backgroundColor: theme.error,
-            borderTopLeftRadius: 8,
-            borderBottomLeftRadius: 8,
-            borderTopRightRadius: 32,
-            borderBottomRightRadius: 32,
-            overflow: "hidden",
-          }}
-          onPress={handleDeleteTemplate}
-        >
-          <StrobeBlur
-            colors={[
-              theme.caka,
-              theme.primaryBackground,
-              theme.accent,
-              theme.tint,
-            ]}
-            style={{
-              width: WIDTH / 2 - 20,
-              height: 64,
-            }}
-          >
-            <Text
-              style={{ fontSize: 24, fontWeight: "bold", color: theme.text }}
-            >
-              {t("button.delete")}
-            </Text>
-          </StrobeBlur>
-        </BounceButton>
-      </View>
+
+      <TwoOptionStrobeButtons
+        labelOne={t("button.cancel")}
+        labelTwo={t("button.delete")}
+        onOptionOne={handleCancel}
+        onOptionTwo={handleDeleteTemplate}
+        styleTwo={{ backgroundColor: theme.error }}
+      />
       <Text
         style={{
           marginVertical: 16,

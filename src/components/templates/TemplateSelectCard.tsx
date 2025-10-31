@@ -117,7 +117,11 @@ export function TemplateSelectCard({
         </Text>
       </TouchableOpacity>
 
-      <TemplateBottomSheet template={template} ref={bottomSheetRef} />
+      <TemplateBottomSheet
+        template={template}
+        ref={bottomSheetRef}
+        startView="preview"
+      />
     </Fragment>
   );
 }

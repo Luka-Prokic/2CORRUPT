@@ -1,0 +1,114 @@
+import React from "react";
+import { View, Text, ViewStyle } from "react-native";
+import { WIDTH } from "../../../features/Dimensions";
+import { BounceButton } from "./BounceButton";
+import { useSettingsStore } from "../../../stores/settings";
+import { StrobeBlur } from "../misc/StrobeBlur";
+
+interface TwoOptionStrobeButtonsProps {
+  labelOne: string;
+  labelTwo: string;
+  onOptionOne: () => void;
+  onOptionTwo: () => void;
+  styleOne?: ViewStyle | ViewStyle[];
+  styleTwo?: ViewStyle | ViewStyle[];
+  disabledOne?: boolean;
+  disabledTwo?: boolean;
+  style?: ViewStyle | ViewStyle[];
+}
+
+export function TwoOptionStrobeButtons({
+  labelOne,
+  labelTwo,
+  onOptionOne,
+  onOptionTwo,
+  styleOne,
+  styleTwo,
+  disabledOne,
+  disabledTwo,
+  style,
+}: TwoOptionStrobeButtonsProps) {
+  const { theme } = useSettingsStore();
+
+  return (
+    <View
+      style={{
+        width: WIDTH - 32,
+        height: 68,
+        paddingVertical: 2,
+        flexDirection: "row",
+        gap: 8,
+        ...style,
+      }}
+    >
+      {/* OP 1 Button */}
+      <BounceButton
+        style={{
+          width: WIDTH / 2 - 20,
+          height: 64,
+          backgroundColor: theme.handle,
+          borderTopLeftRadius: 32,
+          borderBottomLeftRadius: 32,
+          borderTopRightRadius: 8,
+          borderBottomRightRadius: 8,
+          overflow: "hidden",
+          ...styleOne,
+        }}
+        onPress={onOptionOne}
+        disabled={disabledOne}
+      >
+        <StrobeBlur
+          tint="light"
+          style={{
+            width: WIDTH / 2 - 20,
+            height: 64,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          disabled={disabledOne}
+        >
+          <Text style={{ fontSize: 24, fontWeight: "bold", color: theme.text }}>
+            {labelOne}
+          </Text>
+        </StrobeBlur>
+      </BounceButton>
+
+      {/* OP 2 Button */}
+      <BounceButton
+        style={{
+          width: WIDTH / 2 - 20,
+          height: 64,
+          backgroundColor: theme.handle,
+          borderTopLeftRadius: 8,
+          borderBottomLeftRadius: 8,
+          borderTopRightRadius: 32,
+          borderBottomRightRadius: 32,
+          overflow: "hidden",
+          ...styleTwo,
+        }}
+        onPress={onOptionTwo}
+        disabled={disabledTwo}
+      >
+        <StrobeBlur
+          colors={[
+            theme.caka,
+            theme.primaryBackground,
+            theme.accent,
+            theme.tint,
+          ]}
+          style={{
+            width: WIDTH / 2 - 20,
+            height: 64,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          disabled={disabledTwo}
+        >
+          <Text style={{ fontSize: 24, fontWeight: "bold", color: theme.text }}>
+            {labelTwo}
+          </Text>
+        </StrobeBlur>
+      </BounceButton>
+    </View>
+  );
+}

@@ -5,9 +5,10 @@ import * as Haptics from "expo-haptics";
 
 interface InputRPEProps {
   set: Set;
+  disabled?: boolean;
 }
 
-export function InputRPE({ set }: InputRPEProps) {
+export function InputRPE({ set, disabled }: InputRPEProps) {
   const { updateSetInActiveExercise } = useWorkoutStore();
   const scale = Array.from({ length: 10 }, (_, index) =>
     (index + 1).toString()

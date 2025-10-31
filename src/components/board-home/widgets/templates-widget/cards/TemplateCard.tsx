@@ -97,7 +97,11 @@ export function TemplateCard({ template }: TemplateCardProps) {
           </View>
         </View>
       </TouchableOpacity>
-      <TemplateBottomSheet template={template} ref={bottomSheetRef} />
+      <TemplateBottomSheet
+        template={template}
+        ref={bottomSheetRef}
+        startView="preview"
+      />
     </Fragment>
   );
 }

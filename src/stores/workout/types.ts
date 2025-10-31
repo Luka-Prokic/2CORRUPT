@@ -194,10 +194,7 @@ export interface TemplateSlice {
 export interface SessionSlice {
   activeSession: WorkoutSession | null;
   completedSessions: WorkoutSession[];
-  startSession: (
-    template?: WorkoutTemplate,
-    layout?: SessionExercise[]
-  ) => void;
+  startSession: (template?: WorkoutTemplate, session?: WorkoutSession) => void;
   completeSession: () => void;
   cancelSession: () => void;
   addExerciseToSession: (

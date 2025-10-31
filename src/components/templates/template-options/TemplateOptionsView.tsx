@@ -10,15 +10,16 @@ import { router } from "expo-router";
 import { TemplateBottomSheetViews } from "./TemplateBottomSheet";
 import { useTranslation } from "react-i18next";
 import { TemplateNameInput } from "../../board-home/widgets/templates-widget/cards/TemplateNameInput";
+import { ActiveSessionAlert } from "../../ui/alerts/ActiveSessionAlert";
 
-interface TemplateFirstViewProps {
+interface TemplateOptionsViewProps {
   template: WorkoutTemplate;
   setView: (view: TemplateBottomSheetViews) => void;
 }
 
-export const TemplateFirstView = forwardRef<
+export const TemplateOptionsView = forwardRef<
   BottomSheetModal,
-  TemplateFirstViewProps
+  TemplateOptionsViewProps
 >(({ template, setView }, ref) => {
   const { startSession, editTemplate, activeSession } = useWorkoutStore();
   const { theme } = useSettingsStore();
@@ -30,13 +31,7 @@ export const TemplateFirstView = forwardRef<
   };
 
   const handleStartWorkout = () => {
-    setTimeout(() => {
-      startSession(template);
-      setTypeOfView("workout");
-      router.dismissTo("/");
-    }, 200);
-
-    closeSheet();
+    setView("preview");
   };
 
   const handleEditTemplate = () => {
@@ -72,35 +67,16 @@ export const TemplateFirstView = forwardRef<
         onFocus={handleFocus}
         onBlurCustom={handleBlur}
       />
-      {activeSession && (
-        <Text
-          style={{
-            marginVertical: 4,
-            color: theme.info,
-            fontSize: 16,
-            fontWeight: "500",
-          }}
-        >
-          <Ionicons name="alert-circle" size={16} color={theme.error} />{" "}
-          {t("templates.active-session-warning")}
-        </Text>
-      )}
 
       <OptionButton
-        title={t("templates.start-workout")}
+        title={t("templates.back-to-preview")}
         icon={
-          <Ionicons
-            name="play"
-            size={24}
-            color={activeSession ? theme.handle : theme.accent}
-          />
+          <Ionicons name="chevron-back-circle" size={24} color={theme.text} />
         }
-        color={activeSession ? theme.handle : theme.accent}
         onPress={handleStartWorkout}
         height={44}
-        disabled={!!activeSession}
       />
-
+      <ActiveSessionAlert style={{ marginHorizontal: 16 }} />
       <OptionButton
         title={`${t("button.edit")} ${t("templates.template")}`}
         icon={

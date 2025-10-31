@@ -28,10 +28,6 @@ export const UpdateTemplateView = forwardRef<
 
   const itsNotReady = !tempName;
 
-  function closeSheet() {
-    (ref as React.RefObject<BottomSheetModal>)?.current?.close();
-  }
-
   const handlePullTemplate = () => {
     const templateId = editTemplate(session.templateId);
 
@@ -47,11 +43,11 @@ export const UpdateTemplateView = forwardRef<
     updateTemplateField(templateId, "name", tempName);
     updateTemplateField(templateId, "description", session.notes);
     confirmTemplate();
-    closeSheet();
+    (ref as React.RefObject<BottomSheetModal>)?.current?.close();
   };
 
   const handleCancel = () => {
-    setView("first");
+    setView("options");
   };
 
   const handleFocus = () => {

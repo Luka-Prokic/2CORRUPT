@@ -2,7 +2,6 @@ import { Ionicons } from "@expo/vector-icons";
 import { useCopyWorkoutRecap } from "../../../features/workout/copyWorkoutRecap";
 import { WorkoutSession } from "../../../stores/workout/types";
 import { useSettingsStore } from "../../../stores/settingsStore";
-import { BounceButton } from "../../ui/buttons/BounceButton";
 import { useState } from "react";
 import { TouchableOpacity } from "react-native";
 

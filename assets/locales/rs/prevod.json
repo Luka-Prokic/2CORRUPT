@@ -20,7 +20,10 @@
     "add": "Dodaj",
     "remove": "Obriši",
     "update": "Ažuriraj",
-    "sync": "Poveži"
+    "sync": "Poveži",
+    "start": "Pokreni",
+    "repeat": "Ponovi",
+    "continue": "Nastavi"
   },
   "form": {
     "name": "Naziv",
@@ -269,11 +272,11 @@
     "create-exercise-copy-description": "Kreiranje nove vežbe koristiće ovu kao osnovu. Možeš da urediš naziv, setove i druge detalje na sledećem ekranu. Ovo ti pomaže da brzo dodaš personalizovane varijacije bez da kreiraš novu vežbu od nule. Izmene će uticati samo na novu vežbu, ostanući originalna vežba nepromenjena.",
     "rest-timer-description": "Podesi trajanje pauze između setova. Nakon što završiš set, timer će početi automatski koristeći ovo vreme. Možeš da prilagodiš vreme u koracima od 15 sekundi da bi podesio koliko vremena ti je potrebno.",
     "typical-rest-times": "Tipična vremena pauze:",
-    "heavy-lifts": "Teške vežbe: 3–4+ min",
-    "compound-lifts": "Kompound vežbe: 2–3 min",
-    "accessory-lifts": "Izolacione vežbe (Normalni setovi): 30–60 sec",
+    "heavy-lifts": "Teške vežbe: 3-4+ min",
+    "compound-lifts": "Kompound vežbe: 2-3 min",
+    "accessory-lifts": "Izolacione vežbe (Normalni setovi): 30-60 sec",
     "accessory-lifts-supersets": "Izolacione vežbe (Supersets/Drop setovi): 1-2+ min",
-    "cardio-or-warm-up-sets": "Kardio ili vežbe zagrevanja: 15–60 sec",
+    "cardio-or-warm-up-sets": "Kardio ili vežbe zagrevanja: 15-60 sec",
     "rest-time": "Vreme pauze",
     "remove-exercise": "Obriši Vežbu",
     "swap-exercise": "Zameni Vežbu",
@@ -306,6 +309,8 @@
   },
   "sessions": {
     "session": "Trening",
+    "back-to-preview": "Vrati se na pregled",
+    "preview": "Pregled vežbi",
     "repeat-workout": "Ponovi Trening",
     "view-recap": "Pregled Treninga",
     "add-to-templates": "Dodaj kao Šablon",
@@ -319,6 +324,7 @@
   "templates": {
     "template": "Šablon",
     "start-workout": "Započni Trening",
+    "back-to-preview": "Vrati se na pregled",
     "empty-info": "Šabloni su unapred pripremljeni setovi vežbi koje možete koristiti više puta. Pritisnite dugme plus iznad da započnete svoj prvi šablon. Kreiranje šablona je brzo i može se menjati, što vam omogućava da efikasno organizujete treninge. Kada napravite nekoliko njih, možete ih kombinovati da planirate nedelju treninga, štedeći vreme i fokusirajući se na vežbanje, umesto na planiranje svakog seta posebno.",
     "options-info": "Prilagodite svoj šablon treninga — promenite naziv, izmenite detalje, započnite trening na osnovu njega, napravite kopiju za varijacije ili ga obrišite ako vam više nije potreban.",
     "clone-info": "Duplirajte ovaj šablon da napravite novu verziju, dok original ostaje nepromenjen. Promena imena može vam pomoći da ih razlikujete.",
@@ -326,6 +332,11 @@
     "active-session-warning": "Trening je u toku. Završite ga pre nego što započnete novi ili uređujete šablone."
   },
   "splits": {},
+
+  "alert": {
+    "end-workout": "Završi Trening",
+    "end-workout-message": "Ovo će otkazati tvoj trening. Možeš ga završiti ili sačuvati kao template, ili jednostavno ga prekinuti bez da ga sačuvaš."
+  },
 
   "categories": {
     "all": "Sve",
