@@ -14,6 +14,8 @@ import { Text } from "react-native";
 import { useSettingsStore } from "../stores/settings";
 import { DeleteSelectedTemplates } from "../components/templates/header/DeleteSelectedTemplates";
 import { EmptyTemplateComponent } from "../components/templates/EmptyTemplateComponent";
+import { CloneSelectedTemplates } from "../components/templates/header/CloneSelectedTemplates";
+import { AddToSplitSelectedTemplates } from "../components/templates/header/AddToSplitSelectedTemplates";
 
 export default function TemplatesScreen() {
   const { t } = useTranslation();
@@ -25,11 +27,23 @@ export default function TemplatesScreen() {
   function headerLeft() {
     if (selectMode)
       return (
-        <DeleteSelectedTemplates
-          selected={selected}
-          setSelected={setSelected}
-          setMode={setSelectMode}
-        />
+        <Fragment>
+          <DeleteSelectedTemplates
+            selected={selected}
+            setSelected={setSelected}
+            setMode={setSelectMode}
+          />
+          <CloneSelectedTemplates
+            selected={selected}
+            setSelected={setSelected}
+            setMode={setSelectMode}
+          />
+          <AddToSplitSelectedTemplates
+            selected={selected}
+            setSelected={setSelected}
+            setMode={setSelectMode}
+          />
+        </Fragment>
       );
     return null;
   }
@@ -53,13 +67,6 @@ export default function TemplatesScreen() {
     if (templates.length)
       return (
         <Fragment>
-          <HeaderTemplatesToggle
-            mode={selectMode}
-            toggleMode={() => {
-              setSelectMode(!selectMode);
-              setSelected([]);
-            }}
-          />
           {selectMode ? (
             <SelectAllTemplatesButton
               selected={selected}
@@ -68,6 +75,13 @@ export default function TemplatesScreen() {
           ) : (
             <CreateTemplateButton />
           )}
+          <HeaderTemplatesToggle
+            mode={selectMode}
+            toggleMode={() => {
+              setSelectMode(!selectMode);
+              setSelected([]);
+            }}
+          />
         </Fragment>
       );
     return null;

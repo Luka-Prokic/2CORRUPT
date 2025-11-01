@@ -7,6 +7,7 @@ import { Text } from "react-native";
 import { useTranslation } from "react-i18next";
 import { TempInput } from "../../ui/input/TempInput";
 import { TwoOptionStrobeButtons } from "../../ui/buttons/TwoOptionStrobeButtons";
+import { useKeyboardHeight } from "../../../features/ui/useKeyboardHeight";
 
 interface TemplateCloneViewProps {
   template: WorkoutTemplate;
@@ -21,6 +22,7 @@ export const TemplateCloneView = forwardRef<
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
   const [tempName, setTempName] = useState(template?.name || "");
+  const bottomSpace = useKeyboardHeight(16);
 
   const itsNotReady = !tempName;
 
@@ -37,22 +39,12 @@ export const TemplateCloneView = forwardRef<
     setView("options");
   };
 
-  const handleFocus = () => {
-    (ref as React.RefObject<BottomSheetModal>)?.current?.snapToIndex(3);
-  };
-
-  const handleBlur = () => {
-    (ref as React.RefObject<BottomSheetModal>)?.current?.snapToIndex(1);
-  };
-
   return (
     <Fragment>
       <TempInput
         tempName={tempName}
         setTempName={setTempName}
-        onFocus={handleFocus}
-        onBlurCustom={handleBlur}
-        styleView={{ marginVertical: 16 }}
+        styleView={{ marginTop: 16, marginBottom: bottomSpace }}
       />
       <TwoOptionStrobeButtons
         labelOne={t("button.cancel")}

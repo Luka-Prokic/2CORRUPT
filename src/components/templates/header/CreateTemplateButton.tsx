@@ -21,7 +21,7 @@ export function CreateTemplateButton() {
   }
 
   return (
-    <TouchableOpacity onPress={handlePress} style={{ padding: 10 }}>
+    <TouchableOpacity onPress={handlePress} style={{ padding: 8 }}>
       <Text style={{ fontSize: 16, color: theme.tint }}>
         {t("button.create")}
       </Text>

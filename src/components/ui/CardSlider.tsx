@@ -1,22 +1,32 @@
-import React, { Fragment, useRef, useState, useEffect } from "react";
-import { FlatList, View, ViewStyle } from "react-native";
-import { Animated } from "react-native";
+import React, {
+  Fragment,
+  useRef,
+  useState,
+  useEffect,
+  ReactElement,
+} from "react";
+import {
+  FlatList,
+  FlatListProps,
+  View,
+  ViewStyle,
+  Animated,
+} from "react-native";
 import { useSettingsStore } from "../../stores/settings";
 
 const AnimatedFlatList = Animated.createAnimatedComponent(
   FlatList
 ) as unknown as typeof FlatList;
 
-interface CardSliderProps<T> {
-  data: T[];
-  card: ({ item }: { item: T }) => React.ReactElement;
-  keyExtractor?: (item: T, index: number) => string;
+interface CardSliderProps<T> extends Omit<FlatListProps<T>, "renderItem"> {
+  card: ({ item }: { item: T }) => ReactElement;
   cardWidth: number;
   cardHeight: number;
   showDots?: boolean;
   styleSlider?: ViewStyle | ViewStyle[];
   styleDots?: ViewStyle | ViewStyle[];
-  emptyCard?: React.ReactElement;
+  emptyCard?: ReactElement;
+  firstCard?: ReactElement;
 }
 
 export function CardSlider<T>({
@@ -29,15 +39,21 @@ export function CardSlider<T>({
   styleSlider,
   styleDots,
   emptyCard,
+  firstCard, // 🆕
+  ...flatListProps
 }: CardSliderProps<T>) {
+  const { theme } = useSettingsStore();
+  const scrollX = useRef(new Animated.Value(0)).current;
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const fullData: T[] = firstCard
+    ? [{} as T, ...(data ? Array.from(data) : [])]
+    : data
+    ? Array.from(data)
+    : []; // prepend dummy for layout consistency
+
   const defaultKeyExtractor = (item: any, index: number) =>
     item.id ? `${item.id}-${index}` : `${index}`;
-
-  const { theme } = useSettingsStore();
-
-  const scrollX = useRef(new Animated.Value(0)).current;
-
-  const [currentIndex, setCurrentIndex] = useState(0);
 
   const onScroll = Animated.event(
     [{ nativeEvent: { contentOffset: { x: scrollX } } }],
@@ -49,9 +65,10 @@ export function CardSlider<T>({
         if (
           newIndex !== currentIndex &&
           newIndex >= 0 &&
-          newIndex < data.length
-        )
+          newIndex < fullData.length
+        ) {
           setCurrentIndex(newIndex);
+        }
       },
     }
   );
@@ -59,15 +76,27 @@ export function CardSlider<T>({
   return (
     <Fragment>
       <AnimatedFlatList
-        data={data}
+        {...flatListProps}
+        data={fullData}
         renderItem={({ item, index }) =>
-          renderCard({
-            scrollX,
-            index,
-            content: card({ item }),
-            width: cardWidth,
-            height: cardHeight,
-          })
+          index === 0 && firstCard
+            ? // 🆕 firstCard rendering
+              renderCard({
+                scrollX,
+                index,
+                content: firstCard,
+                width: cardWidth,
+                height: cardHeight,
+              })
+            : renderCard({
+                scrollX,
+                index,
+                content: card({
+                  item: firstCard ? data[index - 1] : item,
+                }),
+                width: cardWidth,
+                height: cardHeight,
+              })
         }
         keyExtractor={keyExtractor || defaultKeyExtractor}
         horizontal
@@ -80,12 +109,12 @@ export function CardSlider<T>({
         nestedScrollEnabled
         ListEmptyComponent={emptyCard}
       />
-      {showDots && data.length > 1 && (
+      {showDots && fullData.length > 1 && (
         <ScrollableDots
-          dataLength={data.length}
+          dataLength={fullData.length}
           currentIndex={currentIndex}
           theme={theme}
-          style={{ height: 32, ...styleDots }}
+          style={{ height: 32, ...(Array.isArray(styleDots) ? {} : styleDots) }}
         />
       )}
     </Fragment>
@@ -107,14 +136,12 @@ function renderCard({
 }) {
   const inputRange = [(index - 1) * width, index * width, (index + 1) * width];
 
-  // Opacity: fade in/out as cards move in/out of view
   const opacity = scrollX.interpolate({
     inputRange,
     outputRange: [0.8, 1, 0.8],
     extrapolate: "clamp",
   });
 
-  // Scale: main card is larger, others are smaller
   const scale = scrollX.interpolate({
     inputRange,
     outputRange: [0.95, 1, 0.95],
@@ -130,8 +157,8 @@ function renderCard({
   return (
     <Animated.View
       style={{
-        width: width,
-        height: height,
+        width,
+        height,
         opacity,
         transform: [{ scale }, { perspective: 600 }, { rotateY }],
       }}
@@ -141,6 +168,9 @@ function renderCard({
   );
 }
 
+// -------------------------
+// ScrollableDots Component
+// -------------------------
 interface ScrollableDotsProps {
   dataLength: number;
   currentIndex: number;
@@ -160,23 +190,19 @@ export const ScrollableDots = ({
   style,
 }: ScrollableDotsProps) => {
   const flatListRef = useRef<FlatList>(null);
-
   const data = Array.from({ length: dataLength });
 
-  const dotWidth = DOT_MARGIN * 2 + DOT_WIDTH; // space of one dot
-  const shownDots = dataLength > maxVisible ? maxVisible : dataLength; // count dots up to maxVisible value
-  const windowWidth = dotWidth * shownDots; // window of dots that flatlist provides
+  const dotWidth = DOT_MARGIN * 2 + DOT_WIDTH;
+  const shownDots = dataLength > maxVisible ? maxVisible : dataLength;
+  const windowWidth = dotWidth * shownDots;
 
   useEffect(() => {
     if (!flatListRef.current) return;
 
-    let offset = 0;
-
-    if (currentIndex >= maxVisible) {
-      offset = dotWidth * (currentIndex - maxVisible + 1);
-    } else {
-      offset = 0;
-    }
+    const offset =
+      currentIndex >= maxVisible
+        ? dotWidth * (currentIndex - maxVisible + 1)
+        : 0;
 
     flatListRef.current.scrollToOffset({
       offset,
@@ -206,12 +232,8 @@ export const ScrollableDots = ({
             }}
           />
         )}
-        contentContainerStyle={{
-          alignItems: "center",
-        }}
-        style={{
-          width: windowWidth,
-        }}
+        contentContainerStyle={{ alignItems: "center" }}
+        style={{ width: windowWidth }}
       />
     </View>
   );

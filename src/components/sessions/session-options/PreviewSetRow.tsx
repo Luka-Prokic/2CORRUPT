@@ -91,6 +91,7 @@ export function PreviewSetRow({
             set={set}
             drop={drop}
             index={index}
+            width={width}
           />
         ))}
     </StrobeBlur>

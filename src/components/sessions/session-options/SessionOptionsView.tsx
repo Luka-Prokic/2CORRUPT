@@ -1,14 +1,13 @@
-import { forwardRef, Fragment } from "react";
+import { forwardRef } from "react";
 import { WorkoutSession } from "../../../stores/workout";
 import { OptionButton } from "../../ui/buttons/OptionButton";
 import { Ionicons } from "@expo/vector-icons";
-import { Text } from "react-native";
+import { Text, View } from "react-native";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { useSettingsStore } from "../../../stores/settings";
 import { router } from "expo-router";
 import { SessionBottomSheetViews } from "./SessionBottomSheet";
 import { useTranslation } from "react-i18next";
-import { SessionNameInput } from "../../board-workout/sheets/session/SessionNameInput";
 
 interface SessionOptionsViewProps {
   session: WorkoutSession;
@@ -44,12 +43,7 @@ export const SessionOptionsView = forwardRef<
 
   if (session)
     return (
-      <Fragment>
-        <SessionNameInput
-          session={session}
-          styleView={{ marginVertical: 16 }}
-          disabled
-        />
+      <View style={{ paddingTop: 16 }}>
         <OptionButton
           title={t("sessions.preview")}
           icon={
@@ -105,7 +99,7 @@ export const SessionOptionsView = forwardRef<
         >
           {t("sessions.options-info")}
         </Text>
-      </Fragment>
+      </View>
     );
   return null;
 });

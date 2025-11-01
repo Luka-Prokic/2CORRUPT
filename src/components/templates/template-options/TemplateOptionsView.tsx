@@ -11,6 +11,7 @@ import { TemplateBottomSheetViews } from "./TemplateBottomSheet";
 import { useTranslation } from "react-i18next";
 import { TemplateNameInput } from "../../board-home/widgets/templates-widget/cards/TemplateNameInput";
 import { ActiveSessionAlert } from "../../ui/alerts/ActiveSessionAlert";
+import { useKeyboardHeight } from "../../../features/ui/useKeyboardHeight";
 
 interface TemplateOptionsViewProps {
   template: WorkoutTemplate;
@@ -21,10 +22,11 @@ export const TemplateOptionsView = forwardRef<
   BottomSheetModal,
   TemplateOptionsViewProps
 >(({ template, setView }, ref) => {
-  const { startSession, editTemplate, activeSession } = useWorkoutStore();
+  const { editTemplate, activeSession } = useWorkoutStore();
   const { theme } = useSettingsStore();
   const { setTypeOfView } = useUIStore();
   const { t } = useTranslation();
+  const bottomSpace = useKeyboardHeight(16);
 
   const closeSheet = () => {
     (ref as React.RefObject<BottomSheetModal>)?.current?.close();
@@ -51,21 +53,11 @@ export const TemplateOptionsView = forwardRef<
     setView("delete");
   };
 
-  const handleFocus = () => {
-    (ref as React.RefObject<BottomSheetModal>)?.current?.snapToIndex(3);
-  };
-
-  const handleBlur = () => {
-    (ref as React.RefObject<BottomSheetModal>)?.current?.snapToIndex(2);
-  };
-
   return (
     <Fragment>
       <TemplateNameInput
         template={template}
-        styleView={{ marginVertical: 16 }}
-        onFocus={handleFocus}
-        onBlurCustom={handleBlur}
+        styleView={{ marginTop: 16, marginBottom: bottomSpace }}
       />
 
       <OptionButton
@@ -94,7 +86,8 @@ export const TemplateOptionsView = forwardRef<
 
       <OptionButton
         title={`${t("button.clone")} ${t("templates.template")}`}
-        icon={<Ionicons name="duplicate" size={24} color={theme.text} />}
+        icon={<Ionicons name="duplicate" size={24} color={theme.accent} />}
+        color={theme.accent}
         onPress={handleCloneTemplate}
         height={44}
       />

@@ -21,14 +21,6 @@ export type SessionBottomSheetViews =
   | "preview"
   | "null";
 
-const VIEW_INDEX_MAP: Record<string, number> = {
-  options: 2,
-  make: 1,
-  update: 1,
-  remove: 1,
-  preview: 3,
-};
-
 interface SessionBottomSheetProps {
   session: WorkoutSession;
   startView?: SessionBottomSheetViews;
@@ -40,25 +32,22 @@ export const SessionBottomSheet = forwardRef<
 >(({ session, startView = "options" }, ref) => {
   const { theme } = useSettingsStore();
   const insets = useSafeAreaInsets();
-  const snapPoints = useMemo(() => ["40%", "60%", "80%"], []);
+  const snapPoints = useMemo(() => ["10%", "60%"], []);
   const [view, setView] = useState<SessionBottomSheetViews>(startView);
 
   function visibleView() {
     switch (view) {
       case "options":
-        (ref as React.RefObject<BottomSheetModal>)?.current?.snapToIndex(2);
         return (
           <SessionOptionsView session={session} setView={setView} ref={ref} />
         );
 
       case "preview":
-        (ref as React.RefObject<BottomSheetModal>)?.current?.snapToIndex(3);
         return (
           <PreviewSessionView session={session} setView={setView} ref={ref} />
         );
 
       case "make":
-        (ref as React.RefObject<BottomSheetModal>)?.current?.snapToIndex(1);
         return (
           <PullTemplateFromSessionView
             session={session}
@@ -68,13 +57,11 @@ export const SessionBottomSheet = forwardRef<
         );
 
       case "update":
-        (ref as React.RefObject<BottomSheetModal>)?.current?.snapToIndex(1);
         return (
           <UpdateTemplateView session={session} setView={setView} ref={ref} />
         );
 
       case "remove":
-        (ref as React.RefObject<BottomSheetModal>)?.current?.snapToIndex(1);
         return (
           <SessionRemoveView session={session} setView={setView} ref={ref} />
         );
@@ -88,12 +75,10 @@ export const SessionBottomSheet = forwardRef<
     return (
       <BottomSheetModal
         ref={ref}
-        index={VIEW_INDEX_MAP[view]}
         enablePanDownToClose
         enableDismissOnClose
-        keyboardBehavior="fillParent"
         keyboardBlurBehavior="restore"
-        snapPoints={snapPoints}
+        keyboardBehavior="fillParent"
         handleIndicatorStyle={{ backgroundColor: theme.info }}
         backgroundStyle={{ backgroundColor: theme.navBackground }}
         backdropComponent={(props) => (

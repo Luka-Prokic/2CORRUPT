@@ -58,7 +58,7 @@ export function SessionRecapCard({ session, zoom }: SessionRecapCardProps) {
               style={{
                 width: fullWidth,
                 flex: 1,
-                padding: 10,
+                padding: 8,
                 gap: 4,
                 justifyContent: "space-between",
                 alignContent: "center",

@@ -68,16 +68,6 @@ export function TemplateSelectCard({
         onPress={handlePress}
         activeOpacity={0.7}
       >
-        {/* Top row: select checkbox */}
-        {selectMode && (
-          <Ionicons
-            name={isSelected ? "checkbox" : "square-outline"}
-            size={24}
-            color={theme.text}
-            style={{ alignSelf: "flex-end" }}
-          />
-        )}
-
         {/* Template name */}
         <Text
           style={{
@@ -97,7 +87,7 @@ export function TemplateSelectCard({
               fontSize: 12,
               color: theme.secondaryText,
             }}
-            numberOfLines={2}
+            numberOfLines={4}
             ellipsizeMode="tail"
           >
             {template.tags.join(", ")}

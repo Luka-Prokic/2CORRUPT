@@ -1,4 +1,4 @@
-import { View, Text, FlatList } from "react-native";
+import { View, Text, FlatList, ViewStyle } from "react-native";
 import { useSettingsStore } from "../../../stores/settings";
 import { WIDTH } from "../../../features/Dimensions";
 import { SessionExercise } from "../../../stores/workout";
@@ -6,17 +6,21 @@ import { hexToRGBA } from "../../../features/HEXtoRGB";
 import { ExerciseName } from "../../view-workout/table/header/ExerciseName";
 import { PreviewSetRow } from "../session-options/PreviewSetRow";
 import { useExercisePreviewHeight } from "../../../features/ui/useGetExercisePreviewCardHeight";
+import { useTranslation } from "react-i18next";
 
 interface ExercisePreviewCardProps {
   exercise: SessionExercise;
   maxHeight: number;
+  cardStyle?: ViewStyle | ViewStyle[];
 }
 
 export function ExercisePreviewCard({
   exercise,
   maxHeight,
+  cardStyle,
 }: ExercisePreviewCardProps) {
   const { theme } = useSettingsStore();
+  const { t } = useTranslation();
   const cardHeight = useExercisePreviewHeight(exercise);
 
   const finalHeight = Math.min(cardHeight, maxHeight);
@@ -29,6 +33,7 @@ export function ExercisePreviewCard({
         borderRadius: 32,
         overflow: "hidden",
         backgroundColor: hexToRGBA(theme.thirdBackground, 0.6),
+        ...cardStyle,
       }}
     >
       <View
@@ -36,7 +41,7 @@ export function ExercisePreviewCard({
           height: 64,
           justifyContent: "center",
           alignItems: "center",
-          paddingHorizontal: 8,
+          paddingHorizontal: 16,
         }}
       >
         <ExerciseName exercise={exercise} />
@@ -92,7 +97,7 @@ export function ExercisePreviewCard({
               fontWeight: "500",
             }}
           >
-            scrollable
+            {t("button.scrollable").toLowerCase()}
           </Text>
         </View>
       )}

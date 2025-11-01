@@ -135,7 +135,7 @@ function SelectionButton({
       <View
         style={{
           backgroundColor: hexToRGBA(theme.handle, 0.8),
-          padding: 10,
+          padding: 8,
           minWidth: 44,
           height: 44,
           borderRadius: 22,

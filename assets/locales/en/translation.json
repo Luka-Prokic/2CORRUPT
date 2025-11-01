@@ -23,7 +23,8 @@
     "sync": "Sync",
     "start": "Start",
     "repeat": "Repeat",
-    "continue": "Continue"
+    "continue": "Continue",
+    "scrollable": "Scrollable"
   },
   "form": {
     "name": "Name",

@@ -15,6 +15,7 @@ import { useUIStore } from "../../../stores/ui";
 import { ExercisePreviewCard } from "../cards/ExercisePreviewCard";
 import Animated, { FadeIn } from "react-native-reanimated";
 import { useLayoutPreviewHeight } from "../../../features/ui/useGetExercisePreviewCardHeight";
+import { SessionFirstCard } from "../cards/SessionFirstCard";
 
 interface PreviewSessionViewProps {
   session: WorkoutSession;
@@ -50,6 +51,7 @@ export const PreviewSessionView = forwardRef<
       <SessionNameInput
         session={session}
         styleView={{ marginVertical: 16 }}
+        fontSize={32}
         disabled
       />
       {session.notes && (
@@ -65,7 +67,6 @@ export const PreviewSessionView = forwardRef<
           {session.notes}
         </Text>
       )}
-
       <CardSlider
         data={session.layout}
         card={({ item }) => (

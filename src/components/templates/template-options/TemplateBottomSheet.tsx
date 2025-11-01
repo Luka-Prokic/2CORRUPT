@@ -19,13 +19,6 @@ export type TemplateBottomSheetViews =
   | "preview"
   | "null";
 
-const VIEW_INDEX_MAP: Record<string, number> = {
-  options: 2,
-  clone: 1,
-  delete: 1,
-  preview: 3,
-};
-
 interface TemplateBottomSheetProps {
   template: WorkoutTemplate;
   startView: TemplateBottomSheetViews;
@@ -37,13 +30,11 @@ export const TemplateBottomSheet = forwardRef<
 >(({ template, startView = "options" }, ref) => {
   const { theme } = useSettingsStore();
   const insets = useSafeAreaInsets();
-  const snapPoints = useMemo(() => ["40%", "60%", "80%"], []);
   const [view, setView] = useState<TemplateBottomSheetViews>(startView);
 
   function visibleView() {
     switch (view) {
       case "options":
-        (ref as React.RefObject<BottomSheetModal>)?.current?.snapToIndex(2);
         return (
           <TemplateOptionsView
             template={template}
@@ -53,7 +44,6 @@ export const TemplateBottomSheet = forwardRef<
         );
 
       case "preview":
-        (ref as React.RefObject<BottomSheetModal>)?.current?.snapToIndex(3);
         return (
           <PreviewTempalteView
             template={template}
@@ -63,13 +53,11 @@ export const TemplateBottomSheet = forwardRef<
         );
 
       case "clone":
-        (ref as React.RefObject<BottomSheetModal>)?.current?.snapToIndex(1);
         return (
           <TemplateCloneView template={template} setView={setView} ref={ref} />
         );
 
       case "delete":
-        (ref as React.RefObject<BottomSheetModal>)?.current?.snapToIndex(1);
         return (
           <TemplateDeleteView template={template} setView={setView} ref={ref} />
         );
@@ -82,12 +70,10 @@ export const TemplateBottomSheet = forwardRef<
   return (
     <BottomSheetModal
       ref={ref}
-      index={VIEW_INDEX_MAP[view]}
       enablePanDownToClose
       enableDismissOnClose
       keyboardBehavior="fillParent"
       keyboardBlurBehavior="restore"
-      snapPoints={snapPoints}
       handleIndicatorStyle={{ backgroundColor: theme.info }}
       backgroundStyle={{ backgroundColor: theme.navBackground }}
       backdropComponent={(props) => (

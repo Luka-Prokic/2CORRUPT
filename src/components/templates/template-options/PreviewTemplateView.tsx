@@ -46,6 +46,7 @@ export const PreviewTempalteView = forwardRef<
     <Animated.View entering={FadeIn}>
       <TemplateName
         template={template}
+        fontSize={32}
         style={{ marginVertical: 16, width: WIDTH - 32, textAlign: "center" }}
       />
 
@@ -78,7 +79,7 @@ export const PreviewTempalteView = forwardRef<
         }}
       />
 
-      <ActiveSessionAlert type="template" style={{ marginHorizontal: 16 }}/>
+      <ActiveSessionAlert type="template" style={{ marginHorizontal: 16 }} />
       <TwoOptionStrobeButtons
         labelOne={t("button.start")}
         labelTwo={t("button.edit")}

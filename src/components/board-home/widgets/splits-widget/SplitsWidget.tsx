@@ -10,7 +10,7 @@ export function SplitsWidget() {
   const { theme } = useSettingsStore();
 
   function handleWidgetPress() {
-    router.push("/splits");
+    router.push("/splits/list");
   }
 
   return (
@@ -30,7 +30,7 @@ export function SplitsWidget() {
         gap: 16,
       }}
     >
-      <Ionicons name="bandage-outline" size={44} color={theme.text} />
+      <Ionicons name="flash-outline" size={44} color={theme.text} />
       <Text style={{ fontSize: 16, fontWeight: "bold", color: theme.text }}>
         Splits
       </Text>

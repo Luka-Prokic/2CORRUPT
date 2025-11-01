@@ -82,7 +82,7 @@ export function DashBoard({
         style={{
           position: "absolute",
           height: 88,
-          padding: 10,
+          padding: 8,
           bottom: 0,
           right: 0,
           left: 0,

@@ -46,7 +46,7 @@ export function NumericDropInput({
       <TextInput
         style={{
           width: "100%",
-          height: 44,
+          height: "100%",
           fontSize: 16,
           textAlign: "center",
           color: set.isCompleted ? theme.secondaryText : theme.grayText,

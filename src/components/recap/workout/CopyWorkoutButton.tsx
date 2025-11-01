@@ -29,7 +29,7 @@ export function CopyWorkoutButton({ session }: CopyWorkoutButtonProps) {
   return (
     <TouchableOpacity
       onPress={handlePress}
-      style={{ width: 44, height: 44, padding: 10 }}
+      style={{ width: 44, height: 44, padding: 8 }}
       disabled={clicked}
     >
       {clicked ? (

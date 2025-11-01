@@ -1,25 +1,29 @@
 import { View, Text } from "react-native";
-import { DropSet, SessionExercise, Set, useWorkoutStore } from "../../../stores/workout";
+import { DropSet, SessionExercise, Set } from "../../../stores/workout";
 import { useSettingsStore } from "../../../stores/settings";
 import { WIDTH } from "../../../features/Dimensions";
 import { hexToRGBA } from "../../../features/HEXtoRGB";
 import { NumericDropInput } from "../../view-workout/table/set-inputs/NumericDropInput";
 
-export function PreviewDropSetRow({
-    exercise,
-  set,
-  drop,
-  index,
-}: {
-    exercise:SessionExercise;
+interface PreviewDropSetRowProps {
+  exercise: SessionExercise;
   set: Set;
   drop: DropSet;
   index: number;
-}) {
+  width?: number;
+}
+
+export function PreviewDropSetRow({
+  exercise,
+  set,
+  drop,
+  index,
+  width = WIDTH,
+}: PreviewDropSetRowProps) {
   const { theme } = useSettingsStore();
 
   const columns = exercise?.columns ?? ["Reps", "Weight"];
-  const columnWidth = WIDTH / (columns.length + 2);
+  const columnWidth = width / (columns.length + 2);
 
   return (
     <View
@@ -30,7 +34,7 @@ export function PreviewDropSetRow({
           set.isCompleted ? 1 : 0.2
         ),
         height: 34,
-        width: WIDTH,
+        width: width,
       }}
     >
       <View
@@ -59,6 +63,7 @@ export function PreviewDropSetRow({
         column="Reps"
         style={{
           width: columnWidth,
+          height: 34,
         }}
         disabled
       />
@@ -69,6 +74,7 @@ export function PreviewDropSetRow({
         column="Weight"
         style={{
           width: columnWidth,
+          height: 34,
         }}
         disabled
       />

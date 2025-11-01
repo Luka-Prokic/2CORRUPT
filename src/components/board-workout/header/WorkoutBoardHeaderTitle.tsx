@@ -29,7 +29,7 @@ export function WorkoutBoardHeaderTitle({
         alignItems: "center",
         justifyContent: "center",
         gap: 4,
-        padding: 10,
+        padding: 8,
         width: WIDTH - 160,
       }}
       disabled={listOpen}

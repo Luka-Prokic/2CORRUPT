@@ -3,14 +3,12 @@ import { useWorkoutStore, WorkoutSession } from "../../../stores/workout";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { useSettingsStore } from "../../../stores/settings";
 import { SessionBottomSheetViews } from "./SessionBottomSheet";
-import { BounceButton } from "../../ui/buttons/BounceButton";
 import { Text } from "react-native";
-import { WIDTH } from "../../../features/Dimensions";
-import { View } from "react-native";
-import { StrobeBlur } from "../../ui/misc/StrobeBlur";
 import { useTranslation } from "react-i18next";
 import { TempInput } from "../../ui/input/TempInput";
 import { TwoOptionStrobeButtons } from "../../ui/buttons/TwoOptionStrobeButtons";
+import { useKeyboardHeight } from "../../../features/ui/useKeyboardHeight";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 interface PullTemplateFromSessionViewProps {
   session: WorkoutSession;
@@ -26,6 +24,7 @@ export const PullTemplateFromSessionView = forwardRef<
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
   const [tempName, setTempName] = useState(session?.name || "");
+  const bottomSpace = useKeyboardHeight(16);
 
   const itsNotReady = !tempName;
 
@@ -56,22 +55,15 @@ export const PullTemplateFromSessionView = forwardRef<
     setView("options");
   };
 
-  const handleFocus = () => {
-    (ref as React.RefObject<BottomSheetModal>)?.current?.snapToIndex(3);
-  };
-
-  const handleBlur = () => {
-    (ref as React.RefObject<BottomSheetModal>)?.current?.snapToIndex(1);
-  };
-
   return (
     <Fragment>
       <TempInput
         tempName={tempName}
         setTempName={setTempName}
-        onFocus={handleFocus}
-        onBlurCustom={handleBlur}
-        styleView={{ marginVertical: 16 }}
+        styleView={{
+          marginTop: 16,
+          marginBottom: bottomSpace,
+        }}
       />
       <TwoOptionStrobeButtons
         labelOne={t("button.cancel")}

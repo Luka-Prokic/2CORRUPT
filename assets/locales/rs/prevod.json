@@ -23,7 +23,8 @@
     "sync": "Poveži",
     "start": "Pokreni",
     "repeat": "Ponovi",
-    "continue": "Nastavi"
+    "continue": "Nastavi",
+    "scrollable": "Skrolujuće"
   },
   "form": {
     "name": "Naziv",

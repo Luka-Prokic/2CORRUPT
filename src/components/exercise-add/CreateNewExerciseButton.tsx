@@ -8,7 +8,7 @@ export function CreateNewExerciseButton() {
   const { t } = useTranslation();
 
   return (
-    <TouchableOpacity onPress={() => {}} style={{ padding: 10 }}>
+    <TouchableOpacity onPress={() => {}} style={{ padding: 8 }}>
       <Text style={{ fontSize: 16, color: theme.tint }}>
         {t("add-exercise.create")}
       </Text>
