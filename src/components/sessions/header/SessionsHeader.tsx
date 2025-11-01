@@ -91,8 +91,6 @@ export function SessionsHeader({
         animatedBackgroundStyle={animatedBackgroundStyle}
         onDayPress={onDayPress}
         setCurrentWeekIndex={setCurrentWeekIndex}
-        isFutureDate={isFutureDate}
-        isToday={isToday}
       />
     </BlurView>
   );

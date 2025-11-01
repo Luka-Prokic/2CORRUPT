@@ -1,17 +1,13 @@
 import React, { useRef } from "react";
 import {
   View,
-  Text,
-  TouchableOpacity,
   FlatList,
   Animated,
   NativeSyntheticEvent,
   NativeScrollEvent,
 } from "react-native";
 import { useSettingsStore } from "../../../stores/settingsStore";
-import { useDayLabels } from "../../../features/Labels";
 import { WIDTH } from "../../../features/Dimensions";
-import { useSessionsByDate } from "../../../features/workout";
 import { WeekDay } from "./WeekDay";
 
 interface DayPickerProps {
@@ -23,8 +19,6 @@ interface DayPickerProps {
   animatedBackgroundStyle: any;
   onDayPress: (date: Date, dayIndex: number) => void;
   setCurrentWeekIndex: (index: number) => void; // to handle swipe
-  isFutureDate: (date: Date) => boolean;
-  isToday: (date: Date) => boolean;
 }
 
 export function DayPicker({
@@ -36,11 +30,8 @@ export function DayPicker({
   animatedBackgroundStyle,
   onDayPress,
   setCurrentWeekIndex,
-  isFutureDate,
-  isToday,
 }: DayPickerProps) {
   const { theme } = useSettingsStore();
-  const dayLabels = useDayLabels();
   const flatListRef = useRef<FlatList>(null);
 
   const handleWeekScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -48,10 +39,6 @@ export function DayPicker({
     const newIndex = Math.round(offsetX / WIDTH);
     if (newIndex !== currentWeekIndex) setCurrentWeekIndex(newIndex);
   };
-
-  const selectedIndexInWeek = currentWeek.findIndex(
-    (d) => d.toDateString() === selectedDate.toDateString()
-  );
 
   return (
     <View
@@ -68,7 +55,7 @@ export function DayPicker({
             borderRadius: "50%",
             width: buttonSize,
             height: buttonSize,
-            backgroundColor: theme.accent,
+            backgroundColor: theme.fifthBackground,
           },
           animatedBackgroundStyle,
         ]}
