@@ -1,6 +1,11 @@
 import { StateCreator } from "zustand";
 import { nanoid } from "nanoid";
-import { WorkoutStore, SplitPlanSlice, SplitPlan } from "../types";
+import {
+  WorkoutStore,
+  SplitPlanSlice,
+  SplitPlan,
+  SplitPlanHistoryEntry,
+} from "../types";
 
 export const createSplitPlanSlice: StateCreator<
   WorkoutStore,
@@ -10,6 +15,7 @@ export const createSplitPlanSlice: StateCreator<
 > = (set, get) => ({
   splitPlans: [],
   activeSplitPlan: null,
+  historySplitPlan: [],
 
   createSplitPlan: (plan?: Partial<SplitPlan>) => {
     const { splitPlans } = get();
@@ -105,6 +111,37 @@ export const createSplitPlanSlice: StateCreator<
   },
 
   setActiveSplitPlan: (plan: SplitPlan) => {
-    set(() => ({ activeSplitPlan: plan }));
+    const now = new Date().toISOString();
+    const state = get();
+
+    // End previous active split, if any
+    if (state.activeSplitPlan) {
+      const updatedHistory = state.historySplitPlan.map((h) =>
+        !h.endTime ? { ...h, endTime: now } : h
+      );
+      set({ historySplitPlan: updatedHistory });
+    }
+
+    // Add new history entry as snapshot
+    const historyEntry: SplitPlanHistoryEntry = {
+      id: nanoid(),
+      plan: JSON.parse(JSON.stringify(plan)),
+      startTime: now,
+    };
+
+    set({
+      activeSplitPlan: plan,
+      historySplitPlan: [...state.historySplitPlan, historyEntry],
+    });
+  },
+
+  endActiveSplitPlan: (endTime) => {
+    const now = endTime || new Date().toISOString();
+    set((state) => ({
+      activeSplitPlan: null,
+      historySplitPlan: state.historySplitPlan.map((h) =>
+        !h.endTime ? { ...h, endTime: now } : h
+      ),
+    }));
   },
 });

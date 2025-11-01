@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import Animated from "react-native-reanimated";
 import { Ionicons } from "@expo/vector-icons";
 import { ViewStyle } from "react-native";
@@ -40,6 +40,8 @@ export function DayBadge({ date, style }: DayBadgeProps) {
       : "ribbon";
   }, [sessionsOnThisDate, categoryScores]);
 
+  const color = sessionsOnThisDate.length ? theme.text : theme.handle;
+
   return (
     <Animated.View
       style={[
@@ -50,7 +52,7 @@ export function DayBadge({ date, style }: DayBadgeProps) {
         style,
       ]}
     >
-      <Ionicons name={iconName} color={theme.handle} size={WIDTH * 0.15} />
+      <Ionicons name={iconName} color={color} size={WIDTH * 0.2} />
     </Animated.View>
   );
 }

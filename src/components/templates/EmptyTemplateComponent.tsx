@@ -7,16 +7,15 @@ import { useUIStore } from "../../stores/ui";
 import { useWorkoutStore } from "../../stores/workout";
 import { StrobeButton } from "../ui/buttons/StrobeButton";
 import { useTranslation } from "react-i18next";
-import { HEIGHT } from "../../features/Dimensions";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Fragment } from "react";
+import { ActiveSessionAlert } from "../ui/alerts/ActiveSessionAlert";
+import { BackgroundText } from "../ui/misc/BackgroundText";
 
 export function EmptyTemplateComponent() {
-  const insets = useSafeAreaInsets();
   const { theme } = useSettingsStore();
   const { widgetUnit, fullWidth } = useWidgetUnit();
   const { setTypeOfView } = useUIStore();
-  const { editTemplate } = useWorkoutStore();
+  const { editTemplate, activeSession } = useWorkoutStore();
   const { t } = useTranslation();
 
   function handlePress() {
@@ -42,24 +41,29 @@ export function EmptyTemplateComponent() {
         }}
         activeOpacity={0.7}
       >
-        <Ionicons name="add" size={64} color={theme.secondaryText} />
+        {!activeSession && (
+          <Ionicons name="add" size={64} color={theme.secondaryText} />
+        )}
+        <ActiveSessionAlert
+          type="icon"
+          style={{
+            height: "100%",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          styleIcon={{ name: "alert", color: theme.background, size: 64 }}
+        />
       </StrobeButton>
       <View
         style={{
-          height: widgetUnit,
           width: fullWidth,
           marginTop: 16,
         }}
       >
-        <Text
-          style={{
-            color: theme.grayText,
-            textAlign: "justify",
-            fontSize: 14,
-          }}
-        >
-          {t("templates.empty-info")}
-        </Text>
+        <BackgroundText
+          text={t("templates.empty-info")}
+          style={{ textAlign: "justify" }}
+        />
       </View>
     </Fragment>
   );

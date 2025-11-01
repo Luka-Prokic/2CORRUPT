@@ -2,7 +2,6 @@ import { Stack } from "expo-router";
 import { Fragment } from "react";
 import { ScreenContent } from "../../components/ui/utils/ScreenContent";
 import { Text } from "react-native";
-import { ModalExitButton } from "../_layout";
 import { useSettingsStore } from "../../stores/settings";
 
 export default function TemplatesScreen() {

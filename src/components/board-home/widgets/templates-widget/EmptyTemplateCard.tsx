@@ -1,18 +1,17 @@
-import { Text, View } from "react-native";
 import { useSettingsStore } from "../../../../stores/settings";
 import { useWidgetUnit } from "../../../../features/widgets/useWidgetUnit";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useUIStore } from "../../../../stores/ui";
 import { useWorkoutStore } from "../../../../stores/workout";
-import { Fragment } from "react";
 import { StrobeButton } from "../../../ui/buttons/StrobeButton";
+import { ActiveSessionAlert } from "../../../ui/alerts/ActiveSessionAlert";
 
 export function EmptyTemplateCard() {
   const { theme } = useSettingsStore();
-  const { widgetUnit, fullWidth } = useWidgetUnit();
+  const { widgetUnit } = useWidgetUnit();
   const { setTypeOfView } = useUIStore();
-  const { editTemplate } = useWorkoutStore();
+  const { editTemplate, activeSession } = useWorkoutStore();
 
   function handlePress() {
     router.back();
@@ -36,7 +35,18 @@ export function EmptyTemplateCard() {
       }}
       activeOpacity={0.7}
     >
-      <Ionicons name="add" size={44} color={theme.secondaryText} />
+      {!activeSession && (
+        <Ionicons name="add" size={44} color={theme.secondaryText} />
+      )}
+      <ActiveSessionAlert
+        type="icon"
+        style={{
+          height: "100%",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+        styleIcon={{ name: "alert", color: theme.background, size: 44 }}
+      />
     </StrobeButton>
   );
 }

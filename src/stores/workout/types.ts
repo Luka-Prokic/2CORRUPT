@@ -107,15 +107,21 @@ export interface SplitPlan {
   updatedAt?: IsoDateString;
 }
 
+export interface SplitPlanHistoryEntry {
+  readonly id: string; // unique ID for this history entry
+  readonly plan: Readonly<SplitPlan>; // frozen snapshot of the plan at the time
+  readonly startTime: IsoDateString; // when it became active
+  readonly endTime?: IsoDateString; // when it was replaced or deactivated
+}
+
 // Slice contracts
 export interface SplitPlanSlice {
-  // All split plans
   splitPlans: SplitPlan[];
-
-  // Currently active split plan
   activeSplitPlan: SplitPlan | null;
 
-  // CRUD operations
+  // Timeline of all activated plans (each is a frozen snapshot)
+  historySplitPlan: SplitPlanHistoryEntry[];
+
   createSplitPlan: (plan?: Partial<SplitPlan>) => string;
   editSplitPlan: (planId: string) => SplitPlan | null;
   updateSplitPlanField: <K extends keyof SplitPlan>(
@@ -125,7 +131,6 @@ export interface SplitPlanSlice {
   ) => void;
   deleteSplitPlan: (planId: string) => void;
 
-  // Day-level operations
   addWorkoutToDay: (
     planId: string,
     dayIndex: number,
@@ -142,8 +147,8 @@ export interface SplitPlanSlice {
     newOrder: string[]
   ) => void;
 
-  // Set active plan
   setActiveSplitPlan: (plan: SplitPlan) => void;
+  endActiveSplitPlan: (endTime?: IsoDateString) => void; // optional helper
 }
 
 export interface TemplateSlice {

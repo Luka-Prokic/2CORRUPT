@@ -85,7 +85,7 @@ export const PreviewSessionView = forwardRef<
       <ActiveSessionAlert type="session" style={{ marginHorizontal: 16 }} />
       <TwoOptionStrobeButtons
         labelOne={t("button.repeat")}
-        labelTwo={t("button.edit")}
+        labelTwo={t("button.more")}
         onOptionOne={handleStartWorkout}
         onOptionTwo={() => setView("options")}
         styleOne={{ backgroundColor: theme.thirdBackground }}

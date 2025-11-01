@@ -24,7 +24,6 @@ export default function SessionssScreen() {
     <Fragment>
       <Stack.Screen
         options={{
-          headerTitle: `${dateTittle}`,
           header: () => (
             <SessionsHeader
               key={`${currentWeek}`}

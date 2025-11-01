@@ -5,15 +5,25 @@ import { Text, TouchableOpacity, ViewStyle } from "react-native";
 import { useActionSheet } from "../../../features/useActionSheet";
 import { useUIStore } from "../../../stores/ui";
 import { router } from "expo-router";
+import { Fragment } from "react";
 
+interface IconStyle {
+  color?: string;
+  size?: number;
+  name?: any;
+}
 interface ActiveSessionAlertProps {
-  type?: "template" | "session";
+  type?: "template" | "session" | "icon";
   style?: ViewStyle | ViewStyle[];
+  styleIcon?: IconStyle;
+  disabled?: boolean;
 }
 
 export function ActiveSessionAlert({
   type = "template",
   style,
+  styleIcon,
+  disabled,
 }: ActiveSessionAlertProps) {
   const { theme } = useSettingsStore();
   const { t, showActionSheet } = useActionSheet();
@@ -52,12 +62,13 @@ export function ActiveSessionAlert({
       !isItEmpty && t("workout-board.save-as-template"),
       t("alert.end-workout"),
     ].filter(Boolean);
+    const destructiveIndex = isItEmpty ? 2 : 3;
 
     showActionSheet({
       title: `${t("alert.end-workout")}?`,
       message: t("alert.end-workout-message"),
       options,
-      destructiveIndex: 3,
+      destructiveIndex: destructiveIndex,
       cancelIndex: 0,
       onSelect: (buttonIndex) => {
         if (buttonIndex === 1) {
@@ -87,6 +98,7 @@ export function ActiveSessionAlert({
       <TouchableOpacity
         onPress={handleAcitveSession}
         style={{ width: "100%", ...style }}
+        disabled={disabled}
       >
         <Text
           style={{
@@ -96,9 +108,20 @@ export function ActiveSessionAlert({
             fontWeight: "500",
           }}
         >
-          <Ionicons name="alert-circle" size={14} color={theme.error} />{" "}
-          {message}{" "}
-          <Ionicons name="arrow-up-circle" size={14} color={theme.info} />
+          <Ionicons
+            name={styleIcon?.name ?? "alert-circle"}
+            size={styleIcon?.size ?? 14}
+            color={styleIcon?.color ?? theme.error}
+          />
+          {type !== "icon" && (
+            <Fragment>
+              {" "}
+              {message}{" "}
+              {!disabled && (
+                <Ionicons name="arrow-up-circle" size={14} color={theme.info} />
+              )}
+            </Fragment>
+          )}
         </Text>
       </TouchableOpacity>
     );

@@ -19,7 +19,7 @@ export default function Layout() {
       }}
     >
       <Stack.Screen name="list" />
-      <Stack.Screen name="edit" />
+      <Stack.Screen name="[splitId]" />
     </Stack>
   );
 }
