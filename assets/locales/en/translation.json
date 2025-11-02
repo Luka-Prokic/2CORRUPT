@@ -25,7 +25,8 @@
     "repeat": "Repeat",
     "continue": "Continue",
     "scrollable": "Scrollable",
-    "more": "More"
+    "more": "More",
+    "confirm": "Confirm"
   },
   "form": {
     "name": "Name",
@@ -351,7 +352,10 @@
     "delete-info": "Deleting this template can't be undone. Your previous workouts won't be affected.",
     "active-session-warning": "Active workout in progress. Finish it before starting a new session or editing templates, or cencel it."
   },
-  "splits": {},
+  "splits": {
+    "delete-title": "Delete this split plan?",
+    "delete-message": "This will remove the split (the way your templates are grouped). Don't worry - your workouts and templates will stay safe."
+  },
 
   "alert": {
     "end-workout": "End Workout",

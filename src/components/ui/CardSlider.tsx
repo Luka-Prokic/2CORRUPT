@@ -4,6 +4,7 @@ import React, {
   useState,
   useEffect,
   ReactElement,
+  ReactNode,
 } from "react";
 import {
   FlatList,
@@ -19,7 +20,7 @@ const AnimatedFlatList = Animated.createAnimatedComponent(
 ) as unknown as typeof FlatList;
 
 interface CardSliderProps<T> extends Omit<FlatListProps<T>, "renderItem"> {
-  card: ({ item }: { item: T }) => ReactElement;
+  card: ({ item, index }: { item: T; index?: number }) => ReactNode;
   cardWidth: number;
   cardHeight: number;
   showDots?: boolean;
@@ -80,8 +81,7 @@ export function CardSlider<T>({
         data={fullData}
         renderItem={({ item, index }) =>
           index === 0 && firstCard
-            ? // 🆕 firstCard rendering
-              renderCard({
+            ? renderCard({
                 scrollX,
                 index,
                 content: firstCard,
@@ -93,6 +93,7 @@ export function CardSlider<T>({
                 index,
                 content: card({
                   item: firstCard ? data[index - 1] : item,
+                  index,
                 }),
                 width: cardWidth,
                 height: cardHeight,

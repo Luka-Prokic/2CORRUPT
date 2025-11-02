@@ -75,7 +75,8 @@ export function ActiveSessionAlert({
           router.dismissTo("/"), setTypeOfView("workout");
         }
         if (buttonIndex === 2 && !isItEmpty) handlePullTemplate();
-        if (buttonIndex === 3) cancelSession();
+        if (buttonIndex === 3 || (isItEmpty && buttonIndex === 2))
+          cancelSession();
       },
     });
   }

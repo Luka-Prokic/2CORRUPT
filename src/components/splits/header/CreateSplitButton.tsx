@@ -1,22 +1,21 @@
 import { Text, TouchableOpacity } from "react-native";
 import { useSettingsStore } from "../../../stores/settings";
 import { router } from "expo-router";
-import { useUIStore } from "../../../stores/ui";
 import { useWorkoutStore } from "../../../stores/workout";
 import { useTranslation } from "react-i18next";
 
-export function CreateTemplateButton() {
+export function CreateSplitButton() {
   const { theme } = useSettingsStore();
-  const { setTypeOfView } = useUIStore();
-  const { editTemplate } = useWorkoutStore();
+  const { createSplitPlan } = useWorkoutStore();
   const { t } = useTranslation();
 
   function handlePress() {
-    router.dismissTo("/");
-    setTypeOfView("template");
-    editTemplate();
+    const splitId = createSplitPlan();
+    router.push({
+      pathname: "/splits/[splitId]",
+      params: { splitId },
+    });
   }
-
   return (
     <TouchableOpacity onPress={handlePress} style={{ padding: 8 }}>
       <Text style={{ fontSize: 16, color: theme.tint }}>

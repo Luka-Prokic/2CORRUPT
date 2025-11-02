@@ -91,7 +91,6 @@ export interface SessionExercise {
 }
 
 export interface SplitPlanDay {
-  dayName?: string; // e.g., "Monday" or "Push Day"
   workouts: string[]; // WorkoutTemplate IDs
   isRest?: boolean; // true if rest day
   notes?: string; // optional notes for the day
@@ -101,6 +100,8 @@ export interface SplitPlan {
   readonly id: string;
   name: string;
   split: SplitPlanDay[]; // array of days
+  splitLength: number; //total length of split
+  activeLength: number; //number of active days in split
   description?: string;
   metadata?: Record<string, any>; // e.g., group, color, difficulty, future online stuff
   readonly createdAt: IsoDateString;
@@ -149,6 +150,23 @@ export interface SplitPlanSlice {
 
   setActiveSplitPlan: (plan: SplitPlan) => void;
   endActiveSplitPlan: (endTime?: IsoDateString) => void; // optional helper
+
+  addDayToSplit: (
+    planId: string,
+    day?: Partial<SplitPlanDay>,
+    dayIndex?: number
+  ) => void;
+
+  removeDayFromSplit: (planId: string, dayIndex: number) => void;
+
+  updateSplitDayField: <K extends keyof SplitPlanDay>(
+    planId: string,
+    dayIndex: number,
+    field: K,
+    value: SplitPlanDay[K]
+  ) => void;
+
+  getSplitById: (planId: string) => SplitPlan | undefined;
 }
 
 export interface TemplateSlice {

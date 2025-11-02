@@ -6,7 +6,6 @@ import { CreateTemplateButton } from "../components/templates/header/CreateTempl
 import { HeaderTemplatesToggle } from "../components/templates/header/HeaderTemplatesToggle";
 import { FlatList } from "react-native-gesture-handler";
 import { EmptyHeader } from "../components/ui/containers/EmptyHeader";
-import { EmptyFooter } from "../components/ui/containers/EmptyFooter";
 import { useWorkoutStore, WorkoutTemplate } from "../stores/workout";
 import { TemplateSelectCard } from "../components/templates/TemplateSelectCard";
 import { SelectAllTemplatesButton } from "../components/templates/header/SelectAllTemplatesButton";
@@ -16,6 +15,8 @@ import { DeleteSelectedTemplates } from "../components/templates/header/DeleteSe
 import { EmptyTemplateComponent } from "../components/templates/EmptyTemplateComponent";
 import { CloneSelectedTemplates } from "../components/templates/header/CloneSelectedTemplates";
 import { AddToSplitSelectedTemplates } from "../components/templates/header/AddToSplitSelectedTemplates";
+import { BackgroundText } from "../components/ui/misc/BackgroundText";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function TemplatesScreen() {
   const { t } = useTranslation();
@@ -23,6 +24,7 @@ export default function TemplatesScreen() {
   const { templates } = useWorkoutStore();
   const [selectMode, setSelectMode] = useState<boolean>(false);
   const [selected, setSelected] = useState<WorkoutTemplate[]>([]);
+  const insets = useSafeAreaInsets();
 
   function headerLeft() {
     if (selectMode)
@@ -96,7 +98,7 @@ export default function TemplatesScreen() {
           headerRight: headerRight,
         }}
       />
-      <ScreenContent edges={["top"]} scroll={false}>
+      <ScreenContent scroll={false}>
         <FlatList
           data={templates}
           numColumns={2}
@@ -112,15 +114,19 @@ export default function TemplatesScreen() {
           )}
           contentContainerStyle={{
             paddingHorizontal: 16,
+            paddingTop: insets.top,
             gap: 8,
           }}
           columnWrapperStyle={{
             gap: 8,
           }}
           ListHeaderComponent={() => <EmptyHeader />}
-          ListFooterComponent={() =>
-            templates.length ? <EmptyFooter /> : null
-          }
+          ListFooterComponent={() => (
+            <BackgroundText
+              text={t("templates.empty-info")}
+              style={{ textAlign: "justify" }}
+            />
+          )}
           ListEmptyComponent={() => <EmptyTemplateComponent />}
         />
       </ScreenContent>

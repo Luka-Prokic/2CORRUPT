@@ -25,7 +25,8 @@
     "repeat": "Ponovi",
     "continue": "Nastavi",
     "scrollable": "Skrolujuće",
-    "more": "Više"
+    "more": "Više",
+    "confirm": "Potvrdi"
   },
   "form": {
     "name": "Naziv",
@@ -333,7 +334,10 @@
     "delete-info": "Brisanje šablona je trajno. Tvoji prethodni treninzi neće biti obrisani.",
     "active-session-warning": "Trening je u toku. Završite ga pre nego što započnete novi ili uređujete šablone."
   },
-  "splits": {},
+  "splits": {
+    "delete-title": "Delete this split plan?",
+    "delete-message": "Ovo će ukloniti split (kako su tvoji templati grupisani). Ne brini - tvoji treninzi i templati ostaju netaknuti."
+  },
 
   "alert": {
     "end-workout": "Završi Trening",
