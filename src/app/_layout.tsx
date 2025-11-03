@@ -11,12 +11,9 @@ export function ModalExitButton() {
   const { theme } = useSettingsStore();
 
   return (
-    <Ionicons
-      name="close"
-      size={28}
-      color={theme.tint}
-      onPress={() => router.back()}
-    />
+    <TouchableOpacity onPress={() => router.back()}>
+      <Ionicons name="close" size={28} color={theme.tint} />
+    </TouchableOpacity>
   );
 }
 
@@ -24,12 +21,9 @@ export function ModalBackButton() {
   const { theme } = useSettingsStore();
 
   return (
-    <Ionicons
-      name="chevron-back"
-      size={28}
-      color={theme.tint}
-      onPress={() => router.back()}
-    />
+    <TouchableOpacity onPress={() => router.back()}>
+      <Ionicons name="chevron-back" size={28} color={theme.tint} />
+    </TouchableOpacity>
   );
 }
 

@@ -6,9 +6,9 @@ import { useWorkoutStore } from "../../stores/workout";
 import { BackgroundText } from "../../components/ui/misc/BackgroundText";
 import { CreateSplitButton } from "../../components/splits/header/CreateSplitButton";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { SplitCard } from "../../components/splits/SplitCard";
+import { SplitCard } from "../../components/splits/cards/SplitCard";
 
-import { NoSplitCard } from "../../components/splits/NoSplitCard";
+import { NoSplitCard } from "../../components/splits/cards/NoSplitCard";
 
 export default function TemplatesScreen() {
   const { splitPlans } = useWorkoutStore();

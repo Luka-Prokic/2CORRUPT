@@ -1,7 +1,7 @@
-import { SplitPlan } from "../../stores/workout";
+import { SplitPlan } from "../../../stores/workout";
 import { Text, TouchableOpacity } from "react-native";
-import { useSettingsStore } from "../../stores/settingsStore";
-import { useWidgetUnit } from "../../features/widgets/useWidgetUnit";
+import { useSettingsStore } from "../../../stores/settingsStore";
+import { useWidgetUnit } from "../../../features/widgets/useWidgetUnit";
 import { router } from "expo-router";
 
 interface SplitCardProps {

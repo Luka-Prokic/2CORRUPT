@@ -37,19 +37,21 @@ export default function AddExerciseScreen() {
         scroll={false}
         edges={["top"]}
         style={{ backgroundColor: theme.background }}
+        HeaderComponent={
+          <ExerciseFilter
+            setFilteredExercises={setFilteredExercises}
+            style={{ marginTop: insets.top }}
+          />
+        }
+        FooterComponent={
+          <BottomAddExerciseSection selectedExercises={selectedExercises} />
+        }
       >
-        <ExerciseFilter
-          setFilteredExercises={setFilteredExercises}
-          style={{ marginTop: insets.top }}
-        />
-
         <AddExerciseList
           filteredExercises={filteredExercises}
           selectedExercises={selectedExercises}
           setSelectedExercises={setSelectedExercises}
         />
-
-        <BottomAddExerciseSection selectedExercises={selectedExercises} />
       </ScreenContent>
     </Fragment>
   );

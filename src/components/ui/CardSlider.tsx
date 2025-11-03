@@ -28,6 +28,10 @@ interface CardSliderProps<T> extends Omit<FlatListProps<T>, "renderItem"> {
   styleDots?: ViewStyle | ViewStyle[];
   emptyCard?: ReactElement;
   firstCard?: ReactElement;
+  lastCard?: ReactElement;
+  firstDot?: ReactNode;
+  lastDot?: ReactNode;
+  maxDotsShown?: number; // 🆕 new prop
 }
 
 export function CardSlider<T>({
@@ -41,17 +45,22 @@ export function CardSlider<T>({
   styleDots,
   emptyCard,
   firstCard, // 🆕
+  lastCard, // 🆕
+  firstDot, // 🆕
+  lastDot, // 🆕
+  maxDotsShown, // 🆕
   ...flatListProps
 }: CardSliderProps<T>) {
   const { theme } = useSettingsStore();
   const scrollX = useRef(new Animated.Value(0)).current;
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const fullData: T[] = firstCard
-    ? [{} as T, ...(data ? Array.from(data) : [])]
-    : data
-    ? Array.from(data)
-    : []; // prepend dummy for layout consistency
+  // ✅ Include firstCard and lastCard cleanly in the data
+  const fullData: (string | T)[] = [
+    ...(firstCard ? ["first"] : []),
+    ...(data ? Array.from(data) : []),
+    ...(lastCard ? ["last"] : []),
+  ];
 
   const defaultKeyExtractor = (item: any, index: number) =>
     item.id ? `${item.id}-${index}` : `${index}`;
@@ -79,26 +88,40 @@ export function CardSlider<T>({
       <AnimatedFlatList
         {...flatListProps}
         data={fullData}
-        renderItem={({ item, index }) =>
-          index === 0 && firstCard
-            ? renderCard({
-                scrollX,
-                index,
-                content: firstCard,
-                width: cardWidth,
-                height: cardHeight,
-              })
-            : renderCard({
-                scrollX,
-                index,
-                content: card({
-                  item: firstCard ? data[index - 1] : item,
-                  index,
-                }),
-                width: cardWidth,
-                height: cardHeight,
-              })
-        }
+        renderItem={({ item, index }) => {
+          if (item === "first" && firstCard) {
+            return renderCard({
+              scrollX,
+              index,
+              content: firstCard,
+              width: cardWidth,
+              height: cardHeight,
+            });
+          }
+
+          if (item === "last" && lastCard) {
+            return renderCard({
+              scrollX,
+              index,
+              content: lastCard,
+              width: cardWidth,
+              height: cardHeight,
+            });
+          }
+
+          const adjustedIndex = firstCard ? index - 1 : index;
+
+          return renderCard({
+            scrollX,
+            index,
+            content: card({
+              item: item as T,
+              index: adjustedIndex,
+            }),
+            width: cardWidth,
+            height: cardHeight,
+          });
+        }}
         keyExtractor={keyExtractor || defaultKeyExtractor}
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -116,6 +139,9 @@ export function CardSlider<T>({
           currentIndex={currentIndex}
           theme={theme}
           style={{ height: 32, ...(Array.isArray(styleDots) ? {} : styleDots) }}
+          firstDot={firstDot}
+          lastDot={lastDot}
+          maxDotsShown={maxDotsShown}
         />
       )}
     </Fragment>
@@ -175,9 +201,11 @@ function renderCard({
 interface ScrollableDotsProps {
   dataLength: number;
   currentIndex: number;
-  maxVisible?: number;
   theme: any;
   style?: ViewStyle | ViewStyle[];
+  firstDot?: ReactNode;
+  lastDot?: ReactNode;
+  maxDotsShown?: number; // 🆕 new prop
 }
 
 const DOT_WIDTH = 6;
@@ -186,54 +214,86 @@ const DOT_MARGIN = 3;
 export const ScrollableDots = ({
   dataLength,
   currentIndex,
-  maxVisible = 5,
   theme,
   style,
+  firstDot,
+  lastDot,
+  maxDotsShown = 5, // default is 5
 }: ScrollableDotsProps) => {
   const flatListRef = useRef<FlatList>(null);
-  const data = Array.from({ length: dataLength });
-
+  const totalDots = dataLength;
   const dotWidth = DOT_MARGIN * 2 + DOT_WIDTH;
-  const shownDots = dataLength > maxVisible ? maxVisible : dataLength;
+  const shownDots = totalDots > maxDotsShown ? maxDotsShown : totalDots;
   const windowWidth = dotWidth * shownDots;
 
   useEffect(() => {
     if (!flatListRef.current) return;
-
     const offset =
-      currentIndex >= maxVisible
-        ? dotWidth * (currentIndex - maxVisible + 1)
+      currentIndex >= maxDotsShown
+        ? dotWidth * (currentIndex - maxDotsShown + 1)
         : 0;
+    flatListRef.current.scrollToOffset({ offset, animated: true });
+  }, [currentIndex, maxDotsShown]);
 
-    flatListRef.current.scrollToOffset({
-      offset,
-      animated: true,
-    });
-  }, [currentIndex, maxVisible]);
+  const renderDot = (index: number) => {
+    const isActive = index === currentIndex;
+
+    if (index === 0 && firstDot) {
+      return (
+        <View
+          style={{
+            marginHorizontal: DOT_MARGIN,
+            transform: [{ scale: isActive ? 1.2 : 0.8 }],
+            opacity: isActive ? 1 : 0.4,
+          }}
+        >
+          {firstDot}
+        </View>
+      );
+    }
+    if (index === totalDots - 1 && lastDot) {
+      return (
+        <View
+          style={{
+            marginHorizontal: DOT_MARGIN,
+            transform: [{ scale: isActive ? 1.2 : 0.8 }],
+            opacity: isActive ? 1 : 0.4,
+          }}
+        >
+          {lastDot}
+        </View>
+      );
+    }
+
+    return (
+      <View
+        style={{
+          width: DOT_WIDTH,
+          height: DOT_WIDTH,
+          borderRadius: DOT_MARGIN,
+          marginHorizontal: DOT_MARGIN,
+          backgroundColor: theme.text,
+          transform: [{ scale: isActive ? 1.2 : 0.8 }],
+          opacity: isActive ? 1 : 0.4,
+        }}
+      />
+    );
+  };
 
   return (
     <View style={style}>
       <FlatList
         ref={flatListRef}
-        data={data}
+        data={Array.from({ length: totalDots })}
         keyExtractor={(_, index) => index.toString()}
         horizontal
         scrollEnabled={false}
         showsHorizontalScrollIndicator={false}
-        renderItem={({ index }) => (
-          <View
-            style={{
-              width: DOT_WIDTH,
-              height: DOT_WIDTH,
-              borderRadius: DOT_MARGIN,
-              marginHorizontal: DOT_MARGIN,
-              backgroundColor: theme.text,
-              transform: [{ scale: index === currentIndex ? 1.2 : 0.8 }],
-              opacity: index === currentIndex ? 1 : 0.4,
-            }}
-          />
-        )}
-        contentContainerStyle={{ alignItems: "center" }}
+        renderItem={({ index }) => renderDot(index)}
+        contentContainerStyle={{
+          alignItems: "center",
+          flexDirection: "row",
+        }}
         style={{ width: windowWidth }}
       />
     </View>

@@ -70,7 +70,8 @@ export const PullTemplateFromSessionView = forwardRef<
         labelTwo={t("button.add")}
         onOptionOne={handleCancel}
         onOptionTwo={handlePullTemplate}
-        styleTwo={{ backgroundColor: theme.tint }}
+        styleTwo={{ backgroundColor: theme.accent }}
+        styleLabelTwo={{ color: theme.secondaryText }}
         disabledTwo={itsNotReady}
       />
       <Text

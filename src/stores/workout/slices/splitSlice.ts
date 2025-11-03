@@ -43,8 +43,8 @@ export const createSplitPlanSlice: StateCreator<
     const { splitPlans } = get();
 
     const newSplit = plan?.split || [];
-    const splitLength = newSplit.length || 7;
-    const activeLength = newSplit.filter((d) => !d.isRest).length || 5;
+    const splitLength = newSplit.length || 0;
+    const activeLength = newSplit.filter((d) => !d.isRest).length || 0;
 
     const newPlan: SplitPlan = {
       id: `split-${nanoid()}`,
@@ -252,6 +252,48 @@ export const createSplitPlanSlice: StateCreator<
           split,
           splitLength,
           activeLength,
+          updatedAt: new Date().toISOString(),
+        };
+      }),
+    }));
+  },
+
+  updateSplitDayField: <K extends keyof SplitPlanDay>(
+    planId: string,
+    dayIndex: number,
+    field: K,
+    value: SplitPlanDay[K]
+  ) => {
+    set((state) => {
+      const planIndex = state.splitPlans.findIndex((p) => p.id === planId);
+      if (planIndex === -1) return state;
+
+      const plan = state.splitPlans[planIndex];
+      const day = plan.split[dayIndex];
+      if (!day) return state;
+
+      const updatedDay = { ...day, [field]: value };
+      const updatedSplit = [...plan.split];
+      updatedSplit[dayIndex] = updatedDay;
+
+      const updatedPlan = { ...plan, split: updatedSplit };
+      const updatedPlans = [...state.splitPlans];
+      updatedPlans[planIndex] = updatedPlan;
+
+      return { splitPlans: updatedPlans };
+    });
+  },
+  toggleDayRest: (planId: string, dayIndex: number) => {
+    set((state) => ({
+      splitPlans: state.splitPlans.map((p) => {
+        if (p.id !== planId) return p;
+        const split = [...p.split];
+        split[dayIndex].isRest = !split[dayIndex].isRest;
+        return {
+          ...p,
+          split,
+          activeLength: split.filter((d) => !d.isRest).length,
+          splitLength: split.length,
           updatedAt: new Date().toISOString(),
         };
       }),

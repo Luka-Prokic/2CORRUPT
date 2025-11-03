@@ -354,7 +354,8 @@
   },
   "splits": {
     "delete-title": "Delete this split plan?",
-    "delete-message": "This will remove the split (the way your templates are grouped). Don't worry - your workouts and templates will stay safe."
+    "delete-message": "This will remove the split (the way your templates are grouped). Don't worry - your workouts and templates will stay safe.",
+    "split-name": "Split Name..."
   },
 
   "alert": {

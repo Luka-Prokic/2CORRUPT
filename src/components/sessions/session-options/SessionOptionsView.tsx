@@ -64,9 +64,9 @@ export const SessionOptionsView = forwardRef<
 
         <OptionButton
           title={t("sessions.add-to-templates")}
-          icon={<Ionicons name="add-circle" size={24} color={theme.tint} />}
+          icon={<Ionicons name="add-circle" size={24} color={theme.accent} />}
           onPress={handleMakeTemplate}
-          color={theme.tint}
+          color={theme.accent}
           height={44}
         />
 

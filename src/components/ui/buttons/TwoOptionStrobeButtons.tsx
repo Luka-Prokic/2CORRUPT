@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, ViewStyle } from "react-native";
+import { View, Text, ViewStyle, TextStyle } from "react-native";
 import { WIDTH } from "../../../features/Dimensions";
 import { BounceButton } from "./BounceButton";
 import { useSettingsStore } from "../../../stores/settings";
@@ -12,6 +12,8 @@ interface TwoOptionStrobeButtonsProps {
   onOptionTwo: () => void;
   styleOne?: ViewStyle | ViewStyle[];
   styleTwo?: ViewStyle | ViewStyle[];
+  styleLabelOne?: TextStyle;
+  styleLabelTwo?: TextStyle;
   disabledOne?: boolean;
   disabledTwo?: boolean;
   style?: ViewStyle | ViewStyle[];
@@ -27,6 +29,8 @@ export function TwoOptionStrobeButtons({
   disabledOne,
   disabledTwo,
   style,
+  styleLabelOne,
+  styleLabelTwo,
 }: TwoOptionStrobeButtonsProps) {
   const { theme } = useSettingsStore();
 
@@ -67,7 +71,14 @@ export function TwoOptionStrobeButtons({
           }}
           disabled={disabledOne}
         >
-          <Text style={{ fontSize: 24, fontWeight: "bold", color: theme.text }}>
+          <Text
+            style={{
+              fontSize: 24,
+              fontWeight: "bold",
+              color: theme.text,
+              ...styleLabelOne,
+            }}
+          >
             {labelOne}
           </Text>
         </StrobeBlur>
@@ -104,7 +115,14 @@ export function TwoOptionStrobeButtons({
           }}
           disabled={disabledTwo}
         >
-          <Text style={{ fontSize: 24, fontWeight: "bold", color: theme.text }}>
+          <Text
+            style={{
+              fontSize: 24,
+              fontWeight: "bold",
+              color: theme.text,
+              ...styleLabelTwo,
+            }}
+          >
             {labelTwo}
           </Text>
         </StrobeBlur>

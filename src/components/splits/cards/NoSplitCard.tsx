@@ -1,7 +1,7 @@
-import { useSettingsStore } from "../../stores/settings";
-import { useWidgetUnit } from "../../features/widgets/useWidgetUnit";
+import { useSettingsStore } from "../../../stores/settings";
+import { useWidgetUnit } from "../../../features/widgets/useWidgetUnit";
 import { router } from "expo-router";
-import { StrobeButton } from "../ui/buttons/StrobeButton";
+import { StrobeButton } from "../../ui/buttons/StrobeButton";
 import { Text } from "react-native";
 
 export function NoSplitCard() {

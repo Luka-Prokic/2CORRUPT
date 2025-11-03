@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from "react";
-import { Animated } from "react-native";
+import { useEffect, useState } from "react";
 import { useUIStore } from "../../stores/ui";
 import { HomeViewType } from "../../stores/ui/types";
+import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 
 interface UIViewProps {
   type: HomeViewType;
@@ -11,19 +11,12 @@ interface UIViewProps {
 export function UIView({ type, children }: UIViewProps) {
   const { typeOfView } = useUIStore();
   const [visible, setVisible] = useState(typeOfView === type);
-  const viewOpacity = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     if (typeOfView === type) {
       setVisible(true);
-      Animated.timing(viewOpacity, {
-        toValue: 1,
-        duration: 600,
-        useNativeDriver: true,
-      }).start();
     } else {
       setVisible(false);
-      viewOpacity.setValue(0);
     }
   }, [typeOfView, type]);
 
@@ -31,9 +24,10 @@ export function UIView({ type, children }: UIViewProps) {
 
   return (
     <Animated.View
+      entering={FadeIn}
+      exiting={FadeOut}
       style={{
         flex: 1,
-        opacity: viewOpacity,
       }}
     >
       {children}

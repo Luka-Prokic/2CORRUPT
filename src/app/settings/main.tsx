@@ -7,6 +7,7 @@ import { ScreenContent } from "../../components/ui/utils/ScreenContent";
 import { useSettingsStore } from "../../stores/settingsStore";
 import { useTranslation } from "react-i18next";
 import { ModalExitButton } from "./../_layout";
+import { ScreenView } from "../../components/ui/containers/ScreenView";
 
 export default function SettingsScreen() {
   const { theme } = useSettingsStore();
@@ -16,21 +17,19 @@ export default function SettingsScreen() {
       <Stack.Screen
         options={{
           title: t("navigation.settings"),
-          headerBlurEffect: "none",
-          headerTransparent: true,
           headerRight: () => <ModalExitButton />,
         }}
       />
 
       <ScreenContent
-        edges={["top", "bottom"]}
+        edges={["bottom"]}
         style={{ backgroundColor: theme.navBackground }}
       >
-        <IList style={{ gap: 16, paddingHorizontal: 16 }} hrStart="None">
+        <ScreenView style={{ gap: 16, paddingHorizontal: 16 }}>
           <ThemeSettings />
 
           <LanguageSettings />
-        </IList>
+        </ScreenView>
       </ScreenContent>
     </Fragment>
   );

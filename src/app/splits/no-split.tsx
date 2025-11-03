@@ -4,6 +4,7 @@ import { ScreenContent } from "../../components/ui/utils/ScreenContent";
 import { NoSplit } from "../../stores/workout";
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { ScreenView } from "../../components/ui/containers/ScreenView";
 
 export default function TemplatesScreen() {
   const insets = useSafeAreaInsets();
@@ -27,12 +28,7 @@ export default function TemplatesScreen() {
         }}
       />
       <ScreenContent>
-        <View
-          style={{
-            marginTop: insets.top + 16,
-            alignItems: "center",
-          }}
-        ></View>
+        <ScreenView></ScreenView>
       </ScreenContent>
     </Fragment>
   );

@@ -6,6 +6,7 @@ import { Stack } from "expo-router";
 import { ScreenContent } from "../components/ui/utils/ScreenContent";
 import { useTranslation } from "react-i18next";
 import { ModalExitButton } from "./_layout";
+import { ScreenView } from "../components/ui/containers/ScreenView";
 
 export default function ProfileScreen() {
   const { theme } = useSettingsStore();
@@ -39,25 +40,23 @@ export default function ProfileScreen() {
       <Stack.Screen
         options={{
           title: t("navigation.profile"),
-          headerBlurEffect: "none",
           headerRight: () => <ModalExitButton />,
         }}
       />
-      <ScreenContent
-        edges={["top"]}
-        style={{ backgroundColor: theme.background }}
-      >
-        {isLogin ? (
-          <UserLogin
-            onLoginSuccess={handleLoginSuccess}
-            onSwitchToRegister={handleSwitchToRegister}
-          />
-        ) : (
-          <UserRegister
-            onRegisterSuccess={handleRegisterSuccess}
-            onSwitchToLogin={handleSwitchToLogin}
-          />
-        )}
+      <ScreenContent style={{ backgroundColor: theme.background }}>
+        <ScreenView>
+          {isLogin ? (
+            <UserLogin
+              onLoginSuccess={handleLoginSuccess}
+              onSwitchToRegister={handleSwitchToRegister}
+            />
+          ) : (
+            <UserRegister
+              onRegisterSuccess={handleRegisterSuccess}
+              onSwitchToLogin={handleSwitchToLogin}
+            />
+          )}
+        </ScreenView>
       </ScreenContent>
     </Fragment>
   );

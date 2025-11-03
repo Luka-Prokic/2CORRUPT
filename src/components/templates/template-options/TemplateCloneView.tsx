@@ -51,7 +51,8 @@ export const TemplateCloneView = forwardRef<
         labelTwo={t("button.clone")}
         onOptionOne={handleCancel}
         onOptionTwo={handleCloneTemplate}
-        styleTwo={{ backgroundColor: theme.tint }}
+        styleTwo={{ backgroundColor: theme.accent }}
+        styleLabelTwo={{ color: theme.secondaryText }}
         disabledTwo={itsNotReady}
       />
       <Text

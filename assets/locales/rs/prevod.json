@@ -336,7 +336,8 @@
   },
   "splits": {
     "delete-title": "Delete this split plan?",
-    "delete-message": "Ovo će ukloniti split (kako su tvoji templati grupisani). Ne brini - tvoji treninzi i templati ostaju netaknuti."
+    "delete-message": "Ovo će ukloniti split (kako su tvoji templati grupisani). Ne brini - tvoji treninzi i templati ostaju netaknuti.",
+    "split-name": "Naziv za Split..."
   },
 
   "alert": {

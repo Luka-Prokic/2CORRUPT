@@ -1,8 +1,13 @@
 import { View, Text, TouchableOpacity, ViewStyle } from "react-native";
-import { SplitPlan, SplitPlanDay, useWorkoutStore } from "../../stores/workout";
-import { useSettingsStore } from "../../stores/settings";
+import {
+  SplitPlan,
+  SplitPlanDay,
+  useWorkoutStore,
+} from "../../../stores/workout";
+import { useSettingsStore } from "../../../stores/settings";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 import { Ionicons } from "@expo/vector-icons";
+import { hexToRGBA } from "../../../features/HEXtoRGB";
 
 interface SplitDayCardProps {
   split: SplitPlan;
@@ -13,12 +18,14 @@ interface SplitDayCardProps {
 
 export function SplitDayCard({ split, day, index, style }: SplitDayCardProps) {
   const { theme } = useSettingsStore();
-  const { removeDayFromSplit } = useWorkoutStore();
-
-  const handleToggleRest = () => {};
+  const { removeDayFromSplit, toggleDayRest } = useWorkoutStore();
 
   function handleRemoveDay() {
     removeDayFromSplit(split.id, index);
+  }
+
+  function handleToggleRest() {
+    toggleDayRest(split.id, index);
   }
 
   return (
@@ -27,9 +34,10 @@ export function SplitDayCard({ split, day, index, style }: SplitDayCardProps) {
       exiting={FadeOut}
       style={{
         padding: 16,
-        flex: 1,
         justifyContent: "space-between",
-        backgroundColor: theme.primaryBackground,
+        backgroundColor: day.isRest
+          ? theme.primaryBackground
+          : hexToRGBA(theme.thirdBackground, 1),
         borderColor: theme.border,
         borderRadius: 32,
         borderWidth: 1,
@@ -42,34 +50,23 @@ export function SplitDayCard({ split, day, index, style }: SplitDayCardProps) {
           flexDirection: "row",
           justifyContent: "space-between",
           alignItems: "center",
+          height: 34,
         }}
       >
         <Text
           style={{
             fontSize: 18,
             fontWeight: "bold",
-            flex: 1,
-            color: day.isRest ? theme.info : theme.fifthBackground,
+            color: day.isRest ? theme.info : theme.tint,
           }}
-          numberOfLines={2}
+          numberOfLines={1}
         >
           Day {index + 1}
         </Text>
 
-        {/* Rest toggle */}
-        <TouchableOpacity onPress={handleToggleRest} hitSlop={10}>
-          <Ionicons
-            name={day.isRest ? "rainy" : "barbell"}
-            size={34}
-            color={day.isRest ? theme.info : theme.fifthBackground}
-          />
+        <TouchableOpacity onPress={handleRemoveDay} hitSlop={10}>
+          <Ionicons name="remove" size={34} color={theme.error} />
         </TouchableOpacity>
-        <Ionicons
-          name="remove-circle"
-          size={34}
-          color={theme.error}
-          onPress={handleRemoveDay}
-        />
       </View>
 
       {/* Notes */}
@@ -119,26 +116,29 @@ export function SplitDayCard({ split, day, index, style }: SplitDayCardProps) {
       </View>
 
       {/* Footer summary */}
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "flex-end",
-          marginTop: 8,
-        }}
-      >
-        <Text
+      <View style={{}}>
+        <TouchableOpacity
+          onPress={handleToggleRest}
           style={{
-            fontSize: 12,
-            fontWeight: "600",
-            color: theme.info,
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+            height: 34,
           }}
         >
-          {day.isRest
-            ? "Rest Day"
-            : `${day.workouts.length} planned workout${
-                day.workouts.length === 1 ? "" : "s"
-              }`}
-        </Text>
+          <Text
+            style={{ fontSize: 12, color: theme.info }}
+            adjustsFontSizeToFit
+            numberOfLines={1}
+          >
+            {day.isRest ? "SET AS ACITVE" : "SET AS REST"}
+          </Text>
+          <Ionicons
+            name={day.isRest ? "rainy" : "barbell"}
+            size={34}
+            color={day.isRest ? theme.info : theme.text}
+          />
+        </TouchableOpacity>
       </View>
     </Animated.View>
   );

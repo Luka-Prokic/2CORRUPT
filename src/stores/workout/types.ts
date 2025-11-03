@@ -166,6 +166,8 @@ export interface SplitPlanSlice {
     value: SplitPlanDay[K]
   ) => void;
 
+  toggleDayRest: (planId: string, dayIndex: number) => void;
+
   getSplitById: (planId: string) => SplitPlan | undefined;
 }
 
