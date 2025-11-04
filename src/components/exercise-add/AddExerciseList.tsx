@@ -48,16 +48,14 @@ export function AddExerciseList({
     <FlatList
       data={pagedExercises}
       keyExtractor={(item) => item.id}
-      renderItem={({ item }) => {
-        return (
-          <AddExerciseCard
-            exercise={item}
-            onSelect={handleSelectExercise}
-            unSelect={handleUnselectExercise}
-            selectedExercises={selectedExercises}
-          />
-        );
-      }}
+      renderItem={({ item }) => (
+        <AddExerciseCard
+          exercise={item}
+          onSelect={handleSelectExercise}
+          unSelect={handleUnselectExercise}
+          selectedExercises={selectedExercises}
+        />
+      )}
       onEndReached={handleLoadMore}
       onEndReachedThreshold={0.5}
       initialNumToRender={20}

@@ -340,7 +340,7 @@
     "add-template-info": "Save this session's layout as a new template. Giving it a clear name helps you recognize it later or use it for similar workouts.",
     "update-template-info": "Update the template used for this session. You can adjust its layout, rename it, and keep it aligned with your latest workout changes.",
     "remove-info": "Removing this session can't be undone. Your progress stats will be affected.",
-    "active-session-warning": "Active workout in progress. Finish it before starting a new session, or cencel it."
+    "active-session-warning": "Active workout in progress. Finish it or cancel it before starting a new session."
   },
   "templates": {
     "template": "Template",
@@ -350,17 +350,27 @@
     "options-info": "Customize your workout template - rename it, adjust details, start a session from it, make a copy for variations, or delete it if it's no longer needed.",
     "clone-info": "Duplicate this template to create a new version while keeping the original intact. Changing the name can help you distinguish between them.",
     "delete-info": "Deleting this template can't be undone. Your previous workouts won't be affected.",
-    "active-session-warning": "Active workout in progress. Finish it before starting a new session or editing templates, or cencel it."
+    "active-session-warning": "Active workout in progress. Finish it or cancel it before starting a new session or editing templates."
   },
   "splits": {
+    "title": "Splits",
+    "total-days": "Total Days",
+    "active-days": "Active Days",
     "delete-title": "Delete this split plan?",
     "delete-message": "This will remove the split (the way your templates are grouped). Don't worry - your workouts and templates will stay safe.",
-    "split-name": "Split Name..."
+    "split-name": "Split Name...",
+    "activate-split": "Activate Split",
+    "deactivate-split": "Deactivate Split",
+    "add-workout": "Add Workout",
+    "set-as-active": "Set as Active",
+    "set-as-rest-day": "Set as Rest Day",
+    "footer-info": "Edit your split here - adjust its name, change training or rest days, add or reorder workouts, and update notes. These changes affect all future workouts and sessions for this split. One split can be active at a time; if you deactivate it, the default “No Split” plan will apply automatically.",
+    "list-info": "Manage your split plans here - organize and store all your training routines so you can switch between them easily. Each split represents a different plan or focus for your workouts, letting you vary your training while keeping everything tracked. One split is always active; if none is selected, the default “No Split” will be used automatically."
   },
 
   "alert": {
     "end-workout": "End Workout",
-    "end-workout-message": "You're about to end your workout. You can finish it and save it or save it as template, or just ending it without saving."
+    "end-workout-message": "You're about to end your workout. You can finish it and save it or save it as template isntead."
   },
 
   "categories": {

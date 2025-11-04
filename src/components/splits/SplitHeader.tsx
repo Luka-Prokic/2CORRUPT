@@ -1,17 +1,17 @@
 import { SplitPlan } from "../../stores/workout";
 import { SplitNameInput } from "./SplitNameInput";
 import { View } from "react-native";
-import { useSettingsStore } from "../../stores/settingsStore";
 import { LabeledValue } from "../ui/misc/LabeledValue";
 import { useWidgetUnit } from "../../features/widgets/useWidgetUnit";
+import { useTranslation } from "react-i18next";
 
-interface SplitDashboardProps {
+interface SplitHeaderProps {
   split: SplitPlan;
 }
 
-export function SplitDashboard({ split }: SplitDashboardProps) {
-  const { theme } = useSettingsStore();
+export function SplitHeader({ split }: SplitHeaderProps) {
   const { widgetUnit, fullWidth } = useWidgetUnit();
+  const { t } = useTranslation();
   return (
     <View
       style={{
@@ -22,14 +22,15 @@ export function SplitDashboard({ split }: SplitDashboardProps) {
       }}
     >
       <SplitNameInput split={split} />
+
       <View style={{ flexDirection: "row", gap: 8 }}>
         <LabeledValue
-          label="Total Days"
+          label={t("splits.total-days")}
           value={split.splitLength}
           style={{ width: widgetUnit }}
         />
         <LabeledValue
-          label="Active Days"
+          label={t("splits.active-days")}
           value={split.activeLength}
           style={{ width: widgetUnit }}
         />

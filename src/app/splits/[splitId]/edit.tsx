@@ -1,16 +1,17 @@
 import { Stack, useLocalSearchParams } from "expo-router";
 import { Fragment, useState } from "react";
-import { ScreenContent } from "../../components/ui/utils/ScreenContent";
-import { useSettingsStore } from "../../stores/settings";
-import { useWorkoutStore } from "../../stores/workout";
+import { ScreenContent } from "../../../components/ui/utils/ScreenContent";
+import { useSettingsStore } from "../../../stores/settings";
+import { useWorkoutStore } from "../../../stores/workout";
 import { TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { SplitDayList } from "../../components/splits/SplitDayList";
-import { SplitDashboard } from "../../components/splits/SplitDashboard";
-import { ScreenView } from "../../components/ui/containers/ScreenView";
-import { SplitFooter } from "../../components/splits/SplitFooter";
+import { SplitDayList } from "../../../components/splits/SplitDayList";
+import { SplitHeader } from "../../../components/splits/SplitHeader";
+import { ScreenView } from "../../../components/ui/containers/ScreenView";
+import { SplitFooter } from "../../../components/splits/SplitFooter";
+import { EmptyFooter } from "../../../components/ui/containers/EmptyFooter";
 
-export default function TemplatesScreen() {
+export default function SplitEditScreen() {
   const { theme } = useSettingsStore();
   const { splitId } = useLocalSearchParams<{ splitId: string }>();
   const { getSplitById } = useWorkoutStore();
@@ -45,9 +46,10 @@ export default function TemplatesScreen() {
       />
       <ScreenContent>
         <ScreenView>
-          <SplitDashboard split={split} />
+          <SplitHeader split={split} />
           <SplitDayList split={split} isGridView={isGridView} />
           <SplitFooter split={split} />
+          <EmptyFooter />
         </ScreenView>
       </ScreenContent>
     </Fragment>

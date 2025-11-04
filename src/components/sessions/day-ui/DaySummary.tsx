@@ -22,7 +22,7 @@ export function DaySummary({ date }: DaySummaryProps) {
     >
       <MuscleRadarChartDay date={date} />
 
-      <View style={{ position: "absolute", top: 4, left: 4 }}>
+      {/* <View style={{ position: "absolute", top: 4, left: 4 }}>
         <WeeklyProgress date={date} />
       </View>
 
@@ -36,7 +36,7 @@ export function DaySummary({ date }: DaySummaryProps) {
 
       <View style={{ position: "absolute", bottom: 4, right: 4 }}>
         <SplitStatus date={date} />
-      </View>
+      </View> */}
     </View>
   );
 }

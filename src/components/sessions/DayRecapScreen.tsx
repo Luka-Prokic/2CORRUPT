@@ -22,11 +22,11 @@ export function DayRecapScreen({ date }: DayRecapScreenProps) {
 
   if (isFutureDate(date)) return null;
   return (
-    <ScreenContent>
-      <SummaryEmptyHeader />
+    <ScreenContent HeaderComponent={<SummaryEmptyHeader />}>
       <DaySummary date={date} />
 
       <StaticDailyActivityBar date={date} />
+
       <FlatList
         data={sessionsOnThisDate ?? []}
         keyExtractor={(item) => item.id}

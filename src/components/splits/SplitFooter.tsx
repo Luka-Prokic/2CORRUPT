@@ -1,16 +1,23 @@
+import React from "react";
+import { View, Switch, Text } from "react-native";
 import { TwoOptionStrobeButtons } from "../ui/buttons/TwoOptionStrobeButtons";
-import { useTranslation } from "react-i18next";
 import { useSettingsStore } from "../../stores/settings";
 import { SplitPlan, useWorkoutStore } from "../../stores/workout";
 import { router } from "expo-router";
 import { useActionSheet } from "../../features/useActionSheet";
+import { BackgroundText } from "../ui/misc/BackgroundText";
+import { StrobeButton } from "../ui/buttons/StrobeButton";
+import { useWidgetUnit } from "../../features/widgets/useWidgetUnit";
+import { SplitNoteInput } from "./SplitNoteInput";
 
 interface SplitFooterProps {
   split: SplitPlan;
 }
+
 export function SplitFooter({ split }: SplitFooterProps) {
   const { t, showActionSheet } = useActionSheet();
   const { theme } = useSettingsStore();
+  const { fullWidth } = useWidgetUnit();
   const { createSplitPlan, deleteSplitPlan } = useWorkoutStore();
 
   function handleDelete() {
@@ -37,18 +44,33 @@ export function SplitFooter({ split }: SplitFooterProps) {
       name: `${split.name} Copy`,
     };
     const newSplitId = createSplitPlan(newSplit);
-    router.replace(`/splits/${newSplitId}`);
+    router.replace(`/splits/${newSplitId}/edit`);
   }
 
   return (
-    <TwoOptionStrobeButtons
-      labelOne={t("button.clone")}
-      labelTwo={t("button.delete")}
-      onOptionOne={handleClone}
-      onOptionTwo={handleDelete}
-      styleOne={{ backgroundColor: theme.accent }}
-      styleLabelOne={{ color: theme.secondaryText }}
-      styleTwo={{ backgroundColor: theme.error }}
-    />
+    <View
+      style={{
+        marginTop: 16,
+        alignItems: "center",
+        gap: 16,
+      }}
+    >
+      <SplitNoteInput split={split} />
+      {/* Buttons */}
+      <TwoOptionStrobeButtons
+        labelOne={t("button.clone")}
+        labelTwo={t("button.delete")}
+        onOptionOne={handleClone}
+        onOptionTwo={handleDelete}
+        styleOne={{ backgroundColor: theme.accent }}
+        styleLabelOne={{ color: theme.secondaryText }}
+        styleTwo={{ backgroundColor: theme.error }}
+      />
+      {/* Info text */}
+      <BackgroundText
+        style={{ textAlign: "justify", width: fullWidth }}
+        text={t("splits.footer-info")}
+      />
+    </View>
   );
 }

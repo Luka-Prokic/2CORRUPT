@@ -90,10 +90,16 @@ export interface SessionExercise {
   noRest?: boolean;
 }
 
+export interface SplitPlanWorkout {
+  readonly id: string;
+  readonly templateId: string;
+  readonly createdAt: IsoDateString;
+  readonly updatedAt: IsoDateString;
+}
 export interface SplitPlanDay {
-  workouts: string[]; // WorkoutTemplate IDs
+  readonly id: string;
+  workouts: SplitPlanWorkout[]; // WorkoutTemplate IDs
   isRest?: boolean; // true if rest day
-  notes?: string; // optional notes for the day
 }
 
 export interface SplitPlan {
@@ -167,6 +173,8 @@ export interface SplitPlanSlice {
   ) => void;
 
   toggleDayRest: (planId: string, dayIndex: number) => void;
+
+  reorderSplitDays: (planId: string, newOrder: string[]) => void;
 
   getSplitById: (planId: string) => SplitPlan | undefined;
 }

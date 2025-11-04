@@ -1,0 +1,69 @@
+import React, { useEffect, useState } from "react";
+import { FlatList } from "react-native";
+import {
+  SplitPlanWorkout,
+  WorkoutTemplate,
+} from "../../../stores/workout/types";
+import { EmptyFooter } from "../../ui/containers/EmptyFooter";
+import { AddSplitWorkoutCard } from "../cards/AddSplitWorkoutCard";
+
+const PAGE_SIZE = 20;
+
+interface AddSplitWorkoutListProps {
+  filteredTemplates: WorkoutTemplate[];
+  selectedTemplates: WorkoutTemplate[];
+  setSelectedTemplates: (templates: WorkoutTemplate[]) => void;
+}
+
+export function AddSplitWorkoutList({
+  filteredTemplates,
+  selectedTemplates,
+  setSelectedTemplates,
+}: AddSplitWorkoutListProps) {
+  const [page, setPage] = useState(1);
+
+  const pagedWorkouts = React.useMemo(
+    () => filteredTemplates.slice(0, page * PAGE_SIZE),
+    [filteredTemplates, page]
+  );
+
+  function handleLoadMore() {
+    if (page * PAGE_SIZE < filteredTemplates.length) {
+      setPage((prev) => prev + 1);
+    }
+  }
+
+  function handleSelectWorkout(template: WorkoutTemplate) {
+    setSelectedTemplates([...selectedTemplates, template]);
+  }
+
+  function handleUnselectTemplate(template: WorkoutTemplate) {
+    setSelectedTemplates(selectedTemplates.filter((t) => t.id !== template.id));
+  }
+
+  useEffect(() => {
+    setPage(1);
+  }, [filteredTemplates.length]);
+
+  return (
+    <FlatList
+      data={pagedWorkouts}
+      keyExtractor={(item) => item.id}
+      renderItem={({ item }) => (
+        <AddSplitWorkoutCard
+          template={item}
+          onSelect={handleSelectWorkout}
+          unSelect={handleUnselectTemplate}
+          selectedTemplates={selectedTemplates}
+        />
+      )}
+      onEndReached={handleLoadMore}
+      onEndReachedThreshold={0.5}
+      initialNumToRender={PAGE_SIZE}
+      maxToRenderPerBatch={PAGE_SIZE}
+      windowSize={10}
+      removeClippedSubviews
+      ListFooterComponent={<EmptyFooter />}
+    />
+  );
+}

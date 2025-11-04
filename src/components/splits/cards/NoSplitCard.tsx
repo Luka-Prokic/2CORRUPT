@@ -3,10 +3,15 @@ import { useWidgetUnit } from "../../../features/widgets/useWidgetUnit";
 import { router } from "expo-router";
 import { StrobeButton } from "../../ui/buttons/StrobeButton";
 import { Text } from "react-native";
+import { useWorkoutStore } from "../../../stores/workout";
 
 export function NoSplitCard() {
   const { theme } = useSettingsStore();
   const { fullWidth, widgetUnit } = useWidgetUnit();
+  const { activeSplitPlan } = useWorkoutStore();
+
+  const isActive = activeSplitPlan?.id === "no-split";
+  const textColor = isActive ? theme.background : theme.grayText;
 
   function handlePress() {
     router.push({
@@ -20,20 +25,20 @@ export function NoSplitCard() {
       style={{
         height: widgetUnit,
         width: fullWidth,
-        backgroundColor: theme.thirdBackground,
+        backgroundColor: isActive ? theme.thirdBackground : theme.handle,
         borderRadius: 32,
         borderColor: theme.border,
         borderWidth: 1,
         justifyContent: "center",
         alignItems: "center",
       }}
-      activeOpacity={0.7}
+      strobeDisabled={!isActive}
     >
       <Text
         style={{
           fontSize: 28,
           fontWeight: "bold",
-          color: theme.background,
+          color: textColor,
         }}
         numberOfLines={2}
       >
@@ -46,7 +51,7 @@ export function NoSplitCard() {
           right: 16,
           fontSize: 16,
           fontWeight: "bold",
-          color: theme.background,
+          color: textColor,
           alignSelf: "flex-end",
         }}
       >

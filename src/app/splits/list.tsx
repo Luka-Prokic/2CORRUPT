@@ -7,16 +7,15 @@ import { BackgroundText } from "../../components/ui/misc/BackgroundText";
 import { CreateSplitButton } from "../../components/splits/header/CreateSplitButton";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { SplitCard } from "../../components/splits/cards/SplitCard";
-
 import { NoSplitCard } from "../../components/splits/cards/NoSplitCard";
+import { useTranslation } from "react-i18next";
+import { useWidgetUnit } from "../../features/widgets/useWidgetUnit";
 
-export default function TemplatesScreen() {
+export default function SplitListScreen() {
   const { splitPlans } = useWorkoutStore();
+  const { t } = useTranslation();
   const insets = useSafeAreaInsets();
-
-  function headerLeft() {
-    return null;
-  }
+  const { fullWidth } = useWidgetUnit();
 
   function headerRight() {
     return <CreateSplitButton />;
@@ -26,8 +25,7 @@ export default function TemplatesScreen() {
     <Fragment>
       <Stack.Screen
         options={{
-          title: "Splits",
-          headerLeft: headerLeft,
+          title: t("splits.title"),
           headerRight: headerRight,
         }}
       />
@@ -45,7 +43,10 @@ export default function TemplatesScreen() {
           }}
           ListHeaderComponent={() => <NoSplitCard />}
           ListFooterComponent={() => (
-            <BackgroundText text="Manage your workout splits here - organize and store all your training routines so you can switch between them easily. Each split represents a different plan or focus for your workouts, letting you vary your training while keeping everything tracked. One split is always active; if none is selected, the default “No Split” will be used automatically." />
+            <BackgroundText
+              style={{ textAlign: "justify", width: fullWidth }}
+              text={t("splits.list-info")}
+            />
           )}
         />
       </ScreenContent>

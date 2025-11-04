@@ -1,4 +1,4 @@
-import { Fragment, useEffect } from "react";
+import { useEffect } from "react";
 import { SearchBar } from "../ui/input/SearchBar";
 import { FilterFlatList } from "../ui/FilterFlatList";
 import { WIDTH } from "../../features/Dimensions";
@@ -11,10 +11,13 @@ import { ExerciseInfo } from "../../stores/workout/types";
 
 interface ExerciseFilterProps {
   setFilteredExercises: (exercises: ExerciseInfo[]) => void;
-  style?: ViewStyle| ViewStyle[];
+  style?: ViewStyle | ViewStyle[];
 }
 
-export function ExerciseFilter({ setFilteredExercises, style }: ExerciseFilterProps) {
+export function ExerciseFilter({
+  setFilteredExercises,
+  style,
+}: ExerciseFilterProps) {
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
   const {

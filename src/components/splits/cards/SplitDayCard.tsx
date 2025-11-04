@@ -8,20 +8,46 @@ import { useSettingsStore } from "../../../stores/settings";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 import { Ionicons } from "@expo/vector-icons";
 import { hexToRGBA } from "../../../features/HEXtoRGB";
+import { PlannedWorkoutsList } from "../PlannedWorkoutsList";
+import { router } from "expo-router";
 
 interface SplitDayCardProps {
   split: SplitPlan;
   day: SplitPlanDay;
   index: number;
   style?: ViewStyle | ViewStyle[];
+  isGridView?: boolean;
+  onLongPressDrag?: () => void;
 }
 
-export function SplitDayCard({ split, day, index, style }: SplitDayCardProps) {
+export function SplitDayCard({
+  split,
+  day,
+  index,
+  style,
+  isGridView,
+  onLongPressDrag,
+}: SplitDayCardProps) {
   const { theme } = useSettingsStore();
-  const { removeDayFromSplit, toggleDayRest } = useWorkoutStore();
+  const { removeDayFromSplit, toggleDayRest, addDayToSplit } =
+    useWorkoutStore();
 
   function handleRemoveDay() {
     removeDayFromSplit(split.id, index);
+  }
+
+  function handleCloneDay() {
+    addDayToSplit(split.id, day, index + 1);
+  }
+
+  function handleAddWorkout() {
+    router.push({
+      pathname: `/splits/[splitId]/[dayIndex]/add`,
+      params: {
+        splitId: split.id,
+        dayIndex: index.toString(),
+      },
+    });
   }
 
   function handleToggleRest() {
@@ -36,8 +62,8 @@ export function SplitDayCard({ split, day, index, style }: SplitDayCardProps) {
         padding: 16,
         justifyContent: "space-between",
         backgroundColor: day.isRest
-          ? theme.primaryBackground
-          : hexToRGBA(theme.thirdBackground, 1),
+          ? theme.handle
+          : hexToRGBA(theme.thirdBackground, 0.6),
         borderColor: theme.border,
         borderRadius: 32,
         borderWidth: 1,
@@ -63,83 +89,58 @@ export function SplitDayCard({ split, day, index, style }: SplitDayCardProps) {
         >
           Day {index + 1}
         </Text>
-
-        <TouchableOpacity onPress={handleRemoveDay} hitSlop={10}>
-          <Ionicons name="remove" size={34} color={theme.error} />
-        </TouchableOpacity>
+        <View style={{ flexDirection: "row", gap: 8 }}>
+          {!isGridView && !day.isRest && (
+            <TouchableOpacity onPress={handleAddWorkout} hitSlop={10}>
+              <Ionicons
+                name="add-circle"
+                size={isGridView ? 24 : 34}
+                color={theme.text}
+              />
+            </TouchableOpacity>
+          )}
+          <TouchableOpacity onPress={handleCloneDay} hitSlop={10}>
+            <Ionicons
+              name="duplicate-outline"
+              size={isGridView ? 24 : 34}
+              color={theme.accent}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={handleRemoveDay} hitSlop={10}>
+            <Ionicons
+              name="remove"
+              size={isGridView ? 24 : 34}
+              color={day.isRest ? theme.error : theme.text}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
 
-      {/* Notes */}
-      <Text
-        style={{
-          fontSize: 12,
-          fontWeight: "500",
-          color: theme.info,
-          marginTop: 6,
-        }}
-        numberOfLines={3}
-        adjustsFontSizeToFit
-        minimumFontScale={0.5}
-      >
-        {day.notes}
-      </Text>
+      {!isGridView && <PlannedWorkoutsList day={day} dayIndex={index} />}
 
-      {/* Templates / workout list */}
-      <View
+      {/* Footer  */}
+      <TouchableOpacity
+        onPress={handleToggleRest}
         style={{
-          marginTop: 12,
           flexDirection: "row",
-          flexWrap: "wrap",
-          gap: 8,
+          justifyContent: "space-between",
+          alignItems: "center",
+          height: 34,
         }}
       >
-        {day.workouts.slice(0, 3).map((template, index) => (
-          <View
-            key={index}
-            style={{
-              paddingVertical: 4,
-              paddingHorizontal: 8,
-              borderRadius: 8,
-              backgroundColor: theme.thirdBackground,
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 12,
-                color: theme.text,
-              }}
-            >
-              {`Template ${index + 1}`}
-            </Text>
-          </View>
-        ))}
-      </View>
-
-      {/* Footer summary */}
-      <View style={{}}>
-        <TouchableOpacity
-          onPress={handleToggleRest}
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-            height: 34,
-          }}
+        <Text
+          style={{ fontSize: 12, color: theme.info }}
+          adjustsFontSizeToFit
+          numberOfLines={1}
         >
-          <Text
-            style={{ fontSize: 12, color: theme.info }}
-            adjustsFontSizeToFit
-            numberOfLines={1}
-          >
-            {day.isRest ? "SET AS ACITVE" : "SET AS REST"}
-          </Text>
-          <Ionicons
-            name={day.isRest ? "rainy" : "barbell"}
-            size={34}
-            color={day.isRest ? theme.info : theme.text}
-          />
-        </TouchableOpacity>
-      </View>
+          {day.isRest ? "SET AS ACITVE" : "SET AS REST"}
+        </Text>
+        <Ionicons
+          name={day.isRest ? "rainy" : "barbell"}
+          size={34}
+          color={day.isRest ? theme.info : theme.text}
+        />
+      </TouchableOpacity>
     </Animated.View>
   );
 }

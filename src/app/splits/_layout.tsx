@@ -19,7 +19,8 @@ export default function Layout() {
       }}
     >
       <Stack.Screen name="list" />
-      <Stack.Screen name="[splitId]" />
+      <Stack.Screen name="[splitId]/edit" />
+      <Stack.Screen name="[splitId]/[dayIndex]/add" />
       <Stack.Screen name="no-split" />
     </Stack>
   );

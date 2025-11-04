@@ -1,9 +1,9 @@
-import { SplitPlan } from "../../../stores/workout";
-import { Text, TouchableOpacity } from "react-native";
+import { SplitPlan, useWorkoutStore } from "../../../stores/workout";
+import { Text, View, Switch } from "react-native";
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { useWidgetUnit } from "../../../features/widgets/useWidgetUnit";
 import { router } from "expo-router";
-
+import { StrobeButton } from "../../ui/buttons/StrobeButton";
 interface SplitCardProps {
   split: SplitPlan;
 }
@@ -11,28 +11,45 @@ interface SplitCardProps {
 export function SplitCard({ split }: SplitCardProps) {
   const { theme } = useSettingsStore();
   const { widgetUnit, fullWidth } = useWidgetUnit();
+  const { activeSplitPlan, setActiveSplitPlan, endActiveSplitPlan } =
+    useWorkoutStore();
+
+  const isActive = activeSplitPlan?.id === split.id;
+
+  const toggleActive = () => {
+    if (isActive) {
+      endActiveSplitPlan(); // sets "no-split" as active
+    } else {
+      setActiveSplitPlan(split);
+    }
+  };
 
   function handlePress() {
     router.push({
-      pathname: "/splits/[splitId]",
+      pathname: "/splits/[splitId]/edit",
       params: { splitId: `${split.id}` },
     });
   }
 
   return (
-    <TouchableOpacity
+    <StrobeButton
       style={{
         height: widgetUnit,
         width: fullWidth,
-        backgroundColor: theme.primaryBackground,
+        backgroundColor: isActive
+          ? theme.thirdBackground
+          : theme.secondaryBackground,
         borderRadius: 32,
         borderColor: theme.border,
         borderWidth: 1,
+      }}
+      contentContainerStyle={{
         justifyContent: "center",
         alignItems: "center",
+        padding: 16,
       }}
       onPress={handlePress}
-      activeOpacity={0.7}
+      strobeDisabled={!isActive}
     >
       <Text
         style={{
@@ -45,19 +62,16 @@ export function SplitCard({ split }: SplitCardProps) {
         {split.name}
       </Text>
 
-      <Text
-        style={{
-          position: "absolute",
-          bottom: 16,
-          right: 16,
-          fontSize: 16,
-          fontWeight: "bold",
-          color: theme.info,
-          alignSelf: "flex-end",
+      <Switch
+        value={isActive}
+        onValueChange={toggleActive}
+        trackColor={{
+          false: theme.handle,
+          true: theme.tint,
         }}
-      >
-        {split.split?.length} days split
-      </Text>
-    </TouchableOpacity>
+        thumbColor={theme.background}
+        style={{ position: "absolute", top: 16, right: 16 }}
+      />
+    </StrobeButton>
   );
 }

@@ -12,7 +12,7 @@ export function CreateSplitButton() {
   function handlePress() {
     const splitId = createSplitPlan();
     router.push({
-      pathname: "/splits/[splitId]",
+      pathname: "/splits/[splitId]/edit",
       params: { splitId },
     });
   }

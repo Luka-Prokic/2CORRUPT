@@ -6,7 +6,7 @@ import { WIDTH } from "../../../features/Dimensions";
 
 export type StrobeColors = [string, string, string, string];
 interface StrobeBlurProps {
-  style?: ViewStyle;
+  style?: ViewStyle | ViewStyle[];
   colors?: StrobeColors;
   duration?: number;
   children?: React.ReactNode;
