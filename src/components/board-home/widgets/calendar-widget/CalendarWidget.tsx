@@ -10,15 +10,11 @@ import {DayPicker} from "./DayPicker";
 interface CalendarWidgetProps {
   onDateChange?: (dateLabel: string, dateObj?: Date) => void;
   navigateToDate?: Date;
-  sharedSelectedDate?: Date;
-  onSharedDateChange?: (date: Date) => void;
 }
 
 export function CalendarWidget({
   onDateChange,
   navigateToDate,
-  sharedSelectedDate,
-  onSharedDateChange,
 }: CalendarWidgetProps) {
   const { theme } = useSettingsStore();
   const [currentWeek, setCurrentWeek] = useState<Date[]>([]);
@@ -84,35 +80,6 @@ export function CalendarWidget({
     // Removed automatic reset to today - let user navigate freely
   }, [navigateToDate]);
 
-  // Sync with shared selected date
-  useEffect(() => {
-    if (sharedSelectedDate) {
-      const dateIndex = currentWeek.findIndex(
-        (date: any) => date.toDateString() === sharedSelectedDate.toDateString()
-      );
-
-      if (dateIndex !== -1) {
-        // Date is in current week, just update selection
-        setSelectedIndex(dateIndex);
-        setSelectedDate(sharedSelectedDate);
-      } else {
-        // Date is not in current week, navigate to the correct week
-        const weekStart = getWeekStart(new Date(sharedSelectedDate));
-        const week = generateWeek(weekStart);
-        setCurrentWeek(week);
-
-        const newDateIndex = week.findIndex(
-          (date: any) =>
-            date.toDateString() === sharedSelectedDate.toDateString()
-        );
-        if (newDateIndex !== -1) {
-          setSelectedIndex(newDateIndex);
-          setSelectedDate(sharedSelectedDate);
-        }
-      }
-    }
-  }, [sharedSelectedDate]);
-
   // Animate background position
   useEffect(() => {
     Animated.spring(animatedTranslateX, {
@@ -140,10 +107,6 @@ export function CalendarWidget({
     if (onDateChange) {
       const dateLabel = newWeek[6].toLocaleDateString();
       onDateChange(dateLabel, newWeek[6]);
-    }
-
-    if (onSharedDateChange) {
-      onSharedDateChange(newWeek[6]);
     }
   };
 
@@ -187,10 +150,6 @@ export function CalendarWidget({
     if (onDateChange) {
       const dateLabel = selectedDate.toLocaleDateString();
       onDateChange(dateLabel, selectedDate);
-    }
-
-    if (onSharedDateChange) {
-      onSharedDateChange(selectedDate);
     }
   };
 
@@ -238,10 +197,6 @@ export function CalendarWidget({
     if (onDateChange) {
       const dateLabel = date.toLocaleDateString();
       onDateChange(dateLabel, date);
-    }
-
-    if (onSharedDateChange) {
-      onSharedDateChange(date);
     }
   };
 
@@ -292,7 +247,7 @@ export function CalendarWidget({
       style={{
         borderRadius: 32,
         marginBottom: 8,
-        backgroundColor: hexToRGBA(theme.fourthBackground, 0.2),
+        backgroundColor: hexToRGBA(theme.fourthBackground, 0.4),
         padding: 8,
         borderWidth: 1,
         borderColor: theme.border,

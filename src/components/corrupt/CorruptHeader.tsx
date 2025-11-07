@@ -1,22 +1,14 @@
-import { Animated } from "react-native";
-import { useSettingsStore } from "../../stores/settingsStore";
+import { router } from "expo-router";
+import { BounceButton } from "../ui/buttons/BounceButton";
 import { CorruptTittle } from "./CorruptTittle";
 
 export function CorruptHeader() {
-  const { theme } = useSettingsStore();
-
+  function handlePress() {
+    router.back();
+  }
   return (
-    <Animated.View
-      style={{
-        height: 88,
-        width: "100%",
-        justifyContent: "flex-end",
-        alignItems: "center",
-        paddingBottom: 10,
-        backgroundColor: theme.background,
-      }}
-    >
+    <BounceButton color="transparent" onPress={handlePress}>
       <CorruptTittle />
-    </Animated.View>
+    </BounceButton>
   );
 }

@@ -1,27 +1,14 @@
 import { Fragment } from "react";
-import { Stack, useRouter } from "expo-router";
+import { Stack, router } from "expo-router";
 import { TouchableOpacity } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { Ionicons } from "@expo/vector-icons";
 import { useSettingsStore } from "../stores/settingsStore";
-import { CorruptHeader } from "../components/corrupt/CorruptHeader";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { useTranslation } from "react-i18next";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
-function ModalBackButton() {
+export function ModalExitButton() {
   const { theme } = useSettingsStore();
-  const router = useRouter();
-
-  return (
-    <TouchableOpacity onPress={() => router.back()} style={{ padding: 10 }}>
-      <Ionicons name="chevron-back" size={24} color={theme.text} />
-    </TouchableOpacity>
-  );
-}
-
-function ModalExitButton() {
-  const { theme } = useSettingsStore();
-  const router = useRouter();
 
   return (
     <TouchableOpacity onPress={() => router.back()} style={{ padding: 10 }}>
@@ -30,94 +17,120 @@ function ModalExitButton() {
   );
 }
 
+export function ModalBackButton() {
+  const { theme } = useSettingsStore();
+
+  return (
+    <TouchableOpacity onPress={() => router.back()} style={{ padding: 10 }}>
+      <Ionicons name="chevron-back" size={24} color={theme.text} />
+    </TouchableOpacity>
+  );
+}
+
 export default function Layout() {
-  const { theme, themeName } = useSettingsStore();
-  const { t } = useTranslation();
+  const { theme, themeMode } = useSettingsStore();
+
+  const statusBarStyle = themeMode === "dark" ? "light" : "dark";
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <StatusBar
-        style={
-          ["dark", "preworkout", "Corrupted"].includes(themeName)
-            ? "light"
-            : "dark"
-        }
-      />
-      <Stack
-        screenOptions={{
-          headerStyle: { backgroundColor: theme.background },
-          headerTintColor: theme.text,
-          headerTitleStyle: { fontWeight: "bold" },
-        }}
-      >
-        {/* Home */}
-        <Stack.Screen name="index" options={{ headerShown: false }} />
-
-        {/* HomeBoard */}
-        <Stack.Screen
-          name="home-board"
-          options={{
-            presentation: "card",
-            header: () => <CorruptHeader />,
-          }}
-        />
-
-        {/* Settings */}
-        <Stack.Screen
-          name="settings"
-          options={{
-            presentation: "modal",
-            title: t("navigation.settings"),
-            headerStyle: { backgroundColor: theme.navBackground },
+      <SafeAreaProvider>
+        <StatusBar style={statusBarStyle} />
+        <Stack
+          screenOptions={{
+            headerBackButtonDisplayMode: "minimal",
             headerTintColor: theme.text,
-            headerTitleStyle: { fontWeight: "bold" },
-            headerLeft: () => <Fragment />,
-            headerRight: () => <ModalExitButton />,
+            headerBlurEffect: themeMode,
+            headerTransparent: true,
+            contentStyle: {
+              backgroundColor: theme.background,
+            },
           }}
-        />
+        >
+          {/* Home */}
+          <Stack.Screen name="index" />
 
-        {/* Profile */}
-        <Stack.Screen
-          name="profile"
-          options={{
-            presentation: "modal",
-            title: t("navigation.profile"),
-            headerStyle: { backgroundColor: theme.background },
-            headerTintColor: theme.text,
-            headerTitleStyle: { fontWeight: "bold" },
-            headerLeft: () => <Fragment />,
-            headerRight: () => <ModalExitButton />,
-          }}
-        />
+          {/* HomeBoard */}
+          <Stack.Screen
+            name="home-board"
+            options={{
+              presentation: "card",
+            }}
+          />
 
-        {/* Workout */}
-        {/* <Stack.Screen
-        name="workout"
-        options={{
-          title: "Workout",
-          animation: "slide_from_right",
-          headerLeft: () => <ModalBackButton />,
-        }}
-      /> */}
+          {/* Settings */}
+          <Stack.Screen
+            name="settings"
+            options={{
+              presentation: "modal",
+            }}
+          />
 
-        {/* WorkoutBoard */}
-        <Stack.Screen
-          name="workout-board"
-          options={{
-            presentation: "card",
-            header: () => <Fragment />,
-          }}
-        />
+          {/* Profile */}
+          <Stack.Screen
+            name="profile"
+            options={{
+              presentation: "modal",
+            }}
+          />
 
-        {/* All */}
-        <Stack.Screen
-          name="all"
-          options={{
-            presentation: "modal",
-            header: () => <Fragment />,
-          }}
-        />
-      </Stack>
+          {/* WorkoutBoard */}
+          <Stack.Screen
+            name="workout-board"
+            options={{
+              presentation: "card",
+            }}
+          />
+
+          {/* TemplateBoard */}
+          <Stack.Screen
+            name="template-board"
+            options={{
+              presentation: "card",
+            }}
+          />
+
+          {/* StartBoard */}
+          <Stack.Screen
+            name="start-board"
+            options={{
+              presentation: "card",
+            }}
+          />
+
+          {/* Add Exercise */}
+          <Stack.Screen
+            name="add-exercise"
+            options={{
+              presentation: "fullScreenModal",
+            }}
+          />
+
+          {/* Swap Exercise */}
+          <Stack.Screen
+            name="swap-exercise"
+            options={{
+              presentation: "fullScreenModal",
+            }}
+          />
+
+          {/* Session Recap */}
+          <Stack.Screen
+            name="recap/[sessionId]"
+            options={{
+              presentation: "fullScreenModal",
+            }}
+          />
+
+          {/* All */}
+          <Stack.Screen
+            name="all"
+            options={{
+              presentation: "modal",
+            }}
+          />
+        </Stack>
+      </SafeAreaProvider>
     </GestureHandlerRootView>
   );
 }

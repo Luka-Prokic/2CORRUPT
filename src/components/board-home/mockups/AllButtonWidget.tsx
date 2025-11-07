@@ -5,22 +5,20 @@ import { useTranslation } from "react-i18next";
 import { useWidgetUnit } from "../../../features/widgets/useWidgetUnit";
 import { hexToRGBA } from "../../../features/HEXtoRGB";
 import { BounceButton } from "../../ui/buttons/BounceButton";
-import { useRouter } from "expo-router";
+import { router } from "expo-router";
 
 export function AllButtonWidget() {
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
   const { halfWidget } = useWidgetUnit();
-  const router = useRouter();
 
   return (
     <BounceButton
       style={{
         width: halfWidget,
         height: halfWidget,
-        marginRight: 4,
-        backgroundColor: hexToRGBA(theme.fourthBackground, 0.2),
-        borderRadius: 24,
+        backgroundColor: hexToRGBA(theme.thirdBackground, 0.4),
+        borderRadius: 28,
         borderWidth: 1,
         borderColor: theme.border,
         alignItems: "center",

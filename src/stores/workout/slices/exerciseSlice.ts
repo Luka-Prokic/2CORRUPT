@@ -4,8 +4,11 @@ import {
   SessionExercise,
   Set,
   DropSet,
-  SessionLayoutItem,
+  ExerciseInfo,
+  ExerciseColumns,
 } from "../types";
+import { exercisesDefList } from "../../../config/constants/defaults";
+import { nanoid } from "nanoid/non-secure";
 
 /**
  * Exercise slice: manages the active exercise (single source of truth during editing)
@@ -16,13 +19,17 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
   get
 ) => ({
   activeExercise: null,
-
+  exercises: exercisesDefList,
   /**
    * Set the active exercise by finding it in the session layout and creating a copy
    */
   setActiveExercise: (exerciseId: string) => {
-    const { activeSession, syncActiveExerciseToSession } = get();
-    
+    const {
+      activeSession,
+      syncActiveExerciseToSession,
+      updateNavigationFlags,
+    } = get();
+
     // First, sync any existing active exercise before switching
     if (get().activeExercise) {
       syncActiveExerciseToSession();
@@ -30,34 +37,38 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
 
     if (!activeSession) return;
 
-    // Find the exercise in the session layout (could be top-level or nested)
-    let foundExercise: SessionExercise | null = null;
+    // Helper to deep-copy a SessionExercise safely
+    function copyExercise(ex: SessionExercise): SessionExercise {
+      return {
+        ...ex,
+        sets: ex.sets.map((s) => ({
+          ...s,
+          dropSets: s.dropSets ? s.dropSets.map((ds) => ({ ...ds })) : [],
+        })),
+        columns: ex.columns ? [...ex.columns] : ["Reps", "Weight"], // safe fallback
+        primaryMuscles: [...ex.primaryMuscles],
+        secondaryMuscles: ex.secondaryMuscles
+          ? [...ex.secondaryMuscles]
+          : undefined,
+        equipment: ex.equipment ? [...ex.equipment] : undefined,
+      };
+    }
 
+    // Find the exercise in the layout (top-level or nested)
+    let foundExercise: SessionExercise | null = null;
     for (const item of activeSession.layout) {
-      if (item.type === "exercise" && item.exercise.id === exerciseId) {
-        foundExercise = item.exercise;
+      if (item.id === exerciseId) {
+        foundExercise = item;
         break;
-      } else if (item.type === "superset" || item.type === "circuit") {
-        const nested = item.exercises.find((ex) => ex.id === exerciseId);
-        if (nested) {
-          foundExercise = nested;
-          break;
-        }
       }
     }
 
     if (foundExercise) {
-      // Create a deep copy to edit independently
-      set({
-        activeExercise: {
-          ...foundExercise,
-          sets: foundExercise.sets.map((s) => ({
-            ...s,
-            dropSets: s.dropSets ? [...s.dropSets] : undefined,
-          })),
-        },
-      });
+      set({ activeExercise: copyExercise(foundExercise) });
     }
+
+    // Update navigation flags for flowSlice
+    updateNavigationFlags();
   },
 
   /**
@@ -76,45 +87,22 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
     const { activeExercise, activeSession } = get();
     if (!activeExercise || !activeSession) return;
 
-    const layout = activeSession.layout.map((item: SessionLayoutItem) => {
-      if (item.type === "exercise" && item.exercise.id === activeExercise.id) {
+    const layout = activeSession.layout.map((item: SessionExercise) => {
+      if (item.id === activeExercise.id) {
         return {
-          ...item,
-          exercise: {
-            ...activeExercise,
-            sets: activeExercise.sets.map((s) => ({
-              ...s,
-              dropSets: s.dropSets ? [...s.dropSets] : undefined,
-            })),
-          },
+          ...activeExercise,
+          sets: activeExercise.sets.map((s) => ({
+            ...s,
+            dropSets: s.dropSets ? s.dropSets.map((ds) => ({ ...ds })) : [],
+          })),
         };
-      } else if (item.type === "superset" || item.type === "circuit") {
-        const hasExercise = item.exercises.some(
-          (ex) => ex.id === activeExercise.id
-        );
-        if (hasExercise) {
-          return {
-            ...item,
-            exercises: item.exercises.map((ex: SessionExercise) =>
-              ex.id === activeExercise.id
-                ? {
-                    ...activeExercise,
-                    sets: activeExercise.sets.map((s) => ({
-                      ...s,
-                      dropSets: s.dropSets ? [...s.dropSets] : undefined,
-                    })),
-                  }
-                : ex
-            ),
-          };
-        }
       }
       return item;
     });
 
-    set((state) => ({
-      activeSession: { ...state.activeSession!, layout },
-    }));
+    set({
+      activeSession: { ...activeSession, layout },
+    });
   },
 
   /**
@@ -124,13 +112,32 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
     const { activeExercise, syncActiveExerciseToSession } = get();
     if (!activeExercise) return;
 
-    set({
-      activeExercise: {
-        ...activeExercise,
-        ...updates,
-        id: activeExercise.id, // Preserve immutable id
-      },
-    });
+    // Merge updates
+    const updatedExercise = {
+      ...activeExercise,
+      ...updates,
+      id: activeExercise.id, // Preserve immutable id
+    };
+
+    // If the exercise has sets, clean up values for disabled columns
+    if (updatedExercise.sets && Array.isArray(updatedExercise.sets)) {
+      const activeCols = updatedExercise.columns || [];
+
+      updatedExercise.sets = updatedExercise.sets.map((set) => {
+        const newSet = { ...set };
+
+        // Remove data if column is not enabled
+        if (!activeCols.includes("Weight")) delete newSet.weight;
+        if (!activeCols.includes("Reps")) delete newSet.reps;
+        if (!activeCols.includes("RPE")) delete newSet.rpe;
+        if (!activeCols.includes("RIR")) delete newSet.rir;
+
+        return newSet;
+      });
+    }
+
+    // Apply updated exercise
+    set({ activeExercise: updatedExercise });
 
     // Auto-sync after update
     syncActiveExerciseToSession();
@@ -139,12 +146,15 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
   /**
    * Add a set to the active exercise (and auto-sync)
    */
-  addSetToActiveExercise: (reps: number | null = 0, weight: number | null = 0) => {
+  addSetToActiveExercise: (
+    reps: number | null = 0,
+    weight: number | null = 0
+  ) => {
     const { activeExercise, syncActiveExerciseToSession } = get();
     if (!activeExercise) return;
 
     const newSet: Set = {
-      id: `set-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+      id: `set-${nanoid()}`,
       reps,
       weight,
       isCompleted: false,
@@ -212,7 +222,7 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
     if (!activeExercise) return;
 
     const newDropSet: DropSet = {
-      id: `drop-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+      id: `drop-${nanoid()}`,
       reps,
       weight,
     };
@@ -250,9 +260,10 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
           s.id === setId
             ? {
                 ...s,
-                dropSets: s.dropSets?.map((ds) =>
-                  ds.id === dropSetId ? { ...ds, ...updates, id: ds.id } : ds
-                ),
+                dropSets:
+                  s.dropSets?.map((ds) =>
+                    ds.id === dropSetId ? { ...ds, ...updates, id: ds.id } : ds
+                  ),
               }
             : s
         ),
@@ -289,67 +300,59 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
   },
 
   /**
-   * Add a new exercise to the session layout
+   * Swap an exercise in the active exercise (and auto-sync)
    */
-  addExerciseToSession: (exercise: SessionExercise, afterItemId?: string) => {
-    const { activeSession } = get();
-    if (!activeSession) return;
+  swapExerciseInActiveExercise: (exerciseId: ExerciseInfo["id"]) => {
+    const { activeExercise, exercises, syncActiveExerciseToSession } = get();
+    if (!activeExercise) return;
 
-    const newExercise: SessionExercise = {
-      ...exercise,
-      id: exercise.id || Date.now().toString(),
-      sets: exercise.sets || [],
-    };
+    const exerciseInfo = exercises.find((e) => e.id === exerciseId);
+    if (!exerciseInfo) return;
 
-    const newLayoutItem: SessionLayoutItem = {
-      type: "exercise",
-      id: newExercise.id,
-      exercise: newExercise,
-    };
+    const isBodyweight = exerciseInfo.equipment?.includes("bodyweight");
 
-    const layout = activeSession.layout;
-    const insertIndex = afterItemId
-      ? layout.findIndex((item: SessionLayoutItem) => item.id === afterItemId) +
-        1
-      : layout.length;
+    // Define the new columns for this exercise type
+    const newColumns: ExerciseColumns[] = isBodyweight
+      ? ["Reps"]
+      : ["Reps", "Weight"];
 
-    const updatedLayout = [...layout];
-    updatedLayout.splice(insertIndex, 0, newLayoutItem);
+    // Start by mapping sets with conditional cleanup
+    const newSets = activeExercise.sets.map((set) => {
+      const newSet = {
+        ...set,
+        weight: isBodyweight ? null : set.weight,
+        dropSets: isBodyweight ? [] : set.dropSets,
+      };
 
-    set((state) => ({
-      activeSession: { ...state.activeSession!, layout: updatedLayout },
-    }));
-  },
+      // Clean up irrelevant columns dynamically
+      if (!newColumns.includes("Weight")) delete newSet.weight;
+      if (!newColumns.includes("Reps")) delete newSet.reps;
+      if (!newColumns.includes("RPE")) delete newSet.rpe;
+      if (!newColumns.includes("RIR")) delete newSet.rir;
 
-  /**
-   * Remove an item from the session layout
-   */
-  removeItemFromSession: (layoutItemId: string) => {
-    const { activeSession } = get();
-    if (!activeSession) return;
+      return newSet;
+    });
 
-    const layout = activeSession.layout.filter(
-      (i: SessionLayoutItem) => i.id !== layoutItemId
-    );
+    // Update the active exercise
+    set({
+      activeExercise: {
+        ...activeExercise,
+        exerciseInfoId: exerciseInfo.id,
+        name: exerciseInfo.defaultName,
+        prefix: undefined,
+        primaryMuscles: [...exerciseInfo.primaryMuscles],
+        secondaryMuscles: exerciseInfo.secondaryMuscles
+          ? [...exerciseInfo.secondaryMuscles]
+          : undefined,
+        equipment: exerciseInfo.equipment
+          ? [...exerciseInfo.equipment]
+          : undefined,
+        sets: newSets,
+        columns: newColumns,
+      },
+    });
 
-    set((state) => ({
-      activeSession: { ...state.activeSession!, layout },
-    }));
-  },
-
-  /**
-   * Reorder items in the session layout
-   */
-  reorderSessionItems: (fromIndex: number, toIndex: number) => {
-    const { activeSession } = get();
-    if (!activeSession) return;
-
-    const layout = [...activeSession.layout];
-    const [movedItem] = layout.splice(fromIndex, 1);
-    layout.splice(toIndex, 0, movedItem);
-
-    set((state) => ({
-      activeSession: { ...state.activeSession!, layout },
-    }));
+    // Sync after swap
+    syncActiveExerciseToSession();
   },
 });

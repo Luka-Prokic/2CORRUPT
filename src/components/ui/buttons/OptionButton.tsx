@@ -24,7 +24,7 @@ export function OptionButton({
   onPress,
   icon,
   width = "100%",
-  height,
+  height = 34,
   style,
   color,
   disabled,
@@ -52,8 +52,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     paddingHorizontal: 12,
-    minHeight: 34,
-    width: "100%",
   },
   title: {
     flex: 1,

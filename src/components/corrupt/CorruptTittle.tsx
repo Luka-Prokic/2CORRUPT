@@ -39,6 +39,9 @@ export function CorruptTittle({ fontSize = 28, style }: CorruptTittleProps) {
         textAlign: "center",
         ...(style as TextStyle),
       }}
+      numberOfLines={1}
+      adjustsFontSizeToFit={true}
+      minimumFontScale={0.5}
     >
       {t("app.corrupt")}
     </Animated.Text>

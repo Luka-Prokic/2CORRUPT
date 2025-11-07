@@ -12,15 +12,31 @@ export const createThemeSlice: StateCreator<
   ThemeSlice
 > = (set, get) => ({
   themeName: "light",
+  themeMode: "light",
   theme: Colors["light"],
 
   setTheme: (themeName: any) =>
-    set({ themeName, theme: Colors[themeName as keyof typeof Colors] }),
+    set({
+      themeName,
+      theme: Colors[themeName as keyof typeof Colors],
+      themeMode: ["Corrupted", "dark", "preworkout"].includes(themeName)
+        ? "dark"
+        : "light",
+    }),
 
   toggleTheme: () => {
     const currentIndex = themeOrder.indexOf(get().themeName);
     const nextIndex = (currentIndex + 1) % themeOrder.length;
     const newThemeName = themeOrder[nextIndex];
-    set({ themeName: newThemeName, theme: Colors[newThemeName] });
+    const newThemeMode = ["Corrupted", "dark", "preworkout"].includes(
+      newThemeName
+    )
+      ? "dark"
+      : "light";
+    set({
+      themeName: newThemeName,
+      theme: Colors[newThemeName],
+      themeMode: newThemeMode,
+    });
   },
 });

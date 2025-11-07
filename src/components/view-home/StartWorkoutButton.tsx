@@ -1,28 +1,37 @@
 import { useSettingsStore } from "../../stores/settingsStore";
-import {StrobeBlur} from "../ui/misc/StrobeBlur";
+import { StrobeBlur } from "../ui/misc/StrobeBlur";
 import { Text } from "react-native";
-import {hexToRGBA} from "../../features/HEXtoRGB";
-import {BounceButton} from "../ui/buttons/BounceButton";
+import { hexToRGBA } from "../../features/HEXtoRGB";
+import { BounceButton } from "../ui/buttons/BounceButton";
 import { HEIGHT } from "../../features/Dimensions";
 import { useTranslation } from "react-i18next";
+import { useUIStore } from "../../stores/ui";
+import { useWorkoutStore } from "../../stores/workout";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-interface StartWorkoutButtonProps {
-  onPress?: () => void;
-}
-
-export function StartWorkoutButton({
-  onPress,
-}: StartWorkoutButtonProps) {
+export function StartWorkoutButton() {
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
+  const { setTypeOfView } = useUIStore();
+  const { activeSession } = useWorkoutStore();
+  const isItActive = activeSession !== null;
+  const insets = useSafeAreaInsets();
+  function handleStartWorkout() {
+    if (isItActive) {
+      setTypeOfView("workout");
+    } else {
+      setTypeOfView("start");
+    }
+  }
+
   return (
     <BounceButton
-      onPress={onPress}
+      onPress={handleStartWorkout}
       style={{
         height: 64,
         borderRadius: 100,
         marginHorizontal: 16,
-        bottom: HEIGHT / 2 - 64,
+        bottom: HEIGHT / 2 - insets.bottom,
         position: "absolute",
         left: 0,
         right: 0,
@@ -36,7 +45,7 @@ export function StartWorkoutButton({
         duration={5000}
       >
         <Text style={{ fontSize: 24, fontWeight: "bold", color: theme.text }}>
-          {t("app.start-workout")}
+          {isItActive ? t("app.continue-workout") : t("app.start-workout")}
         </Text>
       </StrobeBlur>
     </BounceButton>

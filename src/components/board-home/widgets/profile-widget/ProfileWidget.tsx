@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import { useSettingsStore } from "../../../../stores/settingsStore";
-import { ProfileButton } from "../../../profile-settings/ProfileButton";
-import { SettingsButton } from "../../../app-settings/SettingsButton";
+import { ProfileButton } from "../../../settings-profile/ProfileButton";
+import { SettingsButton } from "../../../settings-app/SettingsButton";
 import { hexToRGBA } from "../../../../features/HEXtoRGB";
 import { useWidgetUnit } from "../../../../features/widgets/useWidgetUnit";
 import { useUserStore } from "../../../../stores/userStore";
