@@ -3,19 +3,23 @@ import { SplitPlan, useWorkoutStore } from "../../../stores/workout";
 import { useSettingsStore } from "../../../stores/settings";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 import { Ionicons } from "@expo/vector-icons";
-import { useState } from "react";
 import { hexToRGBA } from "../../../features/HEXtoRGB";
+import { useTranslation } from "react-i18next";
 
 interface AddSplitDayCardProps {
   split: SplitPlan;
   style?: ViewStyle | ViewStyle[];
+  isGridView?: boolean;
 }
 
-export function AddSplitDayCard({ split, style }: AddSplitDayCardProps) {
+export function AddSplitDayCard({
+  split,
+  style,
+  isGridView,
+}: AddSplitDayCardProps) {
   const { theme } = useSettingsStore();
   const { addDayToSplit } = useWorkoutStore();
-  const [isRest, setIsRest] = useState<boolean>(false);
-
+  const { t } = useTranslation();
   function handleAddDay() {
     addDayToSplit(split.id);
   }
@@ -25,7 +29,6 @@ export function AddSplitDayCard({ split, style }: AddSplitDayCardProps) {
       entering={FadeIn}
       exiting={FadeOut}
       style={{
-        padding: 16,
         backgroundColor: hexToRGBA(theme.thirdBackground, 0.5),
         borderColor: theme.border,
         borderRadius: 32,
@@ -33,7 +36,8 @@ export function AddSplitDayCard({ split, style }: AddSplitDayCardProps) {
         ...style,
       }}
     >
-      <View
+      <TouchableOpacity
+        onPress={handleAddDay}
         style={{
           flex: 1,
           alignItems: "center",
@@ -43,36 +47,29 @@ export function AddSplitDayCard({ split, style }: AddSplitDayCardProps) {
           left: 0,
           right: 0,
           bottom: 0,
+          zIndex: 1,
         }}
       >
-        <Ionicons name="add" size={64} color={theme.text} />
-      </View>
-      <TouchableOpacity
-        style={{ flex: 1, alignItems: "center" }}
-        onPress={handleAddDay}
+        <Ionicons name="add" size={64} color={theme.tint} />
+      </TouchableOpacity>
+
+      <View
+        style={{
+          height: isGridView ? 44 : 64,
+          paddingHorizontal: 16,
+          justifyContent: "center",
+        }}
       >
-        {/* Header */}
-        <View
+        <Text
           style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-            height: 34,
+            fontSize: 22,
+            fontWeight: "bold",
+            color: theme.info,
           }}
         >
-          <Text
-            style={{
-              fontSize: 18,
-              fontWeight: "bold",
-              flex: 1,
-              color: theme.handle,
-            }}
-            numberOfLines={1}
-          >
-            Day {(split.split.length || 0) + 1}
-          </Text>
-        </View>
-      </TouchableOpacity>
+          {t("splits.day")} {split.split.length + 1}
+        </Text>
+      </View>
     </Animated.View>
   );
 }

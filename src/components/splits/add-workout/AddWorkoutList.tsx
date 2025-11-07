@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { FlatList } from "react-native";
 import {
-  SplitPlanWorkout,
   WorkoutTemplate,
 } from "../../../stores/workout/types";
 import { EmptyFooter } from "../../ui/containers/EmptyFooter";
-import { AddSplitWorkoutCard } from "../cards/AddSplitWorkoutCard";
+import { AddSplitWorkoutCard } from "./AddSplitWorkoutCard";
 
 const PAGE_SIZE = 20;
 
@@ -13,12 +12,14 @@ interface AddSplitWorkoutListProps {
   filteredTemplates: WorkoutTemplate[];
   selectedTemplates: WorkoutTemplate[];
   setSelectedTemplates: (templates: WorkoutTemplate[]) => void;
+  maxSelection?: number;
 }
 
 export function AddSplitWorkoutList({
   filteredTemplates,
   selectedTemplates,
   setSelectedTemplates,
+  maxSelection,
 }: AddSplitWorkoutListProps) {
   const [page, setPage] = useState(1);
 
@@ -34,7 +35,12 @@ export function AddSplitWorkoutList({
   }
 
   function handleSelectWorkout(template: WorkoutTemplate) {
-    setSelectedTemplates([...selectedTemplates, template]);
+    if (maxSelection && selectedTemplates.length >= maxSelection) {
+      // If max selection reached, replace the first selected template
+      setSelectedTemplates([template]);
+    } else {
+      setSelectedTemplates([...selectedTemplates, template]);
+    }
   }
 
   function handleUnselectTemplate(template: WorkoutTemplate) {

@@ -1,6 +1,6 @@
 import { SplitPlan, useWorkoutStore } from "../../../stores/workout";
 import { Text, View, Switch } from "react-native";
-import { useSettingsStore } from "../../../stores/settingsStore";
+import { useSettingsStore } from "../../../stores/settings";
 import { useWidgetUnit } from "../../../features/widgets/useWidgetUnit";
 import { router } from "expo-router";
 import { StrobeButton } from "../../ui/buttons/StrobeButton";
@@ -51,16 +51,27 @@ export function SplitCard({ split }: SplitCardProps) {
       onPress={handlePress}
       strobeDisabled={!isActive}
     >
-      <Text
-        style={{
-          fontSize: 28,
-          fontWeight: "bold",
-          color: theme.text,
-        }}
-        numberOfLines={2}
-      >
-        {split.name}
-      </Text>
+      <View style={{ alignItems: "center" }}>
+        <Text
+          style={{
+            fontSize: 28,
+            fontWeight: "bold",
+            color: theme.text,
+          }}
+          numberOfLines={2}
+        >
+          {split.name}
+        </Text>
+        <Text
+          style={{
+            fontSize: 13,
+            color: theme.grayText,
+            marginTop: 4,
+          }}
+        >
+          {split.activeLength} active days out of {split.splitLength} total
+        </Text>
+      </View>
 
       <Switch
         value={isActive}

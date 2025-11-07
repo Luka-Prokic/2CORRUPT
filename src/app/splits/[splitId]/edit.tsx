@@ -5,7 +5,7 @@ import { useSettingsStore } from "../../../stores/settings";
 import { useWorkoutStore } from "../../../stores/workout";
 import { TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { SplitDayList } from "../../../components/splits/SplitDayList";
+import { SplitDayList } from "../../../components/splits/split-day/SplitDayList";
 import { SplitHeader } from "../../../components/splits/SplitHeader";
 import { ScreenView } from "../../../components/ui/containers/ScreenView";
 import { SplitFooter } from "../../../components/splits/SplitFooter";

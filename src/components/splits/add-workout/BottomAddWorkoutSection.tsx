@@ -18,19 +18,33 @@ export function BottomAddWorkoutSection({
   selectedTemplates,
 }: BottomAddWorkoutSectionProps) {
   const { theme } = useSettingsStore();
-  const { addWorkoutToDay } = useWorkoutStore();
+  const { addWorkoutToDay, swapWorkoutTemplate } = useWorkoutStore();
   const { t } = useTranslation();
-  const { splitId, dayIndex } = useLocalSearchParams<{
+  const { splitId, dayIndex, workoutId, mode } = useLocalSearchParams<{
     splitId: string;
     dayIndex: string;
+    workoutId?: string;
+    mode?: string;
   }>();
 
   const animatedOpacity = useRef(new Animated.Value(0)).current;
+  const isSwapMode = mode === "swap" && workoutId;
 
   function handleAddExercise() {
-    selectedTemplates.forEach((template: WorkoutTemplate) => {
-      addWorkoutToDay(splitId, parseInt(dayIndex), template.id);
-    });
+    if (isSwapMode && workoutId && selectedTemplates.length > 0) {
+      // Swap mode: replace the workout's template
+      swapWorkoutTemplate(
+        splitId,
+        parseInt(dayIndex),
+        workoutId,
+        selectedTemplates[0].id
+      );
+    } else {
+      // Add mode: add new workouts
+      selectedTemplates.forEach((template: WorkoutTemplate) => {
+        addWorkoutToDay(splitId, parseInt(dayIndex), template.id);
+      });
+    }
     router.back();
   }
 
@@ -86,7 +100,9 @@ export function BottomAddWorkoutSection({
               fontWeight: "bold",
             }}
           >
-            {t("add-exercise.add")} {selectedTemplates.length.toString()}
+            {isSwapMode
+              ? t("add-exercise.swap")
+              : `${t("add-exercise.add")} ${selectedTemplates.length.toString()}`}
           </Text>
         </IButton>
       </LinearGradient>

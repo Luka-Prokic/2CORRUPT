@@ -46,6 +46,16 @@ export function NoSplitCard() {
       </Text>
       <Text
         style={{
+          fontSize: 13,
+          color: textColor,
+          opacity: 0.7,
+          marginTop: 4,
+        }}
+      >
+        Full-body split • 3 active days per week
+      </Text>
+      <Text
+        style={{
           position: "absolute",
           bottom: 16,
           right: 16,

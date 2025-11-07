@@ -1,10 +1,10 @@
 import React, { useMemo } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useSettingsStore } from "../../../stores/settingsStore";
+import { useSettingsStore } from "../../../stores/settings";
 import { hexToRGBA } from "../../../features/HEXtoRGB";
 import { WorkoutTemplate } from "../../../stores/workout/types";
-import { StrobeButton } from "../../../components/ui/buttons/StrobeButton";
+import { StrobeButton } from "../../ui/buttons/StrobeButton";
 
 interface AddSplitWorkoutCardProps {
   template: WorkoutTemplate;

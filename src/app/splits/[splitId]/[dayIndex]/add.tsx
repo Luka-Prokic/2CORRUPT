@@ -1,5 +1,5 @@
 import { Fragment, useState } from "react";
-import { Stack } from "expo-router";
+import { Stack, useLocalSearchParams } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { ScreenContent } from "../../../../components/ui/utils/ScreenContent";
 import { AddSplitWorkoutList } from "../../../../components/splits/add-workout/AddWorkoutList";
@@ -9,6 +9,11 @@ import { BottomAddWorkoutSection } from "../../../../components/splits/add-worko
 
 export default function AddPlannedWorkoutScreen() {
   const { t } = useTranslation();
+  const { workoutId, mode } = useLocalSearchParams<{
+    workoutId?: string;
+    mode?: string;
+  }>();
+  const isSwapMode = mode === "swap" && workoutId;
   const [selectedTemplates, setSelectedTemplates] = useState<WorkoutTemplate[]>(
     []
   );
@@ -35,6 +40,7 @@ export default function AddPlannedWorkoutScreen() {
           filteredTemplates={filteredTemplates}
           selectedTemplates={selectedTemplates}
           setSelectedTemplates={setSelectedTemplates}
+          maxSelection={isSwapMode ? 1 : undefined}
         />
       </ScreenContent>
     </Fragment>

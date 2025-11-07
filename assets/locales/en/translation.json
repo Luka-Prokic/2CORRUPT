@@ -353,6 +353,8 @@
     "active-session-warning": "Active workout in progress. Finish it or cancel it before starting a new session or editing templates."
   },
   "splits": {
+    "day": "Day",
+    "edit-day": "Edit Day",
     "title": "Splits",
     "total-days": "Total Days",
     "active-days": "Active Days",

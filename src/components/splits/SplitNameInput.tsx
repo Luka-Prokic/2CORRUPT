@@ -8,8 +8,8 @@ import {
   TextInputProps,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useSettingsStore } from "../../stores/settingsStore";
-import { useWorkoutStore } from "../../stores/workoutStore";
+import { useSettingsStore } from "../../stores/settings";
+import { useWorkoutStore } from "../../stores/workout";
 import { useTranslation } from "react-i18next";
 import { SplitPlan } from "../../stores/workout";
 

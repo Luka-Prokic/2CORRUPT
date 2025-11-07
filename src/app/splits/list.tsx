@@ -6,8 +6,8 @@ import { useWorkoutStore } from "../../stores/workout";
 import { BackgroundText } from "../../components/ui/misc/BackgroundText";
 import { CreateSplitButton } from "../../components/splits/header/CreateSplitButton";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { SplitCard } from "../../components/splits/cards/SplitCard";
-import { NoSplitCard } from "../../components/splits/cards/NoSplitCard";
+import { SplitCard } from "../../components/splits/edit-split/SplitCard";
+import { NoSplitCard } from "../../components/splits/edit-split/NoSplitCard";
 import { useTranslation } from "react-i18next";
 import { useWidgetUnit } from "../../features/widgets/useWidgetUnit";
 

@@ -178,6 +178,71 @@ export const createSplitPlanSlice: StateCreator<
     }));
   },
 
+  updateWorkoutInDay: (planId, dayIndex, workoutId, updates) => {
+    set((state) => ({
+      splitPlans: state.splitPlans.map((p) => {
+        if (p.id !== planId) return p;
+        const split = [...p.split];
+        if (!split[dayIndex]) return p;
+
+        const workouts = split[dayIndex].workouts.map((w) => {
+          if (w.id === workoutId) {
+            return {
+              ...w,
+              ...updates,
+              updatedAt: new Date().toISOString(),
+            };
+          }
+          return w;
+        });
+
+        split[dayIndex] = { ...split[dayIndex], workouts };
+        return {
+          ...p,
+          split,
+          activeLength: split.filter((d) => !d.isRest).length,
+          splitLength: split.length,
+          updatedAt: new Date().toISOString(),
+        };
+      }),
+    }));
+  },
+
+  swapWorkoutTemplate: (planId, dayIndex, workoutId, newTemplateId) => {
+    set((state) => ({
+      splitPlans: state.splitPlans.map((p) => {
+        if (p.id !== planId) return p;
+        const split = [...p.split];
+        if (!split[dayIndex]) return p;
+
+        const workouts = [...split[dayIndex].workouts];
+        const workoutIndex = workouts.findIndex((w) => w.id === workoutId);
+        if (workoutIndex === -1) return p;
+
+        const oldWorkout = workouts[workoutIndex];
+        const scheduledAt = oldWorkout.scheduledAt;
+
+        // Remove old workout
+        workouts.splice(workoutIndex, 1);
+
+        // Create new workout with new template, preserving scheduledAt
+        const newWorkout = createSplitPlanWorkout(newTemplateId, scheduledAt);
+
+        // Insert new workout at the same position
+        workouts.splice(workoutIndex, 0, newWorkout);
+
+        split[dayIndex] = { ...split[dayIndex], workouts };
+        return {
+          ...p,
+          split,
+          activeLength: split.filter((d) => !d.isRest).length,
+          splitLength: split.length,
+          updatedAt: new Date().toISOString(),
+        };
+      }),
+    }));
+  },
+
   reorderWorkoutsInDay: (planId, dayIndex, newOrder) => {
     set((state) => ({
       splitPlans: state.splitPlans.map((p) => {

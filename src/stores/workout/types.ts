@@ -95,6 +95,7 @@ export interface SplitPlanWorkout {
   readonly templateId: string;
   readonly createdAt: IsoDateString;
   readonly updatedAt: IsoDateString;
+  scheduledAt?: IsoDateString; // ISO date string for scheduled time
 }
 export interface SplitPlanDay {
   readonly id: string;
@@ -147,6 +148,18 @@ export interface SplitPlanSlice {
     planId: string,
     dayIndex: number,
     templateId: string
+  ) => void;
+  updateWorkoutInDay: (
+    planId: string,
+    dayIndex: number,
+    workoutId: string,
+    updates: Partial<SplitPlanWorkout>
+  ) => void;
+  swapWorkoutTemplate: (
+    planId: string,
+    dayIndex: number,
+    workoutId: string,
+    newTemplateId: string
   ) => void;
   reorderWorkoutsInDay: (
     planId: string,

@@ -1,7 +1,7 @@
 import { Keyboard, TextInput } from "react-native";
-import { useSettingsStore } from "../../stores/settingsStore";
+import { useSettingsStore } from "../../stores/settings";
 import { useState } from "react";
-import { useWorkoutStore } from "../../stores/workout/useWorkoutStore";
+import { useWorkoutStore } from "../../stores/workout";
 import { useTranslation } from "react-i18next";
 import { SplitPlan } from "../../stores/workout/types";
 import { useWidgetUnit } from "../../features/widgets/useWidgetUnit";

@@ -335,6 +335,8 @@
     "active-session-warning": "Trening je u toku. Završite ga pre nego što započnete novi ili uređujete šablone."
   },
   "splits": {
+    "day": "Dan",
+    "edit-day": "Uredi Dan",
     "title": "Splits",
     "total-days": "Ukupno dana",
     "active-days": "Aktivnih dana",

@@ -1,9 +1,9 @@
 import { FlatList } from "react-native";
-import { SplitPlan, SplitPlanDay } from "../../stores/workout";
-import { AddSplitDayCard } from "./cards/AddSplitDayCard";
-import { useWidgetUnit } from "../../features/widgets/useWidgetUnit";
-import { SplitDayCard } from "./cards/SplitDayCard";
-import { CardSlider } from "../ui/CardSlider";
+import { SplitPlan, SplitPlanDay } from "../../../stores/workout";
+import { AddSplitDayCard } from "./AddSplitDayCard";
+import { useWidgetUnit } from "../../../features/widgets/useWidgetUnit";
+import { SplitDayCard } from "./SplitDayCard";
+import { CardSlider } from "../../ui/CardSlider";
 
 interface SplitDayListProps {
   split: SplitPlan;
@@ -27,6 +27,7 @@ export function SplitDayList({ split, isGridView }: SplitDayListProps) {
               <AddSplitDayCard
                 split={split}
                 style={{ height: widgetUnit, width: widgetUnit }}
+                isGridView={isGridView}
               />
             );
           }
@@ -62,6 +63,7 @@ export function SplitDayList({ split, isGridView }: SplitDayListProps) {
           day={item}
           index={index}
           style={{ height: fullWidth, width: fullWidth }}
+          isGridView={isGridView}
         />
       )}
       cardWidth={fullWidth}
