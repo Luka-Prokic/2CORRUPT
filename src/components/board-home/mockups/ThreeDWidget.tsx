@@ -1,9 +1,8 @@
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { Canvas } from "@react-three/fiber";
 import { LinearGradient } from "expo-linear-gradient";
 import { BlurView } from "expo-blur";
 import { useSettingsStore } from "../../../stores/settingsStore";
-import { WidgetContainer } from "./WidgetContainer";
 import { hexToRGBA } from "../../../features/HEXtoRGB";
 import { BounceButton } from "../../ui/buttons/BounceButton";
 
@@ -39,20 +38,15 @@ export function ThreeDWidget({
   const { theme } = useSettingsStore();
 
   return (
-    <WidgetContainer
+    <View
       style={[
         {
           width,
           height,
           shadowColor: theme.shadow,
           elevation: elevation,
-          backgroundColor: "transparent",
-          borderColor: "transparent",
-          padding: 0,
-          overflow: "visible",
         },
       ]}
-      variant="inset"
     >
       <LinearGradient
         colors={[
@@ -143,7 +137,7 @@ export function ThreeDWidget({
           </BlurView>
         </BounceButton>
       </LinearGradient>
-    </WidgetContainer>
+    </View>
   );
 }
 

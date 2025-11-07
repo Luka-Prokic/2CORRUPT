@@ -2,7 +2,6 @@ import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ProfileWidget } from "./widgets/profile-widget/ProfileWidget";
 import { AwardsWidget } from "./mockups/AwardsWidget";
-import { BlankWidget } from "./mockups/BlankWidget";
 import { WIDTH } from "../../features/Dimensions";
 import { hexToRGBA } from "../../features/HEXtoRGB";
 import { BackButtonWidget } from "./widgets/BackButtonWidget";
@@ -52,7 +51,7 @@ export function WidgetGrid() {
 
       <SplitsWidget />
 
-      <BlankWidget
+      <View
         style={{
           width: WIDGET_SIZE * 2 + 8,
           height: WIDGET_SIZE,

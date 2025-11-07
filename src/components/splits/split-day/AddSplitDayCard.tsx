@@ -5,6 +5,7 @@ import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 import { Ionicons } from "@expo/vector-icons";
 import { hexToRGBA } from "../../../features/HEXtoRGB";
 import { useTranslation } from "react-i18next";
+import { BlurView } from "expo-blur";
 
 interface AddSplitDayCardProps {
   split: SplitPlan;
@@ -32,6 +33,7 @@ export function AddSplitDayCard({
         backgroundColor: hexToRGBA(theme.thirdBackground, 0.5),
         borderColor: theme.border,
         borderRadius: 32,
+        overflow: "hidden",
         borderWidth: 1,
         ...style,
       }}
@@ -42,22 +44,21 @@ export function AddSplitDayCard({
           flex: 1,
           alignItems: "center",
           justifyContent: "center",
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
           zIndex: 1,
         }}
       >
         <Ionicons name="add" size={64} color={theme.tint} />
       </TouchableOpacity>
 
-      <View
+      <BlurView
         style={{
           height: isGridView ? 44 : 64,
           paddingHorizontal: 16,
           justifyContent: "center",
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
         }}
       >
         <Text
@@ -69,7 +70,18 @@ export function AddSplitDayCard({
         >
           {t("splits.day")} {split.split.length + 1}
         </Text>
-      </View>
+      </BlurView>
+      <BlurView
+        style={{
+          height: isGridView ? 44 : 64,
+          paddingHorizontal: 16,
+          justifyContent: "center",
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          right: 0,
+        }}
+      />
     </Animated.View>
   );
 }

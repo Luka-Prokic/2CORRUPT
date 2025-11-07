@@ -1,9 +1,19 @@
-import { SplitPlan, useWorkoutStore } from "../../../stores/workout";
-import { Text, View, Switch } from "react-native";
+import { Fragment, useState } from "react";
+import { Text, Switch, View, TouchableOpacity } from "react-native";
+import Animated, { FadeOut, FadeIn } from "react-native-reanimated";
 import { useSettingsStore } from "../../../stores/settings";
 import { useWidgetUnit } from "../../../features/widgets/useWidgetUnit";
-import { router } from "expo-router";
+import { useWorkoutStore } from "../../../stores/workout";
 import { StrobeButton } from "../../ui/buttons/StrobeButton";
+import { router } from "expo-router";
+import type { SplitPlan } from "../../../stores/workout";
+import { CenterCardSlider } from "../../ui/CenterCardSlider";
+import { useTranslation } from "react-i18next";
+import { StartDayCard } from "./StartDayCard";
+import { EmptyDayCard } from "./EmpyDayCad";
+import { DescriptionText } from "../../ui/text/DescriptionText";
+import { InfoText } from "../../ui/text/InfoText";
+
 interface SplitCardProps {
   split: SplitPlan;
 }
@@ -11,16 +21,22 @@ interface SplitCardProps {
 export function SplitCard({ split }: SplitCardProps) {
   const { theme } = useSettingsStore();
   const { widgetUnit, fullWidth } = useWidgetUnit();
+  const { t } = useTranslation();
   const { activeSplitPlan, setActiveSplitPlan, endActiveSplitPlan } =
     useWorkoutStore();
 
-  const isActive = activeSplitPlan?.id === split.id;
+  const [selectingStartDay, setSelectingStartDay] = useState(false);
+
+  const isActive = activeSplitPlan?.plan.id === split.id;
+  const activeStartDay = activeSplitPlan?.startDay ?? 0;
 
   const toggleActive = () => {
     if (isActive) {
-      endActiveSplitPlan(); // sets "no-split" as active
+      endActiveSplitPlan();
+      setSelectingStartDay(false);
     } else {
-      setActiveSplitPlan(split);
+      setActiveSplitPlan(split, 0); // default startDay = 0
+      setSelectingStartDay(true);
     }
   };
 
@@ -31,27 +47,87 @@ export function SplitCard({ split }: SplitCardProps) {
     });
   }
 
-  return (
-    <StrobeButton
-      style={{
-        height: widgetUnit,
-        width: fullWidth,
-        backgroundColor: isActive
-          ? theme.thirdBackground
-          : theme.secondaryBackground,
-        borderRadius: 32,
-        borderColor: theme.border,
-        borderWidth: 1,
-      }}
-      contentContainerStyle={{
-        justifyContent: "center",
-        alignItems: "center",
-        padding: 16,
-      }}
-      onPress={handlePress}
-      strobeDisabled={!isActive}
-    >
-      <View style={{ alignItems: "center" }}>
+  function content() {
+    if (selectingStartDay && isActive) {
+      return (
+        <Fragment>
+          <CenterCardSlider
+            data={split.split}
+            card={({ item, index }) => (
+              <StartDayCard
+                day={item}
+                dayIndex={index}
+                width={fullWidth / 3}
+                height={fullWidth / 3}
+                setSelectingStartDay={setSelectingStartDay}
+              />
+            )}
+            emptyCard={
+              <EmptyDayCard
+                splitId={split.id}
+                width={fullWidth / 3}
+                height={fullWidth / 3}
+              />
+            }
+            cardWidth={fullWidth / 3}
+            cardHeight={fullWidth / 3}
+            styleSlider={{
+              width: fullWidth,
+              height: fullWidth / 3,
+              marginTop: 16,
+            }}
+            hideDots
+            maxDotsShown={split.split.length}
+          />
+          <View
+            style={{
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <InfoText
+              text={
+                split.split.length > 0
+                  ? t("splits.choose-starting-day")
+                  : t("splits.add-days-to-split")
+              }
+            />
+          </View>
+        </Fragment>
+      );
+    }
+
+    return (
+      <Animated.View
+        entering={FadeIn}
+        exiting={FadeOut}
+        style={{
+          width: fullWidth,
+          height: widgetUnit,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        {isActive && (
+          <TouchableOpacity
+            onPress={() => setSelectingStartDay(true)}
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              height: 64,
+              padding: 16,
+              justifyContent: "center",
+            }}
+          >
+            <Text
+              style={{ color: theme.text, fontWeight: "600", fontSize: 18 }}
+            >
+              ★ {`${t("splits.day")} ${activeStartDay + 1}`}
+            </Text>
+          </TouchableOpacity>
+        )}
         <Text
           style={{
             fontSize: 28,
@@ -62,27 +138,62 @@ export function SplitCard({ split }: SplitCardProps) {
         >
           {split.name}
         </Text>
-        <Text
-          style={{
-            fontSize: 13,
-            color: theme.grayText,
-            marginTop: 4,
-          }}
-        >
-          {split.activeLength} active days out of {split.splitLength} total
-        </Text>
-      </View>
+        {split.description && (
+          <DescriptionText
+            text={split.description}
+            short
+            style={{ color: isActive ? theme.text : theme.handle }}
+          />
+        )}
+      </Animated.View>
+    );
+  }
 
-      <Switch
-        value={isActive}
-        onValueChange={toggleActive}
-        trackColor={{
-          false: theme.handle,
-          true: theme.tint,
+  return (
+    <StrobeButton
+      style={{
+        height: widgetUnit,
+        width: fullWidth,
+        backgroundColor:
+          isActive && !selectingStartDay
+            ? theme.thirdBackground
+            : theme.secondaryBackground,
+        borderRadius: 32,
+        borderColor:
+          isActive && !selectingStartDay ? theme.thirdBackground : theme.border,
+        borderWidth: 1,
+      }}
+      onPress={handlePress}
+      strobeDisabled={!isActive || selectingStartDay}
+    >
+      {content()}
+      <View
+        style={{
+          position: "absolute",
+          top: 0,
+          right: 0,
+          height: 64,
+          padding: 16,
+          justifyContent: "center",
         }}
-        thumbColor={theme.background}
-        style={{ position: "absolute", top: 16, right: 16 }}
-      />
+      >
+        <Switch
+          value={isActive}
+          onValueChange={toggleActive}
+          trackColor={{
+            false: theme.handle,
+            true: theme.tint,
+          }}
+          thumbColor={theme.background}
+          style={{
+            shadowColor: theme.shadow,
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: isActive ? 0.1 : 0,
+            shadowRadius: isActive ? 8 : 0,
+            elevation: isActive ? 4 : 0,
+          }}
+        />
+      </View>
     </StrobeButton>
   );
 }

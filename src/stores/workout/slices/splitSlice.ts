@@ -8,6 +8,7 @@ import {
   IsoDateString,
   SplitPlanDay,
   SplitPlanWorkout,
+  ActiveSplitPlanState,
 } from "../types";
 
 /**
@@ -24,9 +25,10 @@ function createSplitPlanWorkout(
     createdAt: now,
     updatedAt: now,
     ...(scheduledAt ? { scheduledAt } : {}),
-  } as unknown as SplitPlanWorkout;
+  };
 }
 
+// Default empty split
 export const NoSplit: SplitPlan = {
   id: "no-split",
   name: "No Split",
@@ -40,10 +42,12 @@ export const NoSplit: SplitPlan = {
   activeLength: 5,
 };
 
+// Default history entry for NoSplit
 export const ActiveNoSplitHistoryEntry: SplitPlanHistoryEntry = {
   id: "no-split-history",
   plan: NoSplit,
   startTime: new Date().toISOString() as IsoDateString,
+  startDay: 0,
   endTime: undefined,
 };
 
@@ -54,9 +58,14 @@ export const createSplitPlanSlice: StateCreator<
   SplitPlanSlice
 > = (set, get) => ({
   splitPlans: [],
-  activeSplitPlan: NoSplit,
+  activeSplitPlan: {
+    plan: NoSplit,
+    startDay: 0,
+    startTime: new Date().toISOString(),
+  },
   historySplitPlan: [ActiveNoSplitHistoryEntry],
 
+  // ----------------- CRUD -----------------
   createSplitPlan: (plan?: Partial<SplitPlan>) => {
     const { splitPlans } = get();
     const newSplit: SplitPlanDay[] = (plan?.split || []).map((d) => ({
@@ -95,11 +104,11 @@ export const createSplitPlanSlice: StateCreator<
     set((state) => ({
       splitPlans: state.splitPlans.map((p) => {
         if (p.id !== planId) return p;
-        const updated = {
+        const updated: SplitPlan = {
           ...p,
           [field]: value,
           updatedAt: new Date().toISOString(),
-        } as SplitPlan;
+        };
         updated.activeLength = updated.split.filter((d) => !d.isRest).length;
         updated.splitLength = updated.split.length;
         return updated;
@@ -110,17 +119,15 @@ export const createSplitPlanSlice: StateCreator<
   deleteSplitPlan: (planId: string) => {
     set((state) => ({
       activeSplitPlan:
-        state.activeSplitPlan.id === planId ? NoSplit : state.activeSplitPlan,
+        state.activeSplitPlan?.plan.id === planId
+          ? { plan: NoSplit, startDay: 0, startTime: new Date().toISOString() }
+          : state.activeSplitPlan,
       splitPlans: state.splitPlans.filter((p) => p.id !== planId),
     }));
   },
 
-  addWorkoutToDay: (
-    planId: string,
-    dayIndex: number,
-    templateId: string,
-    scheduledAt?: IsoDateString | null
-  ) => {
+  // ----------------- Workout / Day Management -----------------
+  addWorkoutToDay: (planId, dayIndex, templateId) => {
     set((state) => ({
       splitPlans: state.splitPlans.map((p) => {
         if (p.id !== planId) return p;
@@ -131,10 +138,12 @@ export const createSplitPlanSlice: StateCreator<
             workouts: [],
             isRest: false,
           };
-        const newWorkout = createSplitPlanWorkout(templateId, scheduledAt);
         split[dayIndex] = {
           ...split[dayIndex],
-          workouts: [...split[dayIndex].workouts, newWorkout],
+          workouts: [
+            ...split[dayIndex].workouts,
+            createSplitPlanWorkout(templateId),
+          ],
         };
         return {
           ...p,
@@ -147,26 +156,18 @@ export const createSplitPlanSlice: StateCreator<
     }));
   },
 
-  removeWorkoutFromDay: (planId, dayIndex, workoutIdOrTemplateId) => {
+  removeWorkoutFromDay: (planId, dayIndex, templateId) => {
     set((state) => ({
       splitPlans: state.splitPlans.map((p) => {
         if (p.id !== planId) return p;
         const split = [...p.split];
         if (!split[dayIndex]) return p;
-
-        const workouts = [...split[dayIndex].workouts];
-        const byIdIndex = workouts.findIndex(
-          (w) => w.id === workoutIdOrTemplateId
-        );
-        if (byIdIndex !== -1) workouts.splice(byIdIndex, 1);
-        else {
-          const byTemplateIndex = workouts.findIndex(
-            (w) => w.templateId === workoutIdOrTemplateId
-          );
-          if (byTemplateIndex !== -1) workouts.splice(byTemplateIndex, 1);
-        }
-
-        split[dayIndex] = { ...split[dayIndex], workouts };
+        split[dayIndex] = {
+          ...split[dayIndex],
+          workouts: split[dayIndex].workouts.filter(
+            (w) => w.templateId !== templateId
+          ),
+        };
         return {
           ...p,
           split,
@@ -184,19 +185,14 @@ export const createSplitPlanSlice: StateCreator<
         if (p.id !== planId) return p;
         const split = [...p.split];
         if (!split[dayIndex]) return p;
-
-        const workouts = split[dayIndex].workouts.map((w) => {
-          if (w.id === workoutId) {
-            return {
-              ...w,
-              ...updates,
-              updatedAt: new Date().toISOString(),
-            };
-          }
-          return w;
-        });
-
-        split[dayIndex] = { ...split[dayIndex], workouts };
+        split[dayIndex] = {
+          ...split[dayIndex],
+          workouts: split[dayIndex].workouts.map((w) =>
+            w.id === workoutId
+              ? { ...w, ...updates, updatedAt: new Date().toISOString() }
+              : w
+          ),
+        };
         return {
           ...p,
           split,
@@ -214,23 +210,11 @@ export const createSplitPlanSlice: StateCreator<
         if (p.id !== planId) return p;
         const split = [...p.split];
         if (!split[dayIndex]) return p;
-
         const workouts = [...split[dayIndex].workouts];
-        const workoutIndex = workouts.findIndex((w) => w.id === workoutId);
-        if (workoutIndex === -1) return p;
-
-        const oldWorkout = workouts[workoutIndex];
-        const scheduledAt = oldWorkout.scheduledAt;
-
-        // Remove old workout
-        workouts.splice(workoutIndex, 1);
-
-        // Create new workout with new template, preserving scheduledAt
-        const newWorkout = createSplitPlanWorkout(newTemplateId, scheduledAt);
-
-        // Insert new workout at the same position
-        workouts.splice(workoutIndex, 0, newWorkout);
-
+        const idx = workouts.findIndex((w) => w.id === workoutId);
+        if (idx === -1) return p;
+        const oldWorkout = workouts[idx];
+        workouts[idx] = createSplitPlanWorkout(newTemplateId);
         split[dayIndex] = { ...split[dayIndex], workouts };
         return {
           ...p,
@@ -274,66 +258,6 @@ export const createSplitPlanSlice: StateCreator<
     }));
   },
 
-  reorderSplitDays: (planId, newOrder) => {
-    set((state) => ({
-      splitPlans: state.splitPlans.map((p) => {
-        if (p.id !== planId) return p;
-        const split = [...p.split];
-        const lookup = new Map(split.map((d) => [d.id, d]));
-        const reordered: SplitPlanDay[] = [];
-        newOrder.forEach((id) => {
-          const d = lookup.get(id);
-          if (d) {
-            reordered.push(d);
-            lookup.delete(id);
-          }
-        });
-        split.forEach((d) => {
-          if (lookup.has(d.id)) reordered.push(d);
-        });
-        return { ...p, split: reordered, updatedAt: new Date().toISOString() };
-      }),
-    }));
-  },
-
-  setActiveSplitPlan: (plan) => {
-    const now = new Date().toISOString();
-    const state = get();
-    if (state.activeSplitPlan) {
-      const updatedHistory = state.historySplitPlan.map((h) =>
-        !h.endTime ? { ...h, endTime: now } : h
-      );
-      set({ historySplitPlan: updatedHistory });
-    }
-    const historyEntry: SplitPlanHistoryEntry = {
-      id: nanoid(),
-      plan: JSON.parse(JSON.stringify(plan)),
-      startTime: now,
-    };
-    set({
-      activeSplitPlan: plan,
-      historySplitPlan: [...state.historySplitPlan, historyEntry],
-    });
-  },
-
-  endActiveSplitPlan: (endTime) => {
-    const now = endTime || new Date().toISOString();
-    const state = get();
-    const updatedHistory = state.historySplitPlan.map((h) =>
-      !h.endTime ? { ...h, endTime: now } : h
-    );
-    const noSplitHistoryEntry: SplitPlanHistoryEntry = {
-      id: `no-split-history-${Date.now()}`,
-      plan: NoSplit,
-      startTime: now,
-      endTime: undefined,
-    };
-    set({
-      activeSplitPlan: NoSplit,
-      historySplitPlan: [...updatedHistory, noSplitHistoryEntry],
-    });
-  },
-
   addDayToSplit: (planId, day, dayIndex) => {
     set((state) => ({
       splitPlans: state.splitPlans.map((p) => {
@@ -350,8 +274,8 @@ export const createSplitPlanSlice: StateCreator<
         return {
           ...p,
           split,
-          splitLength: split.length,
           activeLength: split.filter((d) => !d.isRest).length,
+          splitLength: split.length,
           updatedAt: new Date().toISOString(),
         };
       }),
@@ -368,8 +292,8 @@ export const createSplitPlanSlice: StateCreator<
         return {
           ...p,
           split,
-          splitLength: split.length,
           activeLength: split.filter((d) => !d.isRest).length,
+          splitLength: split.length,
           updatedAt: new Date().toISOString(),
         };
       }),
@@ -378,24 +302,26 @@ export const createSplitPlanSlice: StateCreator<
 
   updateSplitDayField: (planId, dayIndex, field, value) => {
     set((state) => {
-      const planIndex = state.splitPlans.findIndex((p) => p.id === planId);
-      if (planIndex === -1) return state;
-      const plan = state.splitPlans[planIndex];
-      const day = plan.split[dayIndex];
+      const plan = state.splitPlans.find((p) => p.id === planId);
+      if (!plan) return state;
+      const split = [...plan.split];
+      const day = split[dayIndex];
       if (!day) return state;
-      const updatedDay = { ...day, [field]: value };
-      const updatedSplit = [...plan.split];
-      updatedSplit[dayIndex] = updatedDay;
-      const updatedPlan = {
-        ...plan,
-        split: updatedSplit,
-        activeLength: updatedSplit.filter((d) => !d.isRest).length,
-        splitLength: updatedSplit.length,
-        updatedAt: new Date().toISOString(),
+      split[dayIndex] = { ...day, [field]: value };
+      return {
+        ...state,
+        splitPlans: state.splitPlans.map((p) =>
+          p.id === planId
+            ? {
+                ...p,
+                split,
+                activeLength: split.filter((d) => !d.isRest).length,
+                splitLength: split.length,
+                updatedAt: new Date().toISOString(),
+              }
+            : p
+        ),
       };
-      const updatedPlans = [...state.splitPlans];
-      updatedPlans[planIndex] = updatedPlan;
-      return { splitPlans: updatedPlans };
     });
   },
 
@@ -420,5 +346,120 @@ export const createSplitPlanSlice: StateCreator<
     }));
   },
 
+  reorderSplitDays: (planId, newOrder: SplitPlanDay[]) => {
+    set((state) => ({
+      splitPlans: state.splitPlans.map((p) => {
+        if (p.id !== planId) return p;
+        return {
+          ...p,
+          split: newOrder, // directly replace with new array
+          updatedAt: new Date().toISOString(),
+        };
+      }),
+    }));
+  },
+  
+
+  // ----------------- Active Split -----------------
+  setActiveSplitPlan: (plan, startDay = 0, startTime) => {
+    const now = startTime || new Date().toISOString();
+    const today = new Date().toDateString();
+    const state = get();
+
+    // 1. End any currently active split
+    const endedHistory = state.historySplitPlan.map((h) =>
+      !h.endTime ? { ...h, endTime: now } : h
+    );
+
+    // 2. Remove any history entries for this plan created today
+    const filteredHistory = endedHistory.filter((h) => {
+      const entryDate = new Date(h.startTime).toDateString();
+      return !(entryDate === today && h.plan.id === plan.id);
+    });
+
+    // 3. Create new ActiveSplitPlanState
+    const active: ActiveSplitPlanState = {
+      plan: JSON.parse(JSON.stringify(plan)),
+      startDay,
+      startTime: now,
+    };
+
+    // 4. Add corresponding history entry
+    const historyEntry: SplitPlanHistoryEntry = {
+      id: nanoid(),
+      plan: active.plan,
+      startDay: active.startDay,
+      startTime: active.startTime,
+    };
+
+    set({
+      activeSplitPlan: active,
+      historySplitPlan: [...filteredHistory, historyEntry],
+    });
+  },
+
+  updateActiveSplitStartDay: (newStartDay) => {
+    set((state) => {
+      if (!state.activeSplitPlan) return state;
+
+      const now = new Date().toISOString();
+      const today = new Date().toDateString();
+
+      // Update activeSplitPlan
+      const updatedActive: ActiveSplitPlanState = {
+        ...state.activeSplitPlan,
+        startDay: newStartDay,
+      };
+
+      // 1. End any other currently active splits (optional, mostly for safety)
+      const endedHistory = state.historySplitPlan.map((h) =>
+        !h.endTime && h.plan.id !== updatedActive.plan.id
+          ? { ...h, endTime: now }
+          : h
+      );
+
+      // 2. Remove any history entries for this plan created today
+      const filteredHistory = endedHistory.filter((h) => {
+        const entryDate = new Date(h.startTime).toDateString();
+        return !(entryDate === today && h.plan.id === updatedActive.plan.id);
+      });
+
+      // 3. Add updated history entry for today
+      const newHistoryEntry: SplitPlanHistoryEntry = {
+        id: nanoid(),
+        plan: JSON.parse(JSON.stringify(updatedActive.plan)),
+        startDay: newStartDay,
+        startTime: updatedActive.startTime, // keep original startTime
+        endTime: updatedActive.endTime,
+      };
+
+      return {
+        ...state,
+        activeSplitPlan: updatedActive,
+        historySplitPlan: [...filteredHistory, newHistoryEntry],
+      };
+    });
+  },
+
+  endActiveSplitPlan: (endTime) => {
+    const now = endTime || new Date().toISOString();
+    const state = get();
+    const updatedHistory = state.historySplitPlan.map((h) =>
+      !h.endTime ? { ...h, endTime: now } : h
+    );
+    const noSplitHistoryEntry: SplitPlanHistoryEntry = {
+      id: `no-split-history-${Date.now()}`,
+      plan: NoSplit,
+      startTime: now,
+      startDay: 0,
+    };
+    set({
+      activeSplitPlan: { plan: NoSplit, startDay: 0, startTime: now },
+      historySplitPlan: [...updatedHistory, noSplitHistoryEntry],
+    });
+  },
+
+  // ----------------- Getters -----------------
   getSplitById: (planId) => get().splitPlans.find((p) => p.id === planId),
+  getActiveSplitStartDay: () => get().activeSplitPlan?.startDay ?? null,
 });

@@ -10,7 +10,7 @@ export function NoSplitCard() {
   const { fullWidth, widgetUnit } = useWidgetUnit();
   const { activeSplitPlan } = useWorkoutStore();
 
-  const isActive = activeSplitPlan?.id === "no-split";
+  const isActive = activeSplitPlan?.plan?.id === "no-split";
   const textColor = isActive ? theme.background : theme.grayText;
 
   function handlePress() {
@@ -43,16 +43,6 @@ export function NoSplitCard() {
         numberOfLines={2}
       >
         No Split
-      </Text>
-      <Text
-        style={{
-          fontSize: 13,
-          color: textColor,
-          opacity: 0.7,
-          marginTop: 4,
-        }}
-      >
-        Full-body split • 3 active days per week
       </Text>
       <Text
         style={{

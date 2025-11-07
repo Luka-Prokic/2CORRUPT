@@ -71,7 +71,6 @@ export const PreviewTempalteView = forwardRef<
         )}
         cardWidth={WIDTH - 32}
         cardHeight={finalHeight}
-        showDots={true}
         styleDots={{
           width: WIDTH - 32,
           justifyContent: "center",

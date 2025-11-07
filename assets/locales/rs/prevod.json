@@ -349,7 +349,10 @@
     "set-as-active": "Postavi kao aktivan",
     "set-as-rest-day": "Postavi kao rest dan",
     "list-info": "Upravljaj svojim split planovima ovde - organizuj i čuvaj sve svoje trening rutine tako da možeš lako da ih menjaš. Svaki split predstavlja različit plan ili fokus za tvoje vežbanje, omogućavajući ti da variraš svoje vežbanje dok sve ostalo ostaje pratljivo. Jedan split je uvek aktivan; ako nijedan nije izabran, automatski će se koristiti zadani “No Split”.",
-    "footer-info": "Uredi tvoj split ovde - promeni njegov naziv, promeni trening ili rest dane, dodaj ili preuredi vežbe, i ažuriraj beleške. Ove izmene utiču na sve buduće vežbe i sesije za ovaj split. Jedan split može biti aktivan u jednom trenutku, ako ga deaktiviraš, automatski će se koristiti zadani “No Split” plan."
+    "footer-info": "Uredi tvoj split ovde - promeni njegov naziv, promeni trening ili rest dane, dodaj ili preuredi vežbe, i ažuriraj beleške. Ove izmene utiču na sve buduće vežbe i sesije za ovaj split. Jedan split može biti aktivan u jednom trenutku, ako ga deaktiviraš, automatski će se koristiti zadani “No Split” plan.",
+    "add-days-to-split": "Dodaj dane na tvoj split",
+    "choose-starting-day": "Izaberi dan za početak",
+    "no-days-yet": "Još nema dana"
   },
 
   "alert": {

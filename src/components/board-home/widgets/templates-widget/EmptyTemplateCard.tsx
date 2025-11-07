@@ -27,7 +27,7 @@ export function EmptyTemplateCard() {
         height: widgetUnit - 84,
         marginHorizontal: widgetUnit * 0.1 - 5,
         backgroundColor: theme.tint,
-        borderColor: theme.border,
+        borderColor: theme.tint,
         borderRadius: 16,
         borderWidth: 1,
         justifyContent: "center",

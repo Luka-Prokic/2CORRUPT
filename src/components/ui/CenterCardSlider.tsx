@@ -12,14 +12,17 @@ import {
   View,
   ViewStyle,
   Animated,
+  Dimensions,
 } from "react-native";
 import { useSettingsStore } from "../../stores/settings";
+
+const { width: SCREEN_WIDTH } = Dimensions.get("window");
 
 const AnimatedFlatList = Animated.createAnimatedComponent(
   FlatList
 ) as unknown as typeof FlatList;
 
-interface CardSliderProps<T> extends Omit<FlatListProps<T>, "renderItem"> {
+interface CenterCardSliderProps<T> extends Omit<FlatListProps<T>, "renderItem"> {
   card: ({ item, index }: { item: T; index?: number }) => ReactNode;
   cardWidth: number;
   cardHeight: number;
@@ -31,10 +34,10 @@ interface CardSliderProps<T> extends Omit<FlatListProps<T>, "renderItem"> {
   lastCard?: ReactElement;
   firstDot?: ReactNode;
   lastDot?: ReactNode;
-  maxDotsShown?: number; // 🆕 new prop
+  maxDotsShown?: number;
 }
 
-export function CardSlider<T>({
+export function CenterCardSlider<T>({
   data,
   card,
   keyExtractor,
@@ -44,18 +47,18 @@ export function CardSlider<T>({
   styleSlider,
   styleDots,
   emptyCard,
-  firstCard, // 🆕
-  lastCard, // 🆕
-  firstDot, // 🆕
-  lastDot, // 🆕
-  maxDotsShown, // 🆕
+  firstCard,
+  lastCard,
+  firstDot,
+  lastDot,
+  maxDotsShown,
   ...flatListProps
-}: CardSliderProps<T>) {
+}: CenterCardSliderProps<T>) {
   const { theme } = useSettingsStore();
   const scrollX = useRef(new Animated.Value(0)).current;
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // ✅ Include firstCard and lastCard cleanly in the data
+  // Include firstCard and lastCard cleanly in the data
   const fullData: (string | T)[] = [
     ...(firstCard ? ["first"] : []),
     ...(data ? Array.from(data) : []),
@@ -65,12 +68,19 @@ export function CardSlider<T>({
   const defaultKeyExtractor = (item: any, index: number) =>
     item.id ? `${item.id}-${index}` : `${index}`;
 
+  // Calculate spacing to show 3 cards with center card perfectly centered
+  // Center card should be at screen center, side cards should peek
+  const sideCardPeek = cardWidth * 0.2; // 20% of card width peeking from each side
+  const horizontalPadding = (SCREEN_WIDTH - cardWidth) / 2 - sideCardPeek;
+
   const onScroll = Animated.event(
     [{ nativeEvent: { contentOffset: { x: scrollX } } }],
     {
       useNativeDriver: true,
       listener: (event: any) => {
         const offsetX = event.nativeEvent.contentOffset.x;
+        // With snapToAlignment="center", calculate which card is centered
+        // The centered card is at: offsetX / cardWidth (rounded)
         const newIndex = Math.round(offsetX / cardWidth);
         if (
           newIndex !== currentIndex &&
@@ -90,28 +100,32 @@ export function CardSlider<T>({
         data={fullData}
         renderItem={({ item, index }) => {
           if (item === "first" && firstCard) {
-            return renderCard({
+            return renderCenterCard({
               scrollX,
               index,
               content: firstCard,
               width: cardWidth,
               height: cardHeight,
+              totalItems: fullData.length,
+              horizontalPadding,
             });
           }
 
           if (item === "last" && lastCard) {
-            return renderCard({
+            return renderCenterCard({
               scrollX,
               index,
               content: lastCard,
               width: cardWidth,
               height: cardHeight,
+              totalItems: fullData.length,
+              horizontalPadding,
             });
           }
 
           const adjustedIndex = firstCard ? index - 1 : index;
 
-          return renderCard({
+          return renderCenterCard({
             scrollX,
             index,
             content: card({
@@ -120,15 +134,21 @@ export function CardSlider<T>({
             }),
             width: cardWidth,
             height: cardHeight,
+            totalItems: fullData.length,
+            horizontalPadding,
           });
         }}
         keyExtractor={keyExtractor || defaultKeyExtractor}
         horizontal
         showsHorizontalScrollIndicator={false}
         snapToInterval={cardWidth}
+        snapToAlignment="center"
         decelerationRate="fast"
         onScroll={onScroll}
         scrollEventThrottle={16}
+        contentContainerStyle={{
+          paddingHorizontal: horizontalPadding,
+        }}
         style={styleSlider}
         nestedScrollEnabled
         ListEmptyComponent={emptyCard}
@@ -148,36 +168,54 @@ export function CardSlider<T>({
   );
 }
 
-function renderCard({
+function renderCenterCard({
   scrollX,
   index,
   content,
   width,
   height,
+  totalItems,
+  horizontalPadding,
 }: {
   scrollX: Animated.Value;
   index: number;
   content: React.ReactNode;
   width: number;
   height: number;
+  totalItems: number;
+  horizontalPadding: number;
 }) {
-  const inputRange = [(index - 1) * width, index * width, (index + 1) * width];
+  // With snapToAlignment="center", the scrollX represents the offset
+  // When a card is centered, its position relative to scroll is: index * width
+  // The card is centered when scrollX + horizontalPadding positions it at screen center
+  // Input ranges for animations - account for center alignment
+  // We need to handle: left card (index-1), center card (index), right card (index+1)
+  const inputRange = [
+    (index - 2) * width,
+    (index - 1) * width,
+    index * width,
+    (index + 1) * width,
+    (index + 2) * width,
+  ];
 
+  // Opacity: center card = 1, side cards = 0.7, outer cards = 0.5
   const opacity = scrollX.interpolate({
     inputRange,
-    outputRange: [0.8, 1, 0.8],
+    outputRange: [0.5, 0.7, 1, 0.7, 0.5],
     extrapolate: "clamp",
   });
 
+  // Scale: center card = 1, side cards = 0.9, outer cards = 0.85
   const scale = scrollX.interpolate({
     inputRange,
-    outputRange: [0.95, 1, 0.95],
+    outputRange: [0.85, 0.9, 1, 0.9, 0.85],
     extrapolate: "clamp",
   });
 
+  // RotateY: center card = 0deg, side cards = ±15deg, outer cards = ±25deg
   const rotateY = scrollX.interpolate({
     inputRange,
-    outputRange: ["-30deg", "0deg", "30deg"],
+    outputRange: ["-25deg", "-15deg", "0deg", "15deg", "25deg"],
     extrapolate: "clamp",
   });
 
@@ -196,7 +234,7 @@ function renderCard({
 }
 
 // -------------------------
-// ScrollableDots Component
+// ScrollableDots Component (reused from CardSlider)
 // -------------------------
 interface ScrollableDotsProps {
   dataLength: number;
@@ -205,7 +243,7 @@ interface ScrollableDotsProps {
   style?: ViewStyle | ViewStyle[];
   firstDot?: ReactNode;
   lastDot?: ReactNode;
-  maxDotsShown?: number; // 🆕 new prop
+  maxDotsShown?: number;
 }
 
 const DOT_WIDTH = 6;
@@ -218,7 +256,7 @@ export const ScrollableDots = ({
   style,
   firstDot,
   lastDot,
-  maxDotsShown = 5, // default is 5
+  maxDotsShown = 5,
 }: ScrollableDotsProps) => {
   const flatListRef = useRef<FlatList>(null);
   const totalDots = dataLength;
@@ -299,3 +337,4 @@ export const ScrollableDots = ({
     </View>
   );
 };
+

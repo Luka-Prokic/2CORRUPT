@@ -49,11 +49,11 @@ export function StrobeButton({
         entering={FadeIn}
         exiting={FadeOut}
         style={[
-          style,
           {
             overflow: "hidden",
             opacity: rest.disabled ? 0.6 : 1,
           },
+          style,
         ]}
       >
         <StrobeBlur

@@ -89,7 +89,6 @@ export interface SessionExercise {
   restTime?: number | null;
   noRest?: boolean;
 }
-
 export interface SplitPlanWorkout {
   readonly id: string;
   readonly templateId: string;
@@ -97,39 +96,49 @@ export interface SplitPlanWorkout {
   readonly updatedAt: IsoDateString;
   scheduledAt?: IsoDateString; // ISO date string for scheduled time
 }
+
 export interface SplitPlanDay {
   readonly id: string;
-  workouts: SplitPlanWorkout[]; // WorkoutTemplate IDs
-  isRest?: boolean; // true if rest day
+  workouts: SplitPlanWorkout[];
+  isRest?: boolean;
 }
 
 export interface SplitPlan {
   readonly id: string;
   name: string;
-  split: SplitPlanDay[]; // array of days
-  splitLength: number; //total length of split
-  activeLength: number; //number of active days in split
+  split: SplitPlanDay[];
+  splitLength: number;
+  activeLength: number;
   description?: string;
-  metadata?: Record<string, any>; // e.g., group, color, difficulty, future online stuff
+  metadata?: Record<string, any>;
   readonly createdAt: IsoDateString;
   updatedAt?: IsoDateString;
 }
 
 export interface SplitPlanHistoryEntry {
   readonly id: string; // unique ID for this history entry
-  readonly plan: Readonly<SplitPlan>; // frozen snapshot of the plan at the time
-  readonly startTime: IsoDateString; // when it became active
-  readonly endTime?: IsoDateString; // when it was replaced or deactivated
+  readonly plan: Readonly<SplitPlan>; // frozen snapshot of the plan at activation
+  readonly startDay: number; // index of first active day (0–6)
+  readonly startTime: IsoDateString;
+  readonly endTime?: IsoDateString;
 }
 
-// Slice contracts
-export interface SplitPlanSlice {
-  splitPlans: SplitPlan[];
-  activeSplitPlan: SplitPlan | null;
+export interface ActiveSplitPlanState {
+  plan: SplitPlan;
+  startDay: number;
+  startTime: IsoDateString;
+  endTime?: IsoDateString;
+}
 
-  // Timeline of all activated plans (each is a frozen snapshot)
+export interface SplitPlanSlice {
+  // core data
+  splitPlans: SplitPlan[];
+  activeSplitPlan: ActiveSplitPlanState | null;
+
+  // full activation timeline
   historySplitPlan: SplitPlanHistoryEntry[];
 
+  // CRUD
   createSplitPlan: (plan?: Partial<SplitPlan>) => string;
   editSplitPlan: (planId: string) => SplitPlan | null;
   updateSplitPlanField: <K extends keyof SplitPlan>(
@@ -139,6 +148,23 @@ export interface SplitPlanSlice {
   ) => void;
   deleteSplitPlan: (planId: string) => void;
 
+  // day management
+  addDayToSplit: (
+    planId: string,
+    day?: Partial<SplitPlanDay>,
+    dayIndex?: number
+  ) => void;
+  removeDayFromSplit: (planId: string, dayIndex: number) => void;
+  reorderSplitDays: (planId: string, newOrder: SplitPlanDay[]) => void;
+  updateSplitDayField: <K extends keyof SplitPlanDay>(
+    planId: string,
+    dayIndex: number,
+    field: K,
+    value: SplitPlanDay[K]
+  ) => void;
+  toggleDayRest: (planId: string, dayIndex: number) => void;
+
+  // workout management
   addWorkoutToDay: (
     planId: string,
     dayIndex: number,
@@ -167,29 +193,18 @@ export interface SplitPlanSlice {
     newOrder: string[]
   ) => void;
 
-  setActiveSplitPlan: (plan: SplitPlan) => void;
-  endActiveSplitPlan: (endTime?: IsoDateString) => void; // optional helper
-
-  addDayToSplit: (
-    planId: string,
-    day?: Partial<SplitPlanDay>,
-    dayIndex?: number
+  // activation & history
+  setActiveSplitPlan: (
+    plan: SplitPlan,
+    startDay?: number,
+    startTime?: IsoDateString
   ) => void;
+  updateActiveSplitStartDay: (newStartDay: number) => void;
+  endActiveSplitPlan: (endTime?: IsoDateString) => void;
 
-  removeDayFromSplit: (planId: string, dayIndex: number) => void;
-
-  updateSplitDayField: <K extends keyof SplitPlanDay>(
-    planId: string,
-    dayIndex: number,
-    field: K,
-    value: SplitPlanDay[K]
-  ) => void;
-
-  toggleDayRest: (planId: string, dayIndex: number) => void;
-
-  reorderSplitDays: (planId: string, newOrder: string[]) => void;
-
+  // getters
   getSplitById: (planId: string) => SplitPlan | undefined;
+  getActiveSplitStartDay: () => number | null;
 }
 
 export interface TemplateSlice {

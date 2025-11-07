@@ -15,7 +15,6 @@ import { useUIStore } from "../../../stores/ui";
 import { ExercisePreviewCard } from "../cards/ExercisePreviewCard";
 import Animated, { FadeIn } from "react-native-reanimated";
 import { useLayoutPreviewHeight } from "../../../features/ui/useGetExercisePreviewCardHeight";
-import { SessionFirstCard } from "../cards/SessionFirstCard";
 
 interface PreviewSessionViewProps {
   session: WorkoutSession;
@@ -74,7 +73,6 @@ export const PreviewSessionView = forwardRef<
         )}
         cardWidth={WIDTH - 32}
         cardHeight={finalHeight}
-        showDots={true}
         styleDots={{
           width: WIDTH - 32,
           justifyContent: "center",

@@ -68,7 +68,6 @@ export function SplitDayList({ split, isGridView }: SplitDayListProps) {
       )}
       cardWidth={fullWidth}
       cardHeight={fullWidth}
-      showDots={true}
       styleSlider={{ width: fullWidth, height: fullWidth }}
       lastCard={
         <AddSplitDayCard
