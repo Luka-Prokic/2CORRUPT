@@ -17,7 +17,7 @@ export function InfoText({
         fontWeight: "600",
         textAlign: "center",
         letterSpacing: -0.5,
-        lineHeight: 24,
+        lineHeight: 12,
         ...style,
       }}
     >

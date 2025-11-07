@@ -22,7 +22,8 @@ const AnimatedFlatList = Animated.createAnimatedComponent(
   FlatList
 ) as unknown as typeof FlatList;
 
-interface CenterCardSliderProps<T> extends Omit<FlatListProps<T>, "renderItem"> {
+interface CenterCardSliderProps<T>
+  extends Omit<FlatListProps<T>, "renderItem"> {
   card: ({ item, index }: { item: T; index?: number }) => ReactNode;
   cardWidth: number;
   cardHeight: number;
@@ -174,8 +175,6 @@ function renderCenterCard({
   content,
   width,
   height,
-  totalItems,
-  horizontalPadding,
 }: {
   scrollX: Animated.Value;
   index: number;
@@ -337,4 +336,3 @@ export const ScrollableDots = ({
     </View>
   );
 };
-

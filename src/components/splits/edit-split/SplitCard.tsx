@@ -50,51 +50,51 @@ export function SplitCard({ split }: SplitCardProps) {
   function content() {
     if (selectingStartDay && isActive) {
       return (
-        <Fragment>
-          <CenterCardSlider
-            data={split.split}
-            card={({ item, index }) => (
-              <StartDayCard
-                day={item}
-                dayIndex={index}
-                width={fullWidth / 3}
-                height={fullWidth / 3}
-                setSelectingStartDay={setSelectingStartDay}
-              />
-            )}
-            emptyCard={
-              <EmptyDayCard
-                splitId={split.id}
-                width={fullWidth / 3}
-                height={fullWidth / 3}
-              />
-            }
-            cardWidth={fullWidth / 3}
-            cardHeight={fullWidth / 3}
-            styleSlider={{
-              width: fullWidth,
-              height: fullWidth / 3,
-              marginTop: 16,
-            }}
-            hideDots
-            maxDotsShown={split.split.length}
-          />
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "space-evenly",
+            alignItems: "center",
+          }}
+        >
           <View
             style={{
-              flex: 1,
-              justifyContent: "center",
-              alignItems: "center",
+              height: fullWidth / 3,
+              width: fullWidth,
             }}
           >
-            <InfoText
-              text={
-                split.split.length > 0
-                  ? t("splits.choose-starting-day")
-                  : t("splits.add-days-to-split")
+            <CenterCardSlider
+              data={split.split}
+              card={({ item, index }) => (
+                <StartDayCard
+                  day={item}
+                  dayIndex={index}
+                  width={fullWidth / 3}
+                  height={fullWidth / 3}
+                  setSelectingStartDay={setSelectingStartDay}
+                />
+              )}
+              emptyCard={
+                <EmptyDayCard
+                  splitId={split.id}
+                  width={fullWidth / 3}
+                  height={fullWidth / 3}
+                />
               }
+              cardWidth={fullWidth / 3}
+              cardHeight={fullWidth / 3}
+              hideDots
+              maxDotsShown={split.split.length}
             />
           </View>
-        </Fragment>
+          <InfoText
+            text={
+              split.split.length > 0
+                ? t("splits.choose-starting-day")
+                : t("splits.add-days-to-split")
+            }
+          />
+        </View>
       );
     }
 

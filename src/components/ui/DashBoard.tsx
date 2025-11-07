@@ -40,6 +40,7 @@ export function DashBoard({
     Animated.spring(animatedY, { toValue, useNativeDriver: true }).start();
   }, [listOpen]);
 
+  const lightText = hexToRGBA(theme.text, 0.2);
   return (
     <Animated.View
       style={{
@@ -50,7 +51,7 @@ export function DashBoard({
       }}
     >
       <StrobeBlur
-        colors={colors || [theme.caka, theme.tint, theme.accent, theme.error]}
+        colors={colors || [lightText, lightText, lightText, lightText]}
         tint="auto"
         size={HEIGHT / 2}
         style={{

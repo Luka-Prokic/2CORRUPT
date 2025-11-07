@@ -13,6 +13,7 @@ interface StrobeBlurProps {
   tint?: "default" | "light" | "dark" | "auto";
   size?: number;
   disabled?: boolean;
+  freeze?: boolean; // <-- new prop
 }
 
 const BLOBS = [0, 1, 2, 3, 0, 1, 2, 3];
@@ -25,6 +26,7 @@ export function StrobeBlur({
   tint = "default",
   size = 100,
   disabled = false,
+  freeze = false,
 }: StrobeBlurProps) {
   const { themeMode } = useSettingsStore();
   const animValues = useRef(BLOBS.map(() => new Animated.Value(0))).current;
@@ -34,21 +36,29 @@ export function StrobeBlur({
     () =>
       BLOBS.map((i: number) => ({
         color: i,
-        offset: Math.random(), // start point of motion
-        radius: 50 + Math.random() * size, // how far they travel
-        size: size + Math.random() * 60, // blob size
+        offset: Math.random(),
+        radius: 50 + Math.random() * size,
+        size: size + Math.random() * 60,
         borderRadius: {
           borderTopLeftRadius: size / 2.5 + (Math.random() * size) / 2,
           borderTopRightRadius: size / 2.5 + (Math.random() * size) / 2,
           borderBottomLeftRadius: size / 2.5 + (Math.random() * size) / 2,
           borderBottomRightRadius: size / 2.5 + (Math.random() * size) / 2,
         },
+        frozenPosition: Math.random(), // <-- random frozen position
       })),
-    []
+    [size]
   );
 
-  // Animate all with the same speed
   useEffect(() => {
+    if (freeze) {
+      // Immediately set each blob to a random frozen position
+      animValues.forEach((val, i) => {
+        val.setValue(blobSettings[i].frozenPosition);
+      });
+      return; // stop the animation
+    }
+
     animValues.forEach((val, i) => {
       val.setValue(blobSettings[i].offset);
       Animated.loop(
@@ -61,7 +71,7 @@ export function StrobeBlur({
         })
       ).start();
     });
-  }, [blobSettings]);
+  }, [blobSettings, freeze]);
 
   function renderBlobs() {
     return blobSettings.map((blob, i) => {

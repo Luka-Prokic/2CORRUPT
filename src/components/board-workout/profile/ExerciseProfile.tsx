@@ -7,7 +7,7 @@ import { RestTimerSettings } from "./RestTimerSettings";
 import { ExerciseHeader } from "./ExerciseHeader";
 import { RemoveExerciseButton } from "./RemoveExerciseButton";
 import { ExerciseNoteInput } from "./ExerciseNoteInput";
-import { SessionSheetType } from "../SessionDashboard";
+import { SessionSheetType } from "../../../app/workout-board";
 
 interface ExerciseProfileProps {
   openPanel: () => void;
@@ -35,7 +35,6 @@ export function ExerciseProfile({
       <View style={{ width: WIDTH - 32, marginBottom: 16 }}>
         <RemoveExerciseButton />
         <SwapExerciseButton />
-        {/* <AddToSupersetButton /> */}
         <ExerciseColumnOptions />
       </View>
 

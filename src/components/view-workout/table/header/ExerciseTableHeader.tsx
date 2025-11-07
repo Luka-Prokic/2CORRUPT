@@ -14,12 +14,17 @@ export function ExerciseTableHeader() {
   const { theme } = useSettingsStore();
   const { activeTemplate } = useWorkoutStore();
 
+  const lightText = hexToRGBA(theme.text, 0.2);
+
   return (
     <StrobeBlur
       colors={
-        activeTemplate && [theme.tint, theme.tint, theme.tint, theme.tint]
+        activeTemplate
+          ? [theme.tint, theme.tint, theme.tint, theme.tint]
+          : [lightText, lightText, lightText, lightText]
       }
       tint="auto"
+      size={WIDTH}
       style={{
         backgroundColor: theme.background,
         height: EXERCISE_TABLE_HEADER_HEIGHT,

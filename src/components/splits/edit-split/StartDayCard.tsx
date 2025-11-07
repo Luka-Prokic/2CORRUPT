@@ -44,11 +44,7 @@ export function StartDayCard({
         alignItems: "center",
         borderRadius: 32,
         borderWidth: 1,
-        borderColor: isActiveDay
-          ? theme.tint
-          : day.isRest
-          ? theme.handle
-          : theme.thirdBackground,
+        borderColor: day.isRest ? theme.handle : theme.thirdBackground,
       }}
     >
       <Text

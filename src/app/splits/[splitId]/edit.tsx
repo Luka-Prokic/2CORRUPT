@@ -14,7 +14,7 @@ import { EmptyFooter } from "../../../components/ui/containers/EmptyFooter";
 export default function SplitEditScreen() {
   const { theme } = useSettingsStore();
   const { splitId } = useLocalSearchParams<{ splitId: string }>();
-  const { getSplitById, reorderSplitDays } = useWorkoutStore();
+  const { getSplitById } = useWorkoutStore();
 
   const [isGridView, setIsGridView] = useState(false);
 
@@ -50,7 +50,6 @@ export default function SplitEditScreen() {
           <SplitDayList
             split={split}
             isGridView={isGridView}
-            onReorder={(newOrder) => reorderSplitDays(splitId, newOrder)}
           />
           <SplitFooter split={split} />
           <EmptyFooter />

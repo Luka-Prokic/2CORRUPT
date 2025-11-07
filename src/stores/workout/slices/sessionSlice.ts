@@ -360,8 +360,20 @@ export const createSessionSlice: StateCreator<WorkoutStore, [], [], {}> = (
    * Reorder items in the session layout
    */
   reorderSessionItems: (newOrder: SessionExercise[]) => {
-    const { activeSession } = get();
+    const {
+      activeSession,
+      activeExercise,
+      setActiveExercise,
+      updateNavigationFlags,
+    } = get();
     if (!activeSession) return;
+
+    // Ensure activeExercise still exists in the new order
+    let newActiveExercise = activeExercise;
+    if (!newOrder.some((ex) => ex.id === activeExercise?.id)) {
+      newActiveExercise = newOrder[0] ?? null;
+      setActiveExercise(newActiveExercise?.id ?? null);
+    }
 
     set((state) => ({
       activeSession: {
@@ -369,6 +381,9 @@ export const createSessionSlice: StateCreator<WorkoutStore, [], [], {}> = (
         layout: newOrder,
       },
     }));
+
+    // Recalculate navigation flags based on current (or new) active exercise
+    if (newActiveExercise) updateNavigationFlags();
   },
 
   removeSession: (sessionId: string) => {
