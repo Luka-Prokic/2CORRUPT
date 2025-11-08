@@ -1,11 +1,12 @@
 import { useSettingsStore } from "../../../stores/settings";
 import { useWorkoutStore } from "../../../stores/workout";
 import { Ionicons } from "@expo/vector-icons";
-import { Text, TouchableOpacity, ViewStyle } from "react-native";
+import { TouchableOpacity, ViewStyle } from "react-native";
 import { useActionSheet } from "../../../features/useActionSheet";
 import { useUIStore } from "../../../stores/ui";
 import { router } from "expo-router";
 import { Fragment } from "react";
+import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 
 interface IconStyle {
   color?: string;
@@ -101,7 +102,9 @@ export function ActiveSessionAlert({
         style={{ width: "100%", ...style }}
         disabled={disabled}
       >
-        <Text
+        <Animated.Text
+          entering={FadeIn}
+          exiting={FadeOut}
           style={{
             marginVertical: 4,
             color: theme.info,
@@ -123,7 +126,7 @@ export function ActiveSessionAlert({
               )}
             </Fragment>
           )}
-        </Text>
+        </Animated.Text>
       </TouchableOpacity>
     );
 }

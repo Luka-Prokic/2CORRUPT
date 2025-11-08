@@ -24,7 +24,7 @@ export function TemplateFilter({
         template.name.toLowerCase().includes(searchQuery.toLowerCase())
       )
     );
-  }, [searchQuery]);
+  }, [searchQuery, templates.length]);
 
   return (
     <SearchBar

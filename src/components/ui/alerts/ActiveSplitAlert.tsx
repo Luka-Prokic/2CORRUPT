@@ -1,9 +1,10 @@
 import { useSettingsStore } from "../../../stores/settings";
 import { Ionicons } from "@expo/vector-icons";
-import { Text, TouchableOpacity, ViewStyle } from "react-native";
+import { TouchableOpacity, ViewStyle } from "react-native";
 import { Fragment } from "react";
 import { useTranslation } from "react-i18next";
 import { useWorkoutStore } from "../../../stores/workout";
+import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 
 interface IconStyle {
   color?: string;
@@ -38,7 +39,9 @@ export function ActiveSplitAlert({
       activeOpacity={1}
       disabled={true} // no click behavior
     >
-      <Text
+      <Animated.Text
+        entering={FadeIn}
+        exiting={FadeOut}
         style={{
           marginVertical: 4,
           color: theme.info,
@@ -56,7 +59,7 @@ export function ActiveSplitAlert({
         ) : (
           <Ionicons name="lock-closed" size={14} color={theme.info} />
         )}
-      </Text>
+      </Animated.Text>
     </TouchableOpacity>
   );
 }

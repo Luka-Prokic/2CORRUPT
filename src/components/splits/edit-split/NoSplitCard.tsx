@@ -92,22 +92,24 @@ export function NoSplitCard() {
         strobeDisabled={!isActive}
         pressable
       >
-        <Ionicons
-          name={expanded ? "chevron-up" : "chevron-down"}
-          size={28}
-          color={isActive ? theme.text : theme.grayText}
-          style={{
-            position: "absolute",
-            top: 16,
-            right: 16,
-          }}
-        />
+        {isActive && (
+          <Ionicons
+            name={expanded ? "chevron-up" : "chevron-down"}
+            size={28}
+            color={isActive ? theme.text : theme.grayText}
+            style={{
+              position: "absolute",
+              top: 16,
+              right: 16,
+            }}
+          />
+        )}
 
         <Text
           style={{
             fontSize: 28,
             fontWeight: "bold",
-            color: isActive ? theme.text : theme.info,
+            color: theme.text,
           }}
         >
           {t("splits.weekly-goal")}
