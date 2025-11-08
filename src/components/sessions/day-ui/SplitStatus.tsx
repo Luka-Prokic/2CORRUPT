@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { TouchableOpacity } from "react-native";
+import { useEffect } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { useSettingsStore } from "../../../stores/settings";
 import { WIDTH } from "../../../features/Dimensions";

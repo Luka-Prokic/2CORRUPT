@@ -4,10 +4,16 @@ import { hexToRGBA } from "../../../../features/HEXtoRGB";
 import { useSettingsStore } from "../../../../stores/settings";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
+import Animated, { FadeOut, FadeIn } from "react-native-reanimated";
+import { useWorkoutStore } from "../../../../stores/workout";
+import { useTranslation } from "react-i18next";
 
 export function SplitsWidget() {
   const { widgetUnit, halfWidget } = useWidgetUnit();
   const { theme } = useSettingsStore();
+  const { activeSplitPlan } = useWorkoutStore();
+  const noSplit = activeSplitPlan?.plan?.id === "no-split";
+  const { t } = useTranslation();
 
   function handleWidgetPress() {
     router.push("/splits/list");
@@ -22,18 +28,50 @@ export function SplitsWidget() {
         borderRadius: 32,
         backgroundColor: hexToRGBA(theme.thirdBackground, 0.6),
         borderWidth: 1,
-        borderColor: theme.border,
-        padding: 12,
+        borderColor: hexToRGBA(theme.thirdBackground, 0.4),
+        padding: 16,
         marginBottom: 8,
         alignItems: "center",
         flexDirection: "row",
-        gap: 16,
       }}
     >
-      <Ionicons name="flash-outline" size={44} color={theme.text} />
-      <Text style={{ fontSize: 16, fontWeight: "bold", color: theme.text }}>
-        Splits
-      </Text>
+      <Animated.View
+        entering={FadeIn}
+        exiting={FadeOut}
+        style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+      >
+        <Text
+          style={{
+            fontSize: 16,
+            fontWeight: "bold",
+            color: noSplit ? theme.info : theme.text,
+          }}
+        >
+          {activeSplitPlan?.plan.name}
+        </Text>
+        <Text
+          style={{
+            fontSize: 12,
+            fontWeight: "600",
+            color: noSplit ? theme.info : theme.fifthBackground,
+          }}
+        >
+          {t("button.active").toLowerCase()}
+        </Text>
+      </Animated.View>
+
+      <Ionicons
+        name={noSplit ? "flash-outline" : "flash"}
+        size={44}
+        color={noSplit ? theme.info : theme.tint}
+        style={{
+          shadowColor: theme.tint,
+          shadowOffset: { width: 0, height: 2 },
+          shadowOpacity: noSplit ? 0 : 0.6,
+          shadowRadius: 16,
+          elevation: noSplit ? 0 : 10,
+        }}
+      />
     </TouchableOpacity>
   );
 }

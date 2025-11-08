@@ -60,7 +60,7 @@ export function SummaryWidget() {
         borderRadius: 32,
         backgroundColor: hexToRGBA(theme.thirdBackground, 0.6),
         borderWidth: 1,
-        borderColor: theme.border,
+        borderColor: hexToRGBA(theme.thirdBackground, 0.4),
         padding: 4,
         marginBottom: 8,
         flexDirection: "row",

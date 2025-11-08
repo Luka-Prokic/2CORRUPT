@@ -57,6 +57,8 @@ export function WidgetGrid() {
           height: WIDGET_SIZE,
           borderRadius: 32,
           backgroundColor: hexToRGBA(theme.thirdBackground, 0.6),
+          borderWidth: 1,
+          borderColor: hexToRGBA(theme.thirdBackground, 0.4),
         }}
       />
     </View>

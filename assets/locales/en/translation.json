@@ -26,7 +26,8 @@
     "continue": "Continue",
     "scrollable": "Scrollable",
     "more": "More",
-    "confirm": "Confirm"
+    "confirm": "Confirm",
+    "active": "Active"
   },
   "form": {
     "name": "Name",
