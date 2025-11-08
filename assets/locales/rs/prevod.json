@@ -357,7 +357,8 @@
     "workout": "Trening",
     "workouts": "Treninga",
     "set-your-fitness-goals": "Podesi svoje fitness ciljeve",
-    "set-your-fitness-goals-description": "Set how many workouts you want per week. You can also adjust this and other goals in Settings → Goals."
+    "set-your-fitness-goals-description": "Set how many workouts you want per week. You can also adjust this and other goals in Settings → Goals.",
+    "active-split-alert": "Aktivan split je detektovan - nedeljni cilj ne može biti direktno promenjen."
   },
 
   "alert": {

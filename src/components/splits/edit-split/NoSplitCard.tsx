@@ -1,7 +1,7 @@
 import { useSettingsStore } from "../../../stores/settings";
 import { useWidgetUnit } from "../../../features/widgets/useWidgetUnit";
 import { Ionicons } from "@expo/vector-icons";
-import { Text, TouchableOpacity } from "react-native";
+import { Text } from "react-native";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -9,15 +9,15 @@ import Animated, {
   FadeIn,
   FadeOut,
 } from "react-native-reanimated";
-import { useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useWorkoutStore } from "../../../stores/workout";
 import { TwoOptionStrobeButtons } from "../../ui/buttons/TwoOptionStrobeButtons";
 import { InfoText } from "../../ui/text/InfoText";
 import { TextButton } from "../../ui/buttons/TextButton";
-import { StrobeBlur } from "../../ui/misc/StrobeBlur";
 import { useWeeklyWorkoutGoal } from "../../../features/workout/useWorkoutGoal";
 import { useTranslation } from "react-i18next";
 import { StrobeButton } from "../../ui/buttons/StrobeButton";
+import { ActiveSplitAlert } from "../../ui/alerts/ActiveSplitAlert";
 
 export function NoSplitCard() {
   const { theme } = useSettingsStore();
@@ -37,8 +37,13 @@ export function NoSplitCard() {
   }));
 
   function toggleExpand() {
+    if (!isActive) return; // 🚫 block toggle if inactive
     expanded ? collapse() : expand();
   }
+
+  useEffect(() => {
+    if (!isActive) collapse();
+  }, [isActive]);
 
   function expand() {
     height.value = withTiming(fullWidth, { duration: 300 });
@@ -82,6 +87,7 @@ export function NoSplitCard() {
           borderWidth: 1,
           borderColor: theme.border,
           borderRadius: 32,
+          opacity: isActive ? 1 : 0.7, // 🟣 subtle visual cue for inactive
         }}
         strobeDisabled={!isActive}
         pressable
@@ -106,17 +112,23 @@ export function NoSplitCard() {
         >
           {t("splits.weekly-goal")}
         </Text>
+
         {!expanded ? (
-          <Animated.Text
-            entering={FadeIn}
-            style={{
-              fontSize: 18,
-              fontWeight: "500",
-              color: isActive ? theme.text : theme.grayText,
-            }}
-          >
-            {goal} {goal === 1 ? t("splits.workout") : t("splits.workouts")}
-          </Animated.Text>
+          <Fragment>
+            <Animated.Text
+              entering={FadeIn}
+              style={{
+                fontSize: 18,
+                fontWeight: "500",
+                color: theme.text,
+              }}
+            >
+              {goal} {goal === 1 ? t("splits.workout") : t("splits.workouts")}
+            </Animated.Text>
+            <ActiveSplitAlert
+              style={{ marginBottom: 16, paddingHorizontal: 16 }}
+            />
+          </Fragment>
         ) : (
           <Animated.View entering={FadeIn} style={{ alignItems: "center" }}>
             <Text
@@ -139,6 +151,10 @@ export function NoSplitCard() {
               {goal === 1 ? t("splits.workout") : t("splits.workouts")}
             </Text>
 
+            <ActiveSplitAlert
+              style={{ marginBottom: 16, paddingHorizontal: 16 }}
+            />
+
             <TwoOptionStrobeButtons
               labelOne="-"
               labelTwo="+"
@@ -147,10 +163,9 @@ export function NoSplitCard() {
               onOptionOne={decrementGoal}
               onOptionTwo={incrementGoal}
               width={fullWidth - 32}
-              disabledOne={!isActive || activeSplitPlan.plan.activeLength === 1}
-              disabledTwo={!isActive}
-              disabledStrobeOne={isActive}
-              disabledStrobeTwo={isActive}
+              disabledOne={activeSplitPlan.plan.activeLength === 1}
+              disabledStrobeOne={true}
+              disabledStrobeTwo={true}
             />
 
             <InfoText
@@ -160,12 +175,13 @@ export function NoSplitCard() {
                 marginHorizontal: 16,
                 fontSize: 16,
                 lineHeight: 18,
-                color: isActive ? theme.text : theme.info,
+                color: theme.text,
               }}
             />
+
             <TextButton
               title={t("splits.set-your-fitness-goals")}
-              color={isActive ? theme.fifthBackground : theme.accent}
+              color={theme.fifthBackground}
             />
           </Animated.View>
         )}

@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FlatList } from "react-native";
-import {
-  WorkoutTemplate,
-} from "../../../stores/workout/types";
+import { WorkoutTemplate } from "../../../stores/workout/types";
 import { EmptyFooter } from "../../ui/containers/EmptyFooter";
 import { AddSplitWorkoutCard } from "./AddSplitWorkoutCard";
 
@@ -55,6 +53,7 @@ export function AddSplitWorkoutList({
     <FlatList
       data={pagedWorkouts}
       keyExtractor={(item) => item.id}
+      numColumns={2}
       renderItem={({ item }) => (
         <AddSplitWorkoutCard
           template={item}
@@ -63,6 +62,13 @@ export function AddSplitWorkoutList({
           selectedTemplates={selectedTemplates}
         />
       )}
+      contentContainerStyle={{
+        paddingHorizontal: 16,
+        gap: 8,
+      }}
+      columnWrapperStyle={{
+        gap: 8,
+      }}
       onEndReached={handleLoadMore}
       onEndReachedThreshold={0.5}
       initialNumToRender={PAGE_SIZE}

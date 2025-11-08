@@ -1,4 +1,4 @@
-import React, { forwardRef, useMemo, useState } from "react";
+import React, { forwardRef, useState } from "react";
 import {
   BottomSheetBackdrop,
   BottomSheetModal,

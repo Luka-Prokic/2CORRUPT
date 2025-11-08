@@ -17,6 +17,7 @@ import { CloneSelectedTemplates } from "../components/templates/header/CloneSele
 import { AddToSplitSelectedTemplates } from "../components/templates/header/AddToSplitSelectedTemplates";
 import { BackgroundText } from "../components/ui/misc/BackgroundText";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { TemplateFilter } from "../components/templates/TemplateFilter";
 
 export default function TemplatesScreen() {
   const { t } = useTranslation();
@@ -24,6 +25,9 @@ export default function TemplatesScreen() {
   const { templates } = useWorkoutStore();
   const [selectMode, setSelectMode] = useState<boolean>(false);
   const [selected, setSelected] = useState<WorkoutTemplate[]>([]);
+  const [filteredTemplates, setFilteredTemplates] = useState<WorkoutTemplate[]>(
+    []
+  );
   const insets = useSafeAreaInsets();
 
   function headerLeft() {
@@ -96,11 +100,21 @@ export default function TemplatesScreen() {
           headerLeft: headerLeft,
           headerTitle: headerTitle,
           headerRight: headerRight,
+          headerBlurEffect: "none",
         }}
       />
-      <ScreenContent scroll={false}>
+      <ScreenContent
+        scroll={false}
+        edges={["top"]}
+        HeaderComponent={
+          <TemplateFilter
+            setFilteredTemplates={setFilteredTemplates}
+            style={{ marginTop: insets.top }}
+          />
+        }
+      >
         <FlatList
-          data={templates}
+          data={filteredTemplates}
           numColumns={2}
           showsVerticalScrollIndicator={false}
           keyExtractor={(item, index) => `${item.createdAt}-${index}`}
@@ -114,20 +128,18 @@ export default function TemplatesScreen() {
           )}
           contentContainerStyle={{
             paddingHorizontal: 16,
-            paddingTop: insets.top,
             gap: 8,
           }}
           columnWrapperStyle={{
             gap: 8,
           }}
-          ListHeaderComponent={() => <EmptyHeader />}
+          ListEmptyComponent={() => <EmptyTemplateComponent />}
           ListFooterComponent={() => (
             <BackgroundText
               text={t("templates.empty-info")}
               style={{ textAlign: "justify" }}
             />
           )}
-          ListEmptyComponent={() => <EmptyTemplateComponent />}
         />
       </ScreenContent>
     </Fragment>

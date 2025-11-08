@@ -5,6 +5,7 @@ import { useSettingsStore } from "../../../stores/settings";
 import { hexToRGBA } from "../../../features/HEXtoRGB";
 import { WorkoutTemplate } from "../../../stores/workout/types";
 import { StrobeButton } from "../../ui/buttons/StrobeButton";
+import { useWidgetUnit } from "../../../features/widgets/useWidgetUnit";
 
 interface AddSplitWorkoutCardProps {
   template: WorkoutTemplate;
@@ -22,6 +23,7 @@ export function AddSplitWorkoutCard({
   showTime = false,
 }: AddSplitWorkoutCardProps) {
   const { theme } = useSettingsStore();
+  const { widgetUnit } = useWidgetUnit();
 
   const selectedTotal = useMemo(
     () => selectedTemplates.filter((t) => t.id === template.id).length,
@@ -32,80 +34,77 @@ export function AddSplitWorkoutCard({
     <StrobeButton
       onPress={() => onSelect(template)}
       style={{
-        height: 72,
-        backgroundColor: theme.secondaryBackground,
+        height: widgetUnit,
+        width: widgetUnit,
+        backgroundColor: theme.fifthBackground,
+        borderRadius: 32,
       }}
       strobeDisabled={selectedTotal === 0}
     >
       <View
         style={{
-          flex: 1,
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-          paddingHorizontal: 16,
+          height: widgetUnit,
+          width: widgetUnit,
+          padding: 16,
         }}
       >
         {/* Workout info */}
-        <View style={{ flex: 1 }}>
-          <Text
-            style={{
-              color: theme.text,
-              fontSize: 16,
-              fontWeight: "600",
-            }}
-          >
-            {template.name}
-          </Text>
-        </View>
+        <Text
+          style={{
+            color: theme.secondaryText,
+            fontSize: 16,
+            fontWeight: "600",
+          }}
+        >
+          {template.name}
+        </Text>
 
-        {/* Selection button */}
+        {/* Selected count pill */}
         {selectedTotal > 0 && (
           <View
             style={{
-              flexDirection: "row",
+              position: "absolute",
+              right: 16,
+              bottom: 16,
+              backgroundColor: hexToRGBA(theme.handle, 0.8),
+              padding: 8,
+              minWidth: 44,
+              height: 44,
+              borderRadius: 22,
               alignItems: "center",
-              gap: 8,
+              justifyContent: "center",
             }}
           >
-            {/* Selected count pill */}
-            <View
+            <Text
               style={{
-                backgroundColor: hexToRGBA(theme.handle, 0.8),
-                padding: 8,
-                minWidth: 44,
-                height: 44,
-                borderRadius: 22,
-                alignItems: "center",
-                justifyContent: "center",
+                color: theme.text,
+                fontWeight: "600",
+                fontSize: 18,
               }}
             >
-              <Text
-                style={{
-                  color: theme.text,
-                  fontWeight: "600",
-                  fontSize: 18,
-                }}
-              >
-                {selectedTotal}x
-              </Text>
-            </View>
-
-            {/* Unselect button */}
-            <TouchableOpacity
-              onPress={() => unSelect(template)}
-              style={{
-                backgroundColor: hexToRGBA(theme.handle, 0.8),
-                width: 44,
-                height: 44,
-                borderRadius: 22,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Ionicons name="close" size={24} color={theme.text} />
-            </TouchableOpacity>
+              {selectedTotal}x
+            </Text>
           </View>
+        )}
+
+        {/* Unselect button */}
+        {selectedTotal > 0 && (
+          <TouchableOpacity
+            onPress={() => unSelect(template)}
+            style={{
+              position: "absolute",
+              right: 16,
+              top: 16,
+              backgroundColor: hexToRGBA(theme.handle, 0.8),
+              width: 44,
+              height: 44,
+              borderRadius: 22,
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Ionicons name="close" size={24} color={theme.text} />
+          </TouchableOpacity>
         )}
       </View>
     </StrobeButton>

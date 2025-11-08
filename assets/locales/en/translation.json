@@ -350,7 +350,8 @@
     "options-info": "Customize your workout template - rename it, adjust details, start a session from it, make a copy for variations, or delete it if it's no longer needed.",
     "clone-info": "Duplicate this template to create a new version while keeping the original intact. Changing the name can help you distinguish between them.",
     "delete-info": "Deleting this template can't be undone. Your previous workouts won't be affected.",
-    "active-session-warning": "Active workout in progress. Finish it or cancel it before starting a new session or editing templates."
+    "active-session-warning": "Active workout in progress. Finish it or cancel it before starting a new session or editing templates.",
+    "search": "Search templates"
   },
   "splits": {
     "day": "Day",
@@ -375,7 +376,8 @@
     "workout": "Workout",
     "workouts": "Workouts",
     "set-your-fitness-goals": "Set Your Fitness Goals",
-    "set-your-fitness-goals-description": "Set how many workouts you want per week. You can also adjust this and other goals in Settings → Goals."
+    "set-your-fitness-goals-description": "Set how many workouts you want per week. You can also adjust this and other goals in Settings → Goals.",
+    "active-split-alert": "Active split detected - weekly goal can't be changed directly."
   },
 
   "alert": {

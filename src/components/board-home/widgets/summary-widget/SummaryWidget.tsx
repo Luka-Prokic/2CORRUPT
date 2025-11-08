@@ -12,11 +12,15 @@ import { useDracoFont } from "../../../../features/fonts/useDracoFont";
 import { useSessionsByDateRange } from "../../../../features/workout";
 import { SummaryWeek } from "./SummaryWeek";
 import { useWeeklyWorkoutGoal } from "../../../../features/workout/useWorkoutGoal";
+import { WeeklyGoalBottomSheet } from "./WeeklyGoalBottomSheet";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import { useCallback, useRef } from "react";
 
 export function SummaryWidget() {
   const { widgetUnit } = useWidgetUnit();
   const { theme } = useSettingsStore();
   const { fontFamily } = useDracoFont();
+  const weeklyGoalBottomSheetRef = useRef<BottomSheetModal>(null);
 
   const today = new Date();
 
@@ -43,6 +47,10 @@ export function SummaryWidget() {
     router.push("/sessions");
   }
 
+  const presentModal = useCallback(() => {
+    weeklyGoalBottomSheetRef.current?.present();
+  }, []);
+
   return (
     <TouchableOpacity
       onPress={handleWidgetPress}
@@ -66,6 +74,7 @@ export function SummaryWidget() {
         compareTo={goal}
         content={
           <BounceButton
+            onPress={presentModal}
             style={{
               backgroundColor: "transaprent",
             }}
@@ -88,6 +97,7 @@ export function SummaryWidget() {
       />
       <SummaryWeek />
       <SummaryFooter />
+      <WeeklyGoalBottomSheet ref={weeklyGoalBottomSheetRef} />
     </TouchableOpacity>
   );
 }
