@@ -16,6 +16,8 @@ interface TwoOptionStrobeButtonsProps {
   styleLabelTwo?: TextStyle;
   disabledOne?: boolean;
   disabledTwo?: boolean;
+  disabledStrobeOne?: boolean;
+  disabledStrobeTwo?: boolean;
   style?: ViewStyle | ViewStyle[];
   width?: number;
 }
@@ -29,6 +31,8 @@ export function TwoOptionStrobeButtons({
   styleTwo,
   disabledOne,
   disabledTwo,
+  disabledStrobeOne,
+  disabledStrobeTwo,
   style,
   styleLabelOne,
   styleLabelTwo,
@@ -71,7 +75,7 @@ export function TwoOptionStrobeButtons({
             justifyContent: "center",
             alignItems: "center",
           }}
-          disabled={disabledOne}
+          disabled={disabledOne || disabledStrobeOne}
         >
           <Text
             style={{
@@ -115,7 +119,7 @@ export function TwoOptionStrobeButtons({
             justifyContent: "center",
             alignItems: "center",
           }}
-          disabled={disabledTwo}
+          disabled={disabledTwo || disabledStrobeTwo}
         >
           <Text
             style={{

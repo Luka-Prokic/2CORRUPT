@@ -142,11 +142,15 @@ export function NoSplitCard() {
             <TwoOptionStrobeButtons
               labelOne="-"
               labelTwo="+"
+              styleOne={{ backgroundColor: theme.border }}
+              styleTwo={{ backgroundColor: theme.border }}
               onOptionOne={decrementGoal}
               onOptionTwo={incrementGoal}
               width={fullWidth - 32}
               disabledOne={!isActive || activeSplitPlan.plan.activeLength === 1}
               disabledTwo={!isActive}
+              disabledStrobeOne={isActive}
+              disabledStrobeTwo={isActive}
             />
 
             <InfoText
