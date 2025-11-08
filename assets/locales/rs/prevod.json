@@ -352,7 +352,12 @@
     "footer-info": "Uredi tvoj split ovde - promeni njegov naziv, promeni trening ili rest dane, dodaj ili preuredi vežbe, i ažuriraj beleške. Ove izmene utiču na sve buduće vežbe i sesije za ovaj split. Jedan split može biti aktivan u jednom trenutku, ako ga deaktiviraš, automatski će se koristiti zadani “No Split” plan.",
     "add-days-to-split": "Dodaj dane na tvoj split",
     "choose-starting-day": "Izaberi dan za početak",
-    "no-days-yet": "Još nema dana"
+    "no-days-yet": "Još nema dana",
+    "weekly-goal": "Nedeljni cilj",
+    "workout": "Trening",
+    "workouts": "Treninga",
+    "set-your-fitness-goals": "Podesi svoje fitness ciljeve",
+    "set-your-fitness-goals-description": "Set how many workouts you want per week. You can also adjust this and other goals in Settings → Goals."
   },
 
   "alert": {

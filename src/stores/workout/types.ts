@@ -205,6 +205,9 @@ export interface SplitPlanSlice {
   // getters
   getSplitById: (planId: string) => SplitPlan | undefined;
   getActiveSplitStartDay: () => number | null;
+
+  // nosplit
+  updateWeeklyGoal: (newGoal: number) => void;
 }
 
 export interface TemplateSlice {

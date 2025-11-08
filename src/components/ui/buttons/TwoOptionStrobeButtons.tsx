@@ -17,6 +17,7 @@ interface TwoOptionStrobeButtonsProps {
   disabledOne?: boolean;
   disabledTwo?: boolean;
   style?: ViewStyle | ViewStyle[];
+  width?: number;
 }
 
 export function TwoOptionStrobeButtons({
@@ -31,13 +32,14 @@ export function TwoOptionStrobeButtons({
   style,
   styleLabelOne,
   styleLabelTwo,
+  width = WIDTH - 32,
 }: TwoOptionStrobeButtonsProps) {
   const { theme } = useSettingsStore();
 
   return (
     <View
       style={{
-        width: WIDTH - 32,
+        width: width,
         height: 68,
         paddingVertical: 2,
         flexDirection: "row",
@@ -48,7 +50,7 @@ export function TwoOptionStrobeButtons({
       {/* OP 1 Button */}
       <BounceButton
         style={{
-          width: WIDTH / 2 - 20,
+          width: width / 2 - 4,
           height: 64,
           backgroundColor: theme.handle,
           borderTopLeftRadius: 32,
@@ -64,7 +66,7 @@ export function TwoOptionStrobeButtons({
         <StrobeBlur
           tint="light"
           style={{
-            width: WIDTH / 2 - 20,
+            width: width / 2 - 4,
             height: 64,
             justifyContent: "center",
             alignItems: "center",
@@ -87,7 +89,7 @@ export function TwoOptionStrobeButtons({
       {/* OP 2 Button */}
       <BounceButton
         style={{
-          width: WIDTH / 2 - 20,
+          width: width / 2 - 4,
           height: 64,
           backgroundColor: theme.handle,
           borderTopLeftRadius: 8,
@@ -108,7 +110,7 @@ export function TwoOptionStrobeButtons({
             theme.tint,
           ]}
           style={{
-            width: WIDTH / 2 - 20,
+            width: width / 2 - 4,
             height: 64,
             justifyContent: "center",
             alignItems: "center",

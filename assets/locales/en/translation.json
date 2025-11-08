@@ -370,7 +370,12 @@
     "list-info": "Manage your split plans here - organize and store all your training routines so you can switch between them easily. Each split represents a different plan or focus for your workouts, letting you vary your training while keeping everything tracked. One split is always active; if none is selected, the default “No Split” will be used automatically.",
     "add-days-to-split": "Add days to your split",
     "choose-starting-day": "Choose starting day",
-    "no-days-yet": "No days yet"
+    "no-days-yet": "No days yet",
+    "weekly-goal": "Weekly Goal",
+    "workout": "Workout",
+    "workouts": "Workouts",
+    "set-your-fitness-goals": "Set Your Fitness Goals",
+    "set-your-fitness-goals-description": "Set how many workouts you want per week. You can also adjust this and other goals in Settings → Goals."
   },
 
   "alert": {

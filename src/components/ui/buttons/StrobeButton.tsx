@@ -17,6 +17,7 @@ interface StrobeButtonProps extends Omit<TouchableOpacityProps, "style"> {
   strobeColors?: [string, string, string, string];
   strobeDisabled?: boolean;
   strobeTint?: "default" | "light" | "dark" | "auto";
+  pressable?: boolean;
 }
 
 export function StrobeButton({
@@ -28,6 +29,7 @@ export function StrobeButton({
   textColor,
   strobeDisabled = false,
   strobeTint = "light",
+  pressable,
   ...rest
 }: StrobeButtonProps) {
   const { theme } = useSettingsStore();
@@ -42,7 +44,7 @@ export function StrobeButton({
   return (
     <TouchableOpacity
       hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-      activeOpacity={0.5}
+      activeOpacity={pressable ? 1 : 0.8}
       {...rest}
     >
       <Animated.View

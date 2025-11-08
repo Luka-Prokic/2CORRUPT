@@ -11,6 +11,7 @@ import { Text } from "react-native";
 import { useDracoFont } from "../../../../features/fonts/useDracoFont";
 import { useSessionsByDateRange } from "../../../../features/workout";
 import { SummaryWeek } from "./SummaryWeek";
+import { useWeeklyWorkoutGoal } from "../../../../features/workout/useWorkoutGoal";
 
 export function SummaryWidget() {
   const { widgetUnit } = useWidgetUnit();
@@ -18,6 +19,8 @@ export function SummaryWidget() {
   const { fontFamily } = useDracoFont();
 
   const today = new Date();
+
+  const goal = useWeeklyWorkoutGoal();
 
   // Get Monday of current week
   const firstDayOfWeek = new Date(today);
@@ -39,6 +42,7 @@ export function SummaryWidget() {
   function handleWidgetPress() {
     router.push("/sessions");
   }
+
   return (
     <TouchableOpacity
       onPress={handleWidgetPress}
@@ -57,8 +61,9 @@ export function SummaryWidget() {
     >
       <SummaryHeader />
       <ProgressRing
+        key={`${goal}-${sessionsThisWeek.length}`}
         compareWith={sessionsThisWeek.length}
-        compareTo={5} //TODO: now its dummy goal, in future change it so user can set it
+        compareTo={goal}
         content={
           <BounceButton
             style={{

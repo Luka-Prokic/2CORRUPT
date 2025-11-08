@@ -7,6 +7,7 @@ import { StrobeBlur } from "../../../ui/misc/StrobeBlur";
 import { BounceButton } from "../../../ui/buttons/BounceButton";
 import { useTranslation } from "react-i18next";
 import { RestCheatSheet } from "./RestCheatSheet";
+import { TwoOptionStrobeButtons } from "../../../ui/buttons/TwoOptionStrobeButtons";
 
 export function RestTimerSheet() {
   const { theme } = useSettingsStore();
@@ -45,58 +46,20 @@ export function RestTimerSheet() {
         {minutes}min {seconds}s
       </Text>
 
-      <View
-        style={{
-          width: WIDTH - 32,
-          height: 68,
-          paddingVertical: 2,
-          flexDirection: "row",
-          gap: 8,
-          marginTop: 24,
+      <TwoOptionStrobeButtons
+        labelOne="-15"
+        labelTwo="+15"
+        onOptionOne={() => handleChangeRestTime(-15)}
+        onOptionTwo={() => handleChangeRestTime(15)}
+        styleOne={{
+          backgroundColor: activeTemplate ? theme.tint : theme.handle,
         }}
-      >
-        {["-15", "+15"].map((label: string, index: number) => (
-          <BounceButton
-            key={index}
-            style={{
-              width: WIDTH / 2 - 20,
-              height: 64,
-              backgroundColor: theme.handle,
-              borderTopLeftRadius: index === 0 ? 32 : 8,
-              borderBottomLeftRadius: index === 0 ? 32 : 8,
-              borderTopRightRadius: index === 1 ? 32 : 8,
-              borderBottomRightRadius: index === 1 ? 32 : 8,
-              overflow: "hidden",
-            }}
-            onPress={() => handleChangeRestTime(label === "-15" ? -15 : 15)}
-            disabled={restTime === 0 && label === "-15"}
-          >
-            <StrobeBlur
-              colors={
-                activeTemplate
-                  ? [theme.text, theme.text, theme.text, theme.text]
-                  : [
-                      theme.caka,
-                      theme.primaryBackground,
-                      theme.accent,
-                      theme.tint,
-                    ]
-              }
-              tint="light"
-              style={{
-                width: WIDTH / 2 - 20,
-                height: 64,
-              }}
-            >
-              <Text
-                style={{ fontSize: 24, fontWeight: "bold", color: theme.text }}
-              >
-                {label}
-              </Text>
-            </StrobeBlur>
-          </BounceButton>
-        ))}
-      </View>
+        styleTwo={{
+          backgroundColor: activeTemplate ? theme.tint : theme.handle,
+        }}
+        disabledOne={restTime === 0}
+      />
+
       <Text
         style={{
           fontSize: 14,

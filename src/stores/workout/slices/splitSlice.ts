@@ -562,5 +562,35 @@ export const createSplitPlanSlice: StateCreator<
     // ----------------- Getters -----------------
     getSplitById: (planId) => get().splitPlans.find((p) => p.id === planId),
     getActiveSplitStartDay: () => get().activeSplitPlan?.startDay ?? null,
+
+    // ----------------- NoSplit -----------------
+    updateWeeklyGoal: (newGoal: number) => {
+      set((state) => {
+        // Update NoSplit plan in splitPlans
+        const splitPlans = state.splitPlans.map((p) =>
+          p.id === "no-split"
+            ? {
+                ...p,
+                activeLength: newGoal, // <-- updated here
+                updatedAt: new Date().toISOString(),
+              }
+            : p
+        );
+
+        // Also update activeSplitPlan if it's NoSplit
+        const activeSplitPlan =
+          state.activeSplitPlan?.plan.id === "no-split"
+            ? {
+                ...state.activeSplitPlan,
+                plan: {
+                  ...state.activeSplitPlan.plan,
+                  activeLength: newGoal, // <-- updated here
+                },
+              }
+            : state.activeSplitPlan;
+
+        return { ...state, splitPlans, activeSplitPlan };
+      });
+    },
   };
 };
