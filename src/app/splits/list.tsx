@@ -3,7 +3,7 @@ import { Fragment } from "react";
 import { ScreenContent } from "../../components/ui/utils/ScreenContent";
 import { FlatList } from "react-native-gesture-handler";
 import { useWorkoutStore } from "../../stores/workout";
-import { BackgroundText } from "../../components/ui/misc/BackgroundText";
+import { BackgroundText } from "../../components/ui/text/BackgroundText";
 import { CreateSplitButton } from "../../components/splits/header/CreateSplitButton";
 import { SplitCard } from "../../components/splits/edit-split/SplitCard";
 import { NoSplitCard } from "../../components/splits/edit-split/NoSplitCard";

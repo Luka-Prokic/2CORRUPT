@@ -32,6 +32,9 @@ interface CardSliderProps<T> extends Omit<FlatListProps<T>, "renderItem"> {
   firstDot?: ReactNode;
   lastDot?: ReactNode;
   maxDotsShown?: number; // 🆕 new prop
+  showDotsTop?: boolean;
+  selectedIndex?: number;
+  onSelect?: (index: number) => void;
 }
 
 export function CardSlider<T>({
@@ -48,12 +51,15 @@ export function CardSlider<T>({
   lastCard, // 🆕
   firstDot, // 🆕
   lastDot, // 🆕
-  maxDotsShown, // 🆕
+  maxDotsShown = 5, // 🆕
+  showDotsTop = false,
+  selectedIndex = 0,
+  onSelect,
   ...flatListProps
 }: CardSliderProps<T>) {
   const { theme } = useSettingsStore();
   const scrollX = useRef(new Animated.Value(0)).current;
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(selectedIndex);
 
   // ✅ Include firstCard and lastCard cleanly in the data
   const fullData: (string | T)[] = [
@@ -78,6 +84,7 @@ export function CardSlider<T>({
           newIndex < fullData.length
         ) {
           setCurrentIndex(newIndex);
+          onSelect?.(newIndex);
         }
       },
     }
@@ -85,6 +92,17 @@ export function CardSlider<T>({
 
   return (
     <Fragment>
+      {showDotsTop && fullData.length > 1 && (
+        <ScrollableDots
+          dataLength={fullData.length}
+          currentIndex={currentIndex}
+          theme={theme}
+          style={{ height: 32, ...(Array.isArray(styleDots) ? {} : styleDots) }}
+          firstDot={firstDot}
+          lastDot={lastDot}
+          maxDotsShown={maxDotsShown}
+        />
+      )}
       <AnimatedFlatList
         {...flatListProps}
         data={fullData}
@@ -133,7 +151,7 @@ export function CardSlider<T>({
         nestedScrollEnabled
         ListEmptyComponent={emptyCard}
       />
-      {!hideDots && fullData.length > 1 && (
+      {!hideDots && !showDotsTop && fullData.length > 1 && (
         <ScrollableDots
           dataLength={fullData.length}
           currentIndex={currentIndex}

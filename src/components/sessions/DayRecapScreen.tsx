@@ -4,10 +4,7 @@ import { FlatList } from "react-native-gesture-handler";
 import { SessionRecapCard } from "./cards/recap/SessionRecapCard";
 import { ScreenContent } from "../ui/utils/ScreenContent";
 import { useCalendarNavigation } from "../../features/test/useCalendarNavigation";
-import { View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { EmptyFooter } from "../ui/containers/EmptyFooter";
-import { MuscleRadarChartDay } from "./stats/MuscleRadarChartDay";
 import { StaticDailyActivityBar } from "./day-activity-bar/StaticDailyActivityBar";
 import { DaySummary } from "./day-ui/DaySummary";
 import { SummaryEmptyHeader } from "./header/SummaryEmptyHeader";
@@ -22,7 +19,8 @@ export function DayRecapScreen({ date }: DayRecapScreenProps) {
 
   if (isFutureDate(date)) return null;
   return (
-    <ScreenContent HeaderComponent={<SummaryEmptyHeader />}>
+    <ScreenContent>
+      <SummaryEmptyHeader />
       <DaySummary date={date} />
 
       <StaticDailyActivityBar date={date} />

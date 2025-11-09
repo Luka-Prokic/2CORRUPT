@@ -36,6 +36,9 @@ interface CenterCardSliderProps<T>
   firstDot?: ReactNode;
   lastDot?: ReactNode;
   maxDotsShown?: number;
+  showDotsTop?: boolean;
+  selectedIndex?: number;
+  onSelect?: (index: number) => void;
 }
 
 export function CenterCardSlider<T>({
@@ -52,12 +55,15 @@ export function CenterCardSlider<T>({
   lastCard,
   firstDot,
   lastDot,
-  maxDotsShown,
+  maxDotsShown = 5,
+  showDotsTop = false,
+  selectedIndex = 0,
+  onSelect,
   ...flatListProps
 }: CenterCardSliderProps<T>) {
   const { theme } = useSettingsStore();
   const scrollX = useRef(new Animated.Value(0)).current;
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(selectedIndex);
 
   // Include firstCard and lastCard cleanly in the data
   const fullData: (string | T)[] = [
@@ -89,6 +95,7 @@ export function CenterCardSlider<T>({
           newIndex < fullData.length
         ) {
           setCurrentIndex(newIndex);
+          onSelect?.(newIndex);
         }
       },
     }
@@ -96,6 +103,17 @@ export function CenterCardSlider<T>({
 
   return (
     <Fragment>
+      {showDotsTop && fullData.length > 1 && (
+        <ScrollableDots
+          dataLength={fullData.length}
+          currentIndex={currentIndex}
+          theme={theme}
+          style={{ height: 32, ...(Array.isArray(styleDots) ? {} : styleDots) }}
+          firstDot={firstDot}
+          lastDot={lastDot}
+          maxDotsShown={maxDotsShown}
+        />
+      )}
       <AnimatedFlatList
         {...flatListProps}
         data={fullData}
@@ -154,7 +172,7 @@ export function CenterCardSlider<T>({
         nestedScrollEnabled
         ListEmptyComponent={emptyCard}
       />
-      {!hideDots && fullData.length > 1 && (
+      {!hideDots && !showDotsTop && fullData.length > 1 && (
         <ScrollableDots
           dataLength={fullData.length}
           currentIndex={currentIndex}

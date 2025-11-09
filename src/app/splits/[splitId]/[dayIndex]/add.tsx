@@ -6,6 +6,7 @@ import { AddSplitWorkoutList } from "../../../../components/splits/add-workout/A
 import { WorkoutTemplate } from "../../../../stores/workout/types";
 import { WorkoutFilter } from "../../../../components/splits/add-workout/WorkoutFilter";
 import { BottomAddWorkoutSection } from "../../../../components/splits/add-workout/BottomAddWorkoutSection";
+import { EmptyFooter } from "../../../../components/ui/containers/EmptyFooter";
 
 export default function AddPlannedWorkoutScreen() {
   const { t } = useTranslation();
@@ -14,9 +15,7 @@ export default function AddPlannedWorkoutScreen() {
     mode?: string;
   }>();
   const isSwapMode = mode === "swap" && workoutId;
-  const [selectedTemplates, setSelectedTemplates] = useState<WorkoutTemplate[]>(
-    []
-  );
+  const [selected, setSelected] = useState<WorkoutTemplate[]>([]);
   const [filteredTemplates, setFilteredTemplates] = useState<WorkoutTemplate[]>(
     []
   );
@@ -24,24 +23,26 @@ export default function AddPlannedWorkoutScreen() {
   return (
     <Fragment>
       <Stack.Screen
-        options={{ title: t("splits.add-workout"), headerBlurEffect: "none" }}
+        options={{
+          title: t("splits.add-workout"),
+          headerBlurEffect: "none",
+        }}
       />
       <ScreenContent
         edges={["top"]}
         scroll={false}
-        HeaderComponent={
-          <WorkoutFilter setFilteredTemplates={setFilteredTemplates} />
-        }
         FooterComponent={
-          <BottomAddWorkoutSection selectedTemplates={selectedTemplates} />
+          <BottomAddWorkoutSection selectedTemplates={selected} />
         }
       >
+        <WorkoutFilter setFilteredTemplates={setFilteredTemplates} />
         <AddSplitWorkoutList
           filteredTemplates={filteredTemplates}
-          selectedTemplates={selectedTemplates}
-          setSelectedTemplates={setSelectedTemplates}
+          selectedTemplates={selected}
+          setSelectedTemplates={setSelected}
           maxSelection={isSwapMode ? 1 : undefined}
         />
+        <EmptyFooter />
       </ScreenContent>
     </Fragment>
   );

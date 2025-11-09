@@ -26,7 +26,8 @@
     "continue": "Nastavi",
     "scrollable": "Skrolujuće",
     "more": "Više",
-    "confirm": "Potvrdi"
+    "confirm": "Potvrdi",
+    "active": "Aktivan"
   },
   "form": {
     "name": "Naziv",
@@ -332,7 +333,8 @@
     "options-info": "Prilagodite svoj šablon treninga - promenite naziv, izmenite detalje, započnite trening na osnovu njega, napravite kopiju za varijacije ili ga obrišite ako vam više nije potreban.",
     "clone-info": "Duplirajte ovaj šablon da napravite novu verziju, dok original ostaje nepromenjen. Promena imena može vam pomoći da ih razlikujete.",
     "delete-info": "Brisanje šablona je trajno. Tvoji prethodni treninzi neće biti obrisani.",
-    "active-session-warning": "Trening je u toku. Završite ga pre nego što započnete novi ili uređujete šablone."
+    "active-session-warning": "Trening je u toku. Završite ga pre nego što započnete novi ili uređujete šablone.",
+    "no-templates-found-match": "Nema template-a koji odgovara pretrazi"
   },
   "splits": {
     "day": "Dan",
@@ -358,7 +360,22 @@
     "workouts": "Treninga",
     "set-your-fitness-goals": "Podesi svoje fitness ciljeve",
     "set-your-fitness-goals-description": "Set how many workouts you want per week. You can also adjust this and other goals in Settings → Goals.",
-    "active-split-alert": "Aktivan split je detektovan - nedeljni cilj ne može biti direktno promenjen."
+    "active-split-alert": "Aktivan split je detektovan - nedeljni cilj ne može biti direktno promenjen.",
+    "create-template-info": "Kreiraj template da brzo dodajš svoje favorite vežbe u ovaj split. Možeš prilagoditi ga da odgovara tvojoj rutini i štediš vreme kada planiraš buduće vežbe. Dodatno, možeš kreirati template iz bilo koje završene sesije, što ti omogućava da reuses vežbe koje si već uradio.",
+    "create-template-description": "Kreiraj template da brzo dodajš svoje favorite vežbe u ovaj split. Možeš prilagoditi ga da odgovara tvojoj rutini i štediš vreme kada planiraš buduće vežbe. Dodatno, možeš kreirati template iz bilo koje završene sesije, što ti omogućava da reuses vežbe koje si već uradio.",
+    "create-template-button": "Kreiraj novi template vežbe",
+    "no-templates-available": "Nema dostupnih template-a",
+    "add-workout-from-sessions-list-title": "Dodaj trening iz završenih sesija u poslednjih 7 dana.",
+    "templates": "Template-i",
+    "sessions": "Sesije",
+    "go-to-summary": "Idi na Pregled da kreiraš template-e"
+  },
+  "all": {
+    "show-workouts-this-week": "Pogledaj Treninge Ove Nedelje",
+    "hide-workouts-this-week": "Sakrij Treninge Ove Nedelje",
+    "workouts-this-week-title": "Treningi Ove Nedelje",
+    "workouts-this-week-description": "Pogledaj svoje završene treninge iz prošle nedelje.",
+    "workouts-this-week-button": "Pogledaj Treninge Ove Nedelje"
   },
 
   "alert": {

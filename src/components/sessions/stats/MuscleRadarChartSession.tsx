@@ -7,7 +7,6 @@ import {
 } from "../../../features/workout/useSessionHistory";
 import { useSettingsStore } from "../../../stores/settings";
 import { useTranslation } from "react-i18next";
-import { useWidgetUnit } from "../../../features/widgets/useWidgetUnit";
 import { hexToRGBA } from "../../../features/HEXtoRGB";
 import { WorkoutSession } from "../../../stores/workout";
 
@@ -46,25 +45,24 @@ const fixedMuscleOrder = [
 
 interface MuscleRadarChartSessionProps {
   session: WorkoutSession;
+  size: number;
 }
 
 export function MuscleRadarChartSession({
   session,
+  size,
 }: MuscleRadarChartSessionProps) {
   const { theme } = useSettingsStore();
-  const { fullWidth } = useWidgetUnit();
   const { t } = useTranslation();
 
   const muscles = useMuscleScoresForSession(session) ?? [];
   const categories = useCategoryScoresForSession(session) ?? [];
 
-  // If too many muscles -> use categories
   const useCategories = muscles.length > 12;
   const sourceData = useCategories ? categories : muscles;
 
-  // No data? Just reserve space
   if (!sourceData || sourceData.length === 0) {
-    return <View style={{ height: fullWidth }} />;
+    return <View style={{ height: size }} />;
   }
 
   const usedKeys = useCategories
@@ -93,10 +91,10 @@ export function MuscleRadarChartSession({
     <RadarChart
       data={data}
       labels={labels}
-      chartSize={fullWidth}
+      chartSize={size}
       noOfSections={5}
       polygonConfig={{
-        fill: hexToRGBA(theme.accent, 0.6),
+        fill: hexToRGBA(theme.accent, 0.8),
         stroke: theme.accent,
         strokeWidth: 4,
       }}
@@ -107,7 +105,7 @@ export function MuscleRadarChartSession({
         showGradient: false,
       }}
       labelConfigArray={labels.map(() => ({
-        fontSize: useCategories ? 13 : 12,
+        fontSize: useCategories ? 16 : 12,
         fontWeight: "bold",
         stroke: theme.text,
       }))}

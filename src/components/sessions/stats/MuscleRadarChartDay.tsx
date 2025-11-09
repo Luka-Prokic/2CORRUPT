@@ -113,7 +113,7 @@ export function MuscleRadarChartDay({ date }: MuscleRadarChartDayProps) {
         chartSize={fullWidth}
         noOfSections={5}
         polygonConfig={{
-          fill: hexToRGBA(theme.tint, 0.6),
+          fill: hexToRGBA(theme.tint, 0.8),
           stroke: theme.tint,
           strokeWidth: 4,
         }}

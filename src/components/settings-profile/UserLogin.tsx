@@ -9,7 +9,7 @@ import { Container } from "../ui/containers/Container";
 
 import { CorruptTittle } from "../corrupt/CorruptTittle";
 import { useKeyboardHeight } from "../../features/ui/useKeyboardHeight";
-import { BackgroundText } from "../ui/misc/BackgroundText";
+import { BackgroundText } from "../ui/text/BackgroundText";
 
 interface UserLoginProps {
   onLoginSuccess?: () => void;

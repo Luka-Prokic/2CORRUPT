@@ -15,10 +15,11 @@ import { useUIStore } from "../../../stores/ui";
 import { ExercisePreviewCard } from "../cards/ExercisePreviewCard";
 import Animated, { FadeIn } from "react-native-reanimated";
 import { useLayoutPreviewHeight } from "../../../features/ui/useGetExercisePreviewCardHeight";
+import { SessionName } from "../../board-workout/sheets/session/SessionName";
 
 interface PreviewSessionViewProps {
   session: WorkoutSession;
-  setView: (view: SessionBottomSheetViews) => void;
+  setView?: (view: SessionBottomSheetViews) => void;
 }
 
 export const PreviewSessionView = forwardRef<
@@ -47,11 +48,10 @@ export const PreviewSessionView = forwardRef<
 
   return (
     <Animated.View entering={FadeIn}>
-      <SessionNameInput
+      <SessionName
         session={session}
         styleView={{ marginVertical: 16 }}
         fontSize={32}
-        disabled
       />
       {session.notes && (
         <Text

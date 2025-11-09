@@ -21,22 +21,6 @@ export function DaySummary({ date }: DaySummaryProps) {
       }}
     >
       <MuscleRadarChartDay date={date} />
-
-      {/* <View style={{ position: "absolute", top: 4, left: 4 }}>
-        <WeeklyProgress date={date} />
-      </View>
-
-      <View style={{ position: "absolute", top: 4, right: 4 }}>
-        <DayBadge date={date} />
-      </View>
-
-      <View style={{ position: "absolute", bottom: 4, left: 4 }}>
-        <DayAchievements />
-      </View>
-
-      <View style={{ position: "absolute", bottom: 4, right: 4 }}>
-        <SplitStatus date={date} />
-      </View> */}
     </View>
   );
 }

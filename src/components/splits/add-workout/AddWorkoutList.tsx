@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { FlatList } from "react-native";
 import { WorkoutTemplate } from "../../../stores/workout/types";
-import { EmptyFooter } from "../../ui/containers/EmptyFooter";
 import { AddSplitWorkoutCard } from "./AddSplitWorkoutCard";
+import { EmptyFooter } from "../../ui/containers/EmptyFooter";
+import { NoSearchMatchTempaltes } from "../../templates/NoSearchMatchTempaltes";
 
 const PAGE_SIZE = 20;
 
@@ -49,6 +50,13 @@ export function AddSplitWorkoutList({
     setPage(1);
   }, [filteredTemplates.length]);
 
+  function footerComponent() {
+    if (filteredTemplates.length === 0) {
+      return <NoSearchMatchTempaltes />;
+    }
+    return <EmptyFooter />;
+  }
+
   return (
     <FlatList
       data={pagedWorkouts}
@@ -65,6 +73,9 @@ export function AddSplitWorkoutList({
       contentContainerStyle={{
         paddingHorizontal: 16,
         gap: 8,
+        paddingTop: 16,
+        paddingBottom: 24,
+        flexGrow: filteredTemplates.length === 0 ? 1 : undefined,
       }}
       columnWrapperStyle={{
         gap: 8,
@@ -75,6 +86,7 @@ export function AddSplitWorkoutList({
       maxToRenderPerBatch={PAGE_SIZE}
       windowSize={10}
       removeClippedSubviews
+      ListEmptyComponent={footerComponent}
       ListFooterComponent={<EmptyFooter />}
     />
   );

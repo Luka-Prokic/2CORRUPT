@@ -5,7 +5,6 @@ import { useTranslation } from "react-i18next";
 import { CreateTemplateButton } from "../components/templates/header/CreateTemplateButton";
 import { HeaderTemplatesToggle } from "../components/templates/header/HeaderTemplatesToggle";
 import { FlatList } from "react-native-gesture-handler";
-import { EmptyHeader } from "../components/ui/containers/EmptyHeader";
 import { useWorkoutStore, WorkoutTemplate } from "../stores/workout";
 import { TemplateSelectCard } from "../components/templates/TemplateSelectCard";
 import { SelectAllTemplatesButton } from "../components/templates/header/SelectAllTemplatesButton";
@@ -15,9 +14,10 @@ import { DeleteSelectedTemplates } from "../components/templates/header/DeleteSe
 import { EmptyTemplateComponent } from "../components/templates/EmptyTemplateComponent";
 import { CloneSelectedTemplates } from "../components/templates/header/CloneSelectedTemplates";
 import { AddToSplitSelectedTemplates } from "../components/templates/header/AddToSplitSelectedTemplates";
-import { BackgroundText } from "../components/ui/misc/BackgroundText";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { TemplateFilter } from "../components/templates/TemplateFilter";
+import { NoSearchMatchTempaltes } from "../components/templates/NoSearchMatchTempaltes";
+import { EmptyFooter } from "../components/ui/containers/EmptyFooter";
 
 export default function TemplatesScreen() {
   const { t } = useTranslation();
@@ -29,6 +29,13 @@ export default function TemplatesScreen() {
     []
   );
   const insets = useSafeAreaInsets();
+
+  function footerComponent() {
+    if (filteredTemplates.length !== 0) {
+      return <NoSearchMatchTempaltes />;
+    }
+    return <EmptyTemplateComponent />;
+  }
 
   function headerLeft() {
     if (selectMode)
@@ -133,13 +140,8 @@ export default function TemplatesScreen() {
           columnWrapperStyle={{
             gap: 8,
           }}
-          ListEmptyComponent={() => <EmptyTemplateComponent />}
-          ListFooterComponent={() => (
-            <BackgroundText
-              text={t("templates.empty-info")}
-              style={{ textAlign: "justify" }}
-            />
-          )}
+          ListEmptyComponent={footerComponent}
+          ListFooterComponent={<EmptyFooter />}
         />
       </ScreenContent>
     </Fragment>
