@@ -55,7 +55,7 @@ export function DayPicker({
             borderRadius: "50%",
             width: buttonSize,
             height: buttonSize,
-            backgroundColor: theme.fifthBackground,
+            backgroundColor: theme.tint,
           },
           animatedBackgroundStyle,
         ]}
