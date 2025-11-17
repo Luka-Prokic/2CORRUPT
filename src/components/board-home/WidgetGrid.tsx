@@ -2,13 +2,14 @@ import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ProfileWidget } from "./widgets/profile-widget/ProfileWidget";
 import { AwardsWidget } from "./mockups/AwardsWidget";
-import { BlankWidget } from "./mockups/BlankWidget";
 import { WIDTH } from "../../features/Dimensions";
 import { hexToRGBA } from "../../features/HEXtoRGB";
-import { BackButtonWidget } from "./mockups/BackButtonWidget";
-import { AllButtonWidget } from "./mockups/AllButtonWidget";
-import { TemplateWidget } from "./mockups/TemplateWidget";
+import { BackButtonWidget } from "./widgets/BackButtonWidget";
+import { AllButtonWidget } from "./widgets/all-widget/AllButtonWidget";
 import { useSettingsStore } from "../../stores/settings";
+import { SplitsWidget } from "./widgets/splits-widget/SplitsWidget";
+import { SummaryWidget } from "./widgets/summary-widget/SummaryWidget";
+import { TemplatesWidget } from "./widgets/templates-widget/TemplatesWidget";
 
 const WIDGET_SIZE = (WIDTH - 40) / 2; // 2 columns with padding
 
@@ -31,17 +32,9 @@ export function WidgetGrid() {
       {/* full-mock */}
       <AwardsWidget />
 
-      <BlankWidget
-        style={{
-          width: WIDGET_SIZE,
-          height: WIDGET_SIZE,
-          borderRadius: 28,
-          backgroundColor: hexToRGBA(theme.thirdBackground, 0.4),
-          marginBottom: 8,
-        }}
-      />
+      <SummaryWidget />
 
-      <TemplateWidget />
+      <TemplatesWidget />
 
       <View
         style={{
@@ -56,21 +49,16 @@ export function WidgetGrid() {
         <AllButtonWidget />
       </View>
 
-      <BlankWidget
-        style={{
-          width: WIDGET_SIZE,
-          height: (WIDGET_SIZE - 8) / 2,
-          borderRadius: 28,
-          backgroundColor: hexToRGBA(theme.thirdBackground, 0.4),
-        }}
-      />
+      <SplitsWidget />
 
-      <BlankWidget
+      <View
         style={{
           width: WIDGET_SIZE * 2 + 8,
           height: WIDGET_SIZE,
-          borderRadius: 28,
-          backgroundColor: hexToRGBA(theme.thirdBackground, 0.4),
+          borderRadius: 32,
+          backgroundColor: hexToRGBA(theme.thirdBackground, 0.6),
+          borderWidth: 1,
+          borderColor: hexToRGBA(theme.thirdBackground, 0.4),
         }}
       />
     </View>

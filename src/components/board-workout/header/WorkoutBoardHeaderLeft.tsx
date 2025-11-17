@@ -25,6 +25,7 @@ export function WorkoutBoardHeaderLeft({
   function handleGoBack() {
     router.back();
   }
+  
   return (
     <Fragment>
       <TouchableOpacity onPress={handleGoBack}>

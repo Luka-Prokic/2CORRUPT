@@ -17,11 +17,7 @@ export function DropSetRow({
   index: number;
 }) {
   const { theme } = useSettingsStore();
-  const {
-    updateDropSetInActiveExercise,
-    removeDropSetFromActiveExercise,
-    activeExercise,
-  } = useWorkoutStore();
+  const { removeDropSetFromActiveExercise, activeExercise } = useWorkoutStore();
 
   const handleRemoveDrop = (dropId: string) => {
     removeDropSetFromActiveExercise(set.id, dropId);
@@ -79,37 +75,6 @@ export function DropSetRow({
           width: columnWidth,
         }}
       />
-
-      {/* <TextInput
-        style={{
-          textAlign: "center",
-          fontSize: 16,
-          color: set.isCompleted ? theme.secondaryText : theme.grayText,
-          height: 44,
-          width: columnWidth,
-        }}
-        value={drop.reps?.toString() ?? ""}
-        onChangeText={(text) => handleDropUpdate(drop.id, { reps: text })}
-        placeholder="0"
-        placeholderTextColor={theme.grayText}
-        keyboardType="numeric"
-      /> */}
-
-      {/* <TextInput
-        style={{
-          textAlign: "center",
-          fontSize: 16,
-          color: set.isCompleted ? theme.secondaryText : theme.grayText,
-          height: 44,
-          width: columnWidth,
-        }}
-        value={drop.weight?.toString() ?? ""}
-        onChangeText={(text) => handleDropUpdate(drop.id, { weight: text })}
-        placeholder="0"
-        placeholderTextColor={theme.grayText}
-        keyboardType="numeric"
-      /> */}
-
       <TouchableOpacity
         onPress={() => handleRemoveDrop(drop.id)}
         style={{

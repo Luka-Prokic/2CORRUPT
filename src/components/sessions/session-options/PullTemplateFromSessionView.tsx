@@ -1,0 +1,89 @@
+import { forwardRef, Fragment, useState } from "react";
+import { useWorkoutStore, WorkoutSession } from "../../../stores/workout";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import { useSettingsStore } from "../../../stores/settings";
+import { SessionBottomSheetViews } from "./SessionBottomSheet";
+import { Text } from "react-native";
+import { useTranslation } from "react-i18next";
+import { TempInput } from "../../ui/input/TempInput";
+import { TwoOptionStrobeButtons } from "../../ui/buttons/TwoOptionStrobeButtons";
+import { useKeyboardHeight } from "../../../features/ui/useKeyboardHeight";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+
+interface PullTemplateFromSessionViewProps {
+  session: WorkoutSession;
+  setView: (view: SessionBottomSheetViews) => void;
+}
+
+export const PullTemplateFromSessionView = forwardRef<
+  BottomSheetModal,
+  PullTemplateFromSessionViewProps
+>(({ session, setView }, ref) => {
+  const { editTemplate, confirmTemplate, updateTemplateField } =
+    useWorkoutStore();
+  const { theme } = useSettingsStore();
+  const { t } = useTranslation();
+  const [tempName, setTempName] = useState(session?.name || "");
+  const bottomSpace = useKeyboardHeight(16);
+
+  const itsNotReady = !tempName;
+
+  function closeSheet() {
+    (ref as React.RefObject<BottomSheetModal>)?.current?.close();
+  }
+
+  const handlePullTemplate = () => {
+    const templateId = editTemplate();
+
+    const newLayout = session.layout.map((ex) => ({
+      ...ex,
+      sets: ex.sets.map((set) => ({
+        ...set,
+        isCompleted: false,
+      })),
+    }));
+
+    updateTemplateField(templateId, "layout", newLayout);
+    updateTemplateField(templateId, "name", tempName);
+    updateTemplateField(templateId, "description", session.notes);
+    confirmTemplate();
+
+    closeSheet();
+  };
+
+  const handleCancel = () => {
+    setView("options");
+  };
+
+  return (
+    <Fragment>
+      <TempInput
+        tempName={tempName}
+        setTempName={setTempName}
+        styleView={{
+          marginTop: 16,
+          marginBottom: bottomSpace,
+        }}
+      />
+      <TwoOptionStrobeButtons
+        labelOne={t("button.cancel")}
+        labelTwo={t("button.add")}
+        onOptionOne={handleCancel}
+        onOptionTwo={handlePullTemplate}
+        styleTwo={{ backgroundColor: theme.accent }}
+        styleLabelTwo={{ color: theme.secondaryText }}
+        disabledTwo={itsNotReady}
+      />
+      <Text
+        style={{
+          marginVertical: 16,
+          color: theme.grayText,
+          fontSize: 14,
+          textAlign: "justify",
+        }}
+      >
+        {t("sessions.add-template-info")}
+      </Text>
+    </Fragment>
+  );
+});

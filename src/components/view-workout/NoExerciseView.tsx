@@ -11,7 +11,12 @@ export function NoExerciseView() {
   const { t } = useTranslation();
 
   function handlePress() {
-    router.push("/add-exercise");
+    router.push({
+      pathname: "/add-exercise/[type]",
+      params: {
+        type: "session",
+      },
+    });
   }
 
   return (
@@ -23,7 +28,6 @@ export function NoExerciseView() {
         paddingBottom: CORRUPT_BUTTON_HEIGHT_FROM_BOTTOM,
       }}
     >
-      {/* <BackHomeButton /> */}
       <StrobeButton
         onPress={handlePress}
         style={{

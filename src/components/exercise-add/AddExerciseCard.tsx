@@ -6,7 +6,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useTranslatedExerciseName } from "../../features/translate/useTranslatedExercisesNames";
 import { translateBodyPart } from "../../features/translate/useTranslatedBodyPart";
 import { StrobeButton } from "../ui/buttons/StrobeButton";
-import { memo, useMemo } from "react";
+import { useMemo } from "react";
 
 interface AddExerciseCardProps {
   exercise: ExerciseInfo;
@@ -135,7 +135,7 @@ function SelectionButton({
       <View
         style={{
           backgroundColor: hexToRGBA(theme.handle, 0.8),
-          padding: 10,
+          padding: 8,
           minWidth: 44,
           height: 44,
           borderRadius: 22,

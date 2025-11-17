@@ -1,20 +1,26 @@
 import { Fragment, useState } from "react";
 import { Stack } from "expo-router";
 import { TemplateBoardHeaderLeft } from "../components/board-template/header/TemplateBoardHeaderLeft";
+import { TemplateBoardHeaderTitle } from "../components/board-template/header/TemplateBoardHeaderTitle";
+import { TemplateBoardHeaderRight } from "../components/board-template/header/TemplateBoardHeaderRight";
 import { ScreenContent } from "../components/ui/utils/ScreenContent";
 import { DashBoard } from "../components/ui/DashBoard";
 import { useSettingsStore } from "../stores/settings";
 import { useWorkoutStore } from "../stores/workout";
 import { TemplateExerciseList } from "../components/board-template/sheets/exercises/TemplateExerciseList";
 import { CreateTemplateBoard } from "../components/board-template/CreateTemplateBoard";
+import { TemplateSheet } from "../components/board-template/sheets/template/TemplateSheet";
+import { ExerciseProfile } from "../components/board-workout/profile/ExerciseProfile";
+import { RestTimerSheet } from "../components/board-workout/sheets/rest/RestTimerSheet";
+import { ExerciseNameSheet } from "../components/board-workout/sheets/name/ExerciseNameSheet";
 
-export type TemplateSheetType = "exercises" | "template";
+export type TemplateSheetType = "exercises" | "rest" | "name" | "template";
 
 export default function TemplateBoard() {
   const [listOpen, setListOpen] = useState(false);
   const [listType, setListType] = useState<TemplateSheetType>("template");
   const { theme } = useSettingsStore();
-  const { activeTemplate } = useWorkoutStore();
+  const { activeTemplate, activeExercise } = useWorkoutStore();
 
   function togglePanel() {
     setListOpen(!listOpen);
@@ -24,7 +30,24 @@ export default function TemplateBoard() {
   return (
     <Fragment>
       <Stack.Screen
-        options={{ headerLeft: () => <TemplateBoardHeaderLeft /> }}
+        options={{
+          headerBlurEffect: "none",
+          headerLeft: () => (
+            <TemplateBoardHeaderLeft
+              listOpen={listOpen}
+              setListOpen={setListOpen}
+              setListType={setListType}
+            />
+          ),
+          headerTitle: () => (
+            <TemplateBoardHeaderTitle
+              listOpen={listOpen}
+              setListOpen={setListOpen}
+              setListType={setListType}
+            />
+          ),
+          headerRight: () => <TemplateBoardHeaderRight />,
+        }}
       />
 
       <ScreenContent edges={["top", "bottom"]} scroll={false}>
@@ -32,18 +55,31 @@ export default function TemplateBoard() {
           listOpen={listOpen}
           togglePanel={togglePanel}
           colors={[
-            theme.secondaryText,
-            theme.secondaryText,
-            theme.secondaryText,
-            theme.secondaryText,
+            theme.tint,
+            theme.tint,
+            theme.tint,
+            theme.tint,
           ]}
-          disabled={!activeTemplate?.layout}
-          upperSection={<CreateTemplateBoard />}
+          disabled={!activeTemplate?.layout.length && !listOpen}
+          upperSection={
+            activeExercise ? (
+              <ExerciseProfile
+                openPanel={() => setListOpen(true)}
+                setListType={setListType}
+              />
+            ) : (
+              <CreateTemplateBoard />
+            )
+          }
           lowerSection={
             listType === "exercises" ? (
               <TemplateExerciseList togglePanel={togglePanel} />
+            ) : listType === "rest" ? (
+              <RestTimerSheet />
+            ) : listType === "name" ? (
+              <ExerciseNameSheet />
             ) : listType === "template" ? (
-              <></>
+              <TemplateSheet />
             ) : null
           }
         />

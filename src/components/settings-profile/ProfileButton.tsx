@@ -1,8 +1,8 @@
-import { Animated, Pressable, View } from "react-native";
+import { View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useSettingsStore } from "../../stores/settingsStore";
-import { useBounceScaleAnim } from "../../animations/useBounceScaleAnim";
 import { router } from "expo-router";
+import { BounceButton } from "../ui/buttons/BounceButton";
 
 interface ProfileButtonProps {
   onPress?: () => void;
@@ -10,7 +10,6 @@ interface ProfileButtonProps {
 
 export function ProfileButton({ onPress }: ProfileButtonProps) {
   const { theme } = useSettingsStore();
-  const { bounceAnim, bounceIt } = useBounceScaleAnim();
 
   const handlePress = () => {
     if (onPress) {
@@ -21,50 +20,35 @@ export function ProfileButton({ onPress }: ProfileButtonProps) {
   };
 
   return (
-    <Animated.View
-      style={[
-        bounceAnim,
-        {
-          width: 88,
-          height: 88,
-          alignItems: "center",
-          justifyContent: "center",
-          // backgroundColor: "red",
-        },
-      ]}
+    <BounceButton
+      onPress={handlePress}
+      style={{
+        width: 88,
+        height: 88,
+        alignItems: "center",
+        justifyContent: "center",
+      }}
     >
-      <Pressable
-        onPress={handlePress}
-        onPressIn={bounceIt}
-        hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+      {/* Glow circle BEHIND icon */}
+      <View
         style={{
-          // backgroundColor: "blue",
-          flex: 1,
+          position: "absolute",
+          height: 74,
+          width: 74,
+          top: 12,
+          left: 12,
+          borderRadius: "50%",
+          backgroundColor: theme.glow,
         }}
-      >
-        {/* Glow circle BEHIND icon */}
-        <View
-          style={{
-            position: "absolute",
-            height: 80,
-            width: 80,
-            top: 9,
-            left: 9,
-            borderRadius: "50%",
-            backgroundColor: theme.glow,
-            borderWidth: 4,
-            borderColor: theme.grayText,
-          }}
-        />
+      />
 
-        {/* Icon ABOVE glow */}
-        <Ionicons
-          name="person-circle"
-          size={94}
-          color={theme.grayText}
-          style={{ position: "relative", top: 1, left: 2 }}
-        />
-      </Pressable>
-    </Animated.View>
+      {/* Icon ABOVE glow */}
+      <Ionicons
+        name="person-circle"
+        size={94}
+        color={theme.grayText}
+        style={{ position: "relative", top: 1, left: 2 }}
+      />
+    </BounceButton>
   );
 }

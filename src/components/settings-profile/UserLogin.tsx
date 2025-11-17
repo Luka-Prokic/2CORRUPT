@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { View, Text, Alert } from "react-native";
 import { useSettingsStore } from "../../stores/settingsStore";
-import {Input} from "../ui/input/Input";
-import {BounceButton} from "../ui/buttons/BounceButton";
-import {TextButton} from "../ui/buttons/TextButton";
+import { Input } from "../ui/input/Input";
+import { BounceButton } from "../ui/buttons/BounceButton";
+import { TextButton } from "../ui/buttons/TextButton";
 import { useTranslation } from "react-i18next";
-import {Container} from "../ui/containers/Container";
+import { Container } from "../ui/containers/Container";
 
-import {CorruptTittle} from "../corrupt/CorruptTittle";
+import { CorruptTittle } from "../corrupt/CorruptTittle";
+import { useKeyboardHeight } from "../../features/ui/useKeyboardHeight";
+import { BackgroundText } from "../ui/text/BackgroundText";
 
 interface UserLoginProps {
   onLoginSuccess?: () => void;
@@ -24,6 +26,7 @@ export function UserLogin({
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { t } = useTranslation();
+  const keyboardHeight = useKeyboardHeight();
 
   const handleLogin = async () => {
     setIsLoading(true);
@@ -50,21 +53,8 @@ export function UserLogin({
 
   return (
     <Container>
-      <Text
-        style={{
-          color: theme.handle,
-          fontSize: 16,
-          fontWeight: "600",
-          letterSpacing: -0.5,
-          lineHeight: 24,
-          textAlign: "center",
-          width: "90%",
-          marginHorizontal: "5%",
-          marginVertical: 16,
-        }}
-      >
-        {t("auth-form.signIn-description")}
-      </Text>
+      <BackgroundText text={t("auth-form.signIn-description")} />
+
       <Text
         style={{
           color: theme.text,
@@ -84,7 +74,7 @@ export function UserLogin({
           color: theme.grayText,
           fontSize: 16,
           textAlign: "center",
-          marginBottom: 40,
+          marginBottom: 36,
         }}
       >
         {t("auth-form.signInToAccount")}
@@ -92,7 +82,8 @@ export function UserLogin({
 
       <View
         style={{
-          gap: 20,
+          gap: 16,
+          marginBottom: keyboardHeight,
         }}
       >
         <Input
@@ -126,8 +117,8 @@ export function UserLogin({
           disabled={isLoading || !email || !password}
           style={{
             height: 44,
-            borderRadius: 22,
-            marginTop: 12,
+            borderRadius: 32,
+            marginTop: 16,
           }}
         />
 

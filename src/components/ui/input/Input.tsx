@@ -1,4 +1,4 @@
-import { TextInput, View, TouchableOpacity } from "react-native";
+import { TextInput, View, TouchableOpacity, ViewStyle } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useSettingsStore } from "../../../stores/settingsStore";
 
@@ -14,6 +14,7 @@ interface InputProps {
   showPasswordToggle?: boolean;
   showPassword?: boolean;
   onTogglePassword?: () => void;
+  style?: ViewStyle | ViewStyle[];
 }
 
 export function Input({
@@ -28,11 +29,12 @@ export function Input({
   showPasswordToggle = false,
   showPassword = false,
   onTogglePassword,
+  style,
 }: InputProps) {
   const { theme } = useSettingsStore();
 
   return (
-    <View style={{ position: "relative" }}>
+    <View style={{ position: "relative", ...style }}>
       {icon && (
         <Ionicons
           name={icon}

@@ -7,10 +7,12 @@ import { StrobeBlur } from "../../../ui/misc/StrobeBlur";
 import { BounceButton } from "../../../ui/buttons/BounceButton";
 import { useTranslation } from "react-i18next";
 import { RestCheatSheet } from "./RestCheatSheet";
+import { TwoOptionStrobeButtons } from "../../../ui/buttons/TwoOptionStrobeButtons";
 
 export function RestTimerSheet() {
   const { theme } = useSettingsStore();
-  const { activeExercise, updateActiveExercise } = useWorkoutStore();
+  const { activeExercise, updateActiveExercise, activeTemplate } =
+    useWorkoutStore();
   const { t } = useTranslation();
 
   const restTime = activeExercise?.restTime ?? 180;
@@ -32,7 +34,10 @@ export function RestTimerSheet() {
         alignItems: "center",
       }}
     >
-      <ExerciseName exercise={activeExercise} textColor={theme.accent} />
+      <ExerciseName
+        exercise={activeExercise}
+        textColor={activeTemplate ? theme.tint : theme.accent}
+      />
       <Text style={{ fontSize: 18, color: theme.grayText }}>
         {t("workout-board.rest-time")}
       </Text>
@@ -41,60 +46,26 @@ export function RestTimerSheet() {
         {minutes}min {seconds}s
       </Text>
 
-      <View
-        style={{
-          width: WIDTH - 32,
-          height: 68,
-          paddingVertical: 2,
-          flexDirection: "row",
-          gap: 8,
-          marginTop: 24,
+      <TwoOptionStrobeButtons
+        labelOne="-15"
+        labelTwo="+15"
+        onOptionOne={() => handleChangeRestTime(-15)}
+        onOptionTwo={() => handleChangeRestTime(15)}
+        styleOne={{
+          backgroundColor: activeTemplate ? theme.tint : theme.handle,
         }}
-      >
-        {["-15", "+15"].map((label: string, index: number) => (
-          <BounceButton
-            key={index}
-            style={{
-              width: WIDTH / 2 - 20,
-              height: 64,
-              backgroundColor: theme.handle,
-              borderTopLeftRadius: index === 0 ? 32 : 8,
-              borderBottomLeftRadius: index === 0 ? 32 : 8,
-              borderTopRightRadius: index === 1 ? 32 : 8,
-              borderBottomRightRadius: index === 1 ? 32 : 8,
-              overflow: "hidden",
-            }}
-            onPress={() => handleChangeRestTime(label === "-15" ? -15 : 15)}
-            disabled={restTime === 0 && label === "-15"}
-          >
-            <StrobeBlur
-              colors={[
-                theme.caka,
-                theme.primaryBackground,
-                theme.accent,
-                theme.tint,
-              ]}
-              tint="light"
-              style={{
-                width: WIDTH / 2 - 20,
-                height: 64,
-              }}
-            >
-              <Text
-                style={{ fontSize: 24, fontWeight: "bold", color: theme.text }}
-              >
-                {label}
-              </Text>
-            </StrobeBlur>
-          </BounceButton>
-        ))}
-      </View>
+        styleTwo={{
+          backgroundColor: activeTemplate ? theme.tint : theme.handle,
+        }}
+        disabledOne={restTime === 0}
+      />
+
       <Text
         style={{
           fontSize: 14,
           color: theme.grayText,
           textAlign: "justify",
-          marginBottom: 12,
+          marginBottom: 16,
         }}
       >
         {t("workout-board.rest-timer-description")}

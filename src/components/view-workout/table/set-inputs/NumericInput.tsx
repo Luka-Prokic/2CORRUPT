@@ -8,9 +8,10 @@ import { useDisplayedWeight } from "../../../../features/translate/useDisplayedW
 interface NumericInputProps {
   set: Set;
   column: Extract<ExerciseColumns, "Weight" | "Reps">;
+  disabled?: boolean;
 }
 
-export function NumericInput({ set, column }: NumericInputProps) {
+export function NumericInput({ set, column, disabled }: NumericInputProps) {
   const { theme } = useSettingsStore();
   const { updateSetInActiveExercise } = useWorkoutStore();
   const { fromKg, toKg } = useDisplayedWeight();
@@ -41,6 +42,8 @@ export function NumericInput({ set, column }: NumericInputProps) {
       placeholder="0"
       placeholderTextColor={theme.grayText}
       keyboardType="numeric"
+      selectTextOnFocus
+      pointerEvents={disabled ? "none" : "auto"}
     />
   );
 }

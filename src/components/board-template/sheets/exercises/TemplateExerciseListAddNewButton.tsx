@@ -13,9 +13,20 @@ export function TemplateExerciseListAddNewButton({
   style,
 }: TemplateExerciseListAddNewButtonProps) {
   const { theme } = useSettingsStore();
+
+  function handlePress() {
+    router.push({
+      pathname: "/add-exercise/[type]",
+      params: {
+        type: "template",
+      },
+    });
+  }
+
   return (
     <StrobeButton
-      onPress={() => router.push("/add-exercise")}
+      strobeColors={[theme.tint, theme.tint, theme.tint, theme.tint]}
+      onPress={handlePress}
       style={{
         height: 64,
         width: WIDTH - 32,
@@ -23,7 +34,7 @@ export function TemplateExerciseListAddNewButton({
         borderRadius: 32,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: theme.secondaryBackground,
+        backgroundColor: theme.handle,
         ...style,
       }}
     >

@@ -6,15 +6,18 @@ import {
 } from "react-native";
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { StrobeBlur } from "../misc/StrobeBlur";
+import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 
 interface StrobeButtonProps extends Omit<TouchableOpacityProps, "style"> {
   title?: string;
   children?: React.ReactNode;
   textColor?: string;
   style?: ViewStyle | ViewStyle[];
+  contentContainerStyle?: ViewStyle | ViewStyle[];
   strobeColors?: [string, string, string, string];
   strobeDisabled?: boolean;
   strobeTint?: "default" | "light" | "dark" | "auto";
+  pressable?: boolean;
 }
 
 export function StrobeButton({
@@ -22,9 +25,11 @@ export function StrobeButton({
   children,
   strobeColors,
   style,
+  contentContainerStyle,
   textColor,
   strobeDisabled = false,
   strobeTint = "light",
+  pressable,
   ...rest
 }: StrobeButtonProps) {
   const { theme } = useSettingsStore();
@@ -38,37 +43,42 @@ export function StrobeButton({
 
   return (
     <TouchableOpacity
-      style={{
-        alignItems: "center",
-        justifyContent: "center",
-        overflow: "hidden",
-        opacity: rest.disabled ? 0.6 : 1,
-        ...style,
-      }}
       hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-      activeOpacity={0.5}
+      activeOpacity={pressable ? 1 : 0.8}
       {...rest}
     >
-      <StrobeBlur
-        colors={colors}
-        style={{ width: "100%", height: "100%" }}
-        disabled={strobeDisabled}
-        tint={strobeTint}
+      <Animated.View
+        entering={FadeIn}
+        exiting={FadeOut}
+        style={[
+          {
+            overflow: "hidden",
+            opacity: rest.disabled ? 0.6 : 1,
+          },
+          style,
+        ]}
       >
-        {children ? (
-          children
-        ) : (
-          <Text
-            style={{
-              fontSize: 16,
-              fontWeight: "bold",
-              color: textColor ?? theme.text,
-            }}
-          >
-            {title}
-          </Text>
-        )}
-      </StrobeBlur>
+        <StrobeBlur
+          colors={colors}
+          style={{ width: "100%", height: "100%", ...contentContainerStyle }}
+          disabled={strobeDisabled}
+          tint={strobeTint}
+        >
+          {children ? (
+            children
+          ) : (
+            <Text
+              style={{
+                fontSize: 16,
+                fontWeight: "bold",
+                color: textColor ?? theme.text,
+              }}
+            >
+              {title}
+            </Text>
+          )}
+        </StrobeBlur>
+      </Animated.View>
     </TouchableOpacity>
   );
 }

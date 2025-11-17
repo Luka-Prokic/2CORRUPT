@@ -8,7 +8,6 @@ import { useWorkoutStore } from "../../../../stores/workout/useWorkoutStore";
 import { Ionicons } from "@expo/vector-icons";
 import { OptionButton } from "../../../ui/buttons/OptionButton";
 
-
 export function SessionSheet() {
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
@@ -66,13 +65,7 @@ export function SessionSheet() {
       <OptionButton
         title={t("workout-board.clear-notes")}
         onPress={() => setNotes("")}
-        icon={
-          <Ionicons
-            name={"remove-circle-outline"}
-            size={20}
-            color={theme.error}
-          />
-        }
+        icon={<Ionicons name={"remove-circle"} size={24} color={theme.error} />}
         color={theme.error}
       />
       <Text

@@ -1,6 +1,6 @@
-import { ViewStyle, DimensionValue, Animated } from "react-native";
+import { ViewStyle, DimensionValue } from "react-native";
 import { useSettingsStore } from "../../../stores/settingsStore";
-import { useFadeInAnim } from "../../../animations/useFadeInAnim";
+import Animated, { FadeIn } from "react-native-reanimated";
 
 interface ContainerProps {
   children: React.ReactNode;
@@ -11,13 +11,13 @@ interface ContainerProps {
 export function Container({
   children,
   style,
-  paddingHorizontal = "5%",
+  paddingHorizontal = 16,
 }: ContainerProps) {
   const { theme } = useSettingsStore();
-  const { fadeIn } = useFadeInAnim(true);
 
   return (
     <Animated.View
+      entering={FadeIn}
       style={[
         {
           backgroundColor: theme.background,
@@ -25,7 +25,6 @@ export function Container({
           paddingHorizontal: paddingHorizontal,
         },
         style,
-        fadeIn,
       ]}
     >
       {children}

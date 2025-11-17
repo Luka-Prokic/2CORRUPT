@@ -5,6 +5,8 @@
     "save": "Sačuvaj",
     "reset": "Resetuj",
     "cancel": "Otkaži",
+    "select": "Označi",
+    "selected": "Označeno",
     "delete": "Obriši",
     "discard": "Odbaci",
     "search": "Pretraži",
@@ -12,8 +14,20 @@
     "upload": "Otpremi",
     "preview": "Pregledaj",
     "download": "Preuzmi",
+    "clone": "Dupliraj",
     "open": "Otvori",
-    "view": "Pogledaj"
+    "view": "Pogledaj",
+    "add": "Dodaj",
+    "remove": "Obriši",
+    "update": "Ažuriraj",
+    "sync": "Poveži",
+    "start": "Pokreni",
+    "repeat": "Ponovi",
+    "continue": "Nastavi",
+    "scrollable": "Skrolujuće",
+    "more": "Više",
+    "confirm": "Potvrdi",
+    "active": "Aktivan"
   },
   "form": {
     "name": "Naziv",
@@ -72,47 +86,6 @@
     "createAccount": "Kreiraj Nalog",
     "signIn-description": "Svaki trening možeš sačuvati offline, tako da ti ništa ne koči. Prijavi se da sačuvaš svoj napredak, podeli rutine i nastavi tačno tamo gde si stao i na drugim uređajima. Tvoje vežbe, setovi i lični rekordi su uvek na dohvatu ruke."
   },
-  "models": {
-    "models": "Modeli",
-    "my-models": "Moji modeli",
-    "upload-model": "Otpremi model",
-    "edit-model": "Uredi model",
-    "create-model": "Kreiraj model",
-    "model-details": "Detalji modela",
-    "no-models": "Još uvek nisi otpremio nijedan model.",
-    "open-model": "Otvori model",
-    "delete-model": "Obriši model",
-    "preview-model": "Pregledaj model",
-    "download-model": "Preuzmi model",
-    "last-updated": "Poslednja izmena",
-    "created-at": "Kreirano",
-    "uploaded-by": "Otpremio",
-    "tags": "Oznake",
-    "file-size": "Veličina fajla",
-    "file-type": "Tip fajla",
-    "views": "{{count}} pregleda",
-    "views_0": "Nema pregleda",
-    "views_1": "1 pregled",
-    "views_other": "{{count}} pregleda",
-    "search-by-name": "Pretraži po nazivu",
-    "sort-by": "Sortiraj po",
-    "sort-options": {
-      "recent": "Najnovije",
-      "popular": "Najgledanije",
-      "name": "Nazivu"
-    }
-  },
-  "viewer": {
-    "scene": "Scena",
-    "controls": "Kontrole",
-    "rotate": "Rotiraj",
-    "zoom": "Zumiraj",
-    "pan": "Pomeraj",
-    "fullscreen": "Ceo ekran",
-    "background": "Pozadina",
-    "wireframe": "Wireframe",
-    "reset-view": "Resetuj pogled"
-  },
   "example": {
     "create-title": "Napravi primer",
     "edit-title": "Uredi primer",
@@ -131,7 +104,8 @@
     "profile": "Nalog",
     "settings": "Podešavanja",
     "addExercise": "Dodaj Vežbu",
-    "swapExercise": "Zameni Vežbu"
+    "swapExercise": "Zameni Vežbu",
+    "templates": "Šabloni"
   },
   "theme": {
     "dark": "Tamna",
@@ -168,7 +142,7 @@
     "start-workout": "Započni Trening",
     "all": "Sve",
     "continue-workout": "Nastavi Trening",
-    "continue-template": "Nastavi Template",
+    "continue-template": "Nastavi sa Templatom",
     "no-exercise": "Nema Vežbe"
   },
   "calendar": {
@@ -176,39 +150,71 @@
     "exercises": "vežbe",
     "rest-day": "Rest Day",
     "start-now": "Započni Sada",
+    "today": "Danas",
+    "yesterday": "Juče",
     "workout": "Trening",
     "no-workout": "Nema Treninga",
     "no-workout-today": "Nema Treninga Danas",
     "no-workout-today-description": "Nisi treanirao danas",
     "no-workout-description": "Nema treninga. Započni novi trening.",
     "days": {
-      "short": ["P", "U", "S", "Č", "P", "S", "N"],
-      "long": [
-        "Ponedeljak",
-        "Utorak",
-        "Sreda",
-        "Četvrtak",
-        "Petak",
-        "Subota",
-        "Nedelja"
-      ]
+      "short": {
+        "monday": "P",
+        "tuesday": "U",
+        "wednesday": "S",
+        "thursday": "Č",
+        "friday": "P",
+        "saturday": "S",
+        "sunday": "N"
+      },
+      "long": {
+        "monday": "Ponedeljak",
+        "tuesday": "Utorak",
+        "wednesday": "Sreda",
+        "thursday": "Četvrtak",
+        "friday": "Petak",
+        "saturday": "Subota",
+        "sunday": "Nedelja"
+      }
     },
     "months": {
-      "long": [
-        "Januar",
-        "Februar",
-        "Mart",
-        "April",
-        "Maj",
-        "Jun",
-        "Jul",
-        "Avgust",
-        "Septembar",
-        "Oktobar",
-        "Novembar",
-        "Decembar"
-      ]
+      "short": {
+        "january": "Jan",
+        "february": "Feb",
+        "march": "Mar",
+        "april": "Apr",
+        "may": "Maj",
+        "june": "Jun",
+        "july": "Jul",
+        "august": "Avg",
+        "september": "Sep",
+        "october": "Okt",
+        "november": "Nov",
+        "december": "Dec"
+      },
+      "long": {
+        "january": "Januar",
+        "february": "Februar",
+        "march": "Mart",
+        "april": "April",
+        "may": "Maj",
+        "june": "Jun",
+        "july": "Jul",
+        "august": "Avgust",
+        "september": "Septembar",
+        "october": "Oktobar",
+        "november": "Novembar",
+        "december": "Decembar"
+      }
     }
+  },
+  "summary-widget": {
+    "footer": "Napredak se zasniva na tvom nedeljnom cilju.",
+    "header": "Pregled"
+  },
+  "templates-widget": {
+    "header": "Šabloni",
+    "footer": "Još uvek nemaš sačuvanih šablona."
   },
 
   "set": {
@@ -252,8 +258,12 @@
     "complete": "Završi",
     "add-to-superset": "Dodaj u Superset",
     "exit-workout": "Izađi iz Treninga",
+    "discard-template": "Poništi Template",
     "exit-workout-message": "Ovo će otkazati tvoj trening. Možeš ga sačuvati kao template pre nego što izađeš.",
+    "discard-template-message": "Ovo će poništiti tvoje izmene na templatu.",
     "save-as-template": "Sačuvaj kao Template",
+    "confirm-template": "Sačuvaj Template",
+    "confirm-template-message": "Da li želiš da završiš sa uređivanjem? Uvek možeš kasnije da se vratiš i promeniš šablon.",
     "complete-workout": "Završi Trening",
     "complete-workout-message": "Da li si siguran da želiš da završiš ovaj trening? Nećeš moći da radiš izmene na njemu kasnije.",
     "delete-exercises": "Obriši Vežbe",
@@ -266,11 +276,11 @@
     "create-exercise-copy-description": "Kreiranje nove vežbe koristiće ovu kao osnovu. Možeš da urediš naziv, setove i druge detalje na sledećem ekranu. Ovo ti pomaže da brzo dodaš personalizovane varijacije bez da kreiraš novu vežbu od nule. Izmene će uticati samo na novu vežbu, ostanući originalna vežba nepromenjena.",
     "rest-timer-description": "Podesi trajanje pauze između setova. Nakon što završiš set, timer će početi automatski koristeći ovo vreme. Možeš da prilagodiš vreme u koracima od 15 sekundi da bi podesio koliko vremena ti je potrebno.",
     "typical-rest-times": "Tipična vremena pauze:",
-    "heavy-lifts": "Teške vežbe: 3–4+ min",
-    "compound-lifts": "Kompound vežbe: 2–3 min",
-    "accessory-lifts": "Izolacione vežbe (Normalni setovi): 30–60 sec",
+    "heavy-lifts": "Teške vežbe: 3-4+ min",
+    "compound-lifts": "Kompound vežbe: 2-3 min",
+    "accessory-lifts": "Izolacione vežbe (Normalni setovi): 30-60 sec",
     "accessory-lifts-supersets": "Izolacione vežbe (Supersets/Drop setovi): 1-2+ min",
-    "cardio-or-warm-up-sets": "Kardio ili vežbe zagrevanja: 15–60 sec",
+    "cardio-or-warm-up-sets": "Kardio ili vežbe zagrevanja: 15-60 sec",
     "rest-time": "Vreme pauze",
     "remove-exercise": "Obriši Vežbu",
     "swap-exercise": "Zameni Vežbu",
@@ -280,6 +290,9 @@
   "template-view": {
     "add-tags": "Dodaj oznake koje opisuju tvoj template.",
     "template-name": "Naziv za Template..."
+  },
+  "template-board": {
+    "template-description-placeholder": "Dodaj template beleške, ciljeve... (neobavezno)"
   },
   "add-exercise": {
     "add-exercise": "Dodaj Vežbu",
@@ -297,6 +310,77 @@
     "exercises": "Vežbe",
     "copied": "Kopirano!",
     "copied-to-clipboard": "Trening recenzija kopirana u clipboard sa legendom."
+  },
+  "sessions": {
+    "session": "Trening",
+    "back-to-preview": "Vrati se na pregled",
+    "preview": "Pregled vežbi",
+    "repeat-workout": "Ponovi Trening",
+    "view-recap": "Pregled Treninga",
+    "add-to-templates": "Dodaj kao Šablon",
+    "update-template": "Ažuriraj Šablon",
+    "options-info": "Upravljaj svojom trening sesijom - pogledaj njen rezime, kopiraj raspored kao tekst, pretvori je u šablon koji možeš ponovo koristiti ili je ukloni ako ti više nije potrebna.",
+    "add-template-info": "Sačuvaj raspored ove sesije kao novi šablon. Daj mu prepoznatljivo ime da bi ga kasnije lakše pronašao ili koristio za slične treninge.",
+    "update-template-info": "Ažuriraj šablon korišćen u ovom treningu. Možeš da izmeniš njegov raspored, promeniš naziv i uskladiš ga sa najnovijim izmenama u treningu.",
+    "remove-info": "Uklanjanje ove sesije je trajno i ne može se poništiti. Statistike tvog napretka biće izmenjene.",
+    "active-session-warning": "Aktivan trening je u toku. Završi ga pre nego što započneš novi."
+  },
+  "templates": {
+    "template": "Šablon",
+    "start-workout": "Započni Trening",
+    "back-to-preview": "Vrati se na pregled",
+    "empty-info": "Šabloni su unapred pripremljeni setovi vežbi koje možete koristiti više puta. Pritisnite dugme plus iznad da započnete svoj prvi šablon. Kreiranje šablona je brzo i može se menjati, što vam omogućava da efikasno organizujete treninge. Kada napravite nekoliko njih, možete ih kombinovati da planirate nedelju treninga, štedeći vreme i fokusirajući se na vežbanje, umesto na planiranje svakog seta posebno.",
+    "options-info": "Prilagodite svoj šablon treninga - promenite naziv, izmenite detalje, započnite trening na osnovu njega, napravite kopiju za varijacije ili ga obrišite ako vam više nije potreban.",
+    "clone-info": "Duplirajte ovaj šablon da napravite novu verziju, dok original ostaje nepromenjen. Promena imena može vam pomoći da ih razlikujete.",
+    "delete-info": "Brisanje šablona je trajno. Tvoji prethodni treninzi neće biti obrisani.",
+    "active-session-warning": "Trening je u toku. Završite ga pre nego što započnete novi ili uređujete šablone.",
+    "no-templates-found-match": "Nema template-a koji odgovara pretrazi"
+  },
+  "splits": {
+    "day": "Dan",
+    "edit-day": "Uredi Dan",
+    "title": "Splits",
+    "total-days": "Ukupno dana",
+    "active-days": "Aktivnih dana",
+    "delete-title": "Delete this split plan?",
+    "delete-message": "Ovo će ukloniti split (kako su tvoji templati grupisani). Ne brini - tvoji treninzi i templati ostaju netaknuti.",
+    "split-name": "Naziv za Split...",
+    "activate-split": "Aktiviraj Split",
+    "deactivate-split": "Deaktiviraj Split",
+    "add-workout": "Dodaj Trening",
+    "set-as-active": "Postavi kao aktivan",
+    "set-as-rest-day": "Postavi kao rest dan",
+    "list-info": "Upravljaj svojim split planovima ovde - organizuj i čuvaj sve svoje trening rutine tako da možeš lako da ih menjaš. Svaki split predstavlja različit plan ili fokus za tvoje vežbanje, omogućavajući ti da variraš svoje vežbanje dok sve ostalo ostaje pratljivo. Jedan split je uvek aktivan; ako nijedan nije izabran, automatski će se koristiti zadani “No Split”.",
+    "footer-info": "Uredi tvoj split ovde - promeni njegov naziv, promeni trening ili rest dane, dodaj ili preuredi vežbe, i ažuriraj beleške. Ove izmene utiču na sve buduće vežbe i sesije za ovaj split. Jedan split može biti aktivan u jednom trenutku, ako ga deaktiviraš, automatski će se koristiti zadani “No Split” plan.",
+    "add-days-to-split": "Dodaj dane na tvoj split",
+    "choose-starting-day": "Izaberi dan za početak",
+    "no-days-yet": "Još nema dana",
+    "weekly-goal": "Nedeljni cilj",
+    "workout": "Trening",
+    "workouts": "Treninga",
+    "set-your-fitness-goals": "Podesi svoje fitness ciljeve",
+    "set-your-fitness-goals-description": "Set how many workouts you want per week. You can also adjust this and other goals in Settings → Goals.",
+    "active-split-alert": "Aktivan split je detektovan - nedeljni cilj ne može biti direktno promenjen.",
+    "create-template-info": "Kreiraj template da brzo dodajš svoje favorite vežbe u ovaj split. Možeš prilagoditi ga da odgovara tvojoj rutini i štediš vreme kada planiraš buduće vežbe. Dodatno, možeš kreirati template iz bilo koje završene sesije, što ti omogućava da reuses vežbe koje si već uradio.",
+    "create-template-description": "Kreiraj template da brzo dodajš svoje favorite vežbe u ovaj split. Možeš prilagoditi ga da odgovara tvojoj rutini i štediš vreme kada planiraš buduće vežbe. Dodatno, možeš kreirati template iz bilo koje završene sesije, što ti omogućava da reuses vežbe koje si već uradio.",
+    "create-template-button": "Kreiraj novi template vežbe",
+    "no-templates-available": "Nema dostupnih template-a",
+    "add-workout-from-sessions-list-title": "Dodaj trening iz završenih sesija u poslednjih 7 dana.",
+    "templates": "Template-i",
+    "sessions": "Sesije",
+    "go-to-summary": "Idi na Pregled da kreiraš template-e"
+  },
+  "all": {
+    "show-workouts-this-week": "Pogledaj Treninge Ove Nedelje",
+    "hide-workouts-this-week": "Sakrij Treninge Ove Nedelje",
+    "workouts-this-week-title": "Treningi Ove Nedelje",
+    "workouts-this-week-description": "Pogledaj svoje završene treninge iz prošle nedelje.",
+    "workouts-this-week-button": "Pogledaj Treninge Ove Nedelje"
+  },
+
+  "alert": {
+    "end-workout": "Završi Trening",
+    "end-workout-message": "Ovo će otkazati tvoj trening. Možeš ga završiti ili sačuvati kao template, ili jednostavno ga prekinuti bez da ga sačuvaš."
   },
 
   "categories": {
@@ -321,8 +405,8 @@
     "back": "Back",
     "lats": "Lats",
     "lower-back": "Donja leđa",
-    "upper-traps": "Gornje trapiste",
-    "mid-traps": "Srednje trapiste",
+    "upper-traps": "Gornje trapište",
+    "mid-traps": "Srednje trapište",
     "arms": "Arms",
     "biceps": "Biceps",
     "brachialis": "Brachialis",

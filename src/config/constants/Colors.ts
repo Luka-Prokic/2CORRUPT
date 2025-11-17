@@ -20,10 +20,10 @@ export const Colors = {
     tabIconProfileSelected: "#4C4F51",
     navBackground: "#FFFFFF",
     primaryBackground: "#FFFFFF",
-    secondaryBackground: "#F2F2F7",
-    thirdBackground: "#A1D9E8",
+    secondaryBackground: "#FAFAFA",
+    thirdBackground: "#A1C6FF",
     fourthBackground: "#D2C7B6",
-    fifthBackground: "#A1C6FF",
+    fifthBackground: "#98A5B8",
     accent: "#4C4F51",
     shadow: "#1C1C1E",
     glow: "#F2F2F7",
@@ -31,6 +31,7 @@ export const Colors = {
     error: "#FF3B30",
     border: "#F2F2F7",
     input: "#FFFFFF",
+    info: "#8E8E93",
   },
 
   peachy: {
@@ -57,6 +58,7 @@ export const Colors = {
     error: "#FF3B30",
     border: "#F2F2F7",
     input: "#FFFFFF",
+    info: "#8E8E93",
   },
 
   oldschool: {
@@ -83,6 +85,7 @@ export const Colors = {
     error: "#FF3B30",
     border: "#F2F2F7",
     input: "#FFFFFF",
+    info: "#8E8E93",
   },
 
   dark: {
@@ -107,8 +110,9 @@ export const Colors = {
     glow: "#F2F2F7",
     caka: "#FFD60A",
     error: "#FF3B30",
-    border: "#3A3A3C",
+    border: "#2F2F31",
     input: "#1C1C1E",
+    info: "#D1D1D6",
   },
 
   preworkout: {
@@ -133,8 +137,9 @@ export const Colors = {
     glow: "#F2F2F7",
     caka: "#FFFF33",
     error: "#FF3B30",
-    border: "#3A3A3C",
+    border: "#2F2F31",
     input: "#1C1C1E",
+    info: "#D1D1D6",
   },
 
   Corrupted: {
@@ -143,7 +148,7 @@ export const Colors = {
     grayText: "#A9A9A9",
     handle: "#3A3A3C",
     background: "#000000",
-    tint: "#A6F7E5",
+    tint: "#FF3B30",
     tabIconDefault: "#D1D1D6",
     tabIconHomeSelected: "#D9004C",
     tabIconTrainingSelected: "#D9004C",
@@ -154,12 +159,13 @@ export const Colors = {
     thirdBackground: "#9E2A2A",
     fourthBackground: "#B4F8D8",
     fifthBackground: "#D0D0D0",
-    accent: "#FF3B30",
+    accent: "#A6F7E5",
     shadow: "#FFFFFF",
     glow: "#F2F2F7",
     caka: "#FFD60A",
     error: "#FF3B30",
-    border: "#3A3A3C",
+    border: "#2F2F31",
     input: "#1C1C1E",
+    info: "#D1D1D6",
   },
 };

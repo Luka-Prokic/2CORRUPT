@@ -23,7 +23,6 @@ export default function SwapExerciseScreen() {
       <Stack.Screen
         options={{
           title: t("navigation.swapExercise"),
-          headerLeft: () => <ModalBackButton />,
           headerBackButtonDisplayMode: "minimal",
           headerBlurEffect: "none",
         }}

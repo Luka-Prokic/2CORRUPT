@@ -7,8 +7,8 @@ import { useWorkoutStore, Set } from "../../../../stores/workoutStore";
 import { useTranslation } from "react-i18next";
 import { router } from "expo-router";
 import { SessionProgressDots } from "./SessionProgressDots";
-import { WIDTH } from "../../../../features/Dimensions";
 import { useUIStore } from "../../../../stores/ui/useUIStore";
+import { TemplateProgressDots } from "../../../view-template/header/TemplateProgressDots";
 
 export function ExerciseFlow() {
   const { theme } = useSettingsStore();
@@ -27,6 +27,7 @@ export function ExerciseFlow() {
         gap: 8,
       }}
     >
+      <TemplateProgressDots />
       <SessionProgressDots />
       <Text
         style={{
@@ -80,6 +81,15 @@ export function RightExerciseFlow() {
   const { theme } = useSettingsStore();
   const { isThereNext, goToNextExercise } = useWorkoutStore();
 
+  function handlePress() {
+    router.push({
+      pathname: "/add-exercise/[type]",
+      params: {
+        type: "session",
+      },
+    });
+  }
+
   if (isThereNext)
     return (
       <IButton
@@ -95,7 +105,7 @@ export function RightExerciseFlow() {
     );
 
   return (
-    <IButton onPress={() => router.push("/add-exercise")}>
+    <IButton onPress={handlePress}>
       <Ionicons name="add-circle" size={44} color={theme.tint} />
     </IButton>
   );

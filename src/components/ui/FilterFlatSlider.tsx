@@ -22,6 +22,7 @@ interface FilterFlatSliderProps {
   contentContainerStyle?: ViewStyle | ViewStyle[];
   itemStyle?: ViewStyle | ViewStyle[];
   textStyle?: TextStyle | TextStyle[];
+  disabled?: boolean;
 }
 
 export const FilterFlatSlider = React.memo(function FilterFlatSlider({
@@ -33,6 +34,7 @@ export const FilterFlatSlider = React.memo(function FilterFlatSlider({
   contentContainerStyle,
   itemStyle,
   textStyle,
+  disabled,
 }: FilterFlatSliderProps) {
   const flatListRef = useRef<FlatList>(null);
   const [selectedIndex, setSelectedIndex] = useState(startIndex);
@@ -52,7 +54,7 @@ export const FilterFlatSlider = React.memo(function FilterFlatSlider({
   const renderItem = ({ item, index }: { item: any; index: number }) => {
     const isSelected = index === selectedIndex;
     return (
-      <Pressable onPress={triggerSideShake}>
+      <Pressable onPress={triggerSideShake} disabled={disabled}>
         <Animated.View
           style={[
             {
@@ -120,6 +122,7 @@ export const FilterFlatSlider = React.memo(function FilterFlatSlider({
           scrollEventThrottle={16}
           style={{ flex: 1 }}
           horizontal
+          scrollEnabled={!disabled}
         />
       </View>
     </View>

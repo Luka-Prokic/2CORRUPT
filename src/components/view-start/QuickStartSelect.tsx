@@ -14,7 +14,12 @@ export function QuickStartSelect() {
   const { startSession } = useWorkoutStore();
 
   function handlePress() {
-    router.push("/add-exercise");
+    router.push({
+      pathname: "/add-exercise/[type]",
+      params: {
+        type: "session",
+      },
+    });
     setTypeOfView("workout");
     startSession();
   }

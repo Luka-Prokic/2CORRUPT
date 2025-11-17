@@ -5,32 +5,39 @@ import { useWorkoutStore } from "../../../../stores/workoutStore";
 import { Set } from "../../../../stores/workout/types";
 
 interface DoneInputProps {
-    set: Set;
+  set: Set;
+  disabled?: boolean;
 }
 
-export function DoneInput({ set }: DoneInputProps) {
-    const { theme } = useSettingsStore();
-    const { updateSetInActiveExercise } = useWorkoutStore();
+export function DoneInput({ set, disabled }: DoneInputProps) {
+  const { theme } = useSettingsStore();
+  const { updateSetInActiveExercise, activeTemplate } = useWorkoutStore();
 
   const handleToggleComplete = () => {
     updateSetInActiveExercise(set.id, { isCompleted: !set.isCompleted });
   };
-    return (
-        <TouchableOpacity
-        style={{
-          alignItems: "center",
-          justifyContent: "center",
-          width: 44,
-          height: 44,
-        }}
-        onPress={handleToggleComplete}
-        disabled={set.isCompleted}
-      >
-        <Ionicons
-          name={set.isCompleted ? "checkmark-circle" : "ellipse-outline"}
-          size={44}
-          color={set.isCompleted ? theme.text : theme.grayText}
-        />
-      </TouchableOpacity>
-    )
+  return (
+    <TouchableOpacity
+      style={{
+        alignItems: "center",
+        justifyContent: "center",
+        width: 44,
+        height: 44,
+      }}
+      onPress={handleToggleComplete}
+      disabled={set.isCompleted || !!activeTemplate || disabled}
+    >
+      <Ionicons
+        name={set.isCompleted ? "checkmark-circle" : "ellipse-outline"}
+        size={44}
+        color={
+          set.isCompleted
+            ? theme.text
+            : activeTemplate || disabled
+            ? theme.handle
+            : theme.grayText
+        }
+      />
+    </TouchableOpacity>
+  );
 }

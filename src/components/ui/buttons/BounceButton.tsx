@@ -2,11 +2,11 @@ import {
   Text,
   ViewStyle,
   TouchableOpacityProps,
-  Animated,
   Pressable,
 } from "react-native";
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { useBounceScaleAnim } from "../../../animations/useBounceScaleAnim";
+import Animated from "react-native-reanimated";
 
 interface BounceButtonProps
   extends Omit<TouchableOpacityProps, "style" | "onPress"> {
@@ -31,7 +31,6 @@ export function BounceButton({
   const { bounceAnim, bounceIt } = useBounceScaleAnim();
 
   const handlePress = () => {
-    // bounceIt();
     onPress?.();
   };
 
@@ -43,7 +42,7 @@ export function BounceButton({
           borderRadius: 8,
           overflow: "hidden",
           zIndex: 1,
-          backgroundColor: color ?? theme.primaryBackground,
+          backgroundColor: color,
           opacity: rest.disabled ? 0.6 : 1,
         },
         style,

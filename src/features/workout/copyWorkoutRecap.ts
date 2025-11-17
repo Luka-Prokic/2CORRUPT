@@ -36,7 +36,7 @@ export function useCopyWorkoutRecap() {
     });
 
     await Clipboard.setStringAsync(text);
-    Alert.alert(t("recap.copied"), t("recap.copied-to-clipboard"));
+    // Alert.alert(t("recap.copied"), t("recap.copied-to-clipboard"));
   }
 
   return { copyWorkoutRecap };

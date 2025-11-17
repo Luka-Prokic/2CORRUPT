@@ -34,40 +34,19 @@ export function SetRow({ set, setIndex }: SetRowProps) {
 
   function input(column: SetColumns) {
     if (column === "Set") {
-      return (
-        <SetIndex
-          setIndex={setIndex}
-        />
-      );
+      return <SetIndex setIndex={setIndex} />;
     }
     if (column === "Done") {
-      return (
-        <DoneInput
-          set={set}
-        />
-      );
+      return <DoneInput set={set} />;
     }
     if (column === "Reps" || column === "Weight") {
-      return (
-        <NumericInput
-          set={set}
-          column={column}
-        />
-      );
+      return <NumericInput set={set} column={column} />;
     }
     if (column === "RPE") {
-      return (
-        <InputRPE
-          set={set}
-        />
-      );
+      return <InputRPE set={set} />;
     }
     if (column === "RIR") {
-      return (
-        <InputRIR
-          set={set}
-        />
-      );
+      return <InputRIR set={set} />;
     }
   }
 

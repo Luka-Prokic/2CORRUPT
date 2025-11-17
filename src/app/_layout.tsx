@@ -1,4 +1,3 @@
-import { Fragment } from "react";
 import { Stack, router } from "expo-router";
 import { TouchableOpacity } from "react-native";
 import { StatusBar } from "expo-status-bar";
@@ -6,13 +5,14 @@ import { Ionicons } from "@expo/vector-icons";
 import { useSettingsStore } from "../stores/settingsStore";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 
 export function ModalExitButton() {
   const { theme } = useSettingsStore();
 
   return (
-    <TouchableOpacity onPress={() => router.back()} style={{ padding: 10 }}>
-      <Ionicons name="close" size={24} color={theme.text} />
+    <TouchableOpacity onPress={() => router.back()}>
+      <Ionicons name="close" size={28} color={theme.tint} />
     </TouchableOpacity>
   );
 }
@@ -21,8 +21,8 @@ export function ModalBackButton() {
   const { theme } = useSettingsStore();
 
   return (
-    <TouchableOpacity onPress={() => router.back()} style={{ padding: 10 }}>
-      <Ionicons name="chevron-back" size={24} color={theme.text} />
+    <TouchableOpacity onPress={() => router.back()}>
+      <Ionicons name="chevron-back" size={28} color={theme.tint} />
     </TouchableOpacity>
   );
 }
@@ -35,101 +35,91 @@ export default function Layout() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
-        <StatusBar style={statusBarStyle} />
-        <Stack
-          screenOptions={{
-            headerBackButtonDisplayMode: "minimal",
-            headerTintColor: theme.text,
-            headerBlurEffect: themeMode,
-            headerTransparent: true,
-            contentStyle: {
-              backgroundColor: theme.background,
-            },
-          }}
-        >
-          {/* Home */}
-          <Stack.Screen name="index" />
-
-          {/* HomeBoard */}
-          <Stack.Screen
-            name="home-board"
-            options={{
-              presentation: "card",
+        <BottomSheetModalProvider>
+          <StatusBar style={statusBarStyle} />
+          <Stack
+            screenOptions={{
+              title: null,
+              headerBackButtonDisplayMode: "minimal",
+              headerTintColor: theme.tint,
+              headerTitleStyle: { color: theme.text },
+              headerBlurEffect: themeMode,
+              headerTransparent: true,
+              contentStyle: {
+                backgroundColor: theme.background,
+              },
             }}
-          />
+          >
+            {/* Home */}
+            <Stack.Screen name="index" />
 
-          {/* Settings */}
-          <Stack.Screen
-            name="settings"
-            options={{
-              presentation: "modal",
-            }}
-          />
+            {/* HomeBoard */}
+            <Stack.Screen name="home-board" />
 
-          {/* Profile */}
-          <Stack.Screen
-            name="profile"
-            options={{
-              presentation: "modal",
-            }}
-          />
+            {/* Settings */}
+            <Stack.Screen
+              name="settings"
+              options={{
+                presentation: "modal",
+                headerShown: false,
+              }}
+            />
 
-          {/* WorkoutBoard */}
-          <Stack.Screen
-            name="workout-board"
-            options={{
-              presentation: "card",
-            }}
-          />
+            {/* Profile */}
+            <Stack.Screen
+              name="profile"
+              options={{
+                presentation: "modal",
+              }}
+            />
 
-          {/* TemplateBoard */}
-          <Stack.Screen
-            name="template-board"
-            options={{
-              presentation: "card",
-            }}
-          />
+            {/* WorkoutBoard */}
+            <Stack.Screen name="workout-board" />
 
-          {/* StartBoard */}
-          <Stack.Screen
-            name="start-board"
-            options={{
-              presentation: "card",
-            }}
-          />
+            {/* TemplateBoard */}
+            <Stack.Screen name="template-board" />
 
-          {/* Add Exercise */}
-          <Stack.Screen
-            name="add-exercise"
-            options={{
-              presentation: "fullScreenModal",
-            }}
-          />
+            {/* StartBoard */}
+            <Stack.Screen name="start-board" />
 
-          {/* Swap Exercise */}
-          <Stack.Screen
-            name="swap-exercise"
-            options={{
-              presentation: "fullScreenModal",
-            }}
-          />
+            {/* Add Exercise */}
+            <Stack.Screen name="add-exercise/[type]" />
 
-          {/* Session Recap */}
-          <Stack.Screen
-            name="recap/[sessionId]"
-            options={{
-              presentation: "fullScreenModal",
-            }}
-          />
+            {/* Swap Exercise */}
+            <Stack.Screen name="swap-exercise" />
 
-          {/* All */}
-          <Stack.Screen
-            name="all"
-            options={{
-              presentation: "modal",
-            }}
-          />
-        </Stack>
+            {/* Session Recap */}
+            <Stack.Screen
+              name="recap/[sessionId]"
+              options={{
+                presentation: "fullScreenModal",
+              }}
+            />
+
+            {/* Sessions */}
+            <Stack.Screen name="sessions" />
+
+            {/* Templates */}
+            <Stack.Screen name="templates" />
+
+            {/* Splits */}
+            <Stack.Screen
+              name="splits"
+              options={{
+                presentation: "modal",
+                headerShown: false,
+              }}
+            />
+
+            {/* All */}
+            <Stack.Screen
+              name="all"
+              options={{
+                presentation: "modal",
+              }}
+            />
+          </Stack>
+        </BottomSheetModalProvider>
       </SafeAreaProvider>
     </GestureHandlerRootView>
   );

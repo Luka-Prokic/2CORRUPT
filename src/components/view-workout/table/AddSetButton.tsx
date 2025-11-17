@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 
 export function AddSetButton() {
   const { theme } = useSettingsStore();
-  const { addSetToActiveExercise } = useWorkoutStore();
+  const { addSetToActiveExercise, activeTemplate } = useWorkoutStore();
   const { t } = useTranslation();
 
   const handleAddSet = () => {
@@ -25,7 +25,7 @@ export function AddSetButton() {
         width: WIDTH - 32,
         borderRadius: 32,
       }}
-      color={theme.tint}
+      color={activeTemplate ? theme.tint : theme.tint}
       onPress={handleAddSet}
     >
       <StrobeBlur

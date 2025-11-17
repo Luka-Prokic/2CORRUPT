@@ -14,7 +14,7 @@ export function SettingsButton({ onPress }: SettingsButtonProps) {
     if (onPress) {
       onPress();
     } else {
-      router.push("/settings");
+      router.push("/settings/main");
     }
   };
 

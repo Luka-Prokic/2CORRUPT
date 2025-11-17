@@ -1,33 +1,32 @@
-import { useRef } from "react";
-import { Animated } from "react-native";
+import {
+  useSharedValue,
+  useAnimatedStyle,
+  withSpring,
+  withTiming,
+} from "react-native-reanimated";
 
 export function useBounceScaleAnim() {
+  const scale = useSharedValue(1);
 
-    const scaleAnim = useRef(new Animated.Value(1)).current;
+  const bounceIt = () => {
+    scale.value = withTiming(0.8, { duration: 50 }, (finished) => {
+      if (finished) {
+        scale.value = withSpring(1, {
+          mass: 0.5,
+          damping: 8,
+          stiffness: 150,
+          overshootClamping: false,
+        });
+      }
+    });
+  };
 
-    const bounceIt = () => {
+  const bounceAnim = useAnimatedStyle(() => ({
+    transform: [{ scale: scale.value }],
+  }));
 
-        Animated.sequence([
-            Animated.timing(scaleAnim, {
-                toValue: 0.8,
-                duration: 10,
-                useNativeDriver: true,
-            }),
-            Animated.spring(scaleAnim, {
-                toValue: 1,
-                speed: 2,
-                bounciness: 10,
-                useNativeDriver: true,
-            }),
-        ]).start();
-    };
-
-    const bounceAnim = {
-        transform: [{ scale: scaleAnim }]
-    };
-
-    return {
-        bounceAnim,
-        bounceIt
-    };
-};
+  return {
+    bounceAnim,
+    bounceIt,
+  };
+}

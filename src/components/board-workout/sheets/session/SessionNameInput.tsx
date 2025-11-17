@@ -1,5 +1,12 @@
 import { useState, useRef } from "react";
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  ViewStyle,
+  TextInputProps,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useSettingsStore } from "../../../../stores/settingsStore";
 import {
@@ -8,16 +15,23 @@ import {
 } from "../../../../stores/workoutStore";
 import { useTranslation } from "react-i18next";
 
-interface SessionNameInputProps {
+export interface SessionNameInputProps extends TextInputProps {
   session?: WorkoutSession;
   fontSize?: number;
   textColor?: string;
+  styleView?: ViewStyle | ViewStyle[];
+  onBlurCustom?: () => void;
+  disabled?: boolean;
 }
 
 export function SessionNameInput({
   session,
   fontSize = 64,
   textColor,
+  styleView,
+  onBlurCustom,
+  disabled = false,
+  ...textInputProps
 }: SessionNameInputProps) {
   const { t } = useTranslation();
   const { theme } = useSettingsStore();
@@ -39,6 +53,7 @@ export function SessionNameInput({
       updateSessionField(currentSession.id, "name", trimmed);
     }
     setIsEditing(false);
+    onBlurCustom?.();
   };
 
   const handleEdit = () => {
@@ -56,6 +71,7 @@ export function SessionNameInput({
         gap: 8,
         height: 44,
         width: "100%",
+        ...styleView,
       }}
     >
       {isEditing ? (
@@ -63,8 +79,19 @@ export function SessionNameInput({
           ref={inputRef}
           value={tempName}
           onChangeText={setTempName}
-          onBlur={handleSave}
-          onSubmitEditing={handleSave}
+          onBlur={(e) => {
+            handleSave();
+            textInputProps.onBlur?.(e);
+          }}
+          onSubmitEditing={(e) => {
+            handleSave();
+            textInputProps.onSubmitEditing?.(e);
+          }}
+          placeholder={t("template-view.template-name")}
+          placeholderTextColor={theme.grayText}
+          returnKeyType="done"
+          blurOnSubmit
+          {...textInputProps}
           style={{
             fontSize: 24,
             fontWeight: "bold",
@@ -73,10 +100,6 @@ export function SessionNameInput({
             borderBottomWidth: 1,
             borderBottomColor: color,
           }}
-          placeholder={t("workout-board.session-name")}
-          placeholderTextColor={theme.grayText}
-          returnKeyType="done"
-          blurOnSubmit
         />
       ) : (
         <TouchableOpacity
@@ -88,6 +111,7 @@ export function SessionNameInput({
             width: "100%",
             height: 44,
           }}
+          disabled={disabled}
         >
           <Text
             style={{
@@ -104,7 +128,9 @@ export function SessionNameInput({
             {currentSession.name}
           </Text>
 
-          <Ionicons name="pencil" size={24} color={theme.grayText} />
+          {!disabled && (
+            <Ionicons name="pencil" size={24} color={theme.grayText} />
+          )}
         </TouchableOpacity>
       )}
     </View>

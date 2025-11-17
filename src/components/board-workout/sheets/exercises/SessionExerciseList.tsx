@@ -1,6 +1,7 @@
 import { HEIGHT, WIDTH } from "../../../../features/Dimensions";
-import { Animated, FlatList } from "react-native";
-import { useFadeInAnim } from "../../../../animations/useFadeInAnim";
+import { View } from "react-native";
+import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
+import DraggableFlatList from "react-native-draggable-flatlist";
 import { useWorkoutStore } from "../../../../stores/workout/useWorkoutStore";
 import { ExerciseCard } from "../../cards/ExerciseCard";
 import { useState } from "react";
@@ -12,12 +13,12 @@ interface SessionExerciseListProps {
 }
 
 export function SessionExerciseList({ togglePanel }: SessionExerciseListProps) {
-  const { activeSession } = useWorkoutStore();
-  const { setActiveExercise } = useWorkoutStore();
-  const { fadeIn } = useFadeInAnim();
-
+  const { activeSession, setActiveExercise, reorderSessionItems } =
+    useWorkoutStore();
   const [selectMode, setSelectMode] = useState(false);
   const [selectedExercises, setSelectedExercises] = useState<string[]>([]);
+
+  if (!activeSession) return null;
 
   const handleExerciseSelect = (exerciseId: string) => {
     if (selectedExercises.includes(exerciseId)) {
@@ -37,27 +38,11 @@ export function SessionExerciseList({ togglePanel }: SessionExerciseListProps) {
     setSelectedExercises([]);
   };
 
-  const renderCard = (item: any) => {
-    return (
-      <ExerciseCard
-        exercise={item}
-        onUse={handleExerciseUse}
-        onSelect={handleExerciseSelect}
-        selectedExercises={selectedExercises}
-        multipleSelect={selectMode}
-      />
-    );
-  };
-
-  if (!activeSession) return null;
-
   return (
     <Animated.View
-      style={{
-        width: WIDTH,
-        height: HEIGHT - 200,
-        ...fadeIn,
-      }}
+      entering={FadeIn}
+      exiting={FadeOut}
+      style={{ width: WIDTH, height: HEIGHT - 200 }}
     >
       <SessionExerciseListHeader
         selectMode={selectMode}
@@ -66,19 +51,32 @@ export function SessionExerciseList({ togglePanel }: SessionExerciseListProps) {
         setSelectedExercises={setSelectedExercises}
         setSelectMode={setSelectMode}
       />
-      <FlatList
-        data={activeSession?.layout}
+
+      <DraggableFlatList
+        data={activeSession.layout}
         keyExtractor={(item) =>
           "group" in item ? `group-${item.group}` : item.id
         }
-        renderItem={({ item }) => renderCard(item)}
-        ListFooterComponent={() => (
-          <SessionExerciseListAddNewButton
-            style={{
-              opacity: selectMode ? 0 : 1,
-            }}
+        renderItem={({ item, drag, isActive }) => (
+          <ExerciseCard
+            exercise={item}
+            onUse={handleExerciseUse}
+            onSelect={handleExerciseSelect}
+            selectedExercises={selectedExercises}
+            multipleSelect={selectMode}
+            drag={!selectMode ? drag : undefined} // enable drag on long press
+            isActiveDrag={isActive}
           />
         )}
+        onDragEnd={({ data }) => {
+          reorderSessionItems(data); // overwrite the order directly
+        }}
+        activationDelay={200} // long press delay to start drag
+      />
+      <SessionExerciseListAddNewButton
+        style={{
+          opacity: selectMode ? 0 : 1,
+        }}
       />
     </Animated.View>
   );

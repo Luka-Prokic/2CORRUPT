@@ -6,7 +6,12 @@ import { useActionSheet } from "../../../features/useActionSheet";
 
 export function RemoveExerciseButton() {
   const { theme } = useSettingsStore();
-  const { activeExercise, removeExercisesFromSession } = useWorkoutStore();
+  const {
+    activeExercise,
+    removeExercisesFromSession,
+    removeExercisesFromTemplate,
+    activeTemplate,
+  } = useWorkoutStore();
   const { showActionSheet, t } = useActionSheet();
 
   function handleRemoveExercise() {
@@ -20,18 +25,25 @@ export function RemoveExerciseButton() {
       destructiveIndex: 1,
       cancelIndex: 0,
       onSelect: (index) => {
-        if (index === 1) removeExercisesFromSession([activeExercise?.id]);
+        if (index === 1) removeExercise();
       },
     });
   }
 
+  function removeExercise() {
+    removeExercisesFromSession([activeExercise?.id]);
+    removeExercisesFromTemplate([activeExercise?.id]);
+  }
+
+  const error = activeTemplate ? theme.tint : theme.error;
+
   return (
     <OptionButton
       title={t("workout-board.remove-exercise")}
-      icon={<Ionicons name="remove-circle-outline" size={24} color={theme.error} />}
+      icon={<Ionicons name="remove-circle" size={24} color={error} />}
       height={44}
       onPress={handleRemoveExercise}
-      color={theme.error}
+      color={error}
     />
   );
 }

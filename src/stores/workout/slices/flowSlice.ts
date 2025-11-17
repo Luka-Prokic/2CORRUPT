@@ -14,50 +14,54 @@ export const createFlowSlice: StateCreator<WorkoutStore, [], [], FlowSlice> = (
   isTherePrev: false,
 
   goToNextExercise: () => {
-    const { activeSession, activeExercise, setActiveExercise } = get();
-    if (!activeSession || !activeExercise) return;
+    const { activeSession, activeTemplate, activeExercise, setActiveExercise } =
+      get();
 
-    const flat = activeSession.layout;
-    const currentIndex = flat.findIndex((f) => f.id === activeExercise.id);
-    if (currentIndex < 0 || currentIndex === flat.length - 1) return;
+    const layout = activeSession?.layout ?? activeTemplate?.layout;
+    if (!layout || !activeExercise) return;
 
-    setActiveExercise(flat[currentIndex + 1].id);
+    const currentIndex = layout.findIndex((f) => f.id === activeExercise.id);
+    if (currentIndex < 0 || currentIndex === layout.length - 1) return;
+
+    setActiveExercise(layout[currentIndex + 1].id);
     get().updateNavigationFlags();
   },
 
   goToPreviousExercise: () => {
-    const { activeSession, activeExercise, setActiveExercise } = get();
-    if (!activeSession || !activeExercise) return;
+    const { activeSession, activeTemplate, activeExercise, setActiveExercise } =
+      get();
 
-    const flat = activeSession.layout;
-    const currentIndex = flat.findIndex((f) => f.id === activeExercise.id);
+    const layout = activeSession?.layout ?? activeTemplate?.layout;
+    if (!layout || !activeExercise) return;
+
+    const currentIndex = layout.findIndex((f) => f.id === activeExercise.id);
     if (currentIndex <= 0) return;
 
-    setActiveExercise(flat[currentIndex - 1].id);
+    setActiveExercise(layout[currentIndex - 1].id);
     get().updateNavigationFlags();
   },
 
   updateNavigationFlags: () => {
-    const { activeSession, activeExercise } = get();
-    if (!activeSession || !activeExercise) {
+    const { activeSession, activeTemplate, activeExercise } = get();
+
+    const layout = activeSession?.layout ?? activeTemplate?.layout;
+    if (!layout || !activeExercise) {
       set({ isThereNext: false, isTherePrev: false });
       return;
     }
 
-    const flat = activeSession.layout;
-    const currentIndex = flat.findIndex((f) => f.id === activeExercise.id);
-
+    const currentIndex = layout.findIndex((f) => f.id === activeExercise.id);
     set({
       isTherePrev: currentIndex > 0,
-      isThereNext: currentIndex >= 0 && currentIndex < flat.length - 1,
+      isThereNext: currentIndex >= 0 && currentIndex < layout.length - 1,
     });
   },
 
   getActiveExerciseIndex: () => {
-    const { activeSession, activeExercise } = get();
-    if (!activeSession || !activeExercise) return null;
+    const { activeSession, activeTemplate, activeExercise } = get();
+    const layout = activeSession?.layout ?? activeTemplate?.layout;
+    if (!layout || !activeExercise) return null;
 
-    const flat = activeSession.layout;
-    return flat.findIndex((f) => f.id === activeExercise.id);
+    return layout.findIndex((f) => f.id === activeExercise.id);
   },
 });

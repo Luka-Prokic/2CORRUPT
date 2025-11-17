@@ -13,12 +13,15 @@ export function StartWorkoutButton() {
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
   const { setTypeOfView } = useUIStore();
-  const { activeSession } = useWorkoutStore();
+  const { activeSession, activeTemplate } = useWorkoutStore();
   const isItActive = activeSession !== null;
+  const isItEditing = activeTemplate !== null;
   const insets = useSafeAreaInsets();
   function handleStartWorkout() {
     if (isItActive) {
       setTypeOfView("workout");
+    } else if (isItEditing) {
+      setTypeOfView("template");
     } else {
       setTypeOfView("start");
     }
@@ -45,7 +48,11 @@ export function StartWorkoutButton() {
         duration={5000}
       >
         <Text style={{ fontSize: 24, fontWeight: "bold", color: theme.text }}>
-          {isItActive ? t("app.continue-workout") : t("app.start-workout")}
+          {isItActive
+            ? t("app.continue-workout")
+            : isItEditing
+            ? t("app.continue-template")
+            : t("app.start-workout")}
         </Text>
       </StrobeBlur>
     </BounceButton>

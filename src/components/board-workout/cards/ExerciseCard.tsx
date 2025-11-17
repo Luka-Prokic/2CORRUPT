@@ -14,6 +14,10 @@ interface ExerciseCardProps {
   onSelect: (id: string) => void;
   selectedExercises: string[];
   multipleSelect: boolean;
+  tint?: string;
+  backgroundColor?: string;
+  drag?: () => void; // <-- new prop
+  isActiveDrag?: boolean; // optional styling while dragging
 }
 
 export function ExerciseCard({
@@ -22,6 +26,10 @@ export function ExerciseCard({
   onSelect,
   selectedExercises,
   multipleSelect,
+  tint,
+  backgroundColor,
+  drag,
+  isActiveDrag,
 }: ExerciseCardProps) {
   const { theme } = useSettingsStore();
   const { translatedName } = useTranslatedSessionExerciseName(exercise);
@@ -30,6 +38,13 @@ export function ExerciseCard({
   const isActive = activeExercise?.id === exercise.id;
   const isSelected = selectedExercises.includes(exercise.id);
 
+  const textTint = isActive ? tint ?? theme.tint : theme.text;
+  const background = isActiveDrag
+    ? theme.info
+    : !isActive || multipleSelect
+    ? backgroundColor ?? theme.secondaryBackground
+    : theme.background;
+
   function handlePress() {
     if (multipleSelect) {
       onSelect(exercise.id);
@@ -37,33 +52,34 @@ export function ExerciseCard({
       onUse(exercise.id);
     }
   }
+
   return (
     <TouchableOpacity
       activeOpacity={0.8}
-      onPress={handlePress}
+      onPress={() => {
+        if (!isActive || multipleSelect) handlePress(); // only block tap if active & single select
+      }}
+      onLongPress={drag} // always enabled
       style={{
         height: 72,
-        marginBottom: 1,
         width: WIDTH,
         paddingHorizontal: 10,
         justifyContent: "center",
-        backgroundColor:
-          !isActive || multipleSelect
-            ? theme.secondaryBackground
-            : theme.primaryBackground,
+        backgroundColor: background,
+        opacity: isActiveDrag ? 0.5 : 1,
       }}
-      disabled={isActive && !multipleSelect}
     >
       <Text
         style={{
           fontSize: 18,
           fontWeight: "700",
-          color: isActive ? theme.tint : theme.text,
+          color: textTint,
         }}
       >
         {exercise.prefix ? `${exercise.prefix} ` : ""}
         {translatedName}
       </Text>
+
       {multipleSelect ? (
         <IButton
           onPress={() => onSelect(exercise.id)}

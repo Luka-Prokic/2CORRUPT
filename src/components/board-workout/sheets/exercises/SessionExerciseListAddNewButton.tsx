@@ -13,9 +13,19 @@ export function SessionExerciseListAddNewButton({
   style,
 }: SessionExerciseListAddNewButtonProps) {
   const { theme } = useSettingsStore();
+
+  function handlePress() {
+    router.push({
+      pathname: "/add-exercise/[type]",
+      params: {
+        type: "session",
+      },
+    });
+  }
+
   return (
     <StrobeButton
-      onPress={() => router.push("/add-exercise")}
+      onPress={handlePress}
       style={{
         height: 64,
         width: WIDTH - 32,
