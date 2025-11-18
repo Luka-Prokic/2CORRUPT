@@ -4,6 +4,8 @@ import { WorkoutTemplate } from "../../../stores/workout/types";
 import { AddSplitWorkoutCard } from "./AddSplitWorkoutCard";
 import { EmptyFooter } from "../../ui/containers/EmptyFooter";
 import { NoSearchMatchTempaltes } from "../../templates/NoSearchMatchTempaltes";
+import { useWorkoutStore } from "../../../stores/workout/useWorkoutStore";
+import { EmptyTemplateComponent } from "../../templates/EmptyTemplateComponent";
 
 const PAGE_SIZE = 20;
 
@@ -20,6 +22,7 @@ export function AddSplitWorkoutList({
   setSelectedTemplates,
   maxSelection,
 }: AddSplitWorkoutListProps) {
+  const { templates } = useWorkoutStore();
   const [page, setPage] = useState(1);
 
   const pagedWorkouts = React.useMemo(
@@ -51,8 +54,11 @@ export function AddSplitWorkoutList({
   }, [filteredTemplates.length]);
 
   function footerComponent() {
-    if (filteredTemplates.length === 0) {
+    if (filteredTemplates.length === 0 && templates.length > 0) {
       return <NoSearchMatchTempaltes />;
+    }
+    if (filteredTemplates.length === 0 && templates.length === 0) {
+      return <EmptyTemplateComponent />;
     }
     return <EmptyFooter />;
   }

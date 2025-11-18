@@ -1,12 +1,11 @@
 import { SplitPlanWorkout } from "../../../stores/workout/types";
-import { TouchableOpacity, ViewStyle, TextInput, View } from "react-native";
+import { TouchableOpacity, ViewStyle, View } from "react-native";
 import { Text } from "react-native";
 import { useWorkoutStore } from "../../../stores/workout";
 import { useSettingsStore } from "../../../stores/settings";
 import { SplitPlanDay } from "../../../stores/workout/types";
 import { Ionicons } from "@expo/vector-icons";
-import { Fragment, useState } from "react";
-import { IsoDateString } from "../../../stores/workout/types";
+import { Fragment } from "react";
 import { router } from "expo-router";
 import { StrobeBlur } from "../../ui/misc/StrobeBlur";
 
@@ -25,69 +24,13 @@ export function PlannedWorkoutCard({
   splitId,
   style,
 }: PlannedWorkoutCardProps) {
-  const { getTemplateById, removeWorkoutFromDay, updateWorkoutInDay } =
-    useWorkoutStore();
-  const { theme, themeMode } = useSettingsStore();
+  const { getTemplateById, removeWorkoutFromDay } = useWorkoutStore();
+  const { theme } = useSettingsStore();
   const template = getTemplateById(workout.templateId);
   if (!template) return null;
 
-  // Extract time from ISO string or use empty string
-  const getTimeFromISO = (isoString?: IsoDateString): string => {
-    if (!isoString) return "";
-    try {
-      const date = new Date(isoString);
-      const hours = date.getHours().toString().padStart(2, "0");
-      const minutes = date.getMinutes().toString().padStart(2, "0");
-      return `${hours}:${minutes}`;
-    } catch {
-      return "";
-    }
-  };
-
-  const [scheduledTime, setScheduledTime] = useState(
-    getTimeFromISO(workout.scheduledAt)
-  );
-
   function handleRemoveWorkout() {
-    removeWorkoutFromDay(splitId, dayIndex, workout.id);
-  }
-
-  function handleTimeChange(text: string) {
-    setScheduledTime(text);
-  }
-
-  function handleTimeBlur() {
-    // Convert time string to ISO date string on blur
-    // Use today's date with the entered time
-    if (scheduledTime.trim()) {
-      const [hours, minutes] = scheduledTime.split(":").map(Number);
-      if (
-        !isNaN(hours) &&
-        !isNaN(minutes) &&
-        hours >= 0 &&
-        hours < 24 &&
-        minutes >= 0 &&
-        minutes < 60
-      ) {
-        const today = new Date();
-        today.setHours(hours, minutes, 0, 0);
-        const isoString = today.toISOString() as IsoDateString;
-        updateWorkoutInDay(splitId, dayIndex, workout.id, {
-          scheduledAt: isoString,
-        });
-      } else {
-        // Invalid time format, clear it
-        setScheduledTime("");
-        updateWorkoutInDay(splitId, dayIndex, workout.id, {
-          scheduledAt: undefined,
-        });
-      }
-    } else {
-      // Clear scheduled time
-      updateWorkoutInDay(splitId, dayIndex, workout.id, {
-        scheduledAt: undefined,
-      });
-    }
+    removeWorkoutFromDay(splitId, dayIndex, workout.templateId);
   }
 
   function handleSwitchTemplate() {
@@ -134,36 +77,7 @@ export function PlannedWorkoutCard({
         </View>
         {!day.isRest && (
           <Fragment>
-            {/* Time Input */}
-            {/* <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                gap: 6,
-                width: 100,
-              }}
-            >
-              <Ionicons name="time-outline" size={16} color={theme.grayText} />
-              <TextInput
-                style={{
-                  color: theme.text,
-                  borderRadius: 8,
-                  fontSize: 12,
-                  minWidth: 44,
-                  height: 44,
-                }}
-                value={scheduledTime}
-                onChangeText={handleTimeChange}
-                onBlur={handleTimeBlur}
-                placeholder="14:30"
-                placeholderTextColor={theme.grayText}
-                editable={!day.isRest}
-                keyboardType="numeric"
-              />
-            </View> */}
-
             {/* Switch Template Button */}
-
             <TouchableOpacity
               onPress={handleSwitchTemplate}
               hitSlop={10}
@@ -175,7 +89,6 @@ export function PlannedWorkoutCard({
             </TouchableOpacity>
 
             {/* Remove Button */}
-
             <TouchableOpacity
               onPress={handleRemoveWorkout}
               hitSlop={10}

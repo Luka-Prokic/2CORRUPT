@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { Text } from "react-native";
 import { useSettingsStore } from "../../stores/settings";
 import { useTranslation } from "react-i18next";
 
@@ -10,7 +10,7 @@ export function NoSearchMatchTempaltes() {
   return (
     <Text
       style={{
-        fontSize: 22,
+        fontSize: 18,
         fontWeight: "600",
         color: theme.grayText,
         textAlign: "center",
