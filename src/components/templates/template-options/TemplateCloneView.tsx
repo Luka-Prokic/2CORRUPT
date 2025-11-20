@@ -26,18 +26,14 @@ export const TemplateCloneView = forwardRef<
 
   const itsNotReady = !tempName;
 
-  function closeSheet() {
+  function handleCloneTemplate() {
+    cloneTemplate(template.id, tempName);
     (ref as React.RefObject<BottomSheetModal>)?.current?.close();
   }
 
-  const handleCloneTemplate = () => {
-    cloneTemplate(template.id, tempName);
-    closeSheet();
-  };
-
-  const handleCancel = () => {
+  function handleCancel() {
     setView("options");
-  };
+  }
 
   return (
     <Fragment>

@@ -56,7 +56,7 @@ export function DashBoard({
         size={HEIGHT / 2}
         style={{
           height: focusHeight,
-          backgroundColor: tint || theme.text,
+          backgroundColor: tint || theme.fifthBackground,
         }}
       >
         <LinearGradient

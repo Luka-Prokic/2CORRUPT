@@ -5,7 +5,6 @@ import { SessionRecapCard } from "./cards/recap/SessionRecapCard";
 import { ScreenContent } from "../ui/utils/ScreenContent";
 import { useCalendarNavigation } from "../../features/test/useCalendarNavigation";
 import { EmptyFooter } from "../ui/containers/EmptyFooter";
-import { StaticDailyActivityBar } from "./day-activity-bar/StaticDailyActivityBar";
 import { DaySummary } from "./day-ui/DaySummary";
 import { SummaryEmptyHeader } from "./header/SummaryEmptyHeader";
 
@@ -22,8 +21,6 @@ export function DayRecapScreen({ date }: DayRecapScreenProps) {
     <ScreenContent>
       <SummaryEmptyHeader />
       <DaySummary date={date} />
-
-      <StaticDailyActivityBar date={date} />
 
       <FlatList
         data={sessionsOnThisDate ?? []}

@@ -1,7 +1,10 @@
 import { useSettingsStore } from "../../../stores/settings";
-import { useWorkoutStore, WorkoutTemplate } from "../../../stores/workout";
+import { WorkoutTemplate } from "../../../stores/workout";
 import { IButton } from "../../ui/buttons/IButton";
 import { Ionicons } from "@expo/vector-icons";
+import { AddToSplitBottomSheet } from "../split-options/AddToSplitBottomSheet";
+import { useCallback, useRef } from "react";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
 
 interface AddToSplitSelectedTemplatesProps {
   selected: WorkoutTemplate[];
@@ -15,11 +18,18 @@ export function AddToSplitSelectedTemplates({
 }: AddToSplitSelectedTemplatesProps) {
   const { theme } = useSettingsStore();
 
+  const bottomSheetRef = useRef<BottomSheetModal>(null);
+
+  const presentModal = useCallback(() => {
+    bottomSheetRef.current?.present();
+  }, []);
+
   const isSomeSelected = selected.length ? true : false;
 
   function handleDeleteSelectedTemplates() {
-    setSelected([]);
-    setMode(false);
+    // setSelected([]);
+    // setMode(false);
+    presentModal();
   }
   return (
     <IButton
@@ -35,6 +45,11 @@ export function AddToSplitSelectedTemplates({
         name="flash-outline"
         size={24}
         color={!isSomeSelected ? theme.handle : theme.fifthBackground}
+      />
+      <AddToSplitBottomSheet
+        templates={selected}
+        startView="list"
+        ref={bottomSheetRef}
       />
     </IButton>
   );

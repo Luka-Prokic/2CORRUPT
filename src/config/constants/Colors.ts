@@ -23,7 +23,7 @@ export const Colors = {
     secondaryBackground: "#FAFAFA",
     thirdBackground: "#A1C6FF",
     fourthBackground: "#D2C7B6",
-    fifthBackground: "#F6D645",
+    fifthBackground: "#FF6F61",
     accent: "#4C4F51",
     shadow: "#1C1C1E",
     glow: "#F2F2F7",
