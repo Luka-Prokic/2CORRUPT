@@ -22,12 +22,13 @@ export type TemplateBottomSheetViews =
 interface TemplateBottomSheetProps {
   template: WorkoutTemplate;
   startView: TemplateBottomSheetViews;
+  onAddToSplit: () => void;
 }
 
 export const TemplateBottomSheet = forwardRef<
   BottomSheetModal,
   TemplateBottomSheetProps
->(({ template, startView = "options" }, ref) => {
+>(({ template, startView = "options", onAddToSplit }, ref) => {
   const { theme } = useSettingsStore();
   const insets = useSafeAreaInsets();
   const [view, setView] = useState<TemplateBottomSheetViews>(startView);
@@ -40,6 +41,7 @@ export const TemplateBottomSheet = forwardRef<
             template={template}
             setView={setView}
             ref={ref}
+            onAddToSplit={onAddToSplit}
           />
         );
 

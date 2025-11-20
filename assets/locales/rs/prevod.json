@@ -334,7 +334,8 @@
     "clone-info": "Duplirajte ovaj šablon da napravite novu verziju, dok original ostaje nepromenjen. Promena imena može vam pomoći da ih razlikujete.",
     "delete-info": "Brisanje šablona je trajno. Tvoji prethodni treninzi neće biti obrisani.",
     "active-session-warning": "Trening je u toku. Završite ga pre nego što započnete novi ili uređujete šablone.",
-    "no-templates-found-match": "Nema template-a koji odgovara pretrazi"
+    "no-templates-found-match": "Nema template-a koji odgovara pretrazi",
+    "add-to-split": "Dodaj u Split"
   },
   "splits": {
     "day": "Dan",

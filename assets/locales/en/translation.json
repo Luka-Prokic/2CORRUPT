@@ -353,7 +353,8 @@
     "delete-info": "Deleting this template can't be undone. Your previous workouts won't be affected.",
     "active-session-warning": "Active workout in progress. Finish it or cancel it before starting a new session or editing templates.",
     "search": "Search templates",
-    "no-templates-found-match": "No templates found matching your search"
+    "no-templates-found-match": "No templates found matching your search",
+    "add-to-split": "Add to Split"
   },
   "splits": {
     "day": "Day",

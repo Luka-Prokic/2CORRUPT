@@ -16,42 +16,44 @@ import { useKeyboardHeight } from "../../../features/ui/useKeyboardHeight";
 interface TemplateOptionsViewProps {
   template: WorkoutTemplate;
   setView: (view: TemplateBottomSheetViews) => void;
+  onAddToSplit: () => void;
 }
 
 export const TemplateOptionsView = forwardRef<
   BottomSheetModal,
   TemplateOptionsViewProps
->(({ template, setView }, ref) => {
+>(({ template, setView, onAddToSplit }, ref) => {
   const { editTemplate, activeSession } = useWorkoutStore();
   const { theme } = useSettingsStore();
   const { setTypeOfView } = useUIStore();
   const { t } = useTranslation();
   const bottomSpace = useKeyboardHeight(16);
 
-  const closeSheet = () => {
-    (ref as React.RefObject<BottomSheetModal>)?.current?.close();
-  };
-
-  const handleStartWorkout = () => {
+  function handleStartWorkout() {
     setView("preview");
-  };
+  }
 
-  const handleEditTemplate = () => {
+  function handleEditTemplate() {
     setTimeout(() => {
       editTemplate(template.id);
       setTypeOfView("template");
       router.dismissTo("/");
     }, 200);
-    closeSheet();
-  };
+    (ref as React.RefObject<BottomSheetModal>)?.current?.close();
+  }
 
-  const handleCloneTemplate = () => {
+  function handleCloneTemplate() {
     setView("clone");
-  };
+  }
 
-  const handleDeleteTemplate = () => {
+  function handleDeleteTemplate() {
     setView("delete");
-  };
+  }
+
+  function handleAddToSplit() {
+    onAddToSplit();
+    (ref as React.RefObject<BottomSheetModal>)?.current?.close();
+  }
 
   return (
     <Fragment>
@@ -89,6 +91,14 @@ export const TemplateOptionsView = forwardRef<
         icon={<Ionicons name="duplicate" size={24} color={theme.accent} />}
         color={theme.accent}
         onPress={handleCloneTemplate}
+        height={44}
+      />
+
+      <OptionButton
+        title={`${t("templates.add-to-split")}`}
+        icon={<Ionicons name="flash" size={24} color={theme.fifthBackground} />}
+        color={theme.fifthBackground}
+        onPress={handleAddToSplit}
         height={44}
       />
 

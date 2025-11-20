@@ -6,6 +6,7 @@ import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { useWidgetUnit } from "../../features/widgets/useWidgetUnit";
 import { Ionicons } from "@expo/vector-icons";
 import { TemplateBottomSheet } from "./template-options/TemplateBottomSheet";
+import { AddToSplitBottomSheet } from "./split-options/AddToSplitBottomSheet";
 
 interface TemplateSelectCardProps {
   template: WorkoutTemplate;
@@ -23,12 +24,8 @@ export function TemplateSelectCard({
   const { theme } = useSettingsStore();
   const { widgetUnit } = useWidgetUnit();
 
-  const bottomSheetRef = useRef<BottomSheetModal>(null);
-
-  const tags = template.tags?.map((tag, i) => {
-    if (template.tags.length > i + 1) return `${tag}, `;
-    return `${tag}`;
-  });
+  const templateBottomSheetRef = useRef<BottomSheetModal>(null);
+  const addToSplitBottomSheetRef = useRef<BottomSheetModal>(null);
 
   const isSelected = selected.includes(template);
 
@@ -49,7 +46,11 @@ export function TemplateSelectCard({
     }
   }
   const presentModal = useCallback(() => {
-    bottomSheetRef.current?.present();
+    templateBottomSheetRef.current?.present();
+  }, []);
+
+  const presentAddToSplitModal = useCallback(() => {
+    addToSplitBottomSheetRef.current?.present();
   }, []);
 
   return (
@@ -109,8 +110,14 @@ export function TemplateSelectCard({
 
       <TemplateBottomSheet
         template={template}
-        ref={bottomSheetRef}
+        ref={templateBottomSheetRef}
+        onAddToSplit={presentAddToSplitModal}
         startView="preview"
+      />
+
+      <AddToSplitBottomSheet
+        templates={[template]}
+        ref={addToSplitBottomSheetRef}
       />
     </Fragment>
   );

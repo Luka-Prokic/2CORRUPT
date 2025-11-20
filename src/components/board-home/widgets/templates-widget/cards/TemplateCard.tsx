@@ -4,6 +4,7 @@ import { useSettingsStore } from "../../../../../stores/settingsStore";
 import { Fragment, useCallback, useRef } from "react";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { TemplateBottomSheet } from "../../../../templates/template-options/TemplateBottomSheet";
+import { AddToSplitBottomSheet } from "../../../../templates/split-options/AddToSplitBottomSheet";
 
 interface TemplateCardProps {
   template: WorkoutTemplate;
@@ -12,7 +13,8 @@ interface TemplateCardProps {
 export function TemplateCard({ template }: TemplateCardProps) {
   const { theme } = useSettingsStore();
 
-  const bottomSheetRef = useRef<BottomSheetModal>(null);
+  const templateBottomSheetRef = useRef<BottomSheetModal>(null);
+  const addToSplitBottomSheetRef = useRef<BottomSheetModal>(null);
 
   const tags = template.tags?.map((tag, i) => {
     if (template.tags.length > i + 1) return `${tag}, `;
@@ -20,7 +22,11 @@ export function TemplateCard({ template }: TemplateCardProps) {
   });
 
   const handlePresentModalPress = useCallback(() => {
-    bottomSheetRef.current?.present();
+    templateBottomSheetRef.current?.present();
+  }, []);
+
+  const handlePresentAddToSplitModal = useCallback(() => {
+    addToSplitBottomSheetRef.current?.present();
   }, []);
 
   return (
@@ -99,8 +105,13 @@ export function TemplateCard({ template }: TemplateCardProps) {
       </TouchableOpacity>
       <TemplateBottomSheet
         template={template}
-        ref={bottomSheetRef}
+        ref={templateBottomSheetRef}
         startView="preview"
+        onAddToSplit={handlePresentAddToSplitModal}
+      />
+      <AddToSplitBottomSheet
+        templates={[template]}
+        ref={addToSplitBottomSheetRef}
       />
     </Fragment>
   );

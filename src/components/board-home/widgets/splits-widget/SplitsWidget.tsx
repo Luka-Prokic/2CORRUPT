@@ -53,7 +53,7 @@ export function SplitsWidget() {
           style={{
             fontSize: 12,
             fontWeight: "600",
-            color: noSplit ? theme.info : theme.fifthBackground,
+            color: noSplit ? theme.info : theme.tint,
           }}
         >
           {t("button.active").toLowerCase()}
@@ -63,9 +63,9 @@ export function SplitsWidget() {
       <Ionicons
         name={noSplit ? "flash-outline" : "flash"}
         size={44}
-        color={noSplit ? theme.info : theme.tint}
+        color={noSplit ? theme.info : theme.fifthBackground}
         style={{
-          shadowColor: theme.tint,
+          shadowColor: theme.fifthBackground,
           shadowOffset: { width: 0, height: 2 },
           shadowOpacity: noSplit ? 0 : 0.6,
           shadowRadius: 16,
