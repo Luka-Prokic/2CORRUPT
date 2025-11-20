@@ -344,7 +344,6 @@
     "active-session-warning": "Active workout in progress. Finish it or cancel it before starting a new session."
   },
   "templates": {
-    "template": "Template",
     "start-workout": "Start Workout",
     "back-to-preview": "Back to Preview",
     "empty-info": "Templates are pre-made sets of exercises you can reuse whenever you want. Tap the plus button above to start your first one. Creating a template is quick and editable, letting you organize your workouts efficiently. Once you have a few, you can mix and match them to plan your training week, saving time and keeping your focus on lifting rather than planning each set from scratch.",
@@ -354,9 +353,15 @@
     "active-session-warning": "Active workout in progress. Finish it or cancel it before starting a new session or editing templates.",
     "search": "Search templates",
     "no-templates-found-match": "No templates found matching your search",
-    "add-to-split": "Add to Split"
+    "add-to-split": "Add to Split",
+    "exercises": "Exercises",
+    "exercise": "Exercise",
+    "templates": "Templates",
+    "template": "Template"
   },
   "splits": {
+    "split": "Split",
+    "splits": "Splits",
     "day": "Day",
     "edit-day": "Edit Day",
     "title": "Splits",
@@ -391,7 +396,8 @@
     "go-to-summary": "Go to Summary to create templates",
     "click-day-to-add-workouts": "Click a day to add workouts",
     "create-split-using-this": "Create a split using this",
-    "create-split-using-this-description": "Looks like you haven't stitched a split together yet. Build one to keep your training structured and easier to follow."
+    "create-split-using-this-description": "Looks like you haven't stitched a split together yet. Build one to keep your training structured and easier to follow.",
+    "select-a-split": "Select a split"
   },
 
   "all": {

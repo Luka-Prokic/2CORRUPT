@@ -326,7 +326,6 @@
     "active-session-warning": "Aktivan trening je u toku. Završi ga pre nego što započneš novi."
   },
   "templates": {
-    "template": "Šablon",
     "start-workout": "Započni Trening",
     "back-to-preview": "Vrati se na pregled",
     "empty-info": "Šabloni su unapred pripremljeni setovi vežbi koje možete koristiti više puta. Pritisnite dugme plus iznad da započnete svoj prvi šablon. Kreiranje šablona je brzo i može se menjati, što vam omogućava da efikasno organizujete treninge. Kada napravite nekoliko njih, možete ih kombinovati da planirate nedelju treninga, štedeći vreme i fokusirajući se na vežbanje, umesto na planiranje svakog seta posebno.",
@@ -335,12 +334,18 @@
     "delete-info": "Brisanje šablona je trajno. Tvoji prethodni treninzi neće biti obrisani.",
     "active-session-warning": "Trening je u toku. Završite ga pre nego što započnete novi ili uređujete šablone.",
     "no-templates-found-match": "Nema template-a koji odgovara pretrazi",
-    "add-to-split": "Dodaj u Split"
+    "add-to-split": "Dodaj u Split",
+    "exercises": "Vežbe",
+    "exercise": "Vežba",
+    "templates": "Šabloni",
+    "template": "Šablon"
   },
   "splits": {
+    "split": "Split",
+    "splits": "Splitovi",
     "day": "Dan",
     "edit-day": "Uredi Dan",
-    "title": "Splits",
+    "title": "Splitovi",
     "total-days": "Ukupno dana",
     "active-days": "Aktivnih dana",
     "delete-title": "Delete this split plan?",
@@ -372,7 +377,8 @@
     "go-to-summary": "Idi na Pregled da kreiraš template-e",
     "click-day-to-add-workouts": "Klikni na dan u koji želiš da dodaš treninge",
     "create-split-using-this": "Kreiraj split koristeći ovaj",
-    "create-split-using-this-description": "Izgleda da nemaš stitched split-a zajedno. Kreiraj jedan da održavaš svoj trening strukturiran i lakše prati."
+    "create-split-using-this-description": "Izgleda da nemaš stitched split-a zajedno. Kreiraj jedan da održavaš svoj trening strukturiran i lakše prati.",
+    "select-a-split": "Izaberi split"
   },
   "all": {
     "show-workouts-this-week": "Pogledaj Treninge Ove Nedelje",

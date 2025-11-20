@@ -12,6 +12,7 @@ import { NoSplitsView } from "./NoSplitsView";
 import { SplitDaysView } from "./SplitDaysView";
 import { SplitPlan } from "../../../stores/workout/types";
 import { BackgroundText } from "../../ui/text/BackgroundText";
+import { useTranslation } from "react-i18next";
 interface AddToSplitBottomSheetProps {
   templates: WorkoutTemplate[];
 }
@@ -24,6 +25,7 @@ export const AddToSplitBottomSheet = forwardRef<
   const { splitPlans } = useWorkoutStore();
   const insets = useSafeAreaInsets();
   const [selectedSplit, setSelectedSplit] = useState<SplitPlan | null>(null);
+  const { t } = useTranslation();
 
   function visibleView() {
     if (splitPlans.length === 0) {
@@ -83,8 +85,10 @@ export const AddToSplitBottomSheet = forwardRef<
       >
         <BackgroundText
           text={`Add ${templates.length} ${
-            templates.length > 1 ? "templates" : "template"
-          } to ${selectedSplit?.name ?? "split"}`}
+            templates.length > 1
+              ? t("templates.templates")
+              : t("templates.template")
+          } to ${selectedSplit?.name ?? t("splits.split")}`}
           style={{ textAlign: "left", color: theme.grayText }}
         />
         {visibleView()}

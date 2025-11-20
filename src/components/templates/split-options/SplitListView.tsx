@@ -60,7 +60,7 @@ export const SplitListView = forwardRef<BottomSheetModal, SplitListViewProps>(
             }
           />
         )}
-        ListHeaderComponent={<InfoText text={"Select a split"} />}
+        ListHeaderComponent={<InfoText text={t("splits.select-a-split")} />}
         ListFooterComponent={
           <OptionButton
             title={t("splits.create-split-using-this")}

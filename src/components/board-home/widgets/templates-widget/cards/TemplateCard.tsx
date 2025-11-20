@@ -5,6 +5,7 @@ import { Fragment, useCallback, useRef } from "react";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { TemplateBottomSheet } from "../../../../templates/template-options/TemplateBottomSheet";
 import { AddToSplitBottomSheet } from "../../../../templates/split-options/AddToSplitBottomSheet";
+import { useTranslation } from "react-i18next";
 
 interface TemplateCardProps {
   template: WorkoutTemplate;
@@ -12,6 +13,7 @@ interface TemplateCardProps {
 
 export function TemplateCard({ template }: TemplateCardProps) {
   const { theme } = useSettingsStore();
+  const { t } = useTranslation();
 
   const templateBottomSheetRef = useRef<BottomSheetModal>(null);
   const addToSplitBottomSheetRef = useRef<BottomSheetModal>(null);
@@ -99,7 +101,10 @@ export function TemplateCard({ template }: TemplateCardProps) {
                 color: theme.secondaryText,
               }}
             >
-              {template.layout?.length} exercises
+              {template.layout?.length}{" "}
+              {template.layout?.length > 1
+                ? t("templates.exercises")
+                : t("templates.exercise")}
             </Text>
           </View>
         </View>

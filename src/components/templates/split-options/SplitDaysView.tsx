@@ -8,7 +8,6 @@ import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { FlatList } from "react-native";
 import { useWidgetUnit } from "../../../features/widgets/useWidgetUnit";
 import { SplitDayButton } from "./SplitDayButton";
-import { EmptyFooter } from "../../ui/containers/EmptyFooter";
 import { useWorkoutStore } from "../../../stores/workout";
 import { useTranslation } from "react-i18next";
 import { InfoText } from "../../ui/text/InfoText";
