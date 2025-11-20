@@ -11,8 +11,7 @@ import { SplitListView } from "./SplitListView";
 import { NoSplitsView } from "./NoSplitsView";
 import { SplitDaysView } from "./SplitDaysView";
 import { SplitPlan } from "../../../stores/workout/types";
-import { Text } from "react-native";
-
+import { BackgroundText } from "../../ui/text/BackgroundText";
 interface AddToSplitBottomSheetProps {
   templates: WorkoutTemplate[];
 }
@@ -28,7 +27,7 @@ export const AddToSplitBottomSheet = forwardRef<
 
   function visibleView() {
     if (splitPlans.length === 0) {
-      return <NoSplitsView ref={ref} />;
+      return <NoSplitsView templates={templates} ref={ref} />;
     }
     if (selectedSplit) {
       return (
@@ -62,13 +61,18 @@ export const AddToSplitBottomSheet = forwardRef<
           opacity={0.2}
         />
       )}
+      onChange={(idx) => {
+        if (idx === -1) {
+          setSelectedSplit(null);
+        }
+      }}
       onDismiss={() => setSelectedSplit(null)}
     >
       <BottomSheetView
         style={[
           {
             flex: 1,
-            paddingHorizontal: 16,
+            padding: 16,
             justifyContent: "flex-start",
             borderTopColor: theme.border,
             borderTopWidth: 1,
@@ -77,18 +81,12 @@ export const AddToSplitBottomSheet = forwardRef<
           },
         ]}
       >
-        <Text
-          style={{
-            fontSize: 16,
-            fontWeight: "bold",
-            color: theme.text,
-            paddingVertical: 16,
-          }}
-        >
-          Add {templates.length}{" "}
-          {templates.length > 1 ? "templates" : "template"} to{" "}
-          {selectedSplit?.name ?? "split"}
-        </Text>
+        <BackgroundText
+          text={`Add ${templates.length} ${
+            templates.length > 1 ? "templates" : "template"
+          } to ${selectedSplit?.name ?? "split"}`}
+          style={{ textAlign: "left", color: theme.grayText }}
+        />
         {visibleView()}
       </BottomSheetView>
     </BottomSheetModal>

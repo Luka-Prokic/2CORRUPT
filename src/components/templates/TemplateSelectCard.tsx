@@ -50,6 +50,7 @@ export function TemplateSelectCard({
   }, []);
 
   const presentAddToSplitModal = useCallback(() => {
+    templateBottomSheetRef.current?.dismiss();
     addToSplitBottomSheetRef.current?.present();
   }, []);
 

@@ -143,7 +143,7 @@ export const createSplitPlanSlice: StateCreator<
     createSplitPlan: (plan?: Partial<SplitPlan>) => {
       const { splitPlans } = get();
       const newSplit: SplitPlanDay[] = (plan?.split || []).map((d) => ({
-        id: d?.id || `split-day-${nanoid()}`,
+        id: `split-day-${nanoid()}`,
         workouts: (d?.workouts || []) as SplitPlanWorkout[],
         isRest: d?.isRest ?? false,
       }));
@@ -363,7 +363,7 @@ export const createSplitPlanSlice: StateCreator<
           if (p.id !== planId) return p;
           const split = [...p.split];
           const newDay: SplitPlanDay = {
-            id: day?.id || `split-day-${nanoid()}`,
+            id: `split-day-${nanoid()}`,
             workouts: day?.workouts || [],
             isRest: day?.isRest ?? false,
           };

@@ -26,6 +26,7 @@ export function TemplateCard({ template }: TemplateCardProps) {
   }, []);
 
   const handlePresentAddToSplitModal = useCallback(() => {
+    templateBottomSheetRef.current?.dismiss();
     addToSplitBottomSheetRef.current?.present();
   }, []);
 

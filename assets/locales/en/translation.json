@@ -388,7 +388,10 @@
     "add-workout-from-sessions-list-title": "Add workout from completed sessions in the last 7 days.",
     "templates": "Templates",
     "sessions": "Sessions",
-    "go-to-summary": "Go to Summary to create templates"
+    "go-to-summary": "Go to Summary to create templates",
+    "click-day-to-add-workouts": "Click a day to add workouts",
+    "create-split-using-this": "Create a split using this",
+    "create-split-using-this-description": "Looks like you haven't stitched a split together yet. Build one to keep your training structured and easier to follow."
   },
 
   "all": {

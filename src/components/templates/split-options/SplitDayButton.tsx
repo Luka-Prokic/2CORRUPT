@@ -33,7 +33,7 @@ export function SplitDayButton({
         entering={FadeIn}
         exiting={FadeOut}
         style={{
-          paddingVertical: 44,
+          paddingTop: 44,
           justifyContent: "space-between",
           backgroundColor: day.isRest ? theme.handle : theme.thirdBackground,
           borderColor: theme.border,

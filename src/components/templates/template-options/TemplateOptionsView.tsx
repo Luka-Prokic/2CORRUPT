@@ -52,7 +52,6 @@ export const TemplateOptionsView = forwardRef<
 
   function handleAddToSplit() {
     onAddToSplit();
-    (ref as React.RefObject<BottomSheetModal>)?.current?.close();
   }
 
   return (
