@@ -61,7 +61,8 @@
     "welcome-to": "Welcome to",
     "lets-get-started": "Let's get started",
     "show": "Show",
-    "hide": "Hide"
+    "hide": "Hide",
+    "to": "to"
   },
   "auth-form": {
     "required": "Required",
@@ -394,10 +395,13 @@
     "templates": "Templates",
     "sessions": "Sessions",
     "go-to-summary": "Go to Summary to create templates",
-    "click-day-to-add-workouts": "Click a day to add workouts",
+    "click-day-to-add-workouts": "Tap a day to add",
     "create-split-using-this": "Create a split using this",
     "create-split-using-this-description": "Looks like you haven't stitched a split together yet. Build one to keep your training structured and easier to follow.",
-    "select-a-split": "Select a split"
+    "select-a-split": "Select a split",
+    "no-workouts-yet": "No workouts yet",
+    "rest": "Rest",
+    "active": "Active"
   },
 
   "all": {

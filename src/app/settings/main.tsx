@@ -1,5 +1,4 @@
 import { ThemeSettings } from "../../components/settings-app/ThemeSettings";
-import { IList } from "../../components/ui/containers/IList";
 import { LanguageSettings } from "../../components/settings-app/LanguageSettings";
 import { Stack } from "expo-router";
 import { Fragment } from "react";

@@ -5,6 +5,7 @@ import { PlannedWorkoutCard } from "./PlannedWorkoutCard";
 import { Ionicons } from "@expo/vector-icons";
 import { TextButton } from "../../ui/buttons/TextButton";
 import { router } from "expo-router";
+import { useTranslation } from "react-i18next";
 
 interface SplitDayCardContentProps {
   split: SplitPlan;
@@ -20,6 +21,7 @@ export function SplitDayCardContent({
   hasWorkouts,
 }: SplitDayCardContentProps) {
   const { theme } = useSettingsStore();
+  const { t } = useTranslation();
 
   function handleAddWorkout() {
     router.push({
@@ -73,9 +75,9 @@ export function SplitDayCardContent({
             textAlign: "center",
           }}
         >
-          No workouts yet
+          {t("splits.no-workouts-yet")}
         </Text>
-        <TextButton title="+ Add Workout" onPress={handleAddWorkout} />
+        <TextButton title={`+ ${t("splits.add-workout")}`} onPress={handleAddWorkout} />
       </View>
     );
   }

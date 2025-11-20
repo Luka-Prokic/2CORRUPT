@@ -5,11 +5,11 @@ import { Input } from "../ui/input/Input";
 import { BounceButton } from "../ui/buttons/BounceButton";
 import { TextButton } from "../ui/buttons/TextButton";
 import { useTranslation } from "react-i18next";
-import { Container } from "../ui/containers/Container";
-
 import { CorruptTittle } from "../corrupt/CorruptTittle";
 import { useKeyboardHeight } from "../../features/ui/useKeyboardHeight";
 import { BackgroundText } from "../ui/text/BackgroundText";
+import { WIDTH } from "../../features/Dimensions";
+import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 
 interface UserLoginProps {
   onLoginSuccess?: () => void;
@@ -52,7 +52,11 @@ export function UserLogin({
   };
 
   return (
-    <Container>
+    <Animated.View
+      entering={FadeIn}
+      exiting={FadeOut}
+      style={{ paddingHorizontal: 16, width: WIDTH }}
+    >
       <BackgroundText text={t("auth-form.signIn-description")} />
 
       <Text
@@ -132,6 +136,6 @@ export function UserLogin({
           }}
         />
       </View>
-    </Container>
+    </Animated.View>
   );
 }

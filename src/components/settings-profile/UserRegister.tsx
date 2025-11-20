@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { View, Text, Alert } from "react-native";
 import { useSettingsStore } from "../../stores/settingsStore";
 import { Input } from "../ui/input/Input";
 import { BounceButton } from "../ui/buttons/BounceButton";
-import { CenterContainer } from "../ui/containers/CenterContainer";
 import { TextButton } from "../ui/buttons/TextButton";
 import { useTranslation } from "react-i18next";
+import { WIDTH } from "../../features/Dimensions";
+import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 
 interface UserRegisterProps {
   onRegisterSuccess?: () => void;
@@ -62,7 +63,11 @@ export function UserRegister({
   };
 
   return (
-    <CenterContainer>
+    <Animated.View
+      entering={FadeIn}
+      exiting={FadeOut}
+      style={{ paddingHorizontal: 16, width: WIDTH }}
+    >
       <Text
         style={{
           color: theme.text,
@@ -151,6 +156,6 @@ export function UserRegister({
           }}
         />
       </View>
-    </CenterContainer>
+    </Animated.View>
   );
 }

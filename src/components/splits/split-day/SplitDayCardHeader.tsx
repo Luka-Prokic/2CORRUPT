@@ -80,7 +80,7 @@ export function SplitDayCardHeader({
             fontWeight: "500",
           }}
         >
-          {day.isRest ? "Rest" : "Active"}
+          {day.isRest ? t("splits.rest") : t("splits.active")}
         </Text>
       </View>
       {isActiveDay && (
@@ -99,7 +99,8 @@ export function SplitDayCardHeader({
                 color: theme.secondaryText,
               }}
             >
-              {workoutCount} {workoutCount === 1 ? "Workout" : "Workouts"}
+              {workoutCount}{" "}
+              {workoutCount === 1 ? t("splits.workout") : t("splits.workouts")}
             </Text>
           </View>
 

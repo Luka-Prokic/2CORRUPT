@@ -30,7 +30,7 @@ export function EmptyTemplateComponent() {
         style={{
           height: widgetUnit,
           width: widgetUnit,
-          backgroundColor: theme.tint,
+          backgroundColor: theme.fifthBackground,
           borderColor: theme.border,
           borderRadius: 32,
           borderWidth: 1,

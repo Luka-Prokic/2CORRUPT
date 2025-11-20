@@ -84,11 +84,13 @@ export const AddToSplitBottomSheet = forwardRef<
         ]}
       >
         <BackgroundText
-          text={`Add ${templates.length} ${
+          text={`${t("button.add")} ${
             templates.length > 1
-              ? t("templates.templates")
-              : t("templates.template")
-          } to ${selectedSplit?.name ?? t("splits.split")}`}
+              ? `${templates.length} ${t("templates.template").toLowerCase()}`
+              : `${templates[0].name}`
+          } ${t("dialog.to")} ${
+            selectedSplit?.name ?? t("splits.split").toLowerCase()
+          }`}
           style={{ textAlign: "left", color: theme.grayText }}
         />
         {visibleView()}
