@@ -244,7 +244,7 @@ export const createSplitPlanSlice: StateCreator<
       });
     },
 
-    removeWorkoutFromDay: (planId, dayIndex, templateId) => {
+    removeWorkoutFromDay: (planId, dayIndex, workoutId) => {
       set((state) => {
         const splitPlans = state.splitPlans.map((p) => {
           if (p.id !== planId) return p;
@@ -253,7 +253,7 @@ export const createSplitPlanSlice: StateCreator<
           split[dayIndex] = {
             ...split[dayIndex],
             workouts: split[dayIndex].workouts.filter(
-              (w) => w.templateId !== templateId
+              (w) => w.id !== workoutId
             ),
           };
           const updatedPlan = {

@@ -1,13 +1,17 @@
-import { SplitPlanWorkout } from "../../../stores/workout/types";
-import { TouchableOpacity, ViewStyle, View } from "react-native";
-import { Text } from "react-native";
-import { useWorkoutStore } from "../../../stores/workout";
-import { useSettingsStore } from "../../../stores/settings";
-import { SplitPlanDay } from "../../../stores/workout/types";
+// PlannedWorkoutCard.tsx
+import {
+  SplitPlanWorkout,
+  SplitPlanDay,
+} from "../../../../stores/workout/types";
+import { TouchableOpacity, ViewStyle, View, Text } from "react-native";
+import { useWorkoutStore } from "../../../../stores/workout";
+import { useSettingsStore } from "../../../../stores/settings";
 import { Ionicons } from "@expo/vector-icons";
 import { Fragment } from "react";
 import { router } from "expo-router";
-import { StrobeBlur } from "../../ui/misc/StrobeBlur";
+import { StrobeBlur } from "../../../ui/misc/StrobeBlur";
+import { StrobeButton } from "../../../ui/buttons/StrobeButton";
+import { useTranslation } from "react-i18next";
 
 interface PlannedWorkoutCardProps {
   workout: SplitPlanWorkout;
@@ -15,6 +19,7 @@ interface PlannedWorkoutCardProps {
   dayIndex: number;
   splitId: string;
   style?: ViewStyle | ViewStyle[];
+  onOpenTimePicker: (workout: SplitPlanWorkout) => void;
 }
 
 export function PlannedWorkoutCard({
@@ -23,14 +28,17 @@ export function PlannedWorkoutCard({
   dayIndex,
   splitId,
   style,
+  onOpenTimePicker,
 }: PlannedWorkoutCardProps) {
   const { getTemplateById, removeWorkoutFromDay } = useWorkoutStore();
   const { theme } = useSettingsStore();
+  const { t } = useTranslation();
+
   const template = getTemplateById(workout.templateId);
   if (!template) return null;
 
   function handleRemoveWorkout() {
-    removeWorkoutFromDay(splitId, dayIndex, workout.templateId);
+    removeWorkoutFromDay(splitId, dayIndex, workout.id);
   }
 
   function handleSwitchTemplate() {
@@ -75,15 +83,41 @@ export function PlannedWorkoutCard({
             {template.name}
           </Text>
         </View>
+
         {!day.isRest && (
           <Fragment>
+            {/* Time Button */}
+            <StrobeButton
+              onPress={() => onOpenTimePicker(workout)}
+              hitSlop={10}
+              style={{
+                height: 34,
+                width: 88,
+                borderRadius: 17,
+              }}
+              strobeDisabled={workout.scheduledAt === undefined}
+            >
+              <Text
+                style={{
+                  color: theme.text,
+                  fontWeight: "bold",
+                  fontSize: 14,
+                }}
+              >
+                {workout.scheduledAt
+                  ? new Date(workout.scheduledAt).toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })
+                  : t("splits.set-time")}
+              </Text>
+            </StrobeButton>
+
             {/* Switch Template Button */}
             <TouchableOpacity
               onPress={handleSwitchTemplate}
               hitSlop={10}
-              style={{
-                padding: 10,
-              }}
+              style={{ padding: 10 }}
             >
               <Ionicons name="swap-horizontal" size={24} color={theme.text} />
             </TouchableOpacity>
@@ -92,11 +126,9 @@ export function PlannedWorkoutCard({
             <TouchableOpacity
               onPress={handleRemoveWorkout}
               hitSlop={10}
-              style={{
-                padding: 10,
-              }}
+              style={{ padding: 10 }}
             >
-              <Ionicons name="remove" size={24} color={theme.background} />
+              <Ionicons name="remove" size={24} color={theme.text} />
             </TouchableOpacity>
           </Fragment>
         )}

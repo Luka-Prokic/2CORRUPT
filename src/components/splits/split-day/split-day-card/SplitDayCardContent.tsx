@@ -1,9 +1,13 @@
 import { View, Text, FlatList } from "react-native";
-import { SplitPlan, SplitPlanDay } from "../../../stores/workout";
-import { useSettingsStore } from "../../../stores/settings";
+import {
+  SplitPlan,
+  SplitPlanDay,
+  useWorkoutStore,
+} from "../../../../stores/workout";
+import { useSettingsStore } from "../../../../stores/settings";
 import { PlannedWorkoutCard } from "./PlannedWorkoutCard";
 import { Ionicons } from "@expo/vector-icons";
-import { TextButton } from "../../ui/buttons/TextButton";
+import { TextButton } from "../../../ui/buttons/TextButton";
 import { router } from "expo-router";
 import { useTranslation } from "react-i18next";
 
@@ -12,6 +16,12 @@ interface SplitDayCardContentProps {
   day: SplitPlanDay;
   dayIndex: number;
   hasWorkouts: boolean;
+
+  // Picker now comes from SplitDayCard
+  onOpenTimePicker: (workoutWithConfirm: {
+    id: string;
+    onConfirm: (date: Date) => void;
+  }) => void;
 }
 
 export function SplitDayCardContent({
@@ -19,17 +29,20 @@ export function SplitDayCardContent({
   day,
   dayIndex,
   hasWorkouts,
+  onOpenTimePicker,
 }: SplitDayCardContentProps) {
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
+  const { updateWorkoutInDay } = useWorkoutStore();
 
   function handleAddWorkout() {
     router.push({
       pathname: "/splits/[splitId]/[dayIndex]/add",
-      params: { splitId: split.id, dayIndex: dayIndex },
+      params: { splitId: split.id, dayIndex },
     });
   }
 
+  // ------------------ Workouts List ------------------
   if (hasWorkouts) {
     return (
       <FlatList
@@ -43,6 +56,15 @@ export function SplitDayCardContent({
             day={day}
             dayIndex={dayIndex}
             splitId={split.id}
+            onOpenTimePicker={() =>
+              onOpenTimePicker({
+                id: item.id,
+                onConfirm: (date: Date) =>
+                  updateWorkoutInDay(split.id, dayIndex, item.id, {
+                    scheduledAt: date.toISOString(),
+                  }),
+              })
+            }
           />
         )}
         ListHeaderComponent={() => <View style={{ height: 64 }} />}
@@ -51,7 +73,7 @@ export function SplitDayCardContent({
     );
   }
 
-  // Empty placeholder for active days only
+  // ------------------ Empty placeholder for active days only ------------------
   if (!day.isRest) {
     return (
       <View
@@ -77,7 +99,10 @@ export function SplitDayCardContent({
         >
           {t("splits.no-workouts-yet")}
         </Text>
-        <TextButton title={`+ ${t("splits.add-workout")}`} onPress={handleAddWorkout} />
+        <TextButton
+          title={`+ ${t("splits.add-workout")}`}
+          onPress={handleAddWorkout}
+        />
       </View>
     );
   }

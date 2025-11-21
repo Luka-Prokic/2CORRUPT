@@ -52,7 +52,11 @@ export function WeekDay({
       activeOpacity={0.7}
     >
       {isDone && !isSelected ? (
-        <Ionicons name="checkmark-circle" color={theme.accent} size={size} />
+        <Ionicons
+          name="checkmark-circle"
+          color={theme.fifthBackground}
+          size={size}
+        />
       ) : (
         <Fragment>
           <Text

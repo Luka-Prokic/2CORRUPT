@@ -27,7 +27,8 @@
     "scrollable": "Scrollable",
     "more": "More",
     "confirm": "Confirm",
-    "active": "Active"
+    "active": "Active",
+    "done": "Done"
   },
   "form": {
     "name": "Name",
@@ -401,7 +402,9 @@
     "select-a-split": "Select a split",
     "no-workouts-yet": "No workouts yet",
     "rest": "Rest",
-    "active": "Active"
+    "active": "Active",
+    "set-time": "Set Time",
+    "suggested-start-time": "Suggested Start Time"
   },
 
   "all": {

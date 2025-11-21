@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity } from "react-native";
-import { useSettingsStore } from "../../../stores/settings";
-import { SplitPlanDay } from "../../../stores/workout";
+import { useSettingsStore } from "../../../../stores/settings";
+import { SplitPlanDay } from "../../../../stores/workout";
 import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import { router, useLocalSearchParams } from "expo-router";

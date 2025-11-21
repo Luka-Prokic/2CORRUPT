@@ -87,7 +87,7 @@ export const AddToSplitBottomSheet = forwardRef<
           text={`${t("button.add")} ${
             templates.length > 1
               ? `${templates.length} ${t("templates.template").toLowerCase()}`
-              : `${templates[0].name}`
+              : `${templates[0]?.name ?? ""}`
           } ${t("dialog.to")} ${
             selectedSplit?.name ?? t("splits.split").toLowerCase()
           }`}

@@ -27,7 +27,8 @@
     "scrollable": "Skrolujuće",
     "more": "Više",
     "confirm": "Potvrdi",
-    "active": "Aktivan"
+    "active": "Aktivan",
+    "done": "Gotovo"
   },
   "form": {
     "name": "Naziv",
@@ -383,7 +384,9 @@
     "select-a-split": "Izaberi split",
     "no-workouts-yet": "Još nema treninga",
     "rest": "Pauza",
-    "active": "Aktivan"
+    "active": "Aktivan",
+    "set-time": "Vreme",
+    "suggested-start-time": "Predloženo vreme za početak treninga"
   },
   "all": {
     "show-workouts-this-week": "Pogledaj Treninge Ove Nedelje",

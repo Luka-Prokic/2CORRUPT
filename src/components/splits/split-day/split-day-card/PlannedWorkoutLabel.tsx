@@ -1,9 +1,9 @@
-import { SplitPlanWorkout } from "../../../stores/workout/types";
+import { SplitPlanWorkout } from "../../../../stores/workout/types";
 import { ViewStyle } from "react-native";
 import { Text } from "react-native";
-import { useWorkoutStore } from "../../../stores/workout";
-import { useSettingsStore } from "../../../stores/settings";
-import { SplitPlanDay } from "../../../stores/workout/types";
+import { useWorkoutStore } from "../../../../stores/workout";
+import { useSettingsStore } from "../../../../stores/settings";
+import { SplitPlanDay } from "../../../../stores/workout/types";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 
 interface PlannedWorkoutLabelProps {
@@ -29,6 +29,7 @@ export function PlannedWorkoutLabel({
       exiting={FadeOut}
       style={{
         height: 18,
+        paddingHorizontal: 8,
         flexDirection: "row",
         justifyContent: "flex-start",
         alignItems: "center",
@@ -43,7 +44,13 @@ export function PlannedWorkoutLabel({
           fontWeight: "500",
         }}
       >
-        00:00-{template.name}
+        {workout.scheduledAt
+          ? `${new Date(workout.scheduledAt).toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            })} - `
+          : ""}
+        {template.name}
       </Text>
     </Animated.View>
   );

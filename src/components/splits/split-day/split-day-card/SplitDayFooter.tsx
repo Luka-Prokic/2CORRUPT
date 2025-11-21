@@ -1,7 +1,10 @@
-import { TouchableOpacity, View } from "react-native";
-import { SplitPlan, SplitPlanDay } from "../../../stores/workout";
-import { useSettingsStore } from "../../../stores/settings";
-import { useWorkoutStore } from "../../../stores/workout";
+import { TouchableOpacity } from "react-native";
+import { useSettingsStore } from "../../../../stores/settings";
+import {
+  useWorkoutStore,
+  SplitPlan,
+  SplitPlanDay,
+} from "../../../../stores/workout";
 import { Ionicons } from "@expo/vector-icons";
 import { BlurView } from "expo-blur";
 

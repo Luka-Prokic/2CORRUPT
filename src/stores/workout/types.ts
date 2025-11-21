@@ -173,7 +173,7 @@ export interface SplitPlanSlice {
   removeWorkoutFromDay: (
     planId: string,
     dayIndex: number,
-    templateId: string
+    workoutId: string
   ) => void;
   updateWorkoutInDay: (
     planId: string,
