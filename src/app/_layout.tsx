@@ -6,6 +6,7 @@ import { useSettingsStore } from "../stores/settingsStore";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
+import { TimerMock } from "../components/session-timer/TimerMock";
 
 export function ModalExitButton() {
   const { theme } = useSettingsStore();

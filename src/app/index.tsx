@@ -20,6 +20,7 @@ import {
   RightTemplateExerciseFlow,
   TemplateExerciseFlow,
 } from "../components/view-template/header/TemplateExerciseFlow";
+import { CorruptButtonMock } from "../components/corrupt/CorruptButtonMock";
 
 export default function HomeScreen() {
   const { typeOfView } = useUIStore();
@@ -76,7 +77,8 @@ export default function HomeScreen() {
         <WorkoutView />
         <TemplateView />
       </ScreenContent>
-      <CorruptButton />
+      {/* <CorruptButton /> */}
+      <CorruptButtonMock />
     </Fragment>
   );
 }

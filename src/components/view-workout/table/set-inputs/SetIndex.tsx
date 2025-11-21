@@ -30,7 +30,7 @@ export function SetIndex({ setIndex, disabled }: SetIndexProps) {
         style={{
           fontSize: 16,
           fontWeight: "bold",
-          color: theme.info,
+          color: theme.text,
         }}
       >
         {setIndex + 1}

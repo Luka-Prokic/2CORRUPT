@@ -21,9 +21,9 @@ export const SessionOptionsView = forwardRef<
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
 
-  function handleViewRecap() {
-    router.push(`/recap/${session.id}`);
-  }
+  // function handleViewRecap() {
+  //   router.push(`/recap/${session.id}`);
+  // }
 
   function handleBack() {
     setView("preview");
@@ -52,7 +52,7 @@ export const SessionOptionsView = forwardRef<
           onPress={handleBack}
           height={44}
         />
-        <OptionButton
+        {/* <OptionButton
           title={t("sessions.view-recap")}
           icon={
             <Ionicons name="arrow-up-circle" size={24} color={theme.info} />
@@ -60,7 +60,7 @@ export const SessionOptionsView = forwardRef<
           onPress={handleViewRecap}
           color={theme.info}
           height={44}
-        />
+        /> */}
 
         <OptionButton
           title={t("sessions.add-to-templates")}

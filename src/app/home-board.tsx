@@ -4,6 +4,7 @@ import { ScreenContent } from "../components/ui/utils/ScreenContent";
 import { Stack } from "expo-router";
 import { CorruptHeader } from "../components/corrupt/CorruptHeader";
 import { WidgetGrid } from "../components/board-home/WidgetGrid";
+import { TimerMock } from "../components/session-timer/TimerMock";
 
 export default function HomeBoard() {
   const { theme } = useSettingsStore();
@@ -24,6 +25,7 @@ export default function HomeBoard() {
       >
         <WidgetGrid />
       </ScreenContent>
+      {/* <TimerMock /> */}
     </Fragment>
   );
 }
