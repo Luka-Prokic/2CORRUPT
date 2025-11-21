@@ -101,8 +101,10 @@ export function BottomAddWorkoutSection({
             }}
           >
             {isSwapMode
-              ? t("add-exercise.swap")
-              : `${t("add-exercise.add")} ${selectedTemplates.length.toString()}`}
+              ? t("button.swap")
+              : `${t(
+                  "add-exercise.add"
+                )} ${selectedTemplates.length.toString()}`}
           </Text>
         </IButton>
       </LinearGradient>

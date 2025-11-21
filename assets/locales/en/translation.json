@@ -28,7 +28,8 @@
     "more": "More",
     "confirm": "Confirm",
     "active": "Active",
-    "done": "Done"
+    "done": "Done",
+    "swap": "Swap"
   },
   "form": {
     "name": "Name",
@@ -375,6 +376,7 @@
     "activate-split": "Activate Split",
     "deactivate-split": "Deactivate Split",
     "add-workout": "Add Workout",
+    "swap-workout": "Swap Workout",
     "set-as-active": "Set as Active",
     "set-as-rest-day": "Set as Rest Day",
     "footer-info": "Edit your split here - adjust its name, change training or rest days, add or reorder workouts, and update notes. These changes affect all future workouts and sessions for this split. One split can be active at a time; if you deactivate it, the default “No Split” plan will apply automatically.",

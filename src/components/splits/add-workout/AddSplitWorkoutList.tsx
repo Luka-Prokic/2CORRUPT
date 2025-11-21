@@ -6,6 +6,7 @@ import { EmptyFooter } from "../../ui/containers/EmptyFooter";
 import { NoSearchMatchTempaltes } from "../../templates/NoSearchMatchTempaltes";
 import { useWorkoutStore } from "../../../stores/workout/useWorkoutStore";
 import { EmptyTemplateComponent } from "../../templates/EmptyTemplateComponent";
+import { SwapSplitWorkoutCard } from "./SwapSplitWorkoutCard";
 
 const PAGE_SIZE = 20;
 
@@ -14,6 +15,7 @@ interface AddSplitWorkoutListProps {
   selectedTemplates: WorkoutTemplate[];
   setSelectedTemplates: (templates: WorkoutTemplate[]) => void;
   maxSelection?: number;
+  swapTemplate?: WorkoutTemplate;
 }
 
 export function AddSplitWorkoutList({
@@ -21,6 +23,7 @@ export function AddSplitWorkoutList({
   selectedTemplates,
   setSelectedTemplates,
   maxSelection,
+  swapTemplate,
 }: AddSplitWorkoutListProps) {
   const { templates } = useWorkoutStore();
   const [page, setPage] = useState(1);
@@ -37,12 +40,17 @@ export function AddSplitWorkoutList({
   }
 
   function handleSelectWorkout(template: WorkoutTemplate) {
-    if (maxSelection && selectedTemplates.length >= maxSelection) {
-      // If max selection reached, replace the first selected template
-      setSelectedTemplates([template]);
-    } else {
+    // If not full → append
+    if (!maxSelection || selectedTemplates.length < maxSelection) {
       setSelectedTemplates([...selectedTemplates, template]);
+      return;
     }
+
+    // If full → replace last one
+    const updated = [...selectedTemplates];
+    updated[updated.length - 1] = template;
+
+    setSelectedTemplates(updated);
   }
 
   function handleUnselectTemplate(template: WorkoutTemplate) {
@@ -68,14 +76,23 @@ export function AddSplitWorkoutList({
       data={pagedWorkouts}
       keyExtractor={(item) => item.id}
       numColumns={2}
-      renderItem={({ item }) => (
-        <AddSplitWorkoutCard
-          template={item}
-          onSelect={handleSelectWorkout}
-          unSelect={handleUnselectTemplate}
-          selectedTemplates={selectedTemplates}
-        />
-      )}
+      renderItem={({ item }) =>
+        swapTemplate ? (
+          <SwapSplitWorkoutCard
+            template={item}
+            onSelect={handleSelectWorkout}
+            selectedTemplates={selectedTemplates}
+            disabled={item.id === swapTemplate.id}
+          />
+        ) : (
+          <AddSplitWorkoutCard
+            template={item}
+            onSelect={handleSelectWorkout}
+            unSelect={handleUnselectTemplate}
+            selectedTemplates={selectedTemplates}
+          />
+        )
+      }
       contentContainerStyle={{
         paddingHorizontal: 16,
         gap: 8,

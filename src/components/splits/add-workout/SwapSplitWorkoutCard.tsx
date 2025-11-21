@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useSettingsStore } from "../../../stores/settings";
 import { hexToRGBA } from "../../../features/HEXtoRGB";
@@ -7,26 +7,24 @@ import { WorkoutTemplate } from "../../../stores/workout/types";
 import { StrobeButton, StrobeButtonProps } from "../../ui/buttons/StrobeButton";
 import { useWidgetUnit } from "../../../features/widgets/useWidgetUnit";
 
-interface AddSplitWorkoutCardProps extends StrobeButtonProps {
+interface SwapSplitWorkoutCardProps extends StrobeButtonProps {
   template: WorkoutTemplate;
   onSelect: (template: WorkoutTemplate) => void;
-  unSelect: (template: WorkoutTemplate) => void;
   selectedTemplates: WorkoutTemplate[];
 }
 
-export function AddSplitWorkoutCard({
+export function SwapSplitWorkoutCard({
   template,
   onSelect,
-  unSelect,
   selectedTemplates,
   ...props
-}: AddSplitWorkoutCardProps) {
+}: SwapSplitWorkoutCardProps) {
   const { theme } = useSettingsStore();
   const { widgetUnit } = useWidgetUnit();
 
   const selectedTotal = useMemo(
     () => selectedTemplates.filter((t) => t.id === template.id).length,
-    [selectedTemplates, template.id]
+    [template.id, selectedTemplates]
   );
 
   return (
@@ -59,38 +57,9 @@ export function AddSplitWorkoutCard({
           {template.name}
         </Text>
 
-        {/* Selected count pill */}
+        {/* Swap icon */}
         {selectedTotal > 0 && (
           <View
-            style={{
-              position: "absolute",
-              right: 16,
-              bottom: 16,
-              backgroundColor: hexToRGBA(theme.handle, 0.8),
-              padding: 8,
-              minWidth: 44,
-              height: 44,
-              borderRadius: 22,
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Text
-              style={{
-                color: theme.text,
-                fontWeight: "600",
-                fontSize: 18,
-              }}
-            >
-              {selectedTotal}x
-            </Text>
-          </View>
-        )}
-
-        {/* Unselect button */}
-        {selectedTotal > 0 && (
-          <TouchableOpacity
-            onPress={() => unSelect(template)}
             style={{
               position: "absolute",
               right: 16,
@@ -103,8 +72,8 @@ export function AddSplitWorkoutCard({
               justifyContent: "center",
             }}
           >
-            <Ionicons name="close" size={24} color={theme.text} />
-          </TouchableOpacity>
+            <Ionicons name="swap-horizontal" size={24} color={theme.text} />
+          </View>
         )}
       </View>
     </StrobeButton>

@@ -8,7 +8,8 @@ import { useSettingsStore } from "../../../stores/settingsStore";
 import { StrobeBlur } from "../misc/StrobeBlur";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 
-interface StrobeButtonProps extends Omit<TouchableOpacityProps, "style"> {
+export interface StrobeButtonProps
+  extends Omit<TouchableOpacityProps, "style"> {
   title?: string;
   children?: React.ReactNode;
   textColor?: string;
@@ -45,6 +46,12 @@ export function StrobeButton({
     <TouchableOpacity
       hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
       activeOpacity={pressable ? 1 : 0.8}
+      style={[
+        {
+          opacity: rest.disabled ? 0.8 : 1,
+        },
+        style,
+      ]}
       {...rest}
     >
       <Animated.View

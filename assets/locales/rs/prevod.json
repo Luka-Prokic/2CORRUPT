@@ -28,7 +28,8 @@
     "more": "Više",
     "confirm": "Potvrdi",
     "active": "Aktivan",
-    "done": "Gotovo"
+    "done": "Gotovo",
+    "swap": "Zameni"
   },
   "form": {
     "name": "Naziv",
@@ -357,6 +358,7 @@
     "activate-split": "Aktiviraj Split",
     "deactivate-split": "Deaktiviraj Split",
     "add-workout": "Dodaj Trening",
+    "swap-workout": "Zameni Trening",
     "set-as-active": "Postavi kao aktivan",
     "set-as-rest-day": "Postavi kao rest dan",
     "list-info": "Upravljaj svojim split planovima ovde - organizuj i čuvaj sve svoje trening rutine tako da možeš lako da ih menjaš. Svaki split predstavlja različit plan ili fokus za tvoje vežbanje, omogućavajući ti da variraš svoje vežbanje dok sve ostalo ostaje pratljivo. Jedan split je uvek aktivan; ako nijedan nije izabran, automatski će se koristiti zadani “No Split”.",
