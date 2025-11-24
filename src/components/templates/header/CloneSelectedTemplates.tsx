@@ -19,9 +19,7 @@ export function CloneSelectedTemplates({
   const isSomeSelected = selected.length ? true : false;
 
   function handleDeleteSelectedTemplates() {
-    selected.map((t: WorkoutTemplate) =>
-      cloneTemplate(t.id, t.name + (t.version + 1))
-    );
+    selected.map((t: WorkoutTemplate) => cloneTemplate(t.id, t.name));
     setSelected([]);
     setMode(false);
   }

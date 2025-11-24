@@ -45,6 +45,14 @@ export const AddToSplitBottomSheet = forwardRef<
     );
   }
 
+  const message = `${t("button.add")} ${
+    templates.length > 1
+      ? `${templates.length} ${t("templates.templates").toLowerCase()}`
+      : `${templates[0]?.name ?? ""}`
+  } ${t("dialog.to")} ${
+    selectedSplit?.name ?? t("splits.split").toLowerCase()
+  }`;
+
   return (
     <BottomSheetModal
       ref={ref}
@@ -84,13 +92,7 @@ export const AddToSplitBottomSheet = forwardRef<
         ]}
       >
         <BackgroundText
-          text={`${t("button.add")} ${
-            templates.length > 1
-              ? `${templates.length} ${t("templates.template").toLowerCase()}`
-              : `${templates[0]?.name ?? ""}`
-          } ${t("dialog.to")} ${
-            selectedSplit?.name ?? t("splits.split").toLowerCase()
-          }`}
+          text={message}
           style={{ textAlign: "left", color: theme.grayText }}
         />
         {visibleView()}

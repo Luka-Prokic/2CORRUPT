@@ -1,5 +1,5 @@
 import { WorkoutTemplate } from "../../../../../stores/workout";
-import { View, Text, TouchableOpacity } from "react-native";
+import { Text, TouchableOpacity } from "react-native";
 import { useSettingsStore } from "../../../../../stores/settingsStore";
 import { Fragment, useCallback, useRef } from "react";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
@@ -47,74 +47,49 @@ export function TemplateCard({ template }: TemplateCardProps) {
         onPress={handlePresentModalPress}
         activeOpacity={0.7}
       >
-        <View
+        <Text
           style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-            gap: 2,
+            fontSize: 16,
+            fontWeight: "bold",
+            color: theme.secondaryBackground,
           }}
+          numberOfLines={2}
         >
-          <Text
-            style={{
-              fontSize: 16,
-              fontWeight: "bold",
-              flex: 1,
-              color: theme.secondaryBackground,
-            }}
-            numberOfLines={2}
-          >
-            {template.name}
-          </Text>
-        </View>
+          {template.name} v{template.version}
+        </Text>
         <Text
           style={{
             fontSize: 12,
             fontWeight: "500",
-            color: theme.border,
+            color: theme.secondaryText,
           }}
-          adjustsFontSizeToFit
-          numberOfLines={3}
-          minimumFontScale={0.5}
+          numberOfLines={2}
+          ellipsizeMode="tail"
         >
           {tags}
         </Text>
-        <View
+        <Text
           style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
+            fontSize: 12,
+            fontWeight: "bold",
+            color: theme.thirdBackground,
+            alignSelf: "flex-end",
           }}
         >
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              width: "100%",
-              justifyContent: "flex-end",
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 8,
-                fontWeight: "bold",
-                color: theme.secondaryText,
-              }}
-            >
-              {template.layout?.length}{" "}
-              {template.layout?.length > 1
-                ? t("templates.exercises")
-                : t("templates.exercise")}
-            </Text>
-          </View>
-        </View>
+          {template.layout?.length}{" "}
+          {template.layout?.length > 1
+            ? t("templates.exercises")
+            : t("templates.exercise")}
+        </Text>
       </TouchableOpacity>
+
       <TemplateBottomSheet
         template={template}
         ref={templateBottomSheetRef}
         startView="preview"
         onAddToSplit={handlePresentAddToSplitModal}
       />
+
       <AddToSplitBottomSheet
         templates={[template]}
         ref={addToSplitBottomSheetRef}

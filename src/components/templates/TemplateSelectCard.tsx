@@ -4,9 +4,9 @@ import { useSettingsStore } from "../../stores/settingsStore";
 import { Fragment, useCallback, useRef } from "react";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { useWidgetUnit } from "../../features/widgets/useWidgetUnit";
-import { Ionicons } from "@expo/vector-icons";
 import { TemplateBottomSheet } from "./template-options/TemplateBottomSheet";
 import { AddToSplitBottomSheet } from "./split-options/AddToSplitBottomSheet";
+import { useTranslation } from "react-i18next";
 
 interface TemplateSelectCardProps {
   template: WorkoutTemplate;
@@ -23,6 +23,7 @@ export function TemplateSelectCard({
 }: TemplateSelectCardProps) {
   const { theme } = useSettingsStore();
   const { widgetUnit } = useWidgetUnit();
+  const { t } = useTranslation();
 
   const templateBottomSheetRef = useRef<BottomSheetModal>(null);
   const addToSplitBottomSheetRef = useRef<BottomSheetModal>(null);
@@ -45,6 +46,12 @@ export function TemplateSelectCard({
       presentModal();
     }
   }
+
+  const tags = template.tags?.map((tag, i) => {
+    if (template.tags.length > i + 1) return `${tag}, `;
+    return `${tag}`;
+  });
+
   const presentModal = useCallback(() => {
     templateBottomSheetRef.current?.present();
   }, []);
@@ -70,7 +77,6 @@ export function TemplateSelectCard({
         onPress={handlePress}
         activeOpacity={0.7}
       >
-        {/* Template name */}
         <Text
           style={{
             fontSize: 16,
@@ -79,33 +85,34 @@ export function TemplateSelectCard({
           }}
           numberOfLines={2}
         >
-          {template.name}
+          {template.name} v{template.version}
         </Text>
 
-        {/* Tags */}
         {template.tags && template.tags.length > 0 && (
           <Text
             style={{
-              fontSize: 12,
+              fontSize: 14,
               color: theme.secondaryText,
             }}
             numberOfLines={4}
             ellipsizeMode="tail"
           >
-            {template.tags.join(", ")}
+            {tags}
           </Text>
         )}
 
-        {/* Bottom: exercise count */}
         <Text
           style={{
             fontSize: 12,
             fontWeight: "bold",
-            color: theme.secondaryText,
+            color: theme.thirdBackground,
             alignSelf: "flex-end",
           }}
         >
-          {template.layout?.length} exercises
+          {template.layout?.length}{" "}
+          {template.layout?.length > 1
+            ? t("templates.exercises")
+            : t("templates.exercise")}
         </Text>
       </TouchableOpacity>
 

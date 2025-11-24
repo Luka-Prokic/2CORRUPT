@@ -26,13 +26,13 @@ export const createTemplateSlice: StateCreator<
       ? {
           ...template,
           id: `template-${nanoid()}`,
-          version: template.version + 1,
+          version: template.version ? template.version + 1 : 1,
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
         }
       : {
           id: `template-${nanoid()}`,
-          primeId: `prime-template-${nanoid()}`,
+          primeId: `template-${nanoid()}`,
           name: "New Template",
           description: "",
           layout: [],
@@ -99,7 +99,6 @@ export const createTemplateSlice: StateCreator<
           ? {
               ...t,
               [field]: value,
-              version: t.version + 1,
               updatedAt: new Date().toISOString(),
             }
           : t
@@ -110,7 +109,6 @@ export const createTemplateSlice: StateCreator<
           ? {
               ...state.activeTemplate,
               [field]: value,
-              version: state.activeTemplate.version + 1,
               updatedAt: new Date().toISOString(),
             }
           : state.activeTemplate;
@@ -278,8 +276,9 @@ export const createTemplateSlice: StateCreator<
     const clonedTemplate: WorkoutTemplate = {
       ...templateToClone,
       id: `template-${nanoid()}`,
+      primeId: templateId,
       name: tempName,
-      version: 1,
+      version: templateToClone.version + 1,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };

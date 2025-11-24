@@ -37,6 +37,13 @@ export const NoSplitsView = forwardRef<BottomSheetModal, NoSplitsViewProps>(
       );
     }
 
+    const message =
+      t("splits.create-split-using-this") +
+      " " +
+      (templates.length > 1
+        ? t("templates.templates").toLowerCase()
+        : t("templates.template").toLowerCase());
+
     return (
       <View
         style={{
@@ -50,11 +57,9 @@ export const NoSplitsView = forwardRef<BottomSheetModal, NoSplitsViewProps>(
 
         <BackgroundText
           text={t("splits.create-split-using-this-description")}
+          style={{ color: theme.grayText }}
         />
-        <TextButton
-          title={t("splits.create-split-using-this")}
-          onPress={handlePress}
-        />
+        <TextButton title={message} onPress={handlePress} />
       </View>
     );
   }
