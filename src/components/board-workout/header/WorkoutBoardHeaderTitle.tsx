@@ -1,8 +1,8 @@
 import { TouchableOpacity } from "react-native";
 import { useSettingsStore } from "../../../stores/settingsStore";
-import { SessionName } from "../sheets/session/SessionName";
 import { WIDTH } from "../../../features/Dimensions";
 import { SessionSheetType } from "../../../app/workout-board";
+import { SessionTimer } from "../../ui/SessionTimer";
 
 interface WorkoutBoardHeaderTitleProps {
   listOpen: boolean;
@@ -34,9 +34,10 @@ export function WorkoutBoardHeaderTitle({
       }}
       disabled={listOpen}
     >
-      <SessionName
-        fontSize={18}
-        textColor={listOpen ? theme.glow : theme.tint}
+      <SessionTimer
+        textStyle={{
+          color: listOpen ? theme.glow : theme.tint,
+        }}
       />
     </TouchableOpacity>
   );

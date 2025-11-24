@@ -25,6 +25,7 @@ export function ExerciseFlow() {
         justifyContent: "center",
         height: 44,
         gap: 8,
+        width: "100%",
       }}
     >
       <TemplateProgressDots />

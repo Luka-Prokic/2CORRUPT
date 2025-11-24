@@ -14,7 +14,7 @@ import { CorruptTittle } from "./CorruptTittle";
 import { HEIGHT, WIDTH } from "../../features/Dimensions";
 import { router } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useDracoFont } from "../../features/fonts/useDracoFont";
+import { SessionTimer } from "../ui/SessionTimer";
 
 export const CORRUPT_BUTTON_FROM_BOTTOM = 22;
 export const CORRUPT_BUTTON_HEIGHT = 64;
@@ -25,9 +25,7 @@ export function CorruptButtonMock() {
   const { typeOfView } = useUIStore();
   const { activeTemplate, activeSession } = useWorkoutStore();
   const insets = useSafeAreaInsets();
-  const { fontFamily } = useDracoFont();
 
-  const [sessionTime, setSessionTime] = useState(0);
   const [restTime, setRestTime] = useState<number | null>(null);
   const [isResting, setIsResting] = useState(false);
 
@@ -72,14 +70,6 @@ export function CorruptButtonMock() {
     const s = (seconds % 60).toString().padStart(2, "0");
     return `${m}:${s}`;
   };
-
-  // Session timer
-  useEffect(() => {
-    if (activeSession && !isResting) {
-      const interval = setInterval(() => setSessionTime((t) => t + 1), 1000);
-      return () => clearInterval(interval);
-    }
-  }, [isResting, activeSession]);
 
   // Rest timer
   useEffect(() => {
@@ -126,13 +116,19 @@ export function CorruptButtonMock() {
           <CorruptTittle style={{ color: theme.border, fontSize: 22 }} />
         ) : (
           <View style={{ flex: 1, alignItems: "center" }}>
-            <Text
-              style={{ color: theme.border, fontSize: 20, fontWeight: "bold" }}
-            >
-              {isResting && restTime !== null
-                ? formatTime(restTime)
-                : formatTime(sessionTime)}
-            </Text>
+            {isResting && restTime !== null ? (
+              <Text
+                style={{
+                  color: theme.border,
+                  fontSize: 20,
+                  fontWeight: "bold",
+                }}
+              >
+                {formatTime(restTime)}
+              </Text>
+            ) : (
+              <SessionTimer />
+            )}
             {isResting && (
               <View style={{ flexDirection: "row", gap: 10, marginTop: 4 }}>
                 <TouchableOpacity
@@ -171,9 +167,13 @@ export function CorruptButtonMock() {
             marginTop: 6,
             color: theme.text,
             fontSize: 14,
+            fontWeight: "500",
           }}
         >
-          On Going Workout: {formatTime(sessionTime)}
+          On Going Workout:{" "}
+          <SessionTimer
+            textStyle={{ fontSize: 14, fontWeight: "500", color: theme.text }}
+          />
         </Text>
       )}
     </Animated.View>
