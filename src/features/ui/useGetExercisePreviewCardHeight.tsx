@@ -3,13 +3,14 @@ import { SessionExercise } from "../../stores/workout";
 const EXERCISE_NAME_HEIGHT = 64;
 const SET_HEIGHT = 54;
 const DROPSET_HEIGHT = 34;
-const NOTES_HEIGHT = 64;
+const NOTES_HEIGHT = 48;
+const SET_TABLE_HEADER_HEIGHT = 34;
 
 export function useLayoutPreviewHeight(layout: SessionExercise[]) {
   let maxHeight = 0;
 
   layout.forEach((exercise) => {
-    let exerciseHeight = EXERCISE_NAME_HEIGHT;
+    let exerciseHeight = EXERCISE_NAME_HEIGHT + SET_TABLE_HEADER_HEIGHT;
 
     // sets
     exercise.sets.forEach((set) => {
@@ -36,7 +37,7 @@ export function useLayoutPreviewHeight(layout: SessionExercise[]) {
 export function useExercisePreviewHeight(exercise: SessionExercise) {
   let totalHeight = 0;
 
-  totalHeight += EXERCISE_NAME_HEIGHT; // exercise name
+  totalHeight += EXERCISE_NAME_HEIGHT + SET_TABLE_HEADER_HEIGHT; // exercise name
 
   exercise.sets.forEach((set) => {
     totalHeight += SET_HEIGHT;

@@ -16,7 +16,6 @@ import { CloneSelectedTemplates } from "../components/templates/header/CloneSele
 import { AddToSplitSelectedTemplates } from "../components/templates/header/AddToSplitSelectedTemplates";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { TemplateFilter } from "../components/templates/TemplateFilter";
-import { NoSearchMatchTempaltes } from "../components/templates/NoSearchMatchTempaltes";
 import { EmptyFooter } from "../components/ui/containers/EmptyFooter";
 
 export default function TemplatesScreen() {
@@ -31,10 +30,9 @@ export default function TemplatesScreen() {
   const insets = useSafeAreaInsets();
 
   function footerComponent() {
-    if (filteredTemplates.length !== 0) {
-      return <NoSearchMatchTempaltes />;
-    }
-    return <EmptyTemplateComponent />;
+    if (filteredTemplates.length === 0 && templates.length > 0) {
+      return null;
+    } else return <EmptyTemplateComponent />;
   }
 
   function headerLeft() {
@@ -111,8 +109,6 @@ export default function TemplatesScreen() {
         }}
       />
       <ScreenContent
-        scroll={false}
-        edges={["top"]}
         HeaderComponent={
           <TemplateFilter
             setFilteredTemplates={setFilteredTemplates}
@@ -124,6 +120,7 @@ export default function TemplatesScreen() {
           data={filteredTemplates}
           numColumns={2}
           showsVerticalScrollIndicator={false}
+          scrollEnabled={false}
           keyExtractor={(item, index) => `${item.createdAt}-${index}`}
           renderItem={({ item }) => (
             <TemplateSelectCard

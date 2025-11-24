@@ -360,7 +360,8 @@
     "exercises": "Exercises",
     "exercise": "Exercise",
     "templates": "Templates",
-    "template": "Template"
+    "template": "Template",
+    "tag": "Tag"
   },
   "splits": {
     "split": "Split",

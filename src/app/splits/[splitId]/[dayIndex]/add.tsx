@@ -40,13 +40,15 @@ export default function AddPlannedWorkoutScreen() {
         }}
       />
       <ScreenContent
-        edges={["top"]}
         scroll={false}
+        edges={["top"]}
         FooterComponent={
           <BottomAddWorkoutSection selectedTemplates={selected} />
         }
+        HeaderComponent={
+          <WorkoutFilter setFilteredTemplates={setFilteredTemplates} />
+        }
       >
-        <WorkoutFilter setFilteredTemplates={setFilteredTemplates} />
         <AddSplitWorkoutList
           filteredTemplates={filteredTemplates}
           selectedTemplates={selected}

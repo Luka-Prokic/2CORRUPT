@@ -3,7 +3,6 @@ import { FlatList } from "react-native";
 import { WorkoutTemplate } from "../../../stores/workout/types";
 import { AddSplitWorkoutCard } from "./AddSplitWorkoutCard";
 import { EmptyFooter } from "../../ui/containers/EmptyFooter";
-import { NoSearchMatchTempaltes } from "../../templates/NoSearchMatchTempaltes";
 import { useWorkoutStore } from "../../../stores/workout/useWorkoutStore";
 import { EmptyTemplateComponent } from "../../templates/EmptyTemplateComponent";
 import { SwapSplitWorkoutCard } from "./SwapSplitWorkoutCard";
@@ -63,7 +62,7 @@ export function AddSplitWorkoutList({
 
   function footerComponent() {
     if (filteredTemplates.length === 0 && templates.length > 0) {
-      return <NoSearchMatchTempaltes />;
+      return null;
     }
     if (filteredTemplates.length === 0 && templates.length === 0) {
       return <EmptyTemplateComponent />;
