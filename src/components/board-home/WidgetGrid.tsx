@@ -1,15 +1,14 @@
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { ProfileWidget } from "./widgets/profile-widget/ProfileWidget";
 import { AwardsWidget } from "./mockups/AwardsWidget";
 import { WIDTH } from "../../features/Dimensions";
 import { hexToRGBA } from "../../features/HEXtoRGB";
 import { BackButtonWidget } from "./widgets/BackButtonWidget";
-import { AllButtonWidget } from "./widgets/all-widget/AllButtonWidget";
 import { useSettingsStore } from "../../stores/settings";
-import { SplitsWidget } from "./widgets/splits-widget/SplitsWidget";
+import { SplitsWidget } from "./widgets/SplitsWidget";
 import { SummaryWidget } from "./widgets/summary-widget/SummaryWidget";
 import { TemplatesWidget } from "./widgets/templates-widget/TemplatesWidget";
+import { SettingsWidget } from "./widgets/SettingsWidget";
 
 const WIDGET_SIZE = (WIDTH - 40) / 2; // 2 columns with padding
 
@@ -26,8 +25,17 @@ export function WidgetGrid() {
         paddingHorizontal: 16,
       }}
     >
-      {/* semi-mock */}
-      <ProfileWidget />
+      <View
+        style={{
+          width: WIDGET_SIZE,
+          height: WIDGET_SIZE,
+          borderRadius: 32,
+          backgroundColor: hexToRGBA(theme.fourthBackground, 0.2),
+          borderWidth: 1,
+          borderColor: theme.border,
+          marginBottom: 8,
+        }}
+      />
 
       {/* full-mock */}
       <AwardsWidget />
@@ -46,7 +54,7 @@ export function WidgetGrid() {
         }}
       >
         <BackButtonWidget />
-        <AllButtonWidget />
+        <SettingsWidget />
       </View>
 
       <SplitsWidget />

@@ -1,11 +1,11 @@
 import { Text, TouchableOpacity } from "react-native";
-import { useWidgetUnit } from "../../../../features/widgets/useWidgetUnit";
-import { hexToRGBA } from "../../../../features/HEXtoRGB";
-import { useSettingsStore } from "../../../../stores/settings";
+import { useWidgetUnit } from "../../../features/widgets/useWidgetUnit";
+import { hexToRGBA } from "../../../features/HEXtoRGB";
+import { useSettingsStore } from "../../../stores/settings";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import Animated, { FadeOut, FadeIn } from "react-native-reanimated";
-import { useWorkoutStore } from "../../../../stores/workout";
+import { useWorkoutStore } from "../../../stores/workout";
 import { useTranslation } from "react-i18next";
 
 export function SplitsWidget() {

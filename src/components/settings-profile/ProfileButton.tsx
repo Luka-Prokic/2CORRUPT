@@ -23,8 +23,8 @@ export function ProfileButton({ onPress }: ProfileButtonProps) {
     <BounceButton
       onPress={handlePress}
       style={{
-        width: 88,
-        height: 88,
+        width: 64,
+        height: 64,
         alignItems: "center",
         justifyContent: "center",
       }}
@@ -33,22 +33,17 @@ export function ProfileButton({ onPress }: ProfileButtonProps) {
       <View
         style={{
           position: "absolute",
-          height: 74,
-          width: 74,
-          top: 12,
-          left: 12,
+          height: 50,
+          width: 50,
+          top: 8,
+          left: 7,
           borderRadius: "50%",
           backgroundColor: theme.glow,
         }}
       />
 
       {/* Icon ABOVE glow */}
-      <Ionicons
-        name="person-circle"
-        size={94}
-        color={theme.grayText}
-        style={{ position: "relative", top: 1, left: 2 }}
-      />
+      <Ionicons name="person-circle" size={64} color={theme.grayText} />
     </BounceButton>
   );
 }

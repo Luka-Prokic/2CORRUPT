@@ -1,10 +1,10 @@
-import { Fragment } from "react";
-import { Text } from "react-native";
+import { Text, View } from "react-native";
 import { useSettingsStore } from "../../stores/settingsStore";
 import { username } from "../../config/constants/defaults";
 import { useTranslation } from "react-i18next";
+import { ProfileButton } from "../settings-profile/ProfileButton";
 
-export function GreetingText() {
+export function HomeHeader() {
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
 
@@ -24,30 +24,33 @@ export function GreetingText() {
   const greeting = getGreeting();
 
   return (
-    <Fragment>
+    <View
+      style={{
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        padding: 16,
+      }}
+    >
       <Text
         style={{
           fontSize: 24,
           fontWeight: "bold",
           color: theme.tint,
-          opacity: 0.9,
-          paddingTop: 20,
-          paddingLeft: 20,
         }}
       >
-        {greeting},
+        {greeting},{"\n"}
+        <Text
+          style={{
+            fontSize: 36,
+            fontWeight: "bold",
+            color: theme.text,
+          }}
+        >
+          {username}
+        </Text>
       </Text>
-      <Text
-        style={{
-          fontSize: 36,
-          fontWeight: "bold",
-          color: theme.text,
-          opacity: 0.9,
-          paddingLeft: 20,
-        }}
-      >
-        {username}
-      </Text>
-    </Fragment>
+      <ProfileButton />
+    </View>
   );
 }

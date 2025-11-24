@@ -1,11 +1,11 @@
 import { StartWorkoutButton } from "./StartWorkoutButton";
-import { GreetingText } from "./GreetingText";
+import { HomeHeader } from "./HomeHeader";
 import { UIView } from "../ui/UIView";
 
 export function HomeView() {
   return (
     <UIView type="home">
-      <GreetingText />
+      <HomeHeader />
 
       <StartWorkoutButton />
     </UIView>

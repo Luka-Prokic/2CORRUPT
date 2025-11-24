@@ -1,13 +1,13 @@
 import { View, Text, TouchableOpacity } from "react-native";
-import { useSettingsStore } from "../../../../stores/settingsStore";
-import { ProfileButton } from "../../../settings-profile/ProfileButton";
-import { SettingsButton } from "../../../settings-app/SettingsButton";
-import { hexToRGBA } from "../../../../features/HEXtoRGB";
-import { useWidgetUnit } from "../../../../features/widgets/useWidgetUnit";
-import { useUserStore } from "../../../../stores/userStore";
-import { useStatsStore } from "../../../../stores/stats";
+import { useSettingsStore } from "../../../stores/settingsStore";
+import { ProfileButton } from "../../settings-profile/ProfileButton";
+import { SettingsButton } from "../../settings-app/SettingsButton";
+import { hexToRGBA } from "../../../features/HEXtoRGB";
+import { useWidgetUnit } from "../../../features/widgets/useWidgetUnit";
+import { useUserStore } from "../../../stores/userStore";
+import { useStatsStore } from "../../../stores/stats";
 import { useTranslation } from "react-i18next";
-import { useWorkoutStore } from "../../../../stores/workout/useWorkoutStore";
+import { useWorkoutStore } from "../../../stores/workout/useWorkoutStore";
 
 export function ProfileWidget() {
   const { theme } = useSettingsStore();
