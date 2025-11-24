@@ -68,17 +68,6 @@ export function SessionSheet() {
         icon={<Ionicons name={"remove-circle"} size={24} color={theme.error} />}
         color={theme.error}
       />
-      <Text
-        style={{
-          fontSize: 14,
-          color: theme.grayText,
-          textAlign: "justify",
-          lineHeight: 18,
-          marginTop: 16,
-        }}
-      >
-        {t("workout-board.notes-description")}
-      </Text>
     </View>
   );
 }
