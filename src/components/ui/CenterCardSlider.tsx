@@ -1,5 +1,4 @@
 import React, {
-  Fragment,
   useRef,
   useState,
   useEffect,
@@ -11,14 +10,14 @@ import {
   FlatListProps,
   View,
   ViewStyle,
-  Animated,
-  Dimensions,
+  Animated as RNAnimated,
+  TextStyle,
 } from "react-native";
 import { useSettingsStore } from "../../stores/settings";
+import Animated, { BounceIn } from "react-native-reanimated";
+import { WIDTH } from "../../features/Dimensions";
 
-const { width: SCREEN_WIDTH } = Dimensions.get("window");
-
-const AnimatedFlatList = Animated.createAnimatedComponent(
+const AnimatedFlatList = RNAnimated.createAnimatedComponent(
   FlatList
 ) as unknown as typeof FlatList;
 
@@ -30,6 +29,7 @@ interface CenterCardSliderProps<T>
   hideDots?: boolean;
   styleSlider?: ViewStyle | ViewStyle[];
   styleDots?: ViewStyle | ViewStyle[];
+  distanceBubbleStyle?: TextStyle | TextStyle[];
   emptyCard?: ReactElement;
   firstCard?: ReactElement;
   lastCard?: ReactElement;
@@ -39,6 +39,9 @@ interface CenterCardSliderProps<T>
   showDotsTop?: boolean;
   selectedIndex?: number;
   onSelect?: (index: number) => void;
+  selectedCardIndex?: number;
+  showDistanceBubble?: boolean;
+  distanceTolerance?: number;
 }
 
 export function CenterCardSlider<T>({
@@ -50,6 +53,7 @@ export function CenterCardSlider<T>({
   hideDots = false,
   styleSlider,
   styleDots,
+  distanceBubbleStyle,
   emptyCard,
   firstCard,
   lastCard,
@@ -59,10 +63,13 @@ export function CenterCardSlider<T>({
   showDotsTop = false,
   selectedIndex = 0,
   onSelect,
+  selectedCardIndex = 0,
+  showDistanceBubble = false,
+  distanceTolerance = 0,
   ...flatListProps
 }: CenterCardSliderProps<T>) {
   const { theme } = useSettingsStore();
-  const scrollX = useRef(new Animated.Value(0)).current;
+  const scrollX = useRef(new RNAnimated.Value(0)).current;
   const [currentIndex, setCurrentIndex] = useState(selectedIndex);
 
   // Include firstCard and lastCard cleanly in the data
@@ -78,9 +85,9 @@ export function CenterCardSlider<T>({
   // Calculate spacing to show 3 cards with center card perfectly centered
   // Center card should be at screen center, side cards should peek
   const sideCardPeek = cardWidth * 0.2; // 20% of card width peeking from each side
-  const horizontalPadding = (SCREEN_WIDTH - cardWidth) / 2 - sideCardPeek;
+  const horizontalPadding = (WIDTH - cardWidth) / 2 - sideCardPeek;
 
-  const onScroll = Animated.event(
+  const onScroll = RNAnimated.event(
     [{ nativeEvent: { contentOffset: { x: scrollX } } }],
     {
       useNativeDriver: true,
@@ -102,7 +109,7 @@ export function CenterCardSlider<T>({
   );
 
   return (
-    <Fragment>
+    <View style={{ position: "relative" }}>
       {showDotsTop && fullData.length > 1 && (
         <ScrollableDots
           dataLength={fullData.length}
@@ -183,7 +190,17 @@ export function CenterCardSlider<T>({
           maxDotsShown={maxDotsShown}
         />
       )}
-    </Fragment>
+      {/* Distance Bubble Indicator */}
+      {showDistanceBubble && (
+        <DistanceBubble
+          currentIndex={currentIndex}
+          selectedCardIndex={selectedCardIndex}
+          theme={theme}
+          style={distanceBubbleStyle}
+          distanceTolerance={distanceTolerance}
+        />
+      )}
+    </View>
   );
 }
 
@@ -194,7 +211,7 @@ function renderCenterCard({
   width,
   height,
 }: {
-  scrollX: Animated.Value;
+  scrollX: RNAnimated.Value;
   index: number;
   content: React.ReactNode;
   width: number;
@@ -237,7 +254,7 @@ function renderCenterCard({
   });
 
   return (
-    <Animated.View
+    <RNAnimated.View
       style={{
         width,
         height,
@@ -246,7 +263,7 @@ function renderCenterCard({
       }}
     >
       {content}
-    </Animated.View>
+    </RNAnimated.View>
   );
 }
 
@@ -354,3 +371,51 @@ export const ScrollableDots = ({
     </View>
   );
 };
+
+function DistanceBubble({
+  currentIndex,
+  selectedCardIndex,
+  theme,
+  style,
+  distanceTolerance = 0,
+}: {
+  currentIndex: number;
+  selectedCardIndex: number;
+  theme: any;
+  style?: TextStyle | TextStyle[];
+  distanceTolerance?: number;
+}) {
+  const distance = Math.abs(currentIndex - selectedCardIndex);
+  if (distance <= distanceTolerance) return null;
+
+  const isRight = currentIndex > selectedCardIndex;
+
+  return (
+    <Animated.Text
+      entering={BounceIn}
+      style={{
+        color: theme.background,
+        fontSize: 14,
+        fontWeight: "600",
+        position: "absolute",
+        top: 22,
+        transform: [{ translateY: -22 }],
+        width: 22,
+        height: 22,
+        borderRadius: 11,
+        backgroundColor: theme.text,
+        textAlign: "center",
+        lineHeight: 22,
+        verticalAlign: "middle",
+        zIndex: 1,
+
+        right: isRight ? undefined : 0,
+        left: isRight ? 0 : undefined,
+
+        ...style,
+      }}
+    >
+      {distance}
+    </Animated.Text>
+  );
+}

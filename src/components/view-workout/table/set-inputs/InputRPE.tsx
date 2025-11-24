@@ -1,36 +1,60 @@
 import { Set } from "../../../../stores/workout/types";
-import { FilterFlatSlider } from "../../../ui/FilterFlatSlider";
-import { useWorkoutStore } from "../../../../stores/workoutStore";
-import * as Haptics from "expo-haptics";
+import { TouchableOpacity, Text, ViewStyle, TextStyle } from "react-native";
+import { useSettingsStore } from "../../../../stores/settingsStore";
+import { useRef, Fragment } from "react";
+import { RirRpeBottomSheet } from "./rir-rpe/RirRpeBottomSheet";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import { hexToRGBA } from "../../../../features/HEXtoRGB";
 
 interface InputRPEProps {
   set: Set;
+  style?: ViewStyle;
+  textStyle?: TextStyle;
   disabled?: boolean;
 }
 
-export function InputRPE({ set, disabled }: InputRPEProps) {
-  const { updateSetInActiveExercise } = useWorkoutStore();
-  const scale = Array.from({ length: 10 }, (_, index) =>
-    (index + 1).toString()
-  );
+export function InputRPE({ set, style, textStyle, disabled }: InputRPEProps) {
+  const { theme } = useSettingsStore();
+  const { rpe } = set;
+  const bottomSheetRef = useRef<BottomSheetModal>(null);
 
-  const handleSelect = (item: string) => {
-    updateSetInActiveExercise(set.id, { rpe: parseInt(item) });
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Rigid);
+  const openSheet = () => {
+    if (disabled) return;
+    bottomSheetRef.current?.present();
   };
 
   return (
-    <FilterFlatSlider
-      data={scale}
-      startIndex={set.rpe ? set.rpe - 1 : 0}
-      itemWidth={54}
-      onSelect={handleSelect}
-      contentContainerStyle={{
-        height: 54,
-        width: 54,
-      }}
-      itemStyle={{ height: 54 }}
-      textStyle={{ fontSize: 16 }}
-    />
+    <Fragment>
+      <TouchableOpacity
+        onPress={openSheet}
+        style={[
+          {
+            width: 44,
+            height: 44,
+            borderRadius: 8,
+            backgroundColor: hexToRGBA(theme.background, disabled ? 0 : 0.4),
+            alignItems: "center",
+            justifyContent: "center",
+          },
+          style,
+        ]}
+        disabled={disabled}
+      >
+        <Text
+          style={[
+            {
+              fontSize: 16,
+              fontWeight: "600",
+              color: theme.text,
+            },
+            textStyle,
+          ]}
+        >
+          {rpe ?? "-"}
+        </Text>
+      </TouchableOpacity>
+
+      <RirRpeBottomSheet startMode="rpe" set={set} ref={bottomSheetRef} />
+    </Fragment>
   );
 }

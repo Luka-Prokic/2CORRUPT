@@ -1,40 +1,60 @@
 import { Set } from "../../../../stores/workout/types";
-import { useWorkoutStore } from "../../../../stores/workoutStore";
-import { FilterFlatSlider } from "../../../ui/FilterFlatSlider";
-import * as Haptics from "expo-haptics";
+import { TouchableOpacity, Text, ViewStyle, TextStyle } from "react-native";
+import { useSettingsStore } from "../../../../stores/settingsStore";
+import { useRef, Fragment } from "react";
+import { RirRpeBottomSheet } from "./rir-rpe/RirRpeBottomSheet";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import { hexToRGBA } from "../../../../features/HEXtoRGB";
 
 interface InputRIRProps {
   set: Set;
+  style?: ViewStyle;
+  textStyle?: TextStyle;
   disabled?: boolean;
 }
 
-export function InputRIR({ set, disabled }: InputRIRProps) {
-  const { updateSetInActiveExercise } = useWorkoutStore();
-  const scale = Array.from({ length: 6 }, (_, index) => {
-    if (index === 5) return "5+";
-    return index.toString();
-  });
+export function InputRIR({ set, style, textStyle, disabled }: InputRIRProps) {
+  const { theme } = useSettingsStore();
+  const { rir } = set;
+  const bottomSheetRef = useRef<BottomSheetModal>(null);
 
-  const handleSelect = (item: string) => {
-    updateSetInActiveExercise(set.id, {
-      rir: item === "5+" ? 5 : parseInt(item),
-    });
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Rigid);
+  const openSheet = () => {
+    if (disabled) return;
+    bottomSheetRef.current?.present();
   };
 
   return (
-    <FilterFlatSlider
-      data={scale}
-      startIndex={set.rir ?? 0}
-      itemWidth={54}
-      onSelect={handleSelect}
-      contentContainerStyle={{
-        height: 54,
-        width: 54,
-      }}
-      itemStyle={{ height: 54 }}
-      textStyle={{ fontSize: 16 }}
-      disabled={disabled}
-    />
+    <Fragment>
+      <TouchableOpacity
+        onPress={openSheet}
+        style={[
+          {
+            width: 44,
+            height: 44,
+            borderRadius: 8,
+            backgroundColor: hexToRGBA(theme.background, disabled ? 0 : 0.4),
+            alignItems: "center",
+            justifyContent: "center",
+          },
+          style,
+        ]}
+        disabled={disabled}
+      >
+        <Text
+          style={[
+            {
+              fontSize: 16,
+              fontWeight: "600",
+              color: theme.text,
+            },
+            textStyle,
+          ]}
+        >
+          {rir === 5 ? "5+" : rir ? rir : "-"}
+        </Text>
+      </TouchableOpacity>
+
+      <RirRpeBottomSheet startMode="rir" set={set} ref={bottomSheetRef} />
+    </Fragment>
   );
 }
