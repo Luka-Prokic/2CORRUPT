@@ -1,27 +1,22 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   FlatList,
-  View,
-  Text,
   NativeSyntheticEvent,
   NativeScrollEvent,
 } from "react-native";
 import { WIDTH } from "../../features/Dimensions";
-import { useSettingsStore } from "../../stores/settingsStore";
 import { DayRecapScreen } from "./DayRecapScreen";
 
 interface DaySliderScreenProps {
   weeks: Date[][];
   selectedDate: Date;
   setSelectedDate: (date: Date) => void;
-  isFutureDate: (date: Date) => boolean;
 }
 
 export function DaySliderScreen({
   weeks,
   selectedDate,
   setSelectedDate,
-  isFutureDate,
 }: DaySliderScreenProps) {
   const allDays = weeks.flat();
   const flatListRef = useRef<FlatList<Date>>(null);

@@ -6,6 +6,9 @@ import { WIDTH } from "../../../features/Dimensions";
 import { ModalBackButton } from "../../../app/_layout";
 import { useSettingsStore } from "../../../stores/settings";
 import { Ionicons } from "@expo/vector-icons";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import { Fragment, useRef } from "react";
+import { SummaryCalendarBottomSheet } from "../calendar/SummaryCalendarBottomSheet";
 
 interface SessionsHeaderProps {
   dateTittle: string;
@@ -17,8 +20,6 @@ interface SessionsHeaderProps {
   animatedBackgroundStyle: any;
   onDayPress: (date: Date, dayIndex: number) => void;
   setCurrentWeekIndex: (index: number) => void; // to handle swipe
-  isFutureDate: (date: Date) => boolean;
-  isToday: (date: Date) => boolean;
 }
 
 export function SessionsHeader({
@@ -31,67 +32,77 @@ export function SessionsHeader({
   animatedBackgroundStyle,
   onDayPress,
   setCurrentWeekIndex,
-  isFutureDate,
-  isToday,
 }: SessionsHeaderProps) {
   const insets = useSafeAreaInsets();
   const { theme, themeMode } = useSettingsStore();
+  const calendarBottomSheetRef = useRef<BottomSheetModal>(null);
 
   return (
-    <BlurView
-      style={{ paddingTop: insets.top, height: WIDTH / 7 + 34 + insets.top }}
-      tint={themeMode}
-    >
-      <View
-        style={{
-          width: WIDTH,
-          flexDirection: "row",
-          height: 34,
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
+    <Fragment>
+      <BlurView
+        style={{ paddingTop: insets.top, height: WIDTH / 7 + 34 + insets.top }}
+        tint={themeMode}
       >
-        <View style={{ paddingHorizontal: 10, width: WIDTH * 0.25 }}>
-          <ModalBackButton />
-        </View>
         <View
           style={{
-            width: WIDTH * 0.5,
-            alignItems: "center",
-          }}
-        >
-          <Text
-            style={{ fontSize: 18, fontWeight: "600", color: theme.text }}
-            adjustsFontSizeToFit
-            numberOfLines={1}
-          >
-            {dateTittle}
-          </Text>
-        </View>
-        <View
-          style={{
-            paddingHorizontal: 10,
-            width: WIDTH * 0.25,
+            width: WIDTH,
             flexDirection: "row",
-            justifyContent: "flex-end",
+            height: 34,
+            alignItems: "center",
+            justifyContent: "space-between",
           }}
         >
-          <TouchableOpacity>
-            <Ionicons name="calendar-outline" size={28} color={theme.info} />
-          </TouchableOpacity>
+          <View style={{ paddingHorizontal: 10, width: WIDTH * 0.25 }}>
+            <ModalBackButton />
+          </View>
+          <View
+            style={{
+              width: WIDTH * 0.5,
+              alignItems: "center",
+            }}
+          >
+            <Text
+              style={{ fontSize: 18, fontWeight: "600", color: theme.text }}
+              adjustsFontSizeToFit
+              numberOfLines={1}
+            >
+              {dateTittle}
+            </Text>
+          </View>
+          <View
+            style={{
+              paddingHorizontal: 10,
+              width: WIDTH * 0.25,
+              flexDirection: "row",
+              justifyContent: "flex-end",
+            }}
+          >
+            <TouchableOpacity
+              onPress={() => {
+                calendarBottomSheetRef.current?.present();
+              }}
+            >
+              <Ionicons name="calendar-outline" size={28} color={theme.info} />
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
-      <DayPicker
-        key={`${currentWeek}`}
-        currentWeek={currentWeek}
-        weeks={weeks}
-        currentWeekIndex={currentWeekIndex}
-        selectedDate={selectedDate}
-        buttonSize={buttonSize}
-        animatedBackgroundStyle={animatedBackgroundStyle}
+        <DayPicker
+          key={`${currentWeek}`}
+          currentWeek={currentWeek}
+          weeks={weeks}
+          currentWeekIndex={currentWeekIndex}
+          selectedDate={selectedDate}
+          buttonSize={buttonSize}
+          animatedBackgroundStyle={animatedBackgroundStyle}
+          onDayPress={onDayPress}
+          setCurrentWeekIndex={setCurrentWeekIndex}
+        />
+      </BlurView>
+      <SummaryCalendarBottomSheet
+        ref={calendarBottomSheetRef}
         onDayPress={onDayPress}
-        setCurrentWeekIndex={setCurrentWeekIndex}
+        selectedDate={selectedDate}
       />
-    </BlurView>
+    </Fragment>
   );
 }

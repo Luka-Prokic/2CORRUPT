@@ -1,4 +1,4 @@
-import React, { forwardRef, useMemo, useState } from "react";
+import { forwardRef, useState } from "react";
 import {
   BottomSheetBackdrop,
   BottomSheetModal,
@@ -32,7 +32,6 @@ export const SessionBottomSheet = forwardRef<
 >(({ session, startView = "options" }, ref) => {
   const { theme } = useSettingsStore();
   const insets = useSafeAreaInsets();
-  const snapPoints = useMemo(() => ["10%", "60%"], []);
   const [view, setView] = useState<SessionBottomSheetViews>(startView);
 
   function visibleView() {

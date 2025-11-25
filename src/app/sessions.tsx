@@ -14,8 +14,6 @@ export default function SessionssScreen() {
     buttonSize,
     animatedBackgroundStyle,
     handleDayPress,
-    isFutureDate,
-    isToday,
     setCurrentWeekIndex,
     setSelectedDate,
   } = useCalendarNavigation();
@@ -36,8 +34,6 @@ export default function SessionssScreen() {
               animatedBackgroundStyle={animatedBackgroundStyle}
               onDayPress={handleDayPress}
               setCurrentWeekIndex={setCurrentWeekIndex}
-              isFutureDate={isFutureDate}
-              isToday={isToday}
             />
           ),
         }}
@@ -46,7 +42,6 @@ export default function SessionssScreen() {
         weeks={weeks}
         selectedDate={selectedDate}
         setSelectedDate={setSelectedDate}
-        isFutureDate={isFutureDate}
       />
     </Fragment>
   );

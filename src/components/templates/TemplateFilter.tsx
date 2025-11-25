@@ -6,10 +6,10 @@ import { FilterFlatList } from "../ui/FilterFlatList";
 import { WIDTH } from "../../features/Dimensions";
 import { useSettingsStore } from "../../stores/settingsStore";
 import { useFilterTemplates } from "../../features/workout/useFilterTemplates";
-import { useEffect } from "react";
+import { Fragment, useEffect } from "react";
 import * as Haptics from "expo-haptics";
 import { useWorkoutStore } from "../../stores/workout/useWorkoutStore";
-
+import { EmptyHeader } from "../ui/containers/EmptyHeader";
 interface TemplateFilterProps {
   setFilteredTemplates: (templates: WorkoutTemplate[]) => void;
   style?: ViewStyle | ViewStyle[];
@@ -46,58 +46,61 @@ export function TemplateFilter({
 
   useEffect(() => {
     setFilteredTemplates(templatesFiltered);
-  }, [searchQuery, selectedTag, selectedSplit]);
+  }, [searchQuery, selectedTag, selectedSplit, templates]);
 
-  if (templates.length === 0) return null;
+  function content() {
+    if (templates.length === 0) return <EmptyHeader />;
+    else
+      return (
+        <Fragment>
+          <SearchBar
+            value={searchQuery}
+            onChangeText={setSearchQuery}
+            placeholder={t("templates.search")}
+            style={{ marginHorizontal: 16, ...style }}
+          />
 
-  return (
-    <View style={style}>
-      <SearchBar
-        value={searchQuery}
-        onChangeText={setSearchQuery}
-        placeholder={t("templates.search")}
-        style={{ marginHorizontal: 16, ...style }}
-      />
-
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          marginHorizontal: 16,
-          marginBottom: 8,
-        }}
-      >
-        <FilterFlatList
-          title={t("templates.tag")}
-          data={availableTags}
-          onSelect={handleSelectTag}
-          itemHeight={50}
-          contentContainerStyle={{
-            height: 54,
-            width: WIDTH * 0.5 - 20,
-            paddingVertical: 2,
-            backgroundColor: theme.primaryBackground,
-            borderTopLeftRadius: 32,
-            borderBottomLeftRadius: 32,
-            borderRadius: 12,
-          }}
-        />
-        <FilterFlatList
-          title={t("splits.split")}
-          data={availableSplits}
-          onSelect={handleSelectSplit}
-          itemHeight={50}
-          contentContainerStyle={{
-            height: 54,
-            width: WIDTH * 0.5 - 20,
-            paddingVertical: 2,
-            backgroundColor: theme.primaryBackground,
-            borderTopRightRadius: 32,
-            borderBottomRightRadius: 32,
-            borderRadius: 12,
-          }}
-        />
-      </View>
-    </View>
-  );
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              marginHorizontal: 16,
+              marginBottom: 8,
+            }}
+          >
+            <FilterFlatList
+              title={t("templates.tag")}
+              data={availableTags}
+              onSelect={handleSelectTag}
+              itemHeight={50}
+              contentContainerStyle={{
+                height: 54,
+                width: WIDTH * 0.5 - 20,
+                paddingVertical: 2,
+                backgroundColor: theme.primaryBackground,
+                borderTopLeftRadius: 32,
+                borderBottomLeftRadius: 32,
+                borderRadius: 12,
+              }}
+            />
+            <FilterFlatList
+              title={t("splits.split")}
+              data={availableSplits}
+              onSelect={handleSelectSplit}
+              itemHeight={50}
+              contentContainerStyle={{
+                height: 54,
+                width: WIDTH * 0.5 - 20,
+                paddingVertical: 2,
+                backgroundColor: theme.primaryBackground,
+                borderTopRightRadius: 32,
+                borderBottomRightRadius: 32,
+                borderRadius: 12,
+              }}
+            />
+          </View>
+        </Fragment>
+      );
+  }
+  return <View style={style}>{content()}</View>;
 }
