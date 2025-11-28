@@ -356,7 +356,10 @@
     "active-session-warning": "Active workout in progress. Finish it or cancel it before starting a new session or editing templates.",
     "search": "Search templates",
     "no-templates-found-match": "No templates found matching your search",
+    "no-templates": "No templates",
+    "create-template": "Create Template",
     "add-to-split": "Add to Split",
+    "your-templates": "Your Templates",
     "exercises": "Exercises",
     "exercise": "Exercise",
     "templates": "Templates",
@@ -417,6 +420,12 @@
     "workouts-this-week-description": "View your completed workouts from the this week.",
     "workouts-this-week-button": "Show Workouts This Week"
   },
+
+  "start": {
+    "title": "Start",
+    "choose-template": "Choose Template"
+  },
+
   "alert": {
     "end-workout": "End Workout",
     "end-workout-message": "You're about to end your workout. You can finish it and save it or save it as template isntead."

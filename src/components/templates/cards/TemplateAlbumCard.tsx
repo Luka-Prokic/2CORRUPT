@@ -1,20 +1,23 @@
 import { WorkoutTemplate } from "../../../stores/workout";
 import { Text, TouchableOpacity } from "react-native";
 import { useSettingsStore } from "../../../stores/settingsStore";
-import { useWidgetUnit } from "../../../features/widgets/useWidgetUnit";
 import { useTranslation } from "react-i18next";
+import { WIDTH } from "../../../features/Dimensions";
 
 interface TemplateAlbumCardProps {
   template: WorkoutTemplate;
   onPress: () => void;
+  cardWidth?: number;
+  cardHeight?: number;
 }
 
 export function TemplateAlbumCard({
   template,
   onPress,
+  cardWidth = WIDTH / 3,
+  cardHeight = WIDTH / 3,
 }: TemplateAlbumCardProps) {
   const { theme } = useSettingsStore();
-  const { widgetUnit } = useWidgetUnit();
   const { t } = useTranslation();
 
   const tags = template.tags?.map((tag, i) => {
@@ -25,8 +28,8 @@ export function TemplateAlbumCard({
   return (
     <TouchableOpacity
       style={{
-        height: widgetUnit,
-        width: widgetUnit,
+        height: cardHeight,
+        width: cardWidth,
         backgroundColor: theme.fifthBackground,
         borderColor: theme.border,
         borderRadius: 32,

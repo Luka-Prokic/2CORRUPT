@@ -175,7 +175,13 @@ export function CenterCardSlider<T>({
         contentContainerStyle={{
           paddingHorizontal: horizontalPadding,
         }}
-        style={{ width: sliderWidth, ...styleSlider }}
+        style={{
+          width: sliderWidth,
+          flexGrow: 0,
+          flexShrink: 0,
+          flexBasis: cardHeight,
+          ...styleSlider,
+        }}
         nestedScrollEnabled
         ListEmptyComponent={emptyCard}
       />
@@ -223,11 +229,6 @@ function renderCenterCard({
   totalItems: number;
   horizontalPadding: number;
 }) {
-  // With snapToAlignment="center", the scrollX represents the offset
-  // When a card is centered, its position relative to scroll is: index * width
-  // The card is centered when scrollX + horizontalPadding positions it at screen center
-  // Input ranges for animations - account for center alignment
-  // We need to handle: left card (index-1), center card (index), right card (index+1)
   const inputRange = [
     (index - 2) * width,
     (index - 1) * width,
@@ -236,38 +237,44 @@ function renderCenterCard({
     (index + 2) * width,
   ];
 
-  // Opacity: center card = 1, side cards = 0.7, outer cards = 0.5
   const opacity = scrollX.interpolate({
     inputRange,
     outputRange: [0.7, 0.9, 1, 0.9, 0.7],
     extrapolate: "clamp",
   });
 
-  // Scale: center card = 1, side cards = 0.9, outer cards = 0.85
   const scale = scrollX.interpolate({
     inputRange,
     outputRange: [0.85, 0.9, 1, 0.9, 0.85],
     extrapolate: "clamp",
   });
 
-  // RotateY: center card = 0deg, side cards = ±15deg, outer cards = ±25deg
   const rotateY = scrollX.interpolate({
     inputRange,
-    outputRange: ["-35deg", "-25deg", "0deg", "25deg", "35deg"],
+    outputRange: ["-45deg", "-25deg", "0deg", "25deg", "45deg"],
     extrapolate: "clamp",
   });
 
   return (
-    <RNAnimated.View
+    <View
       style={{
         width,
         height,
-        opacity,
-        transform: [{ scale }, { perspective: 600 }, { rotateY }],
+        overflow: "visible", // ⭐️ ENFORCES TRUE CARD SIZE
+        justifyContent: "center",
+        alignItems: "center",
       }}
     >
-      {content}
-    </RNAnimated.View>
+      <RNAnimated.View
+        style={{
+          flex: 1,
+          opacity,
+          transform: [{ scale }, { perspective: 600 }, { rotateY }],
+        }}
+      >
+        {content}
+      </RNAnimated.View>
+    </View>
   );
 }
 

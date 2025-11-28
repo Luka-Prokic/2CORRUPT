@@ -354,7 +354,10 @@
     "active-session-warning": "Trening je u toku. Završite ga pre nego što započnete novi ili uređujete šablone.",
     "search": "Pretraži šablone",
     "no-templates-found-match": "Nema template-a koji odgovara pretrazi",
+    "no-templates": "Nema šablona",
+    "create-template": "Kreiraj Šablon",
     "add-to-split": "Dodaj u Split",
+    "your-templates": "Tvoji Šabloni",
     "exercises": "Vežbe",
     "exercise": "Vežba",
     "templates": "Šabloni",
@@ -413,6 +416,10 @@
     "workouts-this-week-title": "Treningi Ove Nedelje",
     "workouts-this-week-description": "Pogledaj svoje završene treninge iz ove nedelje.",
     "workouts-this-week-button": "Pogledaj Treninge Ove Nedelje"
+  },
+  "start": {
+    "title": "Početak",
+    "choose-template": "Izaberi Template"
   },
 
   "alert": {

@@ -7,11 +7,12 @@ import { Text } from "react-native";
 import { useTranslation } from "react-i18next";
 import { TemplateDescriptionInput } from "./TemplateDescritionInput";
 import { useWorkoutStore } from "../../stores/workout";
+import { TemplatesCardList } from "../templates/TemplatesCardList";
 
 export function CreateTemplateBoard() {
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
-  const { activeTemplate } = useWorkoutStore();
+  const { activeTemplate, templates } = useWorkoutStore();
 
   function handlePress() {
     router.push({
@@ -33,13 +34,19 @@ export function CreateTemplateBoard() {
             height: 64,
             borderRadius: 32,
             backgroundColor: theme.tint,
-            marginTop: 32,
+            marginVertical: 16,
           }}
         >
           <Text style={{ color: theme.text, fontSize: 24, fontWeight: "bold" }}>
             {t("workout-view.add-exercise")}
           </Text>
         </StrobeButton>
+      )}
+      {templates.length > 0 && (
+        <TemplatesCardList
+          filters={{ id: activeTemplate?.id }}
+          emptyState={<Fragment />}
+        />
       )}
     </Fragment>
   );

@@ -1,5 +1,4 @@
-import React, { useMemo } from "react";
-import { Text } from "react-native";
+import { useMemo } from "react";
 import {
   IsoDateString,
   useWorkoutStore,
@@ -10,10 +9,13 @@ import { CenterCardSlider } from "../ui/sliders/CenterCardSlider";
 import { TemplateAlbumCard } from "./cards/TemplateAlbumCard";
 import { router } from "expo-router";
 import { useUIStore } from "../../stores/ui";
+import { NoTamplatesAlert } from "../ui/alerts/NoTamplatesAlert";
+import { WIDTH } from "../../features/Dimensions";
 
 interface TemplateFilters {
-  name?: string;
+  name?: string[];
   tags?: string[];
+  id?: string;
   updatedAfter?: IsoDateString;
   updatedBefore?: IsoDateString;
   groups?: string[];
@@ -26,36 +28,44 @@ interface TemplatesCardListProps {
   cardWidth?: number;
   cardHeight?: number;
 
+  sliderWidth?: number;
+
   emptyState?: React.ReactNode;
 }
 
 export function TemplatesCardList({
   templates: templatesProp,
   filters,
-  cardWidth,
-  cardHeight,
+  cardWidth = WIDTH / 3,
+  cardHeight = WIDTH / 3,
+  sliderWidth = WIDTH,
   emptyState,
 }: TemplatesCardListProps) {
-  const { widgetUnit } = useWidgetUnit();
   const { startSession } = useWorkoutStore();
   const { setTypeOfView } = useUIStore();
   const storeTemplates = useWorkoutStore((s) => s.templates);
   const templates = templatesProp ?? storeTemplates;
 
-  const cardWidthValue = cardWidth ?? widgetUnit;
-  const cardHeightValue = cardHeight ?? widgetUnit;
-
   const filtered = useMemo(() => {
     return templates.filter((t) => {
       // Name
       if (filters?.name) {
-        if (!t.name.toLowerCase().includes(filters.name.toLowerCase()))
+        if (
+          !filters.name.some((name) =>
+            t.name.toLowerCase().includes(name.toLowerCase())
+          )
+        )
           return false;
       }
 
       // Tags
       if (filters?.tags?.length) {
         if (!filters.tags.some((tag) => t.tags?.includes(tag))) return false;
+      }
+
+      // ID
+      if (filters?.id) {
+        if (t.id === filters.id) return false;
       }
 
       // UpdatedAfter
@@ -93,18 +103,21 @@ export function TemplatesCardList({
     router.dismissTo("/");
   }
 
-  if (filtered.length === 0) return emptyState ?? <Text>No templates</Text>;
+  if (filtered.length === 0) return emptyState ?? <NoTamplatesAlert />;
 
   return (
     <CenterCardSlider
       data={filtered}
-      cardWidth={cardWidthValue}
-      cardHeight={cardHeightValue}
-      styleSlider={{
-        height: cardHeightValue,
-      }}
+      cardWidth={WIDTH / 2}
+      cardHeight={WIDTH / 2}
+      sliderWidth={sliderWidth}
       card={({ item }) => (
-        <TemplateAlbumCard template={item} onPress={() => handlePress(item)} />
+        <TemplateAlbumCard
+          template={item}
+          onPress={() => handlePress(item)}
+          cardWidth={WIDTH / 2}
+          cardHeight={WIDTH / 2}
+        />
       )}
     />
   );
