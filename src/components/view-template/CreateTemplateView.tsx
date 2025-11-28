@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import { CORRUPT_BUTTON_HEIGHT_FROM_BOTTOM } from "../corrupt/CorruptButton";
+import { CORRUPT_BUTTON_HEIGHT_FROM_BOTTOM } from "../corrupt/LegacyCorruptButton";
 import { TagTextLayout } from "./TagTextLayout";
 import { TemplateNameEditor } from "./TemplateNameEditor";
 import { useWorkoutStore } from "../../stores/workout";

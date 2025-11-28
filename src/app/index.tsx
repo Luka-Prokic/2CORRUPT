@@ -1,6 +1,5 @@
 import { WorkoutView } from "../components/view-workout/WorkoutView";
 import { HomeView } from "../components/view-home/HomeView";
-import { CorruptButton } from "../components/corrupt/CorruptButton";
 import { TemplateView } from "../components/view-template/TemplateView";
 import { StartView } from "../components/view-start/StartView";
 import { Fragment, useMemo } from "react";
@@ -20,7 +19,7 @@ import {
   RightTemplateExerciseFlow,
   TemplateExerciseFlow,
 } from "../components/view-template/header/TemplateExerciseFlow";
-import { CorruptButtonMock } from "../components/corrupt/CorruptButtonMock";
+import { CorruptButton } from "../components/corrupt/CorruptButton";
 
 export default function HomeScreen() {
   const { typeOfView } = useUIStore();
@@ -77,8 +76,7 @@ export default function HomeScreen() {
         <WorkoutView />
         <TemplateView />
       </ScreenContent>
-      {/* <CorruptButton /> */}
-      <CorruptButtonMock />
+      <CorruptButton />
     </Fragment>
   );
 }

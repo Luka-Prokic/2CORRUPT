@@ -4,7 +4,7 @@ import { WIDTH } from "../../features/Dimensions";
 import { Text, View } from "react-native";
 import { useTranslation } from "react-i18next";
 import { StrobeButton } from "../ui/buttons/StrobeButton";
-import { CORRUPT_BUTTON_HEIGHT_FROM_BOTTOM } from "../corrupt/CorruptButton";
+import { CORRUPT_BUTTON_HEIGHT_FROM_BOTTOM } from "../corrupt/LegacyCorruptButton";
 
 export function NoExerciseView() {
   const { theme } = useSettingsStore();

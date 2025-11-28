@@ -5,7 +5,7 @@ import { hexToRGBA } from "../../features/HEXtoRGB";
 import { AddSetButton } from "./table/AddSetButton";
 import { useSettingsStore } from "../../stores/settingsStore";
 import { ExerciseTableHeader } from "./table/header/ExerciseTableHeader";
-import { CORRUPT_BUTTON_HEIGHT_FROM_BOTTOM } from "../corrupt/CorruptButton";
+import { CORRUPT_BUTTON_HEIGHT_FROM_BOTTOM } from "../corrupt/LegacyCorruptButton";
 
 export function ExerciseListView() {
   const { theme } = useSettingsStore();
