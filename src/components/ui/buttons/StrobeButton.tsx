@@ -7,6 +7,7 @@ import {
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { StrobeBlur } from "../misc/StrobeBlur";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
+import { StyleSheet } from "react-native";
 
 export interface StrobeButtonProps
   extends Omit<TouchableOpacityProps, "style"> {
@@ -55,7 +56,11 @@ export function StrobeButton({
       ]}
       {...rest}
     >
-      <Animated.View entering={FadeIn} exiting={FadeOut}>
+      <Animated.View
+        entering={FadeIn}
+        exiting={FadeOut}
+        style={[StyleSheet.absoluteFill]}
+      >
         <StrobeBlur
           colors={colors}
           style={{ width: "100%", height: "100%", ...contentContainerStyle }}
