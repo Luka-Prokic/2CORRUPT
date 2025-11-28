@@ -3,6 +3,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useSettingsStore } from "../../../../stores/settingsStore";
 import { useWorkoutStore } from "../../../../stores/workoutStore";
 import { Set } from "../../../../stores/workout/types";
+import * as Haptics from "expo-haptics";
 
 interface DoneInputProps {
   set: Set;
@@ -20,6 +21,7 @@ export function DoneInput({ set, disabled }: DoneInputProps) {
   } = useWorkoutStore();
 
   const handlePress = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     if (activeExercise.noRest)
       updateSetInActiveExercise(set.id, { isCompleted: !set.isCompleted });
     else startRest(activeExercise.id, set.id, activeExercise.restTime ?? 0);

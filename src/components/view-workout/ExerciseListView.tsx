@@ -19,7 +19,6 @@ export function ExerciseListView() {
       <ExerciseSetList />
 
       {/* Add Set Button */}
-
       <LinearGradient
         style={{
           height: 72 + CORRUPT_BUTTON_HEIGHT_FROM_BOTTOM,

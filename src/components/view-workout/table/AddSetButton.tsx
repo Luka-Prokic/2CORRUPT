@@ -5,6 +5,7 @@ import { useSettingsStore } from "../../../stores/settingsStore";
 import { Text } from "react-native";
 import { useWorkoutStore } from "../../../stores/workout/useWorkoutStore";
 import { useTranslation } from "react-i18next";
+import * as Haptics from "expo-haptics";
 
 export function AddSetButton() {
   const { theme } = useSettingsStore();
@@ -12,6 +13,7 @@ export function AddSetButton() {
   const { t } = useTranslation();
 
   const handleAddSet = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
     addSetToActiveExercise();
   };
 

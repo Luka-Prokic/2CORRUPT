@@ -3,6 +3,7 @@ import { TouchableOpacity, Text } from "react-native";
 import { useSettingsStore } from "../../stores/settingsStore";
 import { RestTimer } from "../ui/timer/RestTimer";
 import { useWorkoutStore } from "../../stores/workout/useWorkoutStore";
+import * as Haptics from "expo-haptics";
 
 interface CorruptRestTimerProps {
   size: number;
@@ -13,6 +14,7 @@ export function CorruptRestTimer({ size }: CorruptRestTimerProps) {
   const { estEndRestTime, updateEstEndRestTime, endRest } = useWorkoutStore();
 
   const addRest = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
     if (estEndRestTime != null) updateEstEndRestTime(estEndRestTime + 15);
   };
 
@@ -25,10 +27,14 @@ export function CorruptRestTimer({ size }: CorruptRestTimerProps) {
     if (remaining === 0) {
       // Timer already at 00:00 → finish rest
       endRest();
+
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Rigid);
     } else {
       // Subtract 15 seconds (or go to 0)
       const newRemaining = Math.max(remaining - 15, 0);
       updateEstEndRestTime(now + newRemaining);
+
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
     }
   };
 

@@ -3,6 +3,7 @@ import { useSettingsStore } from "../../../../stores/settingsStore";
 import { Swipeable } from "react-native-gesture-handler";
 import { Set, useWorkoutStore } from "../../../../stores/workoutStore";
 import { useTranslation } from "react-i18next";
+import * as Haptics from "expo-haptics";
 
 export function SetSwipeActions({
   set,
@@ -22,15 +23,18 @@ export function SetSwipeActions({
   const { t } = useTranslation();
 
   const handleAddDropSet = (setId: string) => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Rigid);
     addDropSetToActiveExercise(setId, 0, 0);
   };
 
   const handleUncheckSet = (setId: string) => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     updateSetInActiveExercise(setId, { isCompleted: false });
     updateSetInActiveExercise(setId, { restSeconds: null });
   };
 
   const handleRemoveSet = (setId: string) => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
     removeSetFromActiveExercise(setId);
   };
 
