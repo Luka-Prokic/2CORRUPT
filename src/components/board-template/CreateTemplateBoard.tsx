@@ -6,10 +6,12 @@ import { useSettingsStore } from "../../stores/settings";
 import { Text } from "react-native";
 import { useTranslation } from "react-i18next";
 import { TemplateDescriptionInput } from "./TemplateDescritionInput";
+import { useWorkoutStore } from "../../stores/workout";
 
 export function CreateTemplateBoard() {
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
+  const { activeTemplate } = useWorkoutStore();
 
   function handlePress() {
     router.push({
@@ -23,21 +25,22 @@ export function CreateTemplateBoard() {
   return (
     <Fragment>
       <TemplateDescriptionInput />
-      <StrobeButton
-        strobeColors={[theme.tint, theme.tint, theme.tint, theme.tint]}
-        onPress={handlePress}
-        style={{
-          width: WIDTH - 32,
-          height: 64,
-          borderRadius: 32,
-          backgroundColor: theme.handle,
-          marginTop: 32,
-        }}
-      >
-        <Text style={{ color: theme.text, fontSize: 24, fontWeight: "bold" }}>
-          {t("workout-view.add-exercise")}
-        </Text>
-      </StrobeButton>
+      {activeTemplate?.layout.length === 0 && (
+        <StrobeButton
+          onPress={handlePress}
+          style={{
+            width: WIDTH - 32,
+            height: 64,
+            borderRadius: 32,
+            backgroundColor: theme.tint,
+            marginTop: 32,
+          }}
+        >
+          <Text style={{ color: theme.text, fontSize: 24, fontWeight: "bold" }}>
+            {t("workout-view.add-exercise")}
+          </Text>
+        </StrobeButton>
+      )}
     </Fragment>
   );
 }

@@ -303,13 +303,19 @@ export interface ExerciseSlice {
   swapExerciseInActiveExercise: (exerciseId: string) => void;
 }
 
-export interface TimerSlice {
-  restTimer: number;
-  isTimerRunning: boolean;
-  timerInterval?: NodeJS.Timeout;
-  startTimer: (duration: number) => void;
-  stopTimer: () => void;
-  resetTimer: () => void;
+export interface RestSlice {
+  restingExerciseId: string | null;
+  restingSetId: string | null;
+
+  startRestTime: number | null; // seconds since epoch
+  estEndRestTime: number | null; // estimated end time in seconds
+
+  startRest: (exerciseId: string, setId: string, duration: number) => void;
+  endRest: (seconds?: number) => void;
+
+  updateEstEndRestTime: (newEndSec: number) => void;
+  extendEstEndRestTime: (amount: number) => void;
+  reduceEstEndRestTime: (amount: number) => void;
 }
 
 export interface StatsSlice {
@@ -338,7 +344,7 @@ export interface FlowSlice {
 export type WorkoutStore = TemplateSlice &
   SessionSlice &
   ExerciseSlice &
-  TimerSlice &
+  RestSlice &
   StatsSlice &
   FlowSlice &
   SplitPlanSlice;

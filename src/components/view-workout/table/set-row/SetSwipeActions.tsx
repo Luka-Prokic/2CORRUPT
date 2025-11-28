@@ -27,6 +27,7 @@ export function SetSwipeActions({
 
   const handleUncheckSet = (setId: string) => {
     updateSetInActiveExercise(setId, { isCompleted: false });
+    updateSetInActiveExercise(setId, { restSeconds: null });
   };
 
   const handleRemoveSet = (setId: string) => {

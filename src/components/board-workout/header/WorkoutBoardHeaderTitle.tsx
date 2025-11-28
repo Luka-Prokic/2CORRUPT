@@ -2,7 +2,7 @@ import { TouchableOpacity } from "react-native";
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { WIDTH } from "../../../features/Dimensions";
 import { SessionSheetType } from "../../../app/workout-board";
-import { SessionTimer } from "../../ui/SessionTimer";
+import { SessionTimer } from "../../ui/timer/SessionTimer";
 
 interface WorkoutBoardHeaderTitleProps {
   listOpen: boolean;

@@ -3,7 +3,7 @@ export * from "./types";
 export * from "./slices/templateSlice";
 export * from "./slices/sessionSlice";
 export * from "./slices/exerciseSlice";
-export * from "./slices/timerSlice";
+export * from "./slices/restSlice";
 export * from "./slices/statsSlice";
 export * from "./slices/flowSlice";
 export * from "./slices/splitSlice";

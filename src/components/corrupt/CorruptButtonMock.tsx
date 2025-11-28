@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { useEffect } from "react";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withSpring,
+  withTiming,
 } from "react-native-reanimated";
 import { Ionicons } from "@expo/vector-icons";
 import { useSettingsStore } from "../../stores/settingsStore";
@@ -14,7 +14,8 @@ import { CorruptTittle } from "./CorruptTittle";
 import { HEIGHT, WIDTH } from "../../features/Dimensions";
 import { router } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { SessionTimer } from "../ui/SessionTimer";
+import { SessionTimer } from "../ui/timer/SessionTimer";
+import { CorruptRestTimer } from "./CorruptRestTimer";
 
 export const CORRUPT_BUTTON_FROM_BOTTOM = 22;
 export const CORRUPT_BUTTON_HEIGHT = 64;
@@ -23,15 +24,13 @@ const CORRUPT_GAP = 8;
 export function CorruptButtonMock() {
   const { theme } = useSettingsStore();
   const { typeOfView } = useUIStore();
-  const { activeTemplate, activeSession } = useWorkoutStore();
+  const { activeTemplate, restingExerciseId } = useWorkoutStore();
   const insets = useSafeAreaInsets();
-
-  const [restTime, setRestTime] = useState<number | null>(null);
-  const [isResting, setIsResting] = useState(false);
 
   const backgroundColor =
     activeTemplate && typeOfView === "template" ? theme.tint : theme.accent;
 
+  // --- Bottom animation (spring) ---
   const bottom = useSharedValue(CORRUPT_BUTTON_FROM_BOTTOM + insets.bottom);
 
   useEffect(() => {
@@ -47,135 +46,73 @@ export function CorruptButtonMock() {
     });
   }, [typeOfView, insets.bottom]);
 
-  const animatedStyle = useAnimatedStyle(() => ({
+  const animatedContainerStyle = useAnimatedStyle(() => ({
     position: "absolute",
     left: 0,
     right: 0,
     width: WIDTH,
     height: CORRUPT_BUTTON_HEIGHT,
     alignItems: "center",
+    justifyContent: "flex-end",
     paddingHorizontal: 16,
     zIndex: 10,
     bottom: bottom.value,
+    flexDirection: "row",
+    gap: 8,
   }));
 
+  // --- Width animation (timing) ---
+  const width = useSharedValue(WIDTH - 32);
+
+  useEffect(() => {
+    width.value =
+      !!restingExerciseId && typeOfView === "workout"
+        ? withTiming(CORRUPT_BUTTON_HEIGHT, { duration: 250 })
+        : withTiming(WIDTH - 32, { duration: 250 });
+  }, [restingExerciseId, typeOfView]);
+
+  const animatedButtonStyle = useAnimatedStyle(() => ({
+    width: width.value,
+  }));
+
+  // --- Navigation ---
   const handleCorruptPress = () => {
     router.push(`/${typeOfView}-board`);
   };
 
-  const formatTime = (seconds: number) => {
-    const m = Math.floor(seconds / 60)
-      .toString()
-      .padStart(2, "0");
-    const s = (seconds % 60).toString().padStart(2, "0");
-    return `${m}:${s}`;
-  };
-
-  // Rest timer
-  useEffect(() => {
-    if (typeOfView === "workout" && isResting && restTime !== null) {
-      const interval = setInterval(() => {
-        setRestTime((t) => {
-          if (t! <= 1) {
-            setIsResting(false);
-            return null;
-          }
-          return t! - 1;
-        });
-      }, 1000);
-      return () => clearInterval(interval);
-    }
-  }, [isResting, restTime, typeOfView]);
-
-  const startRest = () => {
-    setRestTime(30);
-    setIsResting(true);
-  };
-  const addRest = () => restTime !== null && setRestTime(restTime + 15);
-  const removeRest = () =>
-    restTime !== null && setRestTime(Math.max(0, restTime - 15));
-
   return (
-    <Animated.View style={animatedStyle}>
-      <IButton
-        onPress={handleCorruptPress}
-        style={{
-          width: WIDTH - 32,
-          height: CORRUPT_BUTTON_HEIGHT,
-          borderRadius: 100,
-          backgroundColor,
-          borderWidth: 1,
-          borderColor: theme.border,
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-          paddingHorizontal: 20,
-        }}
-      >
-        {typeOfView !== "workout" ? (
-          <CorruptTittle style={{ color: theme.border, fontSize: 22 }} />
-        ) : (
-          <View style={{ flex: 1, alignItems: "center" }}>
-            {isResting && restTime !== null ? (
-              <Text
-                style={{
-                  color: theme.border,
-                  fontSize: 20,
-                  fontWeight: "bold",
-                }}
-              >
-                {formatTime(restTime)}
-              </Text>
-            ) : (
-              <SessionTimer />
-            )}
-            {isResting && (
-              <View style={{ flexDirection: "row", gap: 10, marginTop: 4 }}>
-                <TouchableOpacity
-                  onPress={addRest}
-                  style={{
-                    paddingHorizontal: 10,
-                    paddingVertical: 4,
-                    backgroundColor: "#33333344",
-                    borderRadius: 4,
-                  }}
-                >
-                  <Text style={{ color: theme.border }}>+15s</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={removeRest}
-                  style={{
-                    paddingHorizontal: 10,
-                    paddingVertical: 4,
-                    backgroundColor: "#33333344",
-                    borderRadius: 4,
-                  }}
-                >
-                  <Text style={{ color: theme.border }}>-15s</Text>
-                </TouchableOpacity>
-              </View>
-            )}
-          </View>
-        )}
-        <Ionicons name="chevron-forward" size={28} color={theme.border} />
-      </IButton>
+    <Animated.View style={animatedContainerStyle}>
+      {/* Rest timer row */}
+      {!!restingExerciseId && typeOfView === "workout" && (
+        <CorruptRestTimer size={CORRUPT_BUTTON_HEIGHT} />
+      )}
 
-      {/* Label under button in home mode if activeSession exists */}
-      {typeOfView === "home" && activeSession && (
-        <Text
+      {/* Main button */}
+      <Animated.View style={animatedButtonStyle}>
+        <IButton
+          onPress={handleCorruptPress}
           style={{
-            marginTop: 6,
-            color: theme.text,
-            fontSize: 14,
-            fontWeight: "500",
+            height: CORRUPT_BUTTON_HEIGHT,
+            borderRadius: CORRUPT_BUTTON_HEIGHT / 2,
+            backgroundColor,
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent:
+              !!restingExerciseId && typeOfView === "workout"
+                ? "center"
+                : "space-between",
+            paddingHorizontal: 16,
           }}
         >
-          On Going Workout:{" "}
-          <SessionTimer
-            textStyle={{ fontSize: 14, fontWeight: "500", color: theme.text }}
-          />
-        </Text>
-      )}
+          {typeOfView !== "workout" ? (
+            <CorruptTittle style={{ color: theme.border, fontSize: 22 }} />
+          ) : !restingExerciseId ? (
+            <SessionTimer />
+          ) : null}
+
+          <Ionicons name="chevron-forward" size={34} color={theme.border} />
+        </IButton>
+      </Animated.View>
     </Animated.View>
   );
 }

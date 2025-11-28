@@ -49,22 +49,13 @@ export function StrobeButton({
       style={[
         {
           opacity: rest.disabled ? 0.8 : 1,
+          overflow: "hidden",
         },
         style,
       ]}
       {...rest}
     >
-      <Animated.View
-        entering={FadeIn}
-        exiting={FadeOut}
-        style={[
-          {
-            overflow: "hidden",
-            opacity: rest.disabled ? 0.6 : 1,
-          },
-          style,
-        ]}
-      >
+      <Animated.View entering={FadeIn} exiting={FadeOut}>
         <StrobeBlur
           colors={colors}
           style={{ width: "100%", height: "100%", ...contentContainerStyle }}

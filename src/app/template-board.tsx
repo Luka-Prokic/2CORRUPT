@@ -10,9 +10,9 @@ import { useWorkoutStore } from "../stores/workout";
 import { TemplateExerciseList } from "../components/board-template/sheets/exercises/TemplateExerciseList";
 import { CreateTemplateBoard } from "../components/board-template/CreateTemplateBoard";
 import { TemplateSheet } from "../components/board-template/sheets/template/TemplateSheet";
-import { ExerciseProfile } from "../components/board-workout/profile/ExerciseProfile";
 import { RestTimerSheet } from "../components/board-workout/sheets/rest/RestTimerSheet";
 import { ExerciseNameSheet } from "../components/board-workout/sheets/name/ExerciseNameSheet";
+import { TemplateExerciseProfile } from "../components/board-template/TemplateExerciseProfile";
 
 export type TemplateSheetType = "exercises" | "rest" | "name" | "template";
 
@@ -54,16 +54,11 @@ export default function TemplateBoard() {
         <DashBoard
           listOpen={listOpen}
           togglePanel={togglePanel}
-          colors={[
-            theme.tint,
-            theme.tint,
-            theme.tint,
-            theme.tint,
-          ]}
+          tint={theme.tint}
           disabled={!activeTemplate?.layout.length && !listOpen}
           upperSection={
             activeExercise ? (
-              <ExerciseProfile
+              <TemplateExerciseProfile
                 openPanel={() => setListOpen(true)}
                 setListType={setListType}
               />

@@ -17,6 +17,7 @@ import { DropSetRow } from "./DropSetRow";
 import { NumericInput } from "../set-inputs/NumericInput";
 import { InputRPE } from "../set-inputs/InputRPE";
 import { InputRIR } from "../set-inputs/InputRIR";
+import Animated, { FadeOut } from "react-native-reanimated";
 
 export type SetColumns = ExerciseColumns | "Set" | "Done";
 interface SetRowProps {
@@ -72,7 +73,10 @@ export function SetRow({ set, setIndex }: SetRowProps) {
         tint={set.isCompleted ? "light" : "auto"}
         style={{ width: WIDTH, height: 66 }}
       >
-        <View style={{ flexDirection: "row", width: WIDTH, height: 66 }}>
+        <Animated.View
+          exiting={FadeOut}
+          style={{ flexDirection: "row", width: WIDTH, height: 66 }}
+        >
           {columns.map((column: SetColumns, index: number) => (
             <View
               key={`${column}-${index}-${activeExercise?.exerciseInfoId}`}
@@ -86,7 +90,7 @@ export function SetRow({ set, setIndex }: SetRowProps) {
               {input(column)}
             </View>
           ))}
-        </View>
+        </Animated.View>
       </StrobeBlur>
 
       {/* Drop Sets */}

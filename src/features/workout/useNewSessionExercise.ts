@@ -17,7 +17,7 @@ export function createSessionExercise(exercise: ExerciseInfo): SessionExercise {
     sets: [EmptySet],
     columns: exercise.equipment?.includes("bodyweight")
       ? ["Reps"]
-      : ["Reps", "Weight"], 
+      : ["Reps", "Weight"],
+    restTime: 180, // TODO: Add in settings users preference for rest time
   };
 }
-

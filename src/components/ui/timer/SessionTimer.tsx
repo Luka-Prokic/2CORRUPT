@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Text, AppState, TextStyle } from "react-native";
-import { useWorkoutStore } from "../../stores/workoutStore";
-import { useSettingsStore } from "../../stores/settingsStore";
+import { useWorkoutStore } from "../../../stores/workoutStore";
+import { useSettingsStore } from "../../../stores/settingsStore";
 
 interface SessionTimerProps {
   textStyle?: TextStyle | TextStyle[];

@@ -1,4 +1,4 @@
-import { TouchableOpacity } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useSettingsStore } from "../../../../stores/settingsStore";
 import { useWorkoutStore } from "../../../../stores/workoutStore";
@@ -11,11 +11,50 @@ interface DoneInputProps {
 
 export function DoneInput({ set, disabled }: DoneInputProps) {
   const { theme } = useSettingsStore();
-  const { updateSetInActiveExercise, activeTemplate } = useWorkoutStore();
+  const {
+    updateSetInActiveExercise,
+    activeTemplate,
+    activeExercise,
+    restingExerciseId,
+    startRest,
+  } = useWorkoutStore();
 
-  const handleToggleComplete = () => {
-    updateSetInActiveExercise(set.id, { isCompleted: !set.isCompleted });
+  const handlePress = () => {
+    if (activeExercise.noRest)
+      updateSetInActiveExercise(set.id, { isCompleted: !set.isCompleted });
+    else startRest(activeExercise.id, set.id, activeExercise.restTime ?? 0);
   };
+
+  if (set.restSeconds > 0)
+    return (
+      <View
+        style={{
+          alignItems: "center",
+          justifyContent: "center",
+          width: 44,
+          height: 44,
+        }}
+      >
+        <Ionicons name={"ellipse"} size={44} color={theme.text} />
+        <Text
+          style={{
+            fontSize: 14,
+            fontWeight: "bold",
+            color: theme.background,
+            position: "absolute",
+            textAlign: "center",
+            width: 44,
+          }}
+          adjustsFontSizeToFit
+          minimumFontScale={0.5} // smaller scale if needed
+          numberOfLines={1}
+          allowFontScaling={false}
+        >
+          {set.restSeconds?.toString() ?? "0"}s
+        </Text>
+      </View>
+    );
+
   return (
     <TouchableOpacity
       style={{
@@ -24,8 +63,10 @@ export function DoneInput({ set, disabled }: DoneInputProps) {
         width: 44,
         height: 44,
       }}
-      onPress={handleToggleComplete}
-      disabled={set.isCompleted || !!activeTemplate || disabled}
+      onPress={handlePress}
+      disabled={
+        set.isCompleted || !!activeTemplate || disabled || !!restingExerciseId
+      }
     >
       <Ionicons
         name={set.isCompleted ? "checkmark-circle" : "ellipse-outline"}
@@ -33,7 +74,7 @@ export function DoneInput({ set, disabled }: DoneInputProps) {
         color={
           set.isCompleted
             ? theme.text
-            : activeTemplate || disabled
+            : !!activeTemplate || disabled || !!restingExerciseId
             ? theme.handle
             : theme.grayText
         }
