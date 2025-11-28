@@ -6,7 +6,7 @@ import { CreateTemplateButton } from "../components/templates/header/CreateTempl
 import { HeaderTemplatesToggle } from "../components/templates/header/HeaderTemplatesToggle";
 import { FlatList } from "react-native-gesture-handler";
 import { useWorkoutStore, WorkoutTemplate } from "../stores/workout";
-import { TemplateSelectCard } from "../components/templates/TemplateSelectCard";
+import { TemplateSelectCard } from "../components/templates/cards/TemplateSelectCard";
 import { SelectAllTemplatesButton } from "../components/templates/header/SelectAllTemplatesButton";
 import { Text } from "react-native";
 import { useSettingsStore } from "../stores/settings";

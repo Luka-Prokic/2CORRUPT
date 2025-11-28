@@ -10,8 +10,8 @@ import {
   TextStyle,
 } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
-import { useSettingsStore } from "../../stores/settingsStore";
-import { useSideheadAnim } from "../../animations/useSideheadAnim";
+import { useSettingsStore } from "../../../stores/settingsStore";
+import { useSideheadAnim } from "../../../animations/useSideheadAnim";
 
 interface FilterFlatSliderProps {
   title?: string;

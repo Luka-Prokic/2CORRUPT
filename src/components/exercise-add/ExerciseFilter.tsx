@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { SearchBar } from "../ui/input/SearchBar";
-import { FilterFlatList } from "../ui/FilterFlatList";
+import { FilterFlatList } from "../ui/sliders/FilterFlatList";
 import { WIDTH } from "../../features/Dimensions";
 import { useSettingsStore } from "../../stores/settingsStore";
 import { useTranslation } from "react-i18next";

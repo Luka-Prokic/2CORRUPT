@@ -3,7 +3,7 @@ import { forwardRef } from "react";
 import { TemplateBottomSheetViews } from "./TemplateBottomSheet";
 import { WorkoutTemplate, useWorkoutStore } from "../../../stores/workout";
 import { Text } from "react-native";
-import { CardSlider } from "../../ui/CardSlider";
+import { CardSlider } from "../../ui/sliders/CardSlider";
 import { HEIGHT, WIDTH } from "../../../features/Dimensions";
 import { ActiveSessionAlert } from "../../ui/alerts/ActiveSessionAlert";
 import { TwoOptionStrobeButtons } from "../../ui/buttons/TwoOptionStrobeButtons";

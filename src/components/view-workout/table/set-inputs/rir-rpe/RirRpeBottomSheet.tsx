@@ -7,7 +7,7 @@ import {
 import { View, Text, TouchableOpacity } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useSettingsStore } from "../../../../../stores/settings";
-import { CenterCardSlider } from "../../../../ui/CenterCardSlider";
+import { CenterCardSlider } from "../../../../ui/sliders/CenterCardSlider";
 import { useWorkoutStore } from "../../../../../stores/workoutStore";
 import * as Haptics from "expo-haptics";
 import { Set } from "../../../../../stores/workout/types";

@@ -6,7 +6,7 @@ import { useWorkoutStore } from "../../../../stores/workout";
 import { router } from "expo-router";
 import { useWidgetUnit } from "../../../../features/widgets/useWidgetUnit";
 import { TemplateCard } from "./cards/TemplateCard";
-import { CardSlider } from "../../../ui/CardSlider";
+import { CardSlider } from "../../../ui/sliders/CardSlider";
 import { TemplatesHeader } from "./TemplatesHeader";
 import { EmptyTemplateCard } from "./EmptyTemplateCard";
 import { TemplatesFooter } from "./TemplatesFooter";

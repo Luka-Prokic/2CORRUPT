@@ -1,7 +1,7 @@
 import { useSessionsByDateRange } from "../../features/workout";
 import { useTranslation } from "react-i18next";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
-import { CardSlider } from "../ui/CardSlider";
+import { CardSlider } from "../ui/sliders/CardSlider";
 import { WIDTH } from "../../features/Dimensions";
 import { useWidgetUnit } from "../../features/widgets/useWidgetUnit";
 import { SpiderSessionCard } from "../sessions/cards/SpiderSessionCard";

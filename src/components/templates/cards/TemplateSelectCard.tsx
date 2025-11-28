@@ -1,11 +1,11 @@
-import { WorkoutTemplate } from "../../stores/workout";
+import { WorkoutTemplate } from "../../../stores/workout";
 import { Text, TouchableOpacity } from "react-native";
-import { useSettingsStore } from "../../stores/settingsStore";
+import { useSettingsStore } from "../../../stores/settingsStore";
 import { Fragment, useCallback, useRef } from "react";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
-import { useWidgetUnit } from "../../features/widgets/useWidgetUnit";
-import { TemplateBottomSheet } from "./template-options/TemplateBottomSheet";
-import { AddToSplitBottomSheet } from "./split-options/AddToSplitBottomSheet";
+import { useWidgetUnit } from "../../../features/widgets/useWidgetUnit";
+import { TemplateBottomSheet } from "../template-options/TemplateBottomSheet";
+import { AddToSplitBottomSheet } from "../split-options/AddToSplitBottomSheet";
 import { useTranslation } from "react-i18next";
 
 interface TemplateSelectCardProps {

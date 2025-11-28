@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 import { View, ViewStyle } from "react-native";
 import { WorkoutTemplate } from "../../stores/workout/types";
 import { SearchBar } from "../ui/input/SearchBar";
-import { FilterFlatList } from "../ui/FilterFlatList";
+import { FilterFlatList } from "../ui/sliders/FilterFlatList";
 import { WIDTH } from "../../features/Dimensions";
 import { useSettingsStore } from "../../stores/settingsStore";
 import { useFilterTemplates } from "../../features/workout/useFilterTemplates";

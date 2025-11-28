@@ -6,7 +6,7 @@ import { SearchBar } from "../../ui/input/SearchBar";
 import { useWorkoutStore } from "../../../stores/workout/useWorkoutStore";
 import { useFilterTemplates } from "../../../features/workout/useFilterTemplates";
 import { useSettingsStore } from "../../../stores/settingsStore";
-import { FilterFlatList } from "../../ui/FilterFlatList";
+import { FilterFlatList } from "../../ui/sliders/FilterFlatList";
 import * as Haptics from "expo-haptics";
 import { WIDTH } from "../../../features/Dimensions";
 

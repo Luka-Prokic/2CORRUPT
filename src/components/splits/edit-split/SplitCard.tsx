@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import { Text, Switch, View, TouchableOpacity } from "react-native";
 import Animated, { FadeOut, FadeIn } from "react-native-reanimated";
 import { useSettingsStore } from "../../../stores/settings";
@@ -7,7 +7,7 @@ import { useWorkoutStore } from "../../../stores/workout";
 import { StrobeButton } from "../../ui/buttons/StrobeButton";
 import { router } from "expo-router";
 import type { SplitPlan } from "../../../stores/workout";
-import { CenterCardSlider } from "../../ui/CenterCardSlider";
+import { CenterCardSlider } from "../../ui/sliders/CenterCardSlider";
 import { useTranslation } from "react-i18next";
 import { StartDayCard } from "./StartDayCard";
 import { EmptyDayCard } from "./EmpyDayCad";

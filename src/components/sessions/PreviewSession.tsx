@@ -1,5 +1,5 @@
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
-import { CardSlider } from "../ui/CardSlider";
+import { CardSlider } from "../ui/sliders/CardSlider";
 import { HEIGHT } from "../../features/Dimensions";
 import { SessionName } from "../board-workout/sheets/session/SessionName";
 import { useSettingsStore } from "../../stores/settings";
@@ -9,7 +9,7 @@ import { WorkoutSession } from "../../stores/workout/types";
 import { Text, ViewStyle } from "react-native";
 import { useWidgetUnit } from "../../features/widgets/useWidgetUnit";
 
-interface PreviewSessionProps {
+interface PreviewSessionProps { 
   session: WorkoutSession;
   style?: ViewStyle | ViewStyle[];
   hideSessionName?: boolean;

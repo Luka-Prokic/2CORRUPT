@@ -3,7 +3,7 @@ import { SplitPlan, SplitPlanDay } from "../../../stores/workout";
 import { AddSplitDayCard } from "./AddSplitDayCard";
 import { useWidgetUnit } from "../../../features/widgets/useWidgetUnit";
 import { SplitDayCard } from "./split-day-card/SplitDayCard";
-import { CardSlider } from "../../ui/CardSlider";
+import { CardSlider } from "../../ui/sliders/CardSlider";
 
 interface SplitDayListProps {
   split: SplitPlan;

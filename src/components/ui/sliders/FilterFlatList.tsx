@@ -1,6 +1,6 @@
 import { FlatList, Pressable, Text, View, ViewStyle } from "react-native";
 import { useRef, useState, memo } from "react";
-import { useSettingsStore } from "../../stores/settingsStore";
+import { useSettingsStore } from "../../../stores/settingsStore";
 
 interface FilterFlatListProps {
   title?: string;

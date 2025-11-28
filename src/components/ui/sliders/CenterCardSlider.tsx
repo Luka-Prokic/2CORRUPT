@@ -1,5 +1,4 @@
 import React, {
-  Fragment,
   useRef,
   useState,
   useEffect,
@@ -11,57 +10,71 @@ import {
   FlatListProps,
   View,
   ViewStyle,
-  Animated,
+  Animated as RNAnimated,
+  TextStyle,
 } from "react-native";
-import { useSettingsStore } from "../../stores/settings";
+import { useSettingsStore } from "../../../stores/settings";
+import Animated, { BounceIn } from "react-native-reanimated";
+import { WIDTH } from "../../../features/Dimensions";
 
-const AnimatedFlatList = Animated.createAnimatedComponent(
+const AnimatedFlatList = RNAnimated.createAnimatedComponent(
   FlatList
 ) as unknown as typeof FlatList;
 
-interface CardSliderProps<T> extends Omit<FlatListProps<T>, "renderItem"> {
+interface CenterCardSliderProps<T>
+  extends Omit<FlatListProps<T>, "renderItem"> {
   card: ({ item, index }: { item: T; index?: number }) => ReactNode;
-  cardWidth: number;
-  cardHeight: number;
+  cardWidth?: number;
+  cardHeight?: number;
+  sliderWidth?: number;
   hideDots?: boolean;
   styleSlider?: ViewStyle | ViewStyle[];
   styleDots?: ViewStyle | ViewStyle[];
+  distanceBubbleStyle?: TextStyle | TextStyle[];
   emptyCard?: ReactElement;
   firstCard?: ReactElement;
   lastCard?: ReactElement;
   firstDot?: ReactNode;
   lastDot?: ReactNode;
-  maxDotsShown?: number; // 🆕 new prop
+  maxDotsShown?: number;
   showDotsTop?: boolean;
   selectedIndex?: number;
   onSelect?: (index: number) => void;
+  selectedCardIndex?: number;
+  showDistanceBubble?: boolean;
+  distanceTolerance?: number;
 }
 
-export function CardSlider<T>({
+export function CenterCardSlider<T>({
   data,
   card,
   keyExtractor,
-  cardWidth,
-  cardHeight,
+  cardWidth = 100,
+  cardHeight = 100,
+  sliderWidth = WIDTH - 32,
   hideDots = false,
   styleSlider,
   styleDots,
+  distanceBubbleStyle,
   emptyCard,
-  firstCard, // 🆕
-  lastCard, // 🆕
-  firstDot, // 🆕
-  lastDot, // 🆕
-  maxDotsShown = 5, // 🆕
+  firstCard,
+  lastCard,
+  firstDot,
+  lastDot,
+  maxDotsShown = 5,
   showDotsTop = false,
   selectedIndex = 0,
   onSelect,
+  selectedCardIndex = 0,
+  showDistanceBubble = false,
+  distanceTolerance = 0,
   ...flatListProps
-}: CardSliderProps<T>) {
+}: CenterCardSliderProps<T>) {
   const { theme } = useSettingsStore();
-  const scrollX = useRef(new Animated.Value(0)).current;
+  const scrollX = useRef(new RNAnimated.Value(0)).current;
   const [currentIndex, setCurrentIndex] = useState(selectedIndex);
 
-  // ✅ Include firstCard and lastCard cleanly in the data
+  // Include firstCard and lastCard cleanly in the data
   const fullData: (string | T)[] = [
     ...(firstCard ? ["first"] : []),
     ...(data ? Array.from(data) : []),
@@ -71,12 +84,17 @@ export function CardSlider<T>({
   const defaultKeyExtractor = (item: any, index: number) =>
     item.id ? `${item.id}-${index}` : `${index}`;
 
-  const onScroll = Animated.event(
+  // Calculate spacing to show 3 cards with center card perfectly centered
+  const horizontalPadding = (sliderWidth - cardWidth) / 2;
+
+  const onScroll = RNAnimated.event(
     [{ nativeEvent: { contentOffset: { x: scrollX } } }],
     {
       useNativeDriver: true,
       listener: (event: any) => {
         const offsetX = event.nativeEvent.contentOffset.x;
+        // With snapToAlignment="center", calculate which card is centered
+        // The centered card is at: offsetX / cardWidth (rounded)
         const newIndex = Math.round(offsetX / cardWidth);
         if (
           newIndex !== currentIndex &&
@@ -91,7 +109,7 @@ export function CardSlider<T>({
   );
 
   return (
-    <Fragment>
+    <View style={{ position: "relative" }}>
       {showDotsTop && fullData.length > 1 && (
         <ScrollableDots
           dataLength={fullData.length}
@@ -108,28 +126,32 @@ export function CardSlider<T>({
         data={fullData}
         renderItem={({ item, index }) => {
           if (item === "first" && firstCard) {
-            return renderCard({
+            return renderCenterCard({
               scrollX,
               index,
               content: firstCard,
               width: cardWidth,
               height: cardHeight,
+              totalItems: fullData.length,
+              horizontalPadding,
             });
           }
 
           if (item === "last" && lastCard) {
-            return renderCard({
+            return renderCenterCard({
               scrollX,
               index,
               content: lastCard,
               width: cardWidth,
               height: cardHeight,
+              totalItems: fullData.length,
+              horizontalPadding,
             });
           }
 
           const adjustedIndex = firstCard ? index - 1 : index;
 
-          return renderCard({
+          return renderCenterCard({
             scrollX,
             index,
             content: card({
@@ -138,16 +160,22 @@ export function CardSlider<T>({
             }),
             width: cardWidth,
             height: cardHeight,
+            totalItems: fullData.length,
+            horizontalPadding,
           });
         }}
         keyExtractor={keyExtractor || defaultKeyExtractor}
         horizontal
         showsHorizontalScrollIndicator={false}
         snapToInterval={cardWidth}
+        snapToAlignment="center"
         decelerationRate="fast"
         onScroll={onScroll}
         scrollEventThrottle={16}
-        style={styleSlider}
+        contentContainerStyle={{
+          paddingHorizontal: horizontalPadding,
+        }}
+        style={{ width: sliderWidth, ...styleSlider }}
         nestedScrollEnabled
         ListEmptyComponent={emptyCard}
       />
@@ -156,51 +184,81 @@ export function CardSlider<T>({
           dataLength={fullData.length}
           currentIndex={currentIndex}
           theme={theme}
-          style={{ height: 32, ...(Array.isArray(styleDots) ? {} : styleDots) }}
+          style={{
+            height: 32,
+            alignItems: "center",
+            ...(Array.isArray(styleDots) ? {} : styleDots),
+          }}
           firstDot={firstDot}
           lastDot={lastDot}
           maxDotsShown={maxDotsShown}
         />
       )}
-    </Fragment>
+      {/* Distance Bubble Indicator */}
+      {showDistanceBubble && (
+        <DistanceBubble
+          currentIndex={currentIndex}
+          selectedCardIndex={selectedCardIndex}
+          theme={theme}
+          style={distanceBubbleStyle}
+          distanceTolerance={distanceTolerance}
+        />
+      )}
+    </View>
   );
 }
 
-function renderCard({
+function renderCenterCard({
   scrollX,
   index,
   content,
   width,
   height,
 }: {
-  scrollX: Animated.Value;
+  scrollX: RNAnimated.Value;
   index: number;
   content: React.ReactNode;
   width: number;
   height: number;
+  totalItems: number;
+  horizontalPadding: number;
 }) {
-  const inputRange = [(index - 1) * width, index * width, (index + 1) * width];
+  // With snapToAlignment="center", the scrollX represents the offset
+  // When a card is centered, its position relative to scroll is: index * width
+  // The card is centered when scrollX + horizontalPadding positions it at screen center
+  // Input ranges for animations - account for center alignment
+  // We need to handle: left card (index-1), center card (index), right card (index+1)
+  const inputRange = [
+    (index - 2) * width,
+    (index - 1) * width,
+    index * width,
+    (index + 1) * width,
+    (index + 2) * width,
+  ];
 
+  // Opacity: center card = 1, side cards = 0.7, outer cards = 0.5
   const opacity = scrollX.interpolate({
     inputRange,
-    outputRange: [0.8, 1, 0.8],
+    outputRange: [0.7, 0.9, 1, 0.9, 0.7],
     extrapolate: "clamp",
   });
 
+  // Scale: center card = 1, side cards = 0.9, outer cards = 0.85
   const scale = scrollX.interpolate({
     inputRange,
-    outputRange: [0.95, 1, 0.95],
+    outputRange: [0.85, 0.9, 1, 0.9, 0.85],
     extrapolate: "clamp",
   });
 
+  // RotateY: center card = 0deg, side cards = ±15deg, outer cards = ±25deg
   const rotateY = scrollX.interpolate({
     inputRange,
-    outputRange: ["-30deg", "0deg", "30deg"],
+    outputRange: ["-35deg", "-25deg", "0deg", "25deg", "35deg"],
     extrapolate: "clamp",
   });
 
   return (
-    <Animated.View
+    <RNAnimated.View
       style={{
         width,
         height,
@@ -209,12 +267,12 @@ function renderCard({
       }}
     >
       {content}
-    </Animated.View>
+    </RNAnimated.View>
   );
 }
 
 // -------------------------
-// ScrollableDots Component
+// ScrollableDots Component (reused from CardSlider)
 // -------------------------
 interface ScrollableDotsProps {
   dataLength: number;
@@ -223,7 +281,7 @@ interface ScrollableDotsProps {
   style?: ViewStyle | ViewStyle[];
   firstDot?: ReactNode;
   lastDot?: ReactNode;
-  maxDotsShown?: number; // 🆕 new prop
+  maxDotsShown?: number;
 }
 
 const DOT_WIDTH = 6;
@@ -236,7 +294,7 @@ export const ScrollableDots = ({
   style,
   firstDot,
   lastDot,
-  maxDotsShown = 5, // default is 5
+  maxDotsShown = 5,
 }: ScrollableDotsProps) => {
   const flatListRef = useRef<FlatList>(null);
   const totalDots = dataLength;
@@ -317,3 +375,51 @@ export const ScrollableDots = ({
     </View>
   );
 };
+
+function DistanceBubble({
+  currentIndex,
+  selectedCardIndex,
+  theme,
+  style,
+  distanceTolerance = 0,
+}: {
+  currentIndex: number;
+  selectedCardIndex: number;
+  theme: any;
+  style?: TextStyle | TextStyle[];
+  distanceTolerance?: number;
+}) {
+  const distance = Math.abs(currentIndex - selectedCardIndex);
+  if (distance <= distanceTolerance) return null;
+
+  const isRight = currentIndex > selectedCardIndex;
+
+  return (
+    <Animated.Text
+      entering={BounceIn}
+      style={{
+        color: theme.background,
+        fontSize: 14,
+        fontWeight: "600",
+        position: "absolute",
+        top: 22,
+        transform: [{ translateY: -22 }],
+        width: 22,
+        height: 22,
+        borderRadius: 11,
+        backgroundColor: theme.text,
+        textAlign: "center",
+        lineHeight: 22,
+        verticalAlign: "middle",
+        zIndex: 1,
+
+        right: isRight ? undefined : 0,
+        left: isRight ? 0 : undefined,
+
+        ...style,
+      }}
+    >
+      {distance}
+    </Animated.Text>
+  );
+}

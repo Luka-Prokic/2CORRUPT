@@ -3,7 +3,7 @@ import { QuickStartSelect } from "./QuickStartSelect";
 import { CreateTemplateSelect } from "./CreateTemplateSelect";
 import { UIView } from "../ui/UIView";
 import { View } from "react-native";
-import { CORRUPT_BUTTON_HEIGHT_FROM_BOTTOM } from "../corrupt/LegacyCorruptButton";
+import { CORRUPT_BUTTON_HEIGHT_FROM_BOTTOM } from "../corrupt/CorruptButton";
 
 export function StartView() {
   return (

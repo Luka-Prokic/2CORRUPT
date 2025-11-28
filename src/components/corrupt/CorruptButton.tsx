@@ -21,6 +21,9 @@ export const CORRUPT_BUTTON_FROM_BOTTOM = 22;
 export const CORRUPT_BUTTON_HEIGHT = 64;
 const CORRUPT_GAP = 8;
 
+export const CORRUPT_BUTTON_HEIGHT_FROM_BOTTOM =
+  CORRUPT_BUTTON_FROM_BOTTOM + CORRUPT_BUTTON_HEIGHT;
+
 export function CorruptButton() {
   const { theme } = useSettingsStore();
   const { typeOfView } = useUIStore();
