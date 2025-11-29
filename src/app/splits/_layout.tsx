@@ -8,7 +8,6 @@ export default function Layout() {
     <Stack
       screenOptions={{
         title: null,
-        headerBackButtonDisplayMode: "minimal",
         headerTintColor: theme.tint,
         headerTitleStyle: { color: theme.text },
         headerBlurEffect: themeMode,

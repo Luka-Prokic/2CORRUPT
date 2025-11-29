@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { View, ViewStyle, Animated } from "react-native";
+import { View, ViewStyle } from "react-native";
+import Animated from "react-native-reanimated";
 import { Ionicons } from "@expo/vector-icons";
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { OptionButton } from "./OptionButton";
-import { useRotateAnimation } from "../../../animations/useRotateAnimation";
 import { useSmoothHeightAnim } from "../../../animations/useSmoothHeightAnim";
 
 interface DropDownButtonProps {
@@ -25,8 +25,7 @@ export function DropDownButton({
 }: DropDownButtonProps) {
   const { theme } = useSettingsStore();
   const [isExpanded, setIsExpanded] = useState(false);
-  const { rotateStyle } = useRotateAnimation(isExpanded);
-  const { animatedStyle } = useSmoothHeightAnim(isExpanded, snapPoints, 300);
+  const { animatedStyle } = useSmoothHeightAnim({ isExpanded, snapPoints });
 
   const toggleExpanded = () => {
     setIsExpanded(!isExpanded);
@@ -38,12 +37,8 @@ export function DropDownButton({
     <Animated.View
       style={[
         {
-          borderWidth: 1,
-          borderRadius: 8,
           overflow: "hidden",
           height: currentHeight,
-          backgroundColor: theme.background,
-          borderColor: theme.border,
         },
         style,
         animatedStyle,
@@ -58,9 +53,11 @@ export function DropDownButton({
           height={snapPoints[0]}
           style={style}
           icon={
-            <Animated.View style={rotateStyle}>
-              <Ionicons name="chevron-down" size={24} color={theme.text} />
-            </Animated.View>
+            <Ionicons
+              name={isExpanded ? "chevron-up" : "chevron-down"}
+              size={24}
+              color={theme.text}
+            />
           }
         />
       )}

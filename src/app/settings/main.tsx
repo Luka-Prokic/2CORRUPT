@@ -7,6 +7,11 @@ import { useSettingsStore } from "../../stores/settingsStore";
 import { useTranslation } from "react-i18next";
 import { ModalExitButton } from "./../_layout";
 import { ScreenView } from "../../components/ui/containers/ScreenView";
+import { WorkoutButton } from "../../components/settings-app/WorkoutButton";
+import { GoalsButton } from "../../components/settings-app/GoalsButton";
+import { UnitsButton } from "../../components/settings-app/UnitsButton";
+import { IBubble } from "../../components/ui/containers/IBubbleView";
+import { EmptyFooter } from "../../components/ui/containers/EmptyFooter";
 
 export default function SettingsScreen() {
   const { theme } = useSettingsStore();
@@ -20,14 +25,17 @@ export default function SettingsScreen() {
         }}
       />
 
-      <ScreenContent
-        edges={["bottom"]}
-        style={{ backgroundColor: theme.navBackground }}
-      >
+      <ScreenContent style={{ backgroundColor: theme.navBackground }}>
         <ScreenView style={{ gap: 16, paddingHorizontal: 16 }}>
+          <IBubble height={192}>
+            <WorkoutButton />
+            <GoalsButton />
+            <UnitsButton />
+          </IBubble>
           <ThemeSettings />
 
           <LanguageSettings />
+          <EmptyFooter />
         </ScreenView>
       </ScreenContent>
     </Fragment>

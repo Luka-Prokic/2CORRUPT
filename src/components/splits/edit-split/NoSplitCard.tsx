@@ -95,7 +95,7 @@ export function NoSplitCard() {
         {isActive && (
           <Ionicons
             name={expanded ? "chevron-up" : "chevron-down"}
-            size={28}
+            size={32}
             color={isActive ? theme.text : theme.grayText}
             style={{
               position: "absolute",

@@ -108,7 +108,10 @@
     "settings": "Podešavanja",
     "addExercise": "Dodaj Vežbu",
     "swapExercise": "Zameni Vežbu",
-    "templates": "Šabloni"
+    "templates": "Šabloni",
+    "workout": "Trening",
+    "goals": "Ciljevi",
+    "units": "Jedinice"
   },
   "theme": {
     "dark": "Tamna",
@@ -129,7 +132,13 @@
     "change-language": "Promeni jezik",
     "choose-language": "Izaberi jezik",
     "label-app-settings": "App",
-    "choose-theme": "Izaberi temu"
+    "choose-theme": "Izaberi temu",
+    "workout": "Trening",
+    "workout-info": "Podesi podešavanja treninga.",
+    "goals": "Ciljevi",
+    "goals-info": "Podesi podešavanja ciljeva.",
+    "units": "Jedinice",
+    "units-info": "Podesi podešavanja jedinica."
   },
   "greeting": {
     "morning": "Dobro jutro",

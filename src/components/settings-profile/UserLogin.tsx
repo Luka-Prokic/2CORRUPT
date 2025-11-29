@@ -1,12 +1,11 @@
-import { useState } from "react";
-import { View, Text, Alert } from "react-native";
+import { useState, useRef } from "react";
+import { View, Text, Alert, TextInput } from "react-native";
 import { useSettingsStore } from "../../stores/settingsStore";
 import { Input } from "../ui/input/Input";
 import { BounceButton } from "../ui/buttons/BounceButton";
 import { TextButton } from "../ui/buttons/TextButton";
 import { useTranslation } from "react-i18next";
 import { CorruptTittle } from "../corrupt/CorruptTittle";
-import { useKeyboardHeight } from "../../features/ui/useKeyboardHeight";
 import { BackgroundText } from "../ui/text/BackgroundText";
 import { WIDTH } from "../../features/Dimensions";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
@@ -26,20 +25,23 @@ export function UserLogin({
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { t } = useTranslation();
-  const keyboardHeight = useKeyboardHeight();
+
+  // 👇 ref for second input
+  const passwordRef = useRef<TextInput>(null);
 
   const handleLogin = async () => {
     setIsLoading(true);
+
     if (!email || !password) {
       Alert.alert("Error", "Please fill in all fields");
       setIsLoading(false);
       return;
     }
 
-    setIsLoading(true);
     try {
       console.log("Login attempt:", { email, password });
 
+      // Fake login delay
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
       Alert.alert("Success", "Login successful!");
@@ -84,12 +86,8 @@ export function UserLogin({
         {t("auth-form.signInToAccount")}
       </Text>
 
-      <View
-        style={{
-          gap: 16,
-          marginBottom: keyboardHeight,
-        }}
-      >
+      <View style={{ gap: 16 }}>
+        {/* EMAIL INPUT */}
         <Input
           placeholder={t("auth-form.email")}
           value={email}
@@ -98,9 +96,15 @@ export function UserLogin({
           autoCapitalize="none"
           autoCorrect={false}
           icon="mail-outline"
+          // 👇 ENTER moves to password input
+          returnKeyType="next"
+          blurOnSubmit={false}
+          onSubmitEditing={() => passwordRef.current?.focus()}
         />
 
+        {/* PASSWORD INPUT */}
         <Input
+          ref={passwordRef} // 👈 attach ref
           placeholder={t("auth-form.password")}
           value={password}
           onChangeText={setPassword}
@@ -111,8 +115,12 @@ export function UserLogin({
           showPasswordToggle={true}
           showPassword={showPassword}
           onTogglePassword={() => setShowPassword(!showPassword)}
+          // 👇 Pressing Enter can submit the form
+          returnKeyType="done"
+          onSubmitEditing={handleLogin}
         />
 
+        {/* LOGIN BUTTON */}
         <BounceButton
           title={isLoading ? t("auth-form.signingIn") : t("auth-form.signIn")}
           color={theme.accent}
@@ -126,14 +134,13 @@ export function UserLogin({
           }}
         />
 
+        {/* SWITCH TO REGISTER */}
         <TextButton
           title={`${t("auth-form.dontHaveAccount")} ${t(
             "auth-form.createOne"
           )}...`}
           onPress={onSwitchToRegister}
-          style={{
-            marginTop: 22,
-          }}
+          style={{ marginTop: 22 }}
         />
       </View>
     </Animated.View>

@@ -1,20 +1,32 @@
-import { useEffect, useRef } from "react";
-import { Animated } from "react-native";
+import {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+} from "react-native-reanimated";
+import { useEffect } from "react";
 
-export function useSmoothHeightAnim(isExpanded: boolean, snapPoints: [number, number], duration = 300) {
-  const animatedHeight = useRef(new Animated.Value(snapPoints[0])).current;
+interface UseSmoothHeightAnimProps {
+  isExpanded: boolean;
+  snapPoints: [number, number];
+  duration?: number;
+}
+
+export function useSmoothHeightAnim({
+  isExpanded,
+  snapPoints,
+  duration = 300,
+}: UseSmoothHeightAnimProps) {
+  const height = useSharedValue(snapPoints[0]);
 
   useEffect(() => {
-    Animated.timing(animatedHeight, {
-      toValue: isExpanded ? snapPoints[1] : snapPoints[0],
+    height.value = withTiming(isExpanded ? snapPoints[1] : snapPoints[0], {
       duration,
-      useNativeDriver: false, // height animation must be false
-    }).start();
+    });
   }, [isExpanded, snapPoints, duration]);
 
-  const animatedStyle = {
-    height: animatedHeight,
-  };
+  const animatedStyle = useAnimatedStyle(() => ({
+    height: height.value,
+  }));
 
-  return { animatedStyle };
+  return { animatedStyle, height };
 }

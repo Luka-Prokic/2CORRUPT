@@ -47,10 +47,7 @@ export default function SplitEditScreen() {
       <ScreenContent>
         <ScreenView>
           <SplitHeader split={split} />
-          <SplitDayList
-            split={split}
-            isGridView={isGridView}
-          />
+          <SplitDayList split={split} isGridView={isGridView} />
           <SplitFooter split={split} />
           <EmptyFooter />
         </ScreenView>

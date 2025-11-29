@@ -1,13 +1,14 @@
-import { create } from 'zustand';
-import { SettingsStore } from './types';
-import { createThemeSlice } from './slices/themeSlice';
-import { createLanguageSlice } from './slices/languageSlice';
-import { createGeneralSlice } from './slices/generalSlice';
-import { createUnitsSlice } from './slices/unitsSlice';
+import { create } from "zustand";
+import { SettingsStore } from "./types";
+import { createThemeSlice } from "./slices/themeSlice";
+import { createGeneralSlice } from "./slices/generalSlice";
+import { createUnitsSlice } from "./slices/unitsSlice";
 
-export const useSettingsStore = create<SettingsStore>()((...a) => ({
-  ...createThemeSlice(...a),
-  ...createLanguageSlice(...a),
-  ...createGeneralSlice(...a),
-  ...createUnitsSlice(...a),
-}) as SettingsStore);
+export const useSettingsStore = create<SettingsStore>()(
+  (...a) =>
+    ({
+      ...createThemeSlice(...a),
+      ...createGeneralSlice(...a),
+      ...createUnitsSlice(...a),
+    } as SettingsStore)
+);

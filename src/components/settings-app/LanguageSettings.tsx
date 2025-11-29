@@ -1,43 +1,52 @@
-import { useSettingsStore } from "../../stores/settingsStore";
 import { useTranslation } from "react-i18next";
-import { i18n, LANGUAGES_COUNT, languageArray } from "../../config/i18n";
-import { DropDownButton } from "../ui/buttons/DropDownButton";
-import { OptionButton } from "../ui/buttons/OptionButton";
+import { LANGUAGES_COUNT, languageArray } from "../../config/i18n";
+import { ExpandableBubble } from "../ui/containers/ExpendableBubble";
+import { FlatList } from "react-native-gesture-handler";
 import { hexToRGBA } from "../../features/HEXtoRGB";
-import { IList } from "../ui/containers/IList";
-import { Ionicons } from "@expo/vector-icons";
-import { Fragment } from "react";
+import { useSettingsStore } from "../../stores/settingsStore";
+import i18n from "i18next";
+import { MidText } from "../ui/text/MidText";
+import { StrobeOptionButton } from "../ui/buttons/StrobeOptionButton";
 
 export function LanguageSettings() {
-  const { theme } = useSettingsStore();
   const { t } = useTranslation();
 
   return (
-    <IList label={t("settings.choose-language")}>
-      <DropDownButton
-        snapPoints={[44, 44 + 44 * LANGUAGES_COUNT]}
-        initialText={
-          i18n.language === "en" ? t("language.english") : t("language.serbian")
-        }
-        expandedText={t("settings.choose-language")}
-        style={{ backgroundColor: theme.secondaryBackground }}
-      >
-        {languageArray.map((item: any, index: number) => (
-          <OptionButton
-            key={index}
-            title={t(`language.${item.code === "en" ? "english" : "serbian"}`)}
-            onPress={item.onPress}
-            height={44}
-            style={
-              i18n.language === item.code
-                ? { backgroundColor: hexToRGBA(theme.text, 0.1) }
-                : {}
-            }
-            color={item.code === i18n.language ? theme.tint : theme.text}
-            icon={<Fragment />}
-          />
-        ))}
-      </DropDownButton>
-    </IList>
+    <ExpandableBubble
+      expandedHeight={64 + 44 * LANGUAGES_COUNT}
+      expendedChildren={<LanguageOptions />}
+    >
+      <MidText
+        text={t(`settings.choose-language`)}
+        style={{
+          lineHeight: 64,
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+        }}
+      />
+    </ExpandableBubble>
+  );
+}
+
+function LanguageOptions() {
+  const { theme } = useSettingsStore();
+  const { t } = useTranslation();
+  return (
+    <FlatList
+      data={languageArray}
+      scrollEnabled={false}
+      style={{ width: "100%", paddingTop: 64 }}
+      renderItem={({ item, index }) => (
+        <StrobeOptionButton
+          key={index}
+          title={t(`language.${item.title.toLowerCase()}`)}
+          onPress={item.onPress}
+          height={44}
+          strobeDisabled={i18n.language !== item.code}
+        />
+      )}
+    />
   );
 }

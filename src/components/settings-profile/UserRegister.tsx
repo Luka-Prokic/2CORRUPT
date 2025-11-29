@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { View, Text, Alert } from "react-native";
+import { useState, useRef } from "react";
+import { View, Text, Alert, TextInput } from "react-native";
 import { useSettingsStore } from "../../stores/settingsStore";
 import { Input } from "../ui/input/Input";
 import { BounceButton } from "../ui/buttons/BounceButton";
@@ -19,6 +19,7 @@ export function UserRegister({
 }: UserRegisterProps) {
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -26,8 +27,14 @@ export function UserRegister({
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  // 👇 refs for sequential focusing
+  const emailRef = useRef<TextInput>(null);
+  const passwordRef = useRef<TextInput>(null);
+  const confirmPasswordRef = useRef<TextInput>(null);
+
   const handleRegister = async () => {
     setIsLoading(true);
+
     if (!name || !email || !password || !confirmPassword) {
       Alert.alert("Error", "Please fill in all fields");
       setIsLoading(false);
@@ -47,10 +54,8 @@ export function UserRegister({
     }
 
     try {
-      // TODO: Implement actual registration logic
       console.log("Registration attempt:", { name, email, password });
 
-      // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
       Alert.alert("Success", "Account created successfully!");
@@ -81,6 +86,7 @@ export function UserRegister({
       >
         {t("dialog.lets-get-started")}.
       </Text>
+
       <Text
         style={{
           color: theme.grayText,
@@ -92,11 +98,8 @@ export function UserRegister({
         {t("auth-form.signUpToGetStarted")}
       </Text>
 
-      <View
-        style={{
-          gap: 20,
-        }}
-      >
+      <View style={{ gap: 20 }}>
+        {/* NAME */}
         <Input
           placeholder={t("form.name")}
           value={name}
@@ -104,9 +107,14 @@ export function UserRegister({
           autoCapitalize="words"
           autoCorrect={false}
           icon="person-outline"
+          returnKeyType="next"
+          blurOnSubmit={false}
+          onSubmitEditing={() => emailRef.current?.focus()}
         />
 
+        {/* EMAIL */}
         <Input
+          ref={emailRef}
           placeholder={t("form.email")}
           value={email}
           onChangeText={setEmail}
@@ -114,9 +122,14 @@ export function UserRegister({
           autoCapitalize="none"
           autoCorrect={false}
           icon="mail-outline"
+          returnKeyType="next"
+          blurOnSubmit={false}
+          onSubmitEditing={() => passwordRef.current?.focus()}
         />
 
+        {/* PASSWORD */}
         <Input
+          ref={passwordRef}
           placeholder={t("auth-form.password")}
           value={password}
           onChangeText={setPassword}
@@ -127,8 +140,27 @@ export function UserRegister({
           showPasswordToggle={true}
           showPassword={showPassword}
           onTogglePassword={() => setShowPassword(!showPassword)}
+          returnKeyType="done"
+          blurOnSubmit={false}
+          onSubmitEditing={handleRegister}
+          // onSubmitEditing={() => confirmPasswordRef.current?.focus()}
         />
 
+        {/* CONFIRM PASSWORD */}
+        {/* <Input
+          ref={confirmPasswordRef}
+          placeholder={t("auth-form.confirmPassword")}
+          value={confirmPassword}
+          onChangeText={setConfirmPassword}
+          secureTextEntry={!showPassword}
+          autoCapitalize="none"
+          autoCorrect={false}
+          icon="lock-closed-outline"
+          returnKeyType="done"
+          onSubmitEditing={handleRegister}
+        /> */}
+
+        {/* BUTTON */}
         <BounceButton
           title={
             isLoading
@@ -151,9 +183,7 @@ export function UserRegister({
         <TextButton
           title={`${t("auth-form.haveAccount")} ${t("auth-form.signIn")}...`}
           onPress={onSwitchToLogin}
-          style={{
-            marginTop: 22,
-          }}
+          style={{ marginTop: 22 }}
         />
       </View>
     </Animated.View>

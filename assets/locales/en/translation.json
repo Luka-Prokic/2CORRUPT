@@ -107,7 +107,10 @@
     "settings": "Settings",
     "addExercise": "Add Exercise",
     "swapExercise": "Swap Exercise",
-    "templates": "Templates"
+    "templates": "Templates",
+    "workout": "Workout",
+    "goals": "Goals",
+    "units": "Units"
   },
   "theme": {
     "dark": "Dark",
@@ -128,7 +131,13 @@
     "change-language": "Change language",
     "choose-language": "Choose language",
     "label-app-settings": "App",
-    "choose-theme": "Choose theme"
+    "choose-theme": "Choose theme",
+    "workout": "Workout",
+    "workout-info": "Adjust your session settings.",
+    "goals": "Goals",
+    "goals-info": "Adjust your goals settings.",
+    "units": "Units",
+    "units-info": "Adjust your units settings."
   },
   "greeting": {
     "morning": "Good morning",

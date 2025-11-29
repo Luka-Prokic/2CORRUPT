@@ -1,12 +1,34 @@
-import { useSettingsStore } from "../../stores/settingsStore";
+import { themeOrder, useSettingsStore } from "../../stores/settingsStore";
 import { useTranslation } from "react-i18next";
 import { Themes } from "../../config/constants/Colors";
-import { DropDownButton } from "../ui/buttons/DropDownButton";
-import { OptionButton } from "../ui/buttons/OptionButton";
 import { hexToRGBA } from "../../features/HEXtoRGB";
-import { IList } from "../ui/containers/IList";
+import { ExpandableBubble } from "../ui/containers/ExpendableBubble";
+import { MidText } from "../ui/text/MidText";
+import { FlatList } from "react-native-gesture-handler";
+import { StrobeOptionButton } from "../ui/buttons/StrobeOptionButton";
 
 export function ThemeSettings() {
+  const { t } = useTranslation();
+  return (
+    <ExpandableBubble
+      expandedHeight={64 + 44 * themeOrder.length}
+      expendedChildren={<ThemeOptions />}
+    >
+      <MidText
+        text={t(`settings.choose-theme`)}
+        style={{
+          lineHeight: 64,
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+        }}
+      />
+    </ExpandableBubble>
+  );
+}
+
+function ThemeOptions() {
   const { themeName, setTheme, theme } = useSettingsStore();
   const { t } = useTranslation();
 
@@ -18,30 +40,26 @@ export function ThemeSettings() {
     { name: "preworkout", displayName: "Preworkout", emoji: "⚡" },
     { name: "Corrupted", displayName: "Corrupted", emoji: "💸" },
   ];
-
   return (
-    <IList label={t("settings.choose-theme")}>
-      <DropDownButton
-        snapPoints={[44, 308]}
-        initialText={t(`theme.${themeName}`)}
-        expandedText={t("settings.choose-theme")}
-        style={{ backgroundColor: theme.secondaryBackground }}
-      >
-        {themeArray.map((item, index: number) => (
-          <OptionButton
-            key={index}
-            title={`${item.emoji} ${t(`theme.${item.name}`)}`}
-            onPress={() => setTheme(item.name)}
-            height={44}
-            style={
-              themeName === item.name
-                ? { backgroundColor: hexToRGBA(theme.text, 0.1) }
-                : {}
-            }
-            color={themeName === item.name ? theme.tint : theme.text}
-          />
-        ))}
-      </DropDownButton>
-    </IList>
+    <FlatList
+      data={themeArray}
+      scrollEnabled={false}
+      style={{ width: "100%", paddingTop: 64 }}
+      renderItem={({ item, index }) => (
+        <StrobeOptionButton
+          key={index}
+          title={`${item.emoji} ${t(`theme.${item.name}`)}`}
+          onPress={() => setTheme(item.name)}
+          height={44}
+          style={{
+            backgroundColor: hexToRGBA(
+              theme.text,
+              themeName === item.name ? 0.1 : 0
+            ),
+          }}
+          strobeDisabled={themeName !== item.name}
+        />
+      )}
+    />
   );
 }

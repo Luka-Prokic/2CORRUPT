@@ -43,7 +43,13 @@ export default function ProfileScreen() {
           headerRight: () => <ModalExitButton />,
         }}
       />
-      <ScreenContent style={{ backgroundColor: theme.background }}>
+      <ScreenContent
+        style={{ backgroundColor: theme.background }}
+        keyboardAvoidingView={{
+          enabled: true,
+          keyboardVerticalOffset: 88,
+        }}
+      >
         <ScreenView>
           {isLogin ? (
             <UserLogin
