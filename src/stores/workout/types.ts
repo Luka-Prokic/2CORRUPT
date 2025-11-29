@@ -37,6 +37,7 @@ export interface Set {
 export interface WorkoutTemplate {
   readonly id: string;
   readonly primeId: string;
+  readonly userId?: string | null;
   name: string;
   description?: string;
   version: number;
@@ -105,6 +106,7 @@ export interface SplitPlanDay {
 
 export interface SplitPlan {
   readonly id: string;
+  readonly userId?: string | null;
   name: string;
   split: SplitPlanDay[];
   splitLength: number;

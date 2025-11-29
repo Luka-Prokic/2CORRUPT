@@ -6,6 +6,14 @@ import {
   TemplateSlice,
   SessionExercise,
 } from "../types";
+import {
+  templateLegsDay,
+  templatePullDay,
+  templatePushDay,
+  templateUpperDay,
+  templateFullBody,
+} from "../../../config/constants/premade";
+import { useUserStore } from "../../user/useUserStore";
 
 export const createTemplateSlice: StateCreator<
   WorkoutStore,
@@ -13,7 +21,13 @@ export const createTemplateSlice: StateCreator<
   [],
   TemplateSlice
 > = (set, get) => ({
-  templates: [],
+  templates: [
+    templatePushDay,
+    templatePullDay,
+    templateLegsDay,
+    templateUpperDay,
+    templateFullBody,
+  ],
   historyTemplates: [],
   activeTemplate: null,
 
@@ -22,6 +36,7 @@ export const createTemplateSlice: StateCreator<
    * If `template` is passed, we create a new version (draft)
    */
   createTemplate: (template?: WorkoutTemplate) => {
+    const user = useUserStore.getState().user;
     const newTemplate: WorkoutTemplate = template
       ? {
           ...template,
@@ -29,12 +44,14 @@ export const createTemplateSlice: StateCreator<
           version: template.version ? template.version + 1 : 1,
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
+          userId: user?.id || null,
         }
       : {
           id: `template-${nanoid()}`,
           primeId: `template-${nanoid()}`,
           name: "New Template",
           description: "",
+          userId: user?.id || null,
           layout: [],
           version: 1,
           createdAt: new Date().toISOString(),

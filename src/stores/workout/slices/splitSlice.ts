@@ -10,6 +10,7 @@ import {
   SplitPlanWorkout,
   ActiveSplitPlanState,
 } from "../types";
+import { useUserStore } from "../../user/useUserStore";
 
 /**
  * Helper to create a SplitPlanWorkout object
@@ -142,6 +143,7 @@ export const createSplitPlanSlice: StateCreator<
     // ----------------- CRUD -----------------
     createSplitPlan: (plan?: Partial<SplitPlan>) => {
       const { splitPlans } = get();
+      const user = useUserStore.getState().user;
       const newSplit: SplitPlanDay[] = (plan?.split || []).map((d) => ({
         id: `split-day-${nanoid()}`,
         workouts: (d?.workouts || []) as SplitPlanWorkout[],
@@ -155,6 +157,7 @@ export const createSplitPlanSlice: StateCreator<
         id: `split-${nanoid()}`,
         name: plan?.name || "New Split",
         split: newSplit,
+        userId: user?.id || null,
         splitLength,
         activeLength,
         description: plan?.description || "",
