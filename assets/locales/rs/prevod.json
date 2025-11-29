@@ -125,7 +125,9 @@
   "language": {
     "english": "Engleski",
     "serbian": "Srpski",
-    "language": "Jezik"
+    "language": "Jezik",
+    "en": "Engleski",
+    "rs": "Srpski"
   },
   "settings": {
     "appearance": "Promeni temu",
@@ -133,12 +135,31 @@
     "choose-language": "Izaberi jezik",
     "label-app-settings": "App",
     "choose-theme": "Izaberi temu",
+    "change-theme": "Promeni temu",
     "workout": "Trening",
     "workout-info": "Podesi podešavanja treninga.",
     "goals": "Ciljevi",
     "goals-info": "Podesi podešavanja ciljeva.",
     "units": "Jedinice",
     "units-info": "Podesi podešavanja jedinica."
+  },
+  "units": {
+    "weight": {
+      "kg": "KG",
+      "lbs": "LBS"
+    },
+    "length": {
+      "cm": "CM",
+      "in": "IN"
+    },
+    "volume": {
+      "ml": "ML",
+      "fl.oz": "FL.OZ"
+    }
+  },
+  "temperature": {
+    "°C": "°C",
+    "°F": "°F"
   },
   "greeting": {
     "morning": "Dobro jutro",

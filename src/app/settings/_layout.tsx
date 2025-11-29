@@ -20,7 +20,6 @@ export default function Layout() {
       <Stack.Screen name="main" />
       <Stack.Screen name="workout" />
       <Stack.Screen name="goals" />
-      <Stack.Screen name="units" />
     </Stack>
   );
 }

@@ -20,12 +20,14 @@ export function WorkoutButton() {
       style={{
         height: 64,
         width: "100%",
-        justifyContent: "center",
+        flexDirection: "row",
         alignItems: "center",
+        gap: 16,
+        paddingHorizontal: 16,
       }}
     >
-      <MidText text={t(`settings.workout`)} />
-      <InfoText text={t(`settings.workout-info`)} />
+      <Ionicons name="barbell" size={32} color={theme.grayText} />
+      <MidText text={t(`settings.workout`)} style={{ lineHeight: 64 }} />
       <Ionicons
         name="chevron-forward"
         size={32}

@@ -1,11 +1,6 @@
-import {
-  TouchableOpacity,
-  Text,
-  StyleSheet,
-  ViewStyle,
-  TextStyle,
-} from "react-native";
+import { TouchableOpacity, Text, ViewStyle, TextStyle } from "react-native";
 import { useSettingsStore } from "../../../stores/settingsStore";
+import * as Haptics from "expo-haptics";
 
 interface ToggleButtonProps {
   isActive: boolean;
@@ -15,6 +10,7 @@ interface ToggleButtonProps {
   style?: ViewStyle;
   textStyle?: TextStyle;
   disabled?: boolean;
+  haptics?: boolean;
 }
 
 export function ToggleButton({
@@ -25,57 +21,46 @@ export function ToggleButton({
   style,
   textStyle,
   disabled = false,
+  haptics = false,
 }: ToggleButtonProps) {
   const { theme } = useSettingsStore();
 
-  const buttonStyle = [
-    styles.button,
-    {
-      backgroundColor: isActive ? theme.tint : theme.primaryBackground,
-      borderColor: theme.border,
-    },
-    disabled && styles.disabled,
-    style,
-  ];
-
-  const buttonTextStyle = [
-    styles.text,
-    {
-      color: isActive ? theme.secondaryText : theme.text,
-    },
-    disabled && { opacity: 0.5 },
-    textStyle,
-  ];
+  function handlePress() {
+    onToggle();
+    if (haptics) {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
+    }
+  }
 
   return (
     <TouchableOpacity
-      style={buttonStyle}
-      onPress={onToggle}
+      style={{
+        paddingHorizontal: 16,
+        paddingVertical: 8,
+        borderRadius: 32,
+        borderWidth: 1,
+        alignItems: "center",
+        justifyContent: "center",
+        minWidth: 60,
+        backgroundColor: isActive ? theme.tint : theme.primaryBackground,
+        borderColor: isActive ? theme.tint : theme.border,
+        opacity: disabled ? 0.5 : 1,
+        ...style,
+      }}
+      onPress={handlePress}
       disabled={disabled}
-      activeOpacity={0.7}
     >
-      <Text style={buttonTextStyle}>
+      <Text
+        style={{
+          fontSize: 14,
+          fontWeight: "700",
+          color: isActive ? theme.secondaryText : theme.text,
+          opacity: disabled ? 0.5 : 1,
+          ...textStyle,
+        }}
+      >
         {isActive ? activeText : inactiveText}
       </Text>
     </TouchableOpacity>
   );
 }
-
-const styles = StyleSheet.create({
-  button: {
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 20,
-    borderWidth: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    minWidth: 60,
-  },
-  text: {
-    fontSize: 14,
-    fontWeight: "600",
-  },
-  disabled: {
-    opacity: 0.5,
-  },
-});

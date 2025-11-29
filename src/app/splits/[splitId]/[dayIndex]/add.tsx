@@ -42,11 +42,11 @@ export default function AddPlannedWorkoutScreen() {
       <ScreenContent
         scroll={false}
         edges={["top"]}
-        FooterComponent={
-          <BottomAddWorkoutSection selectedTemplates={selected} />
-        }
         HeaderComponent={
           <WorkoutFilter setFilteredTemplates={setFilteredTemplates} />
+        }
+        FooterComponent={
+          <BottomAddWorkoutSection selectedTemplates={selected} />
         }
       >
         <AddSplitWorkoutList
@@ -56,7 +56,6 @@ export default function AddPlannedWorkoutScreen() {
           maxSelection={isSwapMode ? 1 : undefined}
           swapTemplate={swapTemplate}
         />
-        <EmptyFooter />
       </ScreenContent>
     </Fragment>
   );

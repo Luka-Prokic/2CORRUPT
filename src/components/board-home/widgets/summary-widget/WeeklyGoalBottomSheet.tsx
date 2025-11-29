@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react";
+import { forwardRef } from "react";
 import {
   BottomSheetBackdrop,
   BottomSheetModal,
@@ -15,6 +15,8 @@ import { useWorkoutStore } from "../../../../stores/workout";
 import { useWidgetUnit } from "../../../../features/widgets/useWidgetUnit";
 import { useWeeklyWorkoutGoal } from "../../../../features/workout/useWorkoutGoal";
 import { ActiveSplitAlert } from "../../../ui/alerts/ActiveSplitAlert";
+import { XLText } from "../../../ui/text/XLText";
+import { MidText } from "../../../ui/text/MidText";
 
 export const WeeklyGoalBottomSheet = forwardRef<BottomSheetModal>(({}, ref) => {
   const { theme } = useSettingsStore();
@@ -66,15 +68,8 @@ export const WeeklyGoalBottomSheet = forwardRef<BottomSheetModal>(({}, ref) => {
           },
         ]}
       >
-        <Text
-          style={{
-            fontSize: 28,
-            fontWeight: "bold",
-            color: theme.text,
-          }}
-        >
-          {t("splits.weekly-goal")}
-        </Text>
+        <XLText text={t("splits.weekly-goal")} />
+
         <Text
           style={{
             fontSize: 52,
@@ -84,16 +79,11 @@ export const WeeklyGoalBottomSheet = forwardRef<BottomSheetModal>(({}, ref) => {
         >
           {goal}
         </Text>
-        <Text
-          style={{
-            fontSize: 18,
-            fontWeight: "500",
-            color: theme.text,
-            marginBottom: 16,
-          }}
-        >
-          {goal === 1 ? t("splits.workout") : t("splits.workouts")}
-        </Text>
+        <MidText
+          text={goal === 1 ? t("splits.workout") : t("splits.workouts")}
+          style={{ marginBottom: 16 }}
+        />
+
         <ActiveSplitAlert style={{ marginBottom: 16, paddingHorizontal: 16 }} />
         <TwoOptionStrobeButtons
           labelOne="-"

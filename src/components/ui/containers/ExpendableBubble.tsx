@@ -100,18 +100,15 @@ export function ExpandableBubble({
           borderRadius: 32,
           overflow: "hidden",
           backgroundColor:
-            backgroundColor ?? hexToRGBA(theme.thirdBackground, 0.6),
+            backgroundColor ?? hexToRGBA(theme.fourthBackground, 0.6),
           borderWidth: 1,
-          borderColor: hexToRGBA(theme.thirdBackground, 0.4),
+          borderColor: hexToRGBA(theme.fourthBackground, 0.4),
         },
         animatedStyle,
         style,
       ]}
     >
-      <Pressable
-        onPress={toggle}
-        style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-      >
+      <Pressable onPress={toggle} style={{ flex: 1, alignItems: "center" }}>
         {/* Expand/Collapse Button Layer */}
         {!disabled && (
           <Ionicons
@@ -122,6 +119,7 @@ export function ExpandableBubble({
               position: "absolute",
               top: 16,
               right: 16,
+              zIndex: 1,
             }}
           />
         )}

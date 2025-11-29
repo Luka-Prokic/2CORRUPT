@@ -124,7 +124,9 @@
   "language": {
     "english": "English",
     "serbian": "Serbian",
-    "language": "Language"
+    "language": "Language",
+    "en": "English",
+    "rs": "Serbian"
   },
   "settings": {
     "appearance": "Change theme",
@@ -132,12 +134,32 @@
     "choose-language": "Choose language",
     "label-app-settings": "App",
     "choose-theme": "Choose theme",
+    "change-theme": "Change theme",
     "workout": "Workout",
     "workout-info": "Adjust your session settings.",
     "goals": "Goals",
     "goals-info": "Adjust your goals settings.",
     "units": "Units",
     "units-info": "Adjust your units settings."
+  },
+
+  "units": {
+    "weight": {
+      "kg": "KG",
+      "lbs": "LBS"
+    },
+    "length": {
+      "cm": "CM",
+      "in": "IN"
+    },
+    "volume": {
+      "ml": "ML",
+      "fl.oz": "FL.OZ"
+    }
+  },
+  "temperature": {
+    "°C": "°C",
+    "°F": "°F"
   },
   "greeting": {
     "morning": "Good morning",

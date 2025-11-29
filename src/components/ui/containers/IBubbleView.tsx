@@ -63,10 +63,10 @@ export function IBubble({
         width: width ?? fullWidth,
         borderRadius: 32,
         backgroundColor:
-          backgroundColor ?? hexToRGBA(theme.thirdBackground, 0.6),
+          backgroundColor ?? hexToRGBA(theme.fourthBackground, 0.6),
         overflow: "hidden",
         borderWidth: 1,
-        borderColor: hexToRGBA(theme.thirdBackground, 0.4),
+        borderColor: hexToRGBA(theme.fourthBackground, 0.4),
         ...style,
       }}
     >

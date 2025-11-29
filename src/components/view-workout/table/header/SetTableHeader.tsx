@@ -3,6 +3,7 @@ import { useSettingsStore } from "../../../../stores/settingsStore";
 import { useTranslation } from "react-i18next";
 import { useWorkoutStore } from "../../../../stores/workoutStore";
 import { WIDTH } from "../../../../features/Dimensions";
+import * as Haptics from "expo-haptics";
 
 export function SetTableHeader() {
   const { theme } = useSettingsStore();
@@ -13,6 +14,11 @@ export function SetTableHeader() {
 
   const exerciseColumns = activeExercise?.columns || ["Reps", "Weight"];
   const columns = ["Set", ...exerciseColumns, "Done"];
+
+  function handleChangeUnits() {
+    setUnits({ ...units, weight: units.weight === "kg" ? "lbs" : "kg" });
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
+  }
 
   function TextLabel({ label }: { label: string }) {
     return (
@@ -50,9 +56,7 @@ export function SetTableHeader() {
     return (
       <TouchableOpacity
         key={label}
-        onPress={() => {
-          setUnits({ ...units, weight: units.weight === "kg" ? "lbs" : "kg" });
-        }}
+        onPress={handleChangeUnits}
         style={{
           width: WIDTH / columns.length,
           height: 34,

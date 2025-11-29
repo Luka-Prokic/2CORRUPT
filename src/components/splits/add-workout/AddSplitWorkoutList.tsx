@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FlatList } from "react-native";
+import { FlatList, FlatListProps } from "react-native";
 import { WorkoutTemplate } from "../../../stores/workout/types";
 import { AddSplitWorkoutCard } from "./AddSplitWorkoutCard";
 import { EmptyFooter } from "../../ui/containers/EmptyFooter";

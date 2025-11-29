@@ -2,12 +2,7 @@
 
 import { Themes, Colors } from "../../config/constants/Colors";
 
-export type Language = "en" | "rs";
-
-export type SettingsStore = ThemeSlice &
-  LanguageSlice &
-  GeneralSlice &
-  UnitsSlice;
+export type SettingsStore = ThemeSlice & GeneralSlice & UnitsSlice;
 
 // Theme slice contract
 export interface ThemeSlice {
@@ -16,13 +11,6 @@ export interface ThemeSlice {
   theme: (typeof Colors)[Themes];
   setTheme: (themeName: Themes) => void;
   toggleTheme: () => void;
-}
-
-// Language slice contract
-export interface LanguageSlice {
-  language: Language;
-  setLanguage: (language: Language) => void;
-  toggleLanguage: () => void;
 }
 
 // General settings slice contract
@@ -40,10 +28,23 @@ export const themeOrder: readonly Themes[] = [
 ] as const;
 
 export type WeightUnit = "kg" | "lbs";
-
+export type LengthUnit = "cm" | "in";
+export type DistanceUnit = "km" | "mi";
+export type VolumeUnit = "ml" | "fl.oz";
+export type TemperatureUnit = "°C" | "°F";
 export interface UnitsSlice {
   units: {
     weight: WeightUnit;
+    length: LengthUnit;
+    distance: DistanceUnit;
+    volume: VolumeUnit;
+    temperature: TemperatureUnit;
   };
-  setUnits: (units: { weight: WeightUnit }) => void;
+  setUnits: (units: {
+    weight: WeightUnit;
+    length: LengthUnit;
+    distance: DistanceUnit;
+    volume: VolumeUnit;
+    temperature: TemperatureUnit;
+  }) => void;
 }

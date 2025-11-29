@@ -1,65 +1,54 @@
 import { themeOrder, useSettingsStore } from "../../stores/settingsStore";
 import { useTranslation } from "react-i18next";
 import { Themes } from "../../config/constants/Colors";
-import { hexToRGBA } from "../../features/HEXtoRGB";
 import { ExpandableBubble } from "../ui/containers/ExpendableBubble";
 import { MidText } from "../ui/text/MidText";
 import { FlatList } from "react-native-gesture-handler";
 import { StrobeOptionButton } from "../ui/buttons/StrobeOptionButton";
+import { useState } from "react";
+
+const THEME_ARRAY: readonly {
+  name: Themes;
+  displayName: string;
+  emoji: string;
+}[] = [
+  { name: "light", displayName: "Light", emoji: "☀️" },
+  { name: "oldschool", displayName: "Old School", emoji: "💪" },
+  { name: "peachy", displayName: "Peachy", emoji: "🍑" },
+  { name: "dark", displayName: "Dark", emoji: "🌙" },
+  { name: "preworkout", displayName: "Preworkout", emoji: "⚡" },
+  { name: "Corrupted", displayName: "Corrupted", emoji: "💸" },
+];
 
 export function ThemeSettings() {
   const { t } = useTranslation();
+  const { themeName, setTheme } = useSettingsStore();
+  const [expanded, setExpanded] = useState(false);
+
   return (
     <ExpandableBubble
       expandedHeight={64 + 44 * themeOrder.length}
-      expendedChildren={<ThemeOptions />}
+      collapsedHeight={64 + 44}
+      onToggle={() => setExpanded(!expanded)}
     >
-      <MidText
-        text={t(`settings.choose-theme`)}
-        style={{
-          lineHeight: 64,
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-        }}
+      <MidText text={t(`settings.change-theme`)} style={{ lineHeight: 64 }} />
+      <FlatList
+        data={THEME_ARRAY}
+        scrollEnabled={false}
+        style={{ width: "100%" }}
+        renderItem={({ item, index }) =>
+          expanded || themeName === item.name ? (
+            <StrobeOptionButton
+              key={index}
+              title={`${item.emoji} ${t(`theme.${item.name}`)}`}
+              onPress={() => setTheme(item.name)}
+              height={44}
+              strobeDisabled={themeName !== item.name}
+              styleContent={{ paddingHorizontal: 16 }}
+            />
+          ) : null
+        }
       />
     </ExpandableBubble>
-  );
-}
-
-function ThemeOptions() {
-  const { themeName, setTheme, theme } = useSettingsStore();
-  const { t } = useTranslation();
-
-  const themeArray: { name: Themes; displayName: string; emoji: string }[] = [
-    { name: "light", displayName: "Light", emoji: "☀️" },
-    { name: "oldschool", displayName: "Old School", emoji: "💪" },
-    { name: "peachy", displayName: "Peachy", emoji: "🍑" },
-    { name: "dark", displayName: "Dark", emoji: "🌙" },
-    { name: "preworkout", displayName: "Preworkout", emoji: "⚡" },
-    { name: "Corrupted", displayName: "Corrupted", emoji: "💸" },
-  ];
-  return (
-    <FlatList
-      data={themeArray}
-      scrollEnabled={false}
-      style={{ width: "100%", paddingTop: 64 }}
-      renderItem={({ item, index }) => (
-        <StrobeOptionButton
-          key={index}
-          title={`${item.emoji} ${t(`theme.${item.name}`)}`}
-          onPress={() => setTheme(item.name)}
-          height={44}
-          style={{
-            backgroundColor: hexToRGBA(
-              theme.text,
-              themeName === item.name ? 0.1 : 0
-            ),
-          }}
-          strobeDisabled={themeName !== item.name}
-        />
-      )}
-    />
   );
 }

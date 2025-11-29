@@ -9,7 +9,7 @@ import { ModalExitButton } from "./../_layout";
 import { ScreenView } from "../../components/ui/containers/ScreenView";
 import { WorkoutButton } from "../../components/settings-app/WorkoutButton";
 import { GoalsButton } from "../../components/settings-app/GoalsButton";
-import { UnitsButton } from "../../components/settings-app/UnitsButton";
+import { UnitsSettings } from "../../components/settings-app/UnitsSettings";
 import { IBubble } from "../../components/ui/containers/IBubbleView";
 import { EmptyFooter } from "../../components/ui/containers/EmptyFooter";
 
@@ -27,11 +27,12 @@ export default function SettingsScreen() {
 
       <ScreenContent style={{ backgroundColor: theme.navBackground }}>
         <ScreenView style={{ gap: 16, paddingHorizontal: 16 }}>
-          <IBubble height={192}>
+          <IBubble height={128}>
             <WorkoutButton />
             <GoalsButton />
-            <UnitsButton />
           </IBubble>
+          <UnitsSettings />
+
           <ThemeSettings />
 
           <LanguageSettings />

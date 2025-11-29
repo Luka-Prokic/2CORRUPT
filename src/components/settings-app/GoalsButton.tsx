@@ -20,12 +20,14 @@ export function GoalsButton() {
       style={{
         height: 64,
         width: "100%",
-        justifyContent: "center",
+        flexDirection: "row",
         alignItems: "center",
+        gap: 16,
+        paddingHorizontal: 16,
       }}
     >
-      <MidText text={t(`settings.goals`)} />
-      <InfoText text={t(`settings.goals-info`)} />
+      <Ionicons name="golf" size={32} color={theme.grayText} />
+      <MidText text={t(`settings.goals`)} style={{ lineHeight: 64 }} />
       <Ionicons
         name="chevron-forward"
         size={32}

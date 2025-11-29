@@ -8,7 +8,8 @@ interface StrobeOptionButtonProps extends StrobeButtonProps {
   width?: DimensionValue;
   height?: DimensionValue;
   icon?: React.ReactNode;
-  style?: ViewStyle;
+  style?: ViewStyle | ViewStyle[];
+  styleContent?: ViewStyle | ViewStyle[];
   color?: string;
   disabled?: boolean;
   children?: React.ReactNode;
@@ -20,6 +21,7 @@ export function StrobeOptionButton({
   width = "100%",
   height = 34,
   style,
+  styleContent,
   color,
   disabled,
   children,
@@ -39,6 +41,7 @@ export function StrobeOptionButton({
           flexDirection: "row",
           alignItems: "center",
           paddingHorizontal: 8,
+          ...styleContent,
         }}
       >
         <MidText text={title} style={{ color: color || theme.text }} />
