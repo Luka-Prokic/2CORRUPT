@@ -38,7 +38,7 @@ const UNITS_SETTINGS = [
 
 export function UnitsSettings() {
   const { t } = useTranslation();
-  const { widgetUnit, fullWidth } = useWidgetUnit();
+  const { fullWidth } = useWidgetUnit();
 
   return (
     <IBubble size="flexible">
@@ -50,8 +50,8 @@ export function UnitsSettings() {
       />
       <CenterCardSlider
         data={UNITS_SETTINGS}
-        cardHeight={widgetUnit}
-        cardWidth={widgetUnit}
+        cardHeight={fullWidth / 2}
+        cardWidth={fullWidth / 2}
         card={({ item }) => (
           <UnitCard
             icon={item.icon}
@@ -85,19 +85,18 @@ function UnitCard({
   unit: "weight" | "length" | "volume" | "temperature";
 }) {
   const { units, setUnits, theme } = useSettingsStore();
-  const { widgetUnit } = useWidgetUnit();
+  const { fullWidth } = useWidgetUnit();
   const { t } = useTranslation();
 
   const current = units[unit]; // "kg" or "lbs", etc.
-  const isOption1 = current === option1;
 
   return (
     <View
       style={{
         alignItems: "center",
         justifyContent: "space-between",
-        width: widgetUnit,
-        height: widgetUnit,
+        width: fullWidth / 2,
+        height: fullWidth / 2,
         backgroundColor: theme.text + "10",
         padding: 16,
         borderRadius: 16,
@@ -116,7 +115,7 @@ function UnitCard({
             [unit]: val,
           })
         }
-        width={widgetUnit * 0.9}
+        width={fullWidth / 2 - 16}
         haptics
       />
     </View>

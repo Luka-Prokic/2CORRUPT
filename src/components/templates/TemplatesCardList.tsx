@@ -115,21 +115,23 @@ export function TemplatesCardList({
   return (
     <CenterCardSlider
       data={filtered}
-      cardWidth={WIDTH / 2}
-      cardHeight={WIDTH / 2}
+      cardWidth={
+        filtered.length <= 1 && filters?.userMadeOnly ? WIDTH : WIDTH / 3
+      }
+      cardHeight={WIDTH / 3}
       sliderWidth={sliderWidth}
       disableScroll={filtered.length <= 1}
       emptyCard={
         filters?.userMadeOnly ? (
-          <NoTamplatesAlert style={{ width: WIDTH / 2, height: WIDTH / 2 }} />
+          <NoTamplatesAlert style={{ width: WIDTH, height: WIDTH / 3 }} />
         ) : null
       }
       card={({ item }) => (
         <TemplateAlbumCard
           template={item}
           onPress={() => handlePress(item)}
-          cardWidth={WIDTH / 2}
-          cardHeight={WIDTH / 2}
+          cardWidth={WIDTH / 3}
+          cardHeight={WIDTH / 3}
         />
       )}
     />

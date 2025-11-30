@@ -140,7 +140,7 @@
     "workout-info": "Podesi podešavanja treninga.",
     "goals": "Ciljevi",
     "goals-info": "Podesi podešavanja ciljeva.",
-    "units": "Jedinice Mere",
+    "units": "Merne Jedinice",
     "units-info": "Podesi podešavanja jedinica.",
     "weight": "Težina",
     "length": "Dužina",
@@ -408,7 +408,6 @@
     "templates": "Šabloni",
     "template": "Šablon",
     "tag": "Oznaka"
-
   },
   "splits": {
     "split": "Split",

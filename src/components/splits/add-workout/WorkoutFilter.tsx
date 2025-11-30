@@ -5,10 +5,6 @@ import { WorkoutTemplate } from "../../../stores/workout/types";
 import { SearchBar } from "../../ui/input/SearchBar";
 import { useWorkoutStore } from "../../../stores/workout/useWorkoutStore";
 import { useFilterTemplates } from "../../../features/workout/useFilterTemplates";
-import { useSettingsStore } from "../../../stores/settingsStore";
-import { FilterFlatList } from "../../ui/sliders/FilterFlatList";
-import * as Haptics from "expo-haptics";
-import { WIDTH } from "../../../features/Dimensions";
 
 interface WorkoutFilterProps {
   setFilteredTemplates: (templates: WorkoutTemplate[]) => void;
@@ -21,32 +17,12 @@ export function WorkoutFilter({
 }: WorkoutFilterProps) {
   const { t } = useTranslation();
   const { templates } = useWorkoutStore();
-  const { theme } = useSettingsStore();
-  const {
-    templatesFiltered,
-    searchQuery,
-    setSearchQuery,
-    selectedTag,
-    setSelectedTag,
-    selectedSplit,
-    setSelectedSplit,
-    availableTags,
-    availableSplits,
-  } = useFilterTemplates();
-
-  function handleSelectTag(tag: string) {
-    setSelectedTag(tag.toLowerCase());
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Rigid);
-  }
-
-  function handleSelectSplit(split: string) {
-    setSelectedSplit(split.toLowerCase());
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Rigid);
-  }
+  const { templatesFiltered, searchQuery, setSearchQuery } =
+    useFilterTemplates();
 
   useEffect(() => {
     setFilteredTemplates(templatesFiltered);
-  }, [searchQuery, selectedTag, selectedSplit]);
+  }, [searchQuery, templates]);
 
   if (templates.length === 0) return null;
   return (
@@ -57,46 +33,6 @@ export function WorkoutFilter({
         placeholder={t("templates.search")}
         style={{ marginHorizontal: 16, ...style }}
       />
-
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          marginHorizontal: 16,
-          marginBottom: 8,
-        }}
-      >
-        <FilterFlatList
-          title={t("templates.tag")}
-          data={availableTags}
-          onSelect={handleSelectTag}
-          itemHeight={50}
-          contentContainerStyle={{
-            height: 54,
-            width: WIDTH * 0.5 - 20,
-            paddingVertical: 2,
-            backgroundColor: theme.primaryBackground,
-            borderTopLeftRadius: 32,
-            borderBottomLeftRadius: 32,
-            borderRadius: 12,
-          }}
-        />
-        <FilterFlatList
-          title={t("splits.split")}
-          data={availableSplits}
-          onSelect={handleSelectSplit}
-          itemHeight={50}
-          contentContainerStyle={{
-            height: 54,
-            width: WIDTH * 0.5 - 20,
-            paddingVertical: 2,
-            backgroundColor: theme.primaryBackground,
-            borderTopRightRadius: 32,
-            borderBottomRightRadius: 32,
-            borderRadius: 12,
-          }}
-        />
-      </View>
     </View>
   );
 }
