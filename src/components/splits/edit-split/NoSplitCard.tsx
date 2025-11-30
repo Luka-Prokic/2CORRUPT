@@ -20,6 +20,7 @@ import { StrobeButton } from "../../ui/buttons/StrobeButton";
 import { ActiveSplitAlert } from "../../ui/alerts/ActiveSplitAlert";
 import { XLText } from "../../ui/text/XLText";
 import { MidText } from "../../ui/text/MidText";
+import { router } from "expo-router";
 
 export function NoSplitCard() {
   const { theme } = useSettingsStore();
@@ -63,6 +64,10 @@ export function NoSplitCard() {
 
   function decrementGoal() {
     if (goal > 1) updateWeeklyGoal(goal - 1);
+  }
+
+  function navigateToGoals() {
+    router.replace("/settings/goals");
   }
 
   return (
@@ -173,6 +178,7 @@ export function NoSplitCard() {
             <TextButton
               title={t("splits.set-your-fitness-goals")}
               color={theme.fifthBackground}
+              onPress={navigateToGoals}
             />
           </Animated.View>
         )}

@@ -17,6 +17,7 @@ import { useWeeklyWorkoutGoal } from "../../../../features/workout/useWorkoutGoa
 import { ActiveSplitAlert } from "../../../ui/alerts/ActiveSplitAlert";
 import { XLText } from "../../../ui/text/XLText";
 import { MidText } from "../../../ui/text/MidText";
+import { router } from "expo-router";
 
 export const WeeklyGoalBottomSheet = forwardRef<BottomSheetModal>(({}, ref) => {
   const { theme } = useSettingsStore();
@@ -33,6 +34,11 @@ export const WeeklyGoalBottomSheet = forwardRef<BottomSheetModal>(({}, ref) => {
 
   function decrementGoal() {
     if (goal > 1) updateWeeklyGoal(goal - 1);
+  }
+
+  function navigateToGoals() {
+    router.push("/settings/goals");
+    (ref as React.RefObject<BottomSheetModal>)?.current?.close();
   }
 
   return (
@@ -110,6 +116,7 @@ export const WeeklyGoalBottomSheet = forwardRef<BottomSheetModal>(({}, ref) => {
         <TextButton
           title={t("splits.set-your-fitness-goals")}
           color={theme.accent}
+          onPress={navigateToGoals}
         />
       </BottomSheetView>
     </BottomSheetModal>
