@@ -8,21 +8,23 @@ import { RestCheatSheet } from "./RestCheatSheet";
 import { TwoOptionStrobeButtons } from "../../../ui/buttons/TwoOptionStrobeButtons";
 import { MidText } from "../../../ui/text/MidText";
 import { DescriptionText } from "../../../ui/text/DescriptionText";
+import { useFormatTime } from "../../../../features/format/useFormatTime";
 
 export function RestTimerSheet() {
   const { theme } = useSettingsStore();
   const { activeExercise, updateActiveExercise, activeTemplate } =
     useWorkoutStore();
+  const { defaultRestTime } = useSettingsStore();
   const { t } = useTranslation();
 
-  const restTime = activeExercise?.restTime ?? 180;
+  const restTime = activeExercise?.restTime ?? defaultRestTime ?? 180;
 
-  const minutes = String(Math.floor(restTime / 60));
-  const seconds = String(restTime % 60).padStart(2, "0");
+  const formattedTime = useFormatTime({ seconds: restTime, format: "auto+" });
 
   function handleChangeRestTime(value: number) {
     updateActiveExercise({ restTime: restTime + value });
   }
+
   return (
     <View
       style={{
@@ -44,7 +46,7 @@ export function RestTimerSheet() {
       />
 
       <Text style={{ fontSize: 52, fontWeight: "bold", color: theme.text }}>
-        {minutes}min {seconds}s
+        {formattedTime}
       </Text>
 
       <TwoOptionStrobeButtons

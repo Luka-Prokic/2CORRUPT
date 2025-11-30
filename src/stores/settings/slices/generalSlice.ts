@@ -13,8 +13,7 @@ export const createGeneralSlice: StateCreator<
 > = (set, get) => ({
   resetToDefaults: () =>
     set({
-      themeName: "light",
-      theme: Colors["light"],
-      language: "en",
+      themeName: "dark",
+      theme: Colors["dark"],
     }),
 });

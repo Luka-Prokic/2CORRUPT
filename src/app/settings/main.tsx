@@ -10,7 +10,7 @@ import { ScreenView } from "../../components/ui/containers/ScreenView";
 import { WorkoutButton } from "../../components/settings-app/WorkoutButton";
 import { GoalsButton } from "../../components/settings-app/GoalsButton";
 import { UnitsSettings } from "../../components/settings-app/UnitsSettings";
-import { IBubble } from "../../components/ui/containers/IBubbleView";
+import { IBubble } from "../../components/ui/containers/IBubble";
 import { EmptyFooter } from "../../components/ui/containers/EmptyFooter";
 
 export default function SettingsScreen() {

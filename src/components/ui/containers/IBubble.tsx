@@ -24,6 +24,7 @@ interface IBubbleProps {
   entering?: EntryExitAnimationFunction;
   exiting?: EntryExitAnimationFunction;
   style?: ViewStyle | ViewStyle[];
+  styleContent?: ViewStyle | ViewStyle[];
   onPress?: () => void;
 }
 
@@ -41,6 +42,7 @@ export function IBubble({
   exiting,
   style,
   onPress,
+  styleContent,
 }: IBubbleProps) {
   const { theme } = useSettingsStore();
   const { widgetUnit, fullWidth } = useWidgetUnit();
@@ -70,7 +72,7 @@ export function IBubble({
     >
       <Pressable
         onPress={onPress}
-        style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        style={{ flex: 1, justifyContent: "center", alignItems: "center", ...styleContent }}
       >
         {header && <MidText text={header} />}
         {description && <DescriptionText text={description} />}

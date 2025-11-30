@@ -2,6 +2,7 @@ import { DimensionValue, ViewStyle, View } from "react-native";
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { MidText } from "../text/MidText";
 import { StrobeButton, StrobeButtonProps } from "./StrobeButton";
+import { useTranslation } from "react-i18next";
 
 interface StrobeOptionButtonProps extends StrobeButtonProps {
   title: string;
@@ -13,6 +14,15 @@ interface StrobeOptionButtonProps extends StrobeButtonProps {
   color?: string;
   disabled?: boolean;
   children?: React.ReactNode;
+  stateIndicatorVisible?: boolean;
+  state?: boolean;
+  justifyContent?:
+    | "flex-start"
+    | "center"
+    | "flex-end"
+    | "space-between"
+    | "space-around"
+    | "space-evenly";
 }
 
 export function StrobeOptionButton({
@@ -25,10 +35,13 @@ export function StrobeOptionButton({
   color,
   disabled,
   children,
+  justifyContent = "flex-start",
+  stateIndicatorVisible = false,
+  state = false,
   ...strobeButtonProps
 }: StrobeOptionButtonProps) {
   const { theme } = useSettingsStore();
-
+  const { t } = useTranslation();
   function renderContent() {
     if (children) {
       return children;
@@ -40,11 +53,13 @@ export function StrobeOptionButton({
           width: "100%",
           flexDirection: "row",
           alignItems: "center",
+          justifyContent,
           paddingHorizontal: 8,
           ...styleContent,
         }}
       >
         <MidText text={title} style={{ color: color || theme.text }} />
+
         <View
           style={{
             flexDirection: "row-reverse",
@@ -54,6 +69,13 @@ export function StrobeOptionButton({
         >
           {icon}
         </View>
+
+        {stateIndicatorVisible && (
+          <MidText
+            text={state ? t("button.on") : t("button.off")}
+            style={{ color: theme.text, fontSize: 16, fontWeight: "bold" }}
+          />
+        )}
       </View>
     );
   }

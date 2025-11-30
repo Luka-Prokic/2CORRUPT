@@ -5,8 +5,9 @@ import { WIDTH } from "../../../features/Dimensions";
 import { hexToRGBA } from "../../../features/HEXtoRGB";
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { Ionicons } from "@expo/vector-icons";
-import { useWorkoutStore } from "../../../stores/workoutStore";
-import { SessionSheetType } from "../SessionDashboard";
+import { useWorkoutStore } from "../../../stores/workout/useWorkoutStore";
+import { SessionSheetType } from "../../../app/workout-board";
+import { useFormatTime } from "../../../features/format/useFormatTime";
 
 interface RestTimerSettingsProps {
   openPanel: () => void;
@@ -20,10 +21,8 @@ export function RestTimerSettings({
   const { theme } = useSettingsStore();
   const { activeExercise, updateActiveExercise } = useWorkoutStore();
   const [noRest, setNoRest] = useState(activeExercise?.noRest ?? false);
-  const restTime = activeExercise?.restTime ?? 180;
-
-  const minutes = String(Math.floor(restTime / 60));
-  const seconds = String(restTime % 60).padStart(2, "0");
+  const { defaultRestTime } = useSettingsStore();
+  const restTime = activeExercise?.restTime ?? defaultRestTime ?? 180;
 
   function handleNoRestToggle() {
     const newNoRest = !noRest;
@@ -38,6 +37,8 @@ export function RestTimerSettings({
     setListType("rest");
     openPanel();
   }
+
+  const formattedTime = useFormatTime({ seconds: restTime, format: "auto+" });
 
   return (
     <View
@@ -96,7 +97,7 @@ export function RestTimerSettings({
               fontWeight: "bold",
             }}
           >
-            {minutes}min{seconds != "00" ? ` ${seconds}s` : ""}
+            {formattedTime}
           </Text>
         </View>
       </BounceButton>

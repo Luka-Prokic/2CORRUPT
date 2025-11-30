@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { useSettingsStore } from "../../stores/settingsStore";
-import { IBubble } from "../ui/containers/IBubbleView";
+import { IBubble } from "../ui/containers/IBubble";
 import { Ionicons } from "@expo/vector-icons";
 import { MidText } from "../ui/text/MidText";
 import { View } from "react-native";

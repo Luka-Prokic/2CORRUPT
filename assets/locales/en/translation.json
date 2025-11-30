@@ -30,7 +30,9 @@
     "active": "Active",
     "done": "Done",
     "swap": "Swap",
-    "tap-select": "Tap to select"
+    "tap-select": "Tap to select",
+    "on": "On",
+    "off": "Off"
   },
   "form": {
     "name": "Name",
@@ -144,7 +146,23 @@
     "weight": "Weight",
     "length": "Length",
     "volume": "Volume",
-    "temperature": "Temperature"
+    "temperature": "Temperature",
+    "workout-settings": {
+      "global-start-rest-time-title": "Global Start Rest Timer",
+      "global-start-rest-time-description": "Use a rest timer between sets or skip it entirely.",
+
+      "global-rest-time-title": "Global Rest Time",
+      "global-rest-time-description": "Set here the default rest time for all exercises. Recommended: 1-2 minutes.",
+
+      "auto-rest-complete-title": "Auto-rest complete",
+      "auto-rest-complete-description": "Automatically finish rest when the timer reaches 00:00 • Global only",
+
+      "global-rir-title": "Global RIR",
+      "global-rir-description": "Show or hide RIR input for new exercises.",
+
+      "global-rpe-title": "Global RPE",
+      "global-rpe-description": "Show or hide RPE input for new exercises."
+    }
   },
 
   "units": {

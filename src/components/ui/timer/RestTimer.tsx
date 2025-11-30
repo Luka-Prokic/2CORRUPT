@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Text, AppState, TextStyle } from "react-native";
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { useWorkoutStore } from "../../../stores/workout/useWorkoutStore";
+import { useFormatTime } from "../../../features/format/useFormatTime";
 
 interface RestTimerProps {
   textStyle?: TextStyle | TextStyle[];
@@ -45,15 +46,9 @@ export function RestTimer({ textStyle, onEnd }: RestTimerProps) {
     return () => clearInterval(id);
   }, [estEndRestTime, isActive, onEnd]);
 
-  if (remaining === null) return null;
+  const formattedTime = useFormatTime({ seconds: remaining, format: "auto+" });
 
-  const formatTime = (sec: number) => {
-    const m = Math.floor(sec / 60)
-      .toString()
-      .padStart(2, "0");
-    const s = (sec % 60).toString().padStart(2, "0");
-    return `${m}:${s}`;
-  };
+  if (remaining === null) return null;
 
   return (
     <Text
@@ -64,7 +59,7 @@ export function RestTimer({ textStyle, onEnd }: RestTimerProps) {
         ...textStyle,
       }}
     >
-      {formatTime(remaining)}
+      {formattedTime}
     </Text>
   );
 }

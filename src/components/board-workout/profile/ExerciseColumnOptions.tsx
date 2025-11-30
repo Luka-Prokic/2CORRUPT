@@ -4,6 +4,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Fragment, useState } from "react";
 import { useWorkoutStore } from "../../../stores/workoutStore";
 import { useTranslation } from "react-i18next";
+import { StrobeOptionButton } from "../../ui/buttons/StrobeOptionButton";
 
 export function ExerciseColumnOptions() {
   const { theme } = useSettingsStore();
@@ -31,7 +32,7 @@ export function ExerciseColumnOptions() {
 
   return (
     <Fragment>
-      <OptionButton
+      <StrobeOptionButton
         title={t(`dialog.${showRPE ? "hide" : "show"}`) + " RPE"}
         icon={
           <Ionicons
@@ -46,8 +47,10 @@ export function ExerciseColumnOptions() {
           handleToggleColumn("RPE");
         }}
         color={showRPE ? accent : theme.grayText}
+        strobeDisabled={!showRPE}
+        justifyContent="space-between"
       />
-      <OptionButton
+      <StrobeOptionButton
         title={t(`dialog.${showRIR ? "hide" : "show"}`) + " RIR"}
         icon={
           <Ionicons
@@ -62,6 +65,8 @@ export function ExerciseColumnOptions() {
           handleToggleColumn("RIR");
         }}
         color={showRIR ? accent : theme.grayText}
+        strobeDisabled={!showRIR}
+        justifyContent="space-between"
       />
     </Fragment>
   );

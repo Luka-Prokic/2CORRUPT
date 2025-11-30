@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Text, AppState, TextStyle } from "react-native";
 import { useWorkoutStore } from "../../../stores/workoutStore";
 import { useSettingsStore } from "../../../stores/settingsStore";
+import { useFormatTime } from "../../../features/format/useFormatTime";
 
 interface SessionTimerProps {
   textStyle?: TextStyle | TextStyle[];
@@ -52,13 +53,10 @@ export function SessionTimer({ textStyle }: SessionTimerProps) {
     return () => clearInterval(interval);
   }, [activeSession, isActive]);
 
-  const formatTime = (sec: number) => {
-    const m = Math.floor(sec / 60)
-      .toString()
-      .padStart(2, "0");
-    const s = (sec % 60).toString().padStart(2, "0");
-    return `${m}:${s}`;
-  };
+  const formattedTime = useFormatTime({
+    seconds: sessionTime,
+    format: "auto+",
+  });
 
   return (
     <Text
@@ -69,7 +67,7 @@ export function SessionTimer({ textStyle }: SessionTimerProps) {
         ...textStyle,
       }}
     >
-      {formatTime(sessionTime)}
+      {formattedTime}
     </Text>
   );
 }

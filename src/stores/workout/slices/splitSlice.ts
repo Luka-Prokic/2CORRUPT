@@ -11,6 +11,7 @@ import {
   ActiveSplitPlanState,
 } from "../types";
 import { useUserStore } from "../../user/useUserStore";
+import { useSettingsStore } from "../../settings/useSettingsStore";
 
 /**
  * Helper to create a SplitPlanWorkout object
@@ -568,6 +569,8 @@ export const createSplitPlanSlice: StateCreator<
 
     // ----------------- NoSplit -----------------
     updateWeeklyGoal: (newGoal: number) => {
+      const { syncWeeklyGoal } = useSettingsStore.getState();
+      syncWeeklyGoal?.(newGoal);
       set((state) => {
         // Update NoSplit plan in splitPlans
         const splitPlans = state.splitPlans.map((p) =>

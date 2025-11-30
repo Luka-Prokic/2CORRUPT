@@ -1,12 +1,13 @@
 import { Text, View } from "react-native";
 import { useSettingsStore } from "../../stores/settingsStore";
-import { username } from "../../config/constants/defaults";
 import { useTranslation } from "react-i18next";
 import { ProfileButton } from "../settings-profile/ProfileButton";
+import { useUserStore } from "../../stores/user";
 
 export function HomeHeader() {
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
+  const { user } = useUserStore();
 
   // Get current time and determine greeting
   const getGreeting = () => {
@@ -47,7 +48,7 @@ export function HomeHeader() {
             color: theme.text,
           }}
         >
-          {username}
+          {user.username}
         </Text>
       </Text>
       <ProfileButton />

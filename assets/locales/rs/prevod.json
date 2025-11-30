@@ -30,7 +30,9 @@
     "active": "Aktivan",
     "done": "Gotovo",
     "swap": "Zameni",
-    "tap-select": "Klikni da izabereš"
+    "tap-select": "Klikni da izabereš",
+    "on": "I",
+    "off": "O"
   },
   "form": {
     "name": "Naziv",
@@ -145,8 +147,26 @@
     "weight": "Težina",
     "length": "Dužina",
     "volume": "Zapremina",
-    "temperature": "Temperatura"
+    "temperature": "Temperatura",
+
+    "workout-settings": {
+      "global-start-rest-time-title": "Globalno Koristi Timer Pauze",
+      "global-start-rest-time-description": "Koristi vreme pauze između serija ili isključi ga.",
+
+      "global-rest-time-title": "Globalno Vreme Pauze",
+      "global-rest-time-description": "Podesi ovo vreme pauze za sve vežbe. Preporuka: 1-2 minuta.",
+
+      "auto-rest-complete-title": "Automatski kraj odmora",
+      "auto-rest-complete-description": "Automatski isključi timer kada dođe na 00:00. • Globalno samo",
+
+      "global-rir-title": "Globalni RIR",
+      "global-rir-description": "Sakrij i onemogući RIR unos.",
+
+      "global-rpe-title": "Globalni RPE",
+      "global-rpe-description": "Sakrij i onemogući RPE unos."
+    }
   },
+
   "units": {
     "weight": {
       "kg": "KG",

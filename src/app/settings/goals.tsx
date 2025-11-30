@@ -9,6 +9,7 @@ import { ScreenView } from "../../components/ui/containers/ScreenView";
 export default function GoalsScreen() {
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
+
   return (
     <Fragment>
       <Stack.Screen
