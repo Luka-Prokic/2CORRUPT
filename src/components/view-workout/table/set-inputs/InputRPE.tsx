@@ -55,7 +55,7 @@ export function InputRPE({ set, style, textStyle, disabled }: InputRPEProps) {
             textStyle,
           ]}
         >
-          {rpe ?? "-"}
+          {rpe === 0 ? 0 : rpe ?? "-"}
         </Text>
       </TouchableOpacity>
 

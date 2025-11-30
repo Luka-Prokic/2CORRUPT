@@ -76,7 +76,7 @@ export const RirRpeBottomSheet = forwardRef<
         style={{
           flex: 1,
           paddingHorizontal: 16,
-          paddingBottom: insets.bottom,
+          paddingBottom: insets.bottom + 8,
           paddingTop: 8,
         }}
       >
@@ -108,7 +108,7 @@ export const RirRpeBottomSheet = forwardRef<
                   fontSize: 32,
                   fontWeight: "bold",
                   textAlign: "center",
-                  color: index === set[mode] ? theme.text : theme.grayText,
+                  color: index === set[mode] ? theme.tint : theme.grayText,
                 }}
               >
                 {item}
@@ -158,6 +158,7 @@ function Switch({
         onChange={(val) => switchMode(val.toLowerCase() as SheetMode)}
         width={150}
         height={44}
+        haptics
       />
       <DescriptionText
         text={

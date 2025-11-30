@@ -70,7 +70,7 @@ export function SwitchButton({
   const targetX = width - knobWidth;
 
   const animatedX = useDerivedValue(() => {
-    return withSpring(position.value === 0 ? 0 : targetX, {
+    return withSpring(position.value === 0 ? 0 : targetX - 4, {
       mass: 1,
       stiffness: 360,
       damping: 16,
@@ -96,7 +96,8 @@ export function SwitchButton({
         borderRadius: height / 2,
         position: "relative",
         justifyContent: "center",
-        backgroundColor: theme.background + "40",
+        backgroundColor: theme.handle,
+        padding: 2,
         ...style,
       }}
     >
@@ -105,7 +106,7 @@ export function SwitchButton({
           {
             position: "absolute",
             width: knobWidth,
-            height: height,
+            height: height - 4,
             top: 0,
             left: 0,
             borderRadius: height / 2,
@@ -113,7 +114,7 @@ export function SwitchButton({
             shadowOffset: { width: 2, height: 0 },
             shadowOpacity: 0.1,
             shadowRadius: 4,
-            backgroundColor: theme.background + "80",
+            backgroundColor: theme.secondaryBackground,
           },
           knobStyle,
         ]}

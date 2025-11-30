@@ -55,7 +55,7 @@ export function InputRIR({ set, style, textStyle, disabled }: InputRIRProps) {
             textStyle,
           ]}
         >
-          {rir === 5 ? "5+" : rir ? rir : "-"}
+          {rir === 5 ? "5+" : rir === 0 ? 0 : rir ?? "-"}
         </Text>
       </TouchableOpacity>
 
