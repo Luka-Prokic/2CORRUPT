@@ -402,11 +402,13 @@
     "create-template": "Kreiraj Šablon",
     "add-to-split": "Dodaj u Split",
     "your-templates": "Tvoji Šabloni",
+    "app-templates": "App Šabloni",
     "exercises": "Vežbe",
     "exercise": "Vežba",
     "templates": "Šabloni",
     "template": "Šablon",
     "tag": "Oznaka"
+
   },
   "splits": {
     "split": "Split",

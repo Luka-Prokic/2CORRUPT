@@ -299,8 +299,7 @@ export const templateLegsDay: WorkoutTemplate = {
     {
       id: `ex-squat-${nanoid()}`,
       exerciseInfoId: "ex-back-squat",
-      name: "Back Squat",
-      prefix: "Barbell",
+      name: "Barbell Back Squat",
       primaryMuscles: ["quads", "glutes"],
       secondaryMuscles: ["hamstrings"],
       equipment: ["barbell", "rack"],
@@ -315,8 +314,7 @@ export const templateLegsDay: WorkoutTemplate = {
     {
       id: `ex-deadlift-${nanoid()}`,
       exerciseInfoId: "ex-deadlift",
-      name: "Romanian Deadlift",
-      prefix: "Barbell",
+      name: "Barbell Romanian Deadlift",
       primaryMuscles: ["hamstrings"],
       secondaryMuscles: ["glutes", "lower back"],
       equipment: ["barbell"],
@@ -331,7 +329,6 @@ export const templateLegsDay: WorkoutTemplate = {
     {
       id: `ex-lunge-${nanoid()}`,
       name: "Dumbbell Lunges",
-      prefix: "Dumbbell",
       primaryMuscles: ["quads", "glutes"],
       equipment: ["dumbbell"],
       sets: [
@@ -373,5 +370,5 @@ export const templateFullBody: WorkoutTemplate = {
     { ...benchPressExample, id: `ex-${nanoid()}` },
     { ...barbellRowExample, id: `ex-${nanoid()}` },
   ],
-  tags: ["Full Body", "General Strength"],
+  tags: ["Full Body", "Strength"],
 };

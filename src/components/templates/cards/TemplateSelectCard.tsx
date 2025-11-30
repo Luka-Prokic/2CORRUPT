@@ -68,7 +68,9 @@ export function TemplateSelectCard({
           height: widgetUnit,
           width: widgetUnit,
           backgroundColor: isSelected ? theme.text : theme.fifthBackground,
-          borderColor: theme.border,
+          borderColor: isSelected
+            ? theme.text + "40"
+            : theme.fifthBackground + "40",
           borderRadius: 32,
           padding: 16,
           borderWidth: 1,

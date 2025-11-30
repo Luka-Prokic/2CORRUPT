@@ -1,15 +1,14 @@
-import { Animated, Text } from "react-native";
+import { Text } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { hexToRGBA } from "../../features/HEXtoRGB";
 import { useSettingsStore } from "../../stores/settingsStore";
 import { WIDTH } from "../../features/Dimensions";
 import { IButton } from "../ui/buttons/IButton";
 import { router, useLocalSearchParams } from "expo-router";
-import { useEffect, useRef } from "react";
 import { createSessionExercise } from "../../features/workout/useNewSessionExercise";
 import { ExerciseInfo } from "../../stores/workout/types";
 import { useWorkoutStore } from "../../stores/workout/useWorkoutStore";
 import { useTranslation } from "react-i18next";
+import Animated, { FadeInDown, FadeOutDown } from "react-native-reanimated";
 
 interface BottomAddExerciseSectionProps {
   selectedExercises: ExerciseInfo[];
@@ -31,8 +30,6 @@ export function BottomAddExerciseSection({
     type: string;
   }>();
 
-  const animatedOpacity = useRef(new Animated.Value(0)).current;
-
   function handleAddExercise() {
     selectedExercises.forEach((exercise: ExerciseInfo) => {
       if (type === "template" && activeTemplate) {
@@ -46,28 +43,12 @@ export function BottomAddExerciseSection({
     router.back();
   }
 
-  useEffect(() => {
-    if (selectedExercises.length > 0) {
-      Animated.spring(animatedOpacity, {
-        toValue: 1,
-        speed: 100,
-        bounciness: 10,
-        useNativeDriver: true,
-      }).start();
-    } else {
-      Animated.spring(animatedOpacity, {
-        toValue: 0,
-        speed: 100,
-        bounciness: 10,
-        useNativeDriver: true,
-      }).start();
-    }
-  }, [selectedExercises.length]);
+  if (selectedExercises.length === 0) return null;
 
   return (
-    <Animated.View style={{ opacity: animatedOpacity }}>
+    <Animated.View entering={FadeInDown} exiting={FadeOutDown}>
       <LinearGradient
-        colors={[hexToRGBA(theme.text, 0), hexToRGBA(theme.text, 0.4)]}
+        colors={[theme.shadow + "00", theme.shadow + "40"]}
         start={{ x: 0, y: 0 }}
         end={{ x: 0, y: 1 }}
         style={{

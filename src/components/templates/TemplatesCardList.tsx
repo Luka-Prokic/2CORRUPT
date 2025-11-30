@@ -4,18 +4,21 @@ import {
   useWorkoutStore,
   WorkoutTemplate,
 } from "../../stores/workout";
-import { useWidgetUnit } from "../../features/widgets/useWidgetUnit";
 import { CenterCardSlider } from "../ui/sliders/CenterCardSlider";
 import { TemplateAlbumCard } from "./cards/TemplateAlbumCard";
 import { router } from "expo-router";
 import { useUIStore } from "../../stores/ui";
 import { NoTamplatesAlert } from "../ui/alerts/NoTamplatesAlert";
 import { WIDTH } from "../../features/Dimensions";
+import { useUserStore } from "../../stores/userStore";
+import { EmptyTemplateComponent } from "./EmptyTemplateComponent";
 
 interface TemplateFilters {
   name?: string[];
   tags?: string[];
   id?: string;
+  userMadeOnly?: boolean;
+  appMadeOnly?: boolean;
   updatedAfter?: IsoDateString;
   updatedBefore?: IsoDateString;
   groups?: string[];
@@ -25,9 +28,6 @@ interface TemplatesCardListProps {
   templates?: WorkoutTemplate[];
   filters?: TemplateFilters;
 
-  cardWidth?: number;
-  cardHeight?: number;
-
   sliderWidth?: number;
 
   emptyState?: React.ReactNode;
@@ -36,8 +36,6 @@ interface TemplatesCardListProps {
 export function TemplatesCardList({
   templates: templatesProp,
   filters,
-  cardWidth = WIDTH / 3,
-  cardHeight = WIDTH / 3,
   sliderWidth = WIDTH,
   emptyState,
 }: TemplatesCardListProps) {
@@ -45,6 +43,7 @@ export function TemplatesCardList({
   const { setTypeOfView } = useUIStore();
   const storeTemplates = useWorkoutStore((s) => s.templates);
   const templates = templatesProp ?? storeTemplates;
+  const { user } = useUserStore();
 
   const filtered = useMemo(() => {
     return templates.filter((t) => {
@@ -66,6 +65,16 @@ export function TemplatesCardList({
       // ID
       if (filters?.id) {
         if (t.id === filters.id) return false;
+      }
+
+      // User-made templates only
+      if (filters?.userMadeOnly) {
+        if (t.userId !== user?.id) return false;
+      }
+
+      // App-made templates only
+      if (filters?.appMadeOnly) {
+        if (t.userId !== undefined) return false;
       }
 
       // UpdatedAfter
@@ -103,14 +112,18 @@ export function TemplatesCardList({
     router.dismissTo("/");
   }
 
-  if (filtered.length === 0) return emptyState ?? <NoTamplatesAlert />;
-
   return (
     <CenterCardSlider
       data={filtered}
       cardWidth={WIDTH / 2}
       cardHeight={WIDTH / 2}
       sliderWidth={sliderWidth}
+      disableScroll={filtered.length <= 1}
+      emptyCard={
+        filters?.userMadeOnly ? (
+          <NoTamplatesAlert style={{ width: WIDTH / 2, height: WIDTH / 2 }} />
+        ) : null
+      }
       card={({ item }) => (
         <TemplateAlbumCard
           template={item}

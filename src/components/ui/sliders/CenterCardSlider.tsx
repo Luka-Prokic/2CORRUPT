@@ -44,6 +44,7 @@ interface CenterCardSliderProps<T>
   showDistanceBubble?: boolean;
   distanceTolerance?: number;
   animationType?: "card" | "wheel";
+  disableScroll?: boolean;
 }
 
 export function CenterCardSlider<T>({
@@ -70,6 +71,7 @@ export function CenterCardSlider<T>({
   showDistanceBubble = false,
   distanceTolerance = 0,
   animationType = "card",
+  disableScroll = false,
   ...flatListProps
 }: CenterCardSliderProps<T>) {
   const { theme } = useSettingsStore();
@@ -125,6 +127,7 @@ export function CenterCardSlider<T>({
       )}
       <AnimatedFlatList
         {...flatListProps}
+        scrollEnabled={!disableScroll}
         data={fullData}
         renderItem={({ item, index }) => {
           if (item === "first" && firstCard) {

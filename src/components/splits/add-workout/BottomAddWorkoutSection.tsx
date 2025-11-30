@@ -1,14 +1,13 @@
-import { Animated, Text } from "react-native";
+import { Text } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { hexToRGBA } from "../../../features/HEXtoRGB";
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { WIDTH } from "../../../features/Dimensions";
 import { IButton } from "../../ui/buttons/IButton";
 import { router, useLocalSearchParams } from "expo-router";
-import { useEffect, useRef } from "react";
 import { useWorkoutStore } from "../../../stores/workout/useWorkoutStore";
 import { useTranslation } from "react-i18next";
 import { WorkoutTemplate } from "../../../stores/workout/types";
+import Animated, { FadeInDown, FadeOutDown } from "react-native-reanimated";
 
 interface BottomAddWorkoutSectionProps {
   selectedTemplates: WorkoutTemplate[];
@@ -27,7 +26,6 @@ export function BottomAddWorkoutSection({
     mode?: string;
   }>();
 
-  const animatedOpacity = useRef(new Animated.Value(0)).current;
   const isSwapMode = mode === "swap" && workoutId;
 
   function handleAddExercise() {
@@ -48,28 +46,12 @@ export function BottomAddWorkoutSection({
     router.back();
   }
 
-  useEffect(() => {
-    if (selectedTemplates.length > 0) {
-      Animated.spring(animatedOpacity, {
-        toValue: 1,
-        speed: 100,
-        bounciness: 10,
-        useNativeDriver: true,
-      }).start();
-    } else {
-      Animated.spring(animatedOpacity, {
-        toValue: 0,
-        speed: 100,
-        bounciness: 10,
-        useNativeDriver: true,
-      }).start();
-    }
-  }, [selectedTemplates.length]);
+  if (selectedTemplates.length === 0) return null;
 
   return (
-    <Animated.View style={{ opacity: animatedOpacity }}>
+    <Animated.View entering={FadeInDown} exiting={FadeOutDown}>
       <LinearGradient
-        colors={[hexToRGBA(theme.text, 0), hexToRGBA(theme.text, 0.4)]}
+        colors={[theme.shadow + "00", theme.shadow + "40"]}
         start={{ x: 0, y: 0 }}
         end={{ x: 0, y: 1 }}
         style={{

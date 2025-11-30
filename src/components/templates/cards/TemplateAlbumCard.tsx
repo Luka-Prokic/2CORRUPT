@@ -31,7 +31,7 @@ export function TemplateAlbumCard({
         height: cardHeight,
         width: cardWidth,
         backgroundColor: theme.fifthBackground,
-        borderColor: theme.border,
+        borderColor: theme.fifthBackground + "40",
         borderRadius: 32,
         padding: 16,
         borderWidth: 1,
@@ -48,7 +48,7 @@ export function TemplateAlbumCard({
         }}
         numberOfLines={2}
       >
-        {template.name} v{template.version}
+        {template.name}
       </Text>
 
       {template.tags && template.tags.length > 0 && (

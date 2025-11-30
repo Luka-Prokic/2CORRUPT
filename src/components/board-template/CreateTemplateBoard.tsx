@@ -43,10 +43,7 @@ export function CreateTemplateBoard() {
         </StrobeButton>
       )}
       {templates.length > 0 && (
-        <TemplatesCardList
-          filters={{ id: activeTemplate?.id }}
-          emptyState={<Fragment />}
-        />
+        <TemplatesCardList filters={{ id: activeTemplate?.id }} />
       )}
     </Fragment>
   );

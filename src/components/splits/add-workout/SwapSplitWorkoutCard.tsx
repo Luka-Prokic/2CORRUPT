@@ -35,6 +35,8 @@ export function SwapSplitWorkoutCard({
         height: widgetUnit,
         width: widgetUnit,
         backgroundColor: theme.fifthBackground,
+        borderColor: theme.fifthBackground + "40",
+        borderWidth: 1,
         borderRadius: 32,
       }}
       strobeDisabled={selectedTotal === 0}

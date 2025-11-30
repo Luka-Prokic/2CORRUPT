@@ -4,7 +4,7 @@ import { UserStore, ProfileSlice, User } from "../types";
 import { nanoid } from "nanoid/non-secure";
 import { username } from "../../../config/constants/defaults";
 
-export const generateGuestUser = (): User => ({
+export const guestUser: User = {
   id: `user-${nanoid()}`,
   username,
   email: null,
@@ -14,7 +14,7 @@ export const generateGuestUser = (): User => ({
     notifications: false,
     privacy: "public",
   },
-});
+};
 
 /**
  * Profile slice: manages user profile data and updates
@@ -25,7 +25,7 @@ export const createProfileSlice: StateCreator<
   [],
   ProfileSlice
 > = (set, get) => ({
-  user: null, // Will be set by auth slice
+  user: guestUser, // Will be set by auth slice
 
   updateUsername: (username: string) => {
     const currentUser = get().user;
