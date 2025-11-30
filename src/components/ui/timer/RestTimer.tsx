@@ -46,7 +46,7 @@ export function RestTimer({ textStyle, onEnd }: RestTimerProps) {
     return () => clearInterval(id);
   }, [estEndRestTime, isActive, onEnd]);
 
-  const formattedTime = useFormatTime({ seconds: remaining, format: "auto+" });
+  const formattedTime = useFormatTime({ seconds: remaining, format: "mm:ss" });
 
   if (remaining === null) return null;
 
