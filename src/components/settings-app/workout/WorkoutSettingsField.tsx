@@ -27,6 +27,7 @@ export function WorkoutSettingsField({ setting }: WorkoutSettingsFieldProps) {
         option2={t(`button.off`)}
         value={value ? t(`button.on`) : t(`button.off`)}
         onChange={() => setting.update(settingsState, !value)}
+        haptics
       />
       <DescriptionText
         text={t(setting.description)}

@@ -1,4 +1,4 @@
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import { HEIGHT, WIDTH } from "../../../../features/Dimensions";
 import { useSettingsStore } from "../../../../stores/settingsStore";
 import { useWorkoutStore } from "../../../../stores/workout/useWorkoutStore";
@@ -9,6 +9,7 @@ import { TwoOptionStrobeButtons } from "../../../ui/buttons/TwoOptionStrobeButto
 import { MidText } from "../../../ui/text/MidText";
 import { DescriptionText } from "../../../ui/text/DescriptionText";
 import { useFormatTime } from "../../../../features/format/useFormatTime";
+import { IText } from "../../../ui/text/IText";
 
 export function RestTimerSheet() {
   const { theme } = useSettingsStore();
@@ -45,11 +46,10 @@ export function RestTimerSheet() {
         text={t("workout-board.rest-time")}
       />
 
-      <Text style={{ fontSize: 52, fontWeight: "bold", color: theme.text }}>
-        {formattedTime}
-      </Text>
+      <IText text={formattedTime} size={52} />
 
       <TwoOptionStrobeButtons
+        haptics
         labelOne="-15"
         labelTwo="+15"
         onOptionOne={() => handleChangeRestTime(-15)}

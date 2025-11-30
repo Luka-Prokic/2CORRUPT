@@ -1,13 +1,16 @@
 import { useTranslation } from "react-i18next";
 import { useSettingsStore } from "../../stores/settingsStore";
-import { IBubble } from "../ui/containers/IBubble";
 import { Ionicons } from "@expo/vector-icons";
 import { MidText } from "../ui/text/MidText";
-import { View } from "react-native";
+import { Pressable } from "react-native";
 import { InfoText } from "../ui/text/InfoText";
 import { useWidgetUnit } from "../../features/widgets/useWidgetUnit";
 import { CenterCardSlider } from "../ui/sliders/CenterCardSlider";
 import { SwitchButton } from "../ui/buttons/SwitchButton";
+import { ExpandableBubble } from "../ui/containers/ExpendableBubble";
+import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
+import { StrobeOptionButton } from "../ui/buttons/StrobeOptionButton";
+import { StrobeBlur } from "../ui/misc/StrobeBlur";
 
 const UNITS_SETTINGS = [
   {
@@ -41,13 +44,56 @@ export function UnitsSettings() {
   const { fullWidth } = useWidgetUnit();
 
   return (
-    <IBubble size="flexible">
+    <ExpandableBubble
+      collapsedChildren={collapsedChildren()}
+      expandedChildren={expandedChildren()}
+      expandedHeight={128 + fullWidth / 2}
+      collapsedHeight={108}
+    >
       <MidText
         text={t(`settings.units`)}
         style={{
           lineHeight: 64,
         }}
       />
+    </ExpandableBubble>
+  );
+}
+
+function collapsedChildren() {
+  const { t } = useTranslation();
+  const { units } = useSettingsStore();
+  const { themeMode } = useSettingsStore();
+
+  return (
+    <StrobeBlur
+      tint={themeMode}
+      style={{
+        height: 44,
+        width: "100%",
+      }}
+      styleContent={{
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <MidText
+        text={`${t(`units.weight.${units.weight}`)} | ${t(
+          `units.length.${units.length}`
+        )} | ${t(`units.volume.${units.volume}`)} | ${t(
+          `units.temperature.${units.temperature}`
+        )}`}
+      />
+    </StrobeBlur>
+  );
+}
+
+function expandedChildren() {
+  const { t } = useTranslation();
+  const { fullWidth } = useWidgetUnit();
+
+  return (
+    <Animated.View entering={FadeIn} exiting={FadeOut}>
       <CenterCardSlider
         data={UNITS_SETTINGS}
         cardHeight={fullWidth / 2}
@@ -69,7 +115,7 @@ export function UnitsSettings() {
           paddingVertical: 8,
         }}
       />
-    </IBubble>
+    </Animated.View>
   );
 }
 
@@ -91,7 +137,7 @@ function UnitCard({
   const current = units[unit]; // "kg" or "lbs", etc.
 
   return (
-    <View
+    <Pressable
       style={{
         alignItems: "center",
         justifyContent: "space-between",
@@ -118,6 +164,6 @@ function UnitCard({
         width={fullWidth / 2 - 16}
         haptics
       />
-    </View>
+    </Pressable>
   );
 }

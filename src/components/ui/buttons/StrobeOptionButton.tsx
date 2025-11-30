@@ -1,4 +1,4 @@
-import { DimensionValue, ViewStyle, View } from "react-native";
+import { DimensionValue, ViewStyle, View, TextStyle } from "react-native";
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { MidText } from "../text/MidText";
 import { StrobeButton, StrobeButtonProps } from "./StrobeButton";
@@ -11,6 +11,7 @@ interface StrobeOptionButtonProps extends StrobeButtonProps {
   icon?: React.ReactNode;
   style?: ViewStyle | ViewStyle[];
   styleContent?: ViewStyle | ViewStyle[];
+  styleTitle?: TextStyle | TextStyle[];
   color?: string;
   disabled?: boolean;
   children?: React.ReactNode;
@@ -32,6 +33,7 @@ export function StrobeOptionButton({
   height = 34,
   style,
   styleContent,
+  styleTitle,
   color,
   disabled,
   children,
@@ -58,7 +60,10 @@ export function StrobeOptionButton({
           ...styleContent,
         }}
       >
-        <MidText text={title} style={{ color: color || theme.text }} />
+        <MidText
+          text={title}
+          style={{ color: color || theme.text, ...styleTitle }}
+        />
 
         <View
           style={{

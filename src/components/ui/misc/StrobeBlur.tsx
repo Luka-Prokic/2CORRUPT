@@ -7,6 +7,7 @@ import { WIDTH } from "../../../features/Dimensions";
 export type StrobeColors = [string, string, string, string];
 interface StrobeBlurProps {
   style?: ViewStyle | ViewStyle[];
+  styleContent?: ViewStyle | ViewStyle[];
   colors?: StrobeColors;
   duration?: number;
   children?: React.ReactNode;
@@ -22,6 +23,7 @@ export function StrobeBlur({
   style,
   colors = ["#fff", "#fff", "#fff", "#fff"],
   duration = 6000,
+  styleContent,
   children,
   tint = "default",
   size = 100,
@@ -122,6 +124,7 @@ export function StrobeBlur({
             overflow: "hidden",
             justifyContent: "center",
             alignItems: "center",
+            ...styleContent,
           },
           style,
         ]}
@@ -132,7 +135,9 @@ export function StrobeBlur({
   }
 
   return (
-    <View style={[style, { overflow: "hidden" }]}>
+    <View
+      style={{ width: "100%", height: "100%", overflow: "hidden", ...style }}
+    >
       {renderBlobs()}
       <BlurView
         intensity={100}
@@ -143,6 +148,7 @@ export function StrobeBlur({
             overflow: "hidden",
             justifyContent: "center",
             alignItems: "center",
+            ...styleContent,
           },
         ]}
       >

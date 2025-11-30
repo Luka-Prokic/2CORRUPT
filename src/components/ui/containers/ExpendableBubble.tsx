@@ -28,7 +28,7 @@ interface ExpandableBubbleProps {
   backgroundColor?: string;
   width?: number;
 
-  expendedChildren?: React.ReactNode;
+  expandedChildren?: React.ReactNode;
   collapsedChildren?: React.ReactNode;
   children?: React.ReactNode;
 
@@ -42,7 +42,7 @@ export function ExpandableBubble({
   info,
   description,
   children,
-  expendedChildren,
+  expandedChildren,
   collapsedChildren,
   onToggle,
   collapsedHeight = 64,
@@ -126,7 +126,7 @@ export function ExpandableBubble({
         {description && <BackgroundText text={description} />}
         {/* Children Content */}
         {children ?? null}
-        {expanded ? expendedChildren ?? null : collapsedChildren ?? null}
+        {expanded ? expandedChildren ?? null : collapsedChildren ?? null}
         {/* Info Text */}
         {info && <InfoText text={info} />}
       </Pressable>

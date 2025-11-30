@@ -14,7 +14,7 @@ export function LanguageSettings() {
   return (
     <ExpandableBubble
       expandedHeight={64 + 44 * LANGUAGES_COUNT}
-      collapsedHeight={64 + 44}
+      collapsedHeight={108}
       onToggle={() => setExpanded(!expanded)}
     >
       <MidText

@@ -5,8 +5,9 @@ import { IBubble } from "../../ui/containers/IBubble";
 import { MidText } from "../../ui/text/MidText";
 import { DescriptionText } from "../../ui/text/DescriptionText";
 import { TwoOptionStrobeButtons } from "../../ui/buttons/TwoOptionStrobeButtons";
-import { XLText } from "../../ui/text/XLText";
+import { IText } from "../../ui/text/IText";
 import { WIDTH } from "../../../features/Dimensions";
+import { useFormatTime } from "../../../features/format/useFormatTime";
 
 interface WorkoutSettingsIncrementFieldProps {
   setting: WorkoutSettingConfig;
@@ -23,10 +24,15 @@ export function WorkoutSettingsIncrementField({
 
   const value = setting.select(settingsState);
 
+  const shownValue =
+    setting.key === "defaultRestTime"
+      ? useFormatTime({ seconds: value, format: "auto+" })
+      : value.toString();
+
   return (
     <IBubble size="flexible" style={{ padding: 16 }} styleContent={{ gap: 16 }}>
       <MidText text={t(setting.title)} />
-      <XLText text={value.toString()} />
+      <IText text={shownValue} size={52} />
       <TwoOptionStrobeButtons
         labelOne={`-${setting.increment}`}
         labelTwo={`+${setting.increment}`}
@@ -37,6 +43,7 @@ export function WorkoutSettingsIncrementField({
           setting.update(settingsState, value + setting.increment)
         }
         width={WIDTH - 64}
+        haptics
       />
       <DescriptionText
         text={t(setting.description)}

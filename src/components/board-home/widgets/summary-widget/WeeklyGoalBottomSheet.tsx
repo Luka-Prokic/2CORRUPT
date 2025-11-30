@@ -15,7 +15,7 @@ import { useWorkoutStore } from "../../../../stores/workout";
 import { useWidgetUnit } from "../../../../features/widgets/useWidgetUnit";
 import { useWeeklyWorkoutGoal } from "../../../../features/workout/useWorkoutGoal";
 import { ActiveSplitAlert } from "../../../ui/alerts/ActiveSplitAlert";
-import { XLText } from "../../../ui/text/XLText";
+import { IText } from "../../../ui/text/IText";
 import { MidText } from "../../../ui/text/MidText";
 import { router } from "expo-router";
 
@@ -74,7 +74,7 @@ export const WeeklyGoalBottomSheet = forwardRef<BottomSheetModal>(({}, ref) => {
           },
         ]}
       >
-        <XLText text={t("splits.weekly-goal")} />
+        <IText text={t("splits.weekly-goal")} />
 
         <Text
           style={{

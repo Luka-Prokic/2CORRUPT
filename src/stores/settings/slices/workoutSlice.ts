@@ -7,11 +7,15 @@ export const createWorkoutSlice: StateCreator<
   [],
   WorkoutSlice
 > = (set, get) => ({
-  defaultRestTime: 180,
-  setDefaultRestTime: (defaultRestTime) =>
-    set((state) => ({ ...state, defaultRestTime })),
+  defaultRestTime: 120,
+  setDefaultRestTime: (defaultRestTime) => {
+    if (defaultRestTime < 0 || defaultRestTime > 36000) return;
+
+    set((state) => ({ ...state, defaultRestTime }));
+  },
   startRestTimer: false,
-  setStartRestTimer: (startRestTimer) => set((state) => ({ ...state, startRestTimer })),
+  setStartRestTimer: (startRestTimer) =>
+    set((state) => ({ ...state, startRestTimer })),
   autoRestComplete: false,
   setAutoRestComplete: (autoRestComplete) =>
     set((state) => ({ ...state, autoRestComplete })),

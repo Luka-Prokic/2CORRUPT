@@ -28,7 +28,7 @@ export function ThemeSettings() {
   return (
     <ExpandableBubble
       expandedHeight={64 + 44 * themeOrder.length}
-      collapsedHeight={64 + 44}
+      collapsedHeight={108}
       onToggle={() => setExpanded(!expanded)}
     >
       <MidText text={t(`settings.change-theme`)} style={{ lineHeight: 64 }} />

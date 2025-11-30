@@ -26,8 +26,11 @@ export function GoalsButton() {
         paddingHorizontal: 16,
       }}
     >
-      <Ionicons name="golf" size={32} color={theme.grayText} />
-      <MidText text={t(`settings.goals`)} style={{ lineHeight: 64 }} />
+      <Ionicons name="golf" size={32} color={theme.text} />
+      <MidText
+        text={t(`settings.goals`)}
+        style={{ lineHeight: 64, color: theme.text }}
+      />
       <Ionicons
         name="chevron-forward"
         size={32}

@@ -1,4 +1,4 @@
-import { View, Text, TextInput } from "react-native";
+import { TextInput } from "react-native";
 import { useSettingsStore } from "../../../../stores/settings";
 import { HEIGHT, WIDTH } from "../../../../features/Dimensions";
 import { useTranslation } from "react-i18next";
@@ -8,6 +8,7 @@ import { useWorkoutStore } from "../../../../stores/workout/useWorkoutStore";
 import { Ionicons } from "@expo/vector-icons";
 import { OptionButton } from "../../../ui/buttons/OptionButton";
 import { DescriptionText } from "../../../ui/text/DescriptionText";
+import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 
 export function SessionSheet() {
   const { theme } = useSettingsStore();
@@ -22,7 +23,11 @@ export function SessionSheet() {
   };
 
   return (
-    <View style={{ width: WIDTH, height: HEIGHT - 200, padding: 16 }}>
+    <Animated.View
+      entering={FadeIn}
+      exiting={FadeOut}
+      style={{ width: WIDTH, height: HEIGHT - 200, padding: 16 }}
+    >
       <SessionNameInput />
       <DescriptionText
         style={{
@@ -66,6 +71,6 @@ export function SessionSheet() {
         icon={<Ionicons name={"remove-circle"} size={24} color={theme.error} />}
         color={theme.error}
       />
-    </View>
+    </Animated.View>
   );
 }

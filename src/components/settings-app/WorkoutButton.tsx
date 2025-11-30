@@ -26,7 +26,7 @@ export function WorkoutButton() {
         paddingHorizontal: 16,
       }}
     >
-      <Ionicons name="barbell" size={32} color={theme.grayText} />
+      <Ionicons name="barbell" size={32} color={theme.text} />
       <MidText text={t(`settings.workout`)} style={{ lineHeight: 64 }} />
       <Ionicons
         name="chevron-forward"

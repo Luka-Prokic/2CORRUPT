@@ -32,7 +32,7 @@ export function WorkoutBoardHeaderTitle({
         padding: 8,
         width: WIDTH - 160,
       }}
-      disabled={listOpen}
+      // disabled={listOpen}
     >
       <SessionTimer
         textStyle={{

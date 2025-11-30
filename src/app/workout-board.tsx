@@ -30,13 +30,7 @@ export default function WorkoutBoard() {
       <Stack.Screen
         options={{
           headerBlurEffect: "none",
-          headerLeft: () => (
-            <WorkoutBoardHeaderLeft
-              listOpen={listOpen}
-              setListOpen={setListOpen}
-              setListType={setListType}
-            />
-          ),
+          headerLeft: () => <WorkoutBoardHeaderLeft listOpen={listOpen} />,
 
           headerTitle: () => (
             <WorkoutBoardHeaderTitle

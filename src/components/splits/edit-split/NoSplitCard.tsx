@@ -18,7 +18,7 @@ import { useWeeklyWorkoutGoal } from "../../../features/workout/useWorkoutGoal";
 import { useTranslation } from "react-i18next";
 import { StrobeButton } from "../../ui/buttons/StrobeButton";
 import { ActiveSplitAlert } from "../../ui/alerts/ActiveSplitAlert";
-import { XLText } from "../../ui/text/XLText";
+import { IText } from "../../ui/text/IText";
 import { MidText } from "../../ui/text/MidText";
 import { router } from "expo-router";
 
@@ -112,7 +112,7 @@ export function NoSplitCard() {
           />
         )}
 
-        <XLText text={t("splits.weekly-goal")} />
+        <IText text={t("splits.weekly-goal")} />
 
         {!expanded ? (
           <Animated.View entering={FadeIn} style={{ alignItems: "center" }}>
@@ -162,6 +162,7 @@ export function NoSplitCard() {
               disabledOne={activeSplitPlan.plan.activeLength === 1}
               disabledStrobeOne={true}
               disabledStrobeTwo={true}
+              haptics
             />
 
             <InfoText

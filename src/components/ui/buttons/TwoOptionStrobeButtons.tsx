@@ -4,6 +4,7 @@ import { WIDTH } from "../../../features/Dimensions";
 import { BounceButton } from "./BounceButton";
 import { useSettingsStore } from "../../../stores/settings";
 import { StrobeBlur } from "../misc/StrobeBlur";
+import * as Haptics from "expo-haptics";
 
 interface TwoOptionStrobeButtonsProps {
   labelOne: string;
@@ -20,6 +21,7 @@ interface TwoOptionStrobeButtonsProps {
   disabledStrobeTwo?: boolean;
   style?: ViewStyle | ViewStyle[];
   width?: number;
+  haptics?: boolean;
 }
 
 export function TwoOptionStrobeButtons({
@@ -37,8 +39,23 @@ export function TwoOptionStrobeButtons({
   styleLabelOne,
   styleLabelTwo,
   width = WIDTH - 32,
+  haptics = false,
 }: TwoOptionStrobeButtonsProps) {
   const { theme } = useSettingsStore();
+
+  function handleOptionOne() {
+    onOptionOne();
+    if (haptics) {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
+    }
+  }
+
+  function handleOptionTwo() {
+    onOptionTwo();
+    if (haptics) {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
+    }
+  }
 
   return (
     <View
@@ -64,7 +81,7 @@ export function TwoOptionStrobeButtons({
           overflow: "hidden",
           ...styleOne,
         }}
-        onPress={onOptionOne}
+        onPress={handleOptionOne}
         disabled={disabledOne}
       >
         <StrobeBlur
@@ -103,7 +120,7 @@ export function TwoOptionStrobeButtons({
           overflow: "hidden",
           ...styleTwo,
         }}
-        onPress={onOptionTwo}
+        onPress={handleOptionTwo}
         disabled={disabledTwo}
       >
         <StrobeBlur
