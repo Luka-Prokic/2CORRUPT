@@ -43,6 +43,7 @@ interface CenterCardSliderProps<T>
   selectedCardIndex?: number;
   showDistanceBubble?: boolean;
   distanceTolerance?: number;
+  animationType?: "card" | "wheel";
 }
 
 export function CenterCardSlider<T>({
@@ -68,6 +69,7 @@ export function CenterCardSlider<T>({
   selectedCardIndex = 0,
   showDistanceBubble = false,
   distanceTolerance = 0,
+  animationType = "card",
   ...flatListProps
 }: CenterCardSliderProps<T>) {
   const { theme } = useSettingsStore();
@@ -220,6 +222,7 @@ function renderCenterCard({
   content,
   width,
   height,
+  animationType = "card",
 }: {
   scrollX: RNAnimated.Value;
   index: number;
@@ -228,32 +231,58 @@ function renderCenterCard({
   height: number;
   totalItems: number;
   horizontalPadding: number;
+  animationType?: "card" | "wheel";
 }) {
   const inputRange = [
+    (index - 3) * width,
     (index - 2) * width,
     (index - 1) * width,
     index * width,
     (index + 1) * width,
     (index + 2) * width,
+    (index + 3) * width,
   ];
 
   const opacity = scrollX.interpolate({
     inputRange,
-    outputRange: [0.7, 0.9, 1, 0.9, 0.7],
+    outputRange: [0.4, 0.6, 0.8, 1, 0.8, 0.6, 0.4],
     extrapolate: "clamp",
   });
 
   const scale = scrollX.interpolate({
     inputRange,
-    outputRange: [0.85, 0.9, 1, 0.9, 0.85],
+    outputRange: [0.85, 0.9, 0.95, 1, 0.95, 0.9, 0.85],
     extrapolate: "clamp",
   });
 
-  const rotateY = scrollX.interpolate({
-    inputRange,
-    outputRange: ["-45deg", "-25deg", "0deg", "25deg", "45deg"],
-    extrapolate: "clamp",
-  });
+  const rotateY =
+    animationType === "card"
+      ? scrollX.interpolate({
+          inputRange,
+          outputRange: [
+            "-65deg",
+            "-35deg",
+            "-25deg",
+            "0deg",
+            "25deg",
+            "35deg",
+            "65deg",
+          ],
+          extrapolate: "clamp",
+        })
+      : scrollX.interpolate({
+          inputRange,
+          outputRange: [
+            "85deg",
+            "55deg",
+            "35deg",
+            "0deg",
+            "-35deg",
+            "-55deg",
+            "-85deg",
+          ],
+          extrapolate: "clamp",
+        });
 
   return (
     <View

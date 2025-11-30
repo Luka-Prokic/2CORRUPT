@@ -35,6 +35,7 @@ export function LanguageSettings() {
               onPress={item.onPress}
               height={44}
               strobeDisabled={i18n.language !== item.code}
+              styleContent={{ paddingHorizontal: 16 }}
             />
           ) : null
         }

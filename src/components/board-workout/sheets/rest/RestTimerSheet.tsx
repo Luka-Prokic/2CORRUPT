@@ -3,11 +3,11 @@ import { HEIGHT, WIDTH } from "../../../../features/Dimensions";
 import { useSettingsStore } from "../../../../stores/settingsStore";
 import { useWorkoutStore } from "../../../../stores/workout/useWorkoutStore";
 import { ExerciseName } from "../../../view-workout/table/header/ExerciseName";
-import { StrobeBlur } from "../../../ui/misc/StrobeBlur";
-import { BounceButton } from "../../../ui/buttons/BounceButton";
 import { useTranslation } from "react-i18next";
 import { RestCheatSheet } from "./RestCheatSheet";
 import { TwoOptionStrobeButtons } from "../../../ui/buttons/TwoOptionStrobeButtons";
+import { MidText } from "../../../ui/text/MidText";
+import { DescriptionText } from "../../../ui/text/DescriptionText";
 
 export function RestTimerSheet() {
   const { theme } = useSettingsStore();
@@ -38,9 +38,10 @@ export function RestTimerSheet() {
         exercise={activeExercise}
         textColor={activeTemplate ? theme.tint : theme.accent}
       />
-      <Text style={{ fontSize: 18, color: theme.grayText }}>
-        {t("workout-board.rest-time")}
-      </Text>
+      <MidText
+        style={{ color: theme.grayText }}
+        text={t("workout-board.rest-time")}
+      />
 
       <Text style={{ fontSize: 52, fontWeight: "bold", color: theme.text }}>
         {minutes}min {seconds}s
@@ -60,16 +61,14 @@ export function RestTimerSheet() {
         disabledOne={restTime === 0}
       />
 
-      <Text
+      <DescriptionText
         style={{
-          fontSize: 14,
-          color: theme.grayText,
           textAlign: "justify",
-          marginBottom: 16,
+          marginVertical: 8,
+          color: theme.grayText,
         }}
-      >
-        {t("workout-board.rest-timer-description")}
-      </Text>
+        text={t("workout-board.rest-timer-description")}
+      />
 
       <RestCheatSheet />
     </View>

@@ -2,9 +2,10 @@ import { Set } from "../../../../stores/workout/types";
 import { TouchableOpacity, Text, ViewStyle, TextStyle } from "react-native";
 import { useSettingsStore } from "../../../../stores/settingsStore";
 import { useRef, Fragment } from "react";
-import { RirRpeBottomSheet } from "./rir-rpe/RirRpeBottomSheet";
+import { RirRpeBottomSheet } from "./RirRpeBottomSheet";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { hexToRGBA } from "../../../../features/HEXtoRGB";
+import { Ionicons } from "@expo/vector-icons";
 
 interface InputRIRProps {
   set: Set;
@@ -31,8 +32,6 @@ export function InputRIR({ set, style, textStyle, disabled }: InputRIRProps) {
           {
             width: 44,
             height: 44,
-            borderRadius: 8,
-            backgroundColor: hexToRGBA(theme.background, disabled ? 0 : 0.4),
             alignItems: "center",
             justifyContent: "center",
           },
@@ -40,6 +39,12 @@ export function InputRIR({ set, style, textStyle, disabled }: InputRIRProps) {
         ]}
         disabled={disabled}
       >
+        <Ionicons
+          name="ellipse"
+          color={hexToRGBA(theme.background, disabled ? 0 : 0.4)}
+          size={44}
+          style={{ position: "absolute" }}
+        />
         <Text
           style={[
             {

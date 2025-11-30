@@ -10,7 +10,6 @@ import { InfoText } from "../text/InfoText";
 import { Pressable, ViewStyle } from "react-native";
 import { MidText } from "../text/MidText";
 import { DescriptionText } from "../text/DescriptionText";
-import { hexToRGBA } from "../../../features/HEXtoRGB";
 
 interface IBubbleProps {
   header?: string;
@@ -62,11 +61,10 @@ export function IBubble({
         height: size === "flexible" ? undefined : height ?? bubbleHeight,
         width: width ?? fullWidth,
         borderRadius: 32,
-        backgroundColor:
-          backgroundColor ?? hexToRGBA(theme.fourthBackground, 0.6),
+        backgroundColor: backgroundColor ?? theme.text + "10",
         overflow: "hidden",
         borderWidth: 1,
-        borderColor: hexToRGBA(theme.fourthBackground, 0.4),
+        borderColor: theme.text + "10",
         ...style,
       }}
     >

@@ -8,8 +8,8 @@ import {
 export function useBounceScaleAnim() {
   const scale = useSharedValue(1);
 
-  const bounceIt = () => {
-    scale.value = withTiming(0.8, { duration: 50 }, (finished) => {
+  function bounceIt() {
+    scale.value = withTiming(0.8, { duration: 40 }, (finished) => {
       if (finished) {
         scale.value = withSpring(1, {
           mass: 0.5,
@@ -19,7 +19,7 @@ export function useBounceScaleAnim() {
         });
       }
     });
-  };
+  }
 
   const bounceAnim = useAnimatedStyle(() => ({
     transform: [{ scale: scale.value }],

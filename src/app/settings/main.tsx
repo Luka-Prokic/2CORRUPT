@@ -26,11 +26,12 @@ export default function SettingsScreen() {
       />
 
       <ScreenContent style={{ backgroundColor: theme.navBackground }}>
-        <ScreenView style={{ gap: 16, paddingHorizontal: 16 }}>
+        <ScreenView style={{ gap: 8, paddingHorizontal: 16 }}>
           <IBubble height={128}>
             <WorkoutButton />
             <GoalsButton />
           </IBubble>
+
           <UnitsSettings />
 
           <ThemeSettings />

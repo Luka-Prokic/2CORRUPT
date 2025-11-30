@@ -5,6 +5,7 @@ import { HEIGHT, WIDTH } from "../../../../features/Dimensions";
 import { ExerciseName } from "../../../view-workout/table/header/ExerciseName";
 import { TextButton } from "../../../ui/buttons/TextButton";
 import { useTranslation } from "react-i18next";
+import { DescriptionText } from "../../../ui/text/DescriptionText";
 
 export function ExerciseNameSheet() {
   const { theme } = useSettingsStore();
@@ -52,36 +53,30 @@ export function ExerciseNameSheet() {
         placeholderTextColor={theme.grayText}
       />
 
-      <Text
+      <DescriptionText
         style={{
-          fontSize: 14,
           color: theme.grayText,
           textAlign: "justify",
-          marginBottom: 12,
+          marginBottom: 16,
         }}
-      >
-        {t("workout-board.prefix-description")}
-      </Text>
-
+        text={t("workout-board.prefix-description")}
+      />
       <TextButton
         title={t("workout-board.create-exercise-copy")}
         onPress={() => {
           //TODO: handle routing to create new exercise screen
         }}
-        color={activeTemplate && theme.tint}
+        color={activeTemplate ? theme.tint : theme.accent}
       />
 
-      <Text
+      <DescriptionText
         style={{
-          fontSize: 13,
           color: theme.grayText,
           textAlign: "justify",
           marginTop: 8,
-          lineHeight: 18,
         }}
-      >
-        {t("workout-board.create-exercise-copy-description")}
-      </Text>
+        text={t("workout-board.create-exercise-copy-description")}
+      />
     </View>
   );
 }

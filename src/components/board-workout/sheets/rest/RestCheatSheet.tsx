@@ -1,7 +1,9 @@
 import { WIDTH } from "../../../../features/Dimensions";
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import { useSettingsStore } from "../../../../stores/settingsStore";
 import { useTranslation } from "react-i18next";
+import { InfoText } from "../../../ui/text/InfoText";
+import { DescriptionText } from "../../../ui/text/DescriptionText";
 
 export function RestCheatSheet() {
   const { theme } = useSettingsStore();
@@ -11,39 +13,23 @@ export function RestCheatSheet() {
     <View
       style={{
         width: WIDTH - 32,
-        padding: 12,
         backgroundColor: theme.input,
+        gap: 8,
         borderWidth: 1,
         borderColor: theme.border,
-        borderRadius: 12,
+        borderRadius: 8,
+        alignItems: "flex-start",
         marginBottom: 16,
+        padding: 8,
       }}
     >
-      <Text
-        style={{
-          fontSize: 14,
-          fontWeight: "bold",
-          color: theme.text,
-          marginBottom: 4,
-        }}
-      >
-        {t("workout-board.typical-rest-times")}
-      </Text>
-      <Text style={{ fontSize: 12, color: theme.grayText }}>
-        • {t("workout-board.heavy-lifts")}
-      </Text>
-      <Text style={{ fontSize: 12, color: theme.grayText }}>
-        • {t("workout-board.compound-lifts")}
-      </Text>
-      <Text style={{ fontSize: 12, color: theme.grayText }}>
-        • {t("workout-board.accessory-lifts")}
-      </Text>
-      <Text style={{ fontSize: 12, color: theme.grayText }}>
-        • {t("workout-board.accessory-lifts-supersets")}
-      </Text>
-      <Text style={{ fontSize: 12, color: theme.grayText }}>
-        • {t("workout-board.cardio-or-warm-up-sets")}
-      </Text>
+      <DescriptionText text={t("workout-board.typical-rest-times")} />
+
+      <InfoText text={"• " + t("workout-board.heavy-lifts")} />
+      <InfoText text={"• " + t("workout-board.compound-lifts")} />
+      <InfoText text={"• " + t("workout-board.accessory-lifts")} />
+      <InfoText text={"• " + t("workout-board.accessory-lifts-supersets")} />
+      <InfoText text={"• " + t("workout-board.cardio-or-warm-up-sets")} />
     </View>
   );
 }

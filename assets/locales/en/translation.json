@@ -29,7 +29,8 @@
     "confirm": "Confirm",
     "active": "Active",
     "done": "Done",
-    "swap": "Swap"
+    "swap": "Swap",
+    "tap-select": "Tap to select"
   },
   "form": {
     "name": "Name",
@@ -129,18 +130,21 @@
     "rs": "Serbian"
   },
   "settings": {
-    "appearance": "Change theme",
-    "change-language": "Change language",
-    "choose-language": "Choose language",
+    "change-language": "Change Language",
+    "choose-language": "Choose Language",
     "label-app-settings": "App",
-    "choose-theme": "Choose theme",
-    "change-theme": "Change theme",
+    "choose-theme": "Choose Theme",
+    "change-theme": "Change Theme",
     "workout": "Workout",
     "workout-info": "Adjust your session settings.",
     "goals": "Goals",
     "goals-info": "Adjust your goals settings.",
-    "units": "Units",
-    "units-info": "Adjust your units settings."
+    "units": "Units of Measurement",
+    "units-info": "Adjust your units to your preferred system.",
+    "weight": "Weight",
+    "length": "Length",
+    "volume": "Volume",
+    "temperature": "Temperature"
   },
 
   "units": {
@@ -155,11 +159,11 @@
     "volume": {
       "ml": "ML",
       "fl.oz": "FL.OZ"
+    },
+    "temperature": {
+      "°C": "°C",
+      "°F": "°F"
     }
-  },
-  "temperature": {
-    "°C": "°C",
-    "°F": "°F"
   },
   "greeting": {
     "morning": "Good morning",
@@ -275,7 +279,17 @@
     "got-back-empty-handed": "Got back empty handed?",
     "select-exercises": "To get started, select some exercises.",
     "template-name": "Template Name...",
-    "planned-session": "Planned Session"
+    "planned-session": "Planned Session",
+    "rir-description": "RIR (Reps in Reserve) tells how many reps you could still do before failure.",
+    "rpe-description": "RPE (Rate of Perceived Exertion) measures how hard the set felt on a 1-10 scale.",
+    "rir-1": "Very easy, could do 5 or more reps",
+    "rir-2": "Fairly easy, 3 reps left",
+    "rir-3": "Hard, close to failure",
+    "rir-4": "Max effort / failure",
+    "rpe-1": "Very easy",
+    "rpe-2": "Moderate",
+    "rpe-3": "Hard",
+    "rpe-4": "Max effort"
   },
   "workout-board": {
     "workout": "Workout",

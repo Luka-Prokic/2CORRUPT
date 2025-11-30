@@ -6,12 +6,17 @@ import {
 } from "@gorhom/bottom-sheet";
 import { View, Text, TouchableOpacity } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useSettingsStore } from "../../../../../stores/settings";
-import { CenterCardSlider } from "../../../../ui/sliders/CenterCardSlider";
-import { useWorkoutStore } from "../../../../../stores/workoutStore";
+import { useSettingsStore } from "../../../../stores/settings";
+import { CenterCardSlider } from "../../../ui/sliders/CenterCardSlider";
+import { useWorkoutStore } from "../../../../stores/workoutStore";
 import * as Haptics from "expo-haptics";
-import { Set } from "../../../../../stores/workout/types";
-import { WIDTH } from "../../../../../features/Dimensions";
+import { Set } from "../../../../stores/workout/types";
+import { WIDTH } from "../../../../features/Dimensions";
+import { SwitchButton } from "../../../ui/buttons/SwitchButton";
+import { DescriptionText } from "../../../ui/text/DescriptionText";
+import { RirRpeCheatSheet } from "./RirRpeCheetSheet";
+import { useTranslation } from "react-i18next";
+import { InfoText } from "../../../ui/text/InfoText";
 
 export type SheetMode = "rir" | "rpe";
 
@@ -25,6 +30,7 @@ export const RirRpeBottomSheet = forwardRef<
   RirRpeBottomSheetProps
 >(({ set, startMode }, ref) => {
   const { theme } = useSettingsStore();
+  const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const [mode, setMode] = useState<SheetMode>(startMode);
   const { updateSetInActiveExercise } = useWorkoutStore();
@@ -74,6 +80,8 @@ export const RirRpeBottomSheet = forwardRef<
           paddingTop: 8,
         }}
       >
+        <InfoText text={t("button.tap-select")} />
+
         {/* CENTER CARD SLIDER */}
         <CenterCardSlider
           data={values[mode]}
@@ -82,6 +90,8 @@ export const RirRpeBottomSheet = forwardRef<
           selectedIndex={set[mode] ?? 0}
           selectedCardIndex={set[mode] ?? 0}
           distanceTolerance={2}
+          sliderWidth={WIDTH}
+          animationType="wheel"
           showDistanceBubble
           hideDots
           card={({ item, index }) => (
@@ -107,85 +117,58 @@ export const RirRpeBottomSheet = forwardRef<
           )}
         />
 
-        {/* HEADER SWITCH */}
-        <HeaderSwitch mode={mode} switchMode={switchMode} />
+        {/* RIR/RPE SWITCH */}
+        <Switch mode={mode} switchMode={switchMode} />
       </BottomSheetView>
     </BottomSheetModal>
   );
 });
 
-function HeaderSwitch({
+function Switch({
   mode,
   switchMode,
 }: {
   mode: SheetMode;
   switchMode: (mode: SheetMode) => void;
 }) {
-  const { theme } = useSettingsStore();
   const { activeExercise } = useWorkoutStore();
-  const modes = activeExercise?.columns.filter(
-    (c) => c.toLowerCase() === "rpe" || c.toLowerCase() === "rir"
-  );
-  if (!modes) return null;
-  if (modes.length === 1)
-    return (
-      <View
-        style={{
-          flexDirection: "row",
-          backgroundColor: theme.handle,
-          borderRadius: 22,
-          marginBottom: 32,
-          height: 44,
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Text
-          style={{
-            color: theme.text,
-            fontWeight: "600",
-          }}
-        >
-          {modes[0].toUpperCase()}
-        </Text>
-      </View>
-    );
+  const { t } = useTranslation();
+  // extract RPE / RIR columns deterministically
+  const modes = (activeExercise?.columns ?? [])
+    .map((c) => c.toLowerCase())
+    .filter((c) => c === "rpe" || c === "rir");
+
+  // nothing found → no UI
+  if (modes.length === 0) return null;
+
+  const option1 = modes[0].toUpperCase();
+  const option2 = modes[1]?.toUpperCase(); // may be undefined (single mode)
 
   return (
     <View
       style={{
-        flexDirection: "row",
-        backgroundColor: theme.border,
-        borderRadius: 22,
-        marginBottom: 32,
-        height: 44,
+        alignItems: "center",
+        gap: 16,
       }}
     >
-      {modes.map((m) => {
-        const active = m.toLowerCase() === mode.toLowerCase();
-        return (
-          <TouchableOpacity
-            key={m}
-            onPress={() => switchMode(m.toLowerCase() as SheetMode)}
-            style={{
-              flex: 1,
-              backgroundColor: active ? theme.handle : "transparent",
-              borderRadius: 22,
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Text
-              style={{
-                color: active ? theme.text : theme.handle,
-                fontWeight: "600",
-              }}
-            >
-              {m.toUpperCase()}
-            </Text>
-          </TouchableOpacity>
-        );
-      })}
+      <SwitchButton
+        option1={option1}
+        option2={option2} // undefined → automatically single mode
+        value={mode.toUpperCase()}
+        onChange={(val) => switchMode(val.toLowerCase() as SheetMode)}
+        width={150}
+        height={44}
+      />
+      <DescriptionText
+        text={
+          mode === "rir"
+            ? t("workout-view.rir-description")
+            : t("workout-view.rpe-description")
+        }
+      />
+
+      {/* RIR/RPE CHEAT SHEET */}
+      <RirRpeCheatSheet mode={mode} />
     </View>
   );
 }

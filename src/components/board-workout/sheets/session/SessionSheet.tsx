@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useWorkoutStore } from "../../../../stores/workout/useWorkoutStore";
 import { Ionicons } from "@expo/vector-icons";
 import { OptionButton } from "../../../ui/buttons/OptionButton";
+import { DescriptionText } from "../../../ui/text/DescriptionText";
 
 export function SessionSheet() {
   const { theme } = useSettingsStore();
@@ -23,17 +24,14 @@ export function SessionSheet() {
   return (
     <View style={{ width: WIDTH, height: HEIGHT - 200, padding: 16 }}>
       <SessionNameInput />
-      <Text
+      <DescriptionText
         style={{
-          fontSize: 14,
           color: theme.grayText,
           textAlign: "justify",
-          marginBottom: 32,
-          lineHeight: 18,
+          marginBottom: 16,
         }}
-      >
-        {t("workout-board.session-name-description")}
-      </Text>
+        text={t("workout-board.session-name-description")}
+      />
 
       <TextInput
         style={{

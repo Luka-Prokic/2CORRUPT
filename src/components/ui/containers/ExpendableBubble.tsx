@@ -14,7 +14,6 @@ import { useWidgetUnit } from "../../../features/widgets/useWidgetUnit";
 
 import { BackgroundText } from "../text/BackgroundText";
 import { InfoText } from "../text/InfoText";
-import { hexToRGBA } from "../../../features/HEXtoRGB";
 
 interface ExpandableBubbleProps {
   header?: string;
@@ -99,10 +98,9 @@ export function ExpandableBubble({
           width: width ?? fullWidth,
           borderRadius: 32,
           overflow: "hidden",
-          backgroundColor:
-            backgroundColor ?? hexToRGBA(theme.fourthBackground, 0.6),
+          backgroundColor: backgroundColor ?? theme.text + "10",
           borderWidth: 1,
-          borderColor: hexToRGBA(theme.fourthBackground, 0.4),
+          borderColor: theme.text + "10",
         },
         animatedStyle,
         style,

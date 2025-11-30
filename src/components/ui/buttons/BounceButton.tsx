@@ -30,9 +30,9 @@ export function BounceButton({
   const { theme } = useSettingsStore();
   const { bounceAnim, bounceIt } = useBounceScaleAnim();
 
-  const handlePress = () => {
+  function handlePress() {
     onPress?.();
-  };
+  }
 
   return (
     <Animated.View

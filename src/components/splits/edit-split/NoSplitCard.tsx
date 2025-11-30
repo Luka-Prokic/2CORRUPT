@@ -65,76 +65,6 @@ export function NoSplitCard() {
     if (goal > 1) updateWeeklyGoal(goal - 1);
   }
 
-  function CollapsedChildren() {
-    return (
-      <Animated.View entering={FadeIn} style={{ alignItems: "center" }}>
-        <MidText
-          text={`${goal} ${
-            goal === 1 ? t("splits.workout") : t("splits.workouts")
-          }`}
-        />
-        <ActiveSplitAlert style={{ marginBottom: 16, paddingHorizontal: 16 }} />
-      </Animated.View>
-    );
-  }
-
-  function ExpandedChildren() {
-    return (
-      <Animated.View entering={FadeIn} style={{ alignItems: "center" }}>
-        <Text
-          style={{
-            fontSize: 52,
-            fontWeight: "bold",
-            color: theme.text,
-          }}
-        >
-          {goal}
-        </Text>
-        <Text
-          style={{
-            fontSize: 18,
-            fontWeight: "500",
-            color: theme.text,
-            marginBottom: 16,
-          }}
-        >
-          {goal === 1 ? t("splits.workout") : t("splits.workouts")}
-        </Text>
-
-        <ActiveSplitAlert style={{ marginBottom: 16, paddingHorizontal: 16 }} />
-
-        <TwoOptionStrobeButtons
-          labelOne="-"
-          labelTwo="+"
-          styleOne={{ backgroundColor: theme.border }}
-          styleTwo={{ backgroundColor: theme.border }}
-          onOptionOne={decrementGoal}
-          onOptionTwo={incrementGoal}
-          width={fullWidth - 32}
-          disabledOne={activeSplitPlan.plan.activeLength === 1}
-          disabledStrobeOne={true}
-          disabledStrobeTwo={true}
-        />
-
-        <InfoText
-          text={t("splits.set-your-fitness-goals-description")}
-          style={{
-            margin: 8,
-            marginHorizontal: 16,
-            fontSize: 16,
-            lineHeight: 18,
-            color: theme.text,
-          }}
-        />
-
-        <TextButton
-          title={t("splits.set-your-fitness-goals")}
-          color={theme.fifthBackground}
-        />
-      </Animated.View>
-    );
-  }
-
   return (
     <Animated.View
       entering={FadeIn}
@@ -179,7 +109,73 @@ export function NoSplitCard() {
 
         <XLText text={t("splits.weekly-goal")} />
 
-        {!expanded ? <CollapsedChildren /> : <ExpandedChildren />}
+        {!expanded ? (
+          <Animated.View entering={FadeIn} style={{ alignItems: "center" }}>
+            <MidText
+              text={`${goal} ${
+                goal === 1 ? t("splits.workout") : t("splits.workouts")
+              }`}
+            />
+            <ActiveSplitAlert
+              style={{ marginBottom: 16, paddingHorizontal: 16 }}
+            />
+          </Animated.View>
+        ) : (
+          <Animated.View entering={FadeIn} style={{ alignItems: "center" }}>
+            <Text
+              style={{
+                fontSize: 52,
+                fontWeight: "bold",
+                color: theme.text,
+              }}
+            >
+              {goal}
+            </Text>
+            <Text
+              style={{
+                fontSize: 18,
+                fontWeight: "500",
+                color: theme.text,
+                marginBottom: 16,
+              }}
+            >
+              {goal === 1 ? t("splits.workout") : t("splits.workouts")}
+            </Text>
+
+            <ActiveSplitAlert
+              style={{ marginBottom: 16, paddingHorizontal: 16 }}
+            />
+
+            <TwoOptionStrobeButtons
+              labelOne="-"
+              labelTwo="+"
+              styleOne={{ backgroundColor: theme.border }}
+              styleTwo={{ backgroundColor: theme.border }}
+              onOptionOne={decrementGoal}
+              onOptionTwo={incrementGoal}
+              width={fullWidth - 32}
+              disabledOne={activeSplitPlan.plan.activeLength === 1}
+              disabledStrobeOne={true}
+              disabledStrobeTwo={true}
+            />
+
+            <InfoText
+              text={t("splits.set-your-fitness-goals-description")}
+              style={{
+                margin: 8,
+                marginHorizontal: 16,
+                fontSize: 16,
+                lineHeight: 18,
+                color: theme.text,
+              }}
+            />
+
+            <TextButton
+              title={t("splits.set-your-fitness-goals")}
+              color={theme.fifthBackground}
+            />
+          </Animated.View>
+        )}
       </StrobeButton>
     </Animated.View>
   );
