@@ -53,7 +53,7 @@ export function DaySliderScreen() {
 
   useEffect(() => {
     if (isUserScrolling) {
-      const timeout = setTimeout(() => setIsUserScrolling(false), 150);
+      const timeout = setTimeout(() => setIsUserScrolling(false), 10);
       return () => clearTimeout(timeout);
     }
   }, [isUserScrolling]);

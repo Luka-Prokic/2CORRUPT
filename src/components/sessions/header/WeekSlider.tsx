@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
   View,
   FlatList,
@@ -6,26 +6,32 @@ import {
   NativeSyntheticEvent,
   NativeScrollEvent,
 } from "react-native";
-import { useSettingsStore } from "../../../stores/settingsStore";
 import { WIDTH } from "../../../features/Dimensions";
 import { WeekDay } from "./WeekDay";
 import { getDayIndex } from "../../../features/calendar/useDate";
-import { useUIStore } from "../../../stores/ui/useUIStore";
+import { useSettingsStore } from "../../../stores/settings";
 
-export function DayPicker() {
+interface WeekSliderProps {
+  weeks: Date[][];
+  currentWeekIndex: number;
+  setCurrentWeekIndex: (index: number) => void;
+  selectedDate: Date;
+  setSelectedDate: (date: Date) => void;
+}
+
+export function WeekSlider({
+  weeks,
+  currentWeekIndex,
+  setCurrentWeekIndex,
+  selectedDate,
+  setSelectedDate,
+}: WeekSliderProps) {
   const { theme } = useSettingsStore();
-  const { selectedDate, currentWeekIndex, setCurrentWeekIndex, weeks } =
-    useUIStore();
-  const flatListRef = useRef<FlatList>(null);
+  const [scrollLocked, setScrollLocked] = useState(false);
 
+  const flatListRef = useRef<FlatList>(null);
   const animatedTranslateX = useRef(new Animated.Value(0)).current;
 
-  const animatedBackgroundStyle = useMemo(
-    () => ({ transform: [{ translateX: animatedTranslateX }] }),
-    [animatedTranslateX]
-  );
-
-  // Animate selected day circle
   useEffect(() => {
     Animated.spring(animatedTranslateX, {
       toValue: (getDayIndex(selectedDate) * WIDTH) / 7,
@@ -35,11 +41,61 @@ export function DayPicker() {
     }).start();
   }, [selectedDate]);
 
+  const animatedBackgroundStyle = useMemo(
+    () => ({ transform: [{ translateX: animatedTranslateX }] }),
+    [animatedTranslateX]
+  );
+
   const handleWeekScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    setScrollLocked(true);
     const offsetX = event.nativeEvent.contentOffset.x;
     const newIndex = Math.round(offsetX / WIDTH);
-    if (newIndex !== currentWeekIndex) setCurrentWeekIndex(newIndex);
+
+    if (newIndex === currentWeekIndex) return;
+
+    const week = weeks[newIndex];
+    const today = new Date();
+
+    // Normalize dates to YYYY-MM-DD to compare correctly
+    const normalize = (d: Date) => d.toISOString().split("T")[0];
+    const todayKey = normalize(today);
+
+    // Check if week contains today
+    const todayInWeek = week.some((d) => normalize(d) === todayKey);
+    setCurrentWeekIndex(newIndex);
+
+    if (todayInWeek) {
+      setSelectedDate(today);
+      setTimeout(() => {
+        setScrollLocked(false);
+      }, 0);
+      return;
+    }
+    if (newIndex < currentWeekIndex) {
+      setSelectedDate(week[6]);
+      setTimeout(() => {
+        setScrollLocked(false);
+      }, 0);
+      return;
+    }
+    setSelectedDate(week[0]);
+    setTimeout(() => {
+      setScrollLocked(false);
+    }, 0);
+    return;
   };
+
+  useEffect(() => {
+    if (scrollLocked) return;
+    setScrollLocked(true);
+    flatListRef.current.scrollToIndex({
+      index: currentWeekIndex,
+      animated: true,
+    });
+    setTimeout(() => {
+      setScrollLocked(false);
+    }, 0);
+  }, [currentWeekIndex]);
 
   return (
     <View

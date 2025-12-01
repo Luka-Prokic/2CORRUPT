@@ -22,7 +22,7 @@ export function WeekDay({ date }: WeekDayProps) {
   const isFuture = isFutureDate(date);
   const isTodayDate = isToday(date);
   const isDone = useSessionsByDate(date).length ? true : false;
-  const { currentWeekIndex, setCurrentWeekIndex, selectedDate, weeks } =
+  const { currentWeekIndex, selectedDate, setSelectedDate, weeks } =
     useUIStore();
   const dayIndex = getDayIndex(date);
 
@@ -32,21 +32,7 @@ export function WeekDay({ date }: WeekDayProps) {
   const isSelected = dayIndex === selectedIndexInWeek;
 
   const handleDayPress = (date: Date) => {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const selectedDay = new Date(date);
-    selectedDay.setHours(0, 0, 0, 0);
-
-    if (selectedDay > today || !selectedDate) return;
-    if (selectedDate?.toDateString() === date.toDateString()) return;
-
-    // update currentWeekIndex if day pressed belongs to a different week
-    const weekIdx = weeks.findIndex((week) =>
-      week.some((d) => d.toDateString() === date.toDateString())
-    );
-    if (weekIdx !== -1 && weekIdx !== currentWeekIndex) {
-      setCurrentWeekIndex(weekIdx);
-    }
+    setSelectedDate(date);
   };
 
   return (
@@ -100,7 +86,7 @@ export function WeekDay({ date }: WeekDayProps) {
               fontWeight: isSelected || isTodayDate ? "bold" : "normal",
             }}
           >
-            {dayIndex + 1}
+            {date?.getDate()}
           </Text>
         </Fragment>
       )}

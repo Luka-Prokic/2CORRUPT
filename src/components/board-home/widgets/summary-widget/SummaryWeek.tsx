@@ -7,7 +7,7 @@ export function SummaryWeek() {
   const monthSlugs = useMonthSlugs();
 
   const today = new Date();
-  const todayMonth = today.getMonth();
+  const todayMonth = today?.getMonth();
 
   const first = new Date(today);
   const dayOfWeek = today.getDay(); // Sunday = 0, Monday = 1, ...

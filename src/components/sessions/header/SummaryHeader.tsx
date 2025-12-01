@@ -1,5 +1,5 @@
 import { BlurView } from "expo-blur";
-import { DayPicker } from "./DayPicker";
+import { WeekSlider } from "./WeekSlider";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Text, TouchableOpacity, View } from "react-native";
 import { WIDTH } from "../../../features/Dimensions";
@@ -16,11 +16,17 @@ export function SummaryHeader() {
   const insets = useSafeAreaInsets();
   const { theme, themeMode } = useSettingsStore();
   const calendarBottomSheetRef = useRef<BottomSheetModal>(null);
-  const { selectedDate, setIsExpanded, isExpanded, weeks, currentWeekIndex } =
-    useUIStore();
+  const {
+    selectedDate,
+    setIsExpanded,
+    isExpanded,
+    weeks,
+    currentWeekIndex,
+    setCurrentWeekIndex,
+    setSelectedDate,
+  } = useUIStore();
   const formatFriendlyDate = useFormatFriendlyDate();
 
-  const currentWeek = weeks?.[currentWeekIndex];
   const dateTittle = selectedDate ? formatFriendlyDate(selectedDate) : "";
 
   function handleExpandPress() {
@@ -90,7 +96,13 @@ export function SummaryHeader() {
             </TouchableOpacity>
           </View>
         </View>
-        <DayPicker key={`${currentWeek}`} />
+        <WeekSlider
+          weeks={weeks}
+          currentWeekIndex={currentWeekIndex}
+          setCurrentWeekIndex={setCurrentWeekIndex}
+          selectedDate={selectedDate}
+          setSelectedDate={setSelectedDate}
+        />
       </BlurView>
       <SummaryCalendarBottomSheet ref={calendarBottomSheetRef} />
     </Fragment>
