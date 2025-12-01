@@ -1,53 +1,65 @@
 import { TouchableOpacity } from "react-native";
-import { useCalendarNavigation } from "../../../features/test/useCalendarNavigation";
 import { useSessionsByDate } from "../../../features/workout";
 import { Text } from "react-native";
 import { useSettingsStore } from "../../../stores/settings";
 import { useDayLabels } from "../../../features/Labels";
 import { Ionicons } from "@expo/vector-icons";
 import { Fragment } from "react";
+import {
+  getDayIndex,
+  isFutureDate,
+  isToday,
+} from "../../../features/calendar/useDate";
+import { useUIStore } from "../../../stores/ui/useUIStore";
+import { WIDTH } from "../../../features/Dimensions";
 
 interface WeekDayProps {
   date: Date;
-  dayIndex: number;
-  size: number;
-  onDayPress: (date: Date, dayIndex: number) => void;
-  selectedDate: Date; // currently selected day
-  currentWeek: Date[];
 }
-export function WeekDay({
-  date,
-  dayIndex,
-  size,
-  onDayPress,
-  selectedDate,
-  currentWeek,
-}: WeekDayProps) {
+export function WeekDay({ date }: WeekDayProps) {
   const { theme } = useSettingsStore();
-  const { isFutureDate, isToday } = useCalendarNavigation();
   const dayLabels = useDayLabels();
   const isFuture = isFutureDate(date);
   const isTodayDate = isToday(date);
   const isDone = useSessionsByDate(date).length ? true : false;
+  const { currentWeekIndex, setCurrentWeekIndex, selectedDate, weeks } =
+    useUIStore();
+  const dayIndex = getDayIndex(date);
 
-  const selectedIndexInWeek = currentWeek.findIndex(
+  const selectedIndexInWeek = weeks[currentWeekIndex].findIndex(
     (d) => d.toDateString() === selectedDate.toDateString()
   );
-
   const isSelected = dayIndex === selectedIndexInWeek;
+
+  const handleDayPress = (date: Date) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const selectedDay = new Date(date);
+    selectedDay.setHours(0, 0, 0, 0);
+
+    if (selectedDay > today || !selectedDate) return;
+    if (selectedDate?.toDateString() === date.toDateString()) return;
+
+    // update currentWeekIndex if day pressed belongs to a different week
+    const weekIdx = weeks.findIndex((week) =>
+      week.some((d) => d.toDateString() === date.toDateString())
+    );
+    if (weekIdx !== -1 && weekIdx !== currentWeekIndex) {
+      setCurrentWeekIndex(weekIdx);
+    }
+  };
 
   return (
     <TouchableOpacity
-      key={`day-${dayIndex}-${date.toDateString()}`}
       style={{
         justifyContent: "center",
         alignItems: "center",
         borderRadius: 25,
         zIndex: 2,
-        width: size,
-        height: size,
+        width: WIDTH / 7,
+        height: WIDTH / 7,
       }}
-      onPress={() => onDayPress(date, dayIndex)}
+      onPress={() => handleDayPress(date)}
       disabled={isFuture}
       activeOpacity={0.7}
     >
@@ -55,7 +67,7 @@ export function WeekDay({
         <Ionicons
           name="checkmark-circle"
           color={theme.fifthBackground}
-          size={size}
+          size={WIDTH / 7}
         />
       ) : (
         <Fragment>
@@ -88,7 +100,7 @@ export function WeekDay({
               fontWeight: isSelected || isTodayDate ? "bold" : "normal",
             }}
           >
-            {date.getDate()}
+            {dayIndex + 1}
           </Text>
         </Fragment>
       )}

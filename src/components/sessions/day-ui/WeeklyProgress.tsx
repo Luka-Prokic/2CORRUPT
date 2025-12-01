@@ -14,7 +14,7 @@ export function WeeklyProgress({ date }: { date: Date }) {
 
   // Calculate Monday of the current week
   const firstDayOfWeek = new Date(date);
-  const dayOfWeek = date.getDay(); // Sunday=0 ... Saturday=6
+  const dayOfWeek = date?.getDay(); // Sunday=0 ... Saturday=6
   const diffToMonday = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
   firstDayOfWeek.setDate(date.getDate() + diffToMonday);
   firstDayOfWeek.setHours(0, 0, 0, 0);

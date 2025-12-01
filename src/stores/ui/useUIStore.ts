@@ -6,6 +6,7 @@ import { createNavigationSlice } from "./slices/navigationSlice";
 import { createLoadingSlice } from "./slices/loadingSlice";
 import { createGeneralSlice } from "./slices/generalSlice";
 import { createHomeViewSlice } from "./slices/homeViewSlice";
+import { createSummarySlice } from "./slices/summarySlice";
 
 export const useUIStore = create<UIStore>(
   (...a) =>
@@ -16,5 +17,6 @@ export const useUIStore = create<UIStore>(
       ...createNavigationSlice(...a),
       ...createLoadingSlice(...a),
       ...createGeneralSlice(...a),
+      ...createSummarySlice(...a),
     } as UIStore)
 );

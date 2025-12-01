@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import {
   View,
   FlatList,
@@ -9,30 +9,31 @@ import {
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { WIDTH } from "../../../features/Dimensions";
 import { WeekDay } from "./WeekDay";
+import { getDayIndex } from "../../../features/calendar/useDate";
+import { useUIStore } from "../../../stores/ui/useUIStore";
 
-interface DayPickerProps {
-  currentWeek: Date[];
-  weeks: Date[][]; // all weeks
-  currentWeekIndex: number; // visible week index
-  selectedDate: Date; // currently selected day
-  buttonSize: number;
-  animatedBackgroundStyle: any;
-  onDayPress: (date: Date, dayIndex: number) => void;
-  setCurrentWeekIndex: (index: number) => void; // to handle swipe
-}
-
-export function DayPicker({
-  currentWeek,
-  weeks,
-  currentWeekIndex,
-  selectedDate,
-  buttonSize,
-  animatedBackgroundStyle,
-  onDayPress,
-  setCurrentWeekIndex,
-}: DayPickerProps) {
+export function DayPicker() {
   const { theme } = useSettingsStore();
+  const { selectedDate, currentWeekIndex, setCurrentWeekIndex, weeks } =
+    useUIStore();
   const flatListRef = useRef<FlatList>(null);
+
+  const animatedTranslateX = useRef(new Animated.Value(0)).current;
+
+  const animatedBackgroundStyle = useMemo(
+    () => ({ transform: [{ translateX: animatedTranslateX }] }),
+    [animatedTranslateX]
+  );
+
+  // Animate selected day circle
+  useEffect(() => {
+    Animated.spring(animatedTranslateX, {
+      toValue: (getDayIndex(selectedDate) * WIDTH) / 7,
+      useNativeDriver: true,
+      tension: 100,
+      friction: 8,
+    }).start();
+  }, [selectedDate]);
 
   const handleWeekScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const offsetX = event.nativeEvent.contentOffset.x;
@@ -53,8 +54,8 @@ export function DayPicker({
           {
             position: "absolute",
             borderRadius: "50%",
-            width: buttonSize,
-            height: buttonSize,
+            width: WIDTH / 7,
+            height: WIDTH / 7,
             backgroundColor: theme.tint,
           },
           animatedBackgroundStyle,
@@ -79,7 +80,7 @@ export function DayPicker({
         renderItem={({ item: week }) => (
           <View
             style={{
-              height: buttonSize,
+              height: WIDTH / 7,
               width: WIDTH,
               flexDirection: "row",
               justifyContent: "space-between",
@@ -88,15 +89,7 @@ export function DayPicker({
             }}
           >
             {week.map((date: Date, dayIndex: number) => (
-              <WeekDay
-                key={`week-day-${dayIndex}`}
-                date={date}
-                dayIndex={dayIndex}
-                size={buttonSize}
-                onDayPress={onDayPress}
-                selectedDate={selectedDate}
-                currentWeek={currentWeek}
-              />
+              <WeekDay key={`week-day-${dayIndex}`} date={date} />
             ))}
           </View>
         )}

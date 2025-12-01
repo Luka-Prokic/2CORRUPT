@@ -9,37 +9,23 @@ import { Ionicons } from "@expo/vector-icons";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { Fragment, useRef } from "react";
 import { SummaryCalendarBottomSheet } from "../calendar/SummaryCalendarBottomSheet";
+import { useUIStore } from "../../../stores/ui/useUIStore";
+import { useFormatFriendlyDate } from "../../../features/format/useFormatDate";
 
-interface SummaryHeaderProps {
-  dateTittle: string;
-  currentWeek: Date[];
-  weeks: Date[][]; // all weeks
-  currentWeekIndex: number; // visible week index
-  selectedDate: Date; // currently selected day
-  buttonSize: number;
-  animatedBackgroundStyle: any;
-  onDayPress: (date: Date, dayIndex: number) => void;
-  setCurrentWeekIndex: (index: number) => void; // to handle swipe
-  onExpandPress: () => void;
-  isExpanded: boolean;
-}
-
-export function SummaryHeader({
-  dateTittle,
-  currentWeek,
-  weeks,
-  currentWeekIndex,
-  selectedDate,
-  buttonSize,
-  animatedBackgroundStyle,
-  onDayPress,
-  setCurrentWeekIndex,
-  onExpandPress,
-  isExpanded,
-}: SummaryHeaderProps) {
+export function SummaryHeader() {
   const insets = useSafeAreaInsets();
   const { theme, themeMode } = useSettingsStore();
   const calendarBottomSheetRef = useRef<BottomSheetModal>(null);
+  const { selectedDate, setIsExpanded, isExpanded, weeks, currentWeekIndex } =
+    useUIStore();
+  const formatFriendlyDate = useFormatFriendlyDate();
+
+  const currentWeek = weeks?.[currentWeekIndex];
+  const dateTittle = selectedDate ? formatFriendlyDate(selectedDate) : "";
+
+  function handleExpandPress() {
+    setIsExpanded(!isExpanded);
+  }
 
   return (
     <Fragment>
@@ -95,7 +81,7 @@ export function SummaryHeader({
               <Ionicons name="calendar-outline" size={28} color={theme.info} />
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={onExpandPress}>
+            <TouchableOpacity onPress={handleExpandPress}>
               <Ionicons
                 name={isExpanded ? "albums-outline" : "chevron-expand-outline"}
                 size={28}
@@ -104,23 +90,9 @@ export function SummaryHeader({
             </TouchableOpacity>
           </View>
         </View>
-        <DayPicker
-          key={`${currentWeek}`}
-          currentWeek={currentWeek}
-          weeks={weeks}
-          currentWeekIndex={currentWeekIndex}
-          selectedDate={selectedDate}
-          buttonSize={buttonSize}
-          animatedBackgroundStyle={animatedBackgroundStyle}
-          onDayPress={onDayPress}
-          setCurrentWeekIndex={setCurrentWeekIndex}
-        />
+        <DayPicker key={`${currentWeek}`} />
       </BlurView>
-      <SummaryCalendarBottomSheet
-        ref={calendarBottomSheetRef}
-        onDayPress={onDayPress}
-        selectedDate={selectedDate}
-      />
+      <SummaryCalendarBottomSheet ref={calendarBottomSheetRef} />
     </Fragment>
   );
 }

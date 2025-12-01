@@ -1,12 +1,3 @@
-// Types for the modular UI store
-
-export type UIStore = HomeViewSlice &
-  ModalSlice &
-  WidgetSlice &
-  NavigationSlice &
-  LoadingSlice &
-  GeneralSlice;
-
 // Home view slice contract
 export interface HomeViewSlice {
   typeOfView: HomeViewType;
@@ -50,3 +41,28 @@ export interface LoadingSlice {
 export interface GeneralSlice {
   resetUI: () => void;
 }
+
+// Summary view slice contract
+export interface SummaryViewSlice {
+  isExpanded: boolean;
+  setIsExpanded: (expanded: boolean) => void;
+
+  currentWeekIndex: number;
+  setCurrentWeekIndex: (index: number) => void;
+
+  selectedDate: Date;
+  setSelectedDate: (date: Date) => void;
+
+  weeks: Date[][];
+  setWeeks: (weeks: Date[][]) => void;
+}
+
+// Types for the modular UI store
+
+export type UIStore = HomeViewSlice &
+  ModalSlice &
+  WidgetSlice &
+  NavigationSlice &
+  LoadingSlice &
+  GeneralSlice &
+  SummaryViewSlice;
