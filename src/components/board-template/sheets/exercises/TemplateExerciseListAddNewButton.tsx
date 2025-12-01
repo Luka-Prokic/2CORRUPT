@@ -25,7 +25,7 @@ export function TemplateExerciseListAddNewButton({
 
   return (
     <StrobeButton
-      strobeColors={[theme.tint, theme.tint, theme.tint, theme.tint]}
+      strobeColors={[theme.glow, theme.glow, theme.glow, theme.glow]}
       onPress={handlePress}
       style={{
         height: 64,
@@ -34,11 +34,11 @@ export function TemplateExerciseListAddNewButton({
         borderRadius: 32,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: theme.handle,
+        backgroundColor: theme.tint,
         ...style,
       }}
     >
-      <Ionicons name="add" size={32} color={theme.text} />
+      <Ionicons name="add" size={32} color={theme.border} />
     </StrobeButton>
   );
 }

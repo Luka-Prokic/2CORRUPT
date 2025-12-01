@@ -1,4 +1,3 @@
-import { View } from "react-native";
 import { useWorkoutStore } from "../../../../stores/workout";
 import { HEIGHT, WIDTH } from "../../../../features/Dimensions";
 import { TemplateNameEditor } from "../../../view-template/TemplateNameEditor";
@@ -6,6 +5,7 @@ import { TagTextLayout } from "../../../view-template/TagTextLayout";
 import { TemplateDescriptionInput } from "../../TemplateDescritionInput";
 import { DescriptionText } from "../../../ui/text/DescriptionText";
 import { useTranslation } from "react-i18next";
+import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 
 //Testing template zustand
 export function TemplateSheet() {
@@ -14,7 +14,9 @@ export function TemplateSheet() {
 
   if (activeTemplate)
     return (
-      <View
+      <Animated.View
+        entering={FadeIn}
+        exiting={FadeOut}
         style={{
           width: WIDTH,
           height: HEIGHT - 200,
@@ -36,6 +38,6 @@ export function TemplateSheet() {
           text={t("template-board.select-tags")}
           style={{ marginTop: 8 }}
         />
-      </View>
+      </Animated.View>
     );
 }

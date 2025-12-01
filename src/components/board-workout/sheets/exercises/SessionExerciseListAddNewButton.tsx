@@ -33,11 +33,11 @@ export function SessionExerciseListAddNewButton({
         borderRadius: 32,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: theme.secondaryBackground,
+        backgroundColor: theme.thirdBackground,
         ...style,
       }}
     >
-      <Ionicons name="add" size={32} color={theme.text} />
+      <Ionicons name="add" size={32} color={theme.border} />
     </StrobeButton>
   );
 }

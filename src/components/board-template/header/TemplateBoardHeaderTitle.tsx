@@ -32,7 +32,6 @@ export function TemplateBoardHeaderTitle({
         padding: 8,
         width: WIDTH - 160,
       }}
-      disabled={listOpen}
     >
       <TemplateName
         fontSize={18}

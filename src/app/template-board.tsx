@@ -32,13 +32,7 @@ export default function TemplateBoard() {
       <Stack.Screen
         options={{
           headerBlurEffect: "none",
-          headerLeft: () => (
-            <TemplateBoardHeaderLeft
-              listOpen={listOpen}
-              setListOpen={setListOpen}
-              setListType={setListType}
-            />
-          ),
+          headerLeft: () => <TemplateBoardHeaderLeft listOpen={listOpen} />,
           headerTitle: () => (
             <TemplateBoardHeaderTitle
               listOpen={listOpen}

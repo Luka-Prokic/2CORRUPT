@@ -1,4 +1,4 @@
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import { IButton } from "../../ui/buttons/IButton";
 import { WIDTH } from "../../../features/Dimensions";
 import { ExerciseName } from "../../view-workout/table/header/ExerciseName";
@@ -8,8 +8,8 @@ import { useWorkoutStore } from "../../../stores/workout/useWorkoutStore";
 import { SessionSheetType } from "../../../app/workout-board";
 import { router } from "expo-router";
 import { TemplateSheetType } from "../../../app/template-board";
-import { DescriptionText } from "../../ui/text/DescriptionText";
 import { IText } from "../../ui/text/IText";
+import { MidText } from "../../ui/text/MidText";
 
 const EDIT_BUTTON_WIDTH = 44;
 
@@ -45,7 +45,6 @@ export function ExerciseHeader({
       <IButton
         style={{
           width: WIDTH - 16 - EDIT_BUTTON_WIDTH,
-          justifyContent: "flex-start",
         }}
         onPress={handleExerciseNamePress}
       >
@@ -56,10 +55,11 @@ export function ExerciseHeader({
         style={{
           height: EDIT_BUTTON_WIDTH,
           width: EDIT_BUTTON_WIDTH,
-          alignItems: "center",
+          justifyContent: "center",
+          alignItems: "flex-end",
         }}
       >
-        <IText size={18} text={t("button.edit")} color={theme.info} />
+        <MidText text={t("button.edit")} style={{ color: theme.info }} />
       </IButton>
     </View>
   );

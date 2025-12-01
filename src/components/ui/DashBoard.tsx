@@ -81,22 +81,20 @@ export function DashBoard({
         style={{
           position: "absolute",
           height: 88,
-          padding: 8,
+          padding: 16,
           bottom: 0,
           right: 0,
           left: 0,
-          flexDirection: "row",
           backgroundColor: theme.background,
           borderTopLeftRadius: 32,
           borderTopRightRadius: 32,
           alignItems: "center",
-          justifyContent: "center",
         }}
         disabled={disabled}
       >
         <Ionicons
           name={listOpen ? "chevron-down" : "chevron-up"}
-          size={34}
+          size={32}
           color={disabled ? theme.handle : theme.text}
         />
       </Pressable>
