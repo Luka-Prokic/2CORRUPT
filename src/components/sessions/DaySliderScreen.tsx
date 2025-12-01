@@ -11,12 +11,14 @@ interface DaySliderScreenProps {
   weeks: Date[][];
   selectedDate: Date;
   setSelectedDate: (date: Date) => void;
+  isExpanded: boolean;
 }
 
 export function DaySliderScreen({
   weeks,
   selectedDate,
   setSelectedDate,
+  isExpanded,
 }: DaySliderScreenProps) {
   const allDays = weeks.flat();
   const flatListRef = useRef<FlatList<Date>>(null);
@@ -76,6 +78,10 @@ export function DaySliderScreen({
         offset: WIDTH * index,
         index,
       })}
+      style={{
+        borderBottomWidth: isExpanded ? 88 : 0,
+        borderBottomColor: "red",
+      }}
       renderItem={({ item }) => <DayRecapScreen date={item} />}
     />
   );

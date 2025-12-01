@@ -10,7 +10,7 @@ import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { Fragment, useRef } from "react";
 import { SummaryCalendarBottomSheet } from "../calendar/SummaryCalendarBottomSheet";
 
-interface SessionsHeaderProps {
+interface SummaryHeaderProps {
   dateTittle: string;
   currentWeek: Date[];
   weeks: Date[][]; // all weeks
@@ -20,9 +20,11 @@ interface SessionsHeaderProps {
   animatedBackgroundStyle: any;
   onDayPress: (date: Date, dayIndex: number) => void;
   setCurrentWeekIndex: (index: number) => void; // to handle swipe
+  onExpandPress: () => void;
+  isExpanded: boolean;
 }
 
-export function SessionsHeader({
+export function SummaryHeader({
   dateTittle,
   currentWeek,
   weeks,
@@ -32,7 +34,9 @@ export function SessionsHeader({
   animatedBackgroundStyle,
   onDayPress,
   setCurrentWeekIndex,
-}: SessionsHeaderProps) {
+  onExpandPress,
+  isExpanded,
+}: SummaryHeaderProps) {
   const insets = useSafeAreaInsets();
   const { theme, themeMode } = useSettingsStore();
   const calendarBottomSheetRef = useRef<BottomSheetModal>(null);
@@ -52,12 +56,17 @@ export function SessionsHeader({
             justifyContent: "space-between",
           }}
         >
-          <View style={{ paddingHorizontal: 10, width: WIDTH * 0.25 }}>
+          <View
+            style={{
+              paddingHorizontal: 4,
+              width: WIDTH / 4,
+            }}
+          >
             <ModalBackButton />
           </View>
           <View
             style={{
-              width: WIDTH * 0.5,
+              width: WIDTH / 2,
               alignItems: "center",
             }}
           >
@@ -71,8 +80,9 @@ export function SessionsHeader({
           </View>
           <View
             style={{
-              paddingHorizontal: 10,
-              width: WIDTH * 0.25,
+              paddingHorizontal: 8,
+              gap: 8,
+              width: WIDTH / 4,
               flexDirection: "row",
               justifyContent: "flex-end",
             }}
@@ -83,6 +93,14 @@ export function SessionsHeader({
               }}
             >
               <Ionicons name="calendar-outline" size={28} color={theme.info} />
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={onExpandPress}>
+              <Ionicons
+                name={isExpanded ? "albums-outline" : "chevron-expand-outline"}
+                size={28}
+                color={theme.info}
+              />
             </TouchableOpacity>
           </View>
         </View>

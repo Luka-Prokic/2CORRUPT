@@ -44,7 +44,7 @@ export function SummaryWidget() {
   );
 
   function handleWidgetPress() {
-    router.push("/sessions");
+    router.push("/summary");
   }
 
   const presentModal = useCallback(() => {

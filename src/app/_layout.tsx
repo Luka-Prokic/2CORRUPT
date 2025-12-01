@@ -96,8 +96,8 @@ export default function Layout() {
               }}
             />
 
-            {/* Sessions */}
-            <Stack.Screen name="sessions" />
+            {/* Summary - Sessions Legacy name */}
+            <Stack.Screen name="summary" />
 
             {/* Templates */}
             <Stack.Screen name="templates" />

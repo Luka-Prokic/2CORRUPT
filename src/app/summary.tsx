@@ -1,10 +1,10 @@
 import { Stack } from "expo-router";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { useCalendarNavigation } from "../features/test/useCalendarNavigation";
 import { DaySliderScreen } from "../components/sessions/DaySliderScreen";
-import { SessionsHeader } from "../components/sessions/header/SessionsHeader";
+import { SummaryHeader } from "../components/sessions/header/SummaryHeader";
 
-export default function SessionssScreen() {
+export default function SummaryScreen() {
   const {
     currentWeek,
     weeks,
@@ -17,13 +17,18 @@ export default function SessionssScreen() {
     setCurrentWeekIndex,
     setSelectedDate,
   } = useCalendarNavigation();
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  function handleExpandPress() {
+    setIsExpanded(!isExpanded);
+  }
 
   return (
     <Fragment>
       <Stack.Screen
         options={{
           header: () => (
-            <SessionsHeader
+            <SummaryHeader
               key={`${currentWeek}`}
               dateTittle={dateTittle}
               currentWeek={currentWeek}
@@ -34,6 +39,8 @@ export default function SessionssScreen() {
               animatedBackgroundStyle={animatedBackgroundStyle}
               onDayPress={handleDayPress}
               setCurrentWeekIndex={setCurrentWeekIndex}
+              onExpandPress={handleExpandPress}
+              isExpanded={isExpanded}
             />
           ),
         }}
@@ -42,6 +49,7 @@ export default function SessionssScreen() {
         weeks={weeks}
         selectedDate={selectedDate}
         setSelectedDate={setSelectedDate}
+        isExpanded={isExpanded}
       />
     </Fragment>
   );
