@@ -72,7 +72,12 @@ export function IBubble({
     >
       <Pressable
         onPress={onPress}
-        style={{ flex: 1, justifyContent: "center", alignItems: "center", ...styleContent }}
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          ...styleContent,
+        }}
       >
         {header && <MidText text={header} />}
         {description && <DescriptionText text={description} />}

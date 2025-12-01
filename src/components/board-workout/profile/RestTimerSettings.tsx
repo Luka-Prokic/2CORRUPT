@@ -8,10 +8,11 @@ import { Ionicons } from "@expo/vector-icons";
 import { useWorkoutStore } from "../../../stores/workout/useWorkoutStore";
 import { SessionSheetType } from "../../../app/workout-board";
 import { useFormatTime } from "../../../features/format/useFormatTime";
+import { TemplateSheetType } from "../../../app/template-board";
 
 interface RestTimerSettingsProps {
   openPanel: () => void;
-  setListType: (listType: SessionSheetType) => void;
+  setListType: (listType: SessionSheetType | TemplateSheetType) => void;
 }
 
 export function RestTimerSettings({
@@ -47,9 +48,10 @@ export function RestTimerSettings({
         gap: 4,
         alignItems: "center",
         height: 34,
-        width: WIDTH * 0.5 - 20,
+        width: WIDTH * 0.5 - 16,
         borderRadius: 22,
         overflow: "hidden",
+        marginLeft: 16,
       }}
     >
       <BounceButton

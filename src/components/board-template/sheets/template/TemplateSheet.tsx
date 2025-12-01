@@ -1,15 +1,16 @@
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import { useWorkoutStore } from "../../../../stores/workout";
-import { useSettingsStore } from "../../../../stores/settings";
 import { HEIGHT, WIDTH } from "../../../../features/Dimensions";
 import { TemplateNameEditor } from "../../../view-template/TemplateNameEditor";
 import { TagTextLayout } from "../../../view-template/TagTextLayout";
 import { TemplateDescriptionInput } from "../../TemplateDescritionInput";
+import { DescriptionText } from "../../../ui/text/DescriptionText";
+import { useTranslation } from "react-i18next";
 
 //Testing template zustand
 export function TemplateSheet() {
   const { activeTemplate } = useWorkoutStore();
-  const { theme } = useSettingsStore();
+  const { t } = useTranslation();
 
   if (activeTemplate)
     return (
@@ -17,24 +18,24 @@ export function TemplateSheet() {
         style={{
           width: WIDTH,
           height: HEIGHT - 200,
-          padding: 16,
-          alignItems: "center",
-          gap: 4,
+          paddingHorizontal: 16,
         }}
       >
-        <Text style={{ fontSize: 14, color: theme.grayText }}>
-          Template Name
-        </Text>
-        <TemplateNameEditor
-          templateId={activeTemplate.id}
-          style={{ height: 44, marginBottom: 16, marginTop: 0 }}
+        <TemplateNameEditor templateId={activeTemplate.id} />
+        <DescriptionText
+          text={t("template-board.template-name")}
+          style={{ marginBottom: 16, marginTop: 8 }}
         />
-        <Text style={{ fontSize: 14, color: theme.grayText }}>Description</Text>
-        <TemplateDescriptionInput style={{ height: 144, marginBottom: 16 }} />
-        <Text style={{ fontSize: 14, color: theme.grayText }}>Select Tags</Text>
+        <TemplateDescriptionInput style={{ height: 144 }} />
+        <DescriptionText
+          text={t("template-board.template-description")}
+          style={{ marginBottom: 16, marginTop: 8 }}
+        />
         <TagTextLayout fontSize={22} />
+        <DescriptionText
+          text={t("template-board.select-tags")}
+          style={{ marginTop: 8 }}
+        />
       </View>
     );
-
-  return null;
 }

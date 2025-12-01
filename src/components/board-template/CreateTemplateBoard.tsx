@@ -1,13 +1,13 @@
-import { Fragment } from "react";
 import { StrobeButton } from "../ui/buttons/StrobeButton";
 import { router } from "expo-router";
 import { WIDTH } from "../../features/Dimensions";
 import { useSettingsStore } from "../../stores/settings";
-import { Text } from "react-native";
+import { View } from "react-native";
 import { useTranslation } from "react-i18next";
 import { TemplateDescriptionInput } from "./TemplateDescritionInput";
 import { useWorkoutStore } from "../../stores/workout";
 import { TemplatesCardList } from "../templates/TemplatesCardList";
+import { IText } from "../ui/text/IText";
 
 export function CreateTemplateBoard() {
   const { theme } = useSettingsStore();
@@ -24,7 +24,7 @@ export function CreateTemplateBoard() {
   }
 
   return (
-    <Fragment>
+    <View style={{ flex: 1, gap: 16, alignItems: "center" }}>
       <TemplateDescriptionInput />
       {activeTemplate?.layout.length === 0 && (
         <StrobeButton
@@ -34,17 +34,18 @@ export function CreateTemplateBoard() {
             height: 64,
             borderRadius: 32,
             backgroundColor: theme.tint,
-            marginVertical: 16,
           }}
         >
-          <Text style={{ color: theme.text, fontSize: 24, fontWeight: "bold" }}>
-            {t("workout-view.add-exercise")}
-          </Text>
+          <IText
+            size={24}
+            text={t("workout-view.add-exercise")}
+            color={theme.border}
+          />
         </StrobeButton>
       )}
       {templates.length > 0 && (
         <TemplatesCardList filters={{ id: activeTemplate?.id }} />
       )}
-    </Fragment>
+    </View>
   );
 }

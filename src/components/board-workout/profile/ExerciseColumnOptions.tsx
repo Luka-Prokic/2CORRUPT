@@ -1,10 +1,10 @@
-import { OptionButton } from "../../ui/buttons/OptionButton";
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { Ionicons } from "@expo/vector-icons";
 import { Fragment, useState } from "react";
 import { useWorkoutStore } from "../../../stores/workoutStore";
 import { useTranslation } from "react-i18next";
 import { StrobeOptionButton } from "../../ui/buttons/StrobeOptionButton";
+import { WIDTH } from "../../../features/Dimensions";
 
 export function ExerciseColumnOptions() {
   const { theme } = useSettingsStore();
@@ -42,6 +42,7 @@ export function ExerciseColumnOptions() {
           />
         }
         height={44}
+        width={WIDTH}
         onPress={() => {
           setShowRPE(!showRPE);
           handleToggleColumn("RPE");
@@ -60,6 +61,7 @@ export function ExerciseColumnOptions() {
           />
         }
         height={44}
+        width={WIDTH}
         onPress={() => {
           setShowRIR(!showRIR);
           handleToggleColumn("RIR");

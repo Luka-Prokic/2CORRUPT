@@ -12,7 +12,6 @@ import Animated, {
 import { useEffect, useState } from "react";
 import { useWorkoutStore } from "../../../stores/workout";
 import { TwoOptionStrobeButtons } from "../../ui/buttons/TwoOptionStrobeButtons";
-import { InfoText } from "../../ui/text/InfoText";
 import { TextButton } from "../../ui/buttons/TextButton";
 import { useWeeklyWorkoutGoal } from "../../../features/workout/useWorkoutGoal";
 import { useTranslation } from "react-i18next";
@@ -21,6 +20,7 @@ import { ActiveSplitAlert } from "../../ui/alerts/ActiveSplitAlert";
 import { IText } from "../../ui/text/IText";
 import { MidText } from "../../ui/text/MidText";
 import { router } from "expo-router";
+import { DescriptionText } from "../../ui/text/DescriptionText";
 
 export function NoSplitCard() {
   const { theme } = useSettingsStore();
@@ -165,15 +165,9 @@ export function NoSplitCard() {
               haptics
             />
 
-            <InfoText
+            <DescriptionText
               text={t("splits.set-your-fitness-goals-description")}
-              style={{
-                margin: 8,
-                marginHorizontal: 16,
-                fontSize: 16,
-                lineHeight: 18,
-                color: theme.text,
-              }}
+              style={{ margin: 8, marginHorizontal: 16, color: theme.text }}
             />
 
             <TextButton

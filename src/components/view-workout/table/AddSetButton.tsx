@@ -17,6 +17,8 @@ export function AddSetButton() {
     addSetToActiveExercise();
   };
 
+  const lightGlow = theme.glow;
+
   return (
     <BounceButton
       style={{
@@ -27,16 +29,11 @@ export function AddSetButton() {
         width: WIDTH - 32,
         borderRadius: 32,
       }}
-      color={activeTemplate ? theme.tint : theme.tint}
+      color={activeTemplate ? theme.tint : theme.thirdBackground}
       onPress={handleAddSet}
     >
       <StrobeBlur
-        colors={[
-          theme.text,
-          theme.secondaryText,
-          theme.background,
-          theme.primaryBackground,
-        ]}
+        colors={[lightGlow, lightGlow, lightGlow, lightGlow]}
         tint="light"
         style={{
           height: 64,

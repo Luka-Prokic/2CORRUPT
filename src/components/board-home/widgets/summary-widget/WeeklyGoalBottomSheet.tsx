@@ -7,7 +7,6 @@ import {
 import { useSettingsStore } from "../../../../stores/settings";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { TextButton } from "../../../ui/buttons/TextButton";
-import { InfoText } from "../../../ui/text/InfoText";
 import { Text } from "react-native";
 import { TwoOptionStrobeButtons } from "../../../ui/buttons/TwoOptionStrobeButtons";
 import { useTranslation } from "react-i18next";
@@ -18,6 +17,7 @@ import { ActiveSplitAlert } from "../../../ui/alerts/ActiveSplitAlert";
 import { IText } from "../../../ui/text/IText";
 import { MidText } from "../../../ui/text/MidText";
 import { router } from "expo-router";
+import { DescriptionText } from "../../../ui/text/DescriptionText";
 
 export const WeeklyGoalBottomSheet = forwardRef<BottomSheetModal>(({}, ref) => {
   const { theme } = useSettingsStore();
@@ -92,6 +92,7 @@ export const WeeklyGoalBottomSheet = forwardRef<BottomSheetModal>(({}, ref) => {
 
         <ActiveSplitAlert style={{ marginBottom: 16, paddingHorizontal: 16 }} />
         <TwoOptionStrobeButtons
+          haptics
           labelOne="-"
           labelTwo="+"
           styleOne={{ backgroundColor: theme.border }}
@@ -103,14 +104,13 @@ export const WeeklyGoalBottomSheet = forwardRef<BottomSheetModal>(({}, ref) => {
           disabledTwo={activeSplit}
         />
 
-        <InfoText
+        <DescriptionText
           text={t("splits.set-your-fitness-goals-description")}
           style={{
             margin: 8,
             marginHorizontal: 16,
             fontSize: 16,
             lineHeight: 18,
-            color: theme.info,
           }}
         />
         <TextButton

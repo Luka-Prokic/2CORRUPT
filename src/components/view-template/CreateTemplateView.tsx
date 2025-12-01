@@ -3,15 +3,13 @@ import { CORRUPT_BUTTON_HEIGHT_FROM_BOTTOM } from "../corrupt/LegacyCorruptButto
 import { TagTextLayout } from "./TagTextLayout";
 import { TemplateNameEditor } from "./TemplateNameEditor";
 import { useWorkoutStore } from "../../stores/workout";
-import { Text } from "react-native";
-import { useSettingsStore } from "../../stores/settings";
 import { useTranslation } from "react-i18next";
+import { DescriptionText } from "../ui/text/DescriptionText";
 
 export function CreateTemplateView() {
   const { activeTemplate } = useWorkoutStore();
-  const { theme } = useSettingsStore();
   const { t } = useTranslation();
-  
+
   if (activeTemplate)
     return (
       <View
@@ -20,22 +18,13 @@ export function CreateTemplateView() {
           justifyContent: "flex-end",
           alignItems: "center",
           paddingBottom: CORRUPT_BUTTON_HEIGHT_FROM_BOTTOM + 32,
-          // paddingHorizontal: 16,
-          gap: 16,
         }}
       >
         <TemplateNameEditor templateId={activeTemplate.id} />
-        <Text
-          style={{
-            color: theme.grayText,
-            fontWeight: "400",
-            fontSize: 16,
-            textAlign: "center",
-            marginHorizontal: 16,
-          }}
-        >
-          {t("template-view.add-tags")}
-        </Text>
+        <DescriptionText
+          text={t("template-view.add-tags")}
+          style={{ marginBottom: 8, marginTop: 16 }}
+        />
         <TagTextLayout />
       </View>
     );

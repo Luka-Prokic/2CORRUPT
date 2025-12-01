@@ -148,6 +148,9 @@
     "volume": "Volume",
     "temperature": "Temperature",
     "workout-settings": {
+      "header": "Global Settings",
+      "description": "These options set the defaults for future workouts and exercises — existing ones won't change.",
+
       "global-start-rest-time-title": "Global Start Rest Timer",
       "global-start-rest-time-description": "Use a rest timer between sets or skip it entirely.",
 
@@ -375,7 +378,10 @@
     "template-name": "Template Name..."
   },
   "template-board": {
-    "template-description-placeholder": "Add template notes, goals, or toughts... (optional)"
+    "template-description-placeholder": "Add template notes, goals, or toughts... (optional)",
+    "template-name": "Template Name",
+    "template-description": "Template Description",
+    "select-tags": "Select tags that describe your template."
   },
 
   "add-exercise": {

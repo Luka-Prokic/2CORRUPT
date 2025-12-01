@@ -1,4 +1,4 @@
-import { Animated, View, Pressable } from "react-native";
+import { Animated, Pressable } from "react-native";
 import { StrobeBlur, StrobeColors } from "../ui/misc/StrobeBlur";
 import { useSettingsStore } from "../../stores/settingsStore";
 import { HEIGHT, WIDTH } from "../../features/Dimensions";
@@ -60,11 +60,7 @@ export function DashBoard({
         }}
       >
         <LinearGradient
-          colors={[
-            theme.background,
-            theme.background,
-            hexToRGBA(theme.background, 0),
-          ]}
+          colors={[theme.background, theme.background, theme.background + "10"]}
           start={{ x: 0, y: 0 }}
           end={{ x: 0, y: 1 }}
           style={{
@@ -79,7 +75,9 @@ export function DashBoard({
       </StrobeBlur>
 
       {/* Toggle Panel */}
-      <View
+
+      <Pressable
+        onPress={togglePanel}
         style={{
           position: "absolute",
           height: 88,
@@ -91,23 +89,17 @@ export function DashBoard({
           backgroundColor: theme.background,
           borderTopLeftRadius: 32,
           borderTopRightRadius: 32,
+          alignItems: "center",
+          justifyContent: "center",
         }}
+        disabled={disabled}
       >
-        <Pressable
-          onPress={togglePanel}
-          style={{
-            flex: 1,
-            alignItems: "center",
-          }}
-          disabled={disabled}
-        >
-          <Ionicons
-            name={listOpen ? "chevron-down" : "chevron-up"}
-            size={34}
-            color={disabled ? theme.handle : theme.text}
-          />
-        </Pressable>
-      </View>
+        <Ionicons
+          name={listOpen ? "chevron-down" : "chevron-up"}
+          size={34}
+          color={disabled ? theme.handle : theme.text}
+        />
+      </Pressable>
 
       {/*Lower Section */}
       {listOpen && lowerSection}

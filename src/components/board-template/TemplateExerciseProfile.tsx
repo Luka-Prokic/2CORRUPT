@@ -1,5 +1,4 @@
 import { useFadeInAnim } from "../../animations/useFadeInAnim";
-import { WIDTH } from "../../features/Dimensions";
 import { Animated, View } from "react-native";
 import { SwapExerciseButton } from "../board-workout/profile/SwapExerciseButton";
 import { ExerciseColumnOptions } from "../board-workout/profile/ExerciseColumnOptions";
@@ -32,7 +31,7 @@ export function TemplateExerciseProfile({
       <ExerciseHeader openPanel={openPanel} setListType={setListType} />
       <RestTimerSettings openPanel={openPanel} setListType={setListType} />
 
-      <View style={{ width: WIDTH - 32, marginBottom: 16 }}>
+      <View>
         <RemoveExerciseButton />
         <SwapExerciseButton />
         <ExerciseColumnOptions />

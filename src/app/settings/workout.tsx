@@ -11,6 +11,7 @@ import { workoutSettingsConfig } from "../../config/settings/workoutSettings";
 import { WorkoutSettingsNumberField } from "../../components/settings-app/workout/WorkoutNumberField";
 import { WorkoutSettingsIncrementField } from "../../components/settings-app/workout/WorkoutIncrementField";
 import { EmptyFooter } from "../../components/ui/containers/EmptyFooter";
+import { DescriptionText } from "../../components/ui/text/DescriptionText";
 
 export default function WorkoutScreen() {
   const { theme } = useSettingsStore();
@@ -20,13 +21,15 @@ export default function WorkoutScreen() {
     <Fragment>
       <Stack.Screen
         options={{
-          title: t("navigation.workout"),
+          title: t("settings.workout"),
           headerRight: () => <ModalExitButton />,
         }}
       />
 
       <ScreenContent style={{ backgroundColor: theme.navBackground }}>
-        <ScreenView style={{ paddingHorizontal: 16 }}>
+        <ScreenView style={{ paddingHorizontal: 16, gap: 16 }}>
+          {/* <IText text={t("settings.workout-settings.header")} /> */}
+          <DescriptionText text={t("settings.workout-settings.description")} />
           <FlatList
             data={workoutSettingsConfig}
             scrollEnabled={false}

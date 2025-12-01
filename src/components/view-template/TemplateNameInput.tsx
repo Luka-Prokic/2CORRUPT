@@ -1,4 +1,3 @@
-import React, { useMemo } from "react";
 import {
   View,
   TextInput,
@@ -32,7 +31,6 @@ export function TemplateNameInput({
       style={{
         width: WIDTH - 32,
         height: 64,
-        marginBottom: 32,
         backgroundColor: theme.input,
         borderWidth: 1,
         borderColor: theme.border,

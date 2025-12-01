@@ -3,6 +3,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useWorkoutStore } from "../../../stores/workoutStore";
 import { useActionSheet } from "../../../features/useActionSheet";
 import { StrobeOptionButton } from "../../ui/buttons/StrobeOptionButton";
+import { WIDTH } from "../../../features/Dimensions";
 
 export function RemoveExerciseButton() {
   const { theme } = useSettingsStore();
@@ -42,6 +43,7 @@ export function RemoveExerciseButton() {
       title={t("workout-board.remove-exercise")}
       icon={<Ionicons name="remove-circle" size={24} color={error} />}
       height={44}
+      width={WIDTH}
       onPress={handleRemoveExercise}
       color={error}
       strobeDisabled

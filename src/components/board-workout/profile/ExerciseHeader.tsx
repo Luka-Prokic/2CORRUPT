@@ -5,14 +5,17 @@ import { ExerciseName } from "../../view-workout/table/header/ExerciseName";
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { useTranslation } from "react-i18next";
 import { useWorkoutStore } from "../../../stores/workout/useWorkoutStore";
-import { SessionSheetType } from "../SessionDashboard";
+import { SessionSheetType } from "../../../app/workout-board";
 import { router } from "expo-router";
+import { TemplateSheetType } from "../../../app/template-board";
+import { DescriptionText } from "../../ui/text/DescriptionText";
+import { IText } from "../../ui/text/IText";
 
 const EDIT_BUTTON_WIDTH = 44;
 
 interface ExerciseHeaderProps {
   openPanel: () => void;
-  setListType: (listType: SessionSheetType) => void;
+  setListType: (listType: SessionSheetType | TemplateSheetType) => void;
 }
 
 export function ExerciseHeader({
@@ -35,15 +38,13 @@ export function ExerciseHeader({
     <View
       style={{
         flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
         gap: 8,
-        width: WIDTH - 32,
+        width: WIDTH,
       }}
     >
       <IButton
         style={{
-          width: WIDTH - 32 - EDIT_BUTTON_WIDTH,
+          width: WIDTH - 16 - EDIT_BUTTON_WIDTH,
           justifyContent: "flex-start",
         }}
         onPress={handleExerciseNamePress}
@@ -54,15 +55,11 @@ export function ExerciseHeader({
         onPress={handleEditExercise}
         style={{
           height: EDIT_BUTTON_WIDTH,
-          alignItems: "flex-end",
-          paddingBottom: 4,
+          width: EDIT_BUTTON_WIDTH,
+          alignItems: "center",
         }}
       >
-        <Text
-          style={{ color: theme.grayText, fontSize: 18, fontWeight: "bold" }}
-        >
-          {t("button.edit")}
-        </Text>
+        <IText size={18} text={t("button.edit")} color={theme.info} />
       </IButton>
     </View>
   );

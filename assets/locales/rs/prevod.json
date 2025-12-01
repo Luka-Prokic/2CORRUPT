@@ -150,6 +150,9 @@
     "temperature": "Temperatura",
 
     "workout-settings": {
+      "header": "Globalna podešavanja",
+      "description": "Ove opcije podešavaju podrazumevane vrednosti za buduće treninge i vežbe — postojeće ostaju iste.",
+
       "global-start-rest-time-title": "Globalno Koristi Timer Pauze",
       "global-start-rest-time-description": "Koristi vreme pauze između serija ili isključi ga.",
 
@@ -375,7 +378,10 @@
     "template-name": "Naziv za Template..."
   },
   "template-board": {
-    "template-description-placeholder": "Dodaj template beleške, ciljeve... (neobavezno)"
+    "template-description-placeholder": "Dodaj template beleške, ciljeve... (neobavezno)",
+    "template-name": "Naziv za Template",
+    "template-description": "Opis za Template",
+    "select-tags": "Izaberi oznake koje opisuju tvoj template."
   },
   "add-exercise": {
     "add-exercise": "Dodaj Vežbu",

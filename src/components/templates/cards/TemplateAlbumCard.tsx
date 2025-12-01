@@ -32,8 +32,8 @@ export function TemplateAlbumCard({
         width: cardWidth,
         backgroundColor: theme.fifthBackground,
         borderColor: theme.fifthBackground + "40",
-        borderRadius: 32,
-        padding: 16,
+        borderRadius: 24,
+        padding: 8,
         borderWidth: 1,
         justifyContent: "space-between",
       }}

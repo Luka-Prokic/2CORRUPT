@@ -20,7 +20,7 @@ export function DescriptionText({
         fontSize: 16,
         fontWeight: "600",
         letterSpacing: -0.5,
-        lineHeight: 24,
+        lineHeight: 18,
         textAlign: "center",
         ...style,
       }}
