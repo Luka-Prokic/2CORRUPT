@@ -5,6 +5,8 @@ import { Text, View } from "react-native";
 import { useTranslation } from "react-i18next";
 import { StrobeButton } from "../ui/buttons/StrobeButton";
 import { CORRUPT_BUTTON_HEIGHT_FROM_BOTTOM } from "../corrupt/LegacyCorruptButton";
+import { DescriptionText } from "../ui/text/DescriptionText";
+import { IText } from "../ui/text/IText";
 
 export function NoExerciseView() {
   const { theme } = useSettingsStore();
@@ -49,14 +51,13 @@ export function NoExerciseView() {
           alignItems: "center",
         }}
       >
-        <Text
-          style={{ color: theme.grayText, fontSize: 16, fontWeight: "bold" }}
-        >
-          {t("workout-view.got-back-empty-handed")}
-        </Text>
-        <Text style={{ color: theme.grayText, fontSize: 16 }}>
-          {t("workout-view.select-exercises")}
-        </Text>
+        <DescriptionText text={t("workout-view.got-back-empty-handed")} />
+        <IText
+          size={16}
+          color={theme.grayText}
+          weight="400"
+          text={t("workout-view.select-exercises")}
+        />
       </View>
     </View>
   );

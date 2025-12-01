@@ -45,7 +45,7 @@ export function ActiveSplitAlert({
         style={{
           marginVertical: 4,
           color: theme.info,
-          fontSize: 14,
+          fontSize: 16,
           fontWeight: "500",
         }}
       >
@@ -53,11 +53,11 @@ export function ActiveSplitAlert({
           <Fragment>
             {message}{" "}
             {!disabled && (
-              <Ionicons name="lock-closed" size={14} color={theme.info} />
+              <Ionicons name="lock-closed" size={16} color={theme.info} />
             )}
           </Fragment>
         ) : (
-          <Ionicons name="lock-closed" size={14} color={theme.info} />
+          <Ionicons name="lock-closed" size={16} color={theme.info} />
         )}
       </Animated.Text>
     </TouchableOpacity>

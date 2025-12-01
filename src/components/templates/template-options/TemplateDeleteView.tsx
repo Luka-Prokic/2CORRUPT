@@ -6,6 +6,8 @@ import { TemplateBottomSheetViews } from "./TemplateBottomSheet";
 import { Text } from "react-native";
 import { useTranslation } from "react-i18next";
 import { TwoOptionStrobeButtons } from "../../ui/buttons/TwoOptionStrobeButtons";
+import { Ionicons } from "@expo/vector-icons";
+import { DescriptionText } from "../../ui/text/DescriptionText";
 
 interface TemplateDeleteViewProps {
   template: WorkoutTemplate;
@@ -63,16 +65,10 @@ export const TemplateDeleteView = forwardRef<
         onOptionTwo={handleDeleteTemplate}
         styleTwo={{ backgroundColor: theme.error }}
       />
-      <Text
-        style={{
-          marginVertical: 16,
-          color: theme.grayText,
-          fontSize: 14,
-          textAlign: "justify",
-        }}
-      >
-        {t("templates.delete-info")}
-      </Text>
+      <DescriptionText
+        text={t("templates.delete-info")}
+        style={{ marginVertical: 16 }}
+      />
     </Fragment>
   );
 });

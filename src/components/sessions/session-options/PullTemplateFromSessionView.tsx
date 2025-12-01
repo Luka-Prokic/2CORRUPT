@@ -3,12 +3,11 @@ import { useWorkoutStore, WorkoutSession } from "../../../stores/workout";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { useSettingsStore } from "../../../stores/settings";
 import { SessionBottomSheetViews } from "./SessionBottomSheet";
-import { Text } from "react-native";
 import { useTranslation } from "react-i18next";
 import { TempInput } from "../../ui/input/TempInput";
 import { TwoOptionStrobeButtons } from "../../ui/buttons/TwoOptionStrobeButtons";
 import { useKeyboardHeight } from "../../../features/ui/useKeyboardHeight";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { DescriptionText } from "../../ui/text/DescriptionText";
 
 interface PullTemplateFromSessionViewProps {
   session: WorkoutSession;
@@ -74,16 +73,10 @@ export const PullTemplateFromSessionView = forwardRef<
         styleLabelTwo={{ color: theme.secondaryText }}
         disabledTwo={itsNotReady}
       />
-      <Text
-        style={{
-          marginVertical: 16,
-          color: theme.grayText,
-          fontSize: 14,
-          textAlign: "justify",
-        }}
-      >
-        {t("sessions.add-template-info")}
-      </Text>
+      <DescriptionText
+        text={t("sessions.add-template-info")}
+        style={{ marginVertical: 16 }}
+      />
     </Fragment>
   );
 });

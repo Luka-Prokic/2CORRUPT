@@ -108,13 +108,13 @@ export function ActiveSessionAlert({
           style={{
             marginVertical: 4,
             color: theme.info,
-            fontSize: 14,
+            fontSize: 16,
             fontWeight: "500",
           }}
         >
           <Ionicons
             name={styleIcon?.name ?? "alert-circle"}
-            size={styleIcon?.size ?? 14}
+            size={styleIcon?.size ?? 16}
             color={styleIcon?.color ?? theme.error}
           />
           {type !== "icon" && (
@@ -122,7 +122,7 @@ export function ActiveSessionAlert({
               {" "}
               {message}{" "}
               {!disabled && (
-                <Ionicons name="arrow-up-circle" size={14} color={theme.info} />
+                <Ionicons name="arrow-up-circle" size={16} color={theme.info} />
               )}
             </Fragment>
           )}

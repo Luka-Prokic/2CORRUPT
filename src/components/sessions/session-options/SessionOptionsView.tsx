@@ -2,12 +2,12 @@ import { forwardRef } from "react";
 import { WorkoutSession } from "../../../stores/workout";
 import { OptionButton } from "../../ui/buttons/OptionButton";
 import { Ionicons } from "@expo/vector-icons";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { useSettingsStore } from "../../../stores/settings";
-import { router } from "expo-router";
 import { SessionBottomSheetViews } from "./SessionBottomSheet";
 import { useTranslation } from "react-i18next";
+import { DescriptionText } from "../../ui/text/DescriptionText";
 
 interface SessionOptionsViewProps {
   session: WorkoutSession;
@@ -52,15 +52,6 @@ export const SessionOptionsView = forwardRef<
           onPress={handleBack}
           height={44}
         />
-        {/* <OptionButton
-          title={t("sessions.view-recap")}
-          icon={
-            <Ionicons name="arrow-up-circle" size={24} color={theme.info} />
-          }
-          onPress={handleViewRecap}
-          color={theme.info}
-          height={44}
-        /> */}
 
         <OptionButton
           title={t("sessions.add-to-templates")}
@@ -89,16 +80,10 @@ export const SessionOptionsView = forwardRef<
           onPress={handleDeleteTemplate}
           height={44}
         />
-        <Text
-          style={{
-            marginVertical: 16,
-            color: theme.grayText,
-            fontSize: 14,
-            textAlign: "justify",
-          }}
-        >
-          {t("sessions.options-info")}
-        </Text>
+        <DescriptionText
+          text={t("sessions.options-info")}
+          style={{ marginVertical: 16 }}
+        />
       </View>
     );
   return null;

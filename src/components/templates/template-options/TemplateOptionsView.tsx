@@ -2,7 +2,6 @@ import { forwardRef, Fragment } from "react";
 import { useWorkoutStore, WorkoutTemplate } from "../../../stores/workout";
 import { OptionButton } from "../../ui/buttons/OptionButton";
 import { Ionicons } from "@expo/vector-icons";
-import { Text } from "react-native";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { useSettingsStore } from "../../../stores/settings";
 import { useUIStore } from "../../../stores/ui";
@@ -12,6 +11,7 @@ import { useTranslation } from "react-i18next";
 import { TemplateNameInput } from "../../board-home/widgets/templates-widget/cards/TemplateNameInput";
 import { ActiveSessionAlert } from "../../ui/alerts/ActiveSessionAlert";
 import { useKeyboardHeight } from "../../../features/ui/useKeyboardHeight";
+import { DescriptionText } from "../../ui/text/DescriptionText";
 
 interface TemplateOptionsViewProps {
   template: WorkoutTemplate;
@@ -108,16 +108,10 @@ export const TemplateOptionsView = forwardRef<
         onPress={handleDeleteTemplate}
         height={44}
       />
-      <Text
-        style={{
-          marginVertical: 16,
-          color: theme.grayText,
-          fontSize: 14,
-          textAlign: "justify",
-        }}
-      >
-        {t("templates.options-info")}
-      </Text>
+      <DescriptionText
+        text={t("templates.options-info")}
+        style={{ marginVertical: 16 }}
+      />
     </Fragment>
   );
 });

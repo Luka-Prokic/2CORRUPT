@@ -2,7 +2,6 @@ import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { forwardRef } from "react";
 import { SessionBottomSheetViews } from "./SessionBottomSheet";
 import { WorkoutSession, useWorkoutStore } from "../../../stores/workout";
-import { Text } from "react-native";
 import { CardSlider } from "../../ui/sliders/CardSlider";
 import { HEIGHT, WIDTH } from "../../../features/Dimensions";
 import { ActiveSessionAlert } from "../../ui/alerts/ActiveSessionAlert";
@@ -15,6 +14,7 @@ import { ExercisePreviewCard } from "../cards/ExercisePreviewCard";
 import Animated, { FadeIn } from "react-native-reanimated";
 import { useLayoutPreviewHeight } from "../../../features/ui/useGetExercisePreviewCardHeight";
 import { SessionName } from "../../board-workout/sheets/session/SessionName";
+import { DescriptionText } from "../../ui/text/DescriptionText";
 
 interface PreviewSessionViewProps {
   session: WorkoutSession;
@@ -53,17 +53,7 @@ export const PreviewSessionView = forwardRef<
         fontSize={32}
       />
       {session.notes && (
-        <Text
-          style={{
-            color: theme.info,
-            fontSize: 16,
-            fontWeight: "500",
-            marginBottom: 16,
-            textAlign: "center",
-          }}
-        >
-          {session.notes}
-        </Text>
+        <DescriptionText text={session.notes} style={{ marginBottom: 16 }} />
       )}
       <CardSlider
         data={session.layout}

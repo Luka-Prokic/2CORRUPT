@@ -55,7 +55,7 @@ export function CorruptRestTimer({ size }: CorruptRestTimerProps) {
         style={{
           width: size,
           height: size,
-          backgroundColor: theme.thirdBackground,
+          backgroundColor: theme.thirdBackground + "80",
           borderRadius: size / 2,
           justifyContent: "center",
           alignItems: "center",
@@ -73,7 +73,7 @@ export function CorruptRestTimer({ size }: CorruptRestTimerProps) {
         style={{
           width: size,
           height: size,
-          backgroundColor: theme.thirdBackground,
+          backgroundColor: theme.thirdBackground + "80",
           borderRadius: size / 2,
           justifyContent: "center",
           alignItems: "center",

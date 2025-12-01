@@ -1,14 +1,17 @@
 import { Text, TextStyle } from "react-native";
 import { useSettingsStore } from "../../../stores/settings";
+import { Fragment } from "react";
 
 export function DescriptionText({
   text,
   style,
   short = false,
+  children,
 }: {
   text: string;
   style?: TextStyle | TextStyle[];
   short?: boolean; // if true, max 3 lines
+  children?: React.ReactNode;
 }) {
   const { theme } = useSettingsStore();
   return (
@@ -25,7 +28,13 @@ export function DescriptionText({
         ...style,
       }}
     >
-      {text}
+      {children ? (
+        <Fragment>
+          {children} {text}
+        </Fragment>
+      ) : (
+        text
+      )}
     </Text>
   );
 }

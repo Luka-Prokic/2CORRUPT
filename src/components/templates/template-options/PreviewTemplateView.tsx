@@ -2,7 +2,6 @@ import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { forwardRef } from "react";
 import { TemplateBottomSheetViews } from "./TemplateBottomSheet";
 import { WorkoutTemplate, useWorkoutStore } from "../../../stores/workout";
-import { Text } from "react-native";
 import { CardSlider } from "../../ui/sliders/CardSlider";
 import { HEIGHT, WIDTH } from "../../../features/Dimensions";
 import { ActiveSessionAlert } from "../../ui/alerts/ActiveSessionAlert";
@@ -15,6 +14,7 @@ import Animated, { FadeIn } from "react-native-reanimated";
 import { useLayoutPreviewHeight } from "../../../features/ui/useGetExercisePreviewCardHeight";
 import { ExercisePreviewCard } from "../../sessions/cards/ExercisePreviewCard";
 import { TemplateName } from "../../board-template/sheets/template/TemplateName";
+import { DescriptionText } from "../../ui/text/DescriptionText";
 
 interface PreviewTempalteViewProps {
   template: WorkoutTemplate;
@@ -51,17 +51,10 @@ export const PreviewTempalteView = forwardRef<
       />
 
       {template.description && (
-        <Text
-          style={{
-            color: theme.info,
-            fontSize: 16,
-            fontWeight: "500",
-            marginBottom: 16,
-            textAlign: "center",
-          }}
-        >
-          {template.description}
-        </Text>
+        <DescriptionText
+          text={template.description}
+          style={{ marginBottom: 16 }}
+        />
       )}
 
       <CardSlider

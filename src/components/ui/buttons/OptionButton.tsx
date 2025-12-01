@@ -1,12 +1,12 @@
 import {
-  StyleSheet,
   DimensionValue,
   ViewStyle,
   TouchableOpacity,
-  Text,
   View,
+  TextStyle,
 } from "react-native";
 import { useSettingsStore } from "../../../stores/settingsStore";
+import { MidText } from "../text/MidText";
 
 interface OptionButtonProps {
   title: string;
@@ -14,9 +14,17 @@ interface OptionButtonProps {
   width?: DimensionValue;
   height?: DimensionValue;
   icon?: React.ReactNode;
-  style?: ViewStyle;
+  style?: ViewStyle | ViewStyle[];
+  styleTitle?: TextStyle | TextStyle[];
   color?: string;
   disabled?: boolean;
+  justifyContent?:
+    | "flex-start"
+    | "center"
+    | "flex-end"
+    | "space-between"
+    | "space-around"
+    | "space-evenly";
 }
 
 export function OptionButton({
@@ -26,40 +34,41 @@ export function OptionButton({
   width = "100%",
   height = 34,
   style,
+  styleTitle,
   color,
   disabled,
+  justifyContent = "space-between",
 }: OptionButtonProps) {
   const { theme } = useSettingsStore();
 
   return (
     <TouchableOpacity
-      style={[styles.container, style, { width, height }]}
+      style={{
+        width: width,
+        height: height,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent,
+        paddingHorizontal: 8,
+        ...style,
+      }}
       onPress={onPress}
       activeOpacity={0.7}
       disabled={disabled}
     >
-      <Text style={[styles.title, { color: color || theme.text }]}>
-        {title}
-      </Text>
-      <View style={styles.icon}>{icon}</View>
+      <MidText
+        text={title}
+        style={{ color: color || theme.text, ...styleTitle }}
+      />
+      <View
+        style={{
+          flexDirection: "row-reverse",
+          alignItems: "center",
+          gap: 8,
+        }}
+      >
+        {icon}
+      </View>
     </TouchableOpacity>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    paddingHorizontal: 12,
-  },
-  title: {
-    flex: 1,
-    fontSize: 16,
-  },
-  icon: {
-    flexDirection: "row-reverse",
-    alignItems: "center",
-    gap: 8,
-  },
-});

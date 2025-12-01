@@ -3,11 +3,11 @@ import { useWorkoutStore, WorkoutTemplate } from "../../../stores/workout";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { useSettingsStore } from "../../../stores/settings";
 import { TemplateBottomSheetViews } from "./TemplateBottomSheet";
-import { Text } from "react-native";
 import { useTranslation } from "react-i18next";
 import { TempInput } from "../../ui/input/TempInput";
 import { TwoOptionStrobeButtons } from "../../ui/buttons/TwoOptionStrobeButtons";
 import { useKeyboardHeight } from "../../../features/ui/useKeyboardHeight";
+import { DescriptionText } from "../../ui/text/DescriptionText";
 
 interface TemplateCloneViewProps {
   template: WorkoutTemplate;
@@ -51,16 +51,10 @@ export const TemplateCloneView = forwardRef<
         styleLabelTwo={{ color: theme.secondaryText }}
         disabledTwo={itsNotReady}
       />
-      <Text
-        style={{
-          marginVertical: 16,
-          color: theme.grayText,
-          fontSize: 14,
-          textAlign: "justify",
-        }}
-      >
-        {t("templates.clone-info")}
-      </Text>
+      <DescriptionText
+        text={t("templates.clone-info")}
+        style={{ marginVertical: 16 }}
+      />
     </Fragment>
   );
 });

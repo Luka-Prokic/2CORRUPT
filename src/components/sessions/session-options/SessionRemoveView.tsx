@@ -7,6 +7,7 @@ import { Text } from "react-native";
 import { useTranslation } from "react-i18next";
 import { Ionicons } from "@expo/vector-icons";
 import { TwoOptionStrobeButtons } from "../../ui/buttons/TwoOptionStrobeButtons";
+import { DescriptionText } from "../../ui/text/DescriptionText";
 
 interface SessionRemoveViewProps {
   session: WorkoutSession;
@@ -62,18 +63,12 @@ export const SessionRemoveView = forwardRef<
           styleTwo={{ backgroundColor: theme.error }}
         />
 
-        <Text
-          style={{
-            marginVertical: 16,
-            color: theme.info,
-            fontSize: 14,
-            fontWeight: "500",
-            textAlign: "justify",
-          }}
+        <DescriptionText
+          text={t("sessions.remove-info")}
+          style={{ marginVertical: 16 }}
         >
-          <Ionicons name="alert-circle" color={theme.error} size={14} />{" "}
-          {t("sessions.remove-info")}
-        </Text>
+          <Ionicons name="alert-circle" color={theme.error} size={16} />
+        </DescriptionText>
       </Fragment>
     );
   return null;
