@@ -88,7 +88,12 @@ export function WeekSlider({
       return;
     }
 
-    setSelectedDate(week[getDayIndex(selectedDate)]);
+    const dayNotInWeek = getDayIndex(selectedDate) - getDayIndex(week[0]);
+
+    // Clamp the index to [0, 6]
+    const clampedIndex = Math.min(Math.max(dayNotInWeek, 0), 6);
+
+    setSelectedDate(week[clampedIndex]);
   };
 
   return (
