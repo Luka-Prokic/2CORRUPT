@@ -22,6 +22,7 @@ export interface StrobeButtonProps
   strobeTint?: "default" | "light" | "dark" | "auto";
   pressable?: boolean;
   animatedEntering?: boolean;
+  animatedExiting?: boolean;
 }
 
 export function StrobeButton({
@@ -36,6 +37,7 @@ export function StrobeButton({
   strobeTint = "light",
   pressable,
   animatedEntering = true,
+  animatedExiting = true,
   ...rest
 }: StrobeButtonProps) {
   const { theme } = useSettingsStore();
@@ -64,7 +66,7 @@ export function StrobeButton({
     >
       <Animated.View
         entering={animatedEntering ? FadeIn : undefined}
-        exiting={animatedEntering ? FadeOut : undefined}
+        exiting={animatedExiting ? FadeOut : undefined}
         style={[StyleSheet.absoluteFill]}
       >
         <StrobeBlur

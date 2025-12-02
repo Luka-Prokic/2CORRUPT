@@ -40,7 +40,7 @@ export function TemplateCard({ template }: TemplateCardProps) {
           flex: 1,
           justifyContent: "space-between",
           backgroundColor: theme.fifthBackground,
-          borderColor: theme.border,
+          borderColor: theme.fifthBackground + "40",
           borderRadius: 16,
           borderWidth: 1,
         }}

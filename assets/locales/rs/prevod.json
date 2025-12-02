@@ -412,7 +412,11 @@
     "add-template-info": "Sačuvaj raspored ove sesije kao novi šablon. Daj mu prepoznatljivo ime da bi ga kasnije lakše pronašao ili koristio za slične treninge.",
     "update-template-info": "Ažuriraj šablon korišćen u ovom treningu. Možeš da izmeniš njegov raspored, promeniš naziv i uskladiš ga sa najnovijim izmenama u treningu.",
     "remove-info": "Uklanjanje ove sesije je trajno i ne može se poništiti. Statistike tvog napretka biće izmenjene.",
-    "active-session-warning": "Aktivan trening je u toku. Završi ga pre nego što započneš novi."
+    "active-session-warning": "Aktivan trening je u toku. Završi ga pre nego što započneš novi.",
+    "total-exercises": "Ukupno vežbi",
+    "completed-exercises": "Završene vežbe",
+    "total-sets": "Ukupno setova",
+    "completed-sets": "Završeni setovi"
   },
   "templates": {
     "start-workout": "Započni Trening",

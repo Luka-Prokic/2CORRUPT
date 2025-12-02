@@ -46,7 +46,7 @@ export const SessionRemoveView = forwardRef<
             textAlign: "center",
           }}
         >
-          {t("button.remove")}
+          {t("button.remove")}{" "}
           <Text
             style={{
               color: theme.text,

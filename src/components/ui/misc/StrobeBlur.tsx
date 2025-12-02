@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useMemo } from "react";
+import { useEffect, useRef, useMemo } from "react";
 import { View, Animated, ViewStyle, StyleSheet, Easing } from "react-native";
 import { BlurView } from "expo-blur";
 import { useSettingsStore } from "../../../stores/settingsStore";
@@ -34,23 +34,24 @@ export function StrobeBlur({
   const animValues = useRef(BLOBS.map(() => new Animated.Value(0))).current;
 
   // Randomize ONLY the path/shape
-  const blobSettings = useMemo(
-    () =>
-      BLOBS.map((i: number) => ({
-        color: i,
-        offset: Math.random(),
-        radius: 50 + Math.random() * size,
-        size: size + Math.random() * 60,
+  const blobSettings = useMemo(() => {
+    return BLOBS.map((blob: number) => {
+      const r = Math.random(); // generate per blob
+      return {
+        color: blob,
+        offset: r,
+        radius: 50 + r * size,
+        size: size + r * 60,
         borderRadius: {
-          borderTopLeftRadius: size / 2.5 + (Math.random() * size) / 2,
-          borderTopRightRadius: size / 2.5 + (Math.random() * size) / 2,
-          borderBottomLeftRadius: size / 2.5 + (Math.random() * size) / 2,
-          borderBottomRightRadius: size / 2.5 + (Math.random() * size) / 2,
+          borderTopLeftRadius: size / 2 + (r * size) / 2,
+          borderTopRightRadius: size / 2 + (r * size) / 2,
+          borderBottomLeftRadius: size / 2 + (r * size) / 2,
+          borderBottomRightRadius: size / 2 + (r * size) / 2,
         },
-        frozenPosition: Math.random(), // <-- random frozen position
-      })),
-    [size]
-  );
+        frozenPosition: r,
+      };
+    });
+  }, [size]);
 
   useEffect(() => {
     if (freeze) {
@@ -79,12 +80,12 @@ export function StrobeBlur({
     return blobSettings.map((blob, i) => {
       const { radius, size, borderRadius } = blob;
 
-      const translateX = animValues[i].interpolate({
+      const translateX = animValues[blob.color].interpolate({
         inputRange: [0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2],
         outputRange: [0, radius, 0, -radius, 0, radius, 0, -radius, 0],
       });
 
-      const translateY = animValues[i].interpolate({
+      const translateY = animValues[blob.color].interpolate({
         inputRange: [0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2],
         outputRange: [-radius, 0, radius, 0, -radius, 0, radius, 0, -radius],
       });

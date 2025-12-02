@@ -1,6 +1,5 @@
-import { View, Text, FlatList, ViewStyle } from "react-native";
+import { View, FlatList, ViewStyle } from "react-native";
 import { useSettingsStore } from "../../../stores/settings";
-import { WIDTH } from "../../../features/Dimensions";
 import { SessionExercise } from "../../../stores/workout";
 import { hexToRGBA } from "../../../features/HEXtoRGB";
 import { ExerciseName } from "../../view-workout/table/header/ExerciseName";
@@ -8,17 +7,26 @@ import { PreviewSetRow } from "../session-options/PreviewSetRow";
 import { useExercisePreviewHeight } from "../../../features/ui/useGetExercisePreviewCardHeight";
 import { useTranslation } from "react-i18next";
 import { useWidgetUnit } from "../../../features/widgets/useWidgetUnit";
+import { DescriptionText } from "../../ui/text/DescriptionText";
+import { MidText } from "../../ui/text/MidText";
+import { InfoText } from "../../ui/text/InfoText";
 
 interface ExercisePreviewCardProps {
   exercise: SessionExercise;
-  maxHeight: number;
+  maxHeight?: number;
   cardStyle?: ViewStyle | ViewStyle[];
+  hollow?: boolean;
+  square?: boolean;
+  width?: number;
 }
 
 export function ExercisePreviewCard({
   exercise,
-  maxHeight,
+  maxHeight = Infinity,
   cardStyle,
+  hollow = false,
+  square = false,
+  width,
 }: ExercisePreviewCardProps) {
   const { theme, units } = useSettingsStore();
   const { t } = useTranslation();
@@ -34,11 +42,13 @@ export function ExercisePreviewCard({
   return (
     <View
       style={{
-        width: fullWidth,
+        width: width ?? fullWidth,
         height: finalHeight,
-        borderRadius: 32,
+        borderRadius: square ? 0 : 32,
         overflow: "hidden",
-        backgroundColor: hexToRGBA(theme.thirdBackground, 0.6),
+        backgroundColor: hollow
+          ? "transparent"
+          : hexToRGBA(theme.thirdBackground, 0.6),
         ...cardStyle,
       }}
     >
@@ -54,57 +64,42 @@ export function ExercisePreviewCard({
       </View>
 
       {exercise.notes && (
-        <Text
+        <DescriptionText
           style={{
-            color: theme.tint,
-            fontSize: 16,
-            fontWeight: "500",
-            textAlign: "center",
+            color: hollow ? theme.info : theme.info,
             paddingHorizontal: 8,
             height: 48,
-            lineHeight: 16,
           }}
-          adjustsFontSizeToFit
-          numberOfLines={3}
-        >
-          {exercise.notes}
-        </Text>
+          text={exercise.notes}
+        />
       )}
 
-      <View
-        style={{
-          flexDirection: "row",
-          height: 34,
-          alignItems: "center",
-        }}
-      >
-        {columns.map((label: string) => (
+      <FlatList
+        data={columns}
+        style={{ flexDirection: "row", width: width ?? fullWidth }}
+        horizontal
+        scrollEnabled={false}
+        renderItem={({ item }) => (
           <View
-            key={label}
             style={{
-              width: fullWidth / columns.length,
+              width: width
+                ? width / columns.length
+                : fullWidth / columns.length,
               height: 34,
               justifyContent: "center",
               alignItems: "center",
-              paddingHorizontal: 4,
             }}
           >
-            <Text
+            <MidText
               style={{
-                fontSize: 16,
                 fontWeight: "bold",
-                textAlign: "center",
-                color: theme.info,
+                color: hollow ? theme.handle : theme.info,
               }}
-              numberOfLines={1}
-              adjustsFontSizeToFit
-              minimumFontScale={0.6}
-            >
-              {t(`workout-view.${label.toLowerCase()}`).toUpperCase()}
-            </Text>
+              text={t(`workout-view.${item.toLowerCase()}`).toUpperCase()}
+            />
           </View>
-        ))}
-      </View>
+        )}
+      />
 
       <FlatList
         data={exercise.sets}
@@ -114,14 +109,15 @@ export function ExercisePreviewCard({
             execise={exercise}
             set={item}
             setIndex={index}
-            width={WIDTH - 32}
+            width={width ?? fullWidth}
           />
         )}
         scrollEnabled={cardHeight > maxHeight}
         nestedScrollEnabled
       />
       {cardHeight > maxHeight && (
-        <View
+        <InfoText
+          text={t("button.scrollable").toLowerCase()}
           style={{
             position: "absolute",
             bottom: 0,
@@ -130,17 +126,7 @@ export function ExercisePreviewCard({
             alignItems: "center",
             padding: 8,
           }}
-        >
-          <Text
-            style={{
-              color: theme.info,
-              fontSize: 14,
-              fontWeight: "500",
-            }}
-          >
-            {t("button.scrollable").toLowerCase()}
-          </Text>
-        </View>
+        />
       )}
     </View>
   );

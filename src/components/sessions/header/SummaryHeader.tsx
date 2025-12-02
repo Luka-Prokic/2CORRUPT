@@ -92,7 +92,7 @@ export function SummaryHeader() {
 
             <TouchableOpacity onPress={handleExpandPress}>
               <Ionicons
-                name={isExpanded ? "albums-outline" : "chevron-expand-outline"}
+                name={isExpanded ? "albums-outline" : "analytics-outline"}
                 size={28}
                 color={theme.info}
               />

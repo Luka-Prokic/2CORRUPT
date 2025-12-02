@@ -1,21 +1,11 @@
 import { Stack } from "expo-router";
-import { Fragment, useEffect } from "react";
+import { Fragment } from "react";
 import { DaySliderScreen } from "../components/sessions/DaySliderScreen";
 import { SummaryHeader } from "../components/sessions/header/SummaryHeader";
 import { useUIStore } from "../stores/ui/useUIStore";
 
 export default function SummaryScreen() {
-  const {
-    weeks,
-    selectedDate,
-    setSelectedDate,
-    isExpanded,
-    resetSelectedDate,
-  } = useUIStore();
-
-  useEffect(() => {
-    resetSelectedDate();
-  }, [resetSelectedDate]);
+  const { weeks, selectedDate, setSelectedDate } = useUIStore();
 
   return (
     <Fragment>

@@ -53,6 +53,7 @@ export function SessionRecapCard({ session }: SessionRecapCardProps) {
             alignContent: "center",
             flexDirection: "row",
           }}
+          animatedExiting={false}
         >
           <SessionRecapCardHeader session={session} />
           <ProgressRing

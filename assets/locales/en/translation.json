@@ -413,7 +413,11 @@
     "add-template-info": "Save this session's layout as a new template. Giving it a clear name helps you recognize it later or use it for similar workouts.",
     "update-template-info": "Update the template used for this session. You can adjust its layout, rename it, and keep it aligned with your latest workout changes.",
     "remove-info": "Removing this session can't be undone. Your progress stats will be affected.",
-    "active-session-warning": "Active workout in progress. Finish it or cancel it before starting a new session."
+    "active-session-warning": "Active workout in progress. Finish it or cancel it before starting a new session.",
+    "total-exercises": "Total Exercises",
+    "completed-exercises": "Completed Exercises",
+    "total-sets": "Total Sets",
+    "completed-sets": "Completed Sets"
   },
   "templates": {
     "start-workout": "Start Workout",

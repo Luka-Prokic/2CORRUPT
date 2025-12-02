@@ -1,84 +1,102 @@
 import { WorkoutSession } from "../../../../stores/workout";
-import { TouchableOpacity, View } from "react-native";
 import { TextButton } from "../../../ui/buttons/TextButton";
 import { useTranslation } from "react-i18next";
-import { SessionRecapCardHeader } from "./SessionRecapCardHeader";
-import { useRef, useState } from "react";
-import { BottomSheetModal } from "@gorhom/bottom-sheet";
-import {
-  SessionBottomSheet,
-  SessionBottomSheetViews,
-} from "../../session-options/SessionBottomSheet";
-import { Fragment } from "react";
-import { Ionicons } from "@expo/vector-icons";
 import { useSettingsStore } from "../../../../stores/settings";
+import { useWorkoutStore } from "../../../../stores/workout";
+import { router } from "expo-router";
+import { useUIStore } from "../../../../stores/ui";
+import { View, ViewStyle } from "react-native";
+import { WIDTH } from "../../../../features/Dimensions";
+import { IText } from "../../../ui/text/IText";
+import { LabeledValue } from "../../../ui/misc/LabeledValue";
+import { ExpandedSessionRecapFooter } from "./ExpandedSessionRecapFooter";
 
 interface ExpandedSessionRecapHeaderProps {
   session: WorkoutSession;
+  style?: ViewStyle | ViewStyle[];
 }
 
 export function ExpandedSessionRecapHeader({
   session,
+  style,
 }: ExpandedSessionRecapHeaderProps) {
   const { t } = useTranslation();
   const { theme } = useSettingsStore();
-  const bottomSheetRef = useRef<BottomSheetModal>(null);
-  const [type, setType] = useState<SessionBottomSheetViews>("options");
+  const { startSession } = useWorkoutStore();
+  const { setTypeOfView } = useUIStore();
 
-  function handlePress(type: SessionBottomSheetViews) {
-    setType(type);
-    bottomSheetRef.current?.present();
+  function handleRepeatPress() {
+    startSession(null, session);
+    setTypeOfView("workout");
+    setTimeout(() => {
+      router.dismissTo("/");
+    }, 100);
   }
+
+  const startOfSession = new Date(session.startTime).toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false, // ensures 24-hour format
+  });
+
+  const endOfSession = new Date(session.endTime).toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
+
   return (
-    <Fragment>
+    <View
+      style={{
+        alignItems: "center",
+        width: WIDTH,
+        padding: 16,
+        gap: 32,
+      }}
+    >
       <View
         style={{
           flexDirection: "row",
           alignItems: "center",
           justifyContent: "space-between",
-          padding: 8,
+          width: WIDTH - 32,
+          ...style,
         }}
       >
-        <SessionRecapCardHeader session={session} />
-        {/* <TextButton text={t("button.edit")} onPress={handleEditPress} /> */}
-
-        <View style={{ flexDirection: "row" }}>
-          <TouchableOpacity
-            onPress={() => handlePress("make")}
-            style={{
-              padding: 4,
-            }}
-          >
-            <Ionicons name="add-circle" size={32} color={theme.accent} />
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => handlePress("remove")}
-            style={{
-              padding: 4,
-            }}
-          >
-            <Ionicons name="remove-circle" size={32} color={theme.error} />
-          </TouchableOpacity>
-
-          {session.templateId && (
-            <TouchableOpacity
-              onPress={() => handlePress("update")}
-              style={{
-                padding: 4,
-              }}
-            >
-              <Ionicons name="sync-circle" size={32} color={theme.info} />
-            </TouchableOpacity>
-          )}
-        </View>
+        <IText color={theme.tint} text={`${startOfSession}-${endOfSession}`} />
+        <TextButton
+          text={t("button.repeat")}
+          onPress={handleRepeatPress}
+          textStyle={{ fontSize: 28 }}
+          color={theme.fifthBackground}
+        />
       </View>
 
-      <SessionBottomSheet
-        session={session}
-        ref={bottomSheetRef}
-        startView={type}
-        closeOnCancel
-      />
-    </Fragment>
+      <View style={{ alignItems: "center" }}>
+        <IText text={session.name} color={theme.shadow} />
+
+        <IText
+          text={session.notes ?? ""}
+          weight="500"
+          size={18}
+          color={theme.info}
+        />
+
+        <ExpandedSessionRecapFooter session={session} />
+      </View>
+
+      <View style={{ flexDirection: "row" }}>
+        <LabeledValue
+          label={t("sessions.total-exercises")}
+          value={session.layout.length}
+          style={{ width: WIDTH / 2 - 16 }}
+        />
+        <LabeledValue
+          label={t("sessions.total-sets")}
+          value={session.totals?.totalSets ?? 1}
+          style={{ width: WIDTH / 2 - 16 }}
+        />
+      </View>
+    </View>
   );
 }

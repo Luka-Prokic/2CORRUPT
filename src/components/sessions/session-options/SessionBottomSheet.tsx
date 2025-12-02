@@ -1,4 +1,4 @@
-import { forwardRef, useState } from "react";
+import { forwardRef, useEffect, useState } from "react";
 import {
   BottomSheetBackdrop,
   BottomSheetModal,
@@ -59,12 +59,22 @@ export const SessionBottomSheet = forwardRef<
 
       case "update":
         return (
-          <UpdateTemplateView session={session} setView={setView} ref={ref} closeOnCancel={closeOnCancel} />
+          <UpdateTemplateView
+            session={session}
+            setView={setView}
+            ref={ref}
+            closeOnCancel={closeOnCancel}
+          />
         );
 
       case "remove":
         return (
-          <SessionRemoveView session={session} setView={setView} ref={ref} closeOnCancel={closeOnCancel} />
+          <SessionRemoveView
+            session={session}
+            setView={setView}
+            ref={ref}
+            closeOnCancel={closeOnCancel}
+          />
         );
 
       default:
