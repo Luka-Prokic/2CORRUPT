@@ -1,15 +1,14 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import {
-  View,
-  FlatList,
-  Animated,
-  NativeSyntheticEvent,
-  NativeScrollEvent,
-} from "react-native";
+import { useEffect, useRef } from "react";
+import { View, FlatList } from "react-native";
 import { WIDTH } from "../../../features/Dimensions";
 import { WeekDay } from "./WeekDay";
 import { getDayIndex } from "../../../features/calendar/useDate";
 import { useSettingsStore } from "../../../stores/settings";
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withSpring,
+} from "react-native-reanimated";
 
 interface WeekSliderProps {
   weeks: Date[][];
@@ -27,27 +26,43 @@ export function WeekSlider({
   setSelectedDate,
 }: WeekSliderProps) {
   const { theme } = useSettingsStore();
-  const [scrollLocked, setScrollLocked] = useState(false);
 
   const flatListRef = useRef<FlatList>(null);
-  const animatedTranslateX = useRef(new Animated.Value(0)).current;
+  const scrollLocked = useRef(false);
 
+  // Start value based on selectedDate
+  const translateX = useSharedValue((getDayIndex(selectedDate) * WIDTH) / 7);
+
+  // Animated style for bubble
+  const bubbleStyle = useAnimatedStyle(() => ({
+    transform: [{ translateX: translateX.value }],
+  }));
+
+  // Animate bubble when selectedDate changes
   useEffect(() => {
-    Animated.spring(animatedTranslateX, {
-      toValue: (getDayIndex(selectedDate) * WIDTH) / 7,
-      useNativeDriver: true,
-      tension: 100,
-      friction: 8,
-    }).start();
+    const dayIndex = getDayIndex(selectedDate);
+    translateX.value = withSpring((dayIndex * WIDTH) / 7, {
+      damping: 100,
+      stiffness: 1000,
+    });
   }, [selectedDate]);
 
-  const animatedBackgroundStyle = useMemo(
-    () => ({ transform: [{ translateX: animatedTranslateX }] }),
-    [animatedTranslateX]
-  );
+  // Programmatic scroll when week changes
+  useEffect(() => {
+    if (scrollLocked.current) return;
+    scrollLocked.current = true;
 
-  const handleWeekScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-    setScrollLocked(true);
+    flatListRef.current?.scrollToIndex({
+      index: currentWeekIndex,
+      animated: true,
+    });
+
+    setTimeout(() => {
+      scrollLocked.current = false;
+    }, 150);
+  }, [currentWeekIndex]);
+
+  const handleMomentumEnd = (event: any) => {
     const offsetX = event.nativeEvent.contentOffset.x;
     const newIndex = Math.round(offsetX / WIDTH);
 
@@ -55,69 +70,39 @@ export function WeekSlider({
 
     const week = weeks[newIndex];
     const today = new Date();
+    const norm = (d: Date) => d.toISOString().split("T")[0];
 
-    // Normalize dates to YYYY-MM-DD to compare correctly
-    const normalize = (d: Date) => d.toISOString().split("T")[0];
-    const todayKey = normalize(today);
-
-    // Check if week contains today
-    const todayInWeek = week.some((d) => normalize(d) === todayKey);
     setCurrentWeekIndex(newIndex);
 
+    const todayInWeek = week.some((d) => norm(d) === norm(today));
     if (todayInWeek) {
       setSelectedDate(today);
-      setTimeout(() => {
-        setScrollLocked(false);
-      }, 0);
       return;
     }
+
     if (newIndex < currentWeekIndex) {
       setSelectedDate(week[6]);
-      setTimeout(() => {
-        setScrollLocked(false);
-      }, 0);
-      return;
+    } else {
+      setSelectedDate(week[0]);
     }
-    setSelectedDate(week[0]);
-    setTimeout(() => {
-      setScrollLocked(false);
-    }, 0);
-    return;
   };
 
-  useEffect(() => {
-    if (scrollLocked) return;
-    setScrollLocked(true);
-    flatListRef.current.scrollToIndex({
-      index: currentWeekIndex,
-      animated: true,
-    });
-    setTimeout(() => {
-      setScrollLocked(false);
-    }, 0);
-  }, [currentWeekIndex]);
-
   return (
-    <View
-      style={{
-        width: WIDTH,
-        height: WIDTH / 7,
-      }}
-    >
-      {/* Animated selected day circle */}
+    <View style={{ marginTop: 8, width: WIDTH, height: WIDTH / 7 }}>
+      {/* Animated bubble */}
       <Animated.View
         style={[
           {
             position: "absolute",
-            borderRadius: "50%",
             width: WIDTH / 7,
             height: WIDTH / 7,
+            borderRadius: WIDTH / 14,
             backgroundColor: theme.tint,
           },
-          animatedBackgroundStyle,
+          bubbleStyle,
         ]}
       />
-      {/* Week Days*/}
+
       <FlatList
         ref={flatListRef}
         horizontal
@@ -125,8 +110,7 @@ export function WeekSlider({
         data={weeks}
         keyExtractor={(_, index) => `week-${index}`}
         showsHorizontalScrollIndicator={false}
-        onScroll={handleWeekScroll}
-        scrollEventThrottle={16}
+        onMomentumScrollEnd={handleMomentumEnd}
         initialScrollIndex={currentWeekIndex}
         getItemLayout={(_, index) => ({
           length: WIDTH,
@@ -134,20 +118,19 @@ export function WeekSlider({
           index,
         })}
         renderItem={({ item: week }) => (
-          <View
-            style={{
+          <FlatList
+            data={week}
+            scrollEnabled={false}
+            keyExtractor={(date) => date.toISOString()}
+            contentContainerStyle={{
               height: WIDTH / 7,
               width: WIDTH,
               flexDirection: "row",
               justifyContent: "space-between",
               alignItems: "center",
-              position: "relative",
             }}
-          >
-            {week.map((date: Date, dayIndex: number) => (
-              <WeekDay key={`week-day-${dayIndex}`} date={date} />
-            ))}
-          </View>
+            renderItem={({ item: date }) => <WeekDay date={date} />}
+          />
         )}
       />
     </View>

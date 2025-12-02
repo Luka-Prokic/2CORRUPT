@@ -36,7 +36,10 @@ export function SummaryHeader() {
   return (
     <Fragment>
       <BlurView
-        style={{ paddingTop: insets.top, height: WIDTH / 7 + 34 + insets.top }}
+        style={{
+          paddingTop: insets.top,
+          height: WIDTH / 7 + 34 + insets.top + 8,
+        }}
         tint={themeMode}
       >
         <View

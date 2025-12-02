@@ -55,6 +55,8 @@ export interface SummaryViewSlice {
 
   weeks: Date[][];
   setWeeks: (weeks: Date[][]) => void;
+
+  resetSelectedDate: () => void;
 }
 
 // Types for the modular UI store
