@@ -12,6 +12,8 @@ import {
 } from "../../../features/calendar/useDate";
 import { useUIStore } from "../../../stores/ui/useUIStore";
 import { WIDTH } from "../../../features/Dimensions";
+import { DescriptionText } from "../../ui/text/DescriptionText";
+import { InfoText } from "../../ui/text/InfoText";
 
 interface WeekDayProps {
   date: Date;
@@ -47,7 +49,6 @@ export function WeekDay({ date }: WeekDayProps) {
       }}
       onPress={() => handleDayPress(date)}
       disabled={isFuture}
-      activeOpacity={0.7}
     >
       {isDone && !isSelected ? (
         <Ionicons
@@ -57,9 +58,8 @@ export function WeekDay({ date }: WeekDayProps) {
         />
       ) : (
         <Fragment>
-          <Text
+          <InfoText
             style={{
-              fontSize: 12,
               marginBottom: 2,
               color: isFuture
                 ? theme.handle
@@ -68,14 +68,11 @@ export function WeekDay({ date }: WeekDayProps) {
                 : isTodayDate
                 ? theme.accent
                 : theme.text,
-              fontWeight: isTodayDate ? "bold" : "normal",
             }}
-          >
-            {dayLabels[dayIndex]}
-          </Text>
-          <Text
+            text={dayLabels[dayIndex]}
+          />
+          <DescriptionText
             style={{
-              fontSize: 14,
               color: isFuture
                 ? theme.handle
                 : isSelected
@@ -83,11 +80,9 @@ export function WeekDay({ date }: WeekDayProps) {
                 : isTodayDate
                 ? theme.accent
                 : theme.text,
-              fontWeight: isSelected || isTodayDate ? "bold" : "normal",
             }}
-          >
-            {date?.getDate()}
-          </Text>
+            text={date?.getDate().toString() ?? ""}
+          />
         </Fragment>
       )}
     </TouchableOpacity>

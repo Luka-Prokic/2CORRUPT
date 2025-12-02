@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { View, FlatList } from "react-native";
+import { FlatList } from "react-native";
 import { WIDTH } from "../../../features/Dimensions";
 import { WeekDay } from "./WeekDay";
 import { getDayIndex } from "../../../features/calendar/useDate";
@@ -8,6 +8,8 @@ import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withSpring,
+  FadeIn,
+  FadeOut,
 } from "react-native-reanimated";
 
 interface WeekSliderProps {
@@ -28,10 +30,11 @@ export function WeekSlider({
   const { theme } = useSettingsStore();
 
   const flatListRef = useRef<FlatList>(null);
-  const scrollLocked = useRef(false);
+  const scrollLocked = useRef<boolean>(false);
+  const moveLocked = useRef<boolean>(false);
 
   // Start value based on selectedDate
-  const translateX = useSharedValue((getDayIndex(selectedDate) * WIDTH) / 7);
+  const translateX = useSharedValue(0);
 
   // Animated style for bubble
   const bubbleStyle = useAnimatedStyle(() => ({
@@ -40,11 +43,16 @@ export function WeekSlider({
 
   // Animate bubble when selectedDate changes
   useEffect(() => {
+    if (moveLocked.current) return;
+    moveLocked.current = true;
     const dayIndex = getDayIndex(selectedDate);
     translateX.value = withSpring((dayIndex * WIDTH) / 7, {
       damping: 100,
       stiffness: 1000,
     });
+    setTimeout(() => {
+      moveLocked.current = false;
+    }, 10);
   }, [selectedDate]);
 
   // Programmatic scroll when week changes
@@ -59,7 +67,7 @@ export function WeekSlider({
 
     setTimeout(() => {
       scrollLocked.current = false;
-    }, 150);
+    }, 10);
   }, [currentWeekIndex]);
 
   const handleMomentumEnd = (event: any) => {
@@ -88,8 +96,11 @@ export function WeekSlider({
   };
 
   return (
-    <View style={{ marginTop: 8, width: WIDTH, height: WIDTH / 7 }}>
-      {/* Animated bubble */}
+    <Animated.View
+      entering={FadeIn}
+      exiting={FadeOut}
+      style={{ marginTop: 8, width: WIDTH, height: WIDTH / 7 }}
+    >
       <Animated.View
         style={[
           {
@@ -133,6 +144,6 @@ export function WeekSlider({
           />
         )}
       />
-    </View>
+    </Animated.View>
   );
 }

@@ -6,10 +6,20 @@ import {
 } from "react-native";
 import { WIDTH } from "../../features/Dimensions";
 import { DayRecapScreen } from "./DayRecapScreen";
-import { useUIStore } from "../../stores/ui/useUIStore";
 
-export function DaySliderScreen() {
-  const { weeks, selectedDate, setSelectedDate, isExpanded } = useUIStore();
+interface DaySliderScreenProps {
+  weeks: Date[][];
+  selectedDate: Date;
+  setSelectedDate: (date: Date) => void;
+  isExpanded: boolean;
+}
+
+export function DaySliderScreen({
+  weeks,
+  selectedDate,
+  setSelectedDate,
+  isExpanded,
+}: DaySliderScreenProps) {
   const allDays = weeks?.flat() ?? [];
 
   // Guard against empty data — REQUIRED
@@ -19,13 +29,6 @@ export function DaySliderScreen() {
 
   const flatListRef = useRef<FlatList<Date>>(null);
   const [isUserScrolling, setIsUserScrolling] = useState(false);
-
-  const initialIndex = allDays.findIndex(
-    (d) => d.toDateString() === selectedDate.toDateString()
-  );
-
-  const safeInitialIndex =
-    typeof initialIndex === "number" && initialIndex >= 0 ? initialIndex : 0;
 
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const offsetX = event.nativeEvent.contentOffset.x;
@@ -58,6 +61,10 @@ export function DaySliderScreen() {
     }
   }, [isUserScrolling]);
 
+  const initialScrollIndex = allDays.findIndex(
+    (d) => d.toDateString() === selectedDate?.toDateString() || 0
+  );
+
   return (
     <FlatList
       ref={flatListRef}
@@ -66,7 +73,7 @@ export function DaySliderScreen() {
       pagingEnabled
       showsHorizontalScrollIndicator={false}
       onMomentumScrollEnd={handleScroll}
-      initialScrollIndex={safeInitialIndex}
+      initialScrollIndex={initialScrollIndex}
       getItemLayout={(_, index) => ({
         length: WIDTH,
         offset: WIDTH * index,
