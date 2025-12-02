@@ -136,7 +136,7 @@ export function UserLogin({
 
         {/* SWITCH TO REGISTER */}
         <TextButton
-          title={`${t("auth-form.dontHaveAccount")} ${t(
+          text={`${t("auth-form.dontHaveAccount")} ${t(
             "auth-form.createOne"
           )}...`}
           onPress={onSwitchToRegister}

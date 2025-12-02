@@ -181,7 +181,7 @@ export function UserRegister({
         />
 
         <TextButton
-          title={`${t("auth-form.haveAccount")} ${t("auth-form.signIn")}...`}
+          text={`${t("auth-form.haveAccount")} ${t("auth-form.signIn")}...`}
           onPress={onSwitchToLogin}
           style={{ marginTop: 22 }}
         />

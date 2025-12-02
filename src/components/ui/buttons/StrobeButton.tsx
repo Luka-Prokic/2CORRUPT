@@ -16,10 +16,12 @@ export interface StrobeButtonProps
   textColor?: string;
   style?: ViewStyle | ViewStyle[];
   contentContainerStyle?: ViewStyle | ViewStyle[];
+  styleContent?: ViewStyle | ViewStyle[];
   strobeColors?: [string, string, string, string];
   strobeDisabled?: boolean;
   strobeTint?: "default" | "light" | "dark" | "auto";
   pressable?: boolean;
+  animatedEntering?: boolean;
 }
 
 export function StrobeButton({
@@ -28,10 +30,12 @@ export function StrobeButton({
   strobeColors,
   style,
   contentContainerStyle,
+  styleContent,
   textColor,
   strobeDisabled = false,
   strobeTint = "light",
   pressable,
+  animatedEntering = true,
   ...rest
 }: StrobeButtonProps) {
   const { theme } = useSettingsStore();
@@ -49,6 +53,8 @@ export function StrobeButton({
       activeOpacity={pressable ? 1 : 0.8}
       style={[
         {
+          width: "100%",
+          height: "100%",
           opacity: rest.disabled ? 0.8 : 1,
           overflow: "hidden",
         },
@@ -57,13 +63,18 @@ export function StrobeButton({
       {...rest}
     >
       <Animated.View
-        entering={FadeIn}
-        exiting={FadeOut}
+        entering={animatedEntering ? FadeIn : undefined}
+        exiting={animatedEntering ? FadeOut : undefined}
         style={[StyleSheet.absoluteFill]}
       >
         <StrobeBlur
           colors={colors}
           style={{ width: "100%", height: "100%", ...contentContainerStyle }}
+          styleContent={{
+            width: "100%",
+            height: "100%",
+            ...styleContent,
+          }}
           disabled={strobeDisabled}
           tint={strobeTint}
         >

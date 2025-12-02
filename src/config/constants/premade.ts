@@ -163,11 +163,15 @@ export const mockSessionThree: WorkoutSession = {
   updatedAt: now.toISOString(),
 };
 
-export const makeTemplateSet = (reps: number, weight: number) => ({
+export const makeTemplateSet = (
+  reps: number,
+  weight: number,
+  isCompleted: boolean = true
+) => ({
   id: `set-${nanoid()}`,
   reps,
   weight,
-  isCompleted: true,
+  isCompleted,
 });
 
 export const templatePushDay: WorkoutTemplate = {
@@ -188,9 +192,9 @@ export const templatePushDay: WorkoutTemplate = {
       secondaryMuscles: ["triceps", "front delts"],
       equipment: ["barbell", "bench"],
       sets: [
-        makeTemplateSet(8, 70),
-        makeTemplateSet(6, 80),
-        makeTemplateSet(5, 85),
+        makeTemplateSet(8, 70, false),
+        makeTemplateSet(6, 80, false),
+        makeTemplateSet(5, 85, false),
       ],
       columns: ["Reps", "Weight"],
       restTime: 120,
@@ -204,9 +208,9 @@ export const templatePushDay: WorkoutTemplate = {
       secondaryMuscles: ["triceps", "side delts"],
       equipment: ["barbell"],
       sets: [
-        makeTemplateSet(8, 40),
-        makeTemplateSet(6, 45),
-        makeTemplateSet(5, 50),
+        makeTemplateSet(8, 40, false),
+        makeTemplateSet(6, 45, false),
+        makeTemplateSet(5, 50, false),
       ],
       columns: ["Reps", "Weight"],
       restTime: 90,
@@ -220,9 +224,9 @@ export const templatePushDay: WorkoutTemplate = {
       secondaryMuscles: ["triceps"],
       equipment: ["dip-bar"],
       sets: [
-        makeTemplateSet(10, 0),
-        makeTemplateSet(8, 10),
-        makeTemplateSet(6, 15),
+        makeTemplateSet(10, 0, false),
+        makeTemplateSet(8, 10, false),
+        makeTemplateSet(6, 15, false),
       ],
       columns: ["Reps", "Weight"],
       restTime: 90,
@@ -248,9 +252,9 @@ export const templatePullDay: WorkoutTemplate = {
       secondaryMuscles: ["biceps", "mid traps"],
       equipment: ["barbell"],
       sets: [
-        makeTemplateSet(8, 60),
-        makeTemplateSet(8, 65),
-        makeTemplateSet(6, 70),
+        makeTemplateSet(8, 60, false),
+        makeTemplateSet(8, 65, false),
+        makeTemplateSet(6, 70, false),
       ],
       columns: ["Reps", "Weight"],
       restTime: 120,
@@ -263,9 +267,9 @@ export const templatePullDay: WorkoutTemplate = {
       secondaryMuscles: ["biceps"],
       equipment: ["cable"],
       sets: [
-        makeTemplateSet(12, 50),
-        makeTemplateSet(10, 55),
-        makeTemplateSet(8, 60),
+        makeTemplateSet(12, 50, false),
+        makeTemplateSet(10, 55, false),
+        makeTemplateSet(8, 60, false),
       ],
       columns: ["Reps", "Weight"],
       restTime: 90,
@@ -277,9 +281,9 @@ export const templatePullDay: WorkoutTemplate = {
       primaryMuscles: ["biceps"],
       equipment: ["dumbbell"],
       sets: [
-        makeTemplateSet(12, 12),
-        makeTemplateSet(10, 14),
-        makeTemplateSet(8, 16),
+        makeTemplateSet(12, 12, false),
+        makeTemplateSet(10, 14, false),
+        makeTemplateSet(8, 16, false),
       ],
       columns: ["Reps", "Weight"],
       restTime: 60,
@@ -304,9 +308,9 @@ export const templateLegsDay: WorkoutTemplate = {
       secondaryMuscles: ["hamstrings"],
       equipment: ["barbell", "rack"],
       sets: [
-        makeTemplateSet(8, 90),
-        makeTemplateSet(6, 100),
-        makeTemplateSet(5, 110),
+        makeTemplateSet(8, 90, false),
+        makeTemplateSet(6, 100, false),
+        makeTemplateSet(5, 110, false),
       ],
       columns: ["Reps", "Weight"],
       restTime: 150,
@@ -319,9 +323,9 @@ export const templateLegsDay: WorkoutTemplate = {
       secondaryMuscles: ["glutes", "lower back"],
       equipment: ["barbell"],
       sets: [
-        makeTemplateSet(8, 80),
-        makeTemplateSet(8, 90),
-        makeTemplateSet(6, 95),
+        makeTemplateSet(8, 80, false),
+        makeTemplateSet(8, 90, false),
+        makeTemplateSet(6, 95, false),
       ],
       columns: ["Reps", "Weight"],
       restTime: 150,
@@ -332,9 +336,9 @@ export const templateLegsDay: WorkoutTemplate = {
       primaryMuscles: ["quads", "glutes"],
       equipment: ["dumbbell"],
       sets: [
-        makeTemplateSet(10, 20),
-        makeTemplateSet(10, 22),
-        makeTemplateSet(10, 24),
+        makeTemplateSet(10, 20, false),
+        makeTemplateSet(10, 22, false),
+        makeTemplateSet(10, 24, false),
       ],
       columns: ["Reps", "Weight"],
       restTime: 90,

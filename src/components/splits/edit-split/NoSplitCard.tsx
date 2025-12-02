@@ -171,7 +171,7 @@ export function NoSplitCard() {
             />
 
             <TextButton
-              title={t("splits.set-your-fitness-goals")}
+              text={t("splits.set-your-fitness-goals")}
               color={theme.fifthBackground}
               onPress={navigateToGoals}
             />

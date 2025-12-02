@@ -59,7 +59,7 @@ export const NoSplitsView = forwardRef<BottomSheetModal, NoSplitsViewProps>(
           text={t("splits.create-split-using-this-description")}
           style={{ color: theme.grayText }}
         />
-        <TextButton title={message} onPress={handlePress} />
+        <TextButton text={message} onPress={handlePress} />
       </View>
     );
   }

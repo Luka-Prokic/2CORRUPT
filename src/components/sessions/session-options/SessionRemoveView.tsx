@@ -12,12 +12,13 @@ import { DescriptionText } from "../../ui/text/DescriptionText";
 interface SessionRemoveViewProps {
   session: WorkoutSession;
   setView: (view: SessionBottomSheetViews) => void;
+  closeOnCancel?: boolean;
 }
 
 export const SessionRemoveView = forwardRef<
   BottomSheetModal,
   SessionRemoveViewProps
->(({ session, setView }, ref) => {
+>(({ session, setView, closeOnCancel = false }, ref) => {
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
   const { removeSession } = useWorkoutStore();
@@ -28,7 +29,9 @@ export const SessionRemoveView = forwardRef<
   };
 
   const handleCancel = () => {
-    setView("options");
+    if (closeOnCancel)
+      (ref as React.RefObject<BottomSheetModal>)?.current?.close();
+    else setView("options");
   };
 
   if (session)

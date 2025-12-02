@@ -64,11 +64,9 @@ export const SessionOptionsView = forwardRef<
         {session.templateId && (
           <OptionButton
             title={t("sessions.update-template")}
-            icon={
-              <Ionicons name="sync-circle" size={24} color={theme.accent} />
-            }
+            icon={<Ionicons name="sync-circle" size={24} color={theme.info} />}
             onPress={handleUpdateTemplate}
-            color={theme.accent}
+            color={theme.info}
             height={44}
           />
         )}

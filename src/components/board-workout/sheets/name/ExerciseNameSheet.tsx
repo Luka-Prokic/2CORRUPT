@@ -62,7 +62,7 @@ export function ExerciseNameSheet() {
         text={t("workout-board.prefix-description")}
       />
       <TextButton
-        title={t("workout-board.create-exercise-copy")}
+        text={t("workout-board.create-exercise-copy")}
         onPress={() => {
           //TODO: handle routing to create new exercise screen
         }}

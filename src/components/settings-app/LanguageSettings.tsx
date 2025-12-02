@@ -36,6 +36,7 @@ export function LanguageSettings() {
               height={44}
               strobeDisabled={i18n.language !== item.code}
               styleContent={{ paddingHorizontal: 16 }}
+              disabled={!expanded}
             />
           ) : null
         }

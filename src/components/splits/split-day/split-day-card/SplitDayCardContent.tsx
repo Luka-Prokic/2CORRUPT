@@ -100,7 +100,7 @@ export function SplitDayCardContent({
           {t("splits.no-workouts-yet")}
         </Text>
         <TextButton
-          title={`+ ${t("splits.add-workout")}`}
+          text={`+ ${t("splits.add-workout")}`}
           onPress={handleAddWorkout}
         />
       </View>

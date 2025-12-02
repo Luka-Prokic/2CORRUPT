@@ -3,6 +3,7 @@ import { useSettingsStore } from "../../../stores/settingsStore";
 import { MidText } from "../text/MidText";
 import { StrobeButton, StrobeButtonProps } from "./StrobeButton";
 import { useTranslation } from "react-i18next";
+import { StrobeBlur } from "../misc/StrobeBlur";
 
 interface StrobeOptionButtonProps extends StrobeButtonProps {
   title: string;
@@ -44,6 +45,7 @@ export function StrobeOptionButton({
 }: StrobeOptionButtonProps) {
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
+
   function renderContent() {
     if (children) {
       return children;
@@ -82,6 +84,18 @@ export function StrobeOptionButton({
           />
         )}
       </View>
+    );
+  }
+
+  if (disabled) {
+    return (
+      <StrobeBlur
+        {...strobeButtonProps}
+        style={{ width, height, ...style }}
+        colors={[theme.caka, theme.primaryBackground, theme.accent, theme.tint]}
+      >
+        {renderContent()}
+      </StrobeBlur>
     );
   }
 

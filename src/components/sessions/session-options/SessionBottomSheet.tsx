@@ -24,12 +24,13 @@ export type SessionBottomSheetViews =
 interface SessionBottomSheetProps {
   session: WorkoutSession;
   startView?: SessionBottomSheetViews;
+  closeOnCancel?: boolean;
 }
 
 export const SessionBottomSheet = forwardRef<
   BottomSheetModal,
   SessionBottomSheetProps
->(({ session, startView = "options" }, ref) => {
+>(({ session, startView = "options", closeOnCancel = false }, ref) => {
   const { theme } = useSettingsStore();
   const insets = useSafeAreaInsets();
   const [view, setView] = useState<SessionBottomSheetViews>(startView);
@@ -52,17 +53,18 @@ export const SessionBottomSheet = forwardRef<
             session={session}
             setView={setView}
             ref={ref}
+            closeOnCancel={closeOnCancel}
           />
         );
 
       case "update":
         return (
-          <UpdateTemplateView session={session} setView={setView} ref={ref} />
+          <UpdateTemplateView session={session} setView={setView} ref={ref} closeOnCancel={closeOnCancel} />
         );
 
       case "remove":
         return (
-          <SessionRemoveView session={session} setView={setView} ref={ref} />
+          <SessionRemoveView session={session} setView={setView} ref={ref} closeOnCancel={closeOnCancel} />
         );
 
       default:

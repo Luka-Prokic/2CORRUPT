@@ -114,7 +114,7 @@ export const WeeklyGoalBottomSheet = forwardRef<BottomSheetModal>(({}, ref) => {
           }}
         />
         <TextButton
-          title={t("splits.set-your-fitness-goals")}
+          text={t("splits.set-your-fitness-goals")}
           color={theme.accent}
           onPress={navigateToGoals}
         />

@@ -8,14 +8,14 @@ import {
 import { useSettingsStore } from "../../../stores/settingsStore";
 
 interface TextButtonProps extends Omit<TouchableOpacityProps, "style"> {
-  title: string;
+  text: string;
   style?: ViewStyle | ViewStyle[];
   textStyle?: TextStyle;
   color?: string;
 }
 
 export function TextButton({
-  title,
+  text,
   style,
   textStyle,
   color,
@@ -43,7 +43,7 @@ export function TextButton({
           textStyle,
         ]}
       >
-        {title}
+        {text}
       </Text>
     </TouchableOpacity>
   );

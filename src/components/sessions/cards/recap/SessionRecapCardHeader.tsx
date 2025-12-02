@@ -1,9 +1,10 @@
 import { Animated } from "react-native";
 import { WorkoutSession } from "../../../../stores/workout";
 import { useSettingsStore } from "../../../../stores/settings";
-import { Fragment } from "react";
 import { Text } from "react-native";
 import { View } from "react-native";
+import { IText } from "../../../ui/text/IText";
+import { MidText } from "../../../ui/text/MidText";
 
 interface SessionRecapCardHeaderProps {
   session: WorkoutSession;
@@ -28,29 +29,13 @@ export function SessionRecapCardHeader({
 
   return (
     <View>
-      <Animated.Text
-        style={{
-          fontSize: 28,
-          fontWeight: "bold",
-          color: theme.tint,
-        }}
-      >
-        {startOfSession}-{endOfSession}
-      </Animated.Text>
+      <IText color={theme.tint} text={`${startOfSession}-${endOfSession}`} />
 
-      <Text
-        style={{
-          fontSize: 18,
-          fontWeight: "600",
-          textAlignVertical: "center",
-          color: theme.shadow,
-        }}
-        adjustsFontSizeToFit
-        numberOfLines={1}
-        minimumFontScale={0.5}
-      >
-        {session.name}
-      </Text>
+      <MidText
+        text={session.name}
+        color={theme.shadow}
+        style={{ textAlign: "left" }}
+      />
     </View>
   );
 }

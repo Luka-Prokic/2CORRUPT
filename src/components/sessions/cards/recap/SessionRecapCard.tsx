@@ -1,22 +1,20 @@
 import { useWidgetUnit } from "../../../../features/widgets/useWidgetUnit";
 import { useSettingsStore } from "../../../../stores/settings";
 import { WorkoutSession } from "../../../../stores/workout";
-import { TouchableOpacity, Animated, Text } from "react-native";
+import { Text } from "react-native";
 import { Fragment, useRef } from "react";
 import { SessionBottomSheet } from "../../session-options/SessionBottomSheet";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
-import { hexToRGBA } from "../../../../features/HEXtoRGB";
-import { StrobeBlur } from "../../../ui/misc/StrobeBlur";
 import { SessionRecapCardHeader } from "./SessionRecapCardHeader";
 import { useSessionCompletionRatio } from "../../../../features/workout/useSessionHistory";
 import { ProgressRing } from "../../../ui/misc/ProgressRing";
+import { StrobeButton } from "../../../ui/buttons/StrobeButton";
 
 interface SessionRecapCardProps {
   session: WorkoutSession;
-  zoom?: boolean;
 }
 
-export function SessionRecapCard({ session, zoom }: SessionRecapCardProps) {
+export function SessionRecapCard({ session }: SessionRecapCardProps) {
   const { theme } = useSettingsStore();
   const { halfWidget, fullWidth } = useWidgetUnit();
   const ratio = useSessionCompletionRatio(session);
@@ -31,62 +29,51 @@ export function SessionRecapCard({ session, zoom }: SessionRecapCardProps) {
   if (session)
     return (
       <Fragment>
-        <Animated.View
+        <StrobeButton
+          onPress={handlePress}
+          strobeColors={[
+            theme.caka,
+            theme.background,
+            theme.background,
+            theme.tint,
+          ]}
+          strobeDisabled={!isCompleted}
           style={{
             width: fullWidth,
             height: halfWidget,
-            borderRadius: 24,
-            marginHorizontal: 16,
+            borderRadius: 32,
             overflow: "hidden",
+            backgroundColor: theme.thirdBackground + "80",
             borderWidth: 1,
-            borderColor: theme.handle,
-            backgroundColor: hexToRGBA(theme.thirdBackground, 0.3),
+            borderColor: theme.thirdBackground + "40",
+          }}
+          styleContent={{
+            padding: 8,
+            justifyContent: "space-between",
+            alignContent: "center",
+            flexDirection: "row",
           }}
         >
-          <StrobeBlur
-            colors={[
-              theme.caka,
-              theme.background,
-              theme.background,
-              theme.tint,
-            ]}
-            style={{ flex: 1 }}
-            disabled={!isCompleted}
-          >
-            <TouchableOpacity
-              onPress={handlePress}
-              style={{
-                width: fullWidth,
-                flex: 1,
-                padding: 8,
-                gap: 4,
-                justifyContent: "space-between",
-                alignContent: "center",
-                flexDirection: "row",
-              }}
-            >
-              <SessionRecapCardHeader session={session} />
-              <ProgressRing
-                compareWith={ratio}
-                compareTo={1}
-                ringSize={halfWidget - 20}
-                content={
-                  <Text
-                    style={{
-                      fontSize: 12,
-                      color: theme.tint,
-                      fontWeight: "bold",
-                    }}
-                    adjustsFontSizeToFit
-                    numberOfLines={1}
-                  >
-                    {Math.round(ratio * 100)}%
-                  </Text>
-                }
-              />
-            </TouchableOpacity>
-          </StrobeBlur>
-        </Animated.View>
+          <SessionRecapCardHeader session={session} />
+          <ProgressRing
+            compareWith={ratio}
+            compareTo={1}
+            ringSize={halfWidget - 16}
+            content={
+              <Text
+                style={{
+                  fontSize: 12,
+                  color: theme.tint,
+                  fontWeight: "bold",
+                }}
+                adjustsFontSizeToFit
+                numberOfLines={1}
+              >
+                {Math.round(ratio * 100)}%
+              </Text>
+            }
+          />
+        </StrobeButton>
 
         <SessionBottomSheet
           session={session}

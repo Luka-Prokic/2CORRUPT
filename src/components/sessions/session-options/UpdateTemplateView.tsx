@@ -10,16 +10,18 @@ import { View } from "react-native";
 import { StrobeBlur } from "../../ui/misc/StrobeBlur";
 import { useTranslation } from "react-i18next";
 import { TempInput } from "../../ui/input/TempInput";
+import { DescriptionText } from "../../ui/text/DescriptionText";
 
 interface UpdateTemplateViewProps {
   session: WorkoutSession;
   setView: (view: SessionBottomSheetViews) => void;
+  closeOnCancel?: boolean;
 }
 
 export const UpdateTemplateView = forwardRef<
   BottomSheetModal,
   UpdateTemplateViewProps
->(({ session, setView }, ref) => {
+>(({ session, setView, closeOnCancel = false }, ref) => {
   const { editTemplate, confirmTemplate, updateTemplateField } =
     useWorkoutStore();
   const { theme } = useSettingsStore();
@@ -47,7 +49,9 @@ export const UpdateTemplateView = forwardRef<
   };
 
   const handleCancel = () => {
-    setView("options");
+    if (closeOnCancel)
+      (ref as React.RefObject<BottomSheetModal>)?.current?.close();
+    else setView("options");
   };
 
   const handleFocus = () => {
@@ -133,21 +137,15 @@ export const UpdateTemplateView = forwardRef<
             <Text
               style={{ fontSize: 24, fontWeight: "bold", color: theme.text }}
             >
-              {t("button.update")}
+              {t("button.sync")}
             </Text>
           </StrobeBlur>
         </BounceButton>
       </View>
-      <Text
-        style={{
-          marginVertical: 16,
-          color: theme.grayText,
-          fontSize: 14,
-          textAlign: "justify",
-        }}
-      >
-        {t("sessions.update-template-info")}
-      </Text>
+      <DescriptionText
+        text={t("sessions.update-template-info")}
+        style={{ marginVertical: 16 }}
+      />
     </Fragment>
   );
 });

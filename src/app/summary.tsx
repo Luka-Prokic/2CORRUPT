@@ -28,7 +28,6 @@ export default function SummaryScreen() {
         weeks={weeks}
         selectedDate={selectedDate}
         setSelectedDate={setSelectedDate}
-        isExpanded={isExpanded}
       />
     </Fragment>
   );

@@ -109,20 +109,22 @@ export function SplitDayCard({
             if (selectedDate) setPickerTime(selectedDate);
           }}
         />
-        <View
+        <StrobeBlur
           style={{
             position: "absolute",
             bottom: 0,
             left: 0,
             right: 0,
-            flexDirection: "row",
-            alignItems: "center",
             height: 64,
             width: fullWidth,
           }}
+          styleContent={{
+            flexDirection: "row",
+            alignItems: "center",
+          }}
         >
           <TextButton
-            title={t("button.remove")}
+            text={t("button.remove")}
             onPress={() => {
               handleTimeConfirm(null);
             }}
@@ -130,18 +132,18 @@ export function SplitDayCard({
             style={{ width: "33%" }}
           />
           <TextButton
-            title={t("button.cancel")}
+            text={t("button.cancel")}
             onPress={closeTimePicker}
-            color={theme.text}
+            color={theme.grayText}
             style={{ width: "33%" }}
           />
           <TextButton
-            title={t("button.done")}
+            text={t("button.done")}
             onPress={() => handleTimeConfirm(pickerTime)}
-            color={theme.accent}
+            color={theme.text}
             style={{ width: "33%" }}
           />
-        </View>
+        </StrobeBlur>
       </StrobeBlur>
     );
   }

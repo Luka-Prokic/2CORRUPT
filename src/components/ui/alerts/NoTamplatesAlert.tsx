@@ -30,7 +30,7 @@ export function NoTamplatesAlert({ style }: { style?: ViewStyle }) {
     >
       <BackgroundText text={t("templates.no-templates")} />
       <TextButton
-        title={`+ ${t("templates.create-template")}`}
+        text={`+ ${t("templates.create-template")}`}
         onPress={handlePress}
       />
     </View>

@@ -12,12 +12,13 @@ import { DescriptionText } from "../../ui/text/DescriptionText";
 interface PullTemplateFromSessionViewProps {
   session: WorkoutSession;
   setView: (view: SessionBottomSheetViews) => void;
+  closeOnCancel?: boolean;
 }
 
 export const PullTemplateFromSessionView = forwardRef<
   BottomSheetModal,
   PullTemplateFromSessionViewProps
->(({ session, setView }, ref) => {
+>(({ session, setView, closeOnCancel = false }, ref) => {
   const { editTemplate, confirmTemplate, updateTemplateField } =
     useWorkoutStore();
   const { theme } = useSettingsStore();
@@ -51,7 +52,9 @@ export const PullTemplateFromSessionView = forwardRef<
   };
 
   const handleCancel = () => {
-    setView("options");
+    if (closeOnCancel)
+      (ref as React.RefObject<BottomSheetModal>)?.current?.close();
+    else setView("options");
   };
 
   return (

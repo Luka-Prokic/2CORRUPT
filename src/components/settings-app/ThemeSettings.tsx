@@ -45,6 +45,7 @@ export function ThemeSettings() {
               height={44}
               strobeDisabled={themeName !== item.name}
               styleContent={{ paddingHorizontal: 16 }}
+              disabled={!expanded}
             />
           ) : null
         }
