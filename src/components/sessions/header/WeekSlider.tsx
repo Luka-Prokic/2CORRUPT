@@ -88,11 +88,7 @@ export function WeekSlider({
       return;
     }
 
-    if (newIndex < currentWeekIndex) {
-      setSelectedDate(week[6]);
-    } else {
-      setSelectedDate(week[0]);
-    }
+    setSelectedDate(week[getDayIndex(selectedDate)]);
   };
 
   return (
