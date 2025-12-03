@@ -1,5 +1,5 @@
 import React from "react";
-import { WIDTH } from "../../../features/Dimensions";
+import { WIDTH } from "../../../utils/Dimensions";
 import { useSettingsStore } from "../../../stores/settings";
 import { useSessionsByDateRange } from "../../../features/workout";
 import { Text } from "react-native";

@@ -1,7 +1,7 @@
 import { Text } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useSettingsStore } from "../../../stores/settingsStore";
-import { WIDTH } from "../../../features/Dimensions";
+import { WIDTH } from "../../../utils/Dimensions";
 import { IButton } from "../../ui/buttons/IButton";
 import { router, useLocalSearchParams } from "expo-router";
 import { useWorkoutStore } from "../../../stores/workout/useWorkoutStore";

@@ -4,7 +4,7 @@ import { useSettingsStore } from "../../../stores/settingsStore";
 import { useWorkoutStore } from "../../../stores/workoutStore";
 import { useUIStore } from "../../../stores/ui";
 import { router } from "expo-router";
-import { useActionSheet } from "../../../features/useActionSheet";
+import { useActionSheet } from "../../../utils/useActionSheet";
 import { Fragment } from "react";
 
 export function WorkoutBoardHeaderRight() {

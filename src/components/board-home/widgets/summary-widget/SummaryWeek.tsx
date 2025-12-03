@@ -1,6 +1,6 @@
 import { Text, View } from "react-native";
 import { useSettingsStore } from "../../../../stores/settings";
-import { useMonthSlugs } from "../../../../features/Labels";
+import { useMonthSlugs } from "../../../../utils/Labels";
 
 export function SummaryWeek() {
   const { theme } = useSettingsStore();

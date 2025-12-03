@@ -1,6 +1,6 @@
 import { TextInput } from "react-native";
 import { useSettingsStore } from "../../../../stores/settings";
-import { HEIGHT, WIDTH } from "../../../../features/Dimensions";
+import { HEIGHT, WIDTH } from "../../../../utils/Dimensions";
 import { useTranslation } from "react-i18next";
 import { SessionNameInput } from "./SessionNameInput";
 import { useState } from "react";

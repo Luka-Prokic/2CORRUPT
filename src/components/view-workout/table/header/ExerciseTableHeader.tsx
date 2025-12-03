@@ -1,9 +1,9 @@
 import { StrobeBlur } from "../../../ui/misc/StrobeBlur";
 import { useSettingsStore } from "../../../../stores/settingsStore";
 import { LinearGradient } from "expo-linear-gradient";
-import { hexToRGBA } from "../../../../features/HEXtoRGB";
+import { hexToRGBA } from "../../../../utils/HEXtoRGB";
 import { SetTableHeader } from "./SetTableHeader";
-import { WIDTH } from "../../../../features/Dimensions";
+import { WIDTH } from "../../../../utils/Dimensions";
 import { SessionExerciseNameSlider } from "./SessionExerciseNameSlider";
 import { TemplateExerciseNameSlider } from "../../../view-template/header/TemplateExerciseNameSlider";
 import { useWorkoutStore } from "../../../../stores/workout";

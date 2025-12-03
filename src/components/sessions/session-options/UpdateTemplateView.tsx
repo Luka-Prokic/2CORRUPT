@@ -5,7 +5,7 @@ import { useSettingsStore } from "../../../stores/settings";
 import { SessionBottomSheetViews } from "./SessionBottomSheet";
 import { BounceButton } from "../../ui/buttons/BounceButton";
 import { Text } from "react-native";
-import { WIDTH } from "../../../features/Dimensions";
+import { WIDTH } from "../../../utils/Dimensions";
 import { View } from "react-native";
 import { StrobeBlur } from "../../ui/misc/StrobeBlur";
 import { useTranslation } from "react-i18next";

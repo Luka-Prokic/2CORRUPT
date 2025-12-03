@@ -8,9 +8,9 @@ import { CalendarList, DateData } from "react-native-calendars";
 import { useSettingsStore } from "../../../stores/settings";
 import { BlurView } from "expo-blur";
 import { View } from "react-native";
-import { HEIGHT } from "../../../features/Dimensions";
+import { HEIGHT } from "../../../utils/Dimensions";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { hexToRGBA } from "../../../features/HEXtoRGB";
+import { hexToRGBA } from "../../../utils/HEXtoRGB";
 import { useSessionsGroupedByDay } from "../../../features/workout/useSessionHistory";
 import { useUIStore } from "../../../stores/ui/useUIStore";
 

@@ -1,6 +1,6 @@
 import { View } from "react-native";
 import { MuscleRadarChartDay } from "../stats/MuscleRadarChartDay";
-import { WIDTH } from "../../../features/Dimensions";
+import { WIDTH } from "../../../utils/Dimensions";
 
 interface DaySummaryProps {
   date: Date;

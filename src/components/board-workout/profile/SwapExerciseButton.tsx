@@ -3,7 +3,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { StrobeOptionButton } from "../../ui/buttons/StrobeOptionButton";
-import { WIDTH } from "../../../features/Dimensions";
+import { WIDTH } from "../../../utils/Dimensions";
 
 export function SwapExerciseButton() {
   const { theme } = useSettingsStore();

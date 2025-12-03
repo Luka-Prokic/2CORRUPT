@@ -2,7 +2,7 @@ import { useRef, useEffect } from "react";
 import { ViewStyle, Animated, Easing, StyleSheet } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useSettingsStore } from "../../../stores/settingsStore";
-import { hexToRGBA } from "../../../features/HEXtoRGB";
+import { hexToRGBA } from "../../../utils/HEXtoRGB";
 
 interface AnimatedLinearGradientBoxProps {
   style?: ViewStyle;

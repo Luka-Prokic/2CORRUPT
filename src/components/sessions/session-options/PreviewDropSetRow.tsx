@@ -1,8 +1,8 @@
 import { View, Text } from "react-native";
 import { DropSet, SessionExercise, Set } from "../../../stores/workout";
 import { useSettingsStore } from "../../../stores/settings";
-import { WIDTH } from "../../../features/Dimensions";
-import { hexToRGBA } from "../../../features/HEXtoRGB";
+import { WIDTH } from "../../../utils/Dimensions";
+import { hexToRGBA } from "../../../utils/HEXtoRGB";
 import { NumericDropInput } from "../../view-workout/table/set-inputs/NumericDropInput";
 
 interface PreviewDropSetRowProps {

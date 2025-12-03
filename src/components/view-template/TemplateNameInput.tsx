@@ -8,7 +8,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { useSettingsStore } from "../../stores/settingsStore";
 import { useTranslation } from "react-i18next";
-import { WIDTH } from "../../features/Dimensions";
+import { WIDTH } from "../../utils/Dimensions";
 
 interface TemplateNameInputProps extends Omit<TextInputProps, "style"> {
   value: string;

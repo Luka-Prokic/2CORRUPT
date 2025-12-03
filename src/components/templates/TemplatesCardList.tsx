@@ -4,11 +4,11 @@ import { TemplateAlbumCard } from "./cards/TemplateAlbumCard";
 import { router } from "expo-router";
 import { useUIStore } from "../../stores/ui";
 import { NoTamplatesAlert } from "../ui/alerts/NoTamplatesAlert";
-import { WIDTH } from "../../features/Dimensions";
+import { WIDTH } from "../../utils/Dimensions";
 import {
   TemplateShowBy,
   useTemplateShowBy,
-} from "../../features/filter/useTempalteShowBy";
+} from "../../features/filter/useTemplateShowBy";
 
 interface TemplatesCardListProps {
   templates?: WorkoutTemplate[];

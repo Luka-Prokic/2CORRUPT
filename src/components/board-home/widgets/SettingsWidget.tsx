@@ -1,7 +1,7 @@
 import React from "react";
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { useWidgetUnit } from "../../../features/widgets/useWidgetUnit";
-import { hexToRGBA } from "../../../features/HEXtoRGB";
+import { hexToRGBA } from "../../../utils/HEXtoRGB";
 import { BounceButton } from "../../ui/buttons/BounceButton";
 import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";

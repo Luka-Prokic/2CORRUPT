@@ -5,7 +5,7 @@ import { Input } from "../ui/input/Input";
 import { BounceButton } from "../ui/buttons/BounceButton";
 import { TextButton } from "../ui/buttons/TextButton";
 import { useTranslation } from "react-i18next";
-import { WIDTH } from "../../features/Dimensions";
+import { WIDTH } from "../../utils/Dimensions";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 
 interface UserRegisterProps {

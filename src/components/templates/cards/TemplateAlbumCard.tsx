@@ -2,7 +2,7 @@ import { WorkoutTemplate } from "../../../stores/workout";
 import { Text, TouchableOpacity } from "react-native";
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { useTranslation } from "react-i18next";
-import { WIDTH } from "../../../features/Dimensions";
+import { WIDTH } from "../../../utils/Dimensions";
 
 interface TemplateAlbumCardProps {
   template: WorkoutTemplate;

@@ -2,7 +2,7 @@ import { View, Text, TouchableOpacity } from "react-native";
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { ProfileButton } from "../../settings-profile/ProfileButton";
 import { SettingsButton } from "../../settings-app/SettingsButton";
-import { hexToRGBA } from "../../../features/HEXtoRGB";
+import { hexToRGBA } from "../../../utils/HEXtoRGB";
 import { useWidgetUnit } from "../../../features/widgets/useWidgetUnit";
 import { useUserStore } from "../../../stores/userStore";
 import { useStatsStore } from "../../../stores/stats";

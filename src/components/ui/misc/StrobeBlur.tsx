@@ -2,7 +2,7 @@ import { useEffect, useRef, useMemo } from "react";
 import { View, Animated, ViewStyle, StyleSheet, Easing } from "react-native";
 import { BlurView } from "expo-blur";
 import { useSettingsStore } from "../../../stores/settingsStore";
-import { WIDTH } from "../../../features/Dimensions";
+import { WIDTH } from "../../../utils/Dimensions";
 
 export type StrobeColors = [string, string, string, string];
 interface StrobeBlurProps {

@@ -5,7 +5,7 @@ import { ViewStyle } from "react-native";
 import { useSettingsStore } from "../../../stores/settings";
 import { useSessionsByDate } from "../../../features/workout";
 import { useCategoryScoresForDay } from "../../../features/workout/useSessionHistory";
-import { WIDTH } from "../../../features/Dimensions";
+import { WIDTH } from "../../../utils/Dimensions";
 
 const CATEGORY_ICONS = {
   chest: "happy",

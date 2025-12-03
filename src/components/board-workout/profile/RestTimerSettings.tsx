@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { BounceButton } from "../../ui/buttons/BounceButton";
 import { Text, View } from "react-native";
-import { WIDTH } from "../../../features/Dimensions";
-import { hexToRGBA } from "../../../features/HEXtoRGB";
+import { WIDTH } from "../../../utils/Dimensions";
+import { hexToRGBA } from "../../../utils/HEXtoRGB";
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { Ionicons } from "@expo/vector-icons";
 import { useWorkoutStore } from "../../../stores/workout/useWorkoutStore";

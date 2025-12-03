@@ -6,7 +6,7 @@ import { TemplatesCardList } from "../components/templates/TemplatesCardList";
 import { ScreenView } from "../components/ui/containers/ScreenView";
 import { useTranslation } from "react-i18next";
 import { BigText } from "../components/ui/text/BigText";
-import { WIDTH } from "../features/Dimensions";
+import { WIDTH } from "../utils/Dimensions";
 import { View } from "react-native";
 
 export default function StartBoard() {

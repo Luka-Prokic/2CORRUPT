@@ -6,7 +6,7 @@ import { MidText } from "../../ui/text/MidText";
 import { DescriptionText } from "../../ui/text/DescriptionText";
 import { TwoOptionStrobeButtons } from "../../ui/buttons/TwoOptionStrobeButtons";
 import { IText } from "../../ui/text/IText";
-import { WIDTH } from "../../../features/Dimensions";
+import { WIDTH } from "../../../utils/Dimensions";
 import { useFormatTime } from "../../../features/format/useFormatTime";
 
 interface WorkoutSettingsIncrementFieldProps {

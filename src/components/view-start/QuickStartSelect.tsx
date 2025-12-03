@@ -1,11 +1,12 @@
 import { useSettingsStore } from "../../stores/settingsStore";
 import { router } from "expo-router";
-import { WIDTH } from "../../features/Dimensions";
+import { WIDTH } from "../../utils/Dimensions";
 import { Text } from "react-native";
 import { useTranslation } from "react-i18next";
 import { useWorkoutStore } from "../../stores/workout";
 import { useUIStore } from "../../stores/ui";
 import { StrobeButton } from "../ui/buttons/StrobeButton";
+import { IText } from "../ui/text/IText";
 
 export function QuickStartSelect() {
   const { theme } = useSettingsStore();
@@ -31,12 +32,10 @@ export function QuickStartSelect() {
         width: WIDTH - 32,
         height: 64,
         borderRadius: 32,
-        backgroundColor: theme.primaryBackground,
+        backgroundColor: theme.fifthBackground,
       }}
     >
-      <Text style={{ color: theme.text, fontSize: 24, fontWeight: "bold" }}>
-        {t("workout-view.quick-start")}
-      </Text>
+      <IText text={t("workout-view.quick-start")} color={theme.background} />
     </StrobeButton>
   );
 }

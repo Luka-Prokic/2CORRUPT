@@ -12,7 +12,7 @@ import { View } from "react-native";
 import { useWorkoutStore } from "../../../../stores/workoutStore";
 import { SetSwipeActions } from "./SetSwipeActions";
 import { StrobeBlur } from "../../../ui/misc/StrobeBlur";
-import { WIDTH } from "../../../../features/Dimensions";
+import { WIDTH } from "../../../../utils/Dimensions";
 import { DropSetRow } from "./DropSetRow";
 import { NumericInput } from "../set-inputs/NumericInput";
 import { InputRPE } from "../set-inputs/InputRPE";

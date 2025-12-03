@@ -1,6 +1,6 @@
 import { View } from "react-native";
 import { IButton } from "../../ui/buttons/IButton";
-import { WIDTH } from "../../../features/Dimensions";
+import { WIDTH } from "../../../utils/Dimensions";
 import { ExerciseName } from "../../view-workout/table/header/ExerciseName";
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { useTranslation } from "react-i18next";

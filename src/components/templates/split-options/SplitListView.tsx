@@ -9,7 +9,7 @@ import { OptionButton } from "../../ui/buttons/OptionButton";
 import { Ionicons } from "@expo/vector-icons";
 import { InfoText } from "../../ui/text/InfoText";
 import { router } from "expo-router";
-import { HEIGHT } from "../../../features/Dimensions";
+import { HEIGHT } from "../../../utils/Dimensions";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 interface SplitListViewProps {

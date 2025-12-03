@@ -4,7 +4,7 @@ import { Fragment, useState } from "react";
 import { useWorkoutStore } from "../../../stores/workoutStore";
 import { useTranslation } from "react-i18next";
 import { StrobeOptionButton } from "../../ui/buttons/StrobeOptionButton";
-import { WIDTH } from "../../../features/Dimensions";
+import { WIDTH } from "../../../utils/Dimensions";
 
 export function ExerciseColumnOptions() {
   const { theme } = useSettingsStore();

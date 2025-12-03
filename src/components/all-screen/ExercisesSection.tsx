@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { FlatList, View, Text, TouchableOpacity } from "react-native";
-import { WIDTH } from "../../features/Dimensions";
+import { WIDTH } from "../../utils/Dimensions";
 import { useWorkoutStore } from "../../stores/workout";
 import { useSettingsStore } from "../../stores/settings";
 import { Ionicons } from "@expo/vector-icons";
 import { OptionButton } from "../ui/buttons/OptionButton";
 import { FlatListFooterButton } from "../ui/buttons/FlatListFooterButtons";
 import Animated, { FadeIn } from "react-native-reanimated";
-import { hexToRGBA } from "../../features/HEXtoRGB";
+import { hexToRGBA } from "../../utils/HEXtoRGB";
 
 export function ExercisesSection() {
   const { exercises } = useWorkoutStore();

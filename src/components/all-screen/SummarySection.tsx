@@ -1,9 +1,9 @@
 import { Text, TouchableOpacity } from "react-native";
-import { WIDTH } from "../../features/Dimensions";
+import { WIDTH } from "../../utils/Dimensions";
 import { useSettingsStore } from "../../stores/settings";
 import { Ionicons } from "@expo/vector-icons";
 import Animated, { FadeIn } from "react-native-reanimated";
-import { hexToRGBA } from "../../features/HEXtoRGB";
+import { hexToRGBA } from "../../utils/HEXtoRGB";
 import { WorkoutsThisWeek } from "./WorkoutsThisWeek";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";

@@ -3,7 +3,7 @@ import { useSettingsStore } from "../../../stores/settings";
 import { SplitPlan, useWorkoutStore } from "../../../stores/workout";
 import { IButton } from "../../ui/buttons/IButton";
 import { Text } from "react-native";
-import { useActionSheet } from "../../../features/useActionSheet";
+import { useActionSheet } from "../../../utils/useActionSheet";
 
 interface DeleteSplitButtonProps {
   split: SplitPlan;

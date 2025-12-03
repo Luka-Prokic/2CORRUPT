@@ -3,7 +3,7 @@ import { View, Text } from "react-native";
 import { WorkoutSession } from "../../../stores/workout/types";
 import { DashLine } from "../../ui/misc/DashLine";
 import { useTranslation } from "react-i18next";
-import { WIDTH } from "../../../features/Dimensions";
+import { WIDTH } from "../../../utils/Dimensions";
 
 interface WorkoutHeaderProps {
   session: WorkoutSession;

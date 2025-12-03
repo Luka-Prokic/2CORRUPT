@@ -9,7 +9,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { Ionicons } from "@expo/vector-icons";
 import { useEffect } from "react";
-import { hexToRGBA } from "../../../features/HEXtoRGB";
+import { hexToRGBA } from "../../../utils/HEXtoRGB";
 import { useSettingsStore } from "../../../stores/settings";
 import { useWidgetUnit } from "../../../features/widgets/useWidgetUnit";
 

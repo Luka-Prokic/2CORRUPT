@@ -1,4 +1,4 @@
-import { WIDTH } from "../../../../features/Dimensions";
+import { WIDTH } from "../../../../utils/Dimensions";
 import { View } from "react-native";
 import { useSettingsStore } from "../../../../stores/settingsStore";
 import { useTranslation } from "react-i18next";

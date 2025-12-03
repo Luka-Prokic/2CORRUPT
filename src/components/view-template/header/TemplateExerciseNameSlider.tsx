@@ -6,7 +6,7 @@ import {
 } from "react-native";
 import { SessionExercise, useWorkoutStore } from "../../../stores/workoutStore";
 import { useSettingsStore } from "../../../stores/settingsStore";
-import { WIDTH } from "../../../features/Dimensions";
+import { WIDTH } from "../../../utils/Dimensions";
 import { useEffect, useRef, useState } from "react";
 import { ExerciseName } from "../../view-workout/table/header/ExerciseName";
 

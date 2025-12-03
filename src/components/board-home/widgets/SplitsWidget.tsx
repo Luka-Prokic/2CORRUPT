@@ -1,6 +1,6 @@
 import { Text, TouchableOpacity } from "react-native";
 import { useWidgetUnit } from "../../../features/widgets/useWidgetUnit";
-import { hexToRGBA } from "../../../features/HEXtoRGB";
+import { hexToRGBA } from "../../../utils/HEXtoRGB";
 import { useSettingsStore } from "../../../stores/settings";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";

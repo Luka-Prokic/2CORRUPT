@@ -6,7 +6,7 @@ import { useWorkoutStore } from "../../../../stores/workout";
 import { router } from "expo-router";
 import { useUIStore } from "../../../../stores/ui";
 import { View, ViewStyle } from "react-native";
-import { WIDTH } from "../../../../features/Dimensions";
+import { WIDTH } from "../../../../utils/Dimensions";
 import { IText } from "../../../ui/text/IText";
 import { LabeledValue } from "../../../ui/misc/LabeledValue";
 import { ExpandedSessionRecapFooter } from "./ExpandedSessionRecapFooter";

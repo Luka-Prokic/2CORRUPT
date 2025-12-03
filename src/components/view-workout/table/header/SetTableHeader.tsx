@@ -2,7 +2,7 @@ import { View, Text, TouchableOpacity } from "react-native";
 import { useSettingsStore } from "../../../../stores/settingsStore";
 import { useTranslation } from "react-i18next";
 import { useWorkoutStore } from "../../../../stores/workoutStore";
-import { WIDTH } from "../../../../features/Dimensions";
+import { WIDTH } from "../../../../utils/Dimensions";
 import * as Haptics from "expo-haptics";
 
 export function SetTableHeader() {

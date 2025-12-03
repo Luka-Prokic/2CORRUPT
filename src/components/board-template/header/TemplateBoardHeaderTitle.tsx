@@ -1,6 +1,6 @@
 import { TouchableOpacity } from "react-native";
 import { useSettingsStore } from "../../../stores/settingsStore";
-import { WIDTH } from "../../../features/Dimensions";
+import { WIDTH } from "../../../utils/Dimensions";
 import { TemplateName } from "../sheets/template/TemplateName";
 import { TemplateSheetType } from "../../../app/template-board";
 

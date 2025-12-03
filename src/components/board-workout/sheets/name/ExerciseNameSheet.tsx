@@ -1,7 +1,7 @@
 import { Text, TextInput, View } from "react-native";
 import { useSettingsStore } from "../../../../stores/settings";
 import { useWorkoutStore } from "../../../../stores/workout/useWorkoutStore";
-import { HEIGHT, WIDTH } from "../../../../features/Dimensions";
+import { HEIGHT, WIDTH } from "../../../../utils/Dimensions";
 import { ExerciseName } from "../../../view-workout/table/header/ExerciseName";
 import { TextButton } from "../../../ui/buttons/TextButton";
 import { useTranslation } from "react-i18next";

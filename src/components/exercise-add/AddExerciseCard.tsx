@@ -1,6 +1,6 @@
 import { useSettingsStore } from "../../stores/settingsStore";
 import { ExerciseInfo } from "../../stores/workout/types";
-import { hexToRGBA } from "../../features/HEXtoRGB";
+import { hexToRGBA } from "../../utils/HEXtoRGB";
 import { TouchableOpacity, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useTranslatedExerciseName } from "../../features/translate/useTranslatedExercisesNames";

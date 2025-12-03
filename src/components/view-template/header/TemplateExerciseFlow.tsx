@@ -6,7 +6,7 @@ import { useWorkoutStore } from "../../../stores/workoutStore";
 import { router } from "expo-router";
 import { useUIStore } from "../../../stores/ui/useUIStore";
 import { TemplateProgressDots } from "./TemplateProgressDots";
-import { useActionSheet } from "../../../features/useActionSheet";
+import { useActionSheet } from "../../../utils/useActionSheet";
 
 export function TemplateExerciseFlow() {
   return (

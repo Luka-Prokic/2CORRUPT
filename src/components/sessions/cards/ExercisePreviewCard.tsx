@@ -1,7 +1,7 @@
 import { View, FlatList, ViewStyle } from "react-native";
 import { useSettingsStore } from "../../../stores/settings";
 import { SessionExercise } from "../../../stores/workout";
-import { hexToRGBA } from "../../../features/HEXtoRGB";
+import { hexToRGBA } from "../../../utils/HEXtoRGB";
 import { ExerciseName } from "../../view-workout/table/header/ExerciseName";
 import { PreviewSetRow } from "../session-options/PreviewSetRow";
 import { useExercisePreviewHeight } from "../../../features/ui/useGetExercisePreviewCardHeight";

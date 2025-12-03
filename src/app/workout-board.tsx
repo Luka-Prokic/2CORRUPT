@@ -45,7 +45,7 @@ export default function WorkoutBoard() {
         <DashBoard
           sheetOpen={!!sheetType}
           togglePanel={togglePanel}
-          disabled={!activeExercise && !!sheetType}
+          disabled={!activeExercise && !sheetType}
           upperSection={
             activeExercise ? (
               <ExerciseProfile setSheetType={setSheetType} />

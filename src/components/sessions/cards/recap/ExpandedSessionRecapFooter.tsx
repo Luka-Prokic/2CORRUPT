@@ -6,7 +6,7 @@ import { View, ViewStyle } from "react-native";
 import { Fragment, useRef, useState } from "react";
 import { SessionBottomSheetViews } from "../../session-options/SessionBottomSheet";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
-import { WIDTH } from "../../../../features/Dimensions";
+import { WIDTH } from "../../../../utils/Dimensions";
 import { SessionBottomSheet } from "../../session-options/SessionBottomSheet";
 
 interface ExpandedSessionRecapFooterProps {

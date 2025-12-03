@@ -1,7 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useSettingsStore } from "../../../../stores/settingsStore";
-import { WIDTH } from "../../../../features/Dimensions";
+import { WIDTH } from "../../../../utils/Dimensions";
 import { ViewStyle } from "react-native";
 import { StrobeButton } from "../../../ui/buttons/StrobeButton";
 import { useWorkoutStore } from "../../../../stores/workout/useWorkoutStore";

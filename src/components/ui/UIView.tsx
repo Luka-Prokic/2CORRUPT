@@ -2,13 +2,15 @@ import { useEffect, useState } from "react";
 import { useUIStore } from "../../stores/ui";
 import { HomeViewType } from "../../stores/ui/types";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
+import { ViewStyle } from "react-native";
 
 interface UIViewProps {
   type: HomeViewType;
   children: React.ReactNode;
+  style?: ViewStyle | ViewStyle[];
 }
 
-export function UIView({ type, children }: UIViewProps) {
+export function UIView({ type, children, style }: UIViewProps) {
   const { typeOfView } = useUIStore();
   const [visible, setVisible] = useState(typeOfView === type);
 
@@ -28,6 +30,7 @@ export function UIView({ type, children }: UIViewProps) {
       exiting={FadeOut}
       style={{
         flex: 1,
+        ...style,
       }}
     >
       {children}

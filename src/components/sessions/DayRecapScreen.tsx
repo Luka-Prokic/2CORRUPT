@@ -1,4 +1,4 @@
-import { WIDTH } from "../../features/Dimensions";
+import { WIDTH } from "../../utils/Dimensions";
 import { useSessionsByDate } from "../../features/workout";
 import { FlatList } from "react-native-gesture-handler";
 import { SessionRecapCard } from "./cards/recap/SessionRecapCard";

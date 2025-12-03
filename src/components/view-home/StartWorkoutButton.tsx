@@ -1,13 +1,14 @@
 import { useSettingsStore } from "../../stores/settingsStore";
 import { StrobeBlur } from "../ui/misc/StrobeBlur";
 import { Text } from "react-native";
-import { hexToRGBA } from "../../features/HEXtoRGB";
+import { hexToRGBA } from "../../utils/HEXtoRGB";
 import { BounceButton } from "../ui/buttons/BounceButton";
-import { HEIGHT } from "../../features/Dimensions";
+import { HEIGHT } from "../../utils/Dimensions";
 import { useTranslation } from "react-i18next";
 import { useUIStore } from "../../stores/ui";
 import { useWorkoutStore } from "../../stores/workout";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { IText } from "../ui/text/IText";
 
 export function StartWorkoutButton() {
   const { theme } = useSettingsStore();
@@ -43,17 +44,25 @@ export function StartWorkoutButton() {
       color={hexToRGBA(theme.accent, 0.2)}
     >
       <StrobeBlur
-        colors={[theme.caka, theme.primaryBackground, theme.accent, theme.tint]}
+        colors={[
+          theme.caka,
+          theme.secondaryBackground,
+          theme.accent,
+          theme.tint,
+        ]}
         style={{ width: "100%", height: "100%" }}
         duration={5000}
       >
-        <Text style={{ fontSize: 24, fontWeight: "bold", color: theme.text }}>
-          {isItActive
-            ? t("app.continue-workout")
-            : isItEditing
-            ? t("app.continue-template")
-            : t("app.start-workout")}
-        </Text>
+        <IText
+          text={
+            isItActive
+              ? t("app.continue-workout")
+              : isItEditing
+              ? t("app.continue-template")
+              : t("app.start-workout")
+          }
+          color={theme.text}
+        />
       </StrobeBlur>
     </BounceButton>
   );

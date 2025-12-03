@@ -3,7 +3,7 @@ import { SplitPlan, useWorkoutStore } from "../../../stores/workout";
 import { useSettingsStore } from "../../../stores/settings";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 import { Ionicons } from "@expo/vector-icons";
-import { hexToRGBA } from "../../../features/HEXtoRGB";
+import { hexToRGBA } from "../../../utils/HEXtoRGB";
 import { useTranslation } from "react-i18next";
 import { BlurView } from "expo-blur";
 

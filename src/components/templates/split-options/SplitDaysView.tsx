@@ -11,7 +11,7 @@ import { SplitDayButton } from "./SplitDayButton";
 import { useWorkoutStore } from "../../../stores/workout";
 import { useTranslation } from "react-i18next";
 import { InfoText } from "../../ui/text/InfoText";
-import { HEIGHT } from "../../../features/Dimensions";
+import { HEIGHT } from "../../../utils/Dimensions";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 interface SplitDaysViewProps {

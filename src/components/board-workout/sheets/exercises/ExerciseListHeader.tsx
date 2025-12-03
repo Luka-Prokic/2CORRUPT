@@ -1,13 +1,13 @@
 import { View, Text } from "react-native";
-import { WIDTH } from "../../../../features/Dimensions";
+import { WIDTH } from "../../../../utils/Dimensions";
 import { IButton } from "../../../ui/buttons/IButton";
 import { useWorkoutStore } from "../../../../stores/workout/useWorkoutStore";
 import { useSettingsStore } from "../../../../stores/settingsStore";
 import { Fragment } from "react";
 import { Ionicons } from "@expo/vector-icons";
-import { useActionSheet } from "../../../../features/useActionSheet";
+import { useActionSheet } from "../../../../utils/useActionSheet";
 import { LinearGradient } from "expo-linear-gradient";
-import { hexToRGBA } from "../../../../features/HEXtoRGB";
+import { hexToRGBA } from "../../../../utils/HEXtoRGB";
 
 interface ExerciseListHeaderProps {
   selectMode: boolean;

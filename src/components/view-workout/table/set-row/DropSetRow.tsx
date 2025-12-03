@@ -1,10 +1,10 @@
 import { View, Text, TouchableOpacity } from "react-native";
-import { hexToRGBA } from "../../../../features/HEXtoRGB";
+import { hexToRGBA } from "../../../../utils/HEXtoRGB";
 import { useSettingsStore } from "../../../../stores/settingsStore";
 import { Set, useWorkoutStore } from "../../../../stores/workoutStore";
 import { DropSet } from "../../../../stores/workoutStore";
 import { Ionicons } from "@expo/vector-icons";
-import { WIDTH } from "../../../../features/Dimensions";
+import { WIDTH } from "../../../../utils/Dimensions";
 import { NumericDropInput } from "../set-inputs/NumericDropInput";
 import * as Haptics from "expo-haptics";
 

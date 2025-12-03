@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import { View, Text } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useSettingsStore } from "../../../stores/settings";
-import { hexToRGBA } from "../../../features/HEXtoRGB";
+import { hexToRGBA } from "../../../utils/HEXtoRGB";
 import { WorkoutTemplate } from "../../../stores/workout/types";
 import { StrobeButton, StrobeButtonProps } from "../../ui/buttons/StrobeButton";
 import { useWidgetUnit } from "../../../features/widgets/useWidgetUnit";

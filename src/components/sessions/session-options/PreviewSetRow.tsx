@@ -1,7 +1,7 @@
 import React from "react";
 import { View } from "react-native";
 import { StrobeBlur } from "../../ui/misc/StrobeBlur";
-import { WIDTH } from "../../../features/Dimensions";
+import { WIDTH } from "../../../utils/Dimensions";
 import { useSettingsStore } from "../../../stores/settings";
 import { DropSet, SessionExercise, Set } from "../../../stores/workout/types";
 import { SetColumns } from "../../view-workout/table/set-row/SetRow";

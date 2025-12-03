@@ -1,7 +1,7 @@
 import { SetRow } from "./set-row/SetRow";
 import { useWorkoutStore } from "../../../stores/workoutStore";
 import { KeyboardAwareFlatList } from "react-native-keyboard-aware-scroll-view";
-import { HEIGHT } from "../../../features/Dimensions";
+import { HEIGHT } from "../../../utils/Dimensions";
 
 export function ExerciseSetList() {
   const { activeExercise } = useWorkoutStore();

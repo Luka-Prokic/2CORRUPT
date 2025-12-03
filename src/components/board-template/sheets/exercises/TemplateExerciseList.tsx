@@ -1,6 +1,5 @@
-import { HEIGHT, WIDTH } from "../../../../features/Dimensions";
-import { Animated } from "react-native";
-import { useFadeInAnim } from "../../../../animations/useFadeInAnim";
+import { HEIGHT, WIDTH } from "../../../../utils/Dimensions";
+import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 import { useWorkoutStore } from "../../../../stores/workout/useWorkoutStore";
 import { ExerciseCard } from "../../../board-workout/cards/ExerciseCard";
 import { useState } from "react";
@@ -8,6 +7,7 @@ import { ExerciseListHeader } from "../../../board-workout/sheets/exercises/Exer
 import { ExerciseListAddNewButton } from "../../../board-workout/sheets/exercises/ExerciseListAddNewButton";
 import { SessionExercise } from "../../../../stores/workout";
 import DraggableFlatList from "react-native-draggable-flatlist";
+import { useSettingsStore } from "../../../../stores/settingsStore";
 
 interface TemplateExerciseListProps {
   togglePanel: () => void;
@@ -18,7 +18,7 @@ export function TemplateExerciseList({
 }: TemplateExerciseListProps) {
   const { setActiveExercise, reorderTemplateItems, activeTemplate } =
     useWorkoutStore();
-  const { fadeIn } = useFadeInAnim();
+  const { theme } = useSettingsStore();
 
   const [selectMode, setSelectMode] = useState(false);
   const [selectedExercises, setSelectedExercises] = useState<string[]>([]);
@@ -45,10 +45,11 @@ export function TemplateExerciseList({
 
   return (
     <Animated.View
+      entering={FadeIn}
+      exiting={FadeOut}
       style={{
         width: WIDTH,
         height: HEIGHT - 200,
-        ...fadeIn,
       }}
     >
       <ExerciseListHeader
@@ -84,6 +85,7 @@ export function TemplateExerciseList({
             style={{
               opacity: selectMode ? 0 : 1,
               marginBottom: 100,
+              backgroundColor: theme.tint,
             }}
           />
         )}

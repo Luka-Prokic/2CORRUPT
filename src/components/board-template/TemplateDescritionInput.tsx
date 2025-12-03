@@ -1,6 +1,6 @@
 import { TextStyle } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
-import { WIDTH } from "../../features/Dimensions";
+import { WIDTH } from "../../utils/Dimensions";
 import { useSettingsStore } from "../../stores/settings";
 import { useWorkoutStore } from "../../stores/workout";
 import { Keyboard } from "react-native";

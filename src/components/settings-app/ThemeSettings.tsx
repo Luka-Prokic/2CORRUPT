@@ -12,12 +12,12 @@ const THEME_ARRAY: readonly {
   displayName: string;
   emoji: string;
 }[] = [
-  { name: "light", displayName: "Light", emoji: "☀️" },
-  { name: "oldschool", displayName: "Old School", emoji: "💪" },
-  { name: "peachy", displayName: "Peachy", emoji: "🍑" },
-  { name: "dark", displayName: "Dark", emoji: "🌙" },
-  { name: "preworkout", displayName: "Preworkout", emoji: "⚡" },
-  { name: "Corrupted", displayName: "Corrupted", emoji: "💸" },
+  { name: "light", displayName: "light", emoji: "🌤️" },
+  { name: "oldschool", displayName: "oldschool", emoji: "💪" },
+  { name: "peachy", displayName: "peachy", emoji: "🍑" },
+  { name: "dark", displayName: "dark", emoji: "🌒" },
+  { name: "preworkout", displayName: "preworkout", emoji: "🍉" },
+  { name: "Corrupted", displayName: "natural", emoji: "💊" },
 ];
 
 export function ThemeSettings() {
@@ -40,7 +40,9 @@ export function ThemeSettings() {
           expanded || themeName === item.name ? (
             <StrobeOptionButton
               key={index}
-              title={`${item.emoji} ${t(`theme.${item.name}`)}`}
+              title={`${item.emoji} ${t(
+                `theme.${item.displayName.toLowerCase()}`
+              )}`}
               onPress={() => setTheme(item.name)}
               height={44}
               strobeDisabled={themeName !== item.name}

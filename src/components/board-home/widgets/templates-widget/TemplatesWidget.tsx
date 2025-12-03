@@ -1,7 +1,7 @@
 import React from "react";
 import { TouchableOpacity } from "react-native";
 import { useSettingsStore } from "../../../../stores/settingsStore";
-import { hexToRGBA } from "../../../../features/HEXtoRGB";
+import { hexToRGBA } from "../../../../utils/HEXtoRGB";
 import { useWorkoutStore } from "../../../../stores/workout";
 import { router } from "expo-router";
 import { useWidgetUnit } from "../../../../features/widgets/useWidgetUnit";

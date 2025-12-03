@@ -1,4 +1,4 @@
-import { HEIGHT, WIDTH } from "../../../../features/Dimensions";
+import { HEIGHT, WIDTH } from "../../../../utils/Dimensions";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 import DraggableFlatList from "react-native-draggable-flatlist";
 import { useWorkoutStore } from "../../../../stores/workout/useWorkoutStore";

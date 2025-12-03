@@ -1,9 +1,9 @@
 import { Animated, Pressable } from "react-native";
 import { StrobeBlur, StrobeColors } from "../ui/misc/StrobeBlur";
 import { useSettingsStore } from "../../stores/settingsStore";
-import { HEIGHT, WIDTH } from "../../features/Dimensions";
+import { HEIGHT, WIDTH } from "../../utils/Dimensions";
 import { LinearGradient } from "expo-linear-gradient";
-import { hexToRGBA } from "../../features/HEXtoRGB";
+import { hexToRGBA } from "../../utils/HEXtoRGB";
 import { useEffect, useRef } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";

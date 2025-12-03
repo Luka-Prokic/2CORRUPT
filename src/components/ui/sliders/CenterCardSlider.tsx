@@ -15,7 +15,7 @@ import {
 } from "react-native";
 import { useSettingsStore } from "../../../stores/settings";
 import Animated, { BounceIn } from "react-native-reanimated";
-import { WIDTH } from "../../../features/Dimensions";
+import { WIDTH } from "../../../utils/Dimensions";
 
 const AnimatedFlatList = RNAnimated.createAnimatedComponent(
   FlatList

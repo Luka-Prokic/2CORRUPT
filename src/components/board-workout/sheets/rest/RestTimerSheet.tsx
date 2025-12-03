@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import { HEIGHT, WIDTH } from "../../../../features/Dimensions";
+import { HEIGHT, WIDTH } from "../../../../utils/Dimensions";
 import { useSettingsStore } from "../../../../stores/settingsStore";
 import { useWorkoutStore } from "../../../../stores/workout/useWorkoutStore";
 import { ExerciseName } from "../../../view-workout/table/header/ExerciseName";

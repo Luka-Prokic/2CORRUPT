@@ -1,6 +1,6 @@
 import { StrobeButton } from "../ui/buttons/StrobeButton";
 import { router } from "expo-router";
-import { WIDTH } from "../../features/Dimensions";
+import { WIDTH } from "../../utils/Dimensions";
 import { useSettingsStore } from "../../stores/settings";
 import { View } from "react-native";
 import { useTranslation } from "react-i18next";

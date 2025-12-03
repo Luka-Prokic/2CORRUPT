@@ -2,7 +2,7 @@ import { useSettingsStore } from "../../../stores/settings";
 import { useWorkoutStore } from "../../../stores/workout";
 import { Ionicons } from "@expo/vector-icons";
 import { TouchableOpacity, ViewStyle } from "react-native";
-import { useActionSheet } from "../../../features/useActionSheet";
+import { useActionSheet } from "../../../utils/useActionSheet";
 import { useUIStore } from "../../../stores/ui";
 import { router } from "expo-router";
 import { Fragment } from "react";

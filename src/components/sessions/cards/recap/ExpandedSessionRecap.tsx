@@ -1,5 +1,5 @@
 import { WorkoutSession } from "../../../../stores/workout";
-import { HEIGHT, WIDTH } from "../../../../features/Dimensions";
+import { HEIGHT, WIDTH } from "../../../../utils/Dimensions";
 import Animated, { FadeIn } from "react-native-reanimated";
 import { useSettingsStore } from "../../../../stores/settings";
 import { useTranslation } from "react-i18next";

@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, ViewStyle, TextStyle } from "react-native";
-import { WIDTH } from "../../../features/Dimensions";
+import { WIDTH } from "../../../utils/Dimensions";
 import { BounceButton } from "./BounceButton";
 import { useSettingsStore } from "../../../stores/settings";
 import { StrobeBlur } from "../misc/StrobeBlur";

@@ -1,5 +1,5 @@
 import React from "react";
-import { WIDTH } from "../../../features/Dimensions";
+import { WIDTH } from "../../../utils/Dimensions";
 import { useSettingsStore } from "../../../stores/settings";
 import { TriangleModel } from "../../board-home/mockups/TriangleModel";
 import { View } from "react-native";

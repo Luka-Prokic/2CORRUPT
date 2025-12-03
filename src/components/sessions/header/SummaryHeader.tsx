@@ -2,7 +2,7 @@ import { BlurView } from "expo-blur";
 import { WeekSlider } from "./WeekSlider";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Text, TouchableOpacity, View } from "react-native";
-import { WIDTH } from "../../../features/Dimensions";
+import { WIDTH } from "../../../utils/Dimensions";
 import { ModalBackButton } from "../../../app/_layout";
 import { useSettingsStore } from "../../../stores/settings";
 import { Ionicons } from "@expo/vector-icons";

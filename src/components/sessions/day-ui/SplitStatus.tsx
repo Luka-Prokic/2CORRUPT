@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { useSettingsStore } from "../../../stores/settings";
-import { WIDTH } from "../../../features/Dimensions";
+import { WIDTH } from "../../../utils/Dimensions";
 import { useCalendarNavigation } from "../../../features/test/useCalendarNavigation";
 import { router } from "expo-router";
 import Animated, {

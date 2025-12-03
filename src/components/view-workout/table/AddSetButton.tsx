@@ -1,4 +1,4 @@
-import { WIDTH } from "../../../features/Dimensions";
+import { WIDTH } from "../../../utils/Dimensions";
 import { BounceButton } from "../../ui/buttons/BounceButton";
 import { StrobeBlur } from "../../ui/misc/StrobeBlur";
 import { useSettingsStore } from "../../../stores/settingsStore";

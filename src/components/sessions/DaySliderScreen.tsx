@@ -4,7 +4,7 @@ import {
   NativeSyntheticEvent,
   NativeScrollEvent,
 } from "react-native";
-import { WIDTH } from "../../features/Dimensions";
+import { WIDTH } from "../../utils/Dimensions";
 import { DayRecapScreen } from "./DayRecapScreen";
 
 interface DaySliderScreenProps {

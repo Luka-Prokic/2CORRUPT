@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { WIDTH } from "../Dimensions";
+import { WIDTH } from "../../utils/Dimensions";
 
 interface WidgetUnitOptions {
   columns?: number;

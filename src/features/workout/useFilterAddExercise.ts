@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { ExerciseInfo } from "../../stores/workout/types";
 import { useWorkoutStore } from "../../stores/workout/useWorkoutStore";
 import { useTranslation } from "react-i18next";
-import { useCategory, useEquipment } from "../Labels";
+import { useCategory, useEquipment } from "../../utils/Labels";
 
 export function useFilterAddExercise() {
   const { exercises } = useWorkoutStore();

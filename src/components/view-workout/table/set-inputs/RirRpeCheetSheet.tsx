@@ -1,7 +1,7 @@
 import { View } from "react-native";
 import { useSettingsStore } from "../../../../stores/settingsStore";
 import { InfoText } from "../../../ui/text/InfoText";
-import { WIDTH } from "../../../../features/Dimensions";
+import { WIDTH } from "../../../../utils/Dimensions";
 import { useTranslation } from "react-i18next";
 
 interface RirRpeCheatSheetProps {

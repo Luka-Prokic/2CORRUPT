@@ -1,7 +1,7 @@
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { ThreeDWidget } from "./ThreeDWidget";
 import { TriangleModel } from "./TriangleModel";
-import { WIDTH } from "../../../features/Dimensions";
+import { WIDTH } from "../../../utils/Dimensions";
 
 const widgetSize = (WIDTH - 40) / 2;
 

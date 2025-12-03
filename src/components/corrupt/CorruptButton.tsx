@@ -11,7 +11,7 @@ import { useUIStore } from "../../stores/ui";
 import { useWorkoutStore } from "../../stores/workout";
 import { IButton } from "../ui/buttons/IButton";
 import { CorruptTittle } from "./CorruptTittle";
-import { HEIGHT, WIDTH } from "../../features/Dimensions";
+import { HEIGHT, WIDTH } from "../../utils/Dimensions";
 import { router } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { SessionTimer } from "../ui/timer/SessionTimer";

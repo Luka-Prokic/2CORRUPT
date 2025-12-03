@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { FlatList } from "react-native";
-import { WIDTH } from "../../../features/Dimensions";
+import { WIDTH } from "../../../utils/Dimensions";
 import { WeekDay } from "./WeekDay";
 import { getDayIndex } from "../../../features/calendar/useDate";
 import { useSettingsStore } from "../../../stores/settings";

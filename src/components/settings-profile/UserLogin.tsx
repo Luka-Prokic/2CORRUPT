@@ -7,7 +7,7 @@ import { TextButton } from "../ui/buttons/TextButton";
 import { useTranslation } from "react-i18next";
 import { CorruptTittle } from "../corrupt/CorruptTittle";
 import { BackgroundText } from "../ui/text/BackgroundText";
-import { WIDTH } from "../../features/Dimensions";
+import { WIDTH } from "../../utils/Dimensions";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 
 interface UserLoginProps {

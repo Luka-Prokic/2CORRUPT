@@ -4,7 +4,7 @@ import { useSettingsStore } from "../../../stores/settingsStore";
 import { Set, DropSet } from "../../../stores/workout/types";
 import { DashLine } from "../../ui/misc/DashLine";
 import { ExerciseName } from "../../view-workout/table/header/ExerciseName";
-import { WIDTH } from "../../../features/Dimensions";
+import { WIDTH } from "../../../utils/Dimensions";
 import { Fragment } from "react";
 
 interface ExerciseRecapProps {

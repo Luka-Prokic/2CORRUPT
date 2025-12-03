@@ -1,9 +1,9 @@
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { Ionicons } from "@expo/vector-icons";
 import { useWorkoutStore } from "../../../stores/workoutStore";
-import { useActionSheet } from "../../../features/useActionSheet";
+import { useActionSheet } from "../../../utils/useActionSheet";
 import { StrobeOptionButton } from "../../ui/buttons/StrobeOptionButton";
-import { WIDTH } from "../../../features/Dimensions";
+import { WIDTH } from "../../../utils/Dimensions";
 
 export function RemoveExerciseButton() {
   const { theme } = useSettingsStore();

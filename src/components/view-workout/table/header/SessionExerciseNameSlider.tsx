@@ -10,7 +10,7 @@ import {
 } from "../../../../stores/workoutStore";
 import { useSettingsStore } from "../../../../stores/settingsStore";
 import { ExerciseName } from "./ExerciseName";
-import { WIDTH } from "../../../../features/Dimensions";
+import { WIDTH } from "../../../../utils/Dimensions";
 import { useEffect, useRef, useState } from "react";
 
 export function SessionExerciseNameSlider() {

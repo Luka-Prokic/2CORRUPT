@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { LANGUAGES_COUNT, languageArray } from "../../config/i18n";
+import { LANGUAGES, LANGUAGES_COUNT, languageArray } from "../../config/i18n";
 import { ExpandableBubble } from "../ui/containers/ExpendableBubble";
 import { FlatList } from "react-native-gesture-handler";
 import i18n from "i18next";
@@ -10,6 +10,14 @@ import { useState } from "react";
 export function LanguageSettings() {
   const { t } = useTranslation();
   const [expanded, setExpanded] = useState(false);
+
+  const LANGUAGE_EMOJI: readonly {
+    name: keyof typeof LANGUAGES;
+    emoji: string;
+  }[] = [
+    { name: "en", emoji: "🇺🇸" },
+    { name: "rs", emoji: "🇷🇸" },
+  ];
 
   return (
     <ExpandableBubble
@@ -31,7 +39,9 @@ export function LanguageSettings() {
           expanded || i18n.language === item.code ? (
             <StrobeOptionButton
               key={index}
-              title={t(`language.${item.title.toLowerCase()}`)}
+              title={`${
+                LANGUAGE_EMOJI.find((emoji) => emoji.name === item.code)?.emoji
+              } ${t(`language.${item.title.toLowerCase()}`)}`}
               onPress={item.onPress}
               height={44}
               strobeDisabled={i18n.language !== item.code}

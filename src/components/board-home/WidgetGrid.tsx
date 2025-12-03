@@ -1,8 +1,8 @@
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { AwardsWidget } from "./mockups/AwardsWidget";
-import { WIDTH } from "../../features/Dimensions";
-import { hexToRGBA } from "../../features/HEXtoRGB";
+import { WIDTH } from "../../utils/Dimensions";
+import { hexToRGBA } from "../../utils/HEXtoRGB";
 import { BackButtonWidget } from "./widgets/BackButtonWidget";
 import { useSettingsStore } from "../../stores/settings";
 import { SplitsWidget } from "./widgets/SplitsWidget";

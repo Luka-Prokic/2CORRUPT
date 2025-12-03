@@ -4,7 +4,7 @@ import { useSettingsStore } from "../../../../stores/settingsStore";
 import { useRef, Fragment } from "react";
 import { RirRpeBottomSheet } from "./RirRpeBottomSheet";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
-import { hexToRGBA } from "../../../../features/HEXtoRGB";
+import { hexToRGBA } from "../../../../utils/HEXtoRGB";
 import { Ionicons } from "@expo/vector-icons";
 
 interface InputRIRProps {

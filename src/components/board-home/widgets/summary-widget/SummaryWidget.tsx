@@ -2,7 +2,7 @@ import { router } from "expo-router";
 import { TouchableOpacity } from "react-native";
 import { useWidgetUnit } from "../../../../features/widgets/useWidgetUnit";
 import { useSettingsStore } from "../../../../stores/settings";
-import { hexToRGBA } from "../../../../features/HEXtoRGB";
+import { hexToRGBA } from "../../../../utils/HEXtoRGB";
 import { SummaryHeader } from "./SummaryHeader";
 import { SummaryFooter } from "./SummaryFooter";
 import { ProgressRing } from "../../../ui/misc/ProgressRing";

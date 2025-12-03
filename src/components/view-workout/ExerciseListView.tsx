@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import { ExerciseSetList } from "./table/ExerciseSetList";
 import { LinearGradient } from "expo-linear-gradient";
-import { hexToRGBA } from "../../features/HEXtoRGB";
+import { hexToRGBA } from "../../utils/HEXtoRGB";
 import { AddSetButton } from "./table/AddSetButton";
 import { useSettingsStore } from "../../stores/settingsStore";
 import { ExerciseTableHeader } from "./table/header/ExerciseTableHeader";

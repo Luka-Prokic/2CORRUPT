@@ -1,6 +1,6 @@
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 import { CardSlider } from "../ui/sliders/CardSlider";
-import { HEIGHT } from "../../features/Dimensions";
+import { HEIGHT } from "../../utils/Dimensions";
 import { SessionName } from "../board-workout/sheets/session/SessionName";
 import { useSettingsStore } from "../../stores/settings";
 import { ExercisePreviewCard } from "./cards/ExercisePreviewCard";

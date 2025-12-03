@@ -1,5 +1,5 @@
 import { useWorkoutStore } from "../../../../stores/workout";
-import { HEIGHT, WIDTH } from "../../../../features/Dimensions";
+import { HEIGHT, WIDTH } from "../../../../utils/Dimensions";
 import { TemplateNameEditor } from "../../../view-template/TemplateNameEditor";
 import { TagTextLayout } from "../../../view-template/TagTextLayout";
 import { TemplateDescriptionInput } from "../../TemplateDescritionInput";

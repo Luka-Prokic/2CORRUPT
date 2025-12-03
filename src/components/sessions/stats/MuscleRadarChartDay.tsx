@@ -8,7 +8,7 @@ import {
 import { useSettingsStore } from "../../../stores/settings";
 import { useTranslation } from "react-i18next";
 import { useWidgetUnit } from "../../../features/widgets/useWidgetUnit";
-import { hexToRGBA } from "../../../features/HEXtoRGB";
+import { hexToRGBA } from "../../../utils/HEXtoRGB";
 import { Ionicons } from "@expo/vector-icons";
 
 const fixedMuscleOrder = [

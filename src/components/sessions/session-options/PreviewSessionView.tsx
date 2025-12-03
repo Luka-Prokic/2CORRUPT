@@ -3,7 +3,7 @@ import { forwardRef } from "react";
 import { SessionBottomSheetViews } from "./SessionBottomSheet";
 import { WorkoutSession, useWorkoutStore } from "../../../stores/workout";
 import { CardSlider } from "../../ui/sliders/CardSlider";
-import { HEIGHT, WIDTH } from "../../../features/Dimensions";
+import { HEIGHT, WIDTH } from "../../../utils/Dimensions";
 import { ActiveSessionAlert } from "../../ui/alerts/ActiveSessionAlert";
 import { TwoOptionStrobeButtons } from "../../ui/buttons/TwoOptionStrobeButtons";
 import { useSettingsStore } from "../../../stores/settings";

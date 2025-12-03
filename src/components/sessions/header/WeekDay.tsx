@@ -2,7 +2,7 @@ import { TouchableOpacity } from "react-native";
 import { useSessionsByDate } from "../../../features/workout";
 import { Text } from "react-native";
 import { useSettingsStore } from "../../../stores/settings";
-import { useDayLabels } from "../../../features/Labels";
+import { useDayLabels } from "../../../utils/Labels";
 import { Ionicons } from "@expo/vector-icons";
 import { Fragment } from "react";
 import {
@@ -11,7 +11,7 @@ import {
   isToday,
 } from "../../../features/calendar/useDate";
 import { useUIStore } from "../../../stores/ui/useUIStore";
-import { WIDTH } from "../../../features/Dimensions";
+import { WIDTH } from "../../../utils/Dimensions";
 import { DescriptionText } from "../../ui/text/DescriptionText";
 import { InfoText } from "../../ui/text/InfoText";
 
