@@ -1,7 +1,6 @@
 import { useSettingsStore } from "../../stores/settingsStore";
 import { router } from "expo-router";
 import { WIDTH } from "../../utils/Dimensions";
-import { Text } from "react-native";
 import { useTranslation } from "react-i18next";
 import { useWorkoutStore } from "../../stores/workout";
 import { useUIStore } from "../../stores/ui";
@@ -32,10 +31,14 @@ export function QuickStartSelect() {
         width: WIDTH - 32,
         height: 64,
         borderRadius: 32,
-        backgroundColor: theme.fifthBackground,
+        backgroundColor: theme.primaryBackground,
       }}
+      strobeColors={[theme.handle, theme.handle, theme.handle, theme.handle]}
     >
-      <IText text={t("workout-view.quick-start")} color={theme.background} />
+      <IText
+        text={t("workout-view.quick-start")}
+        color={theme.fifthBackground}
+      />
     </StrobeButton>
   );
 }

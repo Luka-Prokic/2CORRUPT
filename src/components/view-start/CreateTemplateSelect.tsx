@@ -21,10 +21,10 @@ export function CreateTemplateSelect() {
   return (
     <IButton
       onPress={handlePress}
-      color={theme.handle}
+      color={theme.tint}
       style={{ width: WIDTH - 32, height: 64, borderRadius: 32 }}
     >
-      <IText text={t("workout-view.create-template")} color={theme.info} />
+      <IText text={t("workout-view.create-template")} color={theme.border} />
     </IButton>
   );
 }

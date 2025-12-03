@@ -33,7 +33,7 @@ export function PlannedActiveSplitWorkoutCard({
   return (
     <StrobeButton
       style={{
-        height: 64,
+        height: widgetUnit,
         width: fullWidth,
         backgroundColor: theme.thirdBackground,
         borderRadius: 32,

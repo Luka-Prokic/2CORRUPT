@@ -38,10 +38,9 @@ export function NoExerciseView() {
           borderRadius: 32,
           backgroundColor: theme.primaryBackground,
         }}
+        strobeColors={[theme.handle, theme.handle, theme.handle, theme.handle]}
       >
-        <Text style={{ color: theme.text, fontSize: 24, fontWeight: "bold" }}>
-          {t("workout-view.add-exercise")}
-        </Text>
+        <IText text={t("workout-view.add-exercise")} color={theme.text} />
       </StrobeButton>
       <View
         style={{

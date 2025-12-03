@@ -3,6 +3,7 @@ import { useSettingsStore } from "../../stores/settingsStore";
 import { useTranslation } from "react-i18next";
 import { ProfileButton } from "../settings-profile/ProfileButton";
 import { useUserStore } from "../../stores/user";
+import { IText } from "../ui/text/IText";
 
 export function HomeHeader() {
   const { theme } = useSettingsStore();
@@ -33,24 +34,10 @@ export function HomeHeader() {
         padding: 16,
       }}
     >
-      <Text
-        style={{
-          fontSize: 24,
-          fontWeight: "bold",
-          color: theme.tint,
-        }}
-      >
-        {greeting},{"\n"}
-        <Text
-          style={{
-            fontSize: 36,
-            fontWeight: "bold",
-            color: theme.text,
-          }}
-        >
-          {user.username}
-        </Text>
-      </Text>
+      <View>
+        <IText text={`${greeting},`} color={theme.tint} />
+        <IText text={user.username} color={theme.text} size={36} />
+      </View>
       <ProfileButton />
     </View>
   );

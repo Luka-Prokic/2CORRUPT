@@ -3,6 +3,7 @@ import { CreateTemplateSelect } from "./CreateTemplateSelect";
 import { UIView } from "../ui/UIView";
 import { CORRUPT_BUTTON_HEIGHT_FROM_BOTTOM } from "../corrupt/CorruptButton";
 import { PlannedActiveSplitWorkoutCard } from "../splits/PlannedActiveSplitWorkoutCard";
+import { View } from "react-native";
 
 export function StartView() {
   return (
@@ -16,7 +17,9 @@ export function StartView() {
         gap: 8,
       }}
     >
-      <PlannedActiveSplitWorkoutCard date={new Date()} />
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <PlannedActiveSplitWorkoutCard date={new Date()} />
+      </View>
       <QuickStartSelect />
       <CreateTemplateSelect />
     </UIView>
