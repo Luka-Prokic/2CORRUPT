@@ -2,11 +2,11 @@ import { useSettingsStore } from "../../../stores/settings/useSettingsStore";
 import { SessionExercise } from "../../../stores/workout/types";
 import { TouchableOpacity, View } from "react-native";
 import { WIDTH } from "../../../features/Dimensions";
-import { Text } from "react-native";
 import { IButton } from "../../ui/buttons/IButton";
 import { Ionicons } from "@expo/vector-icons";
 import { useTranslatedSessionExerciseName } from "../../../features/translate/useTranslatedExercisesNames";
 import { useWorkoutStore } from "../../../stores/workout/useWorkoutStore";
+import { MidText } from "../../ui/text/MidText";
 
 interface ExerciseCardProps {
   exercise: SessionExercise;
@@ -33,17 +33,21 @@ export function ExerciseCard({
 }: ExerciseCardProps) {
   const { theme } = useSettingsStore();
   const { translatedName } = useTranslatedSessionExerciseName(exercise);
-  const { activeExercise } = useWorkoutStore();
+  const { activeExercise, activeTemplate } = useWorkoutStore();
 
   const isActive = activeExercise?.id === exercise.id;
   const isSelected = selectedExercises.includes(exercise.id);
 
-  const textTint = isActive ? tint ?? theme.tint : theme.text;
+  const textTint = isActive
+    ? tint ?? activeTemplate
+      ? theme.tint
+      : theme.accent
+    : theme.text;
   const background = isActiveDrag
-    ? theme.info
+    ? theme.secondaryBackground
     : !isActive || multipleSelect
-    ? backgroundColor ?? theme.secondaryBackground
-    : theme.background;
+    ? backgroundColor ?? theme.background
+    : theme.handle;
 
   function handlePress() {
     if (multipleSelect) {
@@ -66,19 +70,16 @@ export function ExerciseCard({
         paddingHorizontal: 10,
         justifyContent: "center",
         backgroundColor: background,
-        opacity: isActiveDrag ? 0.5 : 1,
+        opacity: isActiveDrag ? 0.8 : 1,
       }}
     >
-      <Text
-        style={{
-          fontSize: 18,
-          fontWeight: "700",
-          color: textTint,
-        }}
-      >
-        {exercise.prefix ? `${exercise.prefix} ` : ""}
-        {translatedName}
-      </Text>
+      <MidText
+        text={`${
+          exercise.prefix ? `${exercise.prefix} ` : ""
+        } ${translatedName}`}
+        color={textTint}
+        style={{ textAlign: "left" }}
+      />
 
       {multipleSelect ? (
         <IButton

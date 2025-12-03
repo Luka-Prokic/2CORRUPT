@@ -14,17 +14,21 @@ import { RestTimerSheet } from "../components/board-workout/sheets/rest/RestTime
 import { ExerciseNameSheet } from "../components/board-workout/sheets/name/ExerciseNameSheet";
 import { TemplateExerciseProfile } from "../components/board-template/TemplateExerciseProfile";
 
-export type TemplateSheetType = "exercises" | "rest" | "name" | "template";
+export type TemplateSheetType =
+  | "exercises"
+  | "rest"
+  | "name"
+  | "template"
+  | null;
 
 export default function TemplateBoard() {
-  const [listOpen, setListOpen] = useState(false);
-  const [listType, setListType] = useState<TemplateSheetType>("template");
+  const [sheetType, setSheetType] = useState<TemplateSheetType>(null);
   const { theme } = useSettingsStore();
   const { activeTemplate, activeExercise } = useWorkoutStore();
 
   function togglePanel() {
-    setListOpen(!listOpen);
-    setListType("exercises");
+    if (!!sheetType) setSheetType(null);
+    else setSheetType("exercises");
   }
 
   return (
@@ -32,12 +36,11 @@ export default function TemplateBoard() {
       <Stack.Screen
         options={{
           headerBlurEffect: "none",
-          headerLeft: () => <TemplateBoardHeaderLeft listOpen={listOpen} />,
+          headerLeft: () => <TemplateBoardHeaderLeft sheetOpen={!!sheetType} />,
           headerTitle: () => (
             <TemplateBoardHeaderTitle
-              listOpen={listOpen}
-              setListOpen={setListOpen}
-              setListType={setListType}
+              sheetType={sheetType}
+              setSheetType={setSheetType}
             />
           ),
           headerRight: () => <TemplateBoardHeaderRight />,
@@ -46,28 +49,25 @@ export default function TemplateBoard() {
 
       <ScreenContent edges={["top", "bottom"]} scroll={false}>
         <DashBoard
-          listOpen={listOpen}
+          sheetOpen={!!sheetType}
           togglePanel={togglePanel}
           tint={theme.tint}
-          disabled={!activeTemplate?.layout.length && !listOpen}
+          disabled={!activeTemplate?.layout.length && !!sheetType}
           upperSection={
             activeExercise ? (
-              <TemplateExerciseProfile
-                openPanel={() => setListOpen(true)}
-                setListType={setListType}
-              />
+              <TemplateExerciseProfile setSheetType={setSheetType} />
             ) : (
               <CreateTemplateBoard />
             )
           }
           lowerSection={
-            listType === "exercises" ? (
+            sheetType === "exercises" ? (
               <TemplateExerciseList togglePanel={togglePanel} />
-            ) : listType === "rest" ? (
+            ) : sheetType === "rest" ? (
               <RestTimerSheet />
-            ) : listType === "name" ? (
+            ) : sheetType === "name" ? (
               <ExerciseNameSheet />
-            ) : listType === "template" ? (
+            ) : sheetType === "template" ? (
               <TemplateSheet />
             ) : null
           }

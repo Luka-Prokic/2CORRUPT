@@ -13,16 +13,15 @@ import { RestTimerSheet } from "../components/board-workout/sheets/rest/RestTime
 import { ExerciseNameSheet } from "../components/board-workout/sheets/name/ExerciseNameSheet";
 import { SessionSheet } from "../components/board-workout/sheets/session/SessionSheet";
 
-export type SessionSheetType = "exercises" | "rest" | "name" | "session";
+export type SessionSheetType = "exercises" | "rest" | "name" | "session" | null;
 
 export default function WorkoutBoard() {
-  const [listOpen, setListOpen] = useState(false);
-  const [listType, setListType] = useState<SessionSheetType>("session");
+  const [sheetType, setSheetType] = useState<SessionSheetType>(null);
   const { activeExercise } = useWorkoutStore();
 
   function togglePanel() {
-    setListOpen(!listOpen);
-    setListType("exercises");
+    if (!!sheetType) setSheetType(null);
+    else setSheetType("exercises");
   }
 
   return (
@@ -30,13 +29,12 @@ export default function WorkoutBoard() {
       <Stack.Screen
         options={{
           headerBlurEffect: "none",
-          headerLeft: () => <WorkoutBoardHeaderLeft listOpen={listOpen} />,
+          headerLeft: () => <WorkoutBoardHeaderLeft listOpen={!!sheetType} />,
 
           headerTitle: () => (
             <WorkoutBoardHeaderTitle
-              listOpen={listOpen}
-              setListOpen={setListOpen}
-              setListType={setListType}
+              listType={sheetType}
+              setListType={setSheetType}
             />
           ),
           headerRight: () => <WorkoutBoardHeaderRight />,
@@ -45,27 +43,24 @@ export default function WorkoutBoard() {
 
       <ScreenContent edges={["top", "bottom"]} scroll={false}>
         <DashBoard
-          listOpen={listOpen}
+          sheetOpen={!!sheetType}
           togglePanel={togglePanel}
-          disabled={!activeExercise && !listOpen}
+          disabled={!activeExercise && !!sheetType}
           upperSection={
             activeExercise ? (
-              <ExerciseProfile
-                openPanel={() => setListOpen(true)}
-                setListType={setListType}
-              />
+              <ExerciseProfile setSheetType={setSheetType} />
             ) : (
               <NoExerciseBoard />
             )
           }
           lowerSection={
-            listType === "exercises" ? (
+            sheetType === "exercises" ? (
               <SessionExerciseList togglePanel={togglePanel} />
-            ) : listType === "rest" ? (
+            ) : sheetType === "rest" ? (
               <RestTimerSheet />
-            ) : listType === "name" ? (
+            ) : sheetType === "name" ? (
               <ExerciseNameSheet />
-            ) : listType === "session" ? (
+            ) : sheetType === "session" ? (
               <SessionSheet />
             ) : null
           }

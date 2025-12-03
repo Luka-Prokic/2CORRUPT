@@ -5,19 +5,16 @@ import { SessionSheetType } from "../../../app/workout-board";
 import { SessionTimer } from "../../ui/timer/SessionTimer";
 
 interface WorkoutBoardHeaderTitleProps {
-  listOpen: boolean;
-  setListOpen: (listOpen: boolean) => void;
+  listType: SessionSheetType;
   setListType: (listType: SessionSheetType) => void;
 }
 export function WorkoutBoardHeaderTitle({
-  listOpen,
-  setListOpen,
+  listType,
   setListType,
 }: WorkoutBoardHeaderTitleProps) {
   const { theme } = useSettingsStore();
 
   function handlePressTitle() {
-    setListOpen(true);
     setListType("session");
   }
 
@@ -36,7 +33,7 @@ export function WorkoutBoardHeaderTitle({
     >
       <SessionTimer
         textStyle={{
-          color: listOpen ? theme.glow : theme.tint,
+          color: !!listType ? theme.text : theme.tint,
         }}
       />
     </TouchableOpacity>

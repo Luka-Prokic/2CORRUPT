@@ -438,7 +438,9 @@
     "exercise": "Exercise",
     "templates": "Templates",
     "template": "Template",
-    "tag": "Tag"
+    "tag": "Tag",
+    "made-by-you": "Made by you",
+    "made-by-app": "App made"
   },
   "splits": {
     "split": "Split",
@@ -497,7 +499,8 @@
 
   "start": {
     "title": "Start",
-    "choose-template": "Choose Template"
+    "choose-template": "Choose Template",
+    "pick-template": "Pick Template"
   },
 
   "alert": {

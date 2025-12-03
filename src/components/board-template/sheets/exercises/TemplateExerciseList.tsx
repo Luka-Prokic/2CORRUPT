@@ -1,13 +1,13 @@
 import { HEIGHT, WIDTH } from "../../../../features/Dimensions";
-import { Animated, FlatList } from "react-native";
+import { Animated } from "react-native";
 import { useFadeInAnim } from "../../../../animations/useFadeInAnim";
 import { useWorkoutStore } from "../../../../stores/workout/useWorkoutStore";
 import { ExerciseCard } from "../../../board-workout/cards/ExerciseCard";
 import { useState } from "react";
-import { TemplateExerciseListHeader } from "./TemplateExerciseListHeader";
-import { TemplateExerciseListAddNewButton } from "./TemplateExerciseListAddNewButton";
-import { useSettingsStore } from "../../../../stores/settings";
+import { ExerciseListHeader } from "../../../board-workout/sheets/exercises/ExerciseListHeader";
+import { ExerciseListAddNewButton } from "../../../board-workout/sheets/exercises/ExerciseListAddNewButton";
 import { SessionExercise } from "../../../../stores/workout";
+import DraggableFlatList from "react-native-draggable-flatlist";
 
 interface TemplateExerciseListProps {
   togglePanel: () => void;
@@ -16,10 +16,9 @@ interface TemplateExerciseListProps {
 export function TemplateExerciseList({
   togglePanel,
 }: TemplateExerciseListProps) {
-  const { activeTemplate } = useWorkoutStore();
-  const { setActiveExercise } = useWorkoutStore();
+  const { setActiveExercise, reorderTemplateItems, activeTemplate } =
+    useWorkoutStore();
   const { fadeIn } = useFadeInAnim();
-  const { theme } = useSettingsStore();
 
   const [selectMode, setSelectMode] = useState(false);
   const [selectedExercises, setSelectedExercises] = useState<string[]>([]);
@@ -42,19 +41,6 @@ export function TemplateExerciseList({
     setSelectedExercises([]);
   };
 
-  const renderCard = (item: SessionExercise) => {
-    return (
-      <ExerciseCard
-        exercise={item}
-        onUse={handleExerciseUse}
-        onSelect={handleExerciseSelect}
-        selectedExercises={selectedExercises}
-        multipleSelect={selectMode}
-        backgroundColor={theme.background}
-      />
-    );
-  };
-
   if (!activeTemplate) return null;
 
   return (
@@ -65,21 +51,39 @@ export function TemplateExerciseList({
         ...fadeIn,
       }}
     >
-      <TemplateExerciseListHeader
+      <ExerciseListHeader
         selectMode={selectMode}
         toggleSelectMode={toggleSelectMode}
         selectedExercises={selectedExercises}
         setSelectedExercises={setSelectedExercises}
         setSelectMode={setSelectMode}
       />
-      <FlatList
-        data={activeTemplate?.layout}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => renderCard(item)}
+
+      <DraggableFlatList
+        data={activeTemplate.layout}
+        style={{ height: HEIGHT - 200, paddingTop: 64 }}
+        showsVerticalScrollIndicator={false}
+        keyExtractor={(item: SessionExercise) => item.id}
+        renderItem={({ item, drag, isActive }) => (
+          <ExerciseCard
+            exercise={item}
+            onUse={handleExerciseUse}
+            onSelect={handleExerciseSelect}
+            selectedExercises={selectedExercises}
+            multipleSelect={selectMode}
+            drag={!selectMode ? drag : undefined} // enable drag on long press
+            isActiveDrag={isActive}
+          />
+        )}
+        onDragEnd={({ data }) => {
+          reorderTemplateItems(data); // overwrite the order directly
+        }}
+        activationDelay={100} // long press delay to start drag
         ListFooterComponent={() => (
-          <TemplateExerciseListAddNewButton
+          <ExerciseListAddNewButton
             style={{
               opacity: selectMode ? 0 : 1,
+              marginBottom: 100,
             }}
           />
         )}

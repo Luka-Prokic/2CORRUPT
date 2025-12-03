@@ -11,14 +11,10 @@ import { useFormatTime } from "../../../features/format/useFormatTime";
 import { TemplateSheetType } from "../../../app/template-board";
 
 interface RestTimerSettingsProps {
-  openPanel: () => void;
-  setListType: (listType: SessionSheetType | TemplateSheetType) => void;
+  setSheetType: (sheetType: SessionSheetType | TemplateSheetType) => void;
 }
 
-export function RestTimerSettings({
-  openPanel,
-  setListType,
-}: RestTimerSettingsProps) {
+export function RestTimerSettings({ setSheetType }: RestTimerSettingsProps) {
   const { theme } = useSettingsStore();
   const { activeExercise, updateActiveExercise } = useWorkoutStore();
   const [noRest, setNoRest] = useState(activeExercise?.noRest ?? false);
@@ -35,8 +31,7 @@ export function RestTimerSettings({
   }
 
   function handleRestTimePress() {
-    setListType("rest");
-    openPanel();
+    setSheetType("rest");
   }
 
   const formattedTime = useFormatTime({ seconds: restTime, format: "auto+" });

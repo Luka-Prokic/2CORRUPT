@@ -8,27 +8,21 @@ import { useWorkoutStore } from "../../../stores/workout/useWorkoutStore";
 import { SessionSheetType } from "../../../app/workout-board";
 import { router } from "expo-router";
 import { TemplateSheetType } from "../../../app/template-board";
-import { IText } from "../../ui/text/IText";
 import { MidText } from "../../ui/text/MidText";
 
 const EDIT_BUTTON_WIDTH = 44;
 
 interface ExerciseHeaderProps {
-  openPanel: () => void;
-  setListType: (listType: SessionSheetType | TemplateSheetType) => void;
+  setSheetType: (sheetType: SessionSheetType | TemplateSheetType) => void;
 }
 
-export function ExerciseHeader({
-  openPanel,
-  setListType,
-}: ExerciseHeaderProps) {
+export function ExerciseHeader({ setSheetType }: ExerciseHeaderProps) {
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
   const { activeExercise } = useWorkoutStore();
 
   function handleEditExercise() {
-    setListType("name");
-    openPanel();
+    setSheetType("name");
   }
 
   function handleExerciseNamePress() {

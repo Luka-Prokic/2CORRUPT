@@ -437,7 +437,9 @@
     "exercise": "Vežba",
     "templates": "Šabloni",
     "template": "Šablon",
-    "tag": "Oznaka"
+    "tag": "Oznaka",
+    "made-by-you": "Ti si kreirao",
+    "made-by-app": "App Šabloni"
   },
   "splits": {
     "split": "Split",
@@ -494,7 +496,8 @@
   },
   "start": {
     "title": "Početak",
-    "choose-template": "Izaberi Template"
+    "choose-template": "Izaberi Template",
+    "pick-template": "Izaberi Template"
   },
 
   "alert": {

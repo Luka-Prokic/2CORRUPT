@@ -1,12 +1,12 @@
 import { HEIGHT, WIDTH } from "../../../../features/Dimensions";
-import { View } from "react-native";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 import DraggableFlatList from "react-native-draggable-flatlist";
 import { useWorkoutStore } from "../../../../stores/workout/useWorkoutStore";
 import { ExerciseCard } from "../../cards/ExerciseCard";
 import { useState } from "react";
-import { SessionExerciseListHeader } from "./SessionExerciseListHeader";
-import { SessionExerciseListAddNewButton } from "./SessionExerciseListAddNewButton";
+import { ExerciseListHeader } from "./ExerciseListHeader";
+import { ExerciseListAddNewButton } from "./ExerciseListAddNewButton";
+import { SessionExercise } from "../../../../stores/workout/types";
 
 interface SessionExerciseListProps {
   togglePanel: () => void;
@@ -44,7 +44,7 @@ export function SessionExerciseList({ togglePanel }: SessionExerciseListProps) {
       exiting={FadeOut}
       style={{ width: WIDTH, height: HEIGHT - 200 }}
     >
-      <SessionExerciseListHeader
+      <ExerciseListHeader
         selectMode={selectMode}
         toggleSelectMode={toggleSelectMode}
         selectedExercises={selectedExercises}
@@ -54,9 +54,9 @@ export function SessionExerciseList({ togglePanel }: SessionExerciseListProps) {
 
       <DraggableFlatList
         data={activeSession.layout}
-        keyExtractor={(item) =>
-          "group" in item ? `group-${item.group}` : item.id
-        }
+        style={{ height: HEIGHT - 200, paddingTop: 64 }}
+        showsVerticalScrollIndicator={false}
+        keyExtractor={(item: SessionExercise) => item.id}
         renderItem={({ item, drag, isActive }) => (
           <ExerciseCard
             exercise={item}
@@ -71,12 +71,15 @@ export function SessionExerciseList({ togglePanel }: SessionExerciseListProps) {
         onDragEnd={({ data }) => {
           reorderSessionItems(data); // overwrite the order directly
         }}
-        activationDelay={200} // long press delay to start drag
-      />
-      <SessionExerciseListAddNewButton
-        style={{
-          opacity: selectMode ? 0 : 1,
-        }}
+        activationDelay={100} // long press delay to start drag
+        ListFooterComponent={() => (
+          <ExerciseListAddNewButton
+            style={{
+              opacity: selectMode ? 0 : 1,
+              marginBottom: 100,
+            }}
+          />
+        )}
       />
     </Animated.View>
   );

@@ -6,8 +6,10 @@ import { useSettingsStore } from "../../../../stores/settingsStore";
 import { Fragment } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { useActionSheet } from "../../../../features/useActionSheet";
+import { LinearGradient } from "expo-linear-gradient";
+import { hexToRGBA } from "../../../../features/HEXtoRGB";
 
-interface SessionExerciseListHeaderProps {
+interface ExerciseListHeaderProps {
   selectMode: boolean;
   selectedExercises: string[];
   setSelectedExercises: (exercises: string[]) => void;
@@ -15,14 +17,19 @@ interface SessionExerciseListHeaderProps {
   toggleSelectMode: () => void;
 }
 
-export function SessionExerciseListHeader({
+export function ExerciseListHeader({
   selectMode,
   selectedExercises,
   setSelectedExercises,
   setSelectMode,
   toggleSelectMode,
-}: SessionExerciseListHeaderProps) {
-  const { activeSession, removeExercisesFromSession } = useWorkoutStore();
+}: ExerciseListHeaderProps) {
+  const {
+    activeSession,
+    removeExercisesFromSession,
+    activeTemplate,
+    removeExercisesFromTemplate,
+  } = useWorkoutStore();
   const { theme } = useSettingsStore();
   const { showActionSheet, t } = useActionSheet();
 
@@ -53,18 +60,29 @@ export function SessionExerciseListHeader({
   }
 
   function removeSelectedExercises() {
-    removeExercisesFromSession(selectedExercises);
+    if (activeSession) {
+      removeExercisesFromSession(selectedExercises);
+    } else {
+      removeExercisesFromTemplate(selectedExercises);
+    }
     setSelectedExercises([]);
     setSelectMode(false);
   }
 
   function handleSelectAllExercises() {
-    setSelectedExercises(activeSession.layout.map((item) => item.id));
+    if (activeSession) {
+      setSelectedExercises(activeSession.layout.map((item) => item.id));
+    } else {
+      setSelectedExercises(activeTemplate.layout.map((item) => item.id));
+    }
   }
 
   const selectModeButtons = () => {
     const isAllSelected =
-      selectedExercises.length === activeSession.layout.length;
+      selectedExercises.length ===
+      (activeSession
+        ? activeSession.layout.length
+        : activeTemplate.layout.length);
     const isSomeSelected = selectedExercises.length > 0;
     return (
       <Fragment>
@@ -114,17 +132,26 @@ export function SessionExerciseListHeader({
     );
   };
 
-  if (activeSession.layout.length > 0)
+  if (
+    activeSession
+      ? activeSession.layout.length > 0
+      : activeTemplate.layout.length > 0
+  )
     return (
-      <View
+      <LinearGradient
+        colors={[theme.background, hexToRGBA(theme.background, 0)]}
         style={{
-          height: 24,
-          width: WIDTH - 16,
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 1,
+          height: 64,
+          width: WIDTH,
           flexDirection: "row-reverse",
           justifyContent: "space-between",
           gap: 16,
-          marginHorizontal: 8,
-          marginBottom: 16,
+          paddingHorizontal: 16,
         }}
       >
         <IButton
@@ -142,7 +169,7 @@ export function SessionExerciseListHeader({
         />
 
         {selectMode && selectModeButtons()}
-      </View>
+      </LinearGradient>
     );
 
   return null;

@@ -1,129 +1,76 @@
-import { useMemo } from "react";
-import {
-  IsoDateString,
-  useWorkoutStore,
-  WorkoutTemplate,
-} from "../../stores/workout";
+import { useWorkoutStore, WorkoutTemplate } from "../../stores/workout";
 import { CenterCardSlider } from "../ui/sliders/CenterCardSlider";
 import { TemplateAlbumCard } from "./cards/TemplateAlbumCard";
 import { router } from "expo-router";
 import { useUIStore } from "../../stores/ui";
 import { NoTamplatesAlert } from "../ui/alerts/NoTamplatesAlert";
 import { WIDTH } from "../../features/Dimensions";
-import { useUserStore } from "../../stores/userStore";
-import { EmptyTemplateComponent } from "./EmptyTemplateComponent";
-
-interface TemplateFilters {
-  name?: string[];
-  tags?: string[];
-  id?: string;
-  userMadeOnly?: boolean;
-  appMadeOnly?: boolean;
-  updatedAfter?: IsoDateString;
-  updatedBefore?: IsoDateString;
-  groups?: string[];
-}
+import {
+  TemplateShowBy,
+  useTemplateShowBy,
+} from "../../features/filter/useTempalteShowBy";
 
 interface TemplatesCardListProps {
   templates?: WorkoutTemplate[];
-  filters?: TemplateFilters;
+  showBy?: TemplateShowBy;
 
   sliderWidth?: number;
 
-  emptyState?: React.ReactNode;
+  useType?: "startSession" | "addToSession" | "addToTemplate" | "preview";
 }
 
 export function TemplatesCardList({
   templates: templatesProp,
-  filters,
+  showBy,
   sliderWidth = WIDTH,
-  emptyState,
+  useType = "preview",
 }: TemplatesCardListProps) {
-  const { startSession } = useWorkoutStore();
+  const {
+    startSession,
+    updateTemplateField,
+    updateSessionField,
+    activeSession,
+    activeTemplate,
+    setActiveExercise,
+  } = useWorkoutStore();
   const { setTypeOfView } = useUIStore();
   const storeTemplates = useWorkoutStore((s) => s.templates);
   const templates = templatesProp ?? storeTemplates;
-  const { user } = useUserStore();
-
-  const filtered = useMemo(() => {
-    return templates.filter((t) => {
-      // Name
-      if (filters?.name) {
-        if (
-          !filters.name.some((name) =>
-            t.name.toLowerCase().includes(name.toLowerCase())
-          )
-        )
-          return false;
-      }
-
-      // Tags
-      if (filters?.tags?.length) {
-        if (!filters.tags.some((tag) => t.tags?.includes(tag))) return false;
-      }
-
-      // ID
-      if (filters?.id) {
-        if (t.id === filters.id) return false;
-      }
-
-      // User-made templates only
-      if (filters?.userMadeOnly) {
-        if (t.userId !== user?.id) return false;
-      }
-
-      // App-made templates only
-      if (filters?.appMadeOnly) {
-        if (t.userId !== undefined) return false;
-      }
-
-      // UpdatedAfter
-      if (filters?.updatedAfter) {
-        if (
-          !t.updatedAt ||
-          new Date(t.updatedAt) < new Date(filters.updatedAfter)
-        )
-          return false;
-      }
-
-      // UpdatedBefore
-      if (filters?.updatedBefore) {
-        if (
-          !t.updatedAt ||
-          new Date(t.updatedAt) > new Date(filters.updatedBefore)
-        )
-          return false;
-      }
-
-      // Group (metadata.group)
-      if (filters?.groups?.length) {
-        const group = t.metadata?.group;
-        if (!group || !filters.groups.includes(group)) return false;
-      }
-
-      return true;
-    });
-  }, [templates, filters]);
+  const filteredTemplates = useTemplateShowBy(templates, showBy);
 
   function handlePress(template: WorkoutTemplate) {
-    if (template) startSession(template);
-    else startSession(template);
-    setTypeOfView("workout");
-    router.dismissTo("/");
+    if (useType === "preview") {
+    } else if (useType === "startSession") {
+      startSession(template);
+      setTypeOfView("workout");
+      router.dismissTo("/");
+    } else if (useType === "addToSession") {
+      updateSessionField(activeSession.id, "layout", [...template.layout]);
+      setActiveExercise(template.layout[0].id);
+      setTypeOfView("workout");
+      router.dismissTo("/");
+    } else if (useType === "addToTemplate") {
+      updateTemplateField(activeTemplate.id, "layout", [...template.layout]);
+      setActiveExercise(template.layout[0].id);
+      setTypeOfView("template");
+      router.dismissTo("/");
+    }
   }
 
   return (
     <CenterCardSlider
-      data={filtered}
+      data={filteredTemplates}
       cardWidth={
-        filtered.length <= 1 && filters?.userMadeOnly ? WIDTH : WIDTH / 3
+        filteredTemplates.length <= 1 && showBy?.userMadeOnly
+          ? sliderWidth
+          : WIDTH / 3
       }
       cardHeight={WIDTH / 3}
       sliderWidth={sliderWidth}
-      disableScroll={filtered.length <= 1}
+      disableScroll={filteredTemplates.length <= 1}
       emptyCard={
-        filters?.userMadeOnly ? (
-          <NoTamplatesAlert style={{ width: WIDTH, height: WIDTH / 3 }} />
+        showBy?.userMadeOnly ? (
+          <NoTamplatesAlert style={{ width: sliderWidth, height: WIDTH / 3 }} />
         ) : null
       }
       card={({ item }) => (

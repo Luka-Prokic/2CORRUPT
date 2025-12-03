@@ -17,25 +17,27 @@ export default function StartBoard() {
       <Stack.Screen
         options={{
           headerLeft: () => <ModalBackButton />,
-          title: t("start.choose-template"),
+          title: t("start.pick-template"),
         }}
       />
 
       <ScreenContent edges={["top"]} scroll={true}>
         <ScreenView style={{ gap: 32 }}>
           <View style={{ gap: 16 }}>
-            <BigText text={t("templates.your-templates")} />
+            <BigText text={t("templates.made-by-you")} />
             <TemplatesCardList
               sliderWidth={WIDTH}
-              filters={{ userMadeOnly: true }}
+              showBy={{ userMadeOnly: true }}
+              useType="startSession"
             />
           </View>
 
           <View style={{ gap: 16 }}>
-            <BigText text={t("templates.app-templates")} />
+            <BigText text={t("templates.made-by-app")} />
             <TemplatesCardList
               sliderWidth={WIDTH}
-              filters={{ appMadeOnly: true }}
+              showBy={{ appMadeOnly: true }}
+              useType="startSession"
             />
           </View>
         </ScreenView>

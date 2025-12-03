@@ -9,14 +9,10 @@ import { ExerciseNoteInput } from "./ExerciseNoteInput";
 import { SessionSheetType } from "../../../app/workout-board";
 
 interface ExerciseProfileProps {
-  openPanel: () => void;
-  setListType: (listType: SessionSheetType) => void;
+  setSheetType: (sheetType: SessionSheetType) => void;
 }
 
-export function ExerciseProfile({
-  openPanel,
-  setListType,
-}: ExerciseProfileProps) {
+export function ExerciseProfile({ setSheetType }: ExerciseProfileProps) {
   const { fadeIn } = useFadeInAnim();
 
   return (
@@ -27,8 +23,8 @@ export function ExerciseProfile({
         ...fadeIn,
       }}
     >
-      <ExerciseHeader openPanel={openPanel} setListType={setListType} />
-      <RestTimerSettings openPanel={openPanel} setListType={setListType} />
+      <ExerciseHeader setSheetType={setSheetType} />
+      <RestTimerSettings setSheetType={setSheetType} />
 
       <View>
         <RemoveExerciseButton />

@@ -11,7 +11,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 const FOCUS_HEIGHT = HEIGHT - 120;
 
 interface DashBoardProps {
-  listOpen: boolean;
+  sheetOpen: boolean;
   togglePanel: () => void;
   disabled?: boolean;
   upperSection: React.ReactNode;
@@ -21,7 +21,7 @@ interface DashBoardProps {
 }
 
 export function DashBoard({
-  listOpen,
+  sheetOpen,
   togglePanel,
   disabled,
   upperSection,
@@ -36,9 +36,9 @@ export function DashBoard({
   const focusHeight = FOCUS_HEIGHT - insets.bottom;
 
   useEffect(() => {
-    const toValue = listOpen ? -focusHeight + 80 : insets.bottom;
+    const toValue = sheetOpen ? -focusHeight + 80 : insets.bottom;
     Animated.spring(animatedY, { toValue, useNativeDriver: true }).start();
-  }, [listOpen]);
+  }, [sheetOpen]);
 
   const lightText = hexToRGBA(theme.text, 0.2);
   return (
@@ -93,14 +93,14 @@ export function DashBoard({
         disabled={disabled}
       >
         <Ionicons
-          name={listOpen ? "chevron-down" : "chevron-up"}
+          name={sheetOpen ? "chevron-down" : "chevron-up"}
           size={32}
           color={disabled ? theme.handle : theme.text}
         />
       </Pressable>
 
       {/*Lower Section */}
-      {listOpen && lowerSection}
+      {sheetOpen && lowerSection}
     </Animated.View>
   );
 }

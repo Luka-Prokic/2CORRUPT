@@ -9,13 +9,11 @@ import { ExerciseNoteInput } from "../board-workout/profile/ExerciseNoteInput";
 import { TemplateSheetType } from "../../app/template-board";
 
 interface TemplateExerciseProfileProps {
-  openPanel: () => void;
-  setListType: (listType: TemplateSheetType) => void;
+  setSheetType: (sheetType: TemplateSheetType) => void;
 }
 
 export function TemplateExerciseProfile({
-  openPanel,
-  setListType,
+  setSheetType,
 }: TemplateExerciseProfileProps) {
   const { fadeIn } = useFadeInAnim();
 
@@ -28,8 +26,8 @@ export function TemplateExerciseProfile({
         ...fadeIn,
       }}
     >
-      <ExerciseHeader openPanel={openPanel} setListType={setListType} />
-      <RestTimerSettings openPanel={openPanel} setListType={setListType} />
+      <ExerciseHeader setSheetType={setSheetType} />
+      <RestTimerSettings setSheetType={setSheetType} />
 
       <View>
         <RemoveExerciseButton />

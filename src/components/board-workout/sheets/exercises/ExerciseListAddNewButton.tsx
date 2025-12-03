@@ -4,28 +4,29 @@ import { useSettingsStore } from "../../../../stores/settingsStore";
 import { WIDTH } from "../../../../features/Dimensions";
 import { ViewStyle } from "react-native";
 import { StrobeButton } from "../../../ui/buttons/StrobeButton";
+import { useWorkoutStore } from "../../../../stores/workout/useWorkoutStore";
 
-interface TemplateExerciseListAddNewButtonProps {
+interface ExerciseListAddNewButtonProps {
   style?: ViewStyle | ViewStyle[];
 }
 
-export function TemplateExerciseListAddNewButton({
+export function ExerciseListAddNewButton({
   style,
-}: TemplateExerciseListAddNewButtonProps) {
+}: ExerciseListAddNewButtonProps) {
   const { theme } = useSettingsStore();
+  const { activeSession } = useWorkoutStore();
 
   function handlePress() {
     router.push({
       pathname: "/add-exercise/[type]",
       params: {
-        type: "template",
+        type: activeSession ? "session" : "template",
       },
     });
   }
 
   return (
     <StrobeButton
-      strobeColors={[theme.glow, theme.glow, theme.glow, theme.glow]}
       onPress={handlePress}
       style={{
         height: 64,
@@ -34,7 +35,7 @@ export function TemplateExerciseListAddNewButton({
         borderRadius: 32,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: theme.tint,
+        backgroundColor: theme.thirdBackground,
         ...style,
       }}
     >

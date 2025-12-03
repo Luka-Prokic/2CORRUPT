@@ -5,11 +5,11 @@ import { router } from "expo-router";
 import { Fragment } from "react";
 
 interface TemplateBoardHeaderLeftProps {
-  listOpen: boolean;
+  sheetOpen: boolean;
 }
 
 export function TemplateBoardHeaderLeft({
-  listOpen,
+  sheetOpen,
 }: TemplateBoardHeaderLeftProps) {
   const { theme } = useSettingsStore();
 
@@ -29,7 +29,7 @@ export function TemplateBoardHeaderLeft({
         <Ionicons
           name="cog"
           size={44}
-          color={listOpen ? theme.glow : theme.grayText}
+          color={!!sheetOpen ? theme.text : theme.grayText}
         />
       </TouchableOpacity>
     </Fragment>

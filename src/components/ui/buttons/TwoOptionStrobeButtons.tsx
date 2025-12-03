@@ -98,7 +98,7 @@ export function TwoOptionStrobeButtons({
             style={{
               fontSize: 24,
               fontWeight: "bold",
-              color: theme.text,
+              color: theme.shadow,
               ...styleLabelOne,
             }}
           >
@@ -142,7 +142,7 @@ export function TwoOptionStrobeButtons({
             style={{
               fontSize: 24,
               fontWeight: "bold",
-              color: theme.text,
+              color: theme.shadow,
               ...styleLabelTwo,
             }}
           >

@@ -37,7 +37,7 @@ export function StrobeButton({
   strobeTint = "light",
   pressable,
   animatedEntering = true,
-  animatedExiting = true,
+  animatedExiting = false,
   ...rest
 }: StrobeButtonProps) {
   const { theme } = useSettingsStore();
