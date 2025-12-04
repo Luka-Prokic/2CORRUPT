@@ -1,28 +1,28 @@
 import React from "react";
 import { View } from "react-native";
 import { RadarChart } from "react-native-gifted-charts";
-import { useCategoryScoresForSession } from "../../../features/stats/useCategoryScores";
-import { useMuscleScoresForSession } from "../../../features/stats/useMucleScores";
 import { useSettingsStore } from "../../../stores/settings";
 import { useTranslation } from "react-i18next";
 import { hexToRGBA } from "../../../utils/HEXtoRGB";
-import { WorkoutSession } from "../../../stores/workout";
+import { WorkoutTemplate } from "../../../stores/workout";
 import { fixedMuscleOrder } from "../../../config/constants/musscleOrder";
+import { useMuscleScoresForTemplate } from "../../../features/stats/useMucleScores";
+import { useCategoryScoresForTemplate } from "../../../features/stats/useCategoryScores";
 
-interface MuscleRadarChartSessionProps {
-  session: WorkoutSession;
+interface MuscleRadarChartTemplateProps {
+  template: WorkoutTemplate;
   size: number;
 }
 
-export function MuscleRadarChartSession({
-  session,
+export function MuscleRadarChartTemplate({
+  template,
   size,
-}: MuscleRadarChartSessionProps) {
+}: MuscleRadarChartTemplateProps) {
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
 
-  const muscles = useMuscleScoresForSession(session) ?? [];
-  const categories = useCategoryScoresForSession(session) ?? [];
+  const muscles = useMuscleScoresForTemplate(template) ?? [];
+  const categories = useCategoryScoresForTemplate(template) ?? [];
 
   const useCategories = muscles.length > 12;
   const sourceData = useCategories ? categories : muscles;

@@ -1,48 +1,14 @@
 import React from "react";
 import { View } from "react-native";
 import { RadarChart } from "react-native-gifted-charts";
-import {
-  useMuscleScoresForDay,
-  useCategoryScoresForDay,
-} from "../../../features/workout/useSessionHistory";
+import { useCategoryScoresForDay } from "../../../features/stats/useCategoryScores";
+import { useMuscleScoresForDay } from "../../../features/stats/useMucleScores";
 import { useSettingsStore } from "../../../stores/settings";
 import { useTranslation } from "react-i18next";
 import { useWidgetUnit } from "../../../features/widgets/useWidgetUnit";
 import { hexToRGBA } from "../../../utils/HEXtoRGB";
 import { Ionicons } from "@expo/vector-icons";
-
-const fixedMuscleOrder = [
-  "chest",
-  "upper-chest",
-  "mid-chest",
-  "lower-chest",
-  "shoulders",
-  "front-delts",
-  "side-delts",
-  "rear-delts",
-  "back",
-  "lats",
-  "lower-back",
-  "upper-traps",
-  "mid-traps",
-  "arms",
-  "biceps",
-  "brachialis",
-  "triceps",
-  "forearms",
-  "legs",
-  "quads",
-  "hamstrings",
-  "glutes",
-  "calves",
-  "adductors",
-  "core",
-  "abs",
-  "obliques",
-  "hip-flexors",
-  "full-body",
-  "grip",
-];
+import { fixedMuscleOrder } from "../../../config/constants/musscleOrder";
 
 interface MuscleRadarChartDayProps {
   date: Date;

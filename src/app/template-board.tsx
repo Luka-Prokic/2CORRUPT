@@ -52,7 +52,7 @@ export default function TemplateBoard() {
           sheetOpen={!!sheetType}
           togglePanel={togglePanel}
           tint={theme.tint}
-          disabled={!activeTemplate?.layout.length && !!sheetType}
+          disabled={!activeTemplate?.layout.length && !sheetType}
           upperSection={
             activeExercise ? (
               <TemplateExerciseProfile setSheetType={setSheetType} />

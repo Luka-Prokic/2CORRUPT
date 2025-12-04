@@ -33,3 +33,16 @@ export const useFindPlannedWorkout = (date: Date) => {
     return null;
   }, [plannedDay, completedSessions, date]);
 };
+
+export const useFindPlannedWorkouts = (date: Date) => {
+  const plannedDay = useFindPlannedDay(date);
+
+  return useMemo(() => {
+    if (!plannedDay) return null;
+
+    const { workouts } = plannedDay;
+    if (!workouts || workouts.length === 0) return null;
+
+    return workouts; // return full list, nothing filtered
+  }, [plannedDay]);
+};

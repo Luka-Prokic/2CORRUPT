@@ -1,15 +1,13 @@
-import { Text, TextStyle } from "react-native";
+import { Text, TextProps, TextStyle } from "react-native";
 import { useSettingsStore } from "../../../stores/settings";
 
-export function MidText({
-  text,
-  style,
-  color,
-}: {
+interface MidTextProps extends TextProps {
   text: string;
   style?: TextStyle | TextStyle[];
   color?: string;
-}) {
+}
+
+export function MidText({ text, style, color, ...props }: MidTextProps) {
   const { theme } = useSettingsStore();
   return (
     <Text
@@ -21,6 +19,7 @@ export function MidText({
         textAlign: "center",
         ...style,
       }}
+      {...props}
     >
       {text}
     </Text>
