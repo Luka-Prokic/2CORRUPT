@@ -9,6 +9,10 @@ import {
   TemplateShowBy,
   useTemplateShowBy,
 } from "../../features/filter/useTemplateShowBy";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import { Fragment, useRef, useState } from "react";
+import { StartWorkoutBottomSheet } from "../splits/planned-workout/StartWorkoutBottomSheet";
+import { useTranslation } from "react-i18next";
 
 interface TemplatesCardListProps {
   templates?: WorkoutTemplate[];
@@ -17,6 +21,7 @@ interface TemplatesCardListProps {
   sliderWidth?: number;
 
   useType?: "startSession" | "addToSession" | "addToTemplate" | "preview";
+  useBottomSheet?: boolean;
 }
 
 export function TemplatesCardList({
@@ -24,7 +29,9 @@ export function TemplatesCardList({
   showBy,
   sliderWidth = WIDTH,
   useType = "preview",
+  useBottomSheet = true,
 }: TemplatesCardListProps) {
+  const { t } = useTranslation();
   const {
     startSession,
     updateTemplateField,
@@ -32,13 +39,27 @@ export function TemplatesCardList({
     activeSession,
     activeTemplate,
     setActiveExercise,
+    getTemplateById,
   } = useWorkoutStore();
   const { setTypeOfView } = useUIStore();
   const storeTemplates = useWorkoutStore((s) => s.templates);
   const templates = templatesProp ?? storeTemplates;
   const filteredTemplates = useTemplateShowBy(templates, showBy);
+  const ref = useRef<BottomSheetModal>(null);
 
-  function handlePress(template: WorkoutTemplate) {
+  const [templateId, setTemplateId] = useState<string | null>(null);
+
+  function handlePress(templateId: string) {
+    if (useBottomSheet) {
+      setTemplateId(templateId);
+      ref.current?.present();
+    } else {
+      handleBottomSheet(templateId);
+    }
+  }
+
+  function handleBottomSheet(templateId: string) {
+    const template = getTemplateById(templateId);
     if (useType === "preview") {
     } else if (useType === "startSession") {
       startSession(template);
@@ -57,30 +78,48 @@ export function TemplatesCardList({
     }
   }
 
+  function useButtonText() {
+    if (useType === "startSession") {
+      return t("button.start");
+    } else if (useType === "addToSession" || useType === "addToTemplate") {
+      return t("start.use-exercises");
+    }
+  }
+
   return (
-    <CenterCardSlider
-      data={filteredTemplates}
-      cardWidth={
-        filteredTemplates.length <= 1 && showBy?.userMadeOnly
-          ? sliderWidth
-          : WIDTH / 3
-      }
-      cardHeight={WIDTH / 3}
-      sliderWidth={sliderWidth}
-      disableScroll={filteredTemplates.length <= 1}
-      emptyCard={
-        showBy?.userMadeOnly ? (
-          <NoTamplatesAlert style={{ width: sliderWidth, height: WIDTH / 3 }} />
-        ) : null
-      }
-      card={({ item }) => (
-        <TemplateAlbumCard
-          template={item}
-          onPress={() => handlePress(item)}
-          cardWidth={WIDTH / 3}
-          cardHeight={WIDTH / 3}
-        />
-      )}
-    />
+    <Fragment>
+      <CenterCardSlider
+        data={filteredTemplates}
+        cardWidth={
+          filteredTemplates.length <= 1 && showBy?.userMadeOnly
+            ? sliderWidth
+            : WIDTH / 3
+        }
+        cardHeight={WIDTH / 3}
+        sliderWidth={sliderWidth}
+        disableScroll={filteredTemplates.length <= 1}
+        emptyCard={
+          showBy?.userMadeOnly ? (
+            <NoTamplatesAlert
+              style={{ width: sliderWidth, height: WIDTH / 3 }}
+            />
+          ) : null
+        }
+        card={({ item }) => (
+          <TemplateAlbumCard
+            template={item}
+            onPress={() => handlePress(item.id)}
+            cardWidth={WIDTH / 3}
+            cardHeight={WIDTH / 3}
+          />
+        )}
+      />
+      <StartWorkoutBottomSheet
+        ref={ref}
+        templateId={templateId}
+        onPress={() => handleBottomSheet(templateId)}
+        buttonText={useButtonText()}
+      />
+    </Fragment>
   );
 }

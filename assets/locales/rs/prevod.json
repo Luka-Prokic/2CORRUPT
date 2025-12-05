@@ -31,8 +31,10 @@
     "done": "Gotovo",
     "swap": "Zameni",
     "tap-select": "Klikni da izabereš",
+    "tap-to-start": "Klikni da započneš",
     "on": "I",
-    "off": "O"
+    "off": "O",
+    "long-press-to-edit": "Drži da urediš"
   },
   "form": {
     "name": "Naziv",
@@ -342,6 +344,9 @@
     "delete-exercises-message": "Da li si siguran da želiš da obrišeš ove vežbe? Ova akcija ne može biti vraćena.",
     "delete-exercise": "Obriši Vežbu",
     "delete-exercise-message": "Da li si siguran da želiš da obrišeš ovu vežbu? Ova akcija ne može biti vraćena.",
+    "remove-exercise-message": "Da li si siguran da želiš da obrišeš ovu vežbu? Ova akcija ne može biti vraćena.",
+    "remove-exercises-message": "Da li si siguran da želiš da obrišeš ove vežbe? Ova akcija ne može biti vraćena.",
+    "remove-exercises": "Obriši Vežbe",
     "prefix-description": "Koristi ovu polje da označiš ili prilagodiš vežbe za ovaj trening. Ovo neće promeniti originalni naziv vežbe.",
     "custom-label": "Dodaj oznaku (neobavezno)",
     "create-exercise-copy": "Kreiraj Novu Vežbu Koristeći Ovu...",
@@ -418,7 +423,8 @@
     "total-exercises": "Ukupno vežbi",
     "completed-exercises": "Završene vežbe",
     "total-sets": "Ukupno setova",
-    "completed-sets": "Završeni setovi"
+    "completed-sets": "Završeni setovi",
+    "add-to-session": "Dodaj u Trening"
   },
   "templates": {
     "start-workout": "Započni Trening",
@@ -441,7 +447,8 @@
     "template": "Šablon",
     "tag": "Oznaka",
     "made-by-you": "Ti si kreirao",
-    "made-by-app": "App Šabloni"
+    "made-by-app": "App Šabloni",
+    "add-to-template": "Dodaj u Šablon"
   },
   "splits": {
     "split": "Split",
@@ -499,7 +506,8 @@
   "start": {
     "title": "Početak",
     "choose-template": "Izaberi Template",
-    "pick-template": "Izaberi Template"
+    "pick-template": "Izaberi Template",
+    "use-exercises": "Koristi Vežbe"
   },
 
   "alert": {

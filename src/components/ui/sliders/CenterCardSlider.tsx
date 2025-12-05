@@ -1,10 +1,4 @@
-import React, {
-  useRef,
-  useState,
-  useEffect,
-  ReactElement,
-  ReactNode,
-} from "react";
+import { useRef, useState, useEffect, ReactElement, ReactNode } from "react";
 import {
   FlatList,
   FlatListProps,
@@ -321,6 +315,7 @@ interface ScrollableDotsProps {
   firstDot?: ReactNode;
   lastDot?: ReactNode;
   maxDotsShown?: number;
+  vertical?: boolean;
 }
 
 const DOT_WIDTH = 6;

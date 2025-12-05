@@ -3,20 +3,24 @@ import {
   Text,
   ViewStyle,
   TouchableOpacityProps,
+  TextStyle,
 } from "react-native";
 import { useSettingsStore } from "../../../stores/settingsStore";
-import { StrobeBlur } from "../misc/StrobeBlur";
+import { StrobeBlur, StrobeBlurProps } from "../misc/StrobeBlur";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 import { StyleSheet } from "react-native";
+import { IText } from "../text/IText";
 
 export interface StrobeButtonProps
-  extends Omit<TouchableOpacityProps, "style"> {
+  extends Omit<TouchableOpacityProps, "style">,
+    Omit<StrobeBlurProps, "style"> {
   title?: string;
   children?: React.ReactNode;
   textColor?: string;
   style?: ViewStyle | ViewStyle[];
   contentContainerStyle?: ViewStyle | ViewStyle[];
   styleContent?: ViewStyle | ViewStyle[];
+  textStyle?: TextStyle | TextStyle[];
   strobeColors?: [string, string, string, string];
   strobeDisabled?: boolean;
   strobeTint?: "default" | "light" | "dark" | "auto";
@@ -38,6 +42,9 @@ export function StrobeButton({
   pressable,
   animatedEntering = true,
   animatedExiting = false,
+  freeze = false,
+  duration,
+  textStyle,
   ...rest
 }: StrobeButtonProps) {
   const { theme } = useSettingsStore();
@@ -79,20 +86,18 @@ export function StrobeButton({
           }}
           disabled={strobeDisabled}
           tint={strobeTint}
+          freeze={freeze}
+          duration={duration}
         >
           {children ? (
             children
-          ) : (
-            <Text
-              style={{
-                fontSize: 16,
-                fontWeight: "bold",
-                color: textColor ?? theme.text,
-              }}
-            >
-              {title}
-            </Text>
-          )}
+          ) : title ? (
+            <IText
+              text={title}
+              color={textColor ?? theme.text}
+              style={textStyle}
+            />
+          ) : null}
         </StrobeBlur>
       </Animated.View>
     </TouchableOpacity>

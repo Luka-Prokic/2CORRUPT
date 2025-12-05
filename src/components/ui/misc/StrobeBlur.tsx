@@ -5,7 +5,7 @@ import { useSettingsStore } from "../../../stores/settingsStore";
 import { WIDTH } from "../../../utils/Dimensions";
 
 export type StrobeColors = [string, string, string, string];
-interface StrobeBlurProps {
+export interface StrobeBlurProps {
   style?: ViewStyle | ViewStyle[];
   styleContent?: ViewStyle | ViewStyle[];
   colors?: StrobeColors;

@@ -1,32 +1,59 @@
 import { useWorkoutStore } from "../../stores/workout";
-import { useFindPlannedWorkouts } from "../../features/find/useFindPlannedWorkout";
-import { PlannedActiveSplitWorkoutCard } from "../splits/PlannedActiveSplitWorkoutCard";
-import { CardFlatList } from "../ui/sliders/CardFlatList";
-import { useWidgetUnit } from "../../features/widgets/useWidgetUnit";
+import {
+  useFindPlannedWorkouts,
+  useFindPlannedWorkoutIndexNow,
+} from "../../features/find/useFindPlannedWorkout";
+import { PlannedActiveSplitWorkoutCard } from "../splits/planned-workout/PlannedActiveSplitWorkoutCard";
+import { WidgetFlatList } from "../ui/sliders/WidgetFlatList";
+import { IText } from "../ui/text/IText";
+import { View } from "react-native";
+import { WIDTH } from "../../utils/Dimensions";
+import { useSettingsStore } from "../../stores/settingsStore";
+import { InfoText } from "../ui/text/InfoText";
+import { useTranslation } from "react-i18next";
 
 export function TodaysWorkouts() {
   const { activeSplitPlan } = useWorkoutStore();
-  const { widgetUnit } = useWidgetUnit();
+  const { theme } = useSettingsStore();
+  const { t } = useTranslation();
 
-  const workouts = useFindPlannedWorkouts(new Date());
-  if (!workouts) return null;
+  const now = new Date();
+
+  const workouts = useFindPlannedWorkouts(now);
+  const workoutIndexNow = useFindPlannedWorkoutIndexNow();
+
+  if (!workouts || workoutIndexNow === -1) return null;
   if (!activeSplitPlan) return null;
+
   return (
-    <CardFlatList
-      data={workouts}
-      contentContainerStyle={{ height: widgetUnit }}
-      snapToInterval={widgetUnit}
-      decelerationRate="fast"
-      showsVerticalScrollIndicator={false}
-      scrollEventThrottle={16}
-      renderItem={({ item }) => (
-        <PlannedActiveSplitWorkoutCard
-          key={item.id}
-          splitPlan={activeSplitPlan.plan}
-          workout={item}
-          date={new Date()}
-        />
-      )}
-    />
+    <>
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 8,
+          height: 44,
+          width: WIDTH,
+        }}
+      >
+        <IText text={activeSplitPlan.plan.name} color={theme.text} />
+        {/* <Ionicons name="flash" size={24} color={theme.fifthBackground} /> */}
+      </View>
+      <WidgetFlatList
+        data={workouts}
+        initialScrollIndex={workoutIndexNow}
+        renderItem={({ item }) => (
+          <PlannedActiveSplitWorkoutCard
+            key={item.id}
+            splitPlan={activeSplitPlan.plan}
+            workout={item}
+            date={now}
+          />
+        )}
+      />
+      <InfoText text={t("button.tap-to-start")} style={{ marginTop: 8 }} />
+      <InfoText text={t("button.long-press-to-edit")} style={{ marginTop: 8 }} />
+    </>
   );
 }

@@ -16,13 +16,13 @@ export function RemoveExerciseButton() {
   const { showActionSheet, t } = useActionSheet();
 
   function handleRemoveExercise() {
-    const title = t("workout-board.delete") + ` ${activeExercise?.name}`;
-    const message = t("workout-board.delete-exercise-message");
+    const title = t("button.remove") + ` ${activeExercise?.name}`;
+    const message = t("workout-board.remove-exercise-message");
 
     showActionSheet({
       title: `${title}?`,
       message,
-      options: [t("workout-board.cancel"), t("workout-board.delete")],
+      options: [t("workout-board.cancel"), t("button.remove")],
       destructiveIndex: 1,
       cancelIndex: 0,
       onSelect: (index) => {

@@ -31,8 +31,10 @@
     "done": "Done",
     "swap": "Swap",
     "tap-select": "Tap to select",
+    "tap-to-start": "Tap to start",
     "on": "On",
-    "off": "Off"
+    "off": "Off",
+    "long-press-to-edit": "Hold to edit"
   },
   "form": {
     "name": "Name",
@@ -340,6 +342,9 @@
     "delete-exercises-message": "Are you sure you want to delete these exercises? This action cannot be undone.",
     "delete-exercise": "Delete Exercise",
     "delete-exercise-message": "Are you sure you want to delete this exercise? This action cannot be undone.",
+    "remove-exercise-message": "Are you sure you want to remove this exercise? This action cannot be undone.",
+    "remove-exercises-message": "Are you sure you want to remove these exercises? This action cannot be undone.",
+    "remove-exercises": "Remove Exercises",
     "prefix-description": "Use this field to mark or customize exercises for this session. It won't change the original exercise name.",
     "custom-label": "Custom label (optional)",
     "create-exercise-copy": "Create a New Exercise Using This One...",
@@ -419,7 +424,8 @@
     "total-exercises": "Total Exercises",
     "completed-exercises": "Completed Exercises",
     "total-sets": "Total Sets",
-    "completed-sets": "Completed Sets"
+    "completed-sets": "Completed Sets",
+    "add-to-session": "Add to Session"
   },
   "templates": {
     "start-workout": "Start Workout",
@@ -442,7 +448,8 @@
     "template": "Template",
     "tag": "Tag",
     "made-by-you": "Made by you",
-    "made-by-app": "App made"
+    "made-by-app": "App made",
+    "add-to-template": "Add to Template"
   },
   "splits": {
     "split": "Split",
@@ -502,7 +509,8 @@
   "start": {
     "title": "Start",
     "choose-template": "Choose Template",
-    "pick-template": "Pick Template"
+    "pick-template": "Pick Template",
+    "use-exercises": "Use Exercises"
   },
 
   "alert": {

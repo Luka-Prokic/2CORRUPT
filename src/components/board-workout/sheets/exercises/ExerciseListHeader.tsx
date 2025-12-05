@@ -37,20 +37,19 @@ export function ExerciseListHeader({
     const count = selectedExercises.length;
     const title =
       count > 1
-        ? t("workout-board.delete-exercises")
-        : t("workout-board.delete-exercise");
+        ? t("workout-board.remove-exercises")
+        : t("workout-board.remove-exercise");
     const message =
       count > 1
-        ? t("workout-board.delete-exercises-message")
-        : t("workout-board.delete-exercise-message");
+        ? t("workout-board.remove-exercises-message")
+        : t("workout-board.remove-exercise-message");
+    const removeText =
+      count > 1 ? `${t("button.remove")} ${count}` : t("button.remove");
 
     showActionSheet({
       title: `${title}?`,
       message,
-      options: [
-        t("workout-board.cancel"),
-        `${t("workout-board.delete")} ${count}`,
-      ],
+      options: [t("button.cancel"), removeText],
       destructiveIndex: 1,
       cancelIndex: 0,
       onSelect: (index) => {

@@ -14,10 +14,10 @@ interface WidgetUnitOptions {
  */
 
 export function useWidgetUnit(options: WidgetUnitOptions = {}) {
-  const { columns = 2, padding = 40, margin = 8 } = options;
+  const { columns = 2, padding = 32, margin = 8 } = options;
 
   const widgetUnit = useMemo(() => {
-    return (WIDTH - padding) / columns;
+    return (WIDTH - padding - margin) / columns;
   }, [WIDTH, columns, padding]);
 
   const halfWidget = useMemo(() => {

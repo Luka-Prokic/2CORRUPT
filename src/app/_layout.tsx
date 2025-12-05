@@ -50,7 +50,7 @@ export default function Layout() {
               },
             }}
           >
-            {/* Home */}
+            {/* Home/Start/Workout/Template */}
             <Stack.Screen name="index" />
 
             {/* HomeBoard */}
@@ -96,7 +96,7 @@ export default function Layout() {
               }}
             />
 
-            {/* Summary - Sessions Legacy name */}
+            {/* Summary - Sessions (Legacy name) */}
             <Stack.Screen name="summary" />
 
             {/* Templates */}
@@ -108,14 +108,6 @@ export default function Layout() {
               options={{
                 presentation: "modal",
                 headerShown: false,
-              }}
-            />
-
-            {/* All */}
-            <Stack.Screen
-              name="all"
-              options={{
-                presentation: "modal",
               }}
             />
           </Stack>
