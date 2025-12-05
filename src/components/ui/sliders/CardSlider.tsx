@@ -63,7 +63,7 @@ export function CardSlider<T>({
   // ✅ Include firstCard and lastCard cleanly in the data
   const fullData: (string | T)[] = [
     ...(firstCard ? ["first"] : []),
-    ...(data ? Array.from(data) : []),
+    ...(data ? [...(data as T[])] : []),
     ...(lastCard ? ["last"] : []),
   ];
 

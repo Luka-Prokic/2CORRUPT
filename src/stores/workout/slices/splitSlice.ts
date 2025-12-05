@@ -361,6 +361,58 @@ export const createSplitPlanSlice: StateCreator<
       });
     },
 
+    reorderWorkoutsInDayAuto: (planId, dayIndex) => {
+      set((state) => {
+        const splitPlans = state.splitPlans.map((p) => {
+          if (p.id !== planId) return p;
+
+          const split = [...p.split];
+          if (!split[dayIndex]) return p;
+
+          const workouts = split[dayIndex].workouts;
+
+          // Sorting logic:
+          // 1. Extract HH:MM:SS from scheduledAt if available
+          // 2. Sort by time-of-day only
+          // 3. Workouts WITHOUT scheduledAt go to end
+          const sorted = [...workouts].sort((a, b) => {
+            const ta = a.scheduledAt ? new Date(a.scheduledAt) : null;
+            const tb = b.scheduledAt ? new Date(b.scheduledAt) : null;
+
+            // If both missing → keep relative order (stable)
+            if (!ta && !tb) return 0;
+            // Only a missing → a goes last
+            if (!ta) return 1;
+            // Only b missing → b goes last
+            if (!tb) return -1;
+
+            // Compare ONLY time-of-day (ignore date)
+            const ma = ta.getHours() * 60 + ta.getMinutes();
+            const mb = tb.getHours() * 60 + tb.getMinutes();
+            return ma - mb;
+          });
+
+          split[dayIndex] = {
+            ...split[dayIndex],
+            workouts: sorted,
+          };
+
+          const updatedPlan = {
+            ...p,
+            split,
+            activeLength: split.filter((d) => !d.isRest).length,
+            splitLength: split.length,
+            updatedAt: new Date().toISOString(),
+          };
+
+          return updatedPlan;
+        });
+
+        const updatedPlan = splitPlans.find((p) => p.id === planId)!;
+        return syncActiveSplit({ ...state, splitPlans }, updatedPlan);
+      });
+    },
+
     addDayToSplit: (planId, day, dayIndex) => {
       set((state) => {
         const splitPlans = state.splitPlans.map((p) => {

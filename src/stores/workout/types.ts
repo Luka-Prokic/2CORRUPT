@@ -194,6 +194,10 @@ export interface SplitPlanSlice {
     dayIndex: number,
     newOrder: string[]
   ) => void;
+  reorderWorkoutsInDayAuto: (
+    planId: string,
+    dayIndex: number,
+  ) => void;
 
   // activation & history
   setActiveSplitPlan: (

@@ -46,7 +46,8 @@ export function SplitDayCard({
     null
   );
   const [pickerTime, setPickerTime] = useState<Date>(new Date());
-  const { updateWorkoutInDay } = useWorkoutStore();
+  const { updateWorkoutInDay, reorderWorkoutsInDayAuto } = useWorkoutStore();
+
   function openTimePicker(workout: any) {
     setPickerWorkout(workout);
     setPickerTime(
@@ -64,6 +65,7 @@ export function SplitDayCard({
       updateWorkoutInDay(split.id, index, pickerWorkout.id, {
         scheduledAt: date?.toISOString() ?? undefined,
       });
+      setTimeout(() => reorderWorkoutsInDayAuto(split.id, index), 10);
     }
     closeTimePicker();
   }

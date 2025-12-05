@@ -153,7 +153,7 @@
 
     "workout-settings": {
       "header": "Globalna podešavanja",
-      "description": "Ove opcije podešavaju podrazumevane vrednosti za buduće treninge i vežbe — postojeće ostaju iste.",
+      "description": "Ove opcije podešavaju podrazumevane vrednosti za buduće treninge i vežbe. Postojeće ostaju iste.",
 
       "global-start-rest-time-title": "Globalno Koristi Timer Pauze",
       "global-start-rest-time-description": "Koristi vreme pauze između serija ili isključi ga.",

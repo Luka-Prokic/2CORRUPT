@@ -151,7 +151,7 @@
     "temperature": "Temperature",
     "workout-settings": {
       "header": "Global Settings",
-      "description": "These options set the defaults for future workouts and exercises — existing ones won't change.",
+      "description": "These options set the defaults for future workouts and exercises. Existing ones won't change.",
 
       "global-start-rest-time-title": "Global Start Rest Timer",
       "global-start-rest-time-description": "Use a rest timer between sets or skip it entirely.",
