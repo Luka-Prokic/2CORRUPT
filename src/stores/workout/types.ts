@@ -194,10 +194,7 @@ export interface SplitPlanSlice {
     dayIndex: number,
     newOrder: string[]
   ) => void;
-  reorderWorkoutsInDayAuto: (
-    planId: string,
-    dayIndex: number,
-  ) => void;
+  reorderWorkoutsInDayAuto: (planId: string, dayIndex: number) => void;
 
   // activation & history
   setActiveSplitPlan: (
@@ -310,6 +307,20 @@ export interface ExerciseSlice {
   swapExerciseInActiveExercise: (exerciseId: string) => void;
 }
 
+export interface DraftSlice {
+  draftExercise: ExerciseInfo | null;
+  placeholderExercise: ExerciseInfo | null; // used only as reference exercise// readonly
+
+  startDraftExercise: (exercise?: ExerciseInfo) => void; // create OR edit
+  updateDraftExercise: (updates: Partial<ExerciseInfo>) => void;
+  clearDraftExercise: () => void;
+  saveDraftExercise: () => void; // moves into exercises[]
+
+  setPlaceholderExercise: (exercise: ExerciseInfo) => void;
+  clearPlaceholderExercise: () => void;
+
+  removeExercise: () => void; // removes from exercises[] // only user made ones
+}
 export interface RestSlice {
   restingExerciseId: string | null;
   restingSetId: string | null;
@@ -354,4 +365,5 @@ export type WorkoutStore = TemplateSlice &
   RestSlice &
   StatsSlice &
   FlowSlice &
-  SplitPlanSlice;
+  SplitPlanSlice &
+  DraftSlice;

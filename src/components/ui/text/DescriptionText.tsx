@@ -21,7 +21,7 @@ export function DescriptionText({
       style={{
         color: theme.info,
         fontSize: 16,
-        fontWeight: "600",
+        fontWeight: "500",
         letterSpacing: -0.5,
         lineHeight: 18,
         textAlign: "center",

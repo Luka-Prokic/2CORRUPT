@@ -7,6 +7,7 @@ import { createRestSlice } from "./slices/restSlice";
 import { createStatsSlice } from "./slices/statsSlice";
 import { createFlowSlice } from "./slices/flowSlice";
 import { createSplitPlanSlice } from "../workoutStore";
+import { createDraftSlice } from "./slices/draftSlice";
 
 export const useWorkoutStore = create<WorkoutStore>()(
   (...a) =>
@@ -18,5 +19,6 @@ export const useWorkoutStore = create<WorkoutStore>()(
       ...createStatsSlice(...a),
       ...createFlowSlice(...a),
       ...createSplitPlanSlice(...a),
+      ...createDraftSlice(...a),
     } as WorkoutStore)
 );
