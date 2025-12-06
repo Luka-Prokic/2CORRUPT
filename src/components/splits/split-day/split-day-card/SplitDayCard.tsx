@@ -1,3 +1,4 @@
+import { useState, useMemo } from "react";
 import { ViewStyle, FlatList, View } from "react-native";
 import {
   SplitPlan,
@@ -12,7 +13,6 @@ import { SplitDayFooter } from "./SplitDayFooter";
 import { PlannedWorkoutLabel } from "./PlannedWorkoutLabel";
 import { SplitDayCardHeader } from "./SplitDayCardHeader";
 import { SplitDayCardContent } from "./SplitDayCardContent";
-import { useState } from "react";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { TextButton } from "../../../ui/buttons/TextButton";
 import { StrobeBlur } from "../../../ui/misc/StrobeBlur";
@@ -39,6 +39,11 @@ export function SplitDayCard({
   const { theme } = useSettingsStore();
   const { fullWidth } = useWidgetUnit();
   const { t } = useTranslation();
+  const { timeFormat } = useSettingsStore();
+
+  const is24Hour = useMemo(() => {
+    return timeFormat === "24h";
+  }, [timeFormat]);
 
   // Shared time picker state (now lives here)
   const [showTimePicker, setShowTimePicker] = useState(false);
@@ -107,6 +112,7 @@ export function SplitDayCard({
           value={pickerTime}
           mode="time"
           display="spinner"
+          is24Hour={is24Hour}
           onChange={(_, selectedDate) => {
             if (selectedDate) setPickerTime(selectedDate);
           }}

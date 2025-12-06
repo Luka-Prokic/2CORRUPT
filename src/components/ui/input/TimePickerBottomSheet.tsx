@@ -1,4 +1,4 @@
-import { forwardRef, useState } from "react";
+import { forwardRef, useMemo, useState } from "react";
 import {
   BottomSheetBackdrop,
   BottomSheetModal,
@@ -24,6 +24,10 @@ export const TimePickerBottomSheet = forwardRef<
   const { theme } = useSettingsStore();
   const insets = useSafeAreaInsets();
   const { t } = useTranslation();
+  const { timeFormat } = useSettingsStore();
+  const is24Hour = useMemo(() => {
+    return timeFormat === "24h";
+  }, [timeFormat]);
 
   return (
     <BottomSheetModal
@@ -54,6 +58,7 @@ export const TimePickerBottomSheet = forwardRef<
           value={value}
           mode="time"
           display="spinner"
+          is24Hour={is24Hour}
           onChange={(e, d) => {
             if (d) setValue(d);
           }}
