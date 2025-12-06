@@ -6,6 +6,7 @@ export default function Layout() {
 
   return (
     <Stack
+      initialRouteName="list"
       screenOptions={{
         title: null,
         headerTintColor: theme.tint,

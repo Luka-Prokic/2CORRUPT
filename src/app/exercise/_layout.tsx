@@ -6,7 +6,7 @@ export default function Layout() {
 
   return (
     <Stack
-      initialRouteName="main"
+      initialRouteName="list"
       screenOptions={{
         title: null,
         headerTintColor: theme.tint,
@@ -18,10 +18,10 @@ export default function Layout() {
         },
       }}
     >
-      <Stack.Screen name="main" />
-      <Stack.Screen name="workout" />
-      <Stack.Screen name="goals" />
-      <Stack.Screen name="general" />
+      <Stack.Screen name="list" />
+      <Stack.Screen name="[exerciseId]/edit" />
+      <Stack.Screen name="[exerciseId]/create" />
+      <Stack.Screen name="[exerciseId]/info" />
     </Stack>
   );
 }
