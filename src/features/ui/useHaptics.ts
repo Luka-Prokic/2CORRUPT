@@ -43,13 +43,13 @@ interface UseHapticsProps {
 }
 
 export const useHaptics = ({ modeType, hapticType }: UseHapticsProps) => {
-  const globalMode = useSettingsStore((s) => s.haptics);
+  const { haptics } = useSettingsStore();
 
   const trigger = useCallback(() => {
     const requiredMode = modeType ?? "on";
 
     // ❗ FILTER: if global mode is weaker than required — ABORT
-    if (MODE_LEVEL[globalMode] < MODE_LEVEL[requiredMode]) return;
+    if (MODE_LEVEL[haptics.toLowerCase()] < MODE_LEVEL[requiredMode]) return;
 
     // ANDROID fallback
     if (Platform.OS !== "ios") {
@@ -58,7 +58,7 @@ export const useHaptics = ({ modeType, hapticType }: UseHapticsProps) => {
     }
 
     HAPTIC_MAP[hapticType]?.();
-  }, [modeType, hapticType, globalMode]);
+  }, [modeType, hapticType, haptics]);
 
   return trigger;
 };

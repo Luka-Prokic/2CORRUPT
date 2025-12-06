@@ -61,11 +61,11 @@ export interface WorkoutSlice {
   setShowRPE: (showRPE: boolean) => void;
 }
 
-export type HapticsMode = "on" | "off" | "gentle" | "max";
+export type HapticsMode = "off" | "gentle" | "on" | "max";
 
 export type TimeFormat = "12h" | "24h";
 
-export interface AppSlice {
+export interface GeneralSlice {
   haptics: HapticsMode;
   setHaptics: (haptics: HapticsMode) => void;
   timeFormat: TimeFormat;
@@ -73,4 +73,8 @@ export interface AppSlice {
 }
 
 // Settings store contract
-export type SettingsStore = ThemeSlice & UnitsSlice & GoalsSlice & WorkoutSlice & AppSlice;
+export type SettingsStore = ThemeSlice &
+  UnitsSlice &
+  GoalsSlice &
+  WorkoutSlice &
+  GeneralSlice;

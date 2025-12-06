@@ -12,6 +12,7 @@ import { GoalsButton } from "../../components/settings-app/GoalsButton";
 import { UnitsSettings } from "../../components/settings-app/UnitsSettings";
 import { IBubble } from "../../components/ui/containers/IBubble";
 import { EmptyFooter } from "../../components/ui/containers/EmptyFooter";
+import { GeneralButton } from "../../components/settings-app/GeneralButton";
 
 export default function SettingsScreen() {
   const { theme } = useSettingsStore();
@@ -25,9 +26,10 @@ export default function SettingsScreen() {
         }}
       />
 
-      <ScreenContent style={{ backgroundColor: theme.navBackground }}>
+      <ScreenContent>
         <ScreenView style={{ gap: 8, paddingHorizontal: 16 }}>
-          <IBubble height={128}>
+          <IBubble size="flexible">
+            <GeneralButton />
             <WorkoutButton />
             <GoalsButton />
           </IBubble>

@@ -1,10 +1,12 @@
 import { StateCreator } from "zustand";
-import { HapticsMode, SettingsStore, TimeFormat, AppSlice } from "../types";
+import { HapticsMode, SettingsStore, TimeFormat, GeneralSlice } from "../types";
 
-export const createAppSlice: StateCreator<SettingsStore, [], [], AppSlice> = (
-  set,
-  get
-) => ({
+export const createGeneralSlice: StateCreator<
+  SettingsStore,
+  [],
+  [],
+  GeneralSlice
+> = (set, get) => ({
   haptics: "on",
   timeFormat: "24h",
   setHaptics: (haptics: HapticsMode) => set({ haptics }),

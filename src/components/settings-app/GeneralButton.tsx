@@ -5,12 +5,12 @@ import { router } from "expo-router";
 import { TouchableOpacity } from "react-native";
 import { MidText } from "../ui/text/MidText";
 
-export function GoalsButton() {
-  const { t } = useTranslation();
+export function GeneralButton() {
   const { theme } = useSettingsStore();
+  const { t } = useTranslation();
 
   function handlePress() {
-    router.push("/settings/goals");
+    router.push("/settings/general");
   }
 
   return (
@@ -25,9 +25,9 @@ export function GoalsButton() {
         paddingHorizontal: 16,
       }}
     >
-      <Ionicons name="golf" size={32} color={theme.text} />
+      <Ionicons name="construct" size={32} color={theme.text} />
       <MidText
-        text={t(`settings.set-goals`)}
+        text={t(`settings.app`)}
         style={{ lineHeight: 64, color: theme.text }}
       />
       <Ionicons

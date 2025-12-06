@@ -4,7 +4,7 @@ import { createThemeSlice } from "./slices/themeSlice";
 import { createUnitsSlice } from "./slices/unitsSlice";
 import { createGoalsSlice } from "./slices/goalsSlice";
 import { createWorkoutSlice } from "./slices/workoutSlice";
-import { createAppSlice } from "./slices/appSlice";
+import { createGeneralSlice } from "./slices/generalSlice";
 
 export const useSettingsStore = create<SettingsStore>()(
   (...a) =>
@@ -13,6 +13,6 @@ export const useSettingsStore = create<SettingsStore>()(
       ...createUnitsSlice(...a),
       ...createGoalsSlice(...a),
       ...createWorkoutSlice(...a),
-      ...createAppSlice(...a),
+      ...createGeneralSlice(...a),
     } as SettingsStore)
 );

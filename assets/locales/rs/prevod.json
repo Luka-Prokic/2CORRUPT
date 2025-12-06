@@ -144,7 +144,7 @@
     "change-theme": "Promeni Temu",
     "workout": "Trening Podešavanja",
     "workout-info": "Podesi podešavanja treninga.",
-    "goals": "Podesi svoje fitness ciljeve",
+    "set-goals": "Podesi svoje fitness ciljeve",
     "goals-info": "Podesi podešavanja ciljeva.",
     "units": "Merne Jedinice",
     "units-info": "Podesi podešavanja jedinica.",
@@ -152,6 +152,8 @@
     "length": "Dužina",
     "volume": "Zapremina",
     "temperature": "Temperatura",
+    "app": "Generalna Podešavanja",
+    "goals": "Tvoji Ciljevi",
 
     "workout-settings": {
       "header": "Globalna podešavanja",
@@ -171,6 +173,22 @@
 
       "global-rpe-title": "Globalni RPE",
       "global-rpe-description": "Sakrij i onemogući RPE unos."
+    },
+
+    "general-settings": {
+      "haptics-title": "Haptics",
+      "haptics-description": "Podesi haptics za aplikaciju.",
+      "time-format-title": "Format vremena",
+      "time-format-description": "Podesi format vremena za aplikaciju."
+    },
+
+    "options": {
+      "off": "Isključeno",
+      "gentle": "Lagano",
+      "on": "Uključeno",
+      "max": "Maksimalno",
+      "12h": "12h",
+      "24h": "24h"
     }
   },
 

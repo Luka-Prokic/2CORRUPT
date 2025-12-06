@@ -1,5 +1,4 @@
-import { useSettingsStore } from "../../stores/settingsStore";
-import { Ionicons } from "@expo/vector-icons";
+import { SettingConfig } from "./types";
 
 export type WorkoutSettingKey =
   | "startRestTimer"
@@ -8,50 +7,7 @@ export type WorkoutSettingKey =
   | "showRPE"
   | "defaultRestTime";
 
-interface BaseSettingConfig {
-  key: WorkoutSettingKey;
-  title: string;
-  description?: string;
-  iconName?: keyof typeof Ionicons.glyphMap;
-}
-
-// Toggle setting
-export interface ToggleSettingConfig extends BaseSettingConfig {
-  type: "toggle";
-  select: (state: ReturnType<typeof useSettingsStore.getState>) => boolean;
-  update: (
-    state: ReturnType<typeof useSettingsStore.getState>,
-    value: boolean
-  ) => void;
-}
-
-// Number setting
-export interface NumberSettingConfig extends BaseSettingConfig {
-  type: "number";
-  select: (state: ReturnType<typeof useSettingsStore.getState>) => number;
-  update: (
-    state: ReturnType<typeof useSettingsStore.getState>,
-    value: number
-  ) => void;
-}
-
-// Increment setting (could be stepper type)
-export interface IncrementSettingConfig extends BaseSettingConfig {
-  type: "increment";
-  select: (state: ReturnType<typeof useSettingsStore.getState>) => number;
-  update: (
-    state: ReturnType<typeof useSettingsStore.getState>,
-    value: number
-  ) => void;
-  increment: number;
-}
-
-export type WorkoutSettingConfig =
-  | ToggleSettingConfig
-  | NumberSettingConfig
-  | IncrementSettingConfig;
-
-export const workoutSettingsConfig: WorkoutSettingConfig[] = [
+export const workoutSettingsConfig: SettingConfig[] = [
   {
     key: "startRestTimer",
     title: "settings.workout-settings.global-start-rest-time-title",

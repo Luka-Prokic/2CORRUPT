@@ -143,7 +143,7 @@
     "change-theme": "Change Theme",
     "workout": "Workout Settings",
     "workout-info": "Adjust your session settings.",
-    "goals": "Set your fitness goals",
+    "set-goals": "Set your fitness goals",
     "goals-info": "Adjust your goals settings.",
     "units": "Units of Measure",
     "units-info": "Adjust your units to your preferred system.",
@@ -151,6 +151,9 @@
     "length": "Length",
     "volume": "Volume",
     "temperature": "Temperature",
+    "app": "General Settings",
+    "goals": "Your Goals",
+
     "workout-settings": {
       "header": "Global Settings",
       "description": "These options set the defaults for future workouts and exercises. Existing ones won't change.",
@@ -169,6 +172,21 @@
 
       "global-rpe-title": "Global RPE",
       "global-rpe-description": "Show or hide RPE input for new exercises."
+    },
+    "general-settings": {
+      "haptics-title": "Haptics",
+      "haptics-description": "Limit haptics in app interactions.",
+
+      "time-format-title": "Time format",
+      "time-format-description": "Choose 12h or 24h display."
+    },
+    "options": {
+      "off": "Off",
+      "gentle": "Gentle",
+      "on": "On",
+      "max": "Max",
+      "12h": "12h",
+      "24h": "24h"
     }
   },
 
