@@ -47,18 +47,18 @@ export function TemplatesCardList({
   const filteredTemplates = useTemplateShowBy(templates, showBy);
   const ref = useRef<BottomSheetModal>(null);
 
-  const [templateId, setTemplateId] = useState<string | null>(null);
+  const [templateId, setTemplateId] = useState<string>(templates[0]?.id ?? "");
 
   function handlePress(templateId: string) {
     if (useBottomSheet) {
       setTemplateId(templateId);
       ref.current?.present();
     } else {
-      handleBottomSheet(templateId);
+      handleUseTemplate(templateId);
     }
   }
 
-  function handleBottomSheet(templateId: string) {
+  function handleUseTemplate(templateId: string) {
     const template = getTemplateById(templateId);
     if (useType === "preview") {
     } else if (useType === "startSession") {
@@ -117,7 +117,7 @@ export function TemplatesCardList({
       <StartWorkoutBottomSheet
         ref={ref}
         templateId={templateId}
-        onPress={() => handleBottomSheet(templateId)}
+        onPress={() => handleUseTemplate(templateId ?? "")}
         buttonText={useButtonText()}
       />
     </Fragment>

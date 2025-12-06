@@ -13,6 +13,7 @@ import { StartWorkoutBottomSheet } from "./StartWorkoutBottomSheet";
 import { Fragment, useRef } from "react";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { router } from "expo-router";
+import { useStartWorkoutOfTemplate } from "../../../features/start/useStartWorkout";
 
 interface PlannedActiveSplitWorkoutCardProps {
   splitPlan: SplitPlan;
@@ -119,7 +120,11 @@ export function PlannedActiveSplitWorkoutCard({
           )}
         />
       </StrobeButton>
-      <StartWorkoutBottomSheet ref={ref} templateId={workout.templateId} />
+      <StartWorkoutBottomSheet
+        ref={ref}
+        templateId={workout.templateId}
+        onPress={() => useStartWorkoutOfTemplate(workout.templateId)}
+      />
     </Fragment>
   );
 }

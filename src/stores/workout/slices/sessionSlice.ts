@@ -275,4 +275,9 @@ export const createSessionSlice: StateCreator<WorkoutStore, [], [], {}> = (
         activeSession: updatedActiveSession,
       };
     }),
+
+  getSessionById: (sessionId: string) => {
+    const { completedSessions } = get();
+    return completedSessions.find((s) => s.id === sessionId) ?? null;
+  },
 });

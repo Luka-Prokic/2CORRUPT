@@ -279,6 +279,7 @@ export interface SessionSlice {
     field: K,
     value: WorkoutSession[K]
   ) => void;
+  getSessionById: (sessionId: string) => WorkoutSession | null;
 }
 
 export interface ExerciseSlice {

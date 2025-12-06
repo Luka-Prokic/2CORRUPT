@@ -52,8 +52,10 @@ export function TodaysWorkouts() {
           />
         )}
       />
-      <InfoText text={t("button.tap-to-start")} style={{ marginTop: 8 }} />
-      <InfoText text={t("button.long-press-to-edit")} style={{ marginTop: 8 }} />
+      <InfoText
+        text={`${t("button.tap-to-start")} | ${t("button.long-press-to-edit")}`}
+        style={{ marginTop: 8 }}
+      />
     </>
   );
 }
