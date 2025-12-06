@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { useSettingsStore } from "../../../stores/settings";
 import { WIDTH } from "../../../utils/Dimensions";
-import { useCalendarNavigation } from "../../../features/test/useCalendarNavigation";
 import { router } from "expo-router";
 import Animated, {
   useSharedValue,
@@ -13,15 +12,15 @@ import Animated, {
   Easing,
 } from "react-native-reanimated";
 import { BounceButton } from "../../ui/buttons/BounceButton";
+import { isToday } from "../../../features/calendar/useDate";
 
 export function SplitStatus({ date }: { date: Date }) {
   const { theme } = useSettingsStore();
-  const { isToday } = useCalendarNavigation();
-  const pulse = useSharedValue(0);
   const itsToday = isToday(date);
+  const pulse = useSharedValue(0);
 
   useEffect(() => {
-    if (isToday(date)) {
+    if (itsToday) {
       pulse.value = withRepeat(
         withTiming(1, { duration: 1500, easing: Easing.inOut(Easing.ease) }),
         -1,

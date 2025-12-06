@@ -1,22 +1,18 @@
 import { useSettingsStore } from "../../../../stores/settings";
 import { useWidgetUnit } from "../../../../features/widgets/useWidgetUnit";
 import { Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router";
-import { useUIStore } from "../../../../stores/ui";
 import { useWorkoutStore } from "../../../../stores/workout";
 import { StrobeButton } from "../../../ui/buttons/StrobeButton";
 import { ActiveSessionAlert } from "../../../ui/alerts/ActiveSessionAlert";
+import { useEditTemplate } from "../../../../features/start/useEditTemplate";
 
 export function EmptyTemplateCard() {
   const { theme } = useSettingsStore();
   const { widgetUnit } = useWidgetUnit();
-  const { setTypeOfView } = useUIStore();
-  const { editTemplate, activeSession } = useWorkoutStore();
+  const { activeSession } = useWorkoutStore();
 
   function handlePress() {
-    router.back();
-    setTypeOfView("template");
-    editTemplate();
+    useEditTemplate();
   }
 
   return (

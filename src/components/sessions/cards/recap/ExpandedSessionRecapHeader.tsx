@@ -2,14 +2,12 @@ import { WorkoutSession } from "../../../../stores/workout";
 import { TextButton } from "../../../ui/buttons/TextButton";
 import { useTranslation } from "react-i18next";
 import { useSettingsStore } from "../../../../stores/settings";
-import { useWorkoutStore } from "../../../../stores/workout";
-import { router } from "expo-router";
-import { useUIStore } from "../../../../stores/ui";
 import { View, ViewStyle } from "react-native";
 import { WIDTH } from "../../../../utils/Dimensions";
 import { IText } from "../../../ui/text/IText";
 import { LabeledValue } from "../../../ui/misc/LabeledValue";
 import { ExpandedSessionRecapFooter } from "./ExpandedSessionRecapFooter";
+import { useStartWorkoutOfSession } from "../../../../features/start/useStartWorkout";
 
 interface ExpandedSessionRecapHeaderProps {
   session: WorkoutSession;
@@ -22,16 +20,6 @@ export function ExpandedSessionRecapHeader({
 }: ExpandedSessionRecapHeaderProps) {
   const { t } = useTranslation();
   const { theme } = useSettingsStore();
-  const { startSession } = useWorkoutStore();
-  const { setTypeOfView } = useUIStore();
-
-  function handleRepeatPress() {
-    startSession(null, session);
-    setTypeOfView("workout");
-    setTimeout(() => {
-      router.dismissTo("/");
-    }, 100);
-  }
 
   const startOfSession = new Date(session.startTime).toLocaleTimeString([], {
     hour: "2-digit",
@@ -66,7 +54,7 @@ export function ExpandedSessionRecapHeader({
         <IText color={theme.tint} text={`${startOfSession}-${endOfSession}`} />
         <TextButton
           text={t("button.repeat")}
-          onPress={handleRepeatPress}
+          onPress={useStartWorkoutOfSession(session.id)}
           textStyle={{ fontSize: 28 }}
           color={theme.fifthBackground}
         />

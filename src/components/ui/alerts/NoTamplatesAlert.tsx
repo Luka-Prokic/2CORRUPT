@@ -1,22 +1,12 @@
 import { useTranslation } from "react-i18next";
 import { BackgroundText } from "../text/BackgroundText";
 import { TextButton } from "../buttons/TextButton";
-import { router } from "expo-router";
-import { useUIStore } from "../../../stores/ui";
-import { useWorkoutStore } from "../../../stores/workout";
+import { useEditTemplate } from "../../../features/start/useEditTemplate";
 import { View } from "react-native";
 import { ViewStyle } from "react-native";
 
 export function NoTamplatesAlert({ style }: { style?: ViewStyle }) {
-  const { setTypeOfView } = useUIStore();
-  const { editTemplate } = useWorkoutStore();
   const { t } = useTranslation();
-
-  function handlePress() {
-    router.dismissTo("/");
-    setTypeOfView("template");
-    editTemplate();
-  }
 
   return (
     <View
@@ -31,7 +21,7 @@ export function NoTamplatesAlert({ style }: { style?: ViewStyle }) {
       <BackgroundText text={t("templates.no-templates")} />
       <TextButton
         text={`+ ${t("templates.create-template")}`}
-        onPress={handlePress}
+        onPress={useEditTemplate()}
       />
     </View>
   );

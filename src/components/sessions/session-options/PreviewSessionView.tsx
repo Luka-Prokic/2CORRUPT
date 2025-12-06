@@ -8,13 +8,15 @@ import { ActiveSessionAlert } from "../../ui/alerts/ActiveSessionAlert";
 import { TwoOptionStrobeButtons } from "../../ui/buttons/TwoOptionStrobeButtons";
 import { useSettingsStore } from "../../../stores/settings";
 import { useTranslation } from "react-i18next";
-import { router } from "expo-router";
-import { useUIStore } from "../../../stores/ui";
 import { ExercisePreviewCard } from "../cards/ExercisePreviewCard";
 import Animated, { FadeIn } from "react-native-reanimated";
 import { useLayoutPreviewHeight } from "../../../features/ui/useGetExercisePreviewCardHeight";
 import { SessionName } from "../../board-workout/sheets/session/SessionName";
 import { DescriptionText } from "../../ui/text/DescriptionText";
+import {
+  useStartWorkoutOfSession,
+  useStartWorkoutOfTemplate,
+} from "../../../features/start/useStartWorkout";
 
 interface PreviewSessionViewProps {
   session: WorkoutSession;
@@ -27,20 +29,17 @@ export const PreviewSessionView = forwardRef<
 >(({ session, setView }, ref) => {
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
-  const { startSession, activeSession, getTemplateById } = useWorkoutStore();
-  const { setTypeOfView } = useUIStore();
+  const { activeSession, getTemplateById } = useWorkoutStore();
   const cardHeight = useLayoutPreviewHeight(session.layout);
   const finalHeight = Math.min(cardHeight, HEIGHT * 0.5);
+  const startWorkout = useStartWorkoutOfSession(session.id);
+  const startWorkoutOfTemplate = useStartWorkoutOfTemplate(session.templateId);
 
   function handleStartWorkout() {
     const template = getTemplateById(session.templateId);
 
-    setTimeout(() => {
-      if (template) startSession(template);
-      else startSession(null, session);
-      setTypeOfView("workout");
-      router.dismissTo("/");
-    }, 200);
+    if (template) startWorkoutOfTemplate();
+    else startWorkout();
 
     (ref as React.RefObject<BottomSheetModal>)?.current?.close();
   }

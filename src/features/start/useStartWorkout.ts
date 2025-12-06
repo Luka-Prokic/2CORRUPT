@@ -7,10 +7,14 @@ export function useStartWorkoutOfTemplate(templateId: string) {
   const { setTypeOfView } = useUIStore();
   const template = getTemplateById(templateId);
   if (!template) return;
-  startSession(template);
-  setTypeOfView("workout");
-  router.dismissTo("/");
-  return template;
+
+  return () => {
+    startSession(template);
+    setTypeOfView("workout");
+    setTimeout(() => {
+      router.dismissTo("/");
+    }, 100);
+  };
 }
 
 export function useStartWorkoutOfSession(sessionId: string) {
@@ -18,8 +22,12 @@ export function useStartWorkoutOfSession(sessionId: string) {
   const { setTypeOfView } = useUIStore();
   const session = getSessionById(sessionId);
   if (!session) return;
-  startSession(null, session);
-  setTypeOfView("workout");
-  router.dismissTo("/");
-  return session;
+
+  return () => {
+    startSession(null, session);
+    setTypeOfView("workout");
+    setTimeout(() => {
+      router.dismissTo("/");
+    }, 100);
+  };
 }

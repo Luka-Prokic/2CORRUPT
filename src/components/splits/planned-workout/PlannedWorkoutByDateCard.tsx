@@ -1,11 +1,10 @@
-import { router } from "expo-router";
-import { useWidgetUnit } from "../../features/widgets/useWidgetUnit";
-import { StrobeButton } from "../ui/buttons/StrobeButton";
-import { useSettingsStore } from "../../stores/settings";
-import { useFindPlannedWorkout } from "../../features/find/useFindPlannedWorkout";
-import { IText } from "../ui/text/IText";
-import { useWorkoutStore } from "../../stores/workout";
-import { useUIStore } from "../../stores/ui";
+import { useWidgetUnit } from "../../../features/widgets/useWidgetUnit";
+import { StrobeButton } from "../../ui/buttons/StrobeButton";
+import { useSettingsStore } from "../../../stores/settings";
+import { useFindPlannedWorkout } from "../../../features/find/useFindPlannedWorkout";
+import { IText } from "../../ui/text/IText";
+import { useWorkoutStore } from "../../../stores/workout";
+import { useStartWorkoutOfTemplate } from "../../../features/start/useStartWorkout";
 
 interface PlannedWorkoutByDateCardProps {
   date: Date;
@@ -16,19 +15,12 @@ export function PlannedWorkoutByDateCard({
 }: PlannedWorkoutByDateCardProps) {
   const { fullWidth, widgetUnit } = useWidgetUnit();
   const { theme } = useSettingsStore();
-  const { getTemplateById, startSession } = useWorkoutStore();
-  const { setTypeOfView } = useUIStore();
+  const { getTemplateById } = useWorkoutStore();
 
   const plannedWorkout = useFindPlannedWorkout(date);
   if (!plannedWorkout) return null;
   const template = getTemplateById(plannedWorkout.templateId);
   if (!template) return null;
-
-  function handlePress() {
-    router.dismissTo("/");
-    setTypeOfView("workout");
-    startSession(template);
-  }
 
   return (
     <StrobeButton
@@ -44,9 +36,8 @@ export function PlannedWorkoutByDateCard({
         justifyContent: "space-between",
         alignItems: "center",
       }}
-      onPress={handlePress}
+      onPress={useStartWorkoutOfTemplate(template.id)}
     >
-     
       <IText text={template.name} color={theme.text} />
     </StrobeButton>
   );
