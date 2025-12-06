@@ -4,6 +4,7 @@ import { useSettingsStore } from "../../stores/settingsStore";
 import { RestTimer } from "../ui/timer/RestTimer";
 import { useWorkoutStore } from "../../stores/workout/useWorkoutStore";
 import * as Haptics from "expo-haptics";
+import { useHaptics } from "../../features/ui/useHaptics";
 
 interface CorruptRestTimerProps {
   size: number;
@@ -12,9 +13,14 @@ interface CorruptRestTimerProps {
 export function CorruptRestTimer({ size }: CorruptRestTimerProps) {
   const { theme } = useSettingsStore();
   const { estEndRestTime, updateEstEndRestTime, endRest } = useWorkoutStore();
+  const triggerHapticsSoft = useHaptics({ modeType: "on", hapticType: "soft" });
+  const triggerHapticsRigid = useHaptics({
+    modeType: "gentle",
+    hapticType: "rigid",
+  });
 
   const addRest = () => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
+    triggerHapticsSoft();
     if (estEndRestTime != null) updateEstEndRestTime(estEndRestTime + 15);
   };
 
@@ -28,13 +34,13 @@ export function CorruptRestTimer({ size }: CorruptRestTimerProps) {
       // Timer already at 00:00 → finish rest
       endRest();
 
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Rigid);
+      triggerHapticsRigid();
     } else {
       // Subtract 15 seconds (or go to 0)
       const newRemaining = Math.max(remaining - 15, 0);
       updateEstEndRestTime(now + newRemaining);
 
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
+      triggerHapticsSoft();
     }
   };
 

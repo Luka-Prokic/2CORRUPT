@@ -17,6 +17,7 @@ import { DescriptionText } from "../../../ui/text/DescriptionText";
 import { RirRpeCheatSheet } from "./RirRpeCheetSheet";
 import { useTranslation } from "react-i18next";
 import { InfoText } from "../../../ui/text/InfoText";
+import { useHaptics } from "../../../../features/ui/useHaptics";
 
 export type SheetMode = "rir" | "rpe";
 
@@ -34,6 +35,10 @@ export const RirRpeBottomSheet = forwardRef<
   const insets = useSafeAreaInsets();
   const [mode, setMode] = useState<SheetMode>(startMode);
   const { updateSetInActiveExercise } = useWorkoutStore();
+  const triggerHapticsHeavy = useHaptics({
+    modeType: "on",
+    hapticType: "heavy",
+  });
 
   const switchMode = (m: SheetMode) => {
     setMode(m);
@@ -49,7 +54,7 @@ export const RirRpeBottomSheet = forwardRef<
     updateSetInActiveExercise(set.id, {
       [mode]: item === "5+" ? 5 : parseInt(item),
     });
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+    triggerHapticsHeavy();
   };
 
   return (

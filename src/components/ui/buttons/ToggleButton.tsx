@@ -1,6 +1,6 @@
 import { TouchableOpacity, Text, ViewStyle, TextStyle } from "react-native";
 import { useSettingsStore } from "../../../stores/settingsStore";
-import * as Haptics from "expo-haptics";
+import { useHaptics } from "../../../features/ui/useHaptics";
 
 interface ToggleButtonProps {
   isActive: boolean;
@@ -24,11 +24,12 @@ export function ToggleButton({
   haptics = false,
 }: ToggleButtonProps) {
   const { theme } = useSettingsStore();
+  const triggerHapticsSoft = useHaptics({ modeType: "on", hapticType: "soft" });
 
   function handlePress() {
     onToggle();
     if (haptics) {
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
+      triggerHapticsSoft();
     }
   }
 

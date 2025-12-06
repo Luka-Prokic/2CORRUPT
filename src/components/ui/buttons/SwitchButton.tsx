@@ -4,10 +4,10 @@ import Animated, {
   useDerivedValue,
   withSpring,
 } from "react-native-reanimated";
-import * as Haptics from "expo-haptics";
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { MidText } from "../text/MidText";
 import { BounceButton } from "./BounceButton";
+import { useHaptics } from "../../../features/ui/useHaptics";
 
 interface SwitchButtonProps {
   option1: string;
@@ -33,6 +33,10 @@ export function SwitchButton({
   disabled = false,
 }: SwitchButtonProps) {
   const { theme } = useSettingsStore();
+  const triggerHapticsLight = useHaptics({
+    modeType: "on",
+    hapticType: "light",
+  });
 
   const singleMode = !option2 || disabled;
 
@@ -83,7 +87,7 @@ export function SwitchButton({
 
   function toggle() {
     const next = value === option1 ? option2! : option1;
-    if (haptics) Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    if (haptics) triggerHapticsLight();
     onChange?.(next);
   }
 

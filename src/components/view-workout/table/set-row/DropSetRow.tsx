@@ -6,7 +6,7 @@ import { DropSet } from "../../../../stores/workoutStore";
 import { Ionicons } from "@expo/vector-icons";
 import { WIDTH } from "../../../../utils/Dimensions";
 import { NumericDropInput } from "../set-inputs/NumericDropInput";
-import * as Haptics from "expo-haptics";
+import { useHaptics } from "../../../../features/ui/useHaptics";
 
 export function DropSetRow({
   set,
@@ -19,9 +19,10 @@ export function DropSetRow({
 }) {
   const { theme } = useSettingsStore();
   const { removeDropSetFromActiveExercise, activeExercise } = useWorkoutStore();
+  const triggerHapticsLight = useHaptics({ modeType: "on", hapticType: "light" });
 
   const handleRemoveDrop = (dropId: string) => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    triggerHapticsLight();
     removeDropSetFromActiveExercise(set.id, dropId);
   };
 

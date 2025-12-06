@@ -6,8 +6,8 @@ import { useSettingsStore } from "../../stores/settingsStore";
 import { useTranslation } from "react-i18next";
 import { View, ViewStyle } from "react-native";
 import { useFilterAddExercise } from "../../features/workout/useFilterAddExercise";
-import * as Haptics from "expo-haptics";
 import { ExerciseInfo } from "../../stores/workout/types";
+import { useHaptics } from "../../features/ui/useHaptics";
 
 interface ExerciseFilterProps {
   setFilteredExercises: (exercises: ExerciseInfo[]) => void;
@@ -32,14 +32,19 @@ export function ExerciseFilter({
     exercisesFiltered,
   } = useFilterAddExercise();
 
+  const triggerHapticsRigid = useHaptics({
+    modeType: "gentle",
+    hapticType: "rigid",
+  });
+
   function handleSelectCategory(bodyPart: string) {
     setSelectedCategory(bodyPart.toLowerCase());
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Rigid);
+    triggerHapticsRigid();
   }
 
   function handleSelectEquipment(equipment: string) {
     setSelectedEquipment(equipment.toLowerCase());
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Rigid);
+    triggerHapticsRigid();
   }
 
   useEffect(() => {

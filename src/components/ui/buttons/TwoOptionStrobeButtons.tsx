@@ -4,7 +4,7 @@ import { WIDTH } from "../../../utils/Dimensions";
 import { BounceButton } from "./BounceButton";
 import { useSettingsStore } from "../../../stores/settings";
 import { StrobeBlur } from "../misc/StrobeBlur";
-import * as Haptics from "expo-haptics";
+import { useHaptics } from "../../../features/ui/useHaptics";
 
 interface TwoOptionStrobeButtonsProps {
   labelOne: string;
@@ -42,18 +42,19 @@ export function TwoOptionStrobeButtons({
   haptics = false,
 }: TwoOptionStrobeButtonsProps) {
   const { theme } = useSettingsStore();
+  const triggerHaptics = useHaptics({ modeType: "on", hapticType: "soft" });
 
   function handleOptionOne() {
     onOptionOne();
     if (haptics) {
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
+      triggerHaptics();
     }
   }
 
   function handleOptionTwo() {
     onOptionTwo();
     if (haptics) {
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
+      triggerHaptics();
     }
   }
 

@@ -1,5 +1,3 @@
-// Types for the modular settings store
-
 import { Themes, Colors } from "../../config/constants/Colors";
 
 export const themeOrder: readonly Themes[] = [
@@ -24,11 +22,6 @@ export interface ThemeSlice {
   theme: (typeof Colors)[Themes];
   setTheme: (themeName: Themes) => void;
   toggleTheme: () => void;
-}
-
-// General settings slice contract
-export interface GeneralSlice {
-  resetToDefaults: () => void;
 }
 
 // Units slice contract
@@ -68,9 +61,16 @@ export interface WorkoutSlice {
   setShowRPE: (showRPE: boolean) => void;
 }
 
+export type HapticsMode = "on" | "off" | "gentle" | "max";
+
+export type TimeFormat = "12h" | "24h";
+
+export interface AppSlice {
+  haptics: HapticsMode;
+  setHaptics: (haptics: HapticsMode) => void;
+  timeFormat: TimeFormat;
+  setTimeFormat: (timeFormat: TimeFormat) => void;
+}
+
 // Settings store contract
-export type SettingsStore = ThemeSlice &
-  GeneralSlice &
-  UnitsSlice &
-  GoalsSlice &
-  WorkoutSlice;
+export type SettingsStore = ThemeSlice & UnitsSlice & GoalsSlice & WorkoutSlice & AppSlice;

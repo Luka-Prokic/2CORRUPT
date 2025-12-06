@@ -3,21 +3,24 @@ import { useSettingsStore } from "../../../../stores/settingsStore";
 import { useTranslation } from "react-i18next";
 import { useWorkoutStore } from "../../../../stores/workoutStore";
 import { WIDTH } from "../../../../utils/Dimensions";
-import * as Haptics from "expo-haptics";
+import { useHaptics } from "../../../../features/ui/useHaptics";
 
 export function SetTableHeader() {
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
   const { units, setUnits } = useSettingsStore();
-
   const { activeExercise } = useWorkoutStore();
+  const triggerHapticsSoft = useHaptics({
+    modeType: "gentle",
+    hapticType: "soft",
+  });
 
   const exerciseColumns = activeExercise?.columns || ["Reps", "Weight"];
   const columns = ["Set", ...exerciseColumns, "Done"];
 
   function handleChangeUnits() {
     setUnits({ ...units, weight: units.weight === "kg" ? "lbs" : "kg" });
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
+    triggerHapticsSoft();
   }
 
   function TextLabel({ label }: { label: string }) {

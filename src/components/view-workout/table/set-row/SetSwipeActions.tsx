@@ -3,7 +3,7 @@ import { useSettingsStore } from "../../../../stores/settingsStore";
 import { Swipeable } from "react-native-gesture-handler";
 import { Set, useWorkoutStore } from "../../../../stores/workoutStore";
 import { useTranslation } from "react-i18next";
-import * as Haptics from "expo-haptics";
+import { useHaptics } from "../../../../features/ui/useHaptics";
 
 export function SetSwipeActions({
   set,
@@ -21,20 +21,32 @@ export function SetSwipeActions({
     activeTemplate,
   } = useWorkoutStore();
   const { t } = useTranslation();
+  const triggerHapticsRigid = useHaptics({
+    modeType: "on",
+    hapticType: "rigid",
+  });
+  const triggerHapticsMedium = useHaptics({
+    modeType: "gentle",
+    hapticType: "medium",
+  });
+  const triggerHapticsHeavy = useHaptics({
+    modeType: "gentle",
+    hapticType: "heavy",
+  });
 
   const handleAddDropSet = (setId: string) => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Rigid);
+    triggerHapticsRigid();
     addDropSetToActiveExercise(setId, 0, 0);
   };
 
   const handleUncheckSet = (setId: string) => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    triggerHapticsMedium();
     updateSetInActiveExercise(setId, { isCompleted: false });
     updateSetInActiveExercise(setId, { restSeconds: null });
   };
 
   const handleRemoveSet = (setId: string) => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+    triggerHapticsHeavy();
     removeSetFromActiveExercise(setId);
   };
 

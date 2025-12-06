@@ -1,0 +1,64 @@
+import { useCallback } from "react";
+import { Platform, Vibration } from "react-native";
+import * as Haptics from "expo-haptics";
+import { useSettingsStore } from "../../stores/settings";
+import { HapticsMode } from "../../stores/settings/types";
+
+export type HapticType =
+  | "soft"
+  | "light"
+  | "medium"
+  | "heavy"
+  | "rigid"
+  | "selection"
+  | "success"
+  | "warning"
+  | "error";
+
+const MODE_LEVEL = {
+  off: 0,
+  gentle: 1,
+  on: 2,
+  max: 3,
+} as const;
+
+const HAPTIC_MAP: Record<HapticType, () => void> = {
+  soft: () => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft),
+  light: () => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light),
+  medium: () => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium),
+  heavy: () => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy),
+  rigid: () => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Rigid),
+  selection: () => Haptics.selectionAsync(),
+  success: () =>
+    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success),
+  warning: () =>
+    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning),
+  error: () =>
+    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error),
+};
+
+interface UseHapticsProps {
+  modeType?: HapticsMode; // requirement for this specific action
+  hapticType: HapticType; // actual haptic to trigger
+}
+
+export const useHaptics = ({ modeType, hapticType }: UseHapticsProps) => {
+  const globalMode = useSettingsStore((s) => s.haptics);
+
+  const trigger = useCallback(() => {
+    const requiredMode = modeType ?? "on";
+
+    // ❗ FILTER: if global mode is weaker than required — ABORT
+    if (MODE_LEVEL[globalMode] < MODE_LEVEL[requiredMode]) return;
+
+    // ANDROID fallback
+    if (Platform.OS !== "ios") {
+      Vibration.vibrate(10);
+      return;
+    }
+
+    HAPTIC_MAP[hapticType]?.();
+  }, [modeType, hapticType, globalMode]);
+
+  return trigger;
+};
