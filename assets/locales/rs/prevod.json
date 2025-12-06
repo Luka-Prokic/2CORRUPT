@@ -176,17 +176,20 @@
     },
 
     "general-settings": {
+      "description": "Podesi aplikaciju po svojim željama, prilagođavajući njene osnovne preferencije i ponašanje.",
+
       "haptics-title": "Haptics",
       "haptics-description": "Podesi haptics za aplikaciju.",
+
       "time-format-title": "Format vremena",
       "time-format-description": "Podesi format vremena za aplikaciju."
     },
 
     "options": {
-      "off": "Isključeno",
-      "gentle": "Lagano",
-      "on": "Uključeno",
-      "max": "Maksimalno",
+      "off": "O",
+      "gentle": "Nežno",
+      "on": "I",
+      "max": "Maks",
       "12h": "12h",
       "24h": "24h"
     }

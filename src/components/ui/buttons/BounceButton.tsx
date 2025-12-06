@@ -7,6 +7,7 @@ import {
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { useBounceScaleAnim } from "../../../animations/useBounceScaleAnim";
 import Animated from "react-native-reanimated";
+import { useHaptics } from "../../../features/ui/useHaptics";
 
 interface BounceButtonProps
   extends Omit<TouchableOpacityProps, "style" | "onPress"> {
@@ -16,6 +17,7 @@ interface BounceButtonProps
   textColor?: string;
   style?: ViewStyle | ViewStyle[];
   onPress?: () => void;
+  haptics?: boolean;
 }
 
 export function BounceButton({
@@ -25,13 +27,16 @@ export function BounceButton({
   style,
   textColor,
   onPress,
+  haptics = false,
   ...rest
 }: BounceButtonProps) {
   const { theme } = useSettingsStore();
   const { bounceAnim, bounceIt } = useBounceScaleAnim();
+  const triggerHaptics = useHaptics({ modeType: "max", hapticType: "medium" });
 
   function handlePress() {
     onPress?.();
+    if (haptics) triggerHaptics();
   }
 
   return (
