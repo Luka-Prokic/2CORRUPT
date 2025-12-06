@@ -8,6 +8,7 @@ import { IText } from "../../../ui/text/IText";
 import { LabeledValue } from "../../../ui/misc/LabeledValue";
 import { ExpandedSessionRecapFooter } from "./ExpandedSessionRecapFooter";
 import { useStartWorkoutOfSession } from "../../../../features/start/useStartWorkout";
+import { useCorrectTime } from "../../../../features/format/useCorrectTime";
 
 interface ExpandedSessionRecapHeaderProps {
   session: WorkoutSession;
@@ -21,17 +22,9 @@ export function ExpandedSessionRecapHeader({
   const { t } = useTranslation();
   const { theme } = useSettingsStore();
 
-  const startOfSession = new Date(session.startTime).toLocaleTimeString([], {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false, // ensures 24-hour format
-  });
+  const startOfSession = useCorrectTime(session.startTime);
 
-  const endOfSession = new Date(session.endTime).toLocaleTimeString([], {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
-  });
+  const endOfSession = useCorrectTime(session.endTime);
 
   return (
     <View

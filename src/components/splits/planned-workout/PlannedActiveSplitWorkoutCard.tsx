@@ -7,13 +7,13 @@ import { SplitPlan, SplitPlanWorkout } from "../../../stores/workout/types";
 import { isWorkoutAlreadyDoneToday } from "../../../features/stats/isWorkoutAlreadyDoneToday";
 import { FlatList } from "react-native-gesture-handler";
 import { MidText } from "../../ui/text/MidText";
-import { formatTimeOnly } from "../../../features/format/useFormatTime";
 import { BlurView } from "expo-blur";
 import { StartWorkoutBottomSheet } from "./StartWorkoutBottomSheet";
 import { Fragment, useRef } from "react";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { router } from "expo-router";
 import { useStartWorkoutOfTemplate } from "../../../features/start/useStartWorkout";
+import { useCorrectTime } from "../../../features/format/useCorrectTime";
 
 interface PlannedActiveSplitWorkoutCardProps {
   splitPlan: SplitPlan;
@@ -58,7 +58,7 @@ export function PlannedActiveSplitWorkoutCard({
   const exceeds = template.layout.length > visibleCount;
 
   const scheduledAt = workout.scheduledAt
-    ? formatTimeOnly(new Date(workout.scheduledAt))
+    ? useCorrectTime(workout.scheduledAt)
     : null;
 
   return (

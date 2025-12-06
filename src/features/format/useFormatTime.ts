@@ -63,28 +63,3 @@ export const useFormatTime = useCallback(
   },
   []
 );
-
-export const formatTimeOnly = (date: Date): string => {
-  if (!date) return "";
-  return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-};
-
-export const formatDateOnly = (date: Date): string => {
-  if (!date) return "";
-  return date.toLocaleDateString([], {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  });
-};
-
-export const formatDateTime = (date: Date): string => {
-  if (!date) return "";
-  return date.toLocaleString([], {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-};

@@ -12,6 +12,7 @@ import { router } from "expo-router";
 import { StrobeBlur } from "../../../ui/misc/StrobeBlur";
 import { StrobeButton } from "../../../ui/buttons/StrobeButton";
 import { useTranslation } from "react-i18next";
+import { useCorrectTime } from "../../../../features/format/useCorrectTime";
 
 interface PlannedWorkoutCardProps {
   workout: SplitPlanWorkout;
@@ -105,10 +106,7 @@ export function PlannedWorkoutCard({
                 }}
               >
                 {workout.scheduledAt
-                  ? new Date(workout.scheduledAt).toLocaleTimeString([], {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })
+                  ? useCorrectTime(workout.scheduledAt)
                   : t("splits.set-time")}
               </Text>
             </StrobeButton>
