@@ -40,6 +40,7 @@ export function WidgetGrid() {
         onPress={() => {
           router.push("/exercise/list");
         }}
+        title="Exercise (mock)"
       />
 
       {/* full-mock */}

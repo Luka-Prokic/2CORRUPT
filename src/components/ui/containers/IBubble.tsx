@@ -10,6 +10,7 @@ import { InfoText } from "../text/InfoText";
 import { Pressable, ViewStyle } from "react-native";
 import { MidText } from "../text/MidText";
 import { DescriptionText } from "../text/DescriptionText";
+import { useHaptics } from "../../../features/ui/useHaptics";
 
 interface IBubbleProps {
   header?: string;
@@ -26,6 +27,7 @@ interface IBubbleProps {
   style?: ViewStyle | ViewStyle[];
   styleContent?: ViewStyle | ViewStyle[];
   onPress?: () => void;
+  haptics?: boolean;
 }
 
 export function IBubble({
@@ -43,9 +45,11 @@ export function IBubble({
   style,
   onPress,
   styleContent,
+  haptics = false,
 }: IBubbleProps) {
   const { theme } = useSettingsStore();
   const { widgetUnit, fullWidth } = useWidgetUnit();
+  const triggerHaptics = useHaptics({ modeType: "off", hapticType: "medium" });
 
   const bubbleHeight = useMemo(() => {
     if (size === "small") return 44;
@@ -54,6 +58,10 @@ export function IBubble({
     if (size === "flexible") return undefined;
   }, [size, widgetUnit]);
 
+  function handlePress() {
+    onPress?.();
+    if (haptics) triggerHaptics();
+  }
   return (
     <Animated.View
       entering={noAnimation ? undefined : entering ?? FadeIn}
@@ -71,7 +79,7 @@ export function IBubble({
       }}
     >
       <Pressable
-        onPress={onPress}
+        onPress={handlePress}
         style={{
           flex: 1,
           justifyContent: "center",

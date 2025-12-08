@@ -38,18 +38,23 @@ const HAPTIC_MAP: Record<HapticType, () => void> = {
 };
 
 interface UseHapticsProps {
-  modeType?: HapticsMode; // requirement for this specific action
+  modeType?: HapticsMode | "ignore"; // requirement for this specific action
   hapticType: HapticType; // actual haptic to trigger
 }
 
-export const useHaptics = ({ modeType, hapticType }: UseHapticsProps) => {
+export const useHaptics = ({
+  modeType = "on",
+  hapticType,
+}: UseHapticsProps) => {
   const { haptics } = useSettingsStore();
 
   const trigger = useCallback(() => {
-    const requiredMode = modeType ?? "on";
-
     // ❗ FILTER: if global mode is weaker than required — ABORT
-    if (MODE_LEVEL[haptics.toLowerCase()] < MODE_LEVEL[requiredMode]) return;
+    if (
+      modeType !== "ignore" &&
+      MODE_LEVEL[haptics.toLowerCase()] < MODE_LEVEL[modeType]
+    )
+      return;
 
     // ANDROID fallback
     if (Platform.OS !== "ios") {
@@ -59,6 +64,49 @@ export const useHaptics = ({ modeType, hapticType }: UseHapticsProps) => {
 
     HAPTIC_MAP[hapticType]?.();
   }, [modeType, hapticType, haptics]);
+
+  return trigger;
+};
+
+export const useHapticsDynamic = () => {
+  const { haptics: storeHaptics } = useSettingsStore();
+
+  const trigger = useCallback(
+    (
+      modeType: HapticsMode | "ignore",
+      hapticType: HapticType,
+      currentHaptics?: HapticsMode
+    ) => {
+      const effectiveHaptics = currentHaptics ?? storeHaptics;
+
+      if (
+        modeType !== "ignore" &&
+        MODE_LEVEL[effectiveHaptics.toLowerCase()] < MODE_LEVEL[modeType]
+      )
+        return;
+
+      if (Platform.OS !== "ios") {
+        Vibration.vibrate(10);
+        return;
+      }
+
+      HAPTIC_MAP[hapticType]?.();
+    },
+    [storeHaptics]
+  );
+
+  return trigger;
+};
+
+export const useHapticsIgnore = () => {
+  const trigger = useCallback((hapticType: HapticType) => {
+    if (Platform.OS !== "ios") {
+      Vibration.vibrate(10);
+      return;
+    }
+
+    HAPTIC_MAP[hapticType]?.();
+  }, []);
 
   return trigger;
 };

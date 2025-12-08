@@ -6,6 +6,14 @@ import { MidText } from "../../ui/text/MidText";
 import { DescriptionText } from "../../ui/text/DescriptionText";
 import { SegmentedButtons } from "../../ui/buttons/SegmentedButtons";
 import { useWidgetUnit } from "../../../features/widgets/useWidgetUnit";
+import { HapticType, useHapticsIgnore } from "../../../features/ui/useHaptics";
+
+const hapticsMap: Record<string, HapticType | null> = {
+  off: null,
+  gentle: "soft",
+  on: "medium",
+  max: "heavy",
+};
 
 interface SegmentedFieldProps<T extends string> {
   setting: SegmentedSettingConfig<T>;
@@ -21,12 +29,22 @@ export function SegmentedField<T extends string>({
 
   const value = setting.select(settingsState);
 
+  const isItHaptics = setting.key === "haptics"; //custom use
+  const triggerHaptics = useHapticsIgnore();
+
   function handleChange(newValue: string) {
     const index = setting.options.findIndex(
       (o) => t(`settings.options.${o}`) === newValue
     );
-    if (index >= 0) {
-      setting.update(settingsState, setting.options[index]);
+    if (index < 0) return;
+
+    const selectedKey = setting.options[index];
+    setting.update(settingsState, selectedKey);
+
+    if (isItHaptics) {
+      const hapticType = hapticsMap[selectedKey];
+      if (hapticType) triggerHaptics(hapticType);
+      console.log(hapticType);
     }
   }
 
@@ -38,7 +56,7 @@ export function SegmentedField<T extends string>({
         value={t(`settings.options.${value.toLowerCase()}`)}
         onChange={handleChange}
         width={fullWidth - 16}
-        haptics
+        haptics={!isItHaptics}
       />
       {setting.description && (
         <DescriptionText
