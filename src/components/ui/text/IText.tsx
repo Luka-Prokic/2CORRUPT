@@ -1,8 +1,8 @@
-import { Text, TextStyle } from "react-native";
+import { Text, TextProps, TextStyle } from "react-native";
 import { useSettingsStore } from "../../../stores/settings";
 import { Fragment } from "react";
 
-interface ITextProps {
+interface ITextProps extends TextProps {
   text: string;
   style?: TextStyle | TextStyle[];
   size?: number;
@@ -28,6 +28,7 @@ export function IText({
   weight = "bold",
   color,
   children,
+  ...rest
 }: ITextProps) {
   const { theme } = useSettingsStore();
   return (
@@ -38,6 +39,7 @@ export function IText({
         color: color ?? theme.text,
         ...style,
       }}
+      {...rest}
     >
       {children ? (
         <Fragment>

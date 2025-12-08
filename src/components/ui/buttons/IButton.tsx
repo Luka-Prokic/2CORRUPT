@@ -1,10 +1,12 @@
 import {
   TouchableOpacity,
-  Text,
   ViewStyle,
   TouchableOpacityProps,
+  GestureResponderEvent,
 } from "react-native";
 import { useSettingsStore } from "../../../stores/settingsStore";
+import { IText } from "../text/IText";
+import { useHaptics } from "../../../features/ui/useHaptics";
 
 interface IButtonProps extends Omit<TouchableOpacityProps, "style"> {
   title?: string;
@@ -12,6 +14,7 @@ interface IButtonProps extends Omit<TouchableOpacityProps, "style"> {
   color?: string;
   textColor?: string;
   style?: ViewStyle | ViewStyle[];
+  haptics?: boolean;
 }
 
 export function IButton({
@@ -20,9 +23,16 @@ export function IButton({
   color,
   style,
   textColor,
+  haptics = false,
   ...rest
 }: IButtonProps) {
   const { theme } = useSettingsStore();
+  const triggerHaptics = useHaptics({ modeType: "max", hapticType: "medium" });
+
+  function handlePress(e: GestureResponderEvent) {
+    rest?.onPress(e);
+    if (haptics) triggerHaptics();
+  }
 
   return (
     <TouchableOpacity
@@ -42,19 +52,20 @@ export function IButton({
       ]}
       hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
       {...rest}
+      onPress={(e) => handlePress(e)}
     >
       {children ? (
         children
       ) : (
-        <Text
+        <IText
+          text={title}
           style={{
-            fontSize: 16,
-            fontWeight: "bold",
             color: textColor ?? theme.text,
           }}
-        >
-          {title}
-        </Text>
+          weight="bold"
+          numberOfLines={1}
+          adjustsFontSizeToFit
+        />
       )}
     </TouchableOpacity>
   );

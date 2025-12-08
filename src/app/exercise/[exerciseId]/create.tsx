@@ -6,6 +6,7 @@ import { useWorkoutStore } from "../../../stores/workout";
 import { ExerciseDraftHeaderLeft } from "../../../components/exercises/header/ExerciseDraftHeaderLeft";
 import { ExerciseCreateHeaderRight } from "../../../components/exercises/header/ExerciseCreateHeaderRight";
 import { EditExerciseName } from "../../../components/exercises/edit/EditExerciseName";
+import { EditCategory } from "../../../components/exercises/edit/EditCategory";
 
 export default function ExerciseCreateScreen() {
   const { draftExercise } = useWorkoutStore();
@@ -25,6 +26,7 @@ export default function ExerciseCreateScreen() {
       <ScreenContent>
         <ScreenView>
           <EditExerciseName exercise={draftExercise} />
+          <EditCategory />
         </ScreenView>
       </ScreenContent>
     </Fragment>

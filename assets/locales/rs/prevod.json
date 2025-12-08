@@ -599,6 +599,7 @@
   "exercise": {
     "sync-exercise-names": "Poveži Nazive Vežbe",
     "exercise-name-input": "Naziv Vežbe...",
-    "name": "Naziv"
+    "name": "Naziv",
+    "select-category": "Izaberi Kategoriju"
   }
 }

@@ -102,7 +102,8 @@ export const RirRpeBottomSheet = forwardRef<
             <TouchableOpacity
               onPress={() => handleSelect(values[mode][index])}
               style={{
-                flex: 1,
+                height: WIDTH / 5,
+                width: WIDTH / 5,
                 justifyContent: "center",
                 alignItems: "center",
               }}

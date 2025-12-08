@@ -16,7 +16,7 @@ const AnimatedFlatList = RNAnimated.createAnimatedComponent(
   FlatList
 ) as unknown as typeof FlatList;
 
-interface CenterCardSliderProps<T>
+interface VerticalCardSliderProps<T>
   extends Omit<FlatListProps<T>, "renderItem"> {
   card: ({ item, index }: { item: T; index?: number }) => ReactNode;
   cardWidth?: number;
@@ -43,7 +43,7 @@ interface CenterCardSliderProps<T>
   hapticFeedback?: boolean;
 }
 
-export function CenterCardSlider<T>({
+export function VerticalCardSlider<T>({
   data,
   card,
   keyExtractor,
@@ -70,7 +70,7 @@ export function CenterCardSlider<T>({
   disableScroll = false,
   hapticFeedback = false,
   ...flatListProps
-}: CenterCardSliderProps<T>) {
+}: VerticalCardSliderProps<T>) {
   const { theme } = useSettingsStore();
   const scrollX = useRef(new RNAnimated.Value(0)).current;
   const [currentIndex, setCurrentIndex] = useState(selectedIndex);
@@ -177,7 +177,6 @@ export function CenterCardSlider<T>({
           });
         }}
         keyExtractor={keyExtractor || defaultKeyExtractor}
-        horizontal
         showsHorizontalScrollIndicator={false}
         snapToInterval={cardWidth}
         snapToAlignment="center"

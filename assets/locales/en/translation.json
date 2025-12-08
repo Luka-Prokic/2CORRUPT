@@ -600,6 +600,7 @@
   "exercise": {
     "sync-exercise-names": "Sync Exercise Names",
     "exercise-name-input": "Exercise Name...",
-    "name": "Name"
+    "name": "Name",
+    "select-category": "Select Category"
   }
 }
