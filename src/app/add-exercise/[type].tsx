@@ -9,7 +9,6 @@ import { Stack } from "expo-router";
 import { CreateNewExerciseButton } from "../../components/exercise-add/CreateNewExerciseButton";
 import { useTranslation } from "react-i18next";
 import { AddExerciseList } from "../../components/exercise-add/AddExerciseList";
-import { ModalBackButton } from "../_layout";
 
 export default function AddExerciseScreen() {
   const { theme } = useSettingsStore();

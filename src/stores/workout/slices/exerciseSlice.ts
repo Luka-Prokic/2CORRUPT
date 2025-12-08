@@ -421,4 +421,9 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
     syncActiveExerciseToSession();
     syncActiveExerciseToTemplate();
   },
+
+  getExerciseById: (exerciseId: string) => {
+    const { exercises } = get();
+    return exercises.find((e) => e.id === exerciseId) || null;
+  },
 });

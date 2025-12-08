@@ -1,23 +1,31 @@
 import { ExerciseInfo, WorkoutStore } from "../types";
 import { StateCreator } from "zustand";
-
-// Prototype logic
+import { nanoid } from "nanoid/non-secure";
+import { useUserStore } from "../../user/useUserStore";
 
 export const createDraftSlice: StateCreator<WorkoutStore, [], [], {}> = (
   set,
   get
 ) => ({
   // State
-  exercises: [], // all user-created exercises
   draftExercise: null,
   placeholderExercise: null,
 
   // --- Draft Logic ---
   startDraftExercise: (exercise?: ExerciseInfo) => {
-    // If editing an existing exercise, set it as draft and placeholder
+    const user = useUserStore.getState().user;
+
+    const newDraftExercise: ExerciseInfo = {
+      ...(exercise ?? {}),
+      id: `exercise-${nanoid()}`,
+      defaultName: exercise?.defaultName || "Push up",
+      userId: user?.id,
+      updatedAt: new Date().toISOString(),
+    };
+
     set({
-      draftExercise: exercise ? { ...exercise } : null,
-      placeholderExercise: exercise ? { ...exercise } : null,
+      draftExercise: { ...newDraftExercise },
+      placeholderExercise: { ...(exercise ?? null) },
     });
   },
 
@@ -33,10 +41,17 @@ export const createDraftSlice: StateCreator<WorkoutStore, [], [], {}> = (
 
   saveDraftExercise: () => {
     const { draftExercise, exercises } = get();
+    const user = useUserStore.getState().user;
     if (!draftExercise) return;
 
+    const savedExercise: ExerciseInfo = {
+      ...draftExercise,
+      updatedAt: new Date().toISOString(),
+      userId: user?.id,
+    };
+    const newExercises = [...exercises, savedExercise];
     set({
-      exercises: [...exercises, draftExercise],
+      exercises: newExercises,
       draftExercise: null,
       placeholderExercise: null,
     });
@@ -54,8 +69,17 @@ export const createDraftSlice: StateCreator<WorkoutStore, [], [], {}> = (
   // --- Remove User-Created Exercise ---
   removeExercise: (exerciseId: string) => {
     const { exercises } = get();
+    const user = useUserStore.getState().user;
+    const exercise = exercises.find((e) => e.id === exerciseId);
+
+    if (!user || !exercise || exercise.userId !== user?.id) return;
+
+    const newExercises = exercises.filter(
+      (e) => e.id !== exerciseId && e.userId !== user?.id
+    );
+
     set({
-      exercises: exercises.filter((e) => e.id !== exerciseId),
+      exercises: newExercises,
       draftExercise: null,
       placeholderExercise: null,
     });

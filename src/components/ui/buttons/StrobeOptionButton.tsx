@@ -59,12 +59,19 @@ export function StrobeOptionButton({
           alignItems: "center",
           justifyContent,
           paddingHorizontal: 8,
+          overflow: "hidden",
           ...styleContent,
         }}
       >
         <MidText
           text={title}
-          style={{ color: color || theme.text, ...styleTitle }}
+          style={{
+            color: color || theme.text,
+            paddingRight: 8,
+            ...styleTitle,
+          }}
+          numberOfLines={1}
+          ellipsizeMode="tail"
         />
 
         <View

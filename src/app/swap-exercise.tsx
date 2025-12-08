@@ -7,7 +7,6 @@ import { useSettingsStore } from "../stores/settings";
 import { Stack } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { SwapExerciseList } from "../components/exercise-swap/SwapExerciseList";
-import { ModalBackButton } from "./_layout";
 
 export default function SwapExerciseScreen() {
   const { theme } = useSettingsStore();

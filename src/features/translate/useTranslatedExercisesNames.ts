@@ -45,3 +45,8 @@ export function useTranslatedSessionExerciseName(exercise: SessionExercise) {
 
   return { translatedName };
 }
+
+export function useTranslatedExerciseInfoName(exercise: ExerciseInfo) {
+  const { t } = useTranslation();
+  return { translatedName: t(`exercises.${exercise.slug}`) };
+}

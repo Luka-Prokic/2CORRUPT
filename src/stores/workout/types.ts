@@ -7,11 +7,12 @@ export interface ExerciseInfo {
   readonly slug?: string;
   readonly defaultName: string;
   readonly category?: string;
-  readonly primaryMuscles: readonly string[];
+  readonly primaryMuscles?: readonly string[];
   readonly secondaryMuscles?: readonly string[];
   readonly equipment?: readonly string[];
   readonly metadata?: Record<string, any>;
   readonly updatedAt?: IsoDateString;
+  readonly userId?: string | null;
 }
 
 // Drop set - simplified set for additional reps after main set
@@ -305,6 +306,8 @@ export interface ExerciseSlice {
   ) => void;
   removeDropSetFromActiveExercise: (setId: string, dropSetId: string) => void;
   swapExerciseInActiveExercise: (exerciseId: string) => void;
+
+  getExerciseById: (exerciseId: string) => ExerciseInfo | null;
 }
 
 export interface DraftSlice {
@@ -319,7 +322,7 @@ export interface DraftSlice {
   setPlaceholderExercise: (exercise: ExerciseInfo) => void;
   clearPlaceholderExercise: () => void;
 
-  removeExercise: () => void; // removes from exercises[] // only user made ones
+  removeExercise: (exerciseId: string) => void; // removes from exercises[] // only user made ones
 }
 export interface RestSlice {
   restingExerciseId: string | null;
