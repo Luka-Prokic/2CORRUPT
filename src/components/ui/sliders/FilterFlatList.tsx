@@ -2,11 +2,16 @@ import { FlatList, Pressable, Text, View, ViewStyle } from "react-native";
 import { useRef, useState, memo } from "react";
 import { useSettingsStore } from "../../../stores/settingsStore";
 
+interface FilterItem {
+  id: string; // used internally for selection
+  label: string; // displayed text
+}
+
 interface FilterFlatListProps {
   title?: string;
-  data: string[];
+  data: FilterItem[];
   startIndex?: number;
-  onSelect: (item: string) => void;
+  onSelect: (item: FilterItem) => void;
   itemHeight?: number;
   contentContainerStyle?: ViewStyle | ViewStyle[];
 }
@@ -26,7 +31,6 @@ export function FilterFlatList({
 
   function handleScroll(offsetY: number) {
     const index = Math.round(offsetY / itemHeight);
-
     if (index !== selectedIndex && index >= 0 && index < data.length) {
       setSelectedIndex(index);
       onSelect(data[index]);
@@ -34,7 +38,7 @@ export function FilterFlatList({
   }
 
   const FilterItem = memo(
-    ({ item, index }: { item: string; index: number }) => {
+    ({ item, index }: { item: FilterItem; index: number }) => {
       const isSelected = index === selectedIndex;
       return (
         <Pressable>
@@ -52,13 +56,13 @@ export function FilterFlatList({
                 color: isSelected ? theme.text : theme.grayText,
               }}
             >
-              {item}
+              {item.label}
             </Text>
           </View>
         </Pressable>
       );
     },
-    (prev, next) => prev.index === next.index && prev.item === next.item
+    (prev, next) => prev.index === next.index && prev.item.id === next.item.id
   );
 
   return (
@@ -74,7 +78,7 @@ export function FilterFlatList({
         <FlatList
           ref={flatListRef}
           data={data}
-          keyExtractor={(item, index) => `${item}-${index}`}
+          keyExtractor={(item, index) => `${item.id}-${index}`}
           renderItem={({ item, index }) => (
             <FilterItem item={item} index={index} />
           )}

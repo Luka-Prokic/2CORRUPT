@@ -53,7 +53,7 @@ export function ExerciseCard({
   return (
     <StrobeOptionButton
       title={`${exercise.prefix ? `${exercise.prefix} ` : ""} ${
-        exercise?.name?.[t("mode")]
+        exercise?.name?.[t("locale")]
       }`}
       activeOpacity={0.8}
       onPress={() => {

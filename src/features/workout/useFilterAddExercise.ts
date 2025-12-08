@@ -1,61 +1,61 @@
 import { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   ExerciseInfo,
-  Muscle,
   MuscleCategory,
+  Equipment,
 } from "../../stores/workout/types";
 import { useWorkoutStore } from "../../stores/workout/useWorkoutStore";
-import { useCategory, useEquipment } from "../../utils/Labels";
 
 export function useFilterAddExercise() {
-  const { exercises } = useWorkoutStore();
-  const categories = useCategory();
-  const equipmentList = useEquipment();
-  console.log(exercises);
-  console.log(111);
+  const { exercises, muscleCategories, equipment } = useWorkoutStore();
+  const { t } = useTranslation();
+
+  const currentLocale = t("locale") as keyof ExerciseInfo["defaultName"];
 
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] =
-    useState<MuscleCategory["id"]>("full-body");
-  const [selectedEquipment, setSelectedEquipment] =
-    useState<Muscle["id"]>("all");
-
-  // Category checkers
-  const isAllCategory = (cat: string) => cat === "full-body";
-
-  // Equipment checkers
-  const isAllEquipment = (eq: string) => eq === "all";
+  const [selectedCategory, setSelectedCategory] = useState<
+    MuscleCategory["id"] | "fullBody"
+  >("fullBody");
+  const [selectedEquipment, setSelectedEquipment] = useState<
+    Equipment["id"] | "all"
+  >("all");
 
   const exercisesFiltered = useMemo(() => {
     return (
-      exercises?.filter((ex: ExerciseInfo) => {
-        const translatedCategory = ex.category;
-        const translatedEquipment = ex.equipment;
+      exercises
+        ?.filter((ex) => {
+          // Filter by category
+          const matchesCategory =
+            selectedCategory === "fullBody" || ex.category === selectedCategory;
 
-        // Then use your comparators
-        const matchesCategory =
-          isAllCategory(selectedCategory) ||
-          (translatedCategory || "").includes(selectedCategory);
+          // Filter by equipment
+          const matchesEquipment =
+            selectedEquipment === "all" ||
+            ex.equipment?.includes(selectedEquipment);
 
-        const matchesEquipment =
-          isAllEquipment(selectedEquipment) ||
-          translatedEquipment?.includes(selectedEquipment);
+          // Filter by search
+          const nameToSearch = ex.defaultName[currentLocale] ?? "";
+          const matchesSearch = nameToSearch
+            .toLowerCase()
+            .includes(searchQuery.toLowerCase());
 
-        const nameToSearch = [ex.defaultName.en, ex.defaultName.rs];
-
-        const matchesSearch = nameToSearch.some((name) =>
-          name?.includes(searchQuery)
-        );
-
-        return matchesSearch && matchesCategory && matchesEquipment;
-      }) ??
-      [].sort((a, b) => {
-        const aIndex = categories.indexOf(a.category || "");
-        const bIndex = categories.indexOf(b.category || "");
-        return aIndex - bIndex;
-      })
+          return matchesCategory && matchesEquipment && matchesSearch;
+        })
+        .sort((a, b) => {
+          const aIndex = muscleCategories.findIndex((c) => c.id === a.category);
+          const bIndex = muscleCategories.findIndex((c) => c.id === b.category);
+          return aIndex - bIndex;
+        }) ?? []
     );
-  }, [exercises, searchQuery, selectedCategory, selectedEquipment, categories]);
+  }, [
+    exercises,
+    searchQuery,
+    selectedCategory,
+    selectedEquipment,
+    muscleCategories,
+    currentLocale,
+  ]);
 
   return {
     exercisesFiltered,
@@ -65,7 +65,8 @@ export function useFilterAddExercise() {
     setSelectedCategory,
     selectedEquipment,
     setSelectedEquipment,
-    categories,
-    equipmentList,
+    muscleCategories,
+    equipment,
+    currentLocale,
   };
 }

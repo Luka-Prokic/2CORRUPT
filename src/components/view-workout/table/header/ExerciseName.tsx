@@ -35,7 +35,7 @@ export function ExerciseName({
       ) : (
         ""
       )}
-      {exercise.name?.[t("mode")]}
+      {exercise.name?.[t("locale")]}
     </Text>
   );
 }

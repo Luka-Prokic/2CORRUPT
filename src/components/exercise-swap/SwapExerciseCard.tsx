@@ -79,7 +79,7 @@ export function SwapExerciseCard({
               marginBottom: 2,
             }}
           >
-            {exercise?.defaultName?.[t("mode")]}
+            {exercise?.defaultName?.[t("locale")]}
           </Text>
 
           {/* body parts detail line */}

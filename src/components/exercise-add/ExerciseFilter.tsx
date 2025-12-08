@@ -1,13 +1,13 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
+import { View, ViewStyle } from "react-native";
 import { SearchBar } from "../ui/input/SearchBar";
 import { FilterFlatList } from "../ui/sliders/FilterFlatList";
 import { WIDTH } from "../../utils/Dimensions";
 import { useSettingsStore } from "../../stores/settingsStore";
 import { useTranslation } from "react-i18next";
-import { View, ViewStyle } from "react-native";
+import { useHaptics } from "../../features/ui/useHaptics";
 import { useFilterAddExercise } from "../../features/workout/useFilterAddExercise";
 import { ExerciseInfo } from "../../stores/workout/types";
-import { useHaptics } from "../../features/ui/useHaptics";
 
 interface ExerciseFilterProps {
   setFilteredExercises: (exercises: ExerciseInfo[]) => void;
@@ -20,16 +20,15 @@ export function ExerciseFilter({
 }: ExerciseFilterProps) {
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
+
   const {
-    categories,
-    equipmentList,
+    exercisesFiltered,
     searchQuery,
     setSearchQuery,
-    selectedCategory,
-    selectedEquipment,
     setSelectedCategory,
     setSelectedEquipment,
-    exercisesFiltered,
+    muscleCategories,
+    equipment,
   } = useFilterAddExercise();
 
   const triggerHapticsRigid = useHaptics({
@@ -37,19 +36,40 @@ export function ExerciseFilter({
     hapticType: "rigid",
   });
 
-  function handleSelectCategory(bodyPart: string) {
-    setSelectedCategory(bodyPart);
+  const handleSelectCategory = (id: string) => {
+    setSelectedCategory(id);
     triggerHapticsRigid();
-  }
+  };
 
-  function handleSelectEquipment(equipment: string) {
-    setSelectedEquipment(equipment);
+  const handleSelectEquipment = (id: string) => {
+    setSelectedEquipment(id);
     triggerHapticsRigid();
-  }
+  };
 
   useEffect(() => {
     setFilteredExercises(exercisesFiltered);
-  }, [searchQuery, selectedCategory, selectedEquipment]);
+  }, [exercisesFiltered]);
+
+  // Prepare display lists (id + label)
+  const muscleCategoriesList = useMemo(() => {
+    return [
+      { id: "fullBody", label: t("categories.full-body") },
+      ...muscleCategories.map((item) => ({
+        id: item.id,
+        label: t(`categories.${item.id}`),
+      })),
+    ];
+  }, [muscleCategories, t]);
+
+  const equipmentList = useMemo(() => {
+    return [
+      { id: "all", label: t("equipment.all") },
+      ...equipment.map((item) => ({
+        id: item.id,
+        label: t(`equipment.${item.id}`),
+      })),
+    ];
+  }, [equipment, t]);
 
   return (
     <View style={style}>
@@ -70,8 +90,8 @@ export function ExerciseFilter({
       >
         <FilterFlatList
           title={t("add-exercise.body-part")}
-          data={categories}
-          onSelect={handleSelectCategory}
+          data={muscleCategoriesList}
+          onSelect={(item) => handleSelectCategory(item.id)}
           itemHeight={50}
           contentContainerStyle={{
             height: 54,
@@ -86,7 +106,7 @@ export function ExerciseFilter({
         <FilterFlatList
           title={t("add-exercise.equipment")}
           data={equipmentList}
-          onSelect={handleSelectEquipment}
+          onSelect={(item) => handleSelectEquipment(item.id)}
           itemHeight={50}
           contentContainerStyle={{
             height: 54,
