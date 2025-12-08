@@ -71,7 +71,6 @@ export function SessionExerciseList({ togglePanel }: SessionExerciseListProps) {
         onDragEnd={({ data }) => {
           reorderSessionItems(data); // overwrite the order directly
         }}
-        activationDelay={100} // long press delay to start drag
         ListFooterComponent={() => (
           <ExerciseListAddNewButton
             style={{

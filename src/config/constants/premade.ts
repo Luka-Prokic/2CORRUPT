@@ -36,7 +36,7 @@ const makeSet = (reps: number, weight: number) => ({
 const overheadPressExample: SessionExercise = {
   id: "ex-ohp-23123123",
   exerciseInfoId: "ex-ohp",
-  name: "Overhead Press",
+  name: { en: "Overhead Press", rs: "Prečac nad glavom" },
   prefix: "Barbell",
   primaryMuscles: ["front delts", "side delts"],
   secondaryMuscles: ["triceps", "rear delts"],
@@ -51,7 +51,7 @@ const overheadPressExample: SessionExercise = {
 const benchPressExample: SessionExercise = {
   id: "ex-bench-press-" + nanoid(),
   exerciseInfoId: "ex-bench-press",
-  name: "Barbell Bench Press",
+  name: { en: "Barbell Bench Press", rs: "Prsljanje na leđima" },
   prefix: "Barbell",
   primaryMuscles: ["mid chest"],
   secondaryMuscles: ["triceps", "front delts"],
@@ -66,7 +66,7 @@ const benchPressExample: SessionExercise = {
 const barbellRowExample: SessionExercise = {
   id: "ex-barbell-row-" + nanoid(),
   exerciseInfoId: "ex-barbell-row",
-  name: "Barbell Row",
+  name: { en: "Barbell Row", rs: "Prsljanje na leđima" },
   prefix: "Barbell",
   primaryMuscles: ["lats", "rear delts"],
   secondaryMuscles: ["biceps", "mid traps"],
@@ -81,7 +81,7 @@ const barbellRowExample: SessionExercise = {
 const backSquatExample: SessionExercise = {
   id: "ex-back-squat-" + nanoid(),
   exerciseInfoId: "ex-back-squat",
-  name: "Back Squat",
+  name: { en: "Back Squat", rs: "Prsljanje na leđima" },
   prefix: "Barbell",
   primaryMuscles: ["quads", "glutes"],
   secondaryMuscles: ["hamstrings", "core"],
@@ -96,7 +96,7 @@ const backSquatExample: SessionExercise = {
 const deadliftExample: SessionExercise = {
   id: "ex-deadlift-" + nanoid(),
   exerciseInfoId: "ex-deadlift",
-  name: "Conventional Deadlift",
+  name: { en: "Conventional Deadlift", rs: "Prsljanje na leđima" },
   prefix: "Barbell",
   primaryMuscles: ["hamstrings", "glutes", "lower back"],
   secondaryMuscles: ["mid traps", "forearms"],
@@ -111,7 +111,7 @@ const deadliftExample: SessionExercise = {
 const dipsExample: SessionExercise = {
   id: "ex-dips-" + nanoid(),
   exerciseInfoId: "ex-dips",
-  name: "Weighted Dips",
+  name: { en: "Weighted Dips", rs: "Prsljanje na leđima" },
   prefix: "Bodyweight",
   primaryMuscles: ["mid chest"],
   secondaryMuscles: ["triceps", "front delts"],
@@ -186,7 +186,7 @@ export const templatePushDay: WorkoutTemplate = {
     {
       id: `ex-bench-${nanoid()}`,
       exerciseInfoId: "ex-bench-press",
-      name: "Barbell Bench Press",
+      name: { en: "Barbell Bench Press", rs: "Prsljanje na leđima" },
       prefix: "Barbell",
       primaryMuscles: ["mid chest"],
       secondaryMuscles: ["triceps", "front delts"],
@@ -202,7 +202,7 @@ export const templatePushDay: WorkoutTemplate = {
     {
       id: `ex-ohp-${nanoid()}`,
       exerciseInfoId: "ex-ohp",
-      name: "Overhead Press",
+      name: { en: "Overhead Press", rs: "Prsljanje na leđima" },
       prefix: "Barbell",
       primaryMuscles: ["front delts"],
       secondaryMuscles: ["triceps", "side delts"],
@@ -218,7 +218,7 @@ export const templatePushDay: WorkoutTemplate = {
     {
       id: `ex-dips-${nanoid()}`,
       exerciseInfoId: "ex-dips",
-      name: "Weighted Dips",
+      name: { en: "Weighted Dips", rs: "Prsljanje na leđima" },
       prefix: "Bodyweight",
       primaryMuscles: ["mid chest"],
       secondaryMuscles: ["triceps"],
@@ -246,7 +246,7 @@ export const templatePullDay: WorkoutTemplate = {
     {
       id: `ex-row-${nanoid()}`,
       exerciseInfoId: "ex-barbell-row",
-      name: "Barbell Row",
+      name: { en: "Barbell Row", rs: "Prsljanje na leđima" },
       prefix: "Barbell",
       primaryMuscles: ["lats", "rear delts"],
       secondaryMuscles: ["biceps", "mid traps"],
@@ -261,7 +261,7 @@ export const templatePullDay: WorkoutTemplate = {
     },
     {
       id: `ex-pulldown-${nanoid()}`,
-      name: "Lat Pulldown",
+      name: { en: "Lat Pulldown", rs: "Prsljanje na leđima" },
       prefix: "Cable",
       primaryMuscles: ["lats"],
       secondaryMuscles: ["biceps"],
@@ -276,7 +276,7 @@ export const templatePullDay: WorkoutTemplate = {
     },
     {
       id: `ex-curl-${nanoid()}`,
-      name: "Dumbbell Curl",
+      name: { en: "Dumbbell Curl", rs: "Prsljanje na leđima" },
       prefix: "Dumbbell",
       primaryMuscles: ["biceps"],
       equipment: ["dumbbell"],
@@ -303,7 +303,7 @@ export const templateLegsDay: WorkoutTemplate = {
     {
       id: `ex-squat-${nanoid()}`,
       exerciseInfoId: "ex-back-squat",
-      name: "Barbell Back Squat",
+      name: { en: "Barbell Back Squat", rs: "Prsljanje na leđima" },
       primaryMuscles: ["quads", "glutes"],
       secondaryMuscles: ["hamstrings"],
       equipment: ["barbell", "rack"],
@@ -318,7 +318,7 @@ export const templateLegsDay: WorkoutTemplate = {
     {
       id: `ex-deadlift-${nanoid()}`,
       exerciseInfoId: "ex-deadlift",
-      name: "Barbell Romanian Deadlift",
+      name: { en: "Barbell Romanian Deadlift", rs: "Prsljanje na leđima" },
       primaryMuscles: ["hamstrings"],
       secondaryMuscles: ["glutes", "lower back"],
       equipment: ["barbell"],
@@ -332,7 +332,7 @@ export const templateLegsDay: WorkoutTemplate = {
     },
     {
       id: `ex-lunge-${nanoid()}`,
-      name: "Dumbbell Lunges",
+      name: { en: "Dumbbell Lunges", rs: "Prsljanje na leđima" },
       primaryMuscles: ["quads", "glutes"],
       equipment: ["dumbbell"],
       sets: [

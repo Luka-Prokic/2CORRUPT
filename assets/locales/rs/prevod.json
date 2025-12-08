@@ -1,4 +1,5 @@
 {
+  "mode": "rs",
   "button": {
     "create": "Napravi",
     "edit": "Uredi",

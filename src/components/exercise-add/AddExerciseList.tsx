@@ -36,7 +36,7 @@ export function AddExerciseList({
 
   function handleUnselectExercise(exercise: ExerciseInfo) {
     setSelectedExercises(
-      selectedExercises.filter((ex) => ex.id !== exercise.id)
+      selectedExercises?.filter((ex) => ex.id !== exercise.id)
     );
   }
 

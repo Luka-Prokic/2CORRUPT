@@ -7,8 +7,8 @@ import {
   ExerciseInfo,
   ExerciseColumns,
 } from "../types";
-import { exercisesDefList } from "../../../config/constants/defaults";
 import { nanoid } from "nanoid/non-secure";
+import { exercisesDefList } from "../../../config/constants/exercises";
 
 /**
  * Exercise slice: manages the active exercise (single source of truth during editing)

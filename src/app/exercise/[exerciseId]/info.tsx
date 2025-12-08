@@ -2,26 +2,15 @@ import { Fragment } from "react";
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { ScreenContent } from "../../../components/ui/utils/ScreenContent";
 import { Stack } from "expo-router";
-import { CorruptHeader } from "../../../components/corrupt/CorruptHeader";
 
 export default function ExerciseListScreen() {
   const { theme } = useSettingsStore();
 
   return (
     <Fragment>
-      <Stack.Screen
-        options={{
-          headerLeft: () => <Fragment />,
-          headerTitle: () => <CorruptHeader />,
-        }}
-      />
+      <Stack.Screen options={{}} />
 
-      <ScreenContent
-        edges={["top"]}
-        scroll={true}
-        style={{ backgroundColor: theme.background }}
-      >
-      </ScreenContent>
+      <ScreenContent edges={["top"]} scroll={true}></ScreenContent>
     </Fragment>
   );
 }

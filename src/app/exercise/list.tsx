@@ -7,8 +7,13 @@ import { IText } from "../../components/ui/text/IText";
 import { StrobeOptionButton } from "../../components/ui/buttons/StrobeOptionButton";
 import { ScreenView } from "../../components/ui/containers/ScreenView";
 import { useWorkoutStore } from "../../stores/workout";
+import { useSettingsStore } from "../../stores/settingsStore";
+import { useUserStore } from "../../stores/user/useUserStore";
 
 export default function ExerciseListScreen() {
+  const { theme } = useSettingsStore();
+  const { user } = useUserStore();
+
   const { exercises, startDraftExercise, draftExercise, removeExercise } =
     useWorkoutStore();
 
@@ -21,8 +26,18 @@ export default function ExerciseListScreen() {
   }
 
   function handleLongPress(exerciseId: string) {
+    const exercise = exercises.find((e) => e.id === exerciseId);
+    if (exercise.userId !== user?.id)
+      router.push({
+        pathname: "/exercise/[exerciseId]/info",
+        params: { exerciseId },
+      });
+
     removeExercise(exerciseId);
   }
+
+  const reversedExercises = [...exercises].reverse();
+
   return (
     <Fragment>
       <Stack.Screen
@@ -33,22 +48,23 @@ export default function ExerciseListScreen() {
       />
       <ScreenContent>
         <ScreenView>
-          <IText text={draftExercise?.defaultName || "no"} />
+          <IText text={draftExercise?.defaultName?.en || "no"} />
           <StrobeOptionButton
             title={"+ New Exercise"}
             height={64}
             onPress={() => handlePress("new")}
           />
           <FlatList
-            data={exercises}
+            data={reversedExercises}
             scrollEnabled={false}
             renderItem={({ item }) => (
               <StrobeOptionButton
-                title={item.defaultName}
+                title={item.defaultName.en}
                 height={64}
                 strobeDisabled
                 onPress={() => handlePress(item.id)}
                 onLongPress={() => handleLongPress(item.id)}
+                color={item.userId === user?.id ? theme.accent : theme.info}
               />
             )}
             ListFooterComponent={() => <EmptyFooter />}

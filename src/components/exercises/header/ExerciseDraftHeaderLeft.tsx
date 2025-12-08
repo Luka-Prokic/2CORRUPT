@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useWorkoutStore } from "../../../stores/workout";
 import { useSettingsStore } from "../../../stores/settingsStore";
 
-export function ExerciseEditHeaderLeft() {
+export function ExerciseDraftHeaderLeft() {
   const { t } = useTranslation();
   const { clearDraftExercise } = useWorkoutStore();
   const { theme } = useSettingsStore();

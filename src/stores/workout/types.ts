@@ -1,15 +1,34 @@
 // Types for the modular workout store
 export type IsoDateString = string;
 
+export interface Muscle {
+  readonly id: string;
+  readonly name: string;
+  metadata?: Record<string, any>;
+}
+
+export interface Equipment {
+  readonly id: string;
+  readonly name: string;
+  metadata?: Record<string, any>;
+}
+
+export interface MuscleCategory {
+  readonly id: string;
+  readonly name: string;
+  muscles: Muscle[];
+  metadata?: Record<string, any>;
+}
+export type LocalizedName = Record<string, string>;
+
 // Canonical exercise reference (master data)
 export interface ExerciseInfo {
   readonly id: string;
-  readonly slug?: string;
-  readonly defaultName: string;
-  readonly category?: string;
-  readonly primaryMuscles?: readonly string[];
-  readonly secondaryMuscles?: readonly string[];
-  readonly equipment?: readonly string[];
+  readonly defaultName: LocalizedName;
+  readonly category?: MuscleCategory["id"];
+  readonly primaryMuscles?: Muscle["id"][];
+  readonly secondaryMuscles?: Muscle["id"][];
+  readonly equipment?: Equipment["id"][];
   readonly metadata?: Record<string, any>;
   readonly updatedAt?: IsoDateString;
   readonly userId?: string | null;
@@ -80,11 +99,11 @@ export type ExerciseColumns = "Reps" | "Weight" | "RIR" | "RPE";
 export interface SessionExercise {
   readonly id: string; // snapshot id for session level
   exerciseInfoId?: string | null;
-  name: string;
+  name: ExerciseInfo["defaultName"];
   prefix?: string; // new prefix field
-  primaryMuscles: string[];
-  secondaryMuscles?: string[];
-  equipment?: string[];
+  primaryMuscles: Muscle["id"][];
+  secondaryMuscles?: Muscle["id"][];
+  equipment?: Equipment["id"][];
   notes?: string | null;
   sets: Set[];
   columns?: ExerciseColumns[];
@@ -362,6 +381,15 @@ export interface FlowSlice {
   getActiveExerciseIndex: () => number | null;
 }
 
+export interface CategorySlice {
+  muscles: Muscle[];
+  muscleCategories: MuscleCategory[];
+  equipment: Equipment[];
+
+  // Getters
+  getMusclesByCategory: (categoryId: string) => Muscle[];
+}
+
 export type WorkoutStore = TemplateSlice &
   SessionSlice &
   ExerciseSlice &
@@ -369,4 +397,5 @@ export type WorkoutStore = TemplateSlice &
   StatsSlice &
   FlowSlice &
   SplitPlanSlice &
-  DraftSlice;
+  DraftSlice &
+  CategorySlice;

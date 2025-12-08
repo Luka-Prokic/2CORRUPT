@@ -4,9 +4,9 @@ import { View } from "react-native";
 import { WIDTH } from "../../../utils/Dimensions";
 import { IButton } from "../../ui/buttons/IButton";
 import { Ionicons } from "@expo/vector-icons";
-import { useTranslatedSessionExerciseName } from "../../../features/translate/useTranslatedExercisesNames";
 import { useWorkoutStore } from "../../../stores/workout/useWorkoutStore";
 import { StrobeOptionButton } from "../../ui/buttons/StrobeOptionButton";
+import { useTranslation } from "react-i18next";
 
 interface ExerciseCardProps {
   exercise: SessionExercise;
@@ -30,7 +30,7 @@ export function ExerciseCard({
   isActiveDrag,
 }: ExerciseCardProps) {
   const { theme } = useSettingsStore();
-  const { translatedName } = useTranslatedSessionExerciseName(exercise);
+  const { t } = useTranslation();
   const { activeExercise, activeTemplate } = useWorkoutStore();
 
   const isActive = activeExercise?.id === exercise.id;
@@ -52,9 +52,9 @@ export function ExerciseCard({
 
   return (
     <StrobeOptionButton
-      title={`${
-        exercise.prefix ? `${exercise.prefix} ` : ""
-      } ${translatedName}`}
+      title={`${exercise.prefix ? `${exercise.prefix} ` : ""} ${
+        exercise?.name?.[t("mode")]
+      }`}
       activeOpacity={0.8}
       onPress={() => {
         if (!isActive || multipleSelect) handlePress();

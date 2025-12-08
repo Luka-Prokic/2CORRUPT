@@ -6,9 +6,9 @@ import { useWorkoutStore } from "../../../stores/workout";
 import { useMemo } from "react";
 import { ExerciseInfoName } from "../../../components/exercises/ExerciseInfoName";
 import { ExerciseDraftHeaderLeft } from "../../../components/exercises/header/ExerciseDraftHeaderLeft";
-import { ExerciseEditHeaderRight } from "../../../components/exercises/header/ExerciseEditHeaderRight";
+import { ExerciseCreateHeaderRight } from "../../../components/exercises/header/ExerciseCreateHeaderRight";
 
-export default function ExerciseEditScreen() {
+export default function ExerciseCreateScreen() {
   const { getExerciseById, draftExercise, placeholderExercise } =
     useWorkoutStore();
   const { exerciseId } = useLocalSearchParams<{ exerciseId: string }>();
@@ -19,8 +19,8 @@ export default function ExerciseEditScreen() {
       <Stack.Screen
         options={{
           headerLeft: () => <ExerciseDraftHeaderLeft />,
-          headerTitle: "edit",
-          headerRight: () => <ExerciseEditHeaderRight />,
+          headerTitle: "create",
+          headerRight: () => <ExerciseCreateHeaderRight />,
         }}
       />
 

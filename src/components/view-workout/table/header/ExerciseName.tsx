@@ -1,7 +1,7 @@
 import { Text } from "react-native";
 import { useSettingsStore } from "../../../../stores/settingsStore";
 import { SessionExercise } from "../../../../stores/workoutStore";
-import { useTranslatedSessionExerciseName } from "../../../../features/translate/useTranslatedExercisesNames";
+import { useTranslation } from "react-i18next";
 
 interface ExerciseNameProps {
   exercise: SessionExercise;
@@ -17,7 +17,7 @@ export function ExerciseName({
   prefixColor,
 }: ExerciseNameProps) {
   const { theme } = useSettingsStore();
-  const { translatedName } = useTranslatedSessionExerciseName(exercise);
+  const { t } = useTranslation();
 
   return (
     <Text
@@ -35,7 +35,7 @@ export function ExerciseName({
       ) : (
         ""
       )}
-      {translatedName}
+      {exercise.name?.[t("mode")]}
     </Text>
   );
 }

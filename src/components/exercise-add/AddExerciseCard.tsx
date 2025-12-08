@@ -3,10 +3,9 @@ import { ExerciseInfo } from "../../stores/workout/types";
 import { hexToRGBA } from "../../utils/HEXtoRGB";
 import { TouchableOpacity, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useTranslatedExerciseName } from "../../features/translate/useTranslatedExercisesNames";
-import { translateBodyPart } from "../../features/translate/useTranslatedBodyPart";
 import { StrobeButton } from "../ui/buttons/StrobeButton";
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
 interface AddExerciseCardProps {
   exercise: ExerciseInfo;
@@ -22,23 +21,21 @@ export function AddExerciseCard({
   selectedExercises,
 }: AddExerciseCardProps) {
   const { theme } = useSettingsStore();
-  const { translatedName } = useTranslatedExerciseName(exercise);
+  const { t } = useTranslation();
 
   const translatedPrimary = useMemo(
-    () =>
-      exercise.primaryMuscles?.map((m) => translateBodyPart(m).toLowerCase()),
+    () => exercise.primaryMuscles?.map((m) => t(`body-parts.${m}`)),
     [exercise.primaryMuscles]
   );
 
   const translatedSecondary = useMemo(
-    () =>
-      exercise.secondaryMuscles?.map((m) => translateBodyPart(m).toLowerCase()),
+    () => exercise.secondaryMuscles?.map((m) => t(`body-parts.${m}`)),
     [exercise.secondaryMuscles]
   );
 
   const selectedTotal = useMemo(
-    () => selectedExercises.filter((ex) => ex.id === exercise.id).length,
-    [selectedExercises.length, exercise.id]
+    () => selectedExercises?.filter((ex) => ex.id === exercise.id).length,
+    [selectedExercises?.length, exercise.id]
   );
 
   return (
@@ -70,7 +67,7 @@ export function AddExerciseCard({
               marginBottom: 2,
             }}
           >
-            {translatedName}
+            {exercise.defaultName[t("mode")]}
           </Text>
 
           {/* body parts detail line */}

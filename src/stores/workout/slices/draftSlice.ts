@@ -18,7 +18,7 @@ export const createDraftSlice: StateCreator<WorkoutStore, [], [], {}> = (
     const newDraftExercise: ExerciseInfo = {
       ...(exercise ?? {}),
       id: `exercise-${nanoid()}`,
-      defaultName: exercise?.defaultName || "Push up",
+      defaultName: exercise?.defaultName || { en: "", rs: "" },
       userId: user?.id,
       updatedAt: new Date().toISOString(),
     };

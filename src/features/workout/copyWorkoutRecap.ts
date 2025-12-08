@@ -1,13 +1,10 @@
 // useCopyWorkoutRecap.ts
 import * as Clipboard from "expo-clipboard";
-import { Alert } from "react-native";
 import { useSettingsStore } from "../../stores/settingsStore";
-import { useTranslation } from "react-i18next";
 import { SessionExercise, WorkoutSession } from "../../stores/workout/types";
 
-export function useCopyWorkoutRecap() {
+export function useCopyWorkoutRecap() { 
   const { units } = useSettingsStore();
-  const { t } = useTranslation();
 
   async function copyWorkoutRecap(session: WorkoutSession) {
     let text = "";

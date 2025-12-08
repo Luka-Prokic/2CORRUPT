@@ -3,12 +3,12 @@ import { ExerciseInfo } from "../../stores/workout/types";
 import { hexToRGBA } from "../../utils/HEXtoRGB";
 import { TouchableOpacity, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useTranslatedExerciseName } from "../../features/translate/useTranslatedExercisesNames";
 import { translateBodyPart } from "../../features/translate/useTranslatedBodyPart";
 import { useWorkoutStore } from "../../stores/workoutStore";
 import { router } from "expo-router";
 import { StrobeButton } from "../ui/buttons/StrobeButton";
 import { memo, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
 interface SwapExerciseCardProps {
   exercise: ExerciseInfo;
@@ -24,7 +24,7 @@ export function SwapExerciseCard({
   isSelected,
 }: SwapExerciseCardProps) {
   const { theme } = useSettingsStore();
-  const { translatedName } = useTranslatedExerciseName(exercise);
+  const { t } = useTranslation();
   const { activeExercise, swapExerciseInActiveExercise } = useWorkoutStore();
 
   const translatedPrimary = useMemo(
@@ -79,7 +79,7 @@ export function SwapExerciseCard({
               marginBottom: 2,
             }}
           >
-            {translatedName}
+            {exercise?.defaultName?.[t("mode")]}
           </Text>
 
           {/* body parts detail line */}

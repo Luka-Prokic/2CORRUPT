@@ -38,12 +38,12 @@ export function ExerciseFilter({
   });
 
   function handleSelectCategory(bodyPart: string) {
-    setSelectedCategory(bodyPart.toLowerCase());
+    setSelectedCategory(bodyPart);
     triggerHapticsRigid();
   }
 
   function handleSelectEquipment(equipment: string) {
-    setSelectedEquipment(equipment.toLowerCase());
+    setSelectedEquipment(equipment);
     triggerHapticsRigid();
   }
 
