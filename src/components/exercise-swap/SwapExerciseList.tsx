@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FlatList } from "react-native";
 import { ExerciseInfo } from "../../stores/workout";
 import { EmptyFooter } from "../ui/containers/EmptyFooter";

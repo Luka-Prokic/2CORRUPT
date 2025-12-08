@@ -596,5 +596,10 @@
     "ab-wheel": "Ab Wheel",
     "preacher-bench": "Preacher Bench",
     "other": "Other"
+  },
+  "exercise": {
+    "sync-exercise-names": "Sync Exercise Names",
+    "exercise-name-input": "Exercise Name...",
+    "name": "Name"
   }
 }

@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from "react";
+import { forwardRef, useState } from "react";
 import {
   BottomSheetModal,
   BottomSheetView,
@@ -9,7 +9,6 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useSettingsStore } from "../../../../stores/settings";
 import { CenterCardSlider } from "../../../ui/sliders/CenterCardSlider";
 import { useWorkoutStore } from "../../../../stores/workoutStore";
-import * as Haptics from "expo-haptics";
 import { Set } from "../../../../stores/workout/types";
 import { WIDTH } from "../../../../utils/Dimensions";
 import { SwitchButton } from "../../../ui/buttons/SwitchButton";

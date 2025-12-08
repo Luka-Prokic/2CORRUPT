@@ -1,13 +1,24 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, Keyboard, TouchableOpacity, TextInput, Platform } from "react-native";
+import { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  Keyboard,
+  TouchableOpacity,
+  TextInput,
+  Platform,
+} from "react-native";
 import { KeyboardAvoidingView } from "react-native";
 
 export function CreateTemplateBoard() {
   const [keyboardVisible, setKeyboardVisible] = useState(false);
 
   useEffect(() => {
-    const showSub = Keyboard.addListener("keyboardDidShow", () => setKeyboardVisible(true));
-    const hideSub = Keyboard.addListener("keyboardDidHide", () => setKeyboardVisible(false));
+    const showSub = Keyboard.addListener("keyboardDidShow", () =>
+      setKeyboardVisible(true)
+    );
+    const hideSub = Keyboard.addListener("keyboardDidHide", () =>
+      setKeyboardVisible(false)
+    );
     return () => {
       showSub.remove();
       hideSub.remove();

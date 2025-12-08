@@ -9,7 +9,7 @@ import {
   Pressable,
   TextStyle,
 } from "react-native";
-import React, { useEffect, useRef, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { useSideheadAnim } from "../../../animations/useSideheadAnim";
 
@@ -25,7 +25,7 @@ interface FilterFlatSliderProps {
   disabled?: boolean;
 }
 
-export const FilterFlatSlider = React.memo(function FilterFlatSlider({
+export const FilterFlatSlider = memo(function FilterFlatSlider({
   title,
   data,
   onSelect,

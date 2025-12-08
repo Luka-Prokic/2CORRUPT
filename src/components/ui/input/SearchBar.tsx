@@ -1,4 +1,3 @@
-import React from "react";
 import { View, TextInput, ViewStyle, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useSettingsStore } from "../../../stores/settingsStore";

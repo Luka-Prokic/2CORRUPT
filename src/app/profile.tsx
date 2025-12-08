@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import { Fragment, useState } from "react";
 import { useSettingsStore } from "../stores/settingsStore";
 import { UserLogin } from "../components/settings-profile/UserLogin";
 import { UserRegister } from "../components/settings-profile/UserRegister";

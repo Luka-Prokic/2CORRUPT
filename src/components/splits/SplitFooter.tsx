@@ -1,12 +1,10 @@
-import React from "react";
-import { View, Switch, Text } from "react-native";
+import { View } from "react-native";
 import { TwoOptionStrobeButtons } from "../ui/buttons/TwoOptionStrobeButtons";
 import { useSettingsStore } from "../../stores/settings";
 import { SplitPlan, useWorkoutStore } from "../../stores/workout";
 import { router } from "expo-router";
 import { useActionSheet } from "../../utils/useActionSheet";
 import { BackgroundText } from "../ui/text/BackgroundText";
-import { StrobeButton } from "../ui/buttons/StrobeButton";
 import { useWidgetUnit } from "../../features/widgets/useWidgetUnit";
 import { SplitNoteInput } from "./SplitNoteInput";
 

@@ -99,7 +99,7 @@ export function StrobeOptionButton({
       <StrobeBlur
         {...strobeButtonProps}
         style={{ width, height, ...style }}
-        colors={[theme.caka, theme.primaryBackground, theme.accent, theme.tint]}
+        disabled={strobeButtonProps.strobeDisabled}
       >
         {renderContent()}
       </StrobeBlur>

@@ -1,4 +1,3 @@
-import React from "react";
 import { TemplateNameInput } from "./TemplateNameInput";
 import { useWorkoutStore } from "../../stores/workout";
 import { ViewStyle } from "react-native";
@@ -8,7 +7,10 @@ interface TemplateNameEditorProps {
   style?: ViewStyle | ViewStyle[];
 }
 
-export function TemplateNameEditor({ templateId, style }: TemplateNameEditorProps) {
+export function TemplateNameEditor({
+  templateId,
+  style,
+}: TemplateNameEditorProps) {
   const { getTemplateById, updateTemplateField } = useWorkoutStore();
 
   const template = getTemplateById(templateId);

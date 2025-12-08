@@ -20,7 +20,7 @@ export default function ExerciseListScreen() {
   function handlePress(exerciseId: string) {
     startDraftExercise(exercises.find((e) => e.id === exerciseId));
     const exercise = exercises.find((e) => e.id === exerciseId);
-    if (exercise.userId === user?.id)
+    if (exercise && exercise.userId === user?.id)
       router.push({
         pathname: "/exercise/[exerciseId]/edit",
         params: { exerciseId },

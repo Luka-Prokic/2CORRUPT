@@ -1,4 +1,3 @@
-import React from "react";
 import { Text, View, TouchableOpacity } from "react-native";
 import { useSettingsStore } from "../../stores/settingsStore";
 import { useWorkoutStore } from "../../stores/workout";

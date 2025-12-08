@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import { memo, useMemo } from "react";
 import {
   KeyboardAvoidingView,
   KeyboardAvoidingViewProps,
@@ -94,7 +94,7 @@ export type ScreenContentProps = {
  * @todo Create prop: BgComponent
  * @returns A memoized screen wrapper component
  */
-export const ScreenContent = React.memo(function ScreenContent({
+export const ScreenContent = memo(function ScreenContent({
   children,
   style,
   contentContainerStyle,

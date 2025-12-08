@@ -595,5 +595,10 @@
     "ab-wheel": "Trbušnji točkić",
     "preacher-bench": "Preacher Benč",
     "other": "Ostalo"
+  },
+  "exercise": {
+    "sync-exercise-names": "Poveži Nazive Vežbe",
+    "exercise-name-input": "Naziv Vežbe...",
+    "name": "Naziv"
   }
 }

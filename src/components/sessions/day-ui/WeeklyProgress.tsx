@@ -1,4 +1,3 @@
-import React from "react";
 import { WIDTH } from "../../../utils/Dimensions";
 import { useSettingsStore } from "../../../stores/settings";
 import { useSessionsByDateRange } from "../../../features/workout";

@@ -1,4 +1,3 @@
-import React from "react";
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { useWidgetUnit } from "../../../features/widgets/useWidgetUnit";
 import { hexToRGBA } from "../../../utils/HEXtoRGB";

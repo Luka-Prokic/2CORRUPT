@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { FlatList, FlatListProps } from "react-native";
+import { useEffect, useMemo, useState } from "react";
+import { FlatList } from "react-native";
 import { WorkoutTemplate } from "../../../stores/workout/types";
 import { AddSplitWorkoutCard } from "./AddSplitWorkoutCard";
 import { EmptyFooter } from "../../ui/containers/EmptyFooter";
@@ -27,7 +27,7 @@ export function AddSplitWorkoutList({
   const { templates } = useWorkoutStore();
   const [page, setPage] = useState(1);
 
-  const pagedWorkouts = React.useMemo(
+  const pagedWorkouts = useMemo(
     () => filteredTemplates.slice(0, page * PAGE_SIZE),
     [filteredTemplates, page]
   );

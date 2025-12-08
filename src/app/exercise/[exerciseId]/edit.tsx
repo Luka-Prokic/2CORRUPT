@@ -1,18 +1,16 @@
 import { Fragment } from "react";
 import { ScreenContent } from "../../../components/ui/utils/ScreenContent";
-import { Stack, useLocalSearchParams } from "expo-router";
+import { Stack } from "expo-router";
 import { ScreenView } from "../../../components/ui/containers/ScreenView";
 import { useWorkoutStore } from "../../../stores/workout";
-import { useMemo } from "react";
-import { ExerciseInfoName } from "../../../components/exercises/ExerciseInfoName";
 import { ExerciseDraftHeaderLeft } from "../../../components/exercises/header/ExerciseDraftHeaderLeft";
 import { ExerciseEditHeaderRight } from "../../../components/exercises/header/ExerciseEditHeaderRight";
+import { EditExerciseName } from "../../../components/exercises/edit/EditExerciseName";
 
 export default function ExerciseEditScreen() {
-  const { getExerciseById, draftExercise, placeholderExercise } =
-    useWorkoutStore();
-  const { exerciseId } = useLocalSearchParams<{ exerciseId: string }>();
-  const exercise = useMemo(() => getExerciseById(exerciseId), [exerciseId]);
+  const { draftExercise } = useWorkoutStore();
+
+  if (!draftExercise) return null;
 
   return (
     <Fragment>
@@ -26,7 +24,18 @@ export default function ExerciseEditScreen() {
 
       <ScreenContent>
         <ScreenView>
-          <ExerciseInfoName exercise={exercise} />
+          {/* Exercise name inputs */}
+          <EditExerciseName exercise={draftExercise} />
+
+          {/* Exercise muscle categorie */}
+
+          {/* Exercise primary/secondary muscles */}
+
+          {/* Exercise equipment */}
+
+          {/* Exercise "media" */}
+
+          {/* Exercise description */}
         </ScreenView>
       </ScreenContent>
     </Fragment>

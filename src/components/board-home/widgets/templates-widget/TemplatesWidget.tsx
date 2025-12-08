@@ -1,4 +1,3 @@
-import React from "react";
 import { TouchableOpacity } from "react-native";
 import { useSettingsStore } from "../../../../stores/settingsStore";
 import { hexToRGBA } from "../../../../utils/HEXtoRGB";

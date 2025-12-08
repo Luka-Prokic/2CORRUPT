@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { FlatList } from "react-native";
 import { ExerciseInfo } from "../../stores/workout";
 import { AddExerciseCard } from "./AddExerciseCard";
@@ -19,7 +19,7 @@ export function AddExerciseList({
 }: AddExerciseListProps) {
   const [page, setPage] = useState(1);
 
-  const pagedExercises = React.useMemo(
+  const pagedExercises = useMemo(
     () => filteredExercises.slice(0, page * PAGE_SIZE),
     [filteredExercises, page]
   );

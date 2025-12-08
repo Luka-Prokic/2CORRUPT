@@ -1,4 +1,3 @@
-import React from "react";
 import { View } from "react-native";
 import { StrobeBlur } from "../../ui/misc/StrobeBlur";
 import { WIDTH } from "../../../utils/Dimensions";
