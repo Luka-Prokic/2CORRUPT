@@ -94,17 +94,6 @@ export const createCategorySlice: StateCreator<
         { id: "hip-flexors", name: "Hip Flexors" },
       ],
     },
-    {
-      id: "fullBody",
-      name: "Full Body",
-      muscles: [
-        { id: "forearms", name: "Forearms" },
-        { id: "grip", name: "Grip" },
-        { id: "core", name: "Core" },
-        { id: "legs", name: "Legs" },
-        { id: "shoulders", name: "Shoulders" },
-      ],
-    },
   ],
 
   equipment: [

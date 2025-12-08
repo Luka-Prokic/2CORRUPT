@@ -1,7 +1,5 @@
 import { useSettingsStore } from "../../stores/settingsStore";
 import { StrobeBlur } from "../ui/misc/StrobeBlur";
-import { Text } from "react-native";
-import { hexToRGBA } from "../../utils/HEXtoRGB";
 import { BounceButton } from "../ui/buttons/BounceButton";
 import { HEIGHT } from "../../utils/Dimensions";
 import { useTranslation } from "react-i18next";
@@ -15,10 +13,12 @@ export function StartWorkoutButton() {
   const { t } = useTranslation();
   const { setTypeOfView } = useUIStore();
   const { activeSession, activeTemplate } = useWorkoutStore();
+  const insets = useSafeAreaInsets();
+
   const isItActive = activeSession !== null;
   const isItEditing = activeTemplate !== null;
-  const insets = useSafeAreaInsets();
-  function handleStartWorkout() {
+
+  function handlePress() {
     if (isItActive) {
       setTypeOfView("workout");
     } else if (isItEditing) {
@@ -30,10 +30,10 @@ export function StartWorkoutButton() {
 
   return (
     <BounceButton
-      onPress={handleStartWorkout}
+      onPress={handlePress}
       style={{
         height: 64,
-        borderRadius: 100,
+        borderRadius: 32,
         marginHorizontal: 16,
         bottom: HEIGHT / 2 - insets.bottom,
         position: "absolute",
@@ -41,17 +41,14 @@ export function StartWorkoutButton() {
         right: 0,
         alignItems: "center",
       }}
-      color={hexToRGBA(theme.accent, 0.2)}
+      haptics
     >
       <StrobeBlur
-        colors={[
-          theme.caka,
-          theme.secondaryBackground,
-          theme.accent,
-          theme.tint,
-        ]}
-        style={{ width: "100%", height: "100%" }}
-        duration={5000}
+        style={{
+          width: "100%",
+          height: "100%",
+          backgroundColor: theme.tint,
+        }}
       >
         <IText
           text={
@@ -61,7 +58,7 @@ export function StartWorkoutButton() {
               ? t("app.continue-template")
               : t("app.start-workout")
           }
-          color={theme.text}
+          color={theme.border}
         />
       </StrobeBlur>
     </BounceButton>

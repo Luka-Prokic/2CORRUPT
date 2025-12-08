@@ -75,7 +75,7 @@ export const createDraftSlice: StateCreator<WorkoutStore, [], [], {}> = (
     if (!user || !exercise || exercise.userId !== user?.id) return;
 
     const newExercises = exercises.filter(
-      (e) => e.id !== exerciseId && e.userId !== user?.id
+      (e) => !(e.id === exerciseId && e.userId === user?.id)
     );
 
     set({

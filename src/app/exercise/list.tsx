@@ -19,10 +19,18 @@ export default function ExerciseListScreen() {
 
   function handlePress(exerciseId: string) {
     startDraftExercise(exercises.find((e) => e.id === exerciseId));
-    router.push({
-      pathname: "/exercise/[exerciseId]/edit",
-      params: { exerciseId },
-    });
+    const exercise = exercises.find((e) => e.id === exerciseId);
+    if (exercise.userId === user?.id)
+      router.push({
+        pathname: "/exercise/[exerciseId]/edit",
+        params: { exerciseId },
+      });
+    else {
+      router.push({
+        pathname: "/exercise/[exerciseId]/create",
+        params: { exerciseId },
+      });
+    }
   }
 
   function handleLongPress(exerciseId: string) {
