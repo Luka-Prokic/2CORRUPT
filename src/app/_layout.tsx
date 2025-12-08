@@ -65,6 +65,15 @@ export default function Layout() {
               }}
             />
 
+            {/* Exercise */}
+            <Stack.Screen
+              name="exercise"
+              options={{
+                presentation: "modal",
+                headerShown: false,
+              }}
+            />
+
             {/* Profile */}
             <Stack.Screen
               name="profile"

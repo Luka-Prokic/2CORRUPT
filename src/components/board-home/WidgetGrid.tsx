@@ -9,6 +9,8 @@ import { SplitsWidget } from "./widgets/SplitsWidget";
 import { SummaryWidget } from "./widgets/summary-widget/SummaryWidget";
 import { TemplatesWidget } from "./widgets/templates-widget/TemplatesWidget";
 import { SettingsWidget } from "./widgets/SettingsWidget";
+import { BounceButton } from "../ui/buttons/BounceButton";
+import { router } from "expo-router";
 
 const WIDGET_SIZE = (WIDTH - 40) / 2; // 2 columns with padding
 
@@ -25,7 +27,7 @@ export function WidgetGrid() {
         paddingHorizontal: 16,
       }}
     >
-      <View
+      <BounceButton
         style={{
           width: WIDGET_SIZE,
           height: WIDGET_SIZE,
@@ -34,6 +36,9 @@ export function WidgetGrid() {
           borderWidth: 1,
           borderColor: theme.border,
           marginBottom: 8,
+        }}
+        onPress={() => {
+          router.push("/exercise/list");
         }}
       />
 
