@@ -58,7 +58,7 @@ export function ExerciseInfoNameInput({
         ref={inputRef}
         value={value}
         onChangeText={handleChange}
-        placeholder={t("template-view.template-name")}
+        placeholder={t("exercise.exercise-name-input")}
         placeholderTextColor={theme.grayText}
         editable={!disabled}
         {...textInputProps}

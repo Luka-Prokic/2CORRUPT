@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import { IButton } from "../../ui/buttons/IButton";
 import { useWorkoutStore, WorkoutTemplate } from "../../../stores/workout";
 import { useSettingsStore } from "../../../stores/settings";
+import { IText } from "../../ui/text/IText";
 
 interface SelectAllTemplatesButtonProps {
   selected: WorkoutTemplate[];
@@ -25,7 +26,6 @@ export function SelectAllTemplatesButton({
   }
   return (
     <IButton
-      title={t("app.all")}
       onPress={selectAll}
       style={{
         height: 44,
@@ -33,6 +33,12 @@ export function SelectAllTemplatesButton({
       }}
       textColor={allSelected ? theme.handle : theme.info}
       disabled={allSelected}
-    />
+    >
+      <IText
+        text={t("app.all")}
+        size={16}
+        color={allSelected ? theme.handle : theme.info}
+      />
+    </IButton>
   );
 }

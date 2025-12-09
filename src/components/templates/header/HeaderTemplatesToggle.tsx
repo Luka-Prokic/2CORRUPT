@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { useSettingsStore } from "../../../stores/settings";
 import { IButton } from "../../ui/buttons/IButton";
-
+import { IText } from "../../ui/text/IText";
 interface HeaderTemplatesToggleProps {
   mode: boolean;
   toggleMode: () => void;
@@ -16,7 +16,6 @@ export function HeaderTemplatesToggle({
 
   return (
     <IButton
-      title={mode ? t("button.cancel") : t("button.select")}
       onPress={toggleMode}
       style={{
         paddingHorizontal: 8,
@@ -24,7 +23,12 @@ export function HeaderTemplatesToggle({
         borderRadius: 17,
       }}
       color={theme.info}
-      textColor={theme.secondaryText}
-    />
+    >
+      <IText
+        text={mode ? t("button.cancel") : t("button.select")}
+        size={16}
+        color={theme.secondaryText}
+      />
+    </IButton>
   );
 }

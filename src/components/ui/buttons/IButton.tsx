@@ -67,6 +67,7 @@ export function IButton({
           text={title}
           style={{
             color: textColor ?? theme.text,
+            textAlign: "center",
           }}
           weight="bold"
           numberOfLines={1}

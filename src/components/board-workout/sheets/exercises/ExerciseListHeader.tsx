@@ -8,6 +8,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useActionSheet } from "../../../../utils/useActionSheet";
 import { LinearGradient } from "expo-linear-gradient";
 import { hexToRGBA } from "../../../../utils/HEXtoRGB";
+import { IText } from "../../../ui/text/IText";
 
 interface ExerciseListHeaderProps {
   selectMode: boolean;
@@ -86,14 +87,18 @@ export function ExerciseListHeader({
     return (
       <Fragment>
         <IButton
-          title={t("app.all")}
           onPress={handleSelectAllExercises}
           style={{
             height: 24,
           }}
-          textColor={isAllSelected ? theme.handle : theme.grayText}
           disabled={isAllSelected}
-        />
+        >
+          <IText
+            text={t("app.all")}
+            size={16}
+            color={isAllSelected ? theme.handle : theme.grayText}
+          />
+        </IButton>
 
         <View
           style={{
@@ -154,9 +159,6 @@ export function ExerciseListHeader({
         }}
       >
         <IButton
-          title={
-            selectMode ? t("workout-board.cancel") : t("workout-board.select")
-          }
           onPress={toggleSelectMode}
           style={{
             paddingHorizontal: 8,
@@ -164,8 +166,15 @@ export function ExerciseListHeader({
             borderRadius: 17,
           }}
           color={theme.grayText}
-          textColor={theme.secondaryText}
-        />
+        >
+          <IText
+            text={
+              selectMode ? t("workout-board.cancel") : t("workout-board.select")
+            }
+            size={16}
+            color={theme.secondaryText}
+          />
+        </IButton>
 
         {selectMode && selectModeButtons()}
       </LinearGradient>

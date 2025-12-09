@@ -10,6 +10,7 @@ import { SplitHeader } from "../../../components/splits/SplitHeader";
 import { ScreenView } from "../../../components/ui/containers/ScreenView";
 import { SplitFooter } from "../../../components/splits/SplitFooter";
 import { EmptyFooter } from "../../../components/ui/containers/EmptyFooter";
+import { SplitActiveTitle } from "../../../components/splits/header/SplitActiveTitle";
 
 export default function SplitEditScreen() {
   const { theme } = useSettingsStore();
@@ -40,7 +41,7 @@ export default function SplitEditScreen() {
     <Fragment>
       <Stack.Screen
         options={{
-          title: `${split.name}`,
+          headerTitle: () => <SplitActiveTitle split={split} />,
           headerRight: headerRight,
         }}
       />

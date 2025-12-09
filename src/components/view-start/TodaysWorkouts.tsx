@@ -38,7 +38,6 @@ export function TodaysWorkouts() {
         }}
       >
         <IText text={activeSplitPlan.plan.name} color={theme.text} />
-        {/* <Ionicons name="flash" size={24} color={theme.fifthBackground} /> */}
       </View>
       <WidgetFlatList
         data={workouts}

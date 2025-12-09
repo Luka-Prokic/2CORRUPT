@@ -12,8 +12,8 @@ import { StartWorkoutBottomSheet } from "./StartWorkoutBottomSheet";
 import { Fragment, useRef } from "react";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { router } from "expo-router";
-import { useStartWorkoutOfTemplate } from "../../../features/start/useStartWorkout";
 import { useCorrectTime } from "../../../features/format/useCorrectTime";
+import { useTranslation } from "react-i18next";
 
 interface PlannedActiveSplitWorkoutCardProps {
   splitPlan: SplitPlan;
@@ -30,6 +30,9 @@ export function PlannedActiveSplitWorkoutCard({
   date,
 }: PlannedActiveSplitWorkoutCardProps) {
   const { fullWidth, widgetUnit } = useWidgetUnit();
+  const { t } = useTranslation();
+  const locale = t("locale");
+
   const { theme } = useSettingsStore();
   const { getTemplateById } = useWorkoutStore();
   const ref = useRef<BottomSheetModal>(null);
@@ -111,7 +114,7 @@ export function PlannedActiveSplitWorkoutCard({
           }}
           renderItem={({ item }) => (
             <MidText
-              text={`• ${item.name}`}
+              text={`• ${item.name[locale]}`}
               color={theme.text}
               style={{ textAlign: "left", lineHeight: ITEM_HEIGHT }}
               adjustsFontSizeToFit
@@ -120,11 +123,7 @@ export function PlannedActiveSplitWorkoutCard({
           )}
         />
       </StrobeButton>
-      <StartWorkoutBottomSheet
-        ref={ref}
-        templateId={workout.templateId}
-        onPress={() => useStartWorkoutOfTemplate(workout.templateId)}
-      />
+      <StartWorkoutBottomSheet ref={ref} templateId={workout.templateId} />
     </Fragment>
   );
 }

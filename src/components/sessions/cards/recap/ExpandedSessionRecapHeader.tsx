@@ -26,6 +26,8 @@ export function ExpandedSessionRecapHeader({
 
   const endOfSession = useCorrectTime(session.endTime);
 
+  const startWorkout = useStartWorkoutOfSession(session.id);
+
   return (
     <View
       style={{
@@ -47,7 +49,7 @@ export function ExpandedSessionRecapHeader({
         <IText color={theme.tint} text={`${startOfSession}-${endOfSession}`} />
         <TextButton
           text={t("button.repeat")}
-          onPress={useStartWorkoutOfSession(session.id)}
+          onPress={startWorkout}
           textStyle={{ fontSize: 28 }}
           color={theme.fifthBackground}
         />

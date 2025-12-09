@@ -15,13 +15,29 @@ export const createDraftSlice: StateCreator<WorkoutStore, [], [], {}> = (
   startDraftExercise: (exercise?: ExerciseInfo) => {
     const user = useUserStore.getState().user;
 
-    const newDraftExercise: ExerciseInfo = {
-      ...(exercise ?? {}),
-      id: `exercise-${nanoid()}`,
-      defaultName: exercise?.defaultName || { en: "", rs: "" },
-      userId: user?.id,
-      updatedAt: new Date().toISOString(),
-    };
+    let newDraftExercise: ExerciseInfo | null = null;
+
+    if (exercise) {
+      newDraftExercise = {
+        ...exercise,
+        id: `exercise-${nanoid()}`,
+        defaultName: exercise?.defaultName || { en: "", rs: "" },
+        userId: user?.id,
+        updatedAt: new Date().toISOString(),
+      };
+    } else {
+      newDraftExercise = {
+        id: `exercise-${nanoid()}`,
+        defaultName: { en: "", rs: "" },
+        userId: user?.id,
+        updatedAt: new Date().toISOString(),
+        category: null,
+        primaryMuscles: [],
+        secondaryMuscles: [],
+        equipment: [],
+        metadata: {},
+      };
+    }
 
     set({
       draftExercise: { ...newDraftExercise },

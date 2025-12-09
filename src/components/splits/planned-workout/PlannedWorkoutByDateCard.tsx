@@ -22,6 +22,8 @@ export function PlannedWorkoutByDateCard({
   const template = getTemplateById(plannedWorkout.templateId);
   if (!template) return null;
 
+  const startWorkout = useStartWorkoutOfTemplate(template.id);
+
   return (
     <StrobeButton
       style={{
@@ -36,7 +38,7 @@ export function PlannedWorkoutByDateCard({
         justifyContent: "space-between",
         alignItems: "center",
       }}
-      onPress={useStartWorkoutOfTemplate(template.id)}
+      onPress={startWorkout}
     >
       <IText text={template.name} color={theme.text} />
     </StrobeButton>

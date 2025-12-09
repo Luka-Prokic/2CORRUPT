@@ -6,12 +6,29 @@ import { ExerciseName } from "../../../view-workout/table/header/ExerciseName";
 import { TextButton } from "../../../ui/buttons/TextButton";
 import { useTranslation } from "react-i18next";
 import { DescriptionText } from "../../../ui/text/DescriptionText";
+import { router } from "expo-router";
 
 export function ExerciseNameSheet() {
   const { theme } = useSettingsStore();
-  const { activeExercise, updateActiveExercise, activeTemplate } =
-    useWorkoutStore();
+  const {
+    activeExercise,
+    updateActiveExercise,
+    activeTemplate,
+    startDraftExercise,
+    getExerciseById,
+  } = useWorkoutStore();
   const { t } = useTranslation();
+
+  function handleCreateExerciseCopy() {
+    const exercise = getExerciseById(activeExercise?.exerciseInfoId);
+    // if (!exercise) return;
+
+    startDraftExercise(exercise);
+    router.push({
+      pathname: "/exercise/[exerciseId]/create",
+      params: { exerciseId: activeExercise?.id },
+    });
+  }
 
   return (
     <View
@@ -63,9 +80,7 @@ export function ExerciseNameSheet() {
       />
       <TextButton
         text={t("workout-board.create-exercise-copy")}
-        onPress={() => {
-          //TODO: handle routing to create new exercise screen
-        }}
+        onPress={handleCreateExerciseCopy}
         color={activeTemplate ? theme.tint : theme.accent}
       />
 

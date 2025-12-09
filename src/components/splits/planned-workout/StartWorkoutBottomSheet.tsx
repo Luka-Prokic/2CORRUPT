@@ -12,6 +12,7 @@ import { StrobeButton } from "../../ui/buttons/StrobeButton";
 import { useTranslation } from "react-i18next";
 import { TemplateName } from "../../board-template/sheets/template/TemplateName";
 import { DescriptionText } from "../../ui/text/DescriptionText";
+import { useStartWorkoutOfTemplate } from "../../../features/start/useStartWorkout";
 
 interface StartWorkoutBottomSheetProps {
   ref: React.RefObject<BottomSheetModal>;
@@ -23,7 +24,7 @@ interface StartWorkoutBottomSheetProps {
 export function StartWorkoutBottomSheet({
   ref,
   templateId,
-  buttonText ,
+  buttonText,
   onPress,
 }: StartWorkoutBottomSheetProps) {
   const { theme } = useSettingsStore();
@@ -35,7 +36,10 @@ export function StartWorkoutBottomSheet({
   const cardHeight = useLayoutPreviewHeight(template.layout);
   const finalHeight = Math.min(cardHeight, HEIGHT * 0.5);
 
+  const startWorkout = useStartWorkoutOfTemplate(templateId);
+
   function handleStartWorkout() {
+    startWorkout();
     onPress?.();
     (ref as React.RefObject<BottomSheetModal>)?.current?.close();
   }

@@ -11,9 +11,7 @@ export function ExerciseDraftHeaderLeft() {
 
   function handlePress() {
     clearDraftExercise();
-    router.dismissTo({
-      pathname: "/exercise/list",
-    });
+    router.back();
   }
 
   return (
