@@ -4,7 +4,7 @@ import {
   TouchableOpacityProps,
   GestureResponderEvent,
 } from "react-native";
-import { useSettingsStore } from "../../../stores/settingsStore";
+import { HapticsMode, useSettingsStore } from "../../../stores/settingsStore";
 import { IText } from "../text/IText";
 import { useHaptics } from "../../../features/ui/useHaptics";
 
@@ -14,7 +14,7 @@ interface IButtonProps extends Omit<TouchableOpacityProps, "style"> {
   color?: string;
   textColor?: string;
   style?: ViewStyle | ViewStyle[];
-  haptics?: boolean;
+  haptics?: HapticsMode | boolean;
 }
 
 export function IButton({
@@ -27,7 +27,13 @@ export function IButton({
   ...rest
 }: IButtonProps) {
   const { theme } = useSettingsStore();
-  const triggerHaptics = useHaptics({ modeType: "max", hapticType: "medium" });
+
+  const hapticsMode =
+    typeof haptics === "string" ? (haptics as HapticsMode) : "max";
+  const triggerHaptics = useHaptics({
+    modeType: hapticsMode,
+    hapticType: "medium",
+  });
 
   function handlePress(e: GestureResponderEvent) {
     rest?.onPress(e);

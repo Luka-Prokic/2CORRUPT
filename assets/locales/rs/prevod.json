@@ -600,6 +600,9 @@
     "sync-exercise-names": "Poveži Nazive Vežbe",
     "exercise-name-input": "Naziv Vežbe...",
     "name": "Naziv",
-    "select-category": "Izaberi Kategoriju"
+    "select-category": "Izaberi Kategoriju",
+    "select-equipment": "Izaberi Opremu",
+    "primary": "Primarni",
+    "secondary": "Sekundarni"
   }
 }

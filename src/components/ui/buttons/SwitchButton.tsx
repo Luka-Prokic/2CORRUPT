@@ -50,7 +50,7 @@ export function SwitchButton({
           borderRadius: height / 2,
           justifyContent: "center",
           alignItems: "center",
-          backgroundColor: theme.background + "40",
+          backgroundColor: theme.grayText + "20",
           ...style,
         }}
       >
@@ -100,7 +100,7 @@ export function SwitchButton({
         borderRadius: height / 2,
         position: "relative",
         justifyContent: "center",
-        backgroundColor: theme.grayText + "40",
+        backgroundColor: theme.grayText + "20",
         padding: 2,
         ...style,
       }}
@@ -114,7 +114,7 @@ export function SwitchButton({
             top: 0,
             left: 0,
             borderRadius: height / 2,
-            backgroundColor: theme.secondaryBackground,
+            backgroundColor: theme.primaryBackground,
           },
           knobStyle,
         ]}

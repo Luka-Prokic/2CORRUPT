@@ -3,12 +3,13 @@ import { CenterCardSlider } from "../../ui/sliders/CenterCardSlider";
 import { useSettingsStore } from "../../../stores/settings";
 import { useHaptics } from "../../../features/ui/useHaptics";
 import { MuscleCategory, useWorkoutStore } from "../../../stores/workout";
-import { Fragment, useMemo } from "react";
+import { useMemo } from "react";
 import { InfoText } from "../../ui/text/InfoText";
 import { IButton } from "../../ui/buttons/IButton";
 import { useTranslation } from "react-i18next";
+import { View } from "react-native";
 
-export function EditCategory() {
+export function MuscleCategorySelect() {
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
 
@@ -32,7 +33,7 @@ export function EditCategory() {
   }, [draftExercise?.category]);
 
   return (
-    <Fragment>
+    <View style={{ gap: 4 }}>
       <CenterCardSlider
         data={muscleCategories}
         cardWidth={WIDTH / 3}
@@ -62,12 +63,14 @@ export function EditCategory() {
               alignItems: "center",
             }}
             textColor={
-              item.id === draftExercise?.category ? theme.tint : theme.grayText
+              item.id === draftExercise?.category
+                ? theme.fifthBackground
+                : theme.grayText
             }
           />
         )}
       />
       <InfoText text={t("exercise.select-category")} />
-    </Fragment>
+    </View>
   );
 }

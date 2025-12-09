@@ -601,6 +601,10 @@
     "sync-exercise-names": "Sync Exercise Names",
     "exercise-name-input": "Exercise Name...",
     "name": "Name",
-    "select-category": "Select Category"
+    "select-category": "Select Category",
+    "select-equipment": "Select Equipment",
+    "primary": "Primary",
+    "secondary": "Secondary",
+    "select-muscles": "Select Muscles"
   }
 }

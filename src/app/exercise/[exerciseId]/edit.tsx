@@ -5,8 +5,8 @@ import { ScreenView } from "../../../components/ui/containers/ScreenView";
 import { useWorkoutStore } from "../../../stores/workout";
 import { ExerciseDraftHeaderLeft } from "../../../components/exercises/header/ExerciseDraftHeaderLeft";
 import { ExerciseEditHeaderRight } from "../../../components/exercises/header/ExerciseEditHeaderRight";
-import { EditExerciseName } from "../../../components/exercises/edit/EditExerciseName";
-import { EditCategory } from "../../../components/exercises/edit/EditCategory";
+import { EditExerciseName } from "../../../components/exercises/edit-create/EditExerciseName";
+import { MuscleCategorySelect } from "../../../components/exercises/edit-create/MuscleCategorySelect";
 
 export default function ExerciseEditScreen() {
   const { draftExercise } = useWorkoutStore();
@@ -29,7 +29,7 @@ export default function ExerciseEditScreen() {
           <EditExerciseName exercise={draftExercise} />
 
           {/* Exercise muscle categorie */}
-          <EditCategory />
+          <MuscleCategorySelect />
 
           {/* Exercise primary/secondary muscles */}
 

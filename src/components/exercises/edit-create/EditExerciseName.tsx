@@ -3,8 +3,7 @@ import { InfoText } from "../../ui/text/InfoText";
 import { ExerciseInfoNameInput } from "../ExerciseInfoNameInput";
 import { useTranslation } from "react-i18next";
 import { ExerciseInfo } from "../../../stores/workout/types";
-import { SyncExerciseName } from "./SyncExerciseName";
-import { useWorkoutStore } from "../../../stores/workout";
+import { View } from "react-native";
 
 interface EditExerciseNameProps {
   exercise: ExerciseInfo;
@@ -13,19 +12,9 @@ interface EditExerciseNameProps {
 export function EditExerciseName({ exercise }: EditExerciseNameProps) {
   const { t } = useTranslation();
   const locale = t("locale");
-  const { updateDraftExercise } = useWorkoutStore();
-
-  const handleSync = () => {
-    updateDraftExercise({
-      defaultName: {
-        en: exercise.defaultName[locale],
-        rs: exercise.defaultName[locale],
-      },
-    });
-  };
 
   return (
-    <Fragment>
+    <View style={{ gap: 4 }}>
       <ExerciseInfoNameInput
         exercise={exercise}
         locale={locale}
@@ -46,11 +35,6 @@ export function EditExerciseName({ exercise }: EditExerciseNameProps) {
           <InfoText text={`${t("language.rs")} ${t("exercise.name")}`} />
         </Fragment>
       )}
-
-      <SyncExerciseName
-        names={[exercise.defaultName.en, exercise.defaultName.rs]}
-        onSync={handleSync}
-      />
-    </Fragment>
+    </View>
   );
 }

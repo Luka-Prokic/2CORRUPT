@@ -41,6 +41,7 @@ interface CenterCardSliderProps<T>
   animationType?: "card" | "wheel";
   disableScroll?: boolean;
   hapticFeedback?: boolean;
+  startAtMiddle?: boolean;
 }
 
 export function CenterCardSlider<T>({
@@ -69,6 +70,7 @@ export function CenterCardSlider<T>({
   animationType = "card",
   disableScroll = false,
   hapticFeedback = false,
+  startAtMiddle = false,
   ...flatListProps
 }: CenterCardSliderProps<T>) {
   const { theme } = useSettingsStore();
@@ -115,6 +117,10 @@ export function CenterCardSlider<T>({
       },
     }
   );
+
+  const initialIndex = startAtMiddle
+    ? Math.floor(fullData.length / 2)
+    : selectedIndex;
 
   return (
     <View style={{ position: "relative" }}>
@@ -195,6 +201,7 @@ export function CenterCardSlider<T>({
           ...styleSlider,
         }}
         nestedScrollEnabled
+        initialScrollIndex={initialIndex}
         ListEmptyComponent={emptyCard}
       />
       {!hideDots && !showDotsTop && fullData.length > 1 && (
