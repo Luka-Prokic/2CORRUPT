@@ -337,6 +337,7 @@ export interface DraftSlice {
   updateDraftExercise: (updates: Partial<ExerciseInfo>) => void;
   clearDraftExercise: () => void;
   saveDraftExercise: () => void; // moves into exercises[]
+  updateExerciseWithDraft: () => void; // updates user made exercise in exercises[] with draft exercise
 
   setPlaceholderExercise: (exercise: ExerciseInfo) => void;
   clearPlaceholderExercise: () => void;

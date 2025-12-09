@@ -6,11 +6,11 @@ import { useSettingsStore } from "../../../stores/settingsStore";
 
 export function ExerciseEditHeaderRight() {
   const { t } = useTranslation();
-  const { saveDraftExercise } = useWorkoutStore();
+  const { updateExerciseWithDraft } = useWorkoutStore();
   const { theme } = useSettingsStore();
 
   function handlePress() {
-    saveDraftExercise();
+    updateExerciseWithDraft();
     router.dismissTo({
       pathname: "/exercise/list",
     });

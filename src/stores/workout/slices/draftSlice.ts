@@ -57,6 +57,29 @@ export const createDraftSlice: StateCreator<WorkoutStore, [], [], {}> = (
     });
   },
 
+  updateExerciseWithDraft: () => {
+    const { draftExercise, exercises, placeholderExercise } = get();
+    const user = useUserStore.getState().user;
+    if (!draftExercise || placeholderExercise.userId !== user?.id) return;
+
+    const savedExercise: ExerciseInfo = {
+      ...draftExercise,
+      id: placeholderExercise.id,
+      updatedAt: new Date().toISOString(),
+      userId: user?.id,
+    };
+
+    const updatedExercise = exercises.map((e) =>
+      e.id === placeholderExercise.id ? savedExercise : e
+    );
+
+    set({
+      exercises: updatedExercise,
+      draftExercise: null,
+      placeholderExercise: null,
+    });
+  },
+
   // --- Placeholder Logic ---
   setPlaceholderExercise: (exercise: ExerciseInfo) => {
     set({ placeholderExercise: { ...exercise } });
