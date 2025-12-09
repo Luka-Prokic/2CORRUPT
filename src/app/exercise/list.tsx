@@ -7,15 +7,13 @@ import { IText } from "../../components/ui/text/IText";
 import { StrobeOptionButton } from "../../components/ui/buttons/StrobeOptionButton";
 import { ScreenView } from "../../components/ui/containers/ScreenView";
 import { useWorkoutStore } from "../../stores/workout";
-import { useSettingsStore } from "../../stores/settingsStore";
 import { useUserStore } from "../../stores/user/useUserStore";
+import { InfoExerciseCard } from "../../components/exercises/InfoExerciseCard";
 
 export default function ExerciseListScreen() {
-  const { theme } = useSettingsStore();
   const { user } = useUserStore();
 
-  const { exercises, startDraftExercise, draftExercise, removeExercise } =
-    useWorkoutStore();
+  const { exercises, startDraftExercise, draftExercise } = useWorkoutStore();
 
   function handlePress(exerciseId: string) {
     startDraftExercise(exercises.find((e) => e.id === exerciseId));
@@ -33,17 +31,6 @@ export default function ExerciseListScreen() {
     }
   }
 
-  function handleLongPress(exerciseId: string) {
-    const exercise = exercises.find((e) => e.id === exerciseId);
-    if (exercise.userId !== user?.id)
-      router.push({
-        pathname: "/exercise/[exerciseId]/info",
-        params: { exerciseId },
-      });
-
-    removeExercise(exerciseId);
-  }
-
   const reversedExercises = [...exercises].reverse();
 
   return (
@@ -51,12 +38,13 @@ export default function ExerciseListScreen() {
       <Stack.Screen
         options={{
           headerLeft: () => <Fragment />,
-          headerTitle: () => <IText text="Exercises" />,
+          headerTitle: () => (
+            <IText text={draftExercise?.defaultName?.en || "Exercises"} />
+          ),
         }}
       />
       <ScreenContent>
         <ScreenView>
-          <IText text={draftExercise?.defaultName?.en || "no"} />
           <StrobeOptionButton
             title={"+ New Exercise"}
             height={64}
@@ -65,16 +53,7 @@ export default function ExerciseListScreen() {
           <FlatList
             data={reversedExercises}
             scrollEnabled={false}
-            renderItem={({ item }) => (
-              <StrobeOptionButton
-                title={item.defaultName.en}
-                height={64}
-                strobeDisabled
-                onPress={() => handlePress(item.id)}
-                onLongPress={() => handleLongPress(item.id)}
-                color={item.userId === user?.id ? theme.accent : theme.info}
-              />
-            )}
+            renderItem={({ item }) => <InfoExerciseCard exercise={item} />}
             ListFooterComponent={() => <EmptyFooter />}
           />
         </ScreenView>
