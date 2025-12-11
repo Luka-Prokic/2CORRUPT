@@ -287,6 +287,7 @@ export const createTemplateSlice: StateCreator<
 
   cloneTemplate: (templateId: string, tempName: string) => {
     const { templates } = get();
+    const user = useUserStore.getState().user;
     const templateToClone = templates.find((t) => t.id === templateId);
     if (!templateToClone) return null;
 
@@ -294,6 +295,7 @@ export const createTemplateSlice: StateCreator<
       ...templateToClone,
       id: `template-${nanoid()}`,
       primeId: templateId,
+      userId: user?.id || null,
       name: tempName,
       version: templateToClone.version + 1,
       createdAt: new Date().toISOString(),

@@ -9,9 +9,11 @@ import { BottomAddWorkoutSection } from "../../../../components/splits/add-worko
 import { useWorkoutStore } from "../../../../stores/workout/useWorkoutStore";
 import { findTemplteOutOfWorkoutId } from "../../../../features/workout/findTemplteOutOfWorkoutId";
 import { IText } from "../../../../components/ui/text/IText";
+import { useSettingsStore } from "../../../../stores/settingsStore";
 
 export default function AddPlannedWorkoutScreen() {
   const { t } = useTranslation();
+  const { theme } = useSettingsStore();
   const { workoutId, mode } = useLocalSearchParams<{
     workoutId?: string;
     mode?: string;
@@ -41,11 +43,13 @@ export default function AddPlannedWorkoutScreen() {
             />
           ),
           headerBlurEffect: "none",
+          headerTransparent: false,
+          headerStyle: {
+            backgroundColor: theme.background,
+          },
         }}
       />
       <ScreenContent
-        scroll={false}
-        edges={["top"]}
         HeaderComponent={
           <WorkoutFilter setFilteredTemplates={setFilteredTemplates} />
         }

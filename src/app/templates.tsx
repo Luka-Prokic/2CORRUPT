@@ -17,6 +17,7 @@ import { AddToSplitSelectedTemplates } from "../components/templates/header/AddT
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { TemplateFilter } from "../components/templates/TemplateFilter";
 import { EmptyFooter } from "../components/ui/containers/EmptyFooter";
+import { TemplateSectionList } from "../components/templates/TempalteSectionList";
 
 export default function TemplatesScreen() {
   const { t } = useTranslation();
@@ -101,39 +102,27 @@ export default function TemplatesScreen() {
           headerTitle: headerTitle,
           headerRight: headerRight,
           headerBlurEffect: "none",
+          headerTransparent: false,
+          headerStyle: {
+            backgroundColor: theme.background,
+          },
         }}
       />
       <ScreenContent
         HeaderComponent={
-          <TemplateFilter
-            setFilteredTemplates={setFilteredTemplates}
-            style={{ marginTop: insets.top }}
-          />
+          <TemplateFilter setFilteredTemplates={setFilteredTemplates} />
         }
       >
-        <FlatList
-          data={filteredTemplates}
-          numColumns={2}
-          showsVerticalScrollIndicator={false}
-          scrollEnabled={false}
-          keyExtractor={(item, index) => `${item.createdAt}-${index}`}
-          renderItem={({ item }) => (
+        <TemplateSectionList
+          templates={filteredTemplates}
+          renderCard={(template) => (
             <TemplateSelectCard
-              template={item}
+              template={template}
               selectMode={selectMode}
               onSelect={setSelected}
               selected={selected}
             />
           )}
-          contentContainerStyle={{
-            paddingHorizontal: 16,
-            gap: 8,
-          }}
-          columnWrapperStyle={{
-            gap: 8,
-          }}
-          ListEmptyComponent={footerComponent}
-          ListFooterComponent={<EmptyFooter />}
         />
       </ScreenContent>
     </Fragment>

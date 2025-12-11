@@ -48,8 +48,8 @@ export function ExerciseSectionList({
     }
 
     return [
-      madeByYou.length > 0 && { title: titleMap.madeByYou, data: madeByYou },
       favorites.length > 0 && { title: titleMap.favorites, data: favorites },
+      madeByYou.length > 0 && { title: titleMap.madeByYou, data: madeByYou },
       rest.length > 0 && { title: titleMap.rest, data: rest },
     ].filter(Boolean) as { title: string; data: ExerciseInfo[] }[];
   }, [exercises, user?.id]);
