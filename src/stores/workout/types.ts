@@ -327,6 +327,7 @@ export interface ExerciseSlice {
   swapExerciseInActiveExercise: (exerciseId: string) => void;
 
   getExerciseById: (exerciseId: string) => ExerciseInfo | null;
+  updateExerciseMetadata: (exerciseId: string, metadata: Record<string, any>) => void;
 }
 
 export interface DraftSlice {

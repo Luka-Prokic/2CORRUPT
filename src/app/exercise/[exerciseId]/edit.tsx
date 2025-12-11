@@ -17,6 +17,7 @@ export default function ExerciseEditScreen() {
     <Fragment>
       <Stack.Screen
         options={{
+          headerBackButtonDisplayMode: "minimal",
           headerLeft: () => <ExerciseDraftHeaderLeft />,
           headerTitle: "edit",
           headerRight: () => <ExerciseEditHeaderRight />,

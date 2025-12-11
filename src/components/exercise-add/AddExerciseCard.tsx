@@ -4,7 +4,7 @@ import { hexToRGBA } from "../../utils/HEXtoRGB";
 import { TouchableOpacity, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { StrobeButton } from "../ui/buttons/StrobeButton";
-import { useMemo } from "react";
+import { memo, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 interface AddExerciseCardProps {
@@ -13,6 +13,8 @@ interface AddExerciseCardProps {
   unSelect: (exercise: ExerciseInfo) => void;
   selectedExercises: ExerciseInfo[];
 }
+
+export const MemoizedAddExerciseCard = memo(AddExerciseCard);
 
 export function AddExerciseCard({
   exercise,

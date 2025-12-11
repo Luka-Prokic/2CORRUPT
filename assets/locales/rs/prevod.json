@@ -604,6 +604,9 @@
     "select-category": "Izaberi Kategoriju",
     "select-equipment": "Izaberi Opremu",
     "primary": "Primarni",
-    "secondary": "Sekundarni"
+    "secondary": "Sekundarni",
+    "made-by-you": "Ti Si Kreirao",
+    "your-favorites": "Tvoje Omiljene",
+    "rest-of-them": "Ostale Vežbe"
   }
 }

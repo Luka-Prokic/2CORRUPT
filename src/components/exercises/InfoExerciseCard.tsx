@@ -3,22 +3,25 @@ import { ExerciseInfo } from "../../stores/workout/types";
 import { hexToRGBA } from "../../utils/HEXtoRGB";
 import { Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useMemo } from "react";
+import { memo, useMemo, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { router } from "expo-router";
-import { useWorkoutStore } from "../../stores/workout";
-import { useUserStore } from "../../stores/user/useUserStore";
 import { IButton } from "../ui/buttons/IButton";
+import { Swipeable } from "react-native-gesture-handler";
+import { WIDTH } from "../../utils/Dimensions";
+import { InfoExerciseSwipeActions } from "./InfoExerciseSwipeActions";
+import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 
 interface InfoExerciseCardProps {
   exercise: ExerciseInfo;
 }
 
+export const MemoizedInfoExerciseCard = memo(InfoExerciseCard);
+
 export function InfoExerciseCard({ exercise }: InfoExerciseCardProps) {
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
-  const { user } = useUserStore();
-  const { removeExercise } = useWorkoutStore();
+  const swipeableRef = useRef<Swipeable>(null);
 
   const translatedPrimary = useMemo(
     () => exercise.primaryMuscles?.map((m) => t(`body-parts.${m}`)),
@@ -30,72 +33,69 @@ export function InfoExerciseCard({ exercise }: InfoExerciseCardProps) {
     [exercise.secondaryMuscles]
   );
 
-  function handlePress() {
-    router.push({
-      pathname: "/exercise/[exerciseId]/info",
-      params: { exerciseId: exercise.id },
-    });
-  }
-
-  function handleLongPress() {
-    if (exercise.userId !== user?.id) return;
-
-    removeExercise(exercise.id);
-  }
-
   return (
-    <IButton
-      style={{
-        flex: 1,
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
-        paddingHorizontal: 16,
-        paddingVertical: 12,
-        height: 72,
-        borderRadius: 0,
-        backgroundColor: theme.secondaryBackground,
-      }}
-      onPress={handlePress}
-      onLongPress={handleLongPress}
+    <Swipeable
+      ref={swipeableRef}
+      renderRightActions={() => (
+        <InfoExerciseSwipeActions
+          exercise={exercise}
+          swipeableRef={swipeableRef}
+        />
+      )}
     >
-      {/* Exercise info section */}
-      <View style={{ flex: 1 }}>
-        <Text
-          style={{
-            color: theme.text,
-            fontSize: 16,
-            fontWeight: "600",
-            marginBottom: 2,
-          }}
-        >
-          {exercise.defaultName[t("locale")]}
-        </Text>
-
-        {/* body parts detail line */}
-        <Text
-          style={{
-            color: theme.text,
-            fontSize: 14,
-          }}
-        >
-          {translatedPrimary?.join(", ")}
-
+      <Animated.View
+        entering={FadeIn}
+        exiting={FadeOut}
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+          paddingHorizontal: 16,
+          paddingVertical: 12,
+          height: 72,
+          width: WIDTH,
+          borderRadius: 0,
+          backgroundColor: theme.secondaryBackground,
+        }}
+      >
+        {/* Exercise info section */}
+        <View style={{ flex: 1 }}>
           <Text
             style={{
-              color: theme.grayText,
-              opacity: translatedSecondary?.length ? 1 : 0,
+              color: theme.text,
+              fontSize: 16,
+              fontWeight: "600",
+              marginBottom: 2,
             }}
           >
-            {" - "}
-            {translatedSecondary?.join(", ")}
+            {exercise.defaultName[t("locale")]}
           </Text>
-        </Text>
-      </View>
 
-      {/* Selection button section */}
-      <OptionButtons exercise={exercise} />
-    </IButton>
+          {/* body parts detail line */}
+          <Text
+            style={{
+              color: theme.text,
+              fontSize: 14,
+            }}
+          >
+            {translatedPrimary?.join(", ")}
+
+            <Text
+              style={{
+                color: theme.grayText,
+                opacity: translatedSecondary?.length ? 1 : 0,
+              }}
+            >
+              {" - "}
+              {translatedSecondary?.join(", ")}
+            </Text>
+          </Text>
+        </View>
+
+        {/* Selection button section */}
+        <OptionButtons exercise={exercise} />
+      </Animated.View>
+    </Swipeable>
   );
 }
 
@@ -105,71 +105,31 @@ interface OptionButtonsProps {
 
 function OptionButtons({ exercise }: OptionButtonsProps) {
   const { theme } = useSettingsStore();
-  const { user } = useUserStore();
-  const { startDraftExercise } = useWorkoutStore();
 
-  const isOwnExercise = exercise.userId === user?.id;
-
-  function handleEditPress() {
-    startDraftExercise(exercise);
+  function handlePress() {
     router.push({
-      pathname: "/exercise/[exerciseId]/edit",
-      params: { exerciseId: exercise.id },
-    });
-  }
-
-  function handleCreatePress() {
-    startDraftExercise(exercise);
-    router.push({
-      pathname: "/exercise/[exerciseId]/create",
+      pathname: "/exercise/[exerciseId]/info",
       params: { exerciseId: exercise.id },
     });
   }
 
   return (
-    <View
+    <IButton
       style={{
-        flexDirection: "row",
+        backgroundColor: hexToRGBA(theme.handle, 0.8),
+        padding: 8,
+        minWidth: 44,
+        height: 44,
+        borderRadius: 22,
         alignItems: "center",
-        gap: 8,
+        justifyContent: "center",
         position: "absolute",
         right: 16,
         top: 16,
       }}
+      onPress={handlePress}
     >
-      {/* Edit button */}
-      {isOwnExercise && (
-        <IButton
-          style={{
-            backgroundColor: hexToRGBA(theme.handle, 0.8),
-            padding: 8,
-            minWidth: 44,
-            height: 44,
-            borderRadius: 22,
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-          onPress={handleEditPress}
-        >
-          <Ionicons name="pencil" size={24} color={theme.text} />
-        </IButton>
-      )}
-
-      {/* Create exercise using this one as base button */}
-      <IButton
-        style={{
-          backgroundColor: hexToRGBA(theme.handle, 0.8),
-          padding: 8,
-          minWidth: 44,
-          height: 44,
-          borderRadius: 22,
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-        onPress={handleCreatePress}
-      >
-        <Ionicons name="create" size={24} color={theme.text} />
-      </IButton>
-    </View>
+      <Ionicons name="chevron-forward" size={24} color={theme.text} />
+    </IButton>
   );
 }

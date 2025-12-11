@@ -10,6 +10,7 @@ import { NoSplitCard } from "../../components/splits/edit-split/NoSplitCard";
 import { useTranslation } from "react-i18next";
 import { useWidgetUnit } from "../../features/widgets/useWidgetUnit";
 import { ScreenView } from "../../components/ui/containers/ScreenView";
+import { IText } from "../../components/ui/text/IText";
 
 export default function SplitListScreen() {
   const { splitPlans } = useWorkoutStore();
@@ -24,7 +25,7 @@ export default function SplitListScreen() {
     <Fragment>
       <Stack.Screen
         options={{
-          title: t("splits.title"),
+          headerTitle: () => <IText text={t("splits.title")} />,
           headerRight: headerRight,
         }}
       />

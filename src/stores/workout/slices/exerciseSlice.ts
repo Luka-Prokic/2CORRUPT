@@ -426,4 +426,21 @@ export const createExerciseSlice: StateCreator<WorkoutStore, [], [], {}> = (
     const { exercises } = get();
     return exercises.find((e) => e.id === exerciseId) || null;
   },
+
+  /**
+   * Update the metadata of an exercise
+   */
+  updateExerciseMetadata: (
+    exerciseId: string,
+    metadata: Record<string, any>
+  ) => {
+    const { exercises } = get();
+    const exercise = exercises.find((e) => e.id === exerciseId);
+    if (!exercise) return;
+    set({
+      exercises: exercises.map((e) =>
+        e.id === exerciseId ? { ...e, metadata } : e
+      ),
+    });
+  },
 });

@@ -19,6 +19,7 @@ export default function ExerciseCreateScreen() {
     <Fragment>
       <Stack.Screen
         options={{
+          headerBackButtonDisplayMode: "minimal",
           headerLeft: () => <ExerciseDraftHeaderLeft />,
           headerTitle: "create",
           headerRight: () => <ExerciseCreateHeaderRight />,

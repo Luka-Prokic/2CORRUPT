@@ -9,6 +9,7 @@
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "assetBundlePatterns": ["assets/**/*"],
+    "jsEngine": "hermes",
     "splash": {
       "image": "./assets/2CORRUPT-icon.png",
       "resizeMode": "contain",

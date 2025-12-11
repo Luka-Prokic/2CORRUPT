@@ -606,6 +606,9 @@
     "select-equipment": "Select Equipment",
     "primary": "Primary",
     "secondary": "Secondary",
-    "select-muscles": "Select Muscles"
+    "select-muscles": "Select Muscles",
+    "made-by-you": "Made By You",
+    "your-favorites": "Your Favorites",
+    "rest-of-them": "Rest Of Them"
   }
 }

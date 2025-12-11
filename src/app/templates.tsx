@@ -8,7 +8,7 @@ import { FlatList } from "react-native-gesture-handler";
 import { useWorkoutStore, WorkoutTemplate } from "../stores/workout";
 import { TemplateSelectCard } from "../components/templates/cards/TemplateSelectCard";
 import { SelectAllTemplatesButton } from "../components/templates/header/SelectAllTemplatesButton";
-import { Text } from "react-native";
+import { IText } from "../components/ui/text/IText";
 import { useSettingsStore } from "../stores/settings";
 import { DeleteSelectedTemplates } from "../components/templates/header/DeleteSelectedTemplates";
 import { EmptyTemplateComponent } from "../components/templates/EmptyTemplateComponent";
@@ -60,20 +60,15 @@ export default function TemplatesScreen() {
   }
 
   function headerTitle() {
-    if (selectMode)
-      return (
-        <Text
-          style={{
-            fontSize: 18,
-            fontWeight: "bold",
-            color: selected.length ? theme.text : theme.handle,
-          }}
-        >
-          {t("button.selected")} {selected.length}
-        </Text>
-      );
-    return null;
+    const text = selectMode
+      ? `${t("button.selected")} ${selected.length}`
+      : t("navigation.templates");
+
+    const color = !selected.length && selectMode ? theme.handle : theme.text;
+
+    return <IText text={text} size={18} color={color} />;
   }
+
   function headerRight() {
     if (templates.length)
       return (

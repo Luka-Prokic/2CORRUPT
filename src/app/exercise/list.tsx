@@ -1,62 +1,53 @@
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { ScreenContent } from "../../components/ui/utils/ScreenContent";
-import { router, Stack } from "expo-router";
-import { FlatList } from "react-native";
-import { EmptyFooter } from "../../components/ui/containers/EmptyFooter";
+import { Stack } from "expo-router";
 import { IText } from "../../components/ui/text/IText";
-import { StrobeOptionButton } from "../../components/ui/buttons/StrobeOptionButton";
-import { ScreenView } from "../../components/ui/containers/ScreenView";
-import { useWorkoutStore } from "../../stores/workout";
-import { useUserStore } from "../../stores/user/useUserStore";
-import { InfoExerciseCard } from "../../components/exercises/InfoExerciseCard";
+import { ExerciseInfo, useWorkoutStore } from "../../stores/workout";
+import { ExerciseSectionList } from "../../components/exercises/ExerciseSectionList";
+import { CreateNewExerciseButton } from "../../components/exercise-add/CreateNewExerciseButton";
+import {
+  InfoExerciseCard,
+  MemoizedInfoExerciseCard,
+} from "../../components/exercises/InfoExerciseCard";
+import { useSettingsStore } from "../../stores/settingsStore";
+import { ExerciseSearchBar } from "../../components/exercises/ExerciseSearchBar";
 
 export default function ExerciseListScreen() {
-  const { user } = useUserStore();
-
-  const { exercises, startDraftExercise, draftExercise } = useWorkoutStore();
-
-  function handlePress(exerciseId: string) {
-    startDraftExercise(exercises.find((e) => e.id === exerciseId));
-    const exercise = exercises.find((e) => e.id === exerciseId);
-    if (exercise && exercise.userId === user?.id)
-      router.push({
-        pathname: "/exercise/[exerciseId]/edit",
-        params: { exerciseId },
-      });
-    else {
-      router.push({
-        pathname: "/exercise/[exerciseId]/create",
-        params: { exerciseId },
-      });
-    }
-  }
-
-  const reversedExercises = [...exercises].reverse();
+  const { draftExercise } = useWorkoutStore();
+  const { theme } = useSettingsStore();
+  const [filteredExercises, setFilteredExercises] = useState<ExerciseInfo[]>(
+    []
+  );
 
   return (
     <Fragment>
       <Stack.Screen
         options={{
+          headerBlurEffect: "none",
+          headerShadowVisible: false,
+          headerTransparent: false,
+          headerStyle: {
+            backgroundColor: theme.background,
+          },
           headerLeft: () => <Fragment />,
           headerTitle: () => (
             <IText text={draftExercise?.defaultName?.en || "Exercises"} />
           ),
+          headerRight: () => <CreateNewExerciseButton />,
         }}
       />
-      <ScreenContent>
-        <ScreenView>
-          <StrobeOptionButton
-            title={"+ New Exercise"}
-            height={64}
-            onPress={() => handlePress("new")}
-          />
-          <FlatList
-            data={reversedExercises}
-            scrollEnabled={false}
-            renderItem={({ item }) => <InfoExerciseCard exercise={item} />}
-            ListFooterComponent={() => <EmptyFooter />}
-          />
-        </ScreenView>
+      <ScreenContent
+        scroll={false}
+        HeaderComponent={
+          <ExerciseSearchBar setFilteredExercises={setFilteredExercises} />
+        }
+      >
+        <ExerciseSectionList
+          exercises={filteredExercises}
+          renderCard={(exercise) => (
+            <MemoizedInfoExerciseCard exercise={exercise} key={exercise.id} />
+          )}
+        />
       </ScreenContent>
     </Fragment>
   );

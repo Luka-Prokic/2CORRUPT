@@ -34,21 +34,21 @@ export function SetSwipeActions({
     hapticType: "heavy",
   });
 
-  const handleAddDropSet = (setId: string) => {
+  function handleAddDropSet(setId: string) {
     triggerHapticsRigid();
     addDropSetToActiveExercise(setId, 0, 0);
-  };
+  }
 
-  const handleUncheckSet = (setId: string) => {
+  function handleUncheckSet(setId: string) {
     triggerHapticsMedium();
     updateSetInActiveExercise(setId, { isCompleted: false });
     updateSetInActiveExercise(setId, { restSeconds: null });
-  };
+  }
 
-  const handleRemoveSet = (setId: string) => {
+  function handleRemoveSet(setId: string) {
     triggerHapticsHeavy();
     removeSetFromActiveExercise(setId);
-  };
+  }
 
   const isDropSetAllowed = activeExercise?.columns.includes("Weight");
 
