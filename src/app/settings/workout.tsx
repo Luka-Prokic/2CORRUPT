@@ -9,6 +9,7 @@ import { workoutSettingsConfig } from "../../config/settings/workoutSettings";
 import { EmptyFooter } from "../../components/ui/containers/EmptyFooter";
 import { DescriptionText } from "../../components/ui/text/DescriptionText";
 import { SettingsField } from "../../components/ui/settings-fields/SettingsField";
+import { IText } from "../../components/ui/text/IText";
 
 export default function WorkoutScreen() {
   const { t } = useTranslation();
@@ -17,7 +18,7 @@ export default function WorkoutScreen() {
     <Fragment>
       <Stack.Screen
         options={{
-          title: t("settings.workout"),
+          headerTitle: () => <IText text={t("settings.workout")} />,
           headerRight: () => <ModalExitButton />,
         }}
       />

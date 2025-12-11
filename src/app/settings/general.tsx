@@ -9,6 +9,7 @@ import { DescriptionText } from "../../components/ui/text/DescriptionText";
 import { EmptyFooter } from "../../components/ui/containers/EmptyFooter";
 import { generalSettingsConfig } from "../../config/settings/generalSettings";
 import { SettingsField } from "../../components/ui/settings-fields/SettingsField";
+import { IText } from "../../components/ui/text/IText";
 
 export default function AppSettings() {
   const { t } = useTranslation();
@@ -17,7 +18,7 @@ export default function AppSettings() {
     <Fragment>
       <Stack.Screen
         options={{
-          title: t("settings.app"),
+          headerTitle: () => <IText text={t("settings.app")} />,
           headerRight: () => <ModalExitButton />,
         }}
       />

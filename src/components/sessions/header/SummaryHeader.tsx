@@ -1,7 +1,7 @@
 import { BlurView } from "expo-blur";
 import { WeekSlider } from "./WeekSlider";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { Text, TouchableOpacity, View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import { WIDTH } from "../../../utils/Dimensions";
 import { ModalBackButton } from "../../../app/_layout";
 import { useSettingsStore } from "../../../stores/settings";
@@ -11,6 +11,7 @@ import { Fragment, useRef } from "react";
 import { SummaryCalendarBottomSheet } from "../calendar/SummaryCalendarBottomSheet";
 import { useUIStore } from "../../../stores/ui/useUIStore";
 import { useFormatFriendlyDate } from "../../../features/format/useFormatDate";
+import { IText } from "../../ui/text/IText";
 
 export function SummaryHeader() {
   const insets = useSafeAreaInsets();
@@ -65,13 +66,7 @@ export function SummaryHeader() {
               alignItems: "center",
             }}
           >
-            <Text
-              style={{ fontSize: 18, fontWeight: "600", color: theme.text }}
-              adjustsFontSizeToFit
-              numberOfLines={1}
-            >
-              {dateTittle}
-            </Text>
+            <IText text={dateTittle} adjustsFontSizeToFit numberOfLines={1} />
           </View>
           <View
             style={{

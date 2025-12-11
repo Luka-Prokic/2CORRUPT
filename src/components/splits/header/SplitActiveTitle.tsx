@@ -27,6 +27,7 @@ export function SplitActiveTitle({ split }: SplitActiveTitleProps) {
       text={isActive ? t("button.active") : t("button.activate")}
       onPress={handlePress}
       color={isActive ? theme.fifthBackground : theme.handle}
+      textStyle={{ fontSize: 28, fontWeight: "bold" }}
     />
   );
 }

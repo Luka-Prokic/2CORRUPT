@@ -3,7 +3,6 @@ import { LanguageSettings } from "../../components/settings-app/LanguageSettings
 import { Stack } from "expo-router";
 import { Fragment } from "react";
 import { ScreenContent } from "../../components/ui/utils/ScreenContent";
-import { useSettingsStore } from "../../stores/settingsStore";
 import { useTranslation } from "react-i18next";
 import { ModalExitButton } from "./../_layout";
 import { ScreenView } from "../../components/ui/containers/ScreenView";
@@ -13,15 +12,16 @@ import { UnitsSettings } from "../../components/settings-app/UnitsSettings";
 import { IBubble } from "../../components/ui/containers/IBubble";
 import { EmptyFooter } from "../../components/ui/containers/EmptyFooter";
 import { GeneralButton } from "../../components/settings-app/GeneralButton";
+import { IText } from "../../components/ui/text/IText";
 
 export default function SettingsScreen() {
-  const { theme } = useSettingsStore();
   const { t } = useTranslation();
+
   return (
     <Fragment>
       <Stack.Screen
         options={{
-          title: t("navigation.settings"),
+          headerTitle: () => <IText text={t("navigation.settings")} />,
           headerRight: () => <ModalExitButton />,
         }}
       />

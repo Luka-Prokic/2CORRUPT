@@ -6,9 +6,9 @@ import { AddSplitWorkoutList } from "../../../../components/splits/add-workout/A
 import { WorkoutTemplate } from "../../../../stores/workout/types";
 import { WorkoutFilter } from "../../../../components/splits/add-workout/WorkoutFilter";
 import { BottomAddWorkoutSection } from "../../../../components/splits/add-workout/BottomAddWorkoutSection";
-import { EmptyFooter } from "../../../../components/ui/containers/EmptyFooter";
 import { useWorkoutStore } from "../../../../stores/workout/useWorkoutStore";
 import { findTemplteOutOfWorkoutId } from "../../../../features/workout/findTemplteOutOfWorkoutId";
+import { IText } from "../../../../components/ui/text/IText";
 
 export default function AddPlannedWorkoutScreen() {
   const { t } = useTranslation();
@@ -33,9 +33,13 @@ export default function AddPlannedWorkoutScreen() {
     <Fragment>
       <Stack.Screen
         options={{
-          title: isSwapMode
-            ? t("splits.swap-workout")
-            : t("splits.add-workout"),
+          headerTitle: () => (
+            <IText
+              text={
+                isSwapMode ? t("splits.swap-workout") : t("splits.add-workout")
+              }
+            />
+          ),
           headerBlurEffect: "none",
         }}
       />

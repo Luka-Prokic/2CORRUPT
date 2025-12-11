@@ -4,6 +4,7 @@ import { ScreenContent } from "../../components/ui/utils/ScreenContent";
 import { useTranslation } from "react-i18next";
 import { ModalExitButton } from "./../_layout";
 import { ScreenView } from "../../components/ui/containers/ScreenView";
+import { IText } from "../../components/ui/text/IText";
 
 export default function GoalsScreen() {
   const { t } = useTranslation();
@@ -12,7 +13,7 @@ export default function GoalsScreen() {
     <Fragment>
       <Stack.Screen
         options={{
-          title: t("settings.goals"),
+          headerTitle: () => <IText text={t("settings.goals")} />,
           headerRight: () => <ModalExitButton />,
         }}
       />

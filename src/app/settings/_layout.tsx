@@ -16,6 +16,7 @@ export default function Layout() {
         contentStyle: {
           backgroundColor: theme.background,
         },
+        headerBackButtonDisplayMode: "minimal",
       }}
     >
       <Stack.Screen name="main" />
