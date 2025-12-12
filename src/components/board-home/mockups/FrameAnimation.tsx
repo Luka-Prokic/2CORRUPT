@@ -4,7 +4,7 @@ import { frameMap } from "./frameMap"; // your require map
 
 interface FrameAnimationProps {
   fps?: number;
-  model: "nudls";
+  model: string;
   width?: number;
   height?: number;
 }
@@ -31,7 +31,7 @@ export function FrameAnimation({
 
   return (
     <View style={{ width, height }}>
-      {frames.map((src, i) => (
+      {frames.map((src: any, i: number) => (
         <Image
           key={i}
           source={src}

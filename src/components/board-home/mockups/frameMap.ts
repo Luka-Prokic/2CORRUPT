@@ -1,4 +1,6 @@
-export const frameMap: Record<string, any[]> = {
+// src/components/board-home/mockups/frameMap.ts
+
+export const frameMap = {
   nudls: [
     require("../../../../assets/gifs/nudls/frame_0001.png"),
     require("../../../../assets/gifs/nudls/frame_0002.png"),

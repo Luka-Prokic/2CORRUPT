@@ -60,7 +60,6 @@ export function AwardsGif() {
               overflow: "hidden",
               borderWidth: 1,
               borderColor: theme.border,
-              // borderTopWidth: 0,
               borderRadius: 22,
               height: 44,
             }}
