@@ -113,6 +113,7 @@ export function TemplatesCardList({
             cardHeight={WIDTH / 3}
           />
         )}
+        animationType="flat"
       />
       <StartWorkoutBottomSheet
         ref={ref}

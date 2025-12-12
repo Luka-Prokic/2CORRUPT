@@ -21,8 +21,8 @@ interface PlannedActiveSplitWorkoutCardProps {
   date: Date;
 }
 
-const ITEM_HEIGHT = 24; // your MidText lineHeight
-const VERTICAL_PADDING = 8; // FlatList padding top+bottom
+const ITEM_HEIGHT = 24; // your MidText lineHeight #workouts
+const VERTICAL_PADDING = 8; // FlatList padding top+bottom #workouts
 
 export function PlannedActiveSplitWorkoutCard({
   splitPlan,
@@ -86,7 +86,6 @@ export function PlannedActiveSplitWorkoutCard({
         freeze
       >
         <BlurView
-          intensity={100}
           style={{
             width: fullWidth,
             height: 44,
@@ -96,7 +95,7 @@ export function PlannedActiveSplitWorkoutCard({
             gap: 16,
           }}
         >
-          <MidText text={scheduledAt} color={theme.text} />
+          {scheduledAt && <MidText text={scheduledAt} color={theme.text} />}
           <IText text={template.name} color={theme.text} />
         </BlurView>
         <FlatList

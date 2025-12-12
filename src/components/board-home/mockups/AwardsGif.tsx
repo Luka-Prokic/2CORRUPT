@@ -44,11 +44,11 @@ export function AwardsGif() {
           }}
           onPress={() => {}}
         >
-          <FrameAnimation
+          {/* <FrameAnimation
             model="nudls"
             width={widgetUnit}
             height={widgetUnit}
-          />
+          /> */}
           <BlurView
             intensity={10}
             tint="light"

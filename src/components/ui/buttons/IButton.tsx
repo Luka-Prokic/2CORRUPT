@@ -36,7 +36,7 @@ export function IButton({
   });
 
   function handlePress(e: GestureResponderEvent) {
-    rest?.onPress(e);
+    rest?.onPress?.(e);
     if (haptics) triggerHaptics();
   }
 

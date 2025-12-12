@@ -1,6 +1,5 @@
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { WIDTH } from "../../utils/Dimensions";
 import { hexToRGBA } from "../../utils/HEXtoRGB";
 import { BackButtonWidget } from "./widgets/BackButtonWidget";
 import { useSettingsStore } from "../../stores/settings";
@@ -11,70 +10,68 @@ import { SettingsWidget } from "./widgets/SettingsWidget";
 import { BounceButton } from "../ui/buttons/BounceButton";
 import { router } from "expo-router";
 import { AwardsGif } from "./mockups/AwardsGif";
-
-const WIDGET_SIZE = (WIDTH - 40) / 2; // 2 columns with padding
+import { useWidgetUnit } from "../../features/widgets/useWidgetUnit";
+import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
+import { ActionWidget } from "./widgets/action-widget/ActionWidget";
 
 export function WidgetGrid() {
   const insets = useSafeAreaInsets();
   const { theme } = useSettingsStore();
+  const { widgetUnit, halfWidget } = useWidgetUnit();
+
   return (
-    <View
+    <Animated.View
+      entering={FadeIn}
+      exiting={FadeOut}
       style={{
-        flexDirection: "row",
-        flexWrap: "wrap",
-        justifyContent: "space-between",
         paddingTop: insets.top,
-        paddingHorizontal: 16,
+        gap: 8,
       }}
     >
-      <BounceButton
-        style={{
-          width: WIDGET_SIZE,
-          height: WIDGET_SIZE,
-          borderRadius: 32,
-          backgroundColor: hexToRGBA(theme.fourthBackground, 0.2),
-          borderWidth: 1,
-          borderColor: theme.border,
-          marginBottom: 8,
-        }}
-        onPress={() => {
-          router.push("/exercise/list");
-        }}
-        title="Exercise (mock)"
-      />
-
-      {/* full-mock */}
-      <AwardsGif />
-
-      <SummaryWidget />
-
-      <TemplatesWidget />
-
       <View
         style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          height: (WIDGET_SIZE - 8) / 2,
-          marginBottom: 8,
+          paddingHorizontal: 16,
           gap: 8,
+          flexWrap: "wrap",
+          flexDirection: "row",
         }}
       >
-        <BackButtonWidget />
-        <SettingsWidget />
+        <BounceButton
+          style={{
+            width: widgetUnit,
+            height: widgetUnit,
+            borderRadius: 32,
+            backgroundColor: hexToRGBA(theme.fourthBackground, 0.2),
+            borderWidth: 1,
+            borderColor: theme.border,
+          }}
+          onPress={() => {
+            router.push("/exercise/list");
+          }}
+          title="Exercise (mock)"
+        />
+
+        {/* full-mock */}
+        <AwardsGif />
+
+        <SummaryWidget />
+
+        <TemplatesWidget />
+
+        <View
+          style={{
+            flexDirection: "row",
+            height: halfWidget,
+            gap: 8,
+          }}
+        >
+          <BackButtonWidget />
+          <SettingsWidget />
+        </View>
+
+        <SplitsWidget />
       </View>
-
-      <SplitsWidget />
-
-      <View
-        style={{
-          width: WIDGET_SIZE * 2 + 8,
-          height: WIDGET_SIZE,
-          borderRadius: 32,
-          backgroundColor: hexToRGBA(theme.thirdBackground, 0.6),
-          borderWidth: 1,
-          borderColor: hexToRGBA(theme.thirdBackground, 0.4),
-        }}
-      />
-    </View>
+      <ActionWidget />
+    </Animated.View>
   );
 }

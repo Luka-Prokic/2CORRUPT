@@ -11,6 +11,7 @@ import { WIDTH } from "../../utils/Dimensions";
 import { useSettingsStore } from "../../stores/settingsStore";
 import { InfoText } from "../ui/text/InfoText";
 import { useTranslation } from "react-i18next";
+import { Fragment } from "react";
 
 export function TodaysWorkouts() {
   const { activeSplitPlan } = useWorkoutStore();
@@ -26,7 +27,7 @@ export function TodaysWorkouts() {
   if (!activeSplitPlan) return null;
 
   return (
-    <>
+    <Fragment>
       <View
         style={{
           flexDirection: "row",
@@ -55,6 +56,6 @@ export function TodaysWorkouts() {
         text={`${t("button.tap-to-start")} | ${t("button.long-press-to-edit")}`}
         style={{ marginTop: 8 }}
       />
-    </>
+    </Fragment>
   );
 }

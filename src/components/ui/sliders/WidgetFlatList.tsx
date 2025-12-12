@@ -52,6 +52,7 @@ export function WidgetFlatList({
         snapToInterval={height}
         decelerationRate="fast"
         showsVerticalScrollIndicator={false}
+        nestedScrollEnabled
         scrollEventThrottle={16}
         scrollEnabled={props.data?.length > 1}
         initialScrollIndex={props.initialScrollIndex}
@@ -167,21 +168,18 @@ export const VerticalScrollableDots = ({
   };
 
   return (
-    <View style={{ height: windowHeight, width: DOT_SIZE * 1.2, ...style }}>
-      <FlatList
-        ref={flatListRef}
-        data={Array.from({ length: totalDots })}
-        keyExtractor={(_, index) => index.toString()}
-        horizontal={false} // vertical list
-        scrollEnabled={false}
-        showsVerticalScrollIndicator={false}
-        renderItem={({ index }) => renderDot(index)}
-        contentContainerStyle={{
-          alignItems: "center",
-          flexDirection: "column",
-        }}
-        style={{ height: windowHeight }}
-      />
-    </View>
+    <FlatList
+      ref={flatListRef}
+      data={Array.from({ length: totalDots })}
+      keyExtractor={(_, index) => index.toString()}
+      scrollEnabled={false}
+      showsVerticalScrollIndicator={false}
+      renderItem={({ index }) => renderDot(index)}
+      contentContainerStyle={{
+        alignItems: "center",
+        flexDirection: "column",
+      }}
+      style={{ height: windowHeight, width: DOT_SIZE * 1.2, ...style }}
+    />
   );
 };

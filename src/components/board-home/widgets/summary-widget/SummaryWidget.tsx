@@ -62,7 +62,6 @@ export function SummaryWidget() {
         borderWidth: 1,
         borderColor: hexToRGBA(theme.thirdBackground, 0.4),
         padding: 4,
-        marginBottom: 8,
         flexDirection: "row",
         flexWrap: "wrap",
       }}

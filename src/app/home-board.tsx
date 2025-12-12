@@ -4,6 +4,7 @@ import { ScreenContent } from "../components/ui/utils/ScreenContent";
 import { Stack } from "expo-router";
 import { CorruptHeader } from "../components/corrupt/CorruptHeader";
 import { WidgetGrid } from "../components/board-home/WidgetGrid";
+import { ScreenView } from "../components/ui/containers/ScreenView";
 
 export default function HomeBoard() {
   const { theme } = useSettingsStore();
@@ -17,14 +18,11 @@ export default function HomeBoard() {
         }}
       />
 
-      <ScreenContent
-        edges={["top"]}
-        scroll={true}
-        style={{ backgroundColor: theme.background }}
-      >
-        <WidgetGrid />
+      <ScreenContent scroll={false}>
+        <ScreenView>
+          <WidgetGrid />
+        </ScreenView>
       </ScreenContent>
-      {/* <TimerMock /> */}
     </Fragment>
   );
 }

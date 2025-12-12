@@ -16,6 +16,8 @@ const AnimatedFlatList = RNAnimated.createAnimatedComponent(
   FlatList
 ) as unknown as typeof FlatList;
 
+type AnimationType = "card" | "wheel" | "album" | "flat";
+
 interface CenterCardSliderProps<T>
   extends Omit<FlatListProps<T>, "renderItem"> {
   card: ({ item, index }: { item: T; index?: number }) => ReactNode;
@@ -38,7 +40,7 @@ interface CenterCardSliderProps<T>
   selectedCardIndex?: number;
   showDistanceBubble?: boolean;
   distanceTolerance?: number;
-  animationType?: "card" | "wheel";
+  animationType?: AnimationType;
   disableScroll?: boolean;
   hapticFeedback?: boolean;
   startAtMiddle?: boolean;
@@ -248,7 +250,7 @@ function renderCenterCard({
   height: number;
   totalItems: number;
   horizontalPadding: number;
-  animationType?: "card" | "wheel";
+  animationType?: AnimationType;
 }) {
   const inputRange = [
     (index - 3) * width,
@@ -260,11 +262,14 @@ function renderCenterCard({
     (index + 3) * width,
   ];
 
-  const opacity = scrollX.interpolate({
-    inputRange,
-    outputRange: [0.4, 0.6, 0.8, 1, 0.8, 0.6, 0.4],
-    extrapolate: "clamp",
-  });
+  const opacity =
+    animationType === "flat"
+      ? 1
+      : scrollX.interpolate({
+          inputRange,
+          outputRange: [0.4, 0.6, 0.8, 1, 0.8, 0.6, 0.4],
+          extrapolate: "clamp",
+        });
 
   const scale = scrollX.interpolate({
     inputRange,
@@ -273,7 +278,13 @@ function renderCenterCard({
   });
 
   const rotateY =
-    animationType === "card"
+    animationType === "flat"
+      ? scrollX.interpolate({
+          inputRange,
+          outputRange: ["0deg", "0deg", "0deg", "0deg", "0deg", "0deg", "0deg"],
+          extrapolate: "clamp",
+        })
+      : animationType === "card"
       ? scrollX.interpolate({
           inputRange,
           outputRange: [
@@ -287,7 +298,8 @@ function renderCenterCard({
           ],
           extrapolate: "clamp",
         })
-      : scrollX.interpolate({
+      : animationType === "wheel"
+      ? scrollX.interpolate({
           inputRange,
           outputRange: [
             "55deg",
@@ -299,28 +311,34 @@ function renderCenterCard({
             "-55deg",
           ],
           extrapolate: "clamp",
-        });
+        })
+      : animationType === "album"
+      ? scrollX.interpolate({
+          inputRange,
+          outputRange: [
+            "-55deg",
+            "-55deg",
+            "-55deg",
+            "0deg",
+            "55deg",
+            "55deg",
+            "55deg",
+          ],
+          extrapolate: "clamp",
+        })
+      : undefined;
 
   return (
-    <View
+    <RNAnimated.View
       style={{
         width,
         height,
-        overflow: "visible", // ⭐️ ENFORCES TRUE CARD SIZE
-        justifyContent: "center",
-        alignItems: "center",
+        opacity,
+        transform: [{ scale }, { perspective: 600 }, { rotateY }],
       }}
     >
-      <RNAnimated.View
-        style={{
-          flex: 1,
-          opacity,
-          transform: [{ scale }, { perspective: 600 }, { rotateY }],
-        }}
-      >
-        {content}
-      </RNAnimated.View>
-    </View>
+      {content}
+    </RNAnimated.View>
   );
 }
 
