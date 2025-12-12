@@ -1,6 +1,5 @@
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { AwardsWidget } from "./mockups/AwardsWidget";
 import { WIDTH } from "../../utils/Dimensions";
 import { hexToRGBA } from "../../utils/HEXtoRGB";
 import { BackButtonWidget } from "./widgets/BackButtonWidget";
@@ -11,6 +10,7 @@ import { TemplatesWidget } from "./widgets/templates-widget/TemplatesWidget";
 import { SettingsWidget } from "./widgets/SettingsWidget";
 import { BounceButton } from "../ui/buttons/BounceButton";
 import { router } from "expo-router";
+import { AwardsGif } from "./mockups/AwardsGif";
 
 const WIDGET_SIZE = (WIDTH - 40) / 2; // 2 columns with padding
 
@@ -44,7 +44,7 @@ export function WidgetGrid() {
       />
 
       {/* full-mock */}
-      <AwardsWidget />
+      <AwardsGif />
 
       <SummaryWidget />
 
