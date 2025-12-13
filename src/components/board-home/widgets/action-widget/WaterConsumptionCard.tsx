@@ -17,6 +17,7 @@ export function WaterConsumptionCard() {
         borderColor: theme.thirdBackground + "40",
         backgroundColor: theme.text,
       }}
+      pressable
     >
       <IText text="Water Consumption" color={theme.secondaryText} />
     </IButton>

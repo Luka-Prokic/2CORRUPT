@@ -10,31 +10,61 @@ import { ReactNode, useEffect, useRef, useState } from "react";
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { WIDTH } from "../../../utils/Dimensions";
 import { useWidgetUnit } from "../../../features/widgets/useWidgetUnit";
+import Animated, { FadeInLeft, FadeOutLeft } from "react-native-reanimated";
+import { VerticalScrollableDots } from "./ScrollableDots";
 
 interface WidgetFlatListProps extends FlatListProps<any> {
   width?: number;
   height?: number;
+  staticDots?: boolean;
+  hidenDots?: boolean;
 }
 
 export function WidgetFlatList({
   contentContainerStyle,
   width = WIDTH,
   height = (WIDTH - 40) / 2,
+  staticDots = false,
+  hidenDots = false,
   ...props
 }: WidgetFlatListProps) {
   const flatListRef = useRef<FlatList>(null);
   const { theme } = useSettingsStore();
   const { fullWidth } = useWidgetUnit();
 
+  const [sleep, setSleep] = useState(false);
+
   const [currentIndex, setCurrentIndex] = useState(
     props.initialScrollIndex || 0
   );
 
+  const sleepTimeoutRef = useRef<number | null>(null);
+
   const onScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-    const y = event.nativeEvent.contentOffset.y; // vertical scroll
+    const y = event.nativeEvent.contentOffset.y;
     const index = Math.round(y / height);
     setCurrentIndex(index);
+
+    // Always reset the sleep timer
+    setSleep(false);
+    if (sleepTimeoutRef.current) clearTimeout(sleepTimeoutRef.current);
+
+    sleepTimeoutRef.current = setTimeout(() => {
+      setSleep(true);
+      sleepTimeoutRef.current = null;
+    }, 1000);
   };
+
+  useEffect(() => {
+    sleepTimeoutRef.current = setTimeout(() => {
+      setSleep(true);
+      sleepTimeoutRef.current = null;
+    }, 1000);
+
+    return () => {
+      if (sleepTimeoutRef.current) clearTimeout(sleepTimeoutRef.current);
+    };
+  }, []);
 
   return (
     <View
@@ -71,115 +101,16 @@ export function WidgetFlatList({
           borderRadius: 32,
           backgroundColor: theme.thirdBackground,
           overflow: "hidden",
+          zIndex: 1,
           ...(props.style as ViewStyle),
         }}
       />
-      <VerticalScrollableDots
-        dataLength={props.data?.length ?? 0}
-        currentIndex={currentIndex}
-        theme={theme}
-      />
+      {!sleep && !staticDots && !hidenDots && (
+        <VerticalScrollableDots
+          dataLength={props.data?.length ?? 0}
+          currentIndex={currentIndex}
+        />
+      )}
     </View>
   );
 }
-
-interface VerticalScrollableDotsProps {
-  dataLength: number;
-  currentIndex: number;
-  theme: any;
-  style?: ViewStyle | ViewStyle[];
-  firstDot?: ReactNode;
-  lastDot?: ReactNode;
-  maxDotsShown?: number;
-}
-
-const DOT_SIZE = 6;
-const DOT_MARGIN = 3;
-
-export const VerticalScrollableDots = ({
-  dataLength,
-  currentIndex,
-  theme,
-  style,
-  firstDot,
-  lastDot,
-  maxDotsShown = 5,
-}: VerticalScrollableDotsProps) => {
-  const flatListRef = useRef<FlatList>(null);
-  const totalDots = dataLength;
-  const dotHeight = DOT_SIZE + DOT_MARGIN * 2;
-  const shownDots = totalDots > maxDotsShown ? maxDotsShown : totalDots;
-  const windowHeight = dotHeight * shownDots;
-
-  useEffect(() => {
-    if (!flatListRef.current) return;
-    const offset =
-      currentIndex >= maxDotsShown
-        ? dotHeight * (currentIndex - maxDotsShown + 1)
-        : 0;
-    flatListRef.current.scrollToOffset({ offset, animated: true });
-  }, [currentIndex, maxDotsShown]);
-
-  const renderDot = (index: number) => {
-    const isActive = index === currentIndex;
-
-    if (index === 0 && firstDot) {
-      return (
-        <View
-          style={{
-            marginVertical: DOT_MARGIN,
-            transform: [{ scale: isActive ? 1.2 : 0.8 }],
-            opacity: isActive ? 1 : 0.4,
-          }}
-        >
-          {firstDot}
-        </View>
-      );
-    }
-
-    if (index === totalDots - 1 && lastDot) {
-      return (
-        <View
-          style={{
-            marginVertical: DOT_MARGIN,
-            transform: [{ scale: isActive ? 1.2 : 0.8 }],
-            opacity: isActive ? 1 : 0.4,
-          }}
-        >
-          {lastDot}
-        </View>
-      );
-    }
-
-    if (totalDots <= 1) return null;
-    return (
-      <View
-        style={{
-          width: DOT_SIZE,
-          height: DOT_SIZE,
-          borderRadius: DOT_SIZE / 2,
-          marginVertical: DOT_MARGIN,
-          backgroundColor: theme.text,
-          transform: [{ scale: isActive ? 1.2 : 0.8 }],
-          opacity: isActive ? 1 : 0.4,
-        }}
-      />
-    );
-  };
-
-  return (
-    <FlatList
-      ref={flatListRef}
-      data={Array.from({ length: totalDots })}
-      keyExtractor={(_, index) => index.toString()}
-      scrollEnabled={false}
-      showsVerticalScrollIndicator={false}
-      renderItem={({ index }) => renderDot(index)}
-      contentContainerStyle={{
-        alignItems: "center",
-        flexDirection: "column",
-      }}
-      style={{ height: windowHeight, width: DOT_SIZE * 1.2, ...style }}
-    />
-  );
-};

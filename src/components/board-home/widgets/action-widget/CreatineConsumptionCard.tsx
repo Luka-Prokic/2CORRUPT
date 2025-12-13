@@ -17,6 +17,7 @@ export function CreatineConsumptionCard() {
         borderColor: theme.thirdBackground + "40",
         backgroundColor: theme.text,
       }}
+      pressable
     >
       <IText text="Creatine Consumption" color={theme.secondaryText} />
     </IButton>

@@ -15,6 +15,7 @@ interface IButtonProps extends Omit<TouchableOpacityProps, "style"> {
   textColor?: string;
   style?: ViewStyle | ViewStyle[];
   haptics?: HapticsMode | boolean;
+  pressable?: boolean;
 }
 
 export function IButton({
@@ -24,6 +25,7 @@ export function IButton({
   style,
   textColor,
   haptics = false,
+  pressable = false,
   ...rest
 }: IButtonProps) {
   const { theme } = useSettingsStore();
@@ -42,6 +44,7 @@ export function IButton({
 
   return (
     <TouchableOpacity
+      activeOpacity={pressable ? 1 : 0.8}
       style={[
         {
           borderRadius: 8,

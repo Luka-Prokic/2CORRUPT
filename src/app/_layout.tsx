@@ -48,6 +48,7 @@ export default function Layout() {
               contentStyle: {
                 backgroundColor: theme.background,
               },
+              headerShadowVisible: false,
             }}
           >
             {/* Home/Start/Workout/Template */}

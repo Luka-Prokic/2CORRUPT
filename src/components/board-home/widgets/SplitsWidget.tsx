@@ -1,4 +1,3 @@
-import { Text, TouchableOpacity } from "react-native";
 import { useWidgetUnit } from "../../../features/widgets/useWidgetUnit";
 import { hexToRGBA } from "../../../utils/HEXtoRGB";
 import { useSettingsStore } from "../../../stores/settings";
@@ -7,6 +6,9 @@ import { router } from "expo-router";
 import Animated, { FadeOut, FadeIn } from "react-native-reanimated";
 import { useWorkoutStore } from "../../../stores/workout";
 import { useTranslation } from "react-i18next";
+import { BounceButton } from "../../ui/buttons/BounceButton";
+import { MidText } from "../../ui/text/MidText";
+import { InfoText } from "../../ui/text/InfoText";
 
 export function SplitsWidget() {
   const { widgetUnit, halfWidget } = useWidgetUnit();
@@ -20,7 +22,7 @@ export function SplitsWidget() {
   }
 
   return (
-    <TouchableOpacity
+    <BounceButton
       onPress={handleWidgetPress}
       style={{
         width: widgetUnit,
@@ -39,24 +41,14 @@ export function SplitsWidget() {
         exiting={FadeOut}
         style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
       >
-        <Text
-          style={{
-            fontSize: 16,
-            fontWeight: "bold",
-            color: noSplit ? theme.info : theme.text,
-          }}
-        >
-          {activeSplitPlan?.plan.name}
-        </Text>
-        <Text
-          style={{
-            fontSize: 12,
-            fontWeight: "600",
-            color: noSplit ? theme.info : theme.tint,
-          }}
-        >
-          {t("button.active").toLowerCase()}
-        </Text>
+        <MidText
+          text={activeSplitPlan?.plan.name}
+          color={noSplit ? theme.info : theme.text}
+        />
+        <InfoText
+          text={t("button.active").toLowerCase()}
+          color={noSplit ? theme.info : theme.tint}
+        />
       </Animated.View>
 
       <Ionicons
@@ -71,6 +63,6 @@ export function SplitsWidget() {
           elevation: noSplit ? 0 : 10,
         }}
       />
-    </TouchableOpacity>
+    </BounceButton>
   );
 }

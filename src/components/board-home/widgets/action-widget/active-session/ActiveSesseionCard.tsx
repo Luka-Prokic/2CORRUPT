@@ -1,11 +1,12 @@
 import { Fragment } from "react";
-import { StrobeButton } from "../../../ui/buttons/StrobeButton";
-import { useWidgetUnit } from "../../../../features/widgets/useWidgetUnit";
-import { useSettingsStore } from "../../../../stores/settingsStore";
-import { BlurView } from "expo-blur";
-import { IText } from "../../../ui/text/IText";
-import { useWorkoutStore } from "../../../../stores/workout";
-import { SessionTimer } from "../../../ui/timer/SessionTimer";
+import { StrobeButton } from "../../../../ui/buttons/StrobeButton";
+import { useWidgetUnit } from "../../../../../features/widgets/useWidgetUnit";
+import { useSettingsStore } from "../../../../../stores/settingsStore";
+import { useWorkoutStore } from "../../../../../stores/workout";
+import { View } from "react-native";
+import { ActiveSessionFooter } from "./ActiveSessionFooter";
+import { ActiveSessionHeader } from "./ActiveSessionHeader";
+import { ExerciseName } from "../../../../view-workout/table/header/ExerciseName";
 
 export function ActiveSessionCard() {
   const { widgetUnit, fullWidth } = useWidgetUnit();
@@ -37,24 +38,25 @@ export function ActiveSessionCard() {
           width: fullWidth,
           alignItems: "center",
           justifyContent: "center",
+          paddingTop: 44,
         }}
         onPress={handlePress}
         onLongPress={handleLongPress}
+        freeze
       >
-        <BlurView
+        <ActiveSessionHeader />
+        <View
           style={{
+            flex: 1,
             width: fullWidth,
-            height: 44,
-            justifyContent: "center",
-            alignItems: "center",
-            position: "absolute",
-            top: 0,
-            left: 0,
+            flexDirection: "row",
+            gap: 16,
+            paddingHorizontal: 8,
           }}
         >
-          <IText text={activeSession.name} color={theme.text} />
-        </BlurView>
-        <SessionTimer />
+          <ExerciseName />
+        </View>
+        {/* <ActiveSessionFooter /> */}
       </StrobeButton>
     </Fragment>
   );

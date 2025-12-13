@@ -13,7 +13,13 @@ import { ExerciseName } from "./ExerciseName";
 import { WIDTH } from "../../../../utils/Dimensions";
 import { useEffect, useRef, useState } from "react";
 
-export function SessionExerciseNameSlider() {
+interface SessionExerciseNameSliderProps {
+  width?: number;
+}
+
+export function SessionExerciseNameSlider({
+  width = WIDTH,
+}: SessionExerciseNameSliderProps) {
   const { theme } = useSettingsStore();
   const { activeSession, setActiveExercise, activeExercise } =
     useWorkoutStore();
@@ -30,7 +36,7 @@ export function SessionExerciseNameSlider() {
     if (!isUserScrolling) return;
 
     const offsetX = event.nativeEvent.contentOffset.x;
-    const index = Math.round(offsetX / WIDTH);
+    const index = Math.round(offsetX / width);
 
     if (index >= 0 && index < exercises.length) {
       setSelectedIndex((prevIndex) => {
@@ -57,7 +63,7 @@ export function SessionExerciseNameSlider() {
     setIsUserScrolling(false); // prevent onScroll from triggering
     setSelectedIndex(index);
     flatListRef.current?.scrollToOffset({
-      offset: index * WIDTH,
+      offset: index * width,
       animated: true,
     });
 
@@ -71,15 +77,16 @@ export function SessionExerciseNameSlider() {
       horizontal
       data={exercises}
       keyExtractor={(item: SessionExercise) => item.id}
-      snapToInterval={WIDTH}
+      snapToInterval={width}
       decelerationRate="fast"
+      nestedScrollEnabled
       showsHorizontalScrollIndicator={false}
       onScroll={handleScroll}
       scrollEventThrottle={16}
       renderItem={({ item, index }) => (
         <View
           style={{
-            width: WIDTH,
+            width,
             alignItems: "center",
             justifyContent: "center",
           }}

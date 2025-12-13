@@ -1,19 +1,6 @@
-import {
-  Fragment,
-  useRef,
-  useState,
-  useEffect,
-  ReactElement,
-  ReactNode,
-} from "react";
-import {
-  FlatList,
-  FlatListProps,
-  View,
-  ViewStyle,
-  Animated,
-} from "react-native";
-import { useSettingsStore } from "../../../stores/settings";
+import { Fragment, useRef, useState, ReactElement, ReactNode } from "react";
+import { FlatList, FlatListProps, ViewStyle, Animated } from "react-native";
+import { ScrollableDots } from "./ScrollableDots";
 
 const AnimatedFlatList = Animated.createAnimatedComponent(
   FlatList
@@ -95,7 +82,12 @@ export function CardSlider<T>({
         <ScrollableDots
           dataLength={fullData.length}
           currentIndex={currentIndex}
-          style={{ height: 32, ...(Array.isArray(styleDots) ? {} : styleDots) }}
+          style={{
+            height: 32,
+            width: cardWidth,
+            alignItems: "center",
+            ...(Array.isArray(styleDots) ? {} : styleDots),
+          }}
           firstDot={firstDot}
           lastDot={lastDot}
           maxDotsShown={maxDotsShown}
@@ -153,7 +145,12 @@ export function CardSlider<T>({
         <ScrollableDots
           dataLength={fullData.length}
           currentIndex={currentIndex}
-          style={{ height: 32, ...(Array.isArray(styleDots) ? {} : styleDots) }}
+          style={{
+            height: 32,
+            width: cardWidth,
+            alignItems: "center",
+            ...(Array.isArray(styleDots) ? {} : styleDots),
+          }}
           firstDot={firstDot}
           lastDot={lastDot}
           maxDotsShown={maxDotsShown}
@@ -209,107 +206,3 @@ function renderCard({
     </Animated.View>
   );
 }
-
-// -------------------------
-// ScrollableDots Component
-// -------------------------
-interface ScrollableDotsProps {
-  dataLength: number;
-  currentIndex: number;
-  style?: ViewStyle | ViewStyle[];
-  firstDot?: ReactNode;
-  lastDot?: ReactNode;
-  maxDotsShown?: number; // 🆕 new prop
-}
-
-const DOT_WIDTH = 6;
-const DOT_MARGIN = 3;
-
-export const ScrollableDots = ({
-  dataLength,
-  currentIndex,
-  style,
-  firstDot,
-  lastDot,
-  maxDotsShown = 5, // default is 5
-}: ScrollableDotsProps) => {
-  const flatListRef = useRef<FlatList>(null);
-  const totalDots = dataLength;
-  const dotWidth = DOT_MARGIN * 2 + DOT_WIDTH;
-  const shownDots = totalDots > maxDotsShown ? maxDotsShown : totalDots;
-  const windowWidth = dotWidth * shownDots;
-  const { theme } = useSettingsStore();
-
-  useEffect(() => {
-    if (!flatListRef.current) return;
-    const offset =
-      currentIndex >= maxDotsShown
-        ? dotWidth * (currentIndex - maxDotsShown + 1)
-        : 0;
-    flatListRef.current.scrollToOffset({ offset, animated: true });
-  }, [currentIndex, maxDotsShown]);
-
-  const renderDot = (index: number) => {
-    const isActive = index === currentIndex;
-
-    if (index === 0 && firstDot) {
-      return (
-        <View
-          style={{
-            marginHorizontal: DOT_MARGIN,
-            transform: [{ scale: isActive ? 1.2 : 0.8 }],
-            opacity: isActive ? 1 : 0.4,
-          }}
-        >
-          {firstDot}
-        </View>
-      );
-    }
-    if (index === totalDots - 1 && lastDot) {
-      return (
-        <View
-          style={{
-            marginHorizontal: DOT_MARGIN,
-            transform: [{ scale: isActive ? 1.2 : 0.8 }],
-            opacity: isActive ? 1 : 0.4,
-          }}
-        >
-          {lastDot}
-        </View>
-      );
-    }
-
-    return (
-      <View
-        style={{
-          width: DOT_WIDTH,
-          height: DOT_WIDTH,
-          borderRadius: DOT_MARGIN,
-          marginHorizontal: DOT_MARGIN,
-          backgroundColor: theme.text,
-          transform: [{ scale: isActive ? 1.2 : 0.8 }],
-          opacity: isActive ? 1 : 0.4,
-        }}
-      />
-    );
-  };
-
-  return (
-    <View style={style}>
-      <FlatList
-        ref={flatListRef}
-        data={Array.from({ length: totalDots })}
-        keyExtractor={(_, index) => index.toString()}
-        horizontal
-        scrollEnabled={false}
-        showsHorizontalScrollIndicator={false}
-        renderItem={({ index }) => renderDot(index)}
-        contentContainerStyle={{
-          alignItems: "center",
-          flexDirection: "row",
-        }}
-        style={{ width: windowWidth }}
-      />
-    </View>
-  );
-};

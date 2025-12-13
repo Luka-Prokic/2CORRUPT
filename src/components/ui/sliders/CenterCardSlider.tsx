@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect, ReactElement, ReactNode } from "react";
+import { useRef, useState, ReactElement, ReactNode } from "react";
 import {
   FlatList,
   FlatListProps,
@@ -11,6 +11,8 @@ import { useSettingsStore } from "../../../stores/settings";
 import Animated, { BounceIn } from "react-native-reanimated";
 import { WIDTH } from "../../../utils/Dimensions";
 import { useHaptics } from "../../../features/ui/useHaptics";
+import { ScrollableDots } from "./ScrollableDots";
+import { SlideCard } from "./SlideCard";
 
 const AnimatedFlatList = RNAnimated.createAnimatedComponent(
   FlatList
@@ -130,8 +132,12 @@ export function CenterCardSlider<T>({
         <ScrollableDots
           dataLength={fullData.length}
           currentIndex={currentIndex}
-          theme={theme}
-          style={{ height: 32, ...(Array.isArray(styleDots) ? {} : styleDots) }}
+          style={{
+            height: 32,
+            width: sliderWidth,
+            alignItems: "center",
+            ...(Array.isArray(styleDots) ? {} : styleDots),
+          }}
           firstDot={firstDot}
           lastDot={lastDot}
           maxDotsShown={maxDotsShown}
@@ -143,7 +149,7 @@ export function CenterCardSlider<T>({
         data={fullData}
         renderItem={({ item, index }) => {
           if (item === "first" && firstCard) {
-            return renderCenterCard({
+            return SlideCard({
               scrollX,
               index,
               content: firstCard,
@@ -156,7 +162,7 @@ export function CenterCardSlider<T>({
           }
 
           if (item === "last" && lastCard) {
-            return renderCenterCard({
+            return SlideCard({
               scrollX,
               index,
               content: lastCard,
@@ -170,7 +176,7 @@ export function CenterCardSlider<T>({
 
           const adjustedIndex = firstCard ? index - 1 : index;
 
-          return renderCenterCard({
+          return SlideCard({
             scrollX,
             index,
             content: card({
@@ -210,9 +216,9 @@ export function CenterCardSlider<T>({
         <ScrollableDots
           dataLength={fullData.length}
           currentIndex={currentIndex}
-          theme={theme}
           style={{
             height: 32,
+            width: sliderWidth,
             alignItems: "center",
             ...(Array.isArray(styleDots) ? {} : styleDots),
           }}
@@ -234,219 +240,6 @@ export function CenterCardSlider<T>({
     </View>
   );
 }
-
-function renderCenterCard({
-  scrollX,
-  index,
-  content,
-  width,
-  height,
-  animationType = "card",
-}: {
-  scrollX: RNAnimated.Value;
-  index: number;
-  content: React.ReactNode;
-  width: number;
-  height: number;
-  totalItems: number;
-  horizontalPadding: number;
-  animationType?: AnimationType;
-}) {
-  const inputRange = [
-    (index - 3) * width,
-    (index - 2) * width,
-    (index - 1) * width,
-    index * width,
-    (index + 1) * width,
-    (index + 2) * width,
-    (index + 3) * width,
-  ];
-
-  const opacity =
-    animationType === "flat"
-      ? 1
-      : scrollX.interpolate({
-          inputRange,
-          outputRange: [0.4, 0.6, 0.8, 1, 0.8, 0.6, 0.4],
-          extrapolate: "clamp",
-        });
-
-  const scale = scrollX.interpolate({
-    inputRange,
-    outputRange: [0.85, 0.9, 0.95, 1, 0.95, 0.9, 0.85],
-    extrapolate: "clamp",
-  });
-
-  const rotateY =
-    animationType === "flat"
-      ? scrollX.interpolate({
-          inputRange,
-          outputRange: ["0deg", "0deg", "0deg", "0deg", "0deg", "0deg", "0deg"],
-          extrapolate: "clamp",
-        })
-      : animationType === "card"
-      ? scrollX.interpolate({
-          inputRange,
-          outputRange: [
-            "-65deg",
-            "-35deg",
-            "-25deg",
-            "0deg",
-            "25deg",
-            "35deg",
-            "65deg",
-          ],
-          extrapolate: "clamp",
-        })
-      : animationType === "wheel"
-      ? scrollX.interpolate({
-          inputRange,
-          outputRange: [
-            "55deg",
-            "45deg",
-            "35deg",
-            "0deg",
-            "-35deg",
-            "-45deg",
-            "-55deg",
-          ],
-          extrapolate: "clamp",
-        })
-      : animationType === "album"
-      ? scrollX.interpolate({
-          inputRange,
-          outputRange: [
-            "-55deg",
-            "-55deg",
-            "-55deg",
-            "0deg",
-            "55deg",
-            "55deg",
-            "55deg",
-          ],
-          extrapolate: "clamp",
-        })
-      : undefined;
-
-  return (
-    <RNAnimated.View
-      style={{
-        width,
-        height,
-        opacity,
-        transform: [{ scale }, { perspective: 600 }, { rotateY }],
-      }}
-    >
-      {content}
-    </RNAnimated.View>
-  );
-}
-
-// -------------------------
-// ScrollableDots Component (reused from CardSlider)
-// -------------------------
-interface ScrollableDotsProps {
-  dataLength: number;
-  currentIndex: number;
-  theme: any;
-  style?: ViewStyle | ViewStyle[];
-  firstDot?: ReactNode;
-  lastDot?: ReactNode;
-  maxDotsShown?: number;
-  vertical?: boolean;
-}
-
-const DOT_WIDTH = 6;
-const DOT_MARGIN = 3;
-
-export const ScrollableDots = ({
-  dataLength,
-  currentIndex,
-  theme,
-  style,
-  firstDot,
-  lastDot,
-  maxDotsShown = 5,
-}: ScrollableDotsProps) => {
-  const flatListRef = useRef<FlatList>(null);
-  const totalDots = dataLength;
-  const dotWidth = DOT_MARGIN * 2 + DOT_WIDTH;
-  const shownDots = totalDots > maxDotsShown ? maxDotsShown : totalDots;
-  const windowWidth = dotWidth * shownDots;
-
-  useEffect(() => {
-    if (!flatListRef.current) return;
-    const offset =
-      currentIndex >= maxDotsShown
-        ? dotWidth * (currentIndex - maxDotsShown + 1)
-        : 0;
-    flatListRef.current.scrollToOffset({ offset, animated: true });
-  }, [currentIndex, maxDotsShown]);
-
-  const renderDot = (index: number) => {
-    const isActive = index === currentIndex;
-
-    if (index === 0 && firstDot) {
-      return (
-        <View
-          style={{
-            marginHorizontal: DOT_MARGIN,
-            transform: [{ scale: isActive ? 1.2 : 0.8 }],
-            opacity: isActive ? 1 : 0.4,
-          }}
-        >
-          {firstDot}
-        </View>
-      );
-    }
-    if (index === totalDots - 1 && lastDot) {
-      return (
-        <View
-          style={{
-            marginHorizontal: DOT_MARGIN,
-            transform: [{ scale: isActive ? 1.2 : 0.8 }],
-            opacity: isActive ? 1 : 0.4,
-          }}
-        >
-          {lastDot}
-        </View>
-      );
-    }
-
-    return (
-      <View
-        style={{
-          width: DOT_WIDTH,
-          height: DOT_WIDTH,
-          borderRadius: DOT_MARGIN,
-          marginHorizontal: DOT_MARGIN,
-          backgroundColor: theme.text,
-          transform: [{ scale: isActive ? 1.2 : 0.8 }],
-          opacity: isActive ? 1 : 0.4,
-        }}
-      />
-    );
-  };
-
-  return (
-    <View style={style}>
-      <FlatList
-        ref={flatListRef}
-        data={Array.from({ length: totalDots })}
-        keyExtractor={(_, index) => index.toString()}
-        horizontal
-        scrollEnabled={false}
-        showsHorizontalScrollIndicator={false}
-        renderItem={({ index }) => renderDot(index)}
-        contentContainerStyle={{
-          alignItems: "center",
-          flexDirection: "row",
-        }}
-        style={{ width: windowWidth }}
-      />
-    </View>
-  );
-};
 
 function DistanceBubble({
   currentIndex,
