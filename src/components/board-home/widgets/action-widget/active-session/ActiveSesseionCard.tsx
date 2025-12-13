@@ -3,10 +3,8 @@ import { StrobeButton } from "../../../../ui/buttons/StrobeButton";
 import { useWidgetUnit } from "../../../../../features/widgets/useWidgetUnit";
 import { useSettingsStore } from "../../../../../stores/settingsStore";
 import { useWorkoutStore } from "../../../../../stores/workout";
-import { View } from "react-native";
-import { ActiveSessionFooter } from "./ActiveSessionFooter";
 import { ActiveSessionHeader } from "./ActiveSessionHeader";
-import { ExerciseName } from "../../../../view-workout/table/header/ExerciseName";
+import { CompleteSession } from "./CompleteSession";
 
 export function ActiveSessionCard() {
   const { widgetUnit, fullWidth } = useWidgetUnit();
@@ -42,21 +40,10 @@ export function ActiveSessionCard() {
         }}
         onPress={handlePress}
         onLongPress={handleLongPress}
-        freeze
+        strobeColors={[theme.border, theme.border, theme.border, theme.border]}
       >
         <ActiveSessionHeader />
-        <View
-          style={{
-            flex: 1,
-            width: fullWidth,
-            flexDirection: "row",
-            gap: 16,
-            paddingHorizontal: 8,
-          }}
-        >
-          <ExerciseName />
-        </View>
-        {/* <ActiveSessionFooter /> */}
+        <CompleteSession />
       </StrobeButton>
     </Fragment>
   );

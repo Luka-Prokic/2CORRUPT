@@ -1,11 +1,26 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, ViewStyle } from "react-native";
 import { useSettingsStore } from "../../../../stores/settingsStore";
 import { useTranslation } from "react-i18next";
-import { useWorkoutStore } from "../../../../stores/workoutStore";
+import {
+  SessionExercise,
+  useWorkoutStore,
+} from "../../../../stores/workoutStore";
 import { WIDTH } from "../../../../utils/Dimensions";
 import { useHaptics } from "../../../../features/ui/useHaptics";
 
-export function SetTableHeader() {
+interface SetTableHeaderProps {
+  exercise?: SessionExercise;
+  style?: ViewStyle | ViewStyle[];
+  width?: number;
+  color?: string;
+}
+
+export function SetTableHeader({
+  exercise,
+  style,
+  width = WIDTH,
+  color,
+}: SetTableHeaderProps) {
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
   const { units, setUnits } = useSettingsStore();
@@ -15,7 +30,8 @@ export function SetTableHeader() {
     hapticType: "soft",
   });
 
-  const exerciseColumns = activeExercise?.columns || ["Reps", "Weight"];
+  const exerciseColumns =
+    exercise?.columns ?? (activeExercise?.columns || ["Reps", "Weight"]);
   const columns = ["Set", ...exerciseColumns, "Done"];
 
   function handleChangeUnits() {
@@ -28,7 +44,7 @@ export function SetTableHeader() {
       <View
         key={label}
         style={{
-          width: WIDTH / columns.length,
+          width: width / columns.length,
           height: 34,
           justifyContent: "center",
           alignItems: "center",
@@ -40,7 +56,7 @@ export function SetTableHeader() {
             fontSize: 16,
             fontWeight: "bold",
             textAlign: "center",
-            color: theme.grayText,
+            color: color ?? theme.grayText,
           }}
           numberOfLines={1}
           adjustsFontSizeToFit
@@ -58,7 +74,7 @@ export function SetTableHeader() {
         key={label}
         onPress={handleChangeUnits}
         style={{
-          width: WIDTH / columns.length,
+          width: width / columns.length,
           height: 34,
           justifyContent: "center",
           alignItems: "center",
@@ -70,7 +86,7 @@ export function SetTableHeader() {
             fontSize: 16,
             fontWeight: "bold",
             textAlign: "center",
-            color: theme.grayText,
+            color: color ?? theme.grayText,
           }}
           numberOfLines={1}
           adjustsFontSizeToFit
@@ -92,6 +108,8 @@ export function SetTableHeader() {
         left: 0,
         right: 0,
         alignItems: "center",
+        width: width,
+        ...style,
       }}
     >
       {columns.map((label: string) => {

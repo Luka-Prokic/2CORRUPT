@@ -12,6 +12,7 @@ interface ExerciseNameProps {
   textColor?: string;
   prefixColor?: string;
   width?: number;
+  height?: number;
 }
 
 export function ExerciseName({
@@ -20,15 +21,20 @@ export function ExerciseName({
   textColor,
   prefixColor,
   width,
+  height,
 }: ExerciseNameProps) {
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
   const { activeExercise } = useWorkoutStore();
 
-  const exerciseName =
-    exercise?.name?.[t("locale")] || activeExercise?.name?.[t("locale")];
+  const exerciseName = exercise
+    ? exercise?.name?.[t("locale")]
+    : activeExercise?.name?.[t("locale")];
 
-  const exercisePrefix = exercise?.prefix || activeExercise?.prefix;
+  const exercisePrefix = exercise ? exercise?.prefix : activeExercise?.prefix;
+
+  console.log("exerciseName", exerciseName);
+  console.log("exercisePrefix", exercisePrefix);
 
   return (
     <Text
@@ -38,6 +44,7 @@ export function ExerciseName({
         color: textColor ?? theme.text,
         textAlign: "center",
         width: width ?? "100%",
+        height: height ?? "auto",
       }}
       numberOfLines={1}
       adjustsFontSizeToFit

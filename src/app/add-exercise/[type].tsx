@@ -27,7 +27,7 @@ export default function AddExerciseScreen() {
       <Stack.Screen
         options={{
           headerBackButtonDisplayMode: "minimal",
-
+          headerBlurEffect: "none",
           headerTitle: () => <IText text={t("navigation.addExercise")} />,
           headerRight: () => <CreateNewExerciseButton />,
         }}

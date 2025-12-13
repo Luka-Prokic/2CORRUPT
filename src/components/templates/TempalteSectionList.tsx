@@ -1,7 +1,6 @@
 import { Fragment, JSX, useMemo } from "react";
 import { FlashList } from "@shopify/flash-list";
 import { View } from "react-native";
-import { SectionTitle } from "../ui/text/SectionTitle";
 import { WorkoutTemplate } from "../../stores/workoutStore";
 import { useUserStore } from "../../stores/userStore";
 import { useTranslation } from "react-i18next";
@@ -11,13 +10,11 @@ import { IText } from "../ui/text/IText";
 interface TemplateSectionListProps {
   templates: WorkoutTemplate[];
   renderCard: (template: WorkoutTemplate) => JSX.Element;
-  contentPadding?: number;
 }
 
 export function TemplateSectionList({
   templates,
   renderCard,
-  contentPadding = 8,
 }: TemplateSectionListProps) {
   const { user } = useUserStore();
   const { t } = useTranslation();
@@ -50,15 +47,10 @@ export function TemplateSectionList({
     ].filter(Boolean) as { title: string; data: WorkoutTemplate[] }[];
   }, [templates, user?.id]);
 
-  const isSingleSection = DATA?.length < 2;
-
-  console.log(isSingleSection);
-
   return (
-    <View>
+    <View style={{ width: WIDTH }}>
       {DATA.map((section, index) => (
         <Fragment key={index}>
-          {/* Only render title if there’s more than 1 section */}
           {DATA.length > 1 && (
             <IText
               text={section.title}

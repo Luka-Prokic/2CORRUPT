@@ -190,6 +190,11 @@ export function CenterCardSlider<T>({
             animationType,
           });
         }}
+        getItemLayout={(_, index) => ({
+          length: cardWidth,
+          offset: cardWidth * index,
+          index,
+        })}
         keyExtractor={keyExtractor || defaultKeyExtractor}
         horizontal
         showsHorizontalScrollIndicator={false}

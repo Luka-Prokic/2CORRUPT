@@ -94,13 +94,14 @@ export function SwitchButton({
   return (
     <BounceButton
       onPress={toggle}
+      strength={0.9}
       style={{
         width,
         height,
         borderRadius: height / 2,
         position: "relative",
         justifyContent: "center",
-        backgroundColor: theme.grayText + "20",
+        backgroundColor: theme.info + "40",
         padding: 2,
         ...style,
       }}
@@ -114,7 +115,7 @@ export function SwitchButton({
             top: 0,
             left: 0,
             borderRadius: height / 2,
-            backgroundColor: theme.primaryBackground,
+            backgroundColor: theme.secondaryBackground,
           },
           knobStyle,
         ]}

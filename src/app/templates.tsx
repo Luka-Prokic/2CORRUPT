@@ -4,20 +4,17 @@ import { ScreenContent } from "../components/ui/utils/ScreenContent";
 import { useTranslation } from "react-i18next";
 import { CreateTemplateButton } from "../components/templates/header/CreateTemplateButton";
 import { HeaderTemplatesToggle } from "../components/templates/header/HeaderTemplatesToggle";
-import { FlatList } from "react-native-gesture-handler";
 import { useWorkoutStore, WorkoutTemplate } from "../stores/workout";
 import { TemplateSelectCard } from "../components/templates/cards/TemplateSelectCard";
 import { SelectAllTemplatesButton } from "../components/templates/header/SelectAllTemplatesButton";
 import { IText } from "../components/ui/text/IText";
 import { useSettingsStore } from "../stores/settings";
 import { DeleteSelectedTemplates } from "../components/templates/header/DeleteSelectedTemplates";
-import { EmptyTemplateComponent } from "../components/templates/EmptyTemplateComponent";
 import { CloneSelectedTemplates } from "../components/templates/header/CloneSelectedTemplates";
 import { AddToSplitSelectedTemplates } from "../components/templates/header/AddToSplitSelectedTemplates";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { TemplateFilter } from "../components/templates/TemplateFilter";
-import { EmptyFooter } from "../components/ui/containers/EmptyFooter";
 import { TemplateSectionList } from "../components/templates/TempalteSectionList";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function TemplatesScreen() {
   const { t } = useTranslation();
@@ -29,12 +26,6 @@ export default function TemplatesScreen() {
     []
   );
   const insets = useSafeAreaInsets();
-
-  function footerComponent() {
-    if (filteredTemplates.length === 0 && templates.length > 0) {
-      return null;
-    } else return <EmptyTemplateComponent />;
-  }
 
   function headerLeft() {
     if (selectMode)
@@ -102,15 +93,14 @@ export default function TemplatesScreen() {
           headerTitle: headerTitle,
           headerRight: headerRight,
           headerBlurEffect: "none",
-          headerTransparent: false,
-          headerStyle: {
-            backgroundColor: theme.background,
-          },
         }}
       />
       <ScreenContent
         HeaderComponent={
-          <TemplateFilter setFilteredTemplates={setFilteredTemplates} />
+          <TemplateFilter
+            setFilteredTemplates={setFilteredTemplates}
+            style={{ marginTop: insets.top }}
+          />
         }
       >
         <TemplateSectionList

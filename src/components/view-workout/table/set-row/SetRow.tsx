@@ -7,6 +7,7 @@ import {
   ExerciseColumns,
   DropSet,
   Set,
+  SessionExercise,
 } from "../../../../stores/workout/types";
 import { View } from "react-native";
 import { useWorkoutStore } from "../../../../stores/workoutStore";
@@ -23,14 +24,27 @@ export type SetColumns = ExerciseColumns | "Set" | "Done";
 interface SetRowProps {
   set: Set;
   setIndex: number;
+  exercise: SessionExercise;
+  width?: number;
+  height?: number;
+  disabledStrobe?: boolean;
 }
 
-export function SetRow({ set, setIndex }: SetRowProps) {
+export function SetRow({
+  set,
+  setIndex,
+  exercise,
+  width = WIDTH,
+  height = 66,
+  disabledStrobe,
+}: SetRowProps) {
   const { theme } = useSettingsStore();
   const { activeExercise } = useWorkoutStore();
   const swipeableRef = useRef<Swipeable>(null);
 
-  const exerciseColumns = activeExercise?.columns || ["Reps", "Weight"];
+  const exerciseColumns = exercise
+    ? exercise.columns
+    : activeExercise?.columns || ["Reps", "Weight"];
   const columns = ["Set", ...exerciseColumns, "Done"];
 
   function input(column: SetColumns) {
@@ -71,20 +85,21 @@ export function SetRow({ set, setIndex }: SetRowProps) {
               ]
         }
         tint={set.isCompleted ? "light" : "auto"}
-        style={{ width: WIDTH, height: 66 }}
+        style={{ width, height }}
+        disabled={disabledStrobe}
       >
         <Animated.View
           exiting={FadeOut}
-          style={{ flexDirection: "row", width: WIDTH, height: 66 }}
+          style={{ flexDirection: "row", width, height }}
         >
           {columns.map((column: SetColumns, index: number) => (
             <View
-              key={`${column}-${index}-${activeExercise?.exerciseInfoId}`}
+              key={`${column}-${index}`}
               style={{
                 flex: 1,
                 justifyContent: "center",
                 alignItems: "center",
-                width: WIDTH / columns.length,
+                width: width / columns.length,
               }}
             >
               {input(column)}

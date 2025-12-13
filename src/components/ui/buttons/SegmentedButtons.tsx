@@ -70,7 +70,7 @@ export function SegmentedButtons<T extends string>({
           width,
           height,
           borderRadius: height / 2,
-          backgroundColor: theme.grayText + "20",
+          backgroundColor: theme.info + "40",
           flexDirection: "row",
           overflow: "hidden",
           ...style,
@@ -86,7 +86,7 @@ export function SegmentedButtons<T extends string>({
             borderRadius: height / 2,
             top: 2,
             left: 0,
-            backgroundColor: theme.primaryBackground,
+            backgroundColor: theme.secondaryBackground,
           },
           knobStyle,
         ]}

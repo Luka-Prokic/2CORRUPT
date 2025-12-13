@@ -18,6 +18,7 @@ interface BounceButtonProps
   style?: ViewStyle | ViewStyle[];
   onPress?: () => void;
   haptics?: boolean;
+  strength?: number;
 }
 
 export function BounceButton({
@@ -28,10 +29,11 @@ export function BounceButton({
   textColor,
   onPress,
   haptics = false,
+  strength = 0.8,
   ...rest
 }: BounceButtonProps) {
   const { theme } = useSettingsStore();
-  const { bounceAnim, bounceIt } = useBounceScaleAnim();
+  const { bounceAnim, bounceIt } = useBounceScaleAnim({ strength });
   const triggerHaptics = useHaptics({ modeType: "max", hapticType: "medium" });
 
   function handlePress() {

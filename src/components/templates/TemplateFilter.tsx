@@ -6,6 +6,7 @@ import { useFilterTemplates } from "../../features/workout/useFilterTemplates";
 import { Fragment, useEffect } from "react";
 import { useWorkoutStore } from "../../stores/workout/useWorkoutStore";
 import { EmptyHeader } from "../ui/containers/EmptyHeader";
+import { useWidgetUnit } from "../../features/widgets/useWidgetUnit";
 interface TemplateFilterProps {
   setFilteredTemplates: (templates: WorkoutTemplate[]) => void;
   style?: ViewStyle | ViewStyle[];
@@ -17,6 +18,7 @@ export function TemplateFilter({
 }: TemplateFilterProps) {
   const { t } = useTranslation();
   const { templates } = useWorkoutStore();
+  const { fullWidth } = useWidgetUnit();
   const { templatesFiltered, searchQuery, setSearchQuery } =
     useFilterTemplates();
 
@@ -33,7 +35,7 @@ export function TemplateFilter({
             value={searchQuery}
             onChangeText={setSearchQuery}
             placeholder={t("templates.search")}
-            style={{ marginHorizontal: 16, ...style }}
+            style={{ marginHorizontal: 16, width: fullWidth, ...style }}
           />
         </Fragment>
       );

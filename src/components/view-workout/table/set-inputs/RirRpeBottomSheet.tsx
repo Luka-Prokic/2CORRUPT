@@ -79,7 +79,6 @@ export const RirRpeBottomSheet = forwardRef<
       <BottomSheetView
         style={{
           flex: 1,
-          paddingHorizontal: 16,
           paddingBottom: insets.bottom + 8,
           paddingTop: 8,
         }}
@@ -96,7 +95,7 @@ export const RirRpeBottomSheet = forwardRef<
           distanceTolerance={2}
           sliderWidth={WIDTH}
           animationType="wheel"
-          showDistanceBubble
+          showDistanceBubble={!!set[mode]}
           hideDots
           card={({ item, index }) => (
             <TouchableOpacity
@@ -154,6 +153,7 @@ function Switch({
       style={{
         alignItems: "center",
         gap: 16,
+        paddingHorizontal: 16,
       }}
     >
       <SwitchButton
