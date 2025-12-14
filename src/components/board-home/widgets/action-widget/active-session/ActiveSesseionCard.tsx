@@ -4,7 +4,7 @@ import { useWidgetUnit } from "../../../../../features/widgets/useWidgetUnit";
 import { useSettingsStore } from "../../../../../stores/settingsStore";
 import { useWorkoutStore } from "../../../../../stores/workout";
 import { ActiveSessionHeader } from "./ActiveSessionHeader";
-import { CompleteSession } from "./CompleteSession";
+import { SevenSegmentSessionTimer } from "../../../../ui/timer/SevenSegmentSessionTimer";
 
 export function ActiveSessionCard() {
   const { widgetUnit, fullWidth } = useWidgetUnit();
@@ -43,7 +43,7 @@ export function ActiveSessionCard() {
         strobeColors={[theme.border, theme.border, theme.border, theme.border]}
       >
         <ActiveSessionHeader />
-        <CompleteSession />
+        <SevenSegmentSessionTimer segmentSize={32} />
       </StrobeButton>
     </Fragment>
   );

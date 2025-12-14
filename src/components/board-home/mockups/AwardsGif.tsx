@@ -7,10 +7,15 @@ import { BlurView } from "expo-blur";
 import { LinearGradient } from "expo-linear-gradient";
 import { Text } from "react-native";
 import { View } from "react-native";
+import { router } from "expo-router";
 
 export function AwardsGif() {
   const { theme } = useSettingsStore();
   const { widgetUnit } = useWidgetUnit();
+
+  function handlePress() {
+    router.push("/number");
+  }
 
   return (
     <View
@@ -42,7 +47,7 @@ export function AwardsGif() {
             height: "100%",
             backgroundColor: "transparent",
           }}
-          onPress={() => {}}
+          onPress={handlePress}
         >
           {/* <FrameAnimation
             model="nudls"

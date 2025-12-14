@@ -42,7 +42,6 @@ export function ActiveSessionHeader() {
         }}
       >
         <Ionicons name="chevron-back" size={32} color={theme.text} />
-        <SessionTimer textStyle={{ color: theme.accent }} />
         <IText text={activeSession.name} color={theme.text} />
       </BlurView>
     </TouchableOpacity>

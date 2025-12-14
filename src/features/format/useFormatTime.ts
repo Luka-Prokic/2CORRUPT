@@ -2,7 +2,7 @@ import { useCallback } from "react";
 
 interface UseFormatTimeProps {
   seconds: number;
-  format?: "mm:ss" | "hh:mm:ss" | "auto" | "auto+";
+  format?: "mm:ss" | "hh:mm:ss" | "auto" | "auto+" | "seven";
 }
 
 export const useFormatTime = useCallback(
@@ -57,6 +57,15 @@ export const useFormatTime = useCallback(
       if (secs > 0) result += `${result ? " " : ""}${secs}s`;
 
       return result;
+    }
+
+    if (format === "seven") {
+      const hours = Math.floor(seconds / 3600);
+      const minutes = Math.floor((seconds % 3600) / 60);
+      const secs = seconds % 60;
+      return `${hours.toString().padStart(2, "0")}:${minutes
+        .toString()
+        .padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
     }
 
     return seconds.toString();
