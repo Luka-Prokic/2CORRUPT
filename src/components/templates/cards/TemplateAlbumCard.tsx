@@ -68,7 +68,7 @@ export function TemplateAlbumCard({
         style={{
           fontSize: 12,
           fontWeight: "bold",
-          color: theme.thirdBackground,
+          color: theme.fifthAccent,
           alignSelf: "flex-end",
         }}
       >

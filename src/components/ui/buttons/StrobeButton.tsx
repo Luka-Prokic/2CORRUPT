@@ -22,6 +22,7 @@ export interface StrobeButtonProps
   styleContent?: ViewStyle | ViewStyle[];
   textStyle?: TextStyle | TextStyle[];
   strobeColors?: [string, string, string, string];
+  strobeColor?: string;
   strobeDisabled?: boolean;
   strobeTint?: "default" | "light" | "dark" | "auto";
   pressable?: boolean;
@@ -33,6 +34,7 @@ export function StrobeButton({
   title,
   children,
   strobeColors,
+  strobeColor,
   style,
   contentContainerStyle,
   styleContent,
@@ -50,10 +52,10 @@ export function StrobeButton({
   const { theme } = useSettingsStore();
 
   const colors: [string, string, string, string] = strobeColors ?? [
-    theme.caka,
-    theme.primaryBackground,
-    theme.accent,
-    theme.tint,
+    strobeColor ?? theme.caka,
+    strobeColor ?? theme.primaryBackground,
+    strobeColor ?? theme.accent,
+    strobeColor ?? theme.tint,
   ];
 
   return (

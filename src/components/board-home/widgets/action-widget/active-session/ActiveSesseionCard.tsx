@@ -11,13 +11,7 @@ export function ActiveSessionCard() {
   const { theme } = useSettingsStore();
   const { activeSession } = useWorkoutStore();
 
-  function handlePress() {
-    console.log("handlePress");
-  }
-
-  function handleLongPress() {
-    console.log("handleLongPress");
-  }
+  const softGlow = theme.fifthBackground + "40";
 
   if (!activeSession) return null;
 
@@ -27,23 +21,25 @@ export function ActiveSessionCard() {
         style={{
           height: widgetUnit,
           width: fullWidth,
-          borderWidth: 1,
-          borderColor: theme.thirdBackground + "40",
           borderRadius: 32,
         }}
         styleContent={{
           height: widgetUnit,
           width: fullWidth,
-          alignItems: "center",
-          justifyContent: "center",
           paddingTop: 44,
+          borderWidth: 1,
+          borderColor: theme.tint + "40",
+          borderRadius: 32,
         }}
-        onPress={handlePress}
-        onLongPress={handleLongPress}
-        strobeColors={[theme.border, theme.border, theme.border, theme.border]}
+        pressable
+        strobeColors={[softGlow, softGlow, softGlow, softGlow]}
       >
         <ActiveSessionHeader />
-        <SevenSegmentSessionTimer segmentSize={32} />
+
+        <SevenSegmentSessionTimer
+          segmentSize={36}
+          color={theme.secondaryAccent}
+        />
       </StrobeButton>
     </Fragment>
   );

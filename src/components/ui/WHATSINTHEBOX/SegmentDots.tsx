@@ -1,6 +1,8 @@
 import React from "react";
 import Svg, { Circle } from "react-native-svg";
 import { View } from "react-native";
+import { SegmentWeight } from "./types";
+import { useThickness } from "./useThickness";
 
 interface SegmentDotsProps {
   size?: number; // total height of colon
@@ -9,33 +11,48 @@ interface SegmentDotsProps {
   activeOpacity?: number;
   inactiveOpacity?: number;
   active?: boolean;
+  weight?: SegmentWeight;
 }
 
 export function SegmentDots({
   size = 44,
-  dotRadius = 4,
+  dotRadius,
   color = "white",
   activeOpacity = 1,
   inactiveOpacity = 0.1,
   active = true,
+  weight = "normal",
 }: SegmentDotsProps) {
   const opacity = active ? activeOpacity : inactiveOpacity;
+
+  const dotThickness = useThickness({ size, weight, thickness: dotRadius });
 
   return (
     <View
       style={{
-        width: dotRadius * 2,
-        height: size,
+        width: dotThickness * 2,
+        height: size * 2,
+        paddingVertical: (size - dotThickness) / 2,
         justifyContent: "space-between",
         alignItems: "center",
         opacity,
       }}
     >
-      <Svg width={dotRadius * 2} height={dotRadius * 2}>
-        <Circle cx={dotRadius} cy={dotRadius} r={dotRadius} fill={color} />
+      <Svg width={dotThickness} height={dotThickness}>
+        <Circle
+          cx={dotThickness / 2}
+          cy={dotThickness / 2}
+          r={dotThickness / 2}
+          fill={color}
+        />
       </Svg>
-      <Svg width={dotRadius * 2} height={dotRadius * 2}>
-        <Circle cx={dotRadius} cy={dotRadius} r={dotRadius} fill={color} />
+      <Svg width={dotThickness} height={dotThickness}>
+        <Circle
+          cx={dotThickness / 2}
+          cy={dotThickness / 2}
+          r={dotThickness / 2}
+          fill={color}
+        />
       </Svg>
     </View>
   );

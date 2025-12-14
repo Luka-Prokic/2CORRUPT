@@ -31,14 +31,11 @@ export function QuickStartSelect() {
         width: WIDTH - 32,
         height: 64,
         borderRadius: 32,
-        backgroundColor: theme.primaryBackground,
+        backgroundColor: theme.fifthAccent,
       }}
-      strobeColors={[theme.handle, theme.handle, theme.handle, theme.handle]}
+      strobeColor={theme.secondaryAccent}
     >
-      <IText
-        text={t("workout-view.quick-start")}
-        color={theme.fifthBackground}
-      />
+      <IText text={t("workout-view.quick-start")} color={theme.border} />
     </StrobeButton>
   );
 }

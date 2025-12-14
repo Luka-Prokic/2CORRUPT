@@ -1,20 +1,19 @@
 import { useEffect, useState } from "react";
 import { AppState } from "react-native";
 import { useWorkoutStore } from "../../../stores/workoutStore";
-import { useSettingsStore } from "../../../stores/settingsStore";
 import { useFormatTime } from "../../../features/format/useFormatTime";
 import { SegmentTime } from "../WHATSINTHEBOX/SegmentTime";
 
 interface SevenSegmentSessionTimerProps {
   segmentSize?: number;
+  color?: string;
 }
 
 export function SevenSegmentSessionTimer({
   segmentSize = 44,
+  color = "white",
 }: SevenSegmentSessionTimerProps) {
   const { activeSession } = useWorkoutStore();
-  const { theme } = useSettingsStore();
-
   const [isActive, setIsActive] = useState(true);
   const [totalSeconds, setTotalSeconds] = useState(0);
 
@@ -58,8 +57,10 @@ export function SevenSegmentSessionTimer({
       hours={Number(hours)}
       minutes={Number(minutes)}
       seconds={Number(seconds)}
-      color={theme.fifthBackground}
+      color={color}
       size={segmentSize}
+      inactiveOpacity={0.1}
+      weight="bold"
     />
   );
 }

@@ -2,12 +2,14 @@ import { View } from "react-native";
 import { SegmentDigit } from "./SegmentDigit";
 import { SegmentDots } from "./SegmentDots";
 import { Fragment } from "react";
+import { SegmentWeight } from "./types";
 
 interface TimeOptions {
   size?: number;
   color?: string;
   activeOpacity?: number;
   inactiveOpacity?: number;
+  weight?: SegmentWeight;
 }
 
 interface SegmentTimeProps {
@@ -22,6 +24,10 @@ interface SegmentTimeProps {
   activeOpacity?: number;
   inactiveOpacity?: number;
   blink?: boolean;
+  height?: number;
+  width?: number;
+  gap?: number;
+  weight?: SegmentWeight;
 }
 
 export function SegmentTime({
@@ -36,7 +42,11 @@ export function SegmentTime({
   activeOpacity = 1,
   inactiveOpacity = 0.1,
   blink = true,
+  gap = 8,
+  weight = "normal",
 }: SegmentTimeProps) {
+  const hasHours = hours !== undefined;
+
   const hrsTens = hours ? Math.floor(hours / 10) : 0;
   const hrsOnes = hours ? hours % 10 : 0;
 
@@ -52,10 +62,10 @@ export function SegmentTime({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
-        gap: 8,
+        gap,
       }}
     >
-      {hours !== undefined && (
+      {hasHours && (
         <Fragment>
           <SegmentDigit
             digit={hrsTens}
@@ -63,6 +73,7 @@ export function SegmentTime({
             color={color || hoursOptions?.color}
             activeOpacity={activeOpacity || hoursOptions?.activeOpacity}
             inactiveOpacity={inactiveOpacity || hoursOptions?.inactiveOpacity}
+            weight={weight || hoursOptions?.weight}
           />
           <SegmentDigit
             digit={hrsOnes}
@@ -70,6 +81,7 @@ export function SegmentTime({
             color={color || hoursOptions?.color}
             activeOpacity={activeOpacity || hoursOptions?.activeOpacity}
             inactiveOpacity={inactiveOpacity || hoursOptions?.inactiveOpacity}
+            weight={weight || hoursOptions?.weight}
           />
           <SegmentDots
             size={size}
@@ -77,15 +89,18 @@ export function SegmentTime({
             activeOpacity={activeOpacity || hoursOptions?.activeOpacity}
             inactiveOpacity={inactiveOpacity || hoursOptions?.inactiveOpacity}
             active={blink}
+            weight={weight || hoursOptions?.weight}
           />
         </Fragment>
       )}
+
       <SegmentDigit
         digit={minTens}
         eightOptions={{ size, ...minutesOptions }}
         color={color || minutesOptions?.color}
         activeOpacity={activeOpacity || minutesOptions?.activeOpacity}
         inactiveOpacity={inactiveOpacity || minutesOptions?.inactiveOpacity}
+        weight={weight || minutesOptions?.weight}
       />
       <SegmentDigit
         digit={minOnes}
@@ -93,6 +108,7 @@ export function SegmentTime({
         color={color || minutesOptions?.color}
         activeOpacity={activeOpacity || minutesOptions?.activeOpacity}
         inactiveOpacity={inactiveOpacity || minutesOptions?.inactiveOpacity}
+        weight={weight || minutesOptions?.weight}
       />
       <SegmentDots
         size={size}
@@ -100,6 +116,7 @@ export function SegmentTime({
         activeOpacity={activeOpacity || minutesOptions?.activeOpacity}
         inactiveOpacity={inactiveOpacity || minutesOptions?.inactiveOpacity}
         active={blink}
+        weight={weight || minutesOptions?.weight}
       />
       <SegmentDigit
         digit={secTens}
@@ -107,6 +124,7 @@ export function SegmentTime({
         color={color || secondsOptions?.color}
         activeOpacity={activeOpacity || secondsOptions?.activeOpacity}
         inactiveOpacity={inactiveOpacity || secondsOptions?.inactiveOpacity}
+        weight={weight || secondsOptions?.weight}
       />
       <SegmentDigit
         digit={secOnes}
@@ -114,6 +132,7 @@ export function SegmentTime({
         color={color || secondsOptions?.color}
         activeOpacity={activeOpacity || secondsOptions?.activeOpacity}
         inactiveOpacity={inactiveOpacity || secondsOptions?.inactiveOpacity}
+        weight={weight || secondsOptions?.weight}
       />
     </View>
   );

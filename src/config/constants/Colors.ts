@@ -8,23 +8,30 @@ export type Themes =
 
 export const Colors = {
   light: {
+    // Text
     text: "#1C1C1E",
     secondaryText: "#FFFFFF",
     grayText: "#8E8E93",
     handle: "#D1D1D6",
+
+    // Backgrounds
     background: "#F2F2F7",
-    tint: "#007AFF",
-    tabIconDefault: "#D1D1D6",
-    tabIconHomeSelected: "#4C4F51",
-    tabIconTrainingSelected: "#4C4F51",
-    tabIconProfileSelected: "#4C4F51",
     navBackground: "#FFFFFF",
     primaryBackground: "#FFFFFF",
     secondaryBackground: "#FAFAFA",
     thirdBackground: "#A1C6FF",
-    fourthBackground: "#D2C7B6",
+    fourthBackground: "#FF6F6F",
     fifthBackground: "#FF6F61",
+
+    // Accents
     accent: "#4C4F51",
+    tint: "#007AFF",
+    secondaryAccent: "#FF4C3B", // bright coral/red |
+    thirdAccent: "#FF9E5C", // softer orange
+    fourthAccent: "#FFB0A8", // light pink
+    fifthAccent: "#FFC75F", // golden accent
+
+    // Misc
     shadow: "#1C1C1E",
     glow: "#F2F2F7",
     caka: "#FFD60A",
@@ -35,23 +42,30 @@ export const Colors = {
   },
 
   peachy: {
+    // Text
     text: "#2C2C2E",
     secondaryText: "#FFFFFF",
     grayText: "#8E8E93",
     handle: "#D1D1D6",
+
+    // Backgrounds
     background: "#F5F5F5",
-    tint: "#00B5E2",
-    tabIconDefault: "#D1D1D6",
-    tabIconHomeSelected: "#E82F8A",
-    tabIconTrainingSelected: "#1B5E20",
-    tabIconProfileSelected: "#0288D1",
     navBackground: "#FFFFFF",
     primaryBackground: "#F7D1A6",
     secondaryBackground: "#FBE9E4",
     thirdBackground: "#F9C1B6",
     fourthBackground: "#B7D8F7",
     fifthBackground: "#C2A7D6",
+
+    // Accents
     accent: "#E82F8A",
+    tint: "#00B5E2",
+    secondaryAccent: "#FFA0C0", // medium pink |
+    thirdAccent: "#FDC5E6", // very light pink
+    fourthAccent: "#FF9BCB", //  soft pink
+    fifthAccent: "#FFB6E3", // pastel pink
+
+    // Misc
     shadow: "#1C1C1E",
     glow: "#F2F2F7",
     caka: "#FFD60A",
@@ -62,23 +76,30 @@ export const Colors = {
   },
 
   oldschool: {
+    // Text
     text: "#1C1C1E",
     secondaryText: "#FFFFFF",
     grayText: "#8E8E93",
     handle: "#D1D1D6",
+
+    // Backgrounds
     background: "#FFFEF6",
-    tint: "#E60046",
-    tabIconDefault: "#D1D1D6",
-    tabIconHomeSelected: "#E60046",
-    tabIconTrainingSelected: "#E60046",
-    tabIconProfileSelected: "#E60046",
     navBackground: "#FFFEF6",
     primaryBackground: "#F5F5F7",
     secondaryBackground: "#F9F9E1",
     thirdBackground: "#E8B475",
-    fourthBackground: "#E0B40A",
+    fourthBackground: "#FF8C8C",
     fifthBackground: "#483E3D",
+
+    // Accents
     accent: "#4B6A88",
+    tint: "#E60046",
+    secondaryAccent: "#6B4C3B", // deep brown |
+    thirdAccent: "#5C5D5A", // grayish
+    fourthAccent: "#7B3E57", // muted burgundy
+    fifthAccent: "#A69F7C", // vintage gold/beige
+
+    // Misc
     shadow: "#1C1C1E",
     glow: "#F2F2F7",
     caka: "#FFD60A",
@@ -89,23 +110,30 @@ export const Colors = {
   },
 
   dark: {
+    // Text
     text: "#FFFFFF",
     secondaryText: "#000000",
     grayText: "#A9A9A9",
     handle: "#3A3A3C",
+
+    // Backgrounds
     background: "#000000",
-    tint: "#A78BFA",
-    tabIconDefault: "#D1D1D6",
-    tabIconHomeSelected: "#007AFF",
-    tabIconTrainingSelected: "#007AFF",
-    tabIconProfileSelected: "#007AFF",
     navBackground: "#333333",
     primaryBackground: "#3A3A3C",
     secondaryBackground: "#222222",
     thirdBackground: "#4A6A7F",
     fourthBackground: "#8A8580",
     fifthBackground: "#D1CCC7",
+
+    // Accents
     accent: "#FFFF33",
+    tint: "#A78BFA",
+    secondaryAccent: "#33FFAA", //  greenish |
+    thirdAccent: "#FF6EFF", // magenta
+    fourthAccent: "#FF9B33", // pastel green
+    fifthAccent: "#7B3E57", //  burgundy
+
+    // Misc
     shadow: "#FFFFFF",
     glow: "#F2F2F7",
     caka: "#FFD60A",
@@ -116,23 +144,30 @@ export const Colors = {
   },
 
   preworkout: {
+    // Text
     text: "#FFFFFF",
     secondaryText: "#000000",
     grayText: "#8E8E93",
     handle: "#3A3A3C",
+
+    // Backgrounds
     background: "#000000",
-    tint: "#F9C1B6",
-    tabIconDefault: "#D1D1D6",
-    tabIconHomeSelected: "#FFFF33",
-    tabIconTrainingSelected: "#007AFF",
-    tabIconProfileSelected: "#66CCFF",
     navBackground: "#1C1C1E",
     primaryBackground: "#222222",
     secondaryBackground: "#2A262B",
     thirdBackground: "#FF5E57",
     fourthBackground: "#333333",
     fifthBackground: "#FFD700",
+
+    // Accents
     accent: "#00FF88",
+    tint: "#F9C1B6",
+    secondaryAccent: "#33FFAA", // light green|
+    thirdAccent: "#99FFCC", //   soft green
+    fourthAccent: "#66FFBB", // pastel green
+    fifthAccent: "#FF4C4C", // coral red
+
+    // Misc
     shadow: "#FFFFFF",
     glow: "#F2F2F7",
     caka: "#FFFF33",
@@ -143,23 +178,30 @@ export const Colors = {
   },
 
   Corrupted: {
+    // Text
     text: "#FFFFFF",
     secondaryText: "#1C1C1C",
     grayText: "#A9A9A9",
     handle: "#3A3A3C",
+
+    // Backgrounds
     background: "#000000",
-    tint: "#FF3B30",
-    tabIconDefault: "#D1D1D6",
-    tabIconHomeSelected: "#D9004C",
-    tabIconTrainingSelected: "#D9004C",
-    tabIconProfileSelected: "#D9004C",
     navBackground: "#090909",
     primaryBackground: "#1A1A1A",
     secondaryBackground: "#282828",
     thirdBackground: "#9E2A2A",
     fourthBackground: "#B4F8D8",
     fifthBackground: "#D0D0D0",
+
+    // Accents
     accent: "#A6F7E5",
+    tint: "#FF3B30",
+    secondaryAccent: "#FFC0C0", // very light red |
+    thirdAccent: "#FF4C4C", // coral red
+    fourthAccent: "#FF8C8C", // pastel red
+    fifthAccent: "#FF6F6F", //  red
+
+    // Misc
     shadow: "#FFFFFF",
     glow: "#F2F2F7",
     caka: "#FFD60A",

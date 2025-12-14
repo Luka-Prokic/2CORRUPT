@@ -1,6 +1,8 @@
 import React from "react";
 import { View } from "react-native";
 import { HorizontalSegment, SegmentProps, VerticalSegment } from "./Segment";
+import { useThickness } from "./useThickness";
+import { SegmentWeight } from "./types";
 
 const defaultSegmentOptions: SegmentProps = {
   thickness: undefined,
@@ -15,6 +17,7 @@ export interface SegmentEightProps {
   segmentOptions?: SegmentProps;
   gap?: number;
   activeSegments?: number[];
+  weight?: SegmentWeight;
 }
 
 export function SegmentEight({
@@ -23,11 +26,13 @@ export function SegmentEight({
   segmentOptions = defaultSegmentOptions,
   gap,
   activeSegments = defaultActiveSegments,
+  weight = "normal",
 }: SegmentEightProps) {
-  const thickness = (() => {
-    const t = Math.floor(segmentOptions.thickness ?? size / 5);
-    return t % 2 === 0 ? t + 1 : t;
-  })();
+  const thickness = useThickness({
+    size,
+    weight,
+    thickness: segmentOptions.thickness,
+  });
   const length = segmentOptions.length ?? size - thickness;
 
   const segmentGap = gap ?? (size > 44 ? 2 : 1);

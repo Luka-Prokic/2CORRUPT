@@ -40,16 +40,11 @@ export function StartWorkoutButton() {
         left: 0,
         right: 0,
         alignItems: "center",
+        backgroundColor: theme.thirdBackground,
       }}
       haptics
     >
-      <StrobeBlur
-        style={{
-          width: "100%",
-          height: "100%",
-          backgroundColor: theme.tint,
-        }}
-      >
+      <StrobeBlur strobeColor={theme.secondaryAccent}>
         <IText
           text={
             isItActive

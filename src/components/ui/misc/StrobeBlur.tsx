@@ -15,6 +15,7 @@ export interface StrobeBlurProps {
   size?: number;
   disabled?: boolean;
   freeze?: boolean; // <-- new prop
+  strobeColor?: string;
 }
 
 const BLOBS = [0, 1, 2, 3, 0, 1, 2, 3];
@@ -29,6 +30,7 @@ export function StrobeBlur({
   size = 100,
   disabled = false,
   freeze = false,
+  strobeColor,
 }: StrobeBlurProps) {
   const { themeMode } = useSettingsStore();
   const animValues = useRef(BLOBS.map(() => new Animated.Value(0))).current;
@@ -97,7 +99,8 @@ export function StrobeBlur({
             position: "absolute",
             width: size,
             height: size,
-            backgroundColor: colors?.[blob.color] ?? "rgba(255,255,255,0.2)",
+            backgroundColor:
+              strobeColor ?? colors?.[blob.color] ?? "rgba(255,255,255,0.2)",
             opacity: 0.2,
             transform: [
               {

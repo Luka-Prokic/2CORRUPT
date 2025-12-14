@@ -72,7 +72,7 @@ export function TemplateCard({ template }: TemplateCardProps) {
           style={{
             fontSize: 12,
             fontWeight: "bold",
-            color: theme.thirdBackground,
+            color: theme.fifthAccent,
             alignSelf: "flex-end",
           }}
         >

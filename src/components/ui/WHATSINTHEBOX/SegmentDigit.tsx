@@ -1,5 +1,6 @@
 import React from "react";
 import { SegmentEight, SegmentEightProps } from "./SegmentEight";
+import { SegmentWeight } from "./types";
 
 interface SegmentDigitProps {
   digit?: number; // 0-9
@@ -7,6 +8,7 @@ interface SegmentDigitProps {
   color?: string;
   activeOpacity?: number;
   inactiveOpacity?: number;
+  weight?: SegmentWeight;
 }
 
 const digitMap: Record<number, number[]> = {
@@ -28,6 +30,7 @@ export function SegmentDigit({
   color,
   activeOpacity = 1,
   inactiveOpacity = 0.1,
+  weight = "normal",
 }: SegmentDigitProps) {
   const baseActiveSegments = digitMap[digit] || digitMap[8];
 
@@ -45,6 +48,7 @@ export function SegmentDigit({
         ...(eightOptions?.segmentOptions || {}),
         color: color || eightOptions?.segmentOptions?.color || "white",
       }}
+      weight={weight}
     />
   );
 }

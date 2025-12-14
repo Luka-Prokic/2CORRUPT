@@ -3,7 +3,6 @@ import { useWidgetUnit } from "../../../../../features/widgets/useWidgetUnit";
 import { IText } from "../../../../ui/text/IText";
 import { useWorkoutStore } from "../../../../../stores/workout";
 import { useSettingsStore } from "../../../../../stores/settingsStore";
-import { SessionTimer } from "../../../../ui/timer/SessionTimer";
 import { Ionicons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
 import { useUIStore } from "../../../../../stores/ui";
@@ -34,14 +33,21 @@ export function ActiveSessionHeader() {
         tint={themeMode}
         style={{
           alignItems: "center",
-          justifyContent: "space-between",
+          justifyContent: "center",
           flexDirection: "row",
-          paddingHorizontal: 16,
+          paddingHorizontal: 64,
           width: fullWidth,
           height: 44,
+          borderBottomWidth: 1,
+          borderBottomColor: theme.tint + "20",
         }}
       >
-        <Ionicons name="chevron-back" size={32} color={theme.text} />
+        <Ionicons
+          name="chevron-back"
+          size={32}
+          color={theme.accent}
+          style={{ position: "absolute", left: 8 }}
+        />
         <IText text={activeSession.name} color={theme.text} />
       </BlurView>
     </TouchableOpacity>
