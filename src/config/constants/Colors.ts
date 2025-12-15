@@ -27,9 +27,9 @@ export const Colors = {
     accent: "#4C4F51",
     tint: "#007AFF",
     secondaryAccent: "#FF4C3B", // bright coral/red |
-    thirdAccent: "#FF9E5C", // softer orange
-    fourthAccent: "#FFB0A8", // light pink
-    fifthAccent: "#FFC75F", // golden accent
+    thirdAccent: "#EFD9C3", // lighter beige / sand
+    fourthAccent: "#FFB37A", //  peach orange
+    fifthAccent: "#FFC75F", // golden accent |
 
     // Misc
     shadow: "#1C1C1E",
@@ -61,9 +61,9 @@ export const Colors = {
     accent: "#E82F8A",
     tint: "#00B5E2",
     secondaryAccent: "#FFA0C0", // medium pink |
-    thirdAccent: "#FDC5E6", // very light pink
-    fourthAccent: "#FF9BCB", //  soft pink
-    fifthAccent: "#FFB6E3", // pastel pink
+    thirdAccent: "#FFC1DD", // pastel pink
+    fourthAccent: "#FDC5E6", //  very light pink
+    fifthAccent: "#FFB6E3", // soft blush |
 
     // Misc
     shadow: "#1C1C1E",
@@ -95,9 +95,9 @@ export const Colors = {
     accent: "#4B6A88",
     tint: "#E60046",
     secondaryAccent: "#6B4C3B", // deep brown |
-    thirdAccent: "#5C5D5A", // grayish
+    thirdAccent: "#C2C0B6", // light warm gray (magazine paper)
     fourthAccent: "#7B3E57", // muted burgundy
-    fifthAccent: "#A69F7C", // vintage gold/beige
+    fifthAccent: "#A69F7C", // vintage gold/beige |
 
     // Misc
     shadow: "#1C1C1E",
@@ -123,15 +123,15 @@ export const Colors = {
     secondaryBackground: "#222222",
     thirdBackground: "#4A6A7F",
     fourthBackground: "#8A8580",
-    fifthBackground: "#D1CCC7",
+    fifthBackground: "#E5E5EA", // iOS light surface inside dark UI
 
     // Accents
     accent: "#FFFF33",
     tint: "#A78BFA",
     secondaryAccent: "#33FFAA", //  greenish |
-    thirdAccent: "#FF6EFF", // magenta
-    fourthAccent: "#FF9B33", // pastel green
-    fifthAccent: "#7B3E57", //  burgundy
+    thirdAccent: "#5C5C60", // graphite gray
+    fourthAccent: "#FF6EFF", // magenta
+    fifthAccent: "#7B3E57", //  burgundy |
 
     // Misc
     shadow: "#FFFFFF",
@@ -162,10 +162,10 @@ export const Colors = {
     // Accents
     accent: "#00FF88",
     tint: "#F9C1B6",
-    secondaryAccent: "#33FFAA", // light green|
-    thirdAccent: "#99FFCC", //   soft green
-    fourthAccent: "#66FFBB", // pastel green
-    fifthAccent: "#FF4C4C", // coral red
+    secondaryAccent: "#F1FFF0", // almost-white with green bias
+    thirdAccent: "#00FFCC", //   soft green |
+    fourthAccent: "#66FF00", // nightvision green
+    fifthAccent: "#FF4C4C", // coral red |
 
     // Misc
     shadow: "#FFFFFF",
@@ -199,7 +199,7 @@ export const Colors = {
     secondaryAccent: "#FFC0C0", // very light red |
     thirdAccent: "#FF4C4C", // coral red
     fourthAccent: "#FF8C8C", // pastel red
-    fifthAccent: "#FF6F6F", //  red
+    fifthAccent: "#FF6F6F", //  red |
 
     // Misc
     shadow: "#FFFFFF",

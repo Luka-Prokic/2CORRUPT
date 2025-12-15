@@ -50,7 +50,7 @@ export function BounceButton({
           overflow: "hidden",
           zIndex: 1,
           backgroundColor: color,
-          opacity: rest.disabled ? 0.6 : 1,
+          opacity: rest.disabled ? 0.4 : 1,
         },
         style,
       ]}

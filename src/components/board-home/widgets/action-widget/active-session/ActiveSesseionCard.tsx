@@ -27,8 +27,9 @@ export function ActiveSessionCard() {
           height: widgetUnit,
           width: fullWidth,
           paddingTop: 44,
+          backgroundColor: theme.thirdAccent + "40",
           borderWidth: 1,
-          borderColor: theme.tint + "40",
+          borderColor: theme.thirdAccent + "20",
           borderRadius: 32,
         }}
         pressable

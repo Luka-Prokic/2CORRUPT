@@ -14,8 +14,8 @@ export function WaterConsumptionCard() {
         width: fullWidth,
         borderRadius: 32,
         borderWidth: 1,
-        borderColor: theme.thirdBackground + "40",
-        backgroundColor: theme.text,
+        borderColor: theme.tint + "40",
+        backgroundColor: theme.tint + "80",
       }}
       pressable
     >

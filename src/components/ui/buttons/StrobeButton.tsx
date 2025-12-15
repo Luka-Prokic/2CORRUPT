@@ -52,10 +52,10 @@ export function StrobeButton({
   const { theme } = useSettingsStore();
 
   const colors: [string, string, string, string] = strobeColors ?? [
-    strobeColor ?? theme.caka,
-    strobeColor ?? theme.primaryBackground,
-    strobeColor ?? theme.accent,
-    strobeColor ?? theme.tint,
+    strobeColor ?? theme.secondaryAccent,
+    strobeColor ?? theme.thirdAccent,
+    strobeColor ?? theme.fourthAccent,
+    strobeColor ?? theme.fifthAccent,
   ];
 
   return (

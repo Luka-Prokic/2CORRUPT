@@ -14,8 +14,8 @@ export function CreatineConsumptionCard() {
         width: fullWidth,
         borderRadius: 32,
         borderWidth: 1,
-        borderColor: theme.thirdBackground + "40",
-        backgroundColor: theme.text,
+        borderColor: theme.fifthAccent + "40",
+        backgroundColor: theme.fifthAccent + "80",
       }}
       pressable
     >

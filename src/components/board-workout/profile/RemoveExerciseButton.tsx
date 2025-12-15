@@ -14,9 +14,14 @@ export function RemoveExerciseButton() {
     activeTemplate,
   } = useWorkoutStore();
   const { showActionSheet, t } = useActionSheet();
+  const locale = t("locale");
 
   function handleRemoveExercise() {
-    const title = t("button.remove") + ` ${activeExercise?.name}`;
+    const title =
+      t("button.remove") +
+      ` ${activeExercise?.prefix ? `${activeExercise?.prefix} ` : ""}${
+        activeExercise?.name?.[locale]
+      }`;
     const message = t("workout-board.remove-exercise-message");
 
     showActionSheet({

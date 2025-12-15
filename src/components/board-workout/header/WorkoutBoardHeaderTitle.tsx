@@ -32,7 +32,7 @@ export function WorkoutBoardHeaderTitle({
     >
       <SessionTimer
         textStyle={{
-          color: !!listType ? theme.text : theme.tint,
+          color: !!listType ? theme.text : theme.secondaryAccent,
         }}
       />
     </TouchableOpacity>

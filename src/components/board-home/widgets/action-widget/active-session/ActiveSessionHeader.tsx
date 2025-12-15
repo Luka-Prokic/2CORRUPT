@@ -7,6 +7,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
 import { useUIStore } from "../../../../../stores/ui";
 import { router } from "expo-router";
+import { hexToRGBA } from "../../../../../utils/HEXtoRGB";
 
 export function ActiveSessionHeader() {
   const { fullWidth } = useWidgetUnit();
@@ -39,7 +40,7 @@ export function ActiveSessionHeader() {
           width: fullWidth,
           height: 44,
           borderBottomWidth: 1,
-          borderBottomColor: theme.tint + "20",
+          borderBottomColor: hexToRGBA(theme.thirdBackground, 0.4),
         }}
       >
         <Ionicons

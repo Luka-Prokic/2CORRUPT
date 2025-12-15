@@ -29,7 +29,7 @@ export function WorkoutBoardHeaderLeft({
         <Ionicons
           name="cog"
           size={44}
-          color={listOpen ? theme.text : theme.tint}
+          color={listOpen ? theme.text : theme.secondaryAccent}
         />
       </TouchableOpacity>
     </Fragment>

@@ -14,10 +14,10 @@ export function SettingsWidget() {
       style={{
         width: halfWidget,
         height: halfWidget,
-        backgroundColor: hexToRGBA(theme.fourthBackground, 0.2),
+        backgroundColor: hexToRGBA(theme.thirdAccent, 0.6),
         borderRadius: 32,
         borderWidth: 1,
-        borderColor: theme.border,
+        borderColor: hexToRGBA(theme.thirdAccent, 0.4),
         alignItems: "center",
         justifyContent: "center",
       }}
@@ -25,7 +25,7 @@ export function SettingsWidget() {
         router.push("/settings/main");
       }}
     >
-      <Ionicons name="cog-outline" size={44} color={theme.grayText} />
+      <Ionicons name="cog-outline" size={44} color={theme.info} />
     </BounceButton>
   );
 }

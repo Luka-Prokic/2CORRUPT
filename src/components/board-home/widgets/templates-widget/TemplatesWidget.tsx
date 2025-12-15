@@ -30,8 +30,8 @@ export function TemplatesWidget() {
         borderRadius: 32,
         padding: 4,
         borderWidth: 1,
-        backgroundColor: hexToRGBA(theme.fourthBackground, 0.2),
-        borderColor: theme.border,
+        backgroundColor: hexToRGBA(theme.thirdAccent, 0.6),
+        borderColor: hexToRGBA(theme.thirdAccent, 0.4),
         width: widgetUnit,
         height: widgetUnit,
       }}
