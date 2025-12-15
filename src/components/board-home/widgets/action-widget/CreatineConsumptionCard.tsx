@@ -19,7 +19,7 @@ export function CreatineConsumptionCard() {
       }}
       pressable
     >
-      <IText text="Creatine Consumption" color={theme.secondaryText} />
+      <IText text="Creatine Consumption" />
     </IButton>
   );
 }

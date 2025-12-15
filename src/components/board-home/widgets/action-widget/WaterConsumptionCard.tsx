@@ -19,7 +19,7 @@ export function WaterConsumptionCard() {
       }}
       pressable
     >
-      <IText text="Water Consumption" color={theme.secondaryText} />
+      <IText text="Water Consumption" />
     </IButton>
   );
 }

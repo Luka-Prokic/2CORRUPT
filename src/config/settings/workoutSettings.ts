@@ -26,6 +26,7 @@ export const workoutSettingsConfig: SettingConfig[] = [
     increment: 15,
     select: (s) => s.defaultRestTime,
     update: (s, v) => s.setDefaultRestTime(v),
+    min: 0,
   },
   {
     key: "autoRestComplete",

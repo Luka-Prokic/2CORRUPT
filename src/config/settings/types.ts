@@ -48,6 +48,8 @@ export interface IncrementSettingConfig extends BaseSettingConfig {
     value: number
   ) => void;
   increment: number;
+  min?: number;
+  max?: number;
 }
 
 // Slider setting

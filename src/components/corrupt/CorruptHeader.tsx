@@ -4,7 +4,7 @@ import { CorruptTittle } from "./CorruptTittle";
 
 export function CorruptHeader() {
   function handlePress() {
-    router.back();
+    router.dismissTo("/");
   }
   return (
     <BounceButton color="transparent" onPress={handlePress}>

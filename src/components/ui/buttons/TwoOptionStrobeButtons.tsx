@@ -85,7 +85,12 @@ export function TwoOptionStrobeButtons({
         disabled={disabledOne}
       >
         <StrobeBlur
-          tint="light"
+          colors={[
+            theme.secondaryAccent,
+            theme.thirdAccent,
+            theme.fourthAccent,
+            theme.fifthAccent,
+          ]}
           style={{
             width: width / 2 - 4,
             height: 64,
@@ -125,10 +130,10 @@ export function TwoOptionStrobeButtons({
       >
         <StrobeBlur
           colors={[
-            theme.caka,
-            theme.primaryBackground,
-            theme.accent,
-            theme.tint,
+            theme.secondaryAccent,
+            theme.thirdAccent,
+            theme.fourthAccent,
+            theme.fifthAccent,
           ]}
           style={{
             width: width / 2 - 4,

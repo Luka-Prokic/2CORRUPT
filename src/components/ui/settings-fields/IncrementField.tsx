@@ -28,6 +28,9 @@ export function IncrementField({ setting }: IncrementFieldProps) {
         })
       : value.toString();
 
+  const isDisabledOne = setting.min !== undefined && value <= setting.min;
+  const isDisabledTwo = setting.max !== undefined && value >= setting.max;
+
   return (
     <IBubble size="flexible" style={{ padding: 16 }} styleContent={{ gap: 16 }}>
       <MidText text={t(setting.title)} />
@@ -38,9 +41,13 @@ export function IncrementField({ setting }: IncrementFieldProps) {
         onOptionOne={() =>
           setting.update(settingsState, value - setting.increment)
         }
+        disabledOne={isDisabledOne}
+        disabledStrobeOne={isDisabledOne}
         onOptionTwo={() =>
           setting.update(settingsState, value + setting.increment)
         }
+        disabledTwo={isDisabledTwo}
+        disabledStrobeTwo={isDisabledTwo}
         width={WIDTH - 64}
         haptics
       />
