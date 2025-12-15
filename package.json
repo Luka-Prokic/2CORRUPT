@@ -14,14 +14,10 @@
     "@gorhom/bottom-sheet": "^5.2.6",
     "@mgcrea/react-native-dnd": "^2.5.3",
     "@react-native-community/datetimepicker": "8.4.4",
-    "@react-navigation/bottom-tabs": "^7.4.0",
     "@react-navigation/native": "^7.1.8",
     "@react-navigation/native-stack": "^7.3.16",
     "@react-navigation/stack": "^7.4.8",
-    "@react-three/drei": "^10.7.6",
-    "@react-three/fiber": "^9.3.0",
     "@shopify/flash-list": "2.0.2",
-    "@types/three": "^0.180.0",
     "base-64": "^1.0.0",
     "expo": "~54.0.24",
     "expo-asset": "~12.0.9",
@@ -61,8 +57,6 @@
     "react-native-worklets": "0.5.1",
     "react-native-worklets-core": "^1.6.2",
     "text-encoding-polyfill": "^0.6.7",
-    "three": "^0.166.1",
-    "three-stdlib": "^2.36.0",
     "zustand": "^5.0.8"
   },
   "devDependencies": {
