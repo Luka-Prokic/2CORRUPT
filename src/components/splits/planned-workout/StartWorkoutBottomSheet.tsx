@@ -1,7 +1,4 @@
 import { useSettingsStore } from "../../../stores/settings";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { BottomSheetBackdrop } from "@gorhom/bottom-sheet";
-import { BottomSheetView } from "@gorhom/bottom-sheet";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { useWorkoutStore } from "../../../stores/workout";
 import { ExercisePreviewCard } from "../../sessions/cards/ExercisePreviewCard";
@@ -13,6 +10,7 @@ import { useTranslation } from "react-i18next";
 import { TemplateName } from "../../board-template/sheets/template/TemplateName";
 import { DescriptionText } from "../../ui/text/DescriptionText";
 import { useStartWorkoutOfTemplate } from "../../../features/start/useStartWorkout";
+import { IBottomSheet } from "../../ui/IBottomSheet";
 
 interface StartWorkoutBottomSheetProps {
   ref: React.RefObject<BottomSheetModal>;
@@ -29,7 +27,7 @@ export function StartWorkoutBottomSheet({
 }: StartWorkoutBottomSheetProps) {
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
-  const insets = useSafeAreaInsets();
+
   const { getTemplateById } = useWorkoutStore();
   const template = getTemplateById(templateId);
   if (!template) return null;
@@ -45,70 +43,34 @@ export function StartWorkoutBottomSheet({
   }
 
   return (
-    <BottomSheetModal
-      ref={ref}
-      enablePanDownToClose
-      enableDismissOnClose
-      keyboardBlurBehavior="restore"
-      keyboardBehavior="fillParent"
-      handleIndicatorStyle={{ backgroundColor: theme.info }}
-      backgroundStyle={{ backgroundColor: theme.navBackground }}
-      backdropComponent={(props) => (
-        <BottomSheetBackdrop
-          {...props}
-          disappearsOnIndex={-1}
-          appearsOnIndex={0}
-          pressBehavior="close"
-          opacity={0.2}
-        />
-      )}
-    >
-      <BottomSheetView
-        style={[
-          {
-            flex: 1,
-            paddingHorizontal: 16,
-            justifyContent: "flex-start",
-            borderTopColor: theme.border,
-            borderTopWidth: 1,
-            paddingBottom: insets.bottom,
-            alignItems: "center",
-            gap: 8,
-          },
-        ]}
-      >
-        <TemplateName template={template} />
-        <DescriptionText text={template.description ?? ""} />
-        <CardSlider
-          data={template?.layout ?? []}
-          card={({ item }) => (
-            <ExercisePreviewCard exercise={item} maxHeight={finalHeight} />
-          )}
-          cardWidth={WIDTH - 32}
-          cardHeight={finalHeight}
-          styleDots={{
-            width: WIDTH - 32,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        />
-        <StrobeButton
-          title={buttonText ?? t("button.start")}
-          onPress={handleStartWorkout}
-          style={{
-            marginVertical: 16,
-            width: WIDTH - 32,
-            height: 64,
-            borderRadius: 32,
-            backgroundColor: theme.tint,
-          }}
-          styleContent={{
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-          textColor={theme.background}
-        />
-      </BottomSheetView>
-    </BottomSheetModal>
+    <IBottomSheet ref={ref}>
+      <TemplateName template={template} />
+      <DescriptionText text={template.description ?? ""} />
+      <CardSlider
+        data={template?.layout ?? []}
+        card={({ item }) => (
+          <ExercisePreviewCard exercise={item} maxHeight={finalHeight} />
+        )}
+        cardWidth={WIDTH - 32}
+        cardHeight={finalHeight}
+        styleDots={{
+          width: WIDTH - 32,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      />
+      <StrobeButton
+        title={buttonText ?? t("button.start")}
+        onPress={handleStartWorkout}
+        style={{
+          marginVertical: 16,
+          width: WIDTH - 32,
+          height: 64,
+          borderRadius: 32,
+          backgroundColor: theme.tint,
+        }}
+        textColor={theme.background}
+      />
+    </IBottomSheet>
   );
 }

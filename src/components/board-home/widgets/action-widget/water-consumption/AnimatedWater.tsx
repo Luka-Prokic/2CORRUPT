@@ -4,24 +4,16 @@ import { WaterWave } from "./WaterVawe";
 import { useWidgetUnit } from "../../../../../features/widgets/useWidgetUnit";
 import { useAnimatedWaterFillHeight } from "../../../../../features/water/useWaterFillHeight";
 import { useSettingsStore } from "../../../../../stores/settingsStore";
+import { useWaterStore } from "../../../../../stores/water";
 
-interface AnimatedWaterProps {
-  drinkAmount: number;
-  increment: number;
-  goalLiters: number;
-}
-
-export function AnimatedWater({
-  drinkAmount,
-  increment,
-  goalLiters,
-}: AnimatedWaterProps) {
+export function AnimatedWater() {
   const { widgetUnit, fullWidth } = useWidgetUnit();
   const { theme } = useSettingsStore();
+  const { waterConsumption, dailyWaterGoal, increment } = useWaterStore();
 
   const { animatedFillHeight } = useAnimatedWaterFillHeight({
-    consumedLiters: drinkAmount,
-    goalLiters: goalLiters * 1000,
+    waterConsumption,
+    dailyWaterGoal,
     containerHeight: widgetUnit,
     duration: increment,
   });
@@ -46,9 +38,9 @@ export function AnimatedWater({
       <WaterWave
         width={fullWidth}
         height={32} // wave height
-        color={theme.handle}
+        color={theme.border}
       />
-      <View style={{ flex: 1, backgroundColor: theme.handle }} />
+      <View style={{ flex: 1, backgroundColor: theme.border }} />
     </Animated.View>
   );
 }

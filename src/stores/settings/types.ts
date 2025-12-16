@@ -9,6 +9,8 @@ export const themeOrder: readonly Themes[] = [
   "Corrupted",
 ] as const;
 
+export type Units = "weight" | "length" | "volume" | "temperature";
+
 export type WeightUnit = "kg" | "lbs";
 export type LengthUnit = "cm" | "in";
 export type DistanceUnit = "km" | "mi";

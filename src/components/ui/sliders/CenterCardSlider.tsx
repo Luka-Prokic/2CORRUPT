@@ -13,6 +13,7 @@ import { WIDTH } from "../../../utils/Dimensions";
 import { useHaptics } from "../../../features/ui/useHaptics";
 import { ScrollableDots } from "./ScrollableDots";
 import { SlideCard } from "./SlideCard";
+import { HapticsMode } from "../../../stores/settings/types";
 
 const AnimatedFlatList = RNAnimated.createAnimatedComponent(
   FlatList
@@ -46,6 +47,7 @@ interface CenterCardSliderProps<T>
   disableScroll?: boolean;
   hapticFeedback?: boolean;
   startAtMiddle?: boolean;
+  hapticsModeType?: HapticsMode;
 }
 
 export function CenterCardSlider<T>({
@@ -75,14 +77,15 @@ export function CenterCardSlider<T>({
   disableScroll = false,
   hapticFeedback = false,
   startAtMiddle = false,
+  hapticsModeType = "max",
   ...flatListProps
 }: CenterCardSliderProps<T>) {
   const { theme } = useSettingsStore();
   const scrollX = useRef(new RNAnimated.Value(0)).current;
   const [currentIndex, setCurrentIndex] = useState(selectedIndex);
   const triggerHapticsScroll = useHaptics({
-    modeType: "max",
-    hapticType: "medium",
+    modeType: hapticsModeType,
+    hapticType: "rigid",
   });
 
   // Include firstCard and lastCard cleanly in the data

@@ -3,7 +3,7 @@ import { useSettingsStore } from "../../../../stores/settingsStore";
 import { useWorkoutStore } from "../../../../stores/workout/useWorkoutStore";
 import { ExerciseColumns } from "../../../../stores/workout/types";
 import { Set } from "../../../../stores/workout/types";
-import { useDisplayedWeight } from "../../../../features/translate/useDisplayedWightUnit";
+import { useDisplayedUnits } from "../../../../features/translate/useDisplayedUnits";
 
 interface NumericInputProps {
   set: Set;
@@ -14,7 +14,7 @@ interface NumericInputProps {
 export function NumericInput({ set, column, disabled }: NumericInputProps) {
   const { theme } = useSettingsStore();
   const { updateSetInActiveExercise } = useWorkoutStore();
-  const { fromKg, toKg } = useDisplayedWeight();
+  const { fromKg, toKg } = useDisplayedUnits();
 
   const handleUpdateSet = (text: string) => {
     const num = Number(text) || 0;

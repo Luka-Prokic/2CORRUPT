@@ -6,7 +6,7 @@ import {
   DropSet,
   Set,
 } from "../../../../stores/workout/types";
-import { useDisplayedWeight } from "../../../../features/translate/useDisplayedWightUnit";
+import { useDisplayedUnits } from "../../../../features/translate/useDisplayedUnits";
 
 interface NumericDropInputProps {
   set: Set;
@@ -25,7 +25,7 @@ export function NumericDropInput({
 }: NumericDropInputProps) {
   const { theme } = useSettingsStore();
   const { updateDropSetInActiveExercise } = useWorkoutStore();
-  const { fromKg, toKg } = useDisplayedWeight();
+  const { fromKg, toKg } = useDisplayedUnits();
 
   const handleUpdateDropSet = (text: string) => {
     const num = Number(text) || 0;

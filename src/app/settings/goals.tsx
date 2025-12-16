@@ -5,7 +5,9 @@ import { useTranslation } from "react-i18next";
 import { ModalExitButton } from "./../_layout";
 import { ScreenView } from "../../components/ui/containers/ScreenView";
 import { IText } from "../../components/ui/text/IText";
-
+import { ChangeWaterGoal } from "../../components/settings-app/goals/ChangeWaterGoal";
+import { WeeklyWorkoutGoal } from "../../components/settings-app/goals/WeeklyWorkoutGoal";
+import { IBubble } from "../../components/ui/containers/IBubble";
 export default function GoalsScreen() {
   const { t } = useTranslation();
 
@@ -19,7 +21,18 @@ export default function GoalsScreen() {
       />
 
       <ScreenContent>
-        <ScreenView style={{ gap: 16, paddingHorizontal: 16 }}></ScreenView>
+        <ScreenView
+          style={{ paddingHorizontal: 16, gap: 16, paddingBottom: 64 }}
+        >
+          <IBubble size="flexible" style={{ padding: 16 }}>
+            <WeeklyWorkoutGoal
+              description={t("settings.goal.weekly-workout-goal-description")}
+            />
+          </IBubble>
+          <IBubble size="flexible" style={{ padding: 16 }}>
+            <ChangeWaterGoal />
+          </IBubble>
+        </ScreenView>
       </ScreenContent>
     </Fragment>
   );

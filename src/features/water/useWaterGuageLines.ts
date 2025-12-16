@@ -1,16 +1,17 @@
 interface UseWaterGaugeLinesParams {
-  goalLiters: number;
-  minorStepLiters?: number; // default 0.25L
-  majorStepLiters?: number; // default 1L
+  dailyWaterGoal: number;
+  minorStepLiters?: number; // default 250ml
+  majorStepLiters?: number; // default 1000ml
 }
 
 export function useWaterGaugeLines({
-  goalLiters,
-  minorStepLiters = 0.25,
-  majorStepLiters = 1,
+  dailyWaterGoal,
+  minorStepLiters = 250,
+  majorStepLiters = 1000,
 }: UseWaterGaugeLinesParams) {
   // round goal up so top tick exists (2.4 → 2.5)
-  const roundedGoal = Math.ceil(goalLiters / minorStepLiters) * minorStepLiters;
+  const roundedGoal =
+    Math.ceil(dailyWaterGoal / minorStepLiters) * minorStepLiters;
 
   const lines = Math.round(roundedGoal / minorStepLiters);
   const majorEvery = Math.round(majorStepLiters / minorStepLiters);

@@ -194,6 +194,18 @@
       "max": "Maks",
       "12h": "12h",
       "24h": "24h"
+    },
+
+    "goal": {
+      "change-goal": "Promeni Cilj",
+      "change-goal-description": "Promeni cilj za izabrane kategorije.",
+      "change-water-intake": "Promeni Vodu",
+      "change-water-goal-description": "Podesi svodu dnevni cilj i prati svoj napredak u hidrataciji preciznije.",
+      "increment-description": "Povećaj za",
+      "hold-to-set-as-default-increment": "Drži da postaviš kao zadnju vrednost.",
+      "add-to-daily-intake": "Dodaj na dnevni cilj.",
+      "daily-water-goal": "Dnevni Cilj Unosa Vode",
+      "weekly-workout-goal-description": "Podesi svoj nedeljni cilj za vežbe. Ovo je broj vežbi koje želiš da završiš svake nedelje."
     }
   },
 
@@ -213,7 +225,13 @@
     "temperature": {
       "°C": "°C",
       "°F": "°F"
-    }
+    },
+    "change-unit": "Promeni Jedinicu",
+    "change-unit-description": "Promeni jedinicu mere za izabrane kategorije.",
+    "change-weight-unit": "Izaberi svoju preferovanu jedinicu težine. Sve vrednosti težine će biti prikazane u kilogramima (kg) ili funtama (lbs).",
+    "change-length-unit": "Izaberi svoju preferovanu jedinicu dužine. Sve vrednosti dužine će biti prikazane u centimetrima (cm) ili inčima (in).",
+    "change-volume-unit": "Izaberi svoju preferovanu jedinicu zapremine. Sve vrednosti zapremine će biti prikazane u mililitrima (ml) ili fluid uncijama (fl oz).",
+    "change-temperature-unit": "Izaberi svoju preferovanu jedinicu temperature. Sve vrednosti temperature će biti prikazane u Celzijusima (°C) ili Farenhajtima (°F)."
   },
   "greeting": {
     "morning": "Dobro jutro",

@@ -175,6 +175,7 @@
       "global-rpe-title": "Global RPE",
       "global-rpe-description": "Show or hide RPE input for new exercises."
     },
+
     "general-settings": {
       "description": "Set up the app the way you like, adjusting its core preferences and behavior.",
 
@@ -184,6 +185,7 @@
       "time-format-title": "Time format",
       "time-format-description": "Choose 12h or 24h display."
     },
+
     "options": {
       "off": "Off",
       "gentle": "Gentle",
@@ -191,6 +193,18 @@
       "max": "Max",
       "12h": "12h",
       "24h": "24h"
+    },
+
+    "goal": {
+      "change-goal": "Change Goal",
+      "change-goal-description": "Change the goal for the selected category.",
+      "change-water-intake": "Change Water Intake",
+      "change-water-goal-description": "Adjust your daily water intake goal and track your hydration progress more accurately.",
+      "increment-description": "Increment by",
+      "hold-to-set-as-default-increment": "Hold to set as default increment.",
+      "add-to-daily-intake": "Add to daily intake.",
+      "daily-water-goal": "Daily Water Intake Goal",
+      "weekly-workout-goal-description": "Set your weekly workout goal. This is the number of workouts you want to complete each week."
     }
   },
 
@@ -210,7 +224,13 @@
     "temperature": {
       "°C": "°C",
       "°F": "°F"
-    }
+    },
+    "change-unit": "Change Unit",
+    "change-unit-description": "Change the unit of measure for the selected category.",
+    "change-weight-unit": "Select your preferred weight unit. All weight values will be shown in either kilograms (kg) or pounds (lbs).",
+    "change-length-unit": "Select your preferred length unit. All length values will be shown in either centimeters (cm) or inches (in).",
+    "change-volume-unit": "Select your preferred volume unit. All volume values will be shown in either milliliters (ml) or fluid ounces (fl oz).",
+    "change-temperature-unit": "Select your preferred temperature unit. All temperature values will be shown in either Celsius (°C) or Fahrenheit (°F)."
   },
   "greeting": {
     "morning": "Good morning",

@@ -2,20 +2,20 @@ import { useEffect } from "react";
 import { useSharedValue, withTiming } from "react-native-reanimated";
 
 interface UseWaterFillHeightParams {
-  consumedLiters: number;
-  goalLiters: number;
+  waterConsumption: number; //ml
+  dailyWaterGoal: number; //ml
   containerHeight: number;
 }
 
 export function useWaterFillHeight({
-  consumedLiters,
-  goalLiters,
+  waterConsumption,
+  dailyWaterGoal,
   containerHeight,
 }: UseWaterFillHeightParams) {
   const progress =
-    goalLiters <= 0 || consumedLiters <= 0
+    dailyWaterGoal <= 0 || waterConsumption <= 0
       ? 0
-      : Math.min(consumedLiters / goalLiters, 1);
+      : Math.min(waterConsumption / dailyWaterGoal, 1);
 
   const fillHeight = progress * containerHeight;
 
@@ -26,23 +26,23 @@ export function useWaterFillHeight({
 }
 
 interface UseAnimatedWaterFillHeightParams {
-  consumedLiters: number;
-  goalLiters: number;
+  waterConsumption: number;
+  dailyWaterGoal: number;
   containerHeight: number;
   duration?: number;
 }
 
 export function useAnimatedWaterFillHeight({
-  consumedLiters,
-  goalLiters,
+  waterConsumption,
+  dailyWaterGoal,
   containerHeight,
   duration = 200,
 }: UseAnimatedWaterFillHeightParams) {
   // progress 0 → 1
   const progress =
-    goalLiters <= 0 || consumedLiters <= 0
+    dailyWaterGoal <= 0 || waterConsumption <= 0
       ? 0
-      : Math.min(consumedLiters / goalLiters, 1);
+      : Math.min(waterConsumption / dailyWaterGoal, 1);
 
   // shared value for animation
   const animatedFillHeight = useSharedValue(progress * containerHeight);

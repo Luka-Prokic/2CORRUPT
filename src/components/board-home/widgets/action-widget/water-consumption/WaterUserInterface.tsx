@@ -4,71 +4,99 @@ import { TouchableOpacity, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useSettingsStore } from "../../../../../stores/settingsStore";
 import { useWidgetUnit } from "../../../../../features/widgets/useWidgetUnit";
+import { useWaterStore } from "../../../../../stores/water";
+import { Fragment, useRef } from "react";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import { WaterBottomSheet } from "./bottom-sheet/WaterBottomSheet";
+import { useDisplayedUnits } from "../../../../../features/translate/useDisplayedUnits";
+import { useTranslation } from "react-i18next";
+import { BounceButton } from "../../../../ui/buttons/BounceButton";
 
-interface WaterUserInterfaceProps {
-  drinkAmount: number;
-  setDrinkAmount: (amount: (prev: number) => number) => void;
-  increment: number;
-}
-
-export function WaterUserInterface({
-  drinkAmount,
-  setDrinkAmount,
-  increment,
-}: WaterUserInterfaceProps) {
-  const { theme } = useSettingsStore();
+export function WaterUserInterface() {
+  const { theme, units } = useSettingsStore();
   const { widgetUnit } = useWidgetUnit();
+  const { t } = useTranslation();
+  const { waterConsumption, increment, setWaterConsumption, dailyWaterGoal } =
+    useWaterStore();
+  const { fromMl } = useDisplayedUnits();
+
+  const bottomSheetRef = useRef<BottomSheetModal>(null);
+
+  function openBottomSheet() {
+    bottomSheetRef.current?.present();
+  }
+
+  function incrementWaterConsumption() {
+    if (waterConsumption + increment > 6000) setWaterConsumption(6000);
+    else setWaterConsumption(waterConsumption + increment);
+  }
+
+  function decrementWaterConsumption() {
+    if (waterConsumption - increment < 0) setWaterConsumption(0);
+    else setWaterConsumption(waterConsumption - increment);
+  }
 
   return (
-    <View
-      style={{
-        flex: 1,
-        alignItems: "center",
-        gap: 8,
-        height: widgetUnit - 32,
-      }}
-    >
-      <IText
-        text={`${(drinkAmount / 1000).toFixed(1)} L`}
-        color={theme.border}
-      />
-      <TouchableOpacity
-        onPress={() => {}} //TODO: Bottom Sheet
+    <Fragment>
+      <View
         style={{
-          position: "absolute",
-          right: 16,
-          bottom: 0,
+          flex: 1,
           alignItems: "center",
           justifyContent: "center",
+          gap: 4,
+          height: widgetUnit,
         }}
       >
-        <Ionicons name="ellipse" size={64} color={theme.background} />
-        <Ionicons
-          name="water-outline"
-          size={32}
-          color={theme.accent}
-          style={{ position: "absolute" }}
+        <IText
+          text={`${fromMl(waterConsumption)}/${fromMl(dailyWaterGoal)} ${
+            units.volume
+          }`}
+          color={theme.border}
         />
-      </TouchableOpacity>
-      <View style={{ flexDirection: "row" }}>
-        <TouchableOpacity
-          onPress={() =>
-            setDrinkAmount((prev: number) =>
-              prev - increment <= 0 ? 0 : prev - increment
-            )
-          }
-          disabled={drinkAmount <= 0}
-          style={{ opacity: drinkAmount <= 0 ? 0.4 : 1 }}
+
+        <BounceButton
+          onPress={openBottomSheet}
+          style={{
+            position: "absolute",
+            bottom: 0,
+            right: 0,
+            padding: 16,
+            zIndex: 1,
+          }}
         >
-          <Ionicons name="remove-circle" size={64} color={theme.background} />
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => setDrinkAmount((prev: number) => prev + increment)}
-        >
-          <Ionicons name="add-circle" size={64} color={theme.background} />
-        </TouchableOpacity>
+          <Ionicons name="ellipse" size={64} color={theme.accent} />
+          <Ionicons
+            name="pint-outline"
+            size={32}
+            color={theme.border}
+            style={{ position: "absolute" }}
+          />
+        </BounceButton>
+
+        <View style={{ flexDirection: "row" }}>
+          <TouchableOpacity
+            onPress={decrementWaterConsumption}
+            disabled={waterConsumption <= 0}
+            style={{ opacity: waterConsumption <= 0 ? 0.4 : 1 }}
+          >
+            <Ionicons name="remove-circle" size={64} color={theme.border} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={incrementWaterConsumption}
+            disabled={waterConsumption >= 6000}
+            style={{ opacity: waterConsumption >= 6000 ? 0.4 : 1 }}
+          >
+            <Ionicons name="add-circle" size={64} color={theme.border} />
+          </TouchableOpacity>
+        </View>
+        <InfoText
+          text={`${t("settings.goal.increment-description")} ${fromMl(
+            increment
+          )} ${units.volume}.`}
+          color={theme.border}
+        />
       </View>
-      <InfoText text={`Increment by ${increment}ml`} color={theme.border} />
-    </View>
+      <WaterBottomSheet ref={bottomSheetRef} />
+    </Fragment>
   );
 }

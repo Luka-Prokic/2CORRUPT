@@ -9,7 +9,6 @@ import { CenterCardSlider } from "../ui/sliders/CenterCardSlider";
 import { SwitchButton } from "../ui/buttons/SwitchButton";
 import { ExpandableBubble } from "../ui/containers/ExpendableBubble";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
-import { StrobeOptionButton } from "../ui/buttons/StrobeOptionButton";
 import { StrobeBlur } from "../ui/misc/StrobeBlur";
 
 const UNITS_SETTINGS = [
