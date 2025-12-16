@@ -11,8 +11,8 @@ export type ActionItem = {
 
 export const ACTION_ITEMS: ActionItem[] = [
   { id: "active-session" },
-  { id: "creatine-consumption" },
   { id: "water-consumption" },
+  { id: "creatine-consumption" },
 ];
 
 export function ActionWidget() {

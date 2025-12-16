@@ -6,11 +6,10 @@ import {
   View,
   ViewStyle,
 } from "react-native";
-import { ReactNode, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { WIDTH } from "../../../utils/Dimensions";
 import { useWidgetUnit } from "../../../features/widgets/useWidgetUnit";
-import Animated, { FadeInLeft, FadeOutLeft } from "react-native-reanimated";
 import { VerticalScrollableDots } from "./ScrollableDots";
 
 interface WidgetFlatListProps extends FlatListProps<any> {

@@ -1,22 +1,18 @@
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { hexToRGBA } from "../../utils/HEXtoRGB";
 import { BackButtonWidget } from "./widgets/BackButtonWidget";
-import { useSettingsStore } from "../../stores/settings";
 import { SplitsWidget } from "./widgets/SplitsWidget";
 import { SummaryWidget } from "./widgets/summary-widget/SummaryWidget";
 import { TemplatesWidget } from "./widgets/templates-widget/TemplatesWidget";
 import { SettingsWidget } from "./widgets/SettingsWidget";
-import { BounceButton } from "../ui/buttons/BounceButton";
-import { router } from "expo-router";
 import { useWidgetUnit } from "../../features/widgets/useWidgetUnit";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 import { ActionWidget } from "./widgets/action-widget/ActionWidget";
+import { ExerciseWidget } from "./widgets/ExerciseWidget";
 
 export function WidgetGrid() {
   const insets = useSafeAreaInsets();
-  const { theme } = useSettingsStore();
-  const { widgetUnit, halfWidget, fullWidth } = useWidgetUnit();
+  const { halfWidget } = useWidgetUnit();
 
   return (
     <Animated.View
@@ -35,20 +31,7 @@ export function WidgetGrid() {
           flexDirection: "row",
         }}
       >
-        <BounceButton
-          style={{
-            width: fullWidth,
-            height: halfWidget,
-            borderRadius: 32,
-            backgroundColor: hexToRGBA(theme.thirdAccent, 0.6),
-            borderWidth: 1,
-            borderColor: hexToRGBA(theme.thirdAccent, 0.4),
-          }}
-          onPress={() => {
-            router.push("/exercise/list");
-          }}
-          title="Exercise (mock)"
-        />
+        <ExerciseWidget />
 
         <SummaryWidget />
 
