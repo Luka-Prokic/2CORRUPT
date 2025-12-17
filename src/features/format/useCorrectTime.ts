@@ -3,6 +3,8 @@ import { useSettingsStore } from "../../stores/settingsStore";
 export function useCorrectTime(input: number | string | Date) {
   const { timeFormat } = useSettingsStore();
 
+  if (!input) return null;
+
   return toDate(input).toLocaleTimeString([], {
     hour: "2-digit",
     minute: "2-digit",
@@ -17,9 +19,6 @@ export function useSystemTime(input: number | string | Date) {
     hour12: false,
   });
 }
-
-
-
 
 //quick helper
 function toDate(input: number | string | Date): Date {

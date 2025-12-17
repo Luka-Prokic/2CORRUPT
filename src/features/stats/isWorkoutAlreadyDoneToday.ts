@@ -7,6 +7,7 @@ export const isWorkoutAlreadyDoneToday = (
   date: Date
 ) => {
   const { completedSessions } = useWorkoutStore();
+  if (!workout) return false;
 
   const targetDateOnly = getISODateOnly(date.toISOString());
 

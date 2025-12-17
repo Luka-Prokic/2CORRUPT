@@ -23,8 +23,7 @@ export function TodaysWorkouts() {
   const workouts = useFindPlannedWorkouts(now);
   const workoutIndexNow = useFindPlannedWorkoutIndexNow();
 
-  if (!workouts || workoutIndexNow === -1) return null;
-  if (!activeSplitPlan) return null;
+  if (!workouts || workoutIndexNow === -1 || !activeSplitPlan) return null;
 
   return (
     <Fragment>

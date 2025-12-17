@@ -12,8 +12,8 @@ import { StartWorkoutBottomSheet } from "./StartWorkoutBottomSheet";
 import { Fragment, useRef } from "react";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { router } from "expo-router";
-import { useCorrectTime } from "../../../features/format/useCorrectTime";
 import { useTranslation } from "react-i18next";
+import { ScheduledAtPlannedWorkoutTime } from "./ScheduledAtPlannedWorkoutTime";
 
 interface PlannedActiveSplitWorkoutCardProps {
   splitPlan: SplitPlan;
@@ -33,16 +33,13 @@ export function PlannedActiveSplitWorkoutCard({
   const { t } = useTranslation();
   const locale = t("locale");
 
-  const { theme } = useSettingsStore();
-  const { getTemplateById } = useWorkoutStore();
   const ref = useRef<BottomSheetModal>(null);
 
-  if (!splitPlan) return null;
-  if (!workout) return null;
+  const { theme } = useSettingsStore();
+  const { getTemplateById } = useWorkoutStore();
 
   const isDoneToday = isWorkoutAlreadyDoneToday(workout, date);
   const template = getTemplateById(workout.templateId);
-  if (!template) return null;
 
   function handlePress() {
     ref.current?.present();
@@ -60,9 +57,7 @@ export function PlannedActiveSplitWorkoutCard({
   );
   const exceeds = template.layout.length > visibleCount;
 
-  const scheduledAt = workout.scheduledAt
-    ? useCorrectTime(workout.scheduledAt)
-    : null;
+  if (!splitPlan || !template) return null;
 
   return (
     <Fragment>
@@ -95,7 +90,7 @@ export function PlannedActiveSplitWorkoutCard({
             gap: 16,
           }}
         >
-          {scheduledAt && <MidText text={scheduledAt} color={theme.text} />}
+          <ScheduledAtPlannedWorkoutTime workout={workout} />
           <IText text={template.name} color={theme.text} />
         </BlurView>
         <FlatList
