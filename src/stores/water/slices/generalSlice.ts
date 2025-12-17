@@ -18,7 +18,10 @@ export const createGeneralSlice: StateCreator<
     if (dailyWaterGoal < 0 || dailyWaterGoal > 6000) return;
     set({ dailyWaterGoal });
   },
-  setIncrement: (increment: number) => set({ increment: Math.round(increment) }),
-  resetWater: () =>
+  setIncrement: (increment: number) => {
+    if (increment < 50 || increment > 1000) return;
+    set({ increment: Math.round(increment) });
+  },
+  resetWaterCompletely: () =>
     set({ waterConsumption: 0, dailyWaterGoal: 0, increment: 0 }),
 });

@@ -5,14 +5,37 @@ import { IButton } from "../../../../ui/buttons/IButton";
 import { useDracoFont } from "../../../../../features/fonts/useDracoFont";
 import { View } from "react-native";
 import { IButtonSwipe } from "../../../../ui/buttons/IButtonSwipe";
-import { useState } from "react";
+import { useCreatineStore } from "../../../../../stores/creatine";
+import { Shine } from "../../../../ui/misc/Shine";
+import { StrobeBlur } from "../../../../ui/misc/StrobeBlur";
 
 export function CreatineConsumptionCard() {
   const { widgetUnit, fullWidth } = useWidgetUnit();
   const { theme } = useSettingsStore();
   const { fontFamily } = useDracoFont();
 
-  const [isConfirmed, setIsConfirmed] = useState<boolean>(false);
+  const {
+    creatineConsumption,
+    dailyCreatineGoal,
+    timesADay,
+    addCreatine,
+    resetCreatine,
+  } = useCreatineStore();
+
+  const dose = dailyCreatineGoal / timesADay;
+  const remaining = dailyCreatineGoal - creatineConsumption;
+
+  const finalSwipe = remaining <= dose;
+
+  const confirmed = creatineConsumption >= dailyCreatineGoal;
+
+  function handleSwipeComplete() {
+    addCreatine();
+  }
+
+  function handleSwipeCancel() {
+    resetCreatine();
+  }
 
   return (
     <IButton
@@ -21,13 +44,13 @@ export function CreatineConsumptionCard() {
         width: fullWidth,
         borderRadius: 32,
         borderWidth: 1,
-        borderColor: theme.fifthAccent + "40",
+        borderColor: theme.fifthAccent,
         backgroundColor: theme.fifthAccent + "80",
         zIndex: 2,
       }}
       pressable
     >
-      <View
+      <Shine
         style={{
           width: fullWidth,
           height: widgetUnit,
@@ -50,22 +73,37 @@ export function CreatineConsumptionCard() {
         <View style={{ width: fullWidth - 16, height: 64 }}>
           <IButtonSwipe
             width={fullWidth - 16}
-            confirmed={isConfirmed}
-            onSwipeComplete={() => {
-              setIsConfirmed(true);
-            }}
-            onCancel={() => {
-              setIsConfirmed(false);
-            }}
+            confirmed={confirmed}
+            onSwipeComplete={handleSwipeComplete}
+            onCancel={handleSwipeCancel}
             style={{
-              backgroundColor: isConfirmed
-                ? theme.secondaryText + "20"
-                : theme.secondaryText + "60",
+              backgroundColor: confirmed ? "" : theme.text + "20",
+              borderColor: theme.text + "20",
+              borderWidth: 1,
             }}
+            slideChild={
+              <StrobeBlur
+                style={{
+                  position: "absolute",
+                  width: fullWidth - 16,
+                }}
+                disabled={!confirmed}
+              >
+                <IText
+                  text={
+                    confirmed
+                      ? `DONE`
+                      : `${creatineConsumption} / ${dailyCreatineGoal}`
+                  }
+                  size={24}
+                />
+              </StrobeBlur>
+            }
             haptics
+            finalSwipe={finalSwipe}
           />
         </View>
-      </View>
+      </Shine>
     </IButton>
   );
 }

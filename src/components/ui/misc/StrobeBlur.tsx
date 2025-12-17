@@ -3,6 +3,7 @@ import { View, Animated, ViewStyle, StyleSheet, Easing } from "react-native";
 import { BlurView } from "expo-blur";
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { WIDTH } from "../../../utils/Dimensions";
+import { Shine } from "./Shine";
 
 export type StrobeColors = [string, string, string, string];
 export interface StrobeBlurProps {
@@ -16,6 +17,7 @@ export interface StrobeBlurProps {
   disabled?: boolean;
   freeze?: boolean; // <-- new prop
   strobeColor?: string;
+  noShine?: boolean;
 }
 
 const BLOBS = [0, 1, 2, 3, 0, 1, 2, 3];
@@ -31,6 +33,7 @@ export function StrobeBlur({
   disabled = false,
   freeze = false,
   strobeColor,
+  noShine = false,
 }: StrobeBlurProps) {
   const { themeMode } = useSettingsStore();
   const animValues = useRef(BLOBS.map(() => new Animated.Value(0))).current;
@@ -99,8 +102,7 @@ export function StrobeBlur({
             position: "absolute",
             width: size,
             height: size,
-            backgroundColor:
-              strobeColor ?? colors?.[blob.color] ?? "rgba(255,255,255,0.2)",
+            backgroundColor: strobeColor ?? colors?.[blob.color],
             opacity: 0.2,
             transform: [
               {
@@ -133,6 +135,7 @@ export function StrobeBlur({
           style,
         ]}
       >
+        {!noShine && <Shine style={{ borderRadius: 0 }} />}
         {children}
       </View>
     );

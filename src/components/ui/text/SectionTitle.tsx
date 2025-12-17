@@ -37,6 +37,7 @@ export function SectionTitle({
   ...rest
 }: SectionTitleProps) {
   const { theme } = useSettingsStore();
+
   return (
     <Animated.View
       entering={FadeIn}
@@ -53,11 +54,15 @@ export function SectionTitle({
           width: WIDTH,
           ...styleStrobe,
         }}
-        colors={[theme.handle, theme.handle, theme.handle, theme.handle]}
+        strobeColor={theme.secondaryBackground}
         tint="auto"
       >
         <LinearGradient
-          colors={[theme.background, theme.background + "00"]}
+          colors={[
+            theme.background,
+            theme.background + "00",
+            theme.background + "00",
+          ]}
           start={{ x: 0, y: 0 }}
           end={{ x: 0, y: 1 }}
           style={{

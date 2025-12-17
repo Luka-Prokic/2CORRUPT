@@ -28,6 +28,7 @@ export interface StrobeButtonProps
   pressable?: boolean;
   animatedEntering?: boolean;
   animatedExiting?: boolean;
+  noShine?: boolean;
 }
 
 export function StrobeButton({
@@ -47,6 +48,7 @@ export function StrobeButton({
   freeze = false,
   duration,
   textStyle,
+  noShine = false,
   ...rest
 }: StrobeButtonProps) {
   const { theme } = useSettingsStore();
@@ -90,6 +92,7 @@ export function StrobeButton({
           tint={strobeTint}
           freeze={freeze}
           duration={duration}
+          noShine={noShine}
         >
           {children ? (
             children

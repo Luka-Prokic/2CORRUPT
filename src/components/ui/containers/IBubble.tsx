@@ -11,6 +11,7 @@ import { Pressable, ViewStyle } from "react-native";
 import { MidText } from "../text/MidText";
 import { DescriptionText } from "../text/DescriptionText";
 import { useHaptics } from "../../../features/ui/useHaptics";
+import { Shine } from "../misc/Shine";
 
 interface IBubbleProps {
   header?: string;
@@ -78,6 +79,7 @@ export function IBubble({
         ...style,
       }}
     >
+      <Shine />
       <Pressable
         onPress={handlePress}
         style={{

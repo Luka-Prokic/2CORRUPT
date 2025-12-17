@@ -3,7 +3,7 @@ import { WidgetFlatList } from "../../../ui/sliders/WidgetFlatList";
 import { ActionRenderItem } from "./ActionRenderItem";
 import { useSettingsStore } from "../../../../stores/settingsStore";
 import { useWorkoutStore } from "../../../../stores/workout";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 
 export type ActionItem = {
   id: string;
@@ -19,6 +19,8 @@ export function ActionWidget() {
   const { theme } = useSettingsStore();
   const { activeSession } = useWorkoutStore();
 
+  const [focusedIndex, setFocusedIndex] = useState(0);
+
   const actionItems = useMemo(() => {
     return ACTION_ITEMS.filter(
       (item) =>
@@ -30,7 +32,12 @@ export function ActionWidget() {
   return (
     <WidgetFlatList
       data={actionItems}
-      renderItem={({ item }) => <ActionRenderItem item={item} />}
+      onSelect={(index) => {
+        setFocusedIndex(index);
+      }}
+      renderItem={({ item, index }) => (
+        <ActionRenderItem item={item} focused={index === focusedIndex} />
+      )}
       style={{
         backgroundColor: hexToRGBA(theme.thirdBackground, 0.6),
       }}

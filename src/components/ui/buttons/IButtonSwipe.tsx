@@ -25,6 +25,7 @@ type IButtonSwipeProps = {
   slideChild?: React.ReactNode;
   slideText?: string;
   haptics?: boolean;
+  finalSwipe?: boolean;
 };
 
 export function IButtonSwipe({
@@ -38,6 +39,7 @@ export function IButtonSwipe({
   slideText,
   haptics = false,
   onCancel,
+  finalSwipe = true,
 }: IButtonSwipeProps) {
   const { theme } = useSettingsStore();
   const triggerHapticsSuccess = useHaptics({
@@ -59,12 +61,14 @@ export function IButtonSwipe({
     hapticType: "soft",
   });
 
+  console.log(confirmed);
+
   const [moving, setMoving] = useState<boolean>(false);
 
   const THUMB_SIZE = height - 4;
   const maxTranslateX = width - THUMB_SIZE - 4;
 
-  const translateX = useSharedValue(0);
+  const translateX = useSharedValue<number>(confirmed ? maxTranslateX : 0);
 
   const pan = Gesture.Pan()
     .onUpdate((e) => {
@@ -74,7 +78,7 @@ export function IButtonSwipe({
     })
     .onEnd(() => {
       if (translateX.value > maxTranslateX * 0.85) {
-        translateX.value = withTiming(maxTranslateX);
+        translateX.value = withSpring(finalSwipe ? maxTranslateX : 0);
         scheduleOnRN(successHaptic);
         scheduleOnRN(onSwipeComplete ? onSwipeComplete : () => {});
         scheduleOnRN(setMoving, false);
@@ -143,7 +147,7 @@ export function IButtonSwipe({
             style={[
               {
                 width: moving ? THUMB_SIZE * 1.2 : THUMB_SIZE,
-                height: moving ? THUMB_SIZE * 0.8 : THUMB_SIZE,
+                height: moving ? THUMB_SIZE * 0.95 : THUMB_SIZE,
                 borderRadius: THUMB_SIZE / 2,
                 backgroundColor: theme.secondaryBackground,
                 justifyContent: "center",

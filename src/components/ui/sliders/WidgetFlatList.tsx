@@ -17,6 +17,7 @@ interface WidgetFlatListProps extends FlatListProps<any> {
   height?: number;
   staticDots?: boolean;
   hidenDots?: boolean;
+  onSelect?: (index: number) => void;
 }
 
 export function WidgetFlatList({
@@ -25,6 +26,7 @@ export function WidgetFlatList({
   height = (WIDTH - 40) / 2,
   staticDots = false,
   hidenDots = false,
+  onSelect,
   ...props
 }: WidgetFlatListProps) {
   const flatListRef = useRef<FlatList>(null);
@@ -43,6 +45,7 @@ export function WidgetFlatList({
     const y = event.nativeEvent.contentOffset.y;
     const index = Math.round(y / height);
     setCurrentIndex(index);
+    onSelect?.(index);
 
     // Always reset the sleep timer
     setSleep(false);

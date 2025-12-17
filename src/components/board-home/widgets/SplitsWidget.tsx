@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 import { BounceButton } from "../../ui/buttons/BounceButton";
 import { MidText } from "../../ui/text/MidText";
 import { InfoText } from "../../ui/text/InfoText";
+import { Shine } from "../../ui/misc/Shine";
 
 export function SplitsWidget() {
   const { widgetUnit, halfWidget } = useWidgetUnit();
@@ -31,39 +32,46 @@ export function SplitsWidget() {
         backgroundColor: hexToRGBA(theme.thirdBackground, 0.6),
         borderWidth: 1,
         borderColor: hexToRGBA(theme.thirdBackground, 0.4),
-        padding: 16,
-        alignItems: "center",
-        flexDirection: "row",
       }}
       haptics
     >
-      <Animated.View
-        entering={FadeIn}
-        exiting={FadeOut}
-        style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-      >
-        <MidText
-          text={activeSplitPlan?.plan.name}
-          color={noSplit ? theme.info : theme.text}
-        />
-        <InfoText
-          text={t("button.active").toLowerCase()}
-          color={noSplit ? theme.info : theme.tint}
-        />
-      </Animated.View>
-
-      <Ionicons
-        name={noSplit ? "flash-outline" : "flash"}
-        size={44}
-        color={noSplit ? theme.info : theme.fifthBackground}
+      <Shine
         style={{
-          shadowColor: theme.fifthBackground,
-          shadowOffset: { width: 0, height: 2 },
-          shadowOpacity: noSplit ? 0 : 0.6,
-          shadowRadius: 16,
-          elevation: noSplit ? 0 : 10,
+          width: widgetUnit,
+          height: halfWidget,
+          padding: 16,
+          alignItems: "center",
+          flexDirection: "row",
         }}
-      />
+      >
+        <Animated.View
+          entering={FadeIn}
+          exiting={FadeOut}
+          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+        >
+          <MidText
+            text={activeSplitPlan?.plan.name}
+            color={noSplit ? theme.info : theme.text}
+          />
+          <InfoText
+            text={t("button.active").toLowerCase()}
+            color={noSplit ? theme.info : theme.tint}
+          />
+        </Animated.View>
+
+        <Ionicons
+          name={noSplit ? "flash-outline" : "flash"}
+          size={44}
+          color={noSplit ? theme.info : theme.fifthBackground}
+          style={{
+            shadowColor: theme.fifthBackground,
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: noSplit ? 0 : 0.6,
+            shadowRadius: 16,
+            elevation: noSplit ? 0 : 10,
+          }}
+        />
+      </Shine>
     </BounceButton>
   );
 }

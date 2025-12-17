@@ -5,7 +5,7 @@ export interface GeneralSlice {
   setWaterConsumption: (waterConsumption: number) => void;
   setdailyWaterGoal: (dailyWaterGoal: number) => void;
   setIncrement: (increment: number) => void;
-  resetWater: () => void;
+  resetWaterCompletely: () => void;
 }
 
 export type WaterStore = GeneralSlice;

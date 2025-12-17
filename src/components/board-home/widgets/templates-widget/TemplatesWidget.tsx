@@ -9,6 +9,7 @@ import { CardSlider } from "../../../ui/sliders/CardSlider";
 import { TemplatesHeader } from "./TemplatesHeader";
 import { EmptyTemplateCard } from "./EmptyTemplateCard";
 import { TemplatesFooter } from "./TemplatesFooter";
+import { Shine } from "../../../ui/misc/Shine";
 
 export function TemplatesWidget() {
   const { theme } = useSettingsStore();
@@ -36,6 +37,8 @@ export function TemplatesWidget() {
         height: widgetUnit,
       }}
     >
+      <Shine />
+
       <TemplatesHeader />
 
       <CardSlider

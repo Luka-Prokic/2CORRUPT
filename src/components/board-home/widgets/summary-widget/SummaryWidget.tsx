@@ -15,6 +15,7 @@ import { useWeeklyWorkoutGoal } from "../../../../features/workout/useWorkoutGoa
 import { WeeklyGoalBottomSheet } from "./WeeklyGoalBottomSheet";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { useCallback, useRef } from "react";
+import { Shine } from "../../../ui/misc/Shine";
 
 export function SummaryWidget() {
   const { widgetUnit } = useWidgetUnit();
@@ -66,6 +67,8 @@ export function SummaryWidget() {
         flexWrap: "wrap",
       }}
     >
+      <Shine />
+
       <SummaryHeader />
       <ProgressRing
         key={`${goal}-${sessionsThisWeek.length}`}

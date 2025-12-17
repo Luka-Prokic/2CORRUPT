@@ -14,6 +14,7 @@ import { useWidgetUnit } from "../../../features/widgets/useWidgetUnit";
 
 import { BackgroundText } from "../text/BackgroundText";
 import { InfoText } from "../text/InfoText";
+import { Shine } from "../misc/Shine";
 
 interface ExpandableBubbleProps {
   header?: string;
@@ -106,6 +107,7 @@ export function ExpandableBubble({
         style,
       ]}
     >
+      <Shine />
       <Pressable onPress={toggle} style={{ flex: 1, alignItems: "center" }}>
         {/* Expand/Collapse Button Layer */}
         {!disabled && (

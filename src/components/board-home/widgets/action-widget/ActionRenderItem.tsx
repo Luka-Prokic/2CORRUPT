@@ -6,9 +6,10 @@ import { ActiveSessionCard } from "./active-session/ActiveSesseionCard";
 
 interface ActionRenderItemProps {
   item: ActionItem;
+  focused: boolean;
 }
 
-export function ActionRenderItem({ item }: ActionRenderItemProps) {
+export function ActionRenderItem({ item, focused }: ActionRenderItemProps) {
   return (
     <Fragment>
       {(() => {

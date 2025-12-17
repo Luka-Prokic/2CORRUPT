@@ -100,6 +100,7 @@ export function StrobeOptionButton({
         {...strobeButtonProps}
         style={{ width, height, ...style }}
         disabled={strobeButtonProps.strobeDisabled}
+        noShine
       >
         {renderContent()}
       </StrobeBlur>
@@ -114,6 +115,7 @@ export function StrobeOptionButton({
         height,
         ...style,
       }}
+      noShine
     >
       {renderContent()}
     </StrobeButton>
