@@ -10,6 +10,8 @@ import Animated, { FadeIn } from "react-native-reanimated";
 import { useWaterStore } from "../../../../../../stores/water";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { InfoText } from "../../../../../ui/text/InfoText";
+import { IBubble } from "../../../../../ui/containers/IBubble";
+import { LabeledValue } from "../../../../../ui/misc/LabeledValue";
 
 // ml-based water options
 const WATER_ADD_OPTIONS_ML = [
@@ -20,6 +22,7 @@ const WATER_ADD_OPTIONS_ML = [
   { title: "300 ml", value: 300 },
   { title: "400 ml", value: 400 },
   { title: "500 ml", value: 500 },
+  { title: "1000 ml", value: 1000 },
 ];
 
 // oz-based water options (commonly used)
@@ -30,6 +33,7 @@ const WATER_ADD_OPTIONS_OZ = [
   { title: "12 fl.oz", value: 355 },
   { title: "16 fl.oz", value: 473 },
   { title: "20 fl.oz", value: 591 },
+  { title: "32 fl.oz", value: 946 },
 ];
 
 interface CustomWaterAddViewProps {
@@ -40,8 +44,12 @@ interface CustomWaterAddViewProps {
 export function CustomWaterAddView({ setMode, ref }: CustomWaterAddViewProps) {
   const { theme, units } = useSettingsStore();
   const { t } = useTranslation();
-  const { waterConsumption, setWaterConsumption, setIncrement } =
-    useWaterStore();
+  const {
+    waterConsumption,
+    setWaterConsumption,
+    setIncrement,
+    dailyWaterGoal,
+  } = useWaterStore();
 
   const [selectedOption, setSelectedOption] = useState<number>(0);
 
@@ -74,17 +82,25 @@ export function CustomWaterAddView({ setMode, ref }: CustomWaterAddViewProps) {
           justifyContent: "space-between",
           width: "100%",
           marginBottom: 32,
-          paddingHorizontal: 16,
+          gap: 32,
         }}
       >
-        <TextButton
-          text={t("units.change-unit")}
-          onPress={() => setMode("change-unit")}
-        />
-        <TextButton
-          text={t("settings.goal.change-goal")}
-          onPress={() => setMode("change-goal")}
-        />
+        <IBubble onPress={() => setMode("change-unit")} size="flexible">
+          <LabeledValue
+            label={t("units.change-unit")}
+            value={units.volume}
+            align="center"
+            style={{ padding: 8 }}
+          />
+        </IBubble>
+        <IBubble onPress={() => setMode("change-goal")} size="flexible">
+          <LabeledValue
+            label={t("settings.goal.change-goal")}
+            value={dailyWaterGoal}
+            align="center"
+            style={{ padding: 8 }}
+          />
+        </IBubble>
       </View>
 
       {/* Slider component */}

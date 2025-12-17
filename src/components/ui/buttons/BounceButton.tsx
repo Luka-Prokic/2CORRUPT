@@ -34,7 +34,7 @@ export function BounceButton({
 }: BounceButtonProps) {
   const { theme } = useSettingsStore();
   const { bounceAnim, bounceIt } = useBounceScaleAnim({ strength });
-  const triggerHaptics = useHaptics({ modeType: "max", hapticType: "medium" });
+  const triggerHaptics = useHaptics({ modeType: "on", hapticType: "medium" });
 
   function handlePress() {
     onPress?.();

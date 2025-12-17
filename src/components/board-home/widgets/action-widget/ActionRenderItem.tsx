@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import { ActionItem } from "./ActionWidget";
 import { WaterConsumptionCard } from "./water-consumption/WaterConsumptionCard";
-import { CreatineConsumptionCard } from "./CreatineConsumptionCard";
+import { CreatineConsumptionCard } from "./creatine-consumption/CreatineConsumptionCard";
 import { ActiveSessionCard } from "./active-session/ActiveSesseionCard";
 
 interface ActionRenderItemProps {

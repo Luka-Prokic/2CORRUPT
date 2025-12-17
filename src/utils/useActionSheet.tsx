@@ -26,7 +26,6 @@ export function useActionSheet() {
     onSelect: (index: number) => void;
   }) => {
     if (Platform.OS === "ios") {
-      // Wrap in setTimeout to ensure it's presented after current render
       setTimeout(() => {
         ActionSheetIOS.showActionSheetWithOptions(
           {
@@ -41,7 +40,6 @@ export function useActionSheet() {
         );
       }, 0);
     } else {
-      // Android fallback using Alert
       const buttons: AlertButton[] = options.map((opt, i) => ({
         text: opt,
         style:

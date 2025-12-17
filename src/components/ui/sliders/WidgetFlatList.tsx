@@ -100,7 +100,7 @@ export function WidgetFlatList({
           borderRadius: 32,
           backgroundColor: theme.thirdBackground,
           overflow: "hidden",
-          zIndex: 1,
+          zIndex: 2,
           ...(props.style as ViewStyle),
         }}
       />

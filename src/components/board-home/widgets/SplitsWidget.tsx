@@ -35,6 +35,7 @@ export function SplitsWidget() {
         alignItems: "center",
         flexDirection: "row",
       }}
+      haptics
     >
       <Animated.View
         entering={FadeIn}

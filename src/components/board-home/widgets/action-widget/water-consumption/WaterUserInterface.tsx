@@ -1,6 +1,6 @@
 import { InfoText } from "../../../../ui/text/InfoText";
 import { IText } from "../../../../ui/text/IText";
-import { TouchableOpacity, View } from "react-native";
+import { View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useSettingsStore } from "../../../../../stores/settingsStore";
 import { useWidgetUnit } from "../../../../../features/widgets/useWidgetUnit";
@@ -11,6 +11,7 @@ import { WaterBottomSheet } from "./bottom-sheet/WaterBottomSheet";
 import { useDisplayedUnits } from "../../../../../features/translate/useDisplayedUnits";
 import { useTranslation } from "react-i18next";
 import { BounceButton } from "../../../../ui/buttons/BounceButton";
+import { IButton } from "../../../../ui/buttons/IButton";
 
 export function WaterUserInterface() {
   const { theme, units } = useSettingsStore();
@@ -60,13 +61,14 @@ export function WaterUserInterface() {
             position: "absolute",
             bottom: 0,
             right: 0,
-            padding: 16,
+            padding: 4,
             zIndex: 1,
           }}
+          haptics
         >
           <Ionicons name="ellipse" size={64} color={theme.accent} />
           <Ionicons
-            name="pint-outline"
+            name="water-outline"
             size={32}
             color={theme.border}
             style={{ position: "absolute" }}
@@ -74,20 +76,22 @@ export function WaterUserInterface() {
         </BounceButton>
 
         <View style={{ flexDirection: "row" }}>
-          <TouchableOpacity
+          <IButton
             onPress={decrementWaterConsumption}
             disabled={waterConsumption <= 0}
             style={{ opacity: waterConsumption <= 0 ? 0.4 : 1 }}
+            haptics
           >
             <Ionicons name="remove-circle" size={64} color={theme.border} />
-          </TouchableOpacity>
-          <TouchableOpacity
+          </IButton>
+          <IButton
             onPress={incrementWaterConsumption}
             disabled={waterConsumption >= 6000}
             style={{ opacity: waterConsumption >= 6000 ? 0.4 : 1 }}
+            haptics
           >
             <Ionicons name="add-circle" size={64} color={theme.border} />
-          </TouchableOpacity>
+          </IButton>
         </View>
         <InfoText
           text={`${t("settings.goal.increment-description")} ${fromMl(

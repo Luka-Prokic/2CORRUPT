@@ -24,6 +24,7 @@ export function SettingsWidget() {
       onPress={() => {
         router.push("/settings/main");
       }}
+      haptics
     >
       <Ionicons name="cog-outline" size={44} color={theme.info} />
     </BounceButton>

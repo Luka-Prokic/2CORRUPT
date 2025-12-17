@@ -19,6 +19,7 @@ export function WaterConsumptionCard() {
         borderColor: theme.handle,
         backgroundColor: theme.info,
         overflow: "hidden",
+        zIndex: 2,
       }}
       pressable
     >

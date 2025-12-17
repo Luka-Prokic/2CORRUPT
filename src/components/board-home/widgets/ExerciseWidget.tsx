@@ -3,6 +3,7 @@ import { BounceButton } from "../../ui/buttons/BounceButton";
 import { router } from "expo-router";
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { useWidgetUnit } from "../../../features/widgets/useWidgetUnit";
+import { Ionicons } from "@expo/vector-icons";
 
 export function ExerciseWidget() {
   const { theme } = useSettingsStore();
@@ -24,6 +25,9 @@ export function ExerciseWidget() {
       }}
       onPress={handlePress}
       title="Exercise (mock)"
-    />
+      haptics
+    >
+      <Ionicons name="barbell-outline" size={44} color={theme.text} />
+    </BounceButton>
   );
 }

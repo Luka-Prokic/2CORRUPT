@@ -1,8 +1,7 @@
-
 import { Animated, TextStyle, StyleProp } from "react-native";
 import { useSettingsStore } from "../../stores/settingsStore";
 import { useTranslation } from "react-i18next";
-import {useFlickerAnim} from "../../animations/useFlickerAnim";
+import { useFlickerAnim } from "../../animations/useFlickerAnim";
 import { useDracoFont } from "../../features/fonts/useDracoFont";
 
 interface CorruptTittleProps {
