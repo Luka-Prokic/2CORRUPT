@@ -1,7 +1,5 @@
-import { hexToRGBA } from "../../../../utils/HEXtoRGB";
 import { WidgetFlatList } from "../../../ui/sliders/WidgetFlatList";
 import { ActionRenderItem } from "./ActionRenderItem";
-import { useSettingsStore } from "../../../../stores/settingsStore";
 import { useWorkoutStore } from "../../../../stores/workout";
 import { useMemo, useState } from "react";
 
@@ -16,7 +14,6 @@ export const ACTION_ITEMS: ActionItem[] = [
 ];
 
 export function ActionWidget() {
-  const { theme } = useSettingsStore();
   const { activeSession } = useWorkoutStore();
 
   const [focusedIndex, setFocusedIndex] = useState(0);
@@ -38,9 +35,6 @@ export function ActionWidget() {
       renderItem={({ item, index }) => (
         <ActionRenderItem item={item} focused={index === focusedIndex} />
       )}
-      style={{
-        backgroundColor: hexToRGBA(theme.thirdBackground, 0.6),
-      }}
     />
   );
 }

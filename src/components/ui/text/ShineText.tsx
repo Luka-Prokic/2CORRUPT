@@ -38,13 +38,13 @@ interface ShineTextProps extends TextProps {
 
 export function ShineText({
   text,
-  size = 28,
+  size = 36,
   weight = "bold",
   color,
   shineColor,
   style,
   duration = 3000,
-  delay = 3000,
+  delay = 2000,
   constant = false,
   focused = false,
   width,

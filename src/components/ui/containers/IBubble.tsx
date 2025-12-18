@@ -68,7 +68,7 @@ export function IBubble({
       entering={noAnimation ? undefined : entering ?? FadeIn}
       exiting={noAnimation ? undefined : exiting ?? FadeOut}
       style={{
-        flex: 1,
+        flex: size === "flexible" ? 1 : undefined,
         height: size === "flexible" ? undefined : height ?? bubbleHeight,
         width: width ?? fullWidth,
         borderRadius: 32,

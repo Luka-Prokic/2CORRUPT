@@ -3,14 +3,16 @@ import {
   FlatListProps,
   NativeSyntheticEvent,
   NativeScrollEvent,
-  View,
   ViewStyle,
+  View,
 } from "react-native";
 import { useEffect, useRef, useState } from "react";
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { WIDTH } from "../../../utils/Dimensions";
 import { useWidgetUnit } from "../../../features/widgets/useWidgetUnit";
 import { VerticalScrollableDots } from "./ScrollableDots";
+import Animated from "react-native-reanimated";
+import { hexToRGBA } from "../../../utils/HEXtoRGB";
 
 interface WidgetFlatListProps extends FlatListProps<any> {
   width?: number;
@@ -34,6 +36,7 @@ export function WidgetFlatList({
   const { fullWidth } = useWidgetUnit();
 
   const [sleep, setSleep] = useState(false);
+  const [scrolling, setScrolling] = useState(false);
 
   const [currentIndex, setCurrentIndex] = useState(
     props.initialScrollIndex || 0
@@ -47,12 +50,13 @@ export function WidgetFlatList({
     setCurrentIndex(index);
     onSelect?.(index);
 
-    // Always reset the sleep timer
+    setScrolling(true);
     setSleep(false);
     if (sleepTimeoutRef.current) clearTimeout(sleepTimeoutRef.current);
 
     sleepTimeoutRef.current = setTimeout(() => {
       setSleep(true);
+      setScrolling(false);
       sleepTimeoutRef.current = null;
     }, 1000);
   };
@@ -76,9 +80,24 @@ export function WidgetFlatList({
         alignItems: "center",
         flexDirection: "row",
         paddingLeft: 16,
-        gap: 4,
+        gap: 6,
       }}
     >
+      <Animated.View
+        style={{
+          position: "absolute",
+          width: fullWidth,
+          left: 16,
+          height,
+          transform: [{ scale: scrolling ? 1.02 : 1 }],
+          transitionProperty: "transform",
+          transitionDuration: "200ms",
+          transitionTimingFunction: "ease-out",
+          borderRadius: 32,
+          overflow: "hidden",
+          backgroundColor: hexToRGBA(theme.thirdBackground, 0.6),
+        }}
+      />
       <FlatList
         ref={flatListRef}
         snapToInterval={height}
@@ -101,7 +120,6 @@ export function WidgetFlatList({
           flexGrow: 0,
           flexShrink: 0,
           borderRadius: 32,
-          backgroundColor: theme.thirdBackground,
           overflow: "hidden",
           zIndex: 2,
           ...(props.style as ViewStyle),
