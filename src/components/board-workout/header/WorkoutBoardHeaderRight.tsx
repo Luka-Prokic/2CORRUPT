@@ -94,7 +94,7 @@ export function WorkoutBoardHeaderRight() {
         <Ionicons
           name="checkmark-circle"
           size={44}
-          color={isItEmpty ? theme.handle : theme.text}
+          color={theme.text + (isItEmpty ? "20" : "")}
         />
       </TouchableOpacity>
     </Fragment>

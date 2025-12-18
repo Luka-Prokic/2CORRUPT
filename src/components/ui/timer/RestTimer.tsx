@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { Text, AppState, TextStyle } from "react-native";
+import { AppState, TextStyle } from "react-native";
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { useWorkoutStore } from "../../../stores/workout/useWorkoutStore";
 import { useFormatTime } from "../../../features/format/useFormatTime";
+import { IText } from "../text/IText";
 
 interface RestTimerProps {
   textStyle?: TextStyle | TextStyle[];
@@ -11,7 +12,7 @@ interface RestTimerProps {
 
 export function RestTimer({ textStyle, onEnd }: RestTimerProps) {
   const { theme } = useSettingsStore();
-  const { estEndRestTime } = useWorkoutStore(); // absolute end timestamp in seconds
+  const { estEndRestTime, startRestTime } = useWorkoutStore(); // absolute end timestamp in seconds
 
   const [isActive, setIsActive] = useState(true);
   const [remaining, setRemaining] = useState<number | null>(null);
@@ -34,6 +35,7 @@ export function RestTimer({ textStyle, onEnd }: RestTimerProps) {
     const tick = () => {
       const now = Math.floor(Date.now() / 1000);
       const r = Math.max(estEndRestTime - now, 0);
+      const t = Math.max(now - startRestTime, 0);
       setRemaining(r);
       if (r === 0) onEnd?.();
     };
@@ -51,15 +53,13 @@ export function RestTimer({ textStyle, onEnd }: RestTimerProps) {
   if (remaining === null) return null;
 
   return (
-    <Text
+    <IText
+      text={formattedTime}
+      color={theme.fifthBackground}
+      size={36}
       style={{
-        color: theme.fifthBackground,
-        fontSize: 32,
-        fontWeight: "bold",
         ...textStyle,
       }}
-    >
-      {formattedTime}
-    </Text>
+    />
   );
 }

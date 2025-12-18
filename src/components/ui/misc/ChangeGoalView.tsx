@@ -3,10 +3,7 @@ import { useTranslation } from "react-i18next";
 import { SegmentedButtons } from "../buttons/SegmentedButtons";
 import { DescriptionText } from "../text/DescriptionText";
 import { TwoOptionStrobeButtons } from "../buttons/TwoOptionStrobeButtons";
-import Animated, {
-  BaseAnimationBuilder,
-  FadeIn,
-} from "react-native-reanimated";
+import Animated, { FadeIn } from "react-native-reanimated";
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { Fragment } from "react";
 import { InfoText } from "../text/InfoText";
@@ -24,7 +21,6 @@ interface ChangeGoalViewProps {
   description?: string;
   min?: number;
   max?: number;
-  animatedTitleEntering?: BaseAnimationBuilder;
   unit?: string;
 }
 
@@ -39,7 +35,6 @@ export function ChangeGoalView({
   description,
   min,
   max,
-  animatedTitleEntering,
   unit,
 }: ChangeGoalViewProps) {
   const { t } = useTranslation();
@@ -51,11 +46,9 @@ export function ChangeGoalView({
       entering={FadeIn}
       style={{ flex: 1, gap: 16, alignItems: "center" }}
     >
-      <Animated.View entering={animatedTitleEntering}>
-        <IText text={title} size={32} style={{ textAlign: "center" }} />
-      </Animated.View>
+      <IText text={title} style={{ textAlign: "center" }} />
 
-      <IText text={`${goal} ${unit}`} color={theme.accent} />
+      <IText text={`${goal} ${unit}`} color={theme.accent} size={52} />
 
       {options && (
         <SegmentedButtons

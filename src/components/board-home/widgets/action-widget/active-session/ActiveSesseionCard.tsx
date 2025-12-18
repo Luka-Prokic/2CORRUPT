@@ -5,11 +5,13 @@ import { useSettingsStore } from "../../../../../stores/settingsStore";
 import { useWorkoutStore } from "../../../../../stores/workout";
 import { ActiveSessionHeader } from "./ActiveSessionHeader";
 import { SevenSegmentSessionTimer } from "../../../../ui/timer/SevenSegmentSessionTimer";
+import { CorruptRestTimer } from "../../../../corrupt/CorruptRestTimer";
+import { View } from "react-native";
 
 export function ActiveSessionCard() {
   const { widgetUnit, fullWidth } = useWidgetUnit();
   const { theme } = useSettingsStore();
-  const { activeSession } = useWorkoutStore();
+  const { activeSession, restingExerciseId } = useWorkoutStore();
 
   const softGlow = theme.fifthBackground + "40";
 
@@ -36,11 +38,21 @@ export function ActiveSessionCard() {
         strobeColors={[softGlow, softGlow, softGlow, softGlow]}
       >
         <ActiveSessionHeader />
-
-        <SevenSegmentSessionTimer
-          segmentSize={36}
-          color={theme.secondaryAccent}
-        />
+        {restingExerciseId ? (
+          <View
+            style={{
+              width: fullWidth - 32,
+              height: 64,
+            }}
+          >
+            <CorruptRestTimer size={64} fontSize={48} />
+          </View>
+        ) : (
+          <SevenSegmentSessionTimer
+            segmentSize={36}
+            color={theme.secondaryAccent}
+          />
+        )}
       </StrobeButton>
     </Fragment>
   );

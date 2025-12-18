@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import { IText } from "../../ui/text/IText";
 import { useTranslation } from "react-i18next";
 import { useSettingsStore } from "../../../stores/settingsStore";
@@ -35,15 +35,8 @@ export function WeeklyWorkoutGoal({ description }: WeeklyWorkoutGoalProps) {
     <View style={{ gap: 16, alignItems: "center" }}>
       <IText text={t("splits.weekly-goal")} />
 
-      <Text
-        style={{
-          fontSize: 52,
-          fontWeight: "bold",
-          color: theme.accent,
-        }}
-      >
-        {goal}
-      </Text>
+      <IText text={goal.toString()} color={theme.accent} size={52} />
+
       <MidText
         text={goal === 1 ? t("splits.workout") : t("splits.workouts")}
         style={{ marginBottom: 16 }}
@@ -51,7 +44,6 @@ export function WeeklyWorkoutGoal({ description }: WeeklyWorkoutGoalProps) {
 
       <ActiveSplitAlert style={{ marginBottom: 16, paddingHorizontal: 16 }} />
       <TwoOptionStrobeButtons
-        haptics
         labelOne="-"
         labelTwo="+"
         styleOne={{ backgroundColor: theme.border }}
@@ -61,6 +53,7 @@ export function WeeklyWorkoutGoal({ description }: WeeklyWorkoutGoalProps) {
         width={fullWidth - 32}
         disabledOne={activeSplit || activeSplitPlan.plan.activeLength === 1}
         disabledTwo={activeSplit}
+        haptics
       />
 
       {description && <DescriptionText text={description} />}

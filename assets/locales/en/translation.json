@@ -210,9 +210,9 @@
       "daily-creatine-goal": "Daily Creatine Intake Goal",
       "change-creatine-goal-description": "Adjust your daily creatine intake goal and track your creatine progress more accurately.",
       "creatine-frequency-title": "Intake Frequency",
-      "creatine-frequency-unit": "times a day",
+      "creatine-frequency-unit": "per day",
       "creatine-frequency-description": "Set how many times per day you take creatine. This determines how many swipes are needed on the creatine widget to complete your daily intake.",
-      "change-frequency": "Change Times",
+      "change-frequency": "Change Reps",
       "custom-add-water": "Add Water"
     }
   },

@@ -36,9 +36,9 @@ export function ChangeUnitView({
       entering={FadeIn}
       style={{ flex: 1, gap: 16, alignItems: "center" }}
     >
-      <IText text={title} size={32} />
+      <IText text={title} />
 
-      <IText text={t(`settings.${unit}`)} color={theme.accent} />
+      <IText text={t(`settings.${unit}`)} color={theme.accent} size={52} />
 
       {options && (
         <SegmentedButtons options={options} value={value} onChange={onChange} />

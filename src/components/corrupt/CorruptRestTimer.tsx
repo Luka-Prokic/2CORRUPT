@@ -3,16 +3,20 @@ import { TouchableOpacity, Text } from "react-native";
 import { useSettingsStore } from "../../stores/settingsStore";
 import { RestTimer } from "../ui/timer/RestTimer";
 import { useWorkoutStore } from "../../stores/workout/useWorkoutStore";
-import * as Haptics from "expo-haptics";
 import { useHaptics } from "../../features/ui/useHaptics";
 
 interface CorruptRestTimerProps {
   size: number;
+  fontSize?: number;
 }
 
-export function CorruptRestTimer({ size }: CorruptRestTimerProps) {
+export function CorruptRestTimer({
+  size,
+  fontSize = 36,
+}: CorruptRestTimerProps) {
   const { theme } = useSettingsStore();
-  const { estEndRestTime, updateEstEndRestTime, endRest } = useWorkoutStore();
+  const { estEndRestTime, updateEstEndRestTime, endRest, startRestTime } =
+    useWorkoutStore();
   const triggerHapticsSoft = useHaptics({ modeType: "on", hapticType: "soft" });
   const triggerHapticsRigid = useHaptics({
     modeType: "gentle",
@@ -20,8 +24,16 @@ export function CorruptRestTimer({ size }: CorruptRestTimerProps) {
   });
 
   const addRest = () => {
+    const now = Math.floor(Date.now() / 1000);
+    const trueTime = Math.max(now - startRestTime, 0);
+
+    const trueTimeIsBigger = trueTime > estEndRestTime - startRestTime;
+
+    const newEstEndRestTime =
+      15 + (trueTimeIsBigger ? trueTime + startRestTime : estEndRestTime);
+
     triggerHapticsSoft();
-    if (estEndRestTime != null) updateEstEndRestTime(estEndRestTime + 15);
+    if (estEndRestTime != null) updateEstEndRestTime(newEstEndRestTime);
   };
 
   const removeRest = () => {
@@ -61,31 +73,43 @@ export function CorruptRestTimer({ size }: CorruptRestTimerProps) {
         style={{
           width: size,
           height: size,
-          backgroundColor: theme.thirdBackground + "80",
+          backgroundColor: theme.secondaryAccent,
           borderRadius: size / 2,
           justifyContent: "center",
           alignItems: "center",
         }}
       >
-        <Text style={{ color: theme.tint, fontWeight: "bold", fontSize: 16 }}>
+        <Text
+          style={{
+            color: theme.border,
+            fontWeight: "bold",
+            fontSize: 16,
+          }}
+        >
           +15s
         </Text>
       </TouchableOpacity>
 
-      <RestTimer />
+      <RestTimer textStyle={{ fontSize: fontSize }} />
 
       <TouchableOpacity
         onPress={removeRest}
         style={{
           width: size,
           height: size,
-          backgroundColor: theme.thirdBackground + "80",
+          backgroundColor: theme.secondaryAccent,
           borderRadius: size / 2,
           justifyContent: "center",
           alignItems: "center",
         }}
       >
-        <Text style={{ color: theme.tint, fontWeight: "bold", fontSize: 16 }}>
+        <Text
+          style={{
+            color: theme.border,
+            fontWeight: "bold",
+            fontSize: 16,
+          }}
+        >
           -15s
         </Text>
       </TouchableOpacity>
