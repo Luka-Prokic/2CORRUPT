@@ -4,10 +4,7 @@ import { useTranslation } from "react-i18next";
 import { SegmentedButtons } from "../buttons/SegmentedButtons";
 import { SwitchButton } from "../buttons/SwitchButton";
 import { DescriptionText } from "../text/DescriptionText";
-import Animated, {
-  BaseAnimationBuilder,
-  FadeIn,
-} from "react-native-reanimated";
+import Animated, { FadeIn } from "react-native-reanimated";
 import { useSettingsStore } from "../../../stores/settingsStore";
 
 interface ChangeUnitViewProps {
@@ -19,7 +16,6 @@ interface ChangeUnitViewProps {
   value: string;
   onChange: (value: string) => void;
   description?: string;
-  animatedTitleEntering?: BaseAnimationBuilder;
 }
 
 export function ChangeUnitView({
@@ -31,7 +27,6 @@ export function ChangeUnitView({
   value,
   onChange,
   description,
-  animatedTitleEntering,
 }: ChangeUnitViewProps) {
   const { t } = useTranslation();
   const { theme } = useSettingsStore();
@@ -41,9 +36,7 @@ export function ChangeUnitView({
       entering={FadeIn}
       style={{ flex: 1, gap: 16, alignItems: "center" }}
     >
-      <Animated.View entering={animatedTitleEntering}>
-        <IText text={title} size={32} />
-      </Animated.View>
+      <IText text={title} size={32} />
 
       <IText text={t(`settings.${unit}`)} color={theme.accent} />
 

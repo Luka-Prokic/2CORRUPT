@@ -10,7 +10,6 @@ import Animated, {
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { Fragment } from "react";
 import { InfoText } from "../text/InfoText";
-import { useDisplayedUnits } from "../../../features/translate/useDisplayedUnits";
 import { useWidgetUnit } from "../../../features/widgets/useWidgetUnit";
 
 interface ChangeGoalViewProps {
@@ -63,6 +62,8 @@ export function ChangeGoalView({
           options={options}
           value={Math.max(Math.min(goal, max), min).toString()}
           onChange={(val) => onChange(Number(val))}
+          width={fullWidth - 32}
+          haptics
         />
       )}
 

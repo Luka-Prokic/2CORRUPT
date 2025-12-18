@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { View } from "react-native";
 import { useSettingsStore } from "../../../../../../stores/settings";
 import { StrobeButton } from "../../../../../ui/buttons/StrobeButton";
 import { useTranslation } from "react-i18next";
@@ -9,11 +8,7 @@ import Animated, { FadeIn } from "react-native-reanimated";
 import { useWaterStore } from "../../../../../../stores/water";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { InfoText } from "../../../../../ui/text/InfoText";
-import { IBubble } from "../../../../../ui/containers/IBubble";
-import { LabeledValue } from "../../../../../ui/misc/LabeledValue";
-import { useDisplayedUnits } from "../../../../../../features/translate/useDisplayedUnits";
 
-// ml-based water options
 const WATER_ADD_OPTIONS_ML = [
   { title: "50 ml", value: 50 },
   { title: "100 ml", value: 100 },
@@ -25,7 +20,6 @@ const WATER_ADD_OPTIONS_ML = [
   { title: "1000 ml", value: 1000 },
 ];
 
-// oz-based water options (commonly used)
 const WATER_ADD_OPTIONS_OZ = [
   { title: "4 fl.oz", value: 118 },
   { title: "6 fl.oz", value: 177 },
@@ -37,23 +31,16 @@ const WATER_ADD_OPTIONS_OZ = [
 ];
 
 interface CustomWaterAddViewProps {
-  setMode: (mode: "custom" | "change-unit" | "change-goal") => void;
   ref: React.RefObject<BottomSheetModal>;
 }
 
-export function CustomWaterAddView({ setMode, ref }: CustomWaterAddViewProps) {
+export function CustomWaterAddView({ ref }: CustomWaterAddViewProps) {
   const { theme, units } = useSettingsStore();
   const { t } = useTranslation();
-  const {
-    waterConsumption,
-    setWaterConsumption,
-    setIncrement,
-    dailyWaterGoal,
-  } = useWaterStore();
-  const { fromMl } = useDisplayedUnits();
+  const { waterConsumption, setWaterConsumption, setIncrement } =
+    useWaterStore();
   const [selectedOption, setSelectedOption] = useState<number>(0);
 
-  // Select the appropriate options based on the unit setting
   const WATER_ADD_OPTIONS =
     units.volume === "fl.oz" ? WATER_ADD_OPTIONS_OZ : WATER_ADD_OPTIONS_ML;
 
@@ -75,35 +62,7 @@ export function CustomWaterAddView({ setMode, ref }: CustomWaterAddViewProps) {
 
   return (
     <Animated.View entering={FadeIn} style={{ flex: 1, alignItems: "center" }}>
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-          width: "100%",
-          marginBottom: 32,
-          gap: 32,
-        }}
-      >
-        <IBubble onPress={() => setMode("change-goal")} size="flexible">
-          <LabeledValue
-            label={t("settings.goal.change-goal")}
-            value={Number(fromMl(dailyWaterGoal))}
-            align="center"
-            style={{ padding: 8 }}
-          />
-        </IBubble>
-        <IBubble onPress={() => setMode("change-unit")} size="flexible">
-          <LabeledValue
-            label={t("units.change-unit")}
-            value={units.volume}
-            align="center"
-            style={{ padding: 8 }}
-          />
-        </IBubble>
-      </View>
-
-      {/* Slider component */}
+      {/* Water options slider */}
       <CenterCardSlider
         data={WATER_ADD_OPTIONS}
         cardWidth={WIDTH / 3}
@@ -135,7 +94,6 @@ export function CustomWaterAddView({ setMode, ref }: CustomWaterAddViewProps) {
         )}
       />
 
-      {/* Info Text */}
       <InfoText text={t("settings.goal.hold-to-set-as-default-increment")} />
 
       {/* Add Water Button */}

@@ -7,6 +7,10 @@ export interface GeneralSlice {
   setDailyCreatineGoal: (dailyCreatineGoal: number) => void;
   setTimesADay: (timesADay: number) => void;
   resetCreatineCompletely: () => void;
+
+  // WIDGET CUSTOMIZATION
+  creatineWidgetLabel: string;
+  setCreatineWidgetLabel: (creatineWidgetLabel: string) => void;
 }
 
 export type CreatineStore = GeneralSlice;

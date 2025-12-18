@@ -11,6 +11,11 @@ export const createGeneralSlice: StateCreator<
   creatineConsumption: 0, // in grams
   dailyCreatineGoal: 10, // in grams
   timesADay: 1, // number of times a day to take creatine to reach the daily goal
+  creatineWidgetLabel: "100% monohydrate", //widget label default value
+
+  setCreatineWidgetLabel: (creatineWidgetLabel: string) => {
+    set({ creatineWidgetLabel });
+  },
 
   // ACTIONS
   addCreatine: () => {
@@ -39,6 +44,13 @@ export const createGeneralSlice: StateCreator<
     if (timesADay < 1 || timesADay > 10) return;
     set({ timesADay: Math.round(timesADay) });
   },
+
+  // COMPLETE RESET OF THE STORE
   resetCreatineCompletely: () =>
-    set({ creatineConsumption: 0, dailyCreatineGoal: 0, timesADay: 0 }),
+    set({
+      creatineConsumption: 0,
+      dailyCreatineGoal: 10,
+      timesADay: 1,
+      creatineWidgetLabel: "100% monohydrate",
+    }),
 });

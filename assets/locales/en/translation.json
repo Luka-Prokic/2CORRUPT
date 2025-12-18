@@ -36,7 +36,8 @@
     "tap-to-start": "Tap to start",
     "on": "On",
     "off": "Off",
-    "long-press-to-edit": "Hold to edit"
+    "long-press-to-edit": "Hold to edit",
+    "change": "Change"
   },
   "form": {
     "name": "Name",
@@ -71,7 +72,8 @@
     "lets-get-started": "Let's get started",
     "show": "Show",
     "hide": "Hide",
-    "to": "to"
+    "to": "to",
+    "label": "Label"
   },
   "auth-form": {
     "required": "Required",
@@ -206,7 +208,12 @@
       "daily-water-goal": "Daily Water Intake Goal",
       "weekly-workout-goal-description": "Set your weekly workout goal. This is the number of workouts you want to complete each week.",
       "daily-creatine-goal": "Daily Creatine Intake Goal",
-      "change-creatine-goal-description": "Adjust your daily creatine intake goal and track your creatine progress more accurately."
+      "change-creatine-goal-description": "Adjust your daily creatine intake goal and track your creatine progress more accurately.",
+      "creatine-frequency-title": "Intake Frequency",
+      "creatine-frequency-unit": "times a day",
+      "creatine-frequency-description": "Set how many times per day you take creatine. This determines how many swipes are needed on the creatine widget to complete your daily intake.",
+      "change-frequency": "Change Times",
+      "custom-add-water": "Add Water"
     }
   },
 
