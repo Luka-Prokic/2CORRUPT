@@ -63,6 +63,11 @@ export function WaterUserInterface() {
             right: 0,
             padding: 4,
             zIndex: 1,
+            shadowColor: theme.shadow,
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.2,
+            shadowRadius: 4,
+            elevation: 5,
           }}
           haptics
         >

@@ -204,7 +204,9 @@
       "hold-to-set-as-default-increment": "Hold to set as default increment.",
       "add-to-daily-intake": "Add to daily intake.",
       "daily-water-goal": "Daily Water Intake Goal",
-      "weekly-workout-goal-description": "Set your weekly workout goal. This is the number of workouts you want to complete each week."
+      "weekly-workout-goal-description": "Set your weekly workout goal. This is the number of workouts you want to complete each week.",
+      "daily-creatine-goal": "Daily Creatine Intake Goal",
+      "change-creatine-goal-description": "Adjust your daily creatine intake goal and track your creatine progress more accurately."
     }
   },
 

@@ -14,7 +14,7 @@ export const createGeneralSlice: StateCreator<
     if (waterConsumption < 0 || waterConsumption > 6000) return;
     set({ waterConsumption: Math.round(waterConsumption) });
   },
-  setdailyWaterGoal: (dailyWaterGoal: number) => {
+  setDailyWaterGoal: (dailyWaterGoal: number) => {
     if (dailyWaterGoal < 0 || dailyWaterGoal > 6000) return;
     set({ dailyWaterGoal });
   },

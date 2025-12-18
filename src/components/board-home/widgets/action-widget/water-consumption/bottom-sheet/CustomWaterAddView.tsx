@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { View } from "react-native";
-import { TextButton } from "../../../../../ui/buttons/TextButton";
 import { useSettingsStore } from "../../../../../../stores/settings";
 import { StrobeButton } from "../../../../../ui/buttons/StrobeButton";
 import { useTranslation } from "react-i18next";
@@ -12,6 +11,7 @@ import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { InfoText } from "../../../../../ui/text/InfoText";
 import { IBubble } from "../../../../../ui/containers/IBubble";
 import { LabeledValue } from "../../../../../ui/misc/LabeledValue";
+import { useDisplayedUnits } from "../../../../../../features/translate/useDisplayedUnits";
 
 // ml-based water options
 const WATER_ADD_OPTIONS_ML = [
@@ -50,7 +50,7 @@ export function CustomWaterAddView({ setMode, ref }: CustomWaterAddViewProps) {
     setIncrement,
     dailyWaterGoal,
   } = useWaterStore();
-
+  const { fromMl } = useDisplayedUnits();
   const [selectedOption, setSelectedOption] = useState<number>(0);
 
   // Select the appropriate options based on the unit setting
@@ -85,18 +85,18 @@ export function CustomWaterAddView({ setMode, ref }: CustomWaterAddViewProps) {
           gap: 32,
         }}
       >
-        <IBubble onPress={() => setMode("change-unit")} size="flexible">
+        <IBubble onPress={() => setMode("change-goal")} size="flexible">
           <LabeledValue
-            label={t("units.change-unit")}
-            value={units.volume}
+            label={t("settings.goal.change-goal")}
+            value={Number(fromMl(dailyWaterGoal))}
             align="center"
             style={{ padding: 8 }}
           />
         </IBubble>
-        <IBubble onPress={() => setMode("change-goal")} size="flexible">
+        <IBubble onPress={() => setMode("change-unit")} size="flexible">
           <LabeledValue
-            label={t("settings.goal.change-goal")}
-            value={dailyWaterGoal}
+            label={t("units.change-unit")}
+            value={units.volume}
             align="center"
             style={{ padding: 8 }}
           />
@@ -119,6 +119,7 @@ export function CustomWaterAddView({ setMode, ref }: CustomWaterAddViewProps) {
             title={item.title}
             onPress={() => handleSelectOption(index)}
             onLongPress={() => handleSetAmount(item.value)}
+            strobeColor={theme.info}
             style={{
               width: WIDTH / 3 - 4,
               height: 64,

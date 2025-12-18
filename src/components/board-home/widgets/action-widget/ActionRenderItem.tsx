@@ -17,7 +17,7 @@ export function ActionRenderItem({ item, focused }: ActionRenderItemProps) {
           case "active-session":
             return <ActiveSessionCard />;
           case "creatine-consumption":
-            return <CreatineConsumptionCard />;
+            return <CreatineConsumptionCard focused={focused} />;
           case "water-consumption":
             return <WaterConsumptionCard />;
           default:

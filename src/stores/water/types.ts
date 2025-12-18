@@ -3,7 +3,7 @@ export interface GeneralSlice {
   dailyWaterGoal: number;
   increment: number;
   setWaterConsumption: (waterConsumption: number) => void;
-  setdailyWaterGoal: (dailyWaterGoal: number) => void;
+  setDailyWaterGoal: (dailyWaterGoal: number) => void;
   setIncrement: (increment: number) => void;
   resetWaterCompletely: () => void;
 }

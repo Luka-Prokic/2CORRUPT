@@ -44,7 +44,6 @@ export function SegmentedField<T extends string>({
     if (isItHaptics) {
       const hapticType = hapticsMap[selectedKey];
       if (hapticType) triggerHaptics(hapticType);
-      console.log(hapticType);
     }
   }
 

@@ -205,7 +205,9 @@
       "hold-to-set-as-default-increment": "Drži da postaviš kao zadnju vrednost.",
       "add-to-daily-intake": "Dodaj na dnevni cilj.",
       "daily-water-goal": "Dnevni Cilj Unosa Vode",
-      "weekly-workout-goal-description": "Podesi svoj nedeljni cilj za vežbe. Ovo je broj vežbi koje želiš da završiš svake nedelje."
+      "weekly-workout-goal-description": "Podesi svoj nedeljni cilj za vežbe. Ovo je broj vežbi koje želiš da završiš svake nedelje.",
+      "daily-creatine-goal": "Dnevni Cilj Unosa Kreatine",
+      "change-creatine-goal-description": "Podesi svoj dnevni cilj za unos kreatine i prati svoj napredak preciznije."
     }
   },
 

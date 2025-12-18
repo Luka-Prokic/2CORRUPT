@@ -61,8 +61,6 @@ export function IButtonSwipe({
     hapticType: "soft",
   });
 
-  console.log(confirmed);
-
   const [moving, setMoving] = useState<boolean>(false);
 
   const THUMB_SIZE = height - 4;
@@ -163,7 +161,7 @@ export function IButtonSwipe({
             ]}
           >
             {knobChild || (
-              <Ionicons name="chevron-forward" size={24} color={theme.text} />
+              <Ionicons name="chevron-forward" size={32} color={theme.text} />
             )}
           </Animated.View>
         </Pressable>

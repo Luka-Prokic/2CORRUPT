@@ -33,9 +33,6 @@ export function ExerciseName({
 
   const exercisePrefix = exercise ? exercise?.prefix : activeExercise?.prefix;
 
-  console.log("exerciseName", exerciseName);
-  console.log("exercisePrefix", exercisePrefix);
-
   return (
     <Text
       style={{

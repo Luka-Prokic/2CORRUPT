@@ -8,6 +8,7 @@ import { IText } from "../../components/ui/text/IText";
 import { ChangeWaterGoal } from "../../components/settings-app/goals/ChangeWaterGoal";
 import { WeeklyWorkoutGoal } from "../../components/settings-app/goals/WeeklyWorkoutGoal";
 import { IBubble } from "../../components/ui/containers/IBubble";
+import { ChangeCreatineGoal } from "../../components/settings-app/goals/ChangeCreatineGoal";
 export default function GoalsScreen() {
   const { t } = useTranslation();
 
@@ -31,6 +32,9 @@ export default function GoalsScreen() {
           </IBubble>
           <IBubble size="flexible" style={{ padding: 16 }}>
             <ChangeWaterGoal />
+          </IBubble>
+          <IBubble size="flexible" style={{ padding: 16 }}>
+            <ChangeCreatineGoal />
           </IBubble>
         </ScreenView>
       </ScreenContent>

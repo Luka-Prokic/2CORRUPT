@@ -8,11 +8,23 @@ import { IButtonSwipe } from "../../../../ui/buttons/IButtonSwipe";
 import { useCreatineStore } from "../../../../../stores/creatine";
 import { Shine } from "../../../../ui/misc/Shine";
 import { StrobeBlur } from "../../../../ui/misc/StrobeBlur";
+import { BounceButton } from "../../../../ui/buttons/BounceButton";
+import { Ionicons } from "@expo/vector-icons";
+import { useTurboDriverFont } from "../../../../../features/fonts/useTurboDriverFont";
+import { MidText } from "../../../../ui/text/MidText";
+import { ShineText } from "../../../../ui/text/ShineText";
 
-export function CreatineConsumptionCard() {
+interface CreatineConsumptionCardProps {
+  focused?: boolean;
+}
+
+export function CreatineConsumptionCard({
+  focused,
+}: CreatineConsumptionCardProps) {
   const { widgetUnit, fullWidth } = useWidgetUnit();
   const { theme } = useSettingsStore();
   const { fontFamily } = useDracoFont();
+  const { fontFamily: fontRubikBubbles } = useTurboDriverFont();
 
   const {
     creatineConsumption,
@@ -44,8 +56,8 @@ export function CreatineConsumptionCard() {
         width: fullWidth,
         borderRadius: 32,
         borderWidth: 1,
-        borderColor: theme.fifthAccent,
-        backgroundColor: theme.fifthAccent + "80",
+        borderColor: theme.fifthAccent + "80",
+        backgroundColor: theme.fifthAccent,
         zIndex: 2,
       }}
       pressable
@@ -55,16 +67,62 @@ export function CreatineConsumptionCard() {
           width: fullWidth,
           height: widgetUnit,
           padding: 8,
-          justifyContent: "space-between",
         }}
       >
-        <View style={{ flex: 1, justifyContent: "center" }}>
+        <BounceButton
+          onPress={() => {}}
+          style={{
+            position: "absolute",
+            top: 0,
+            right: 0,
+            padding: 4,
+            zIndex: 1,
+            alignItems: "center",
+            justifyContent: "center",
+            shadowColor: theme.shadow,
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.2,
+            shadowRadius: 4,
+            elevation: 5,
+          }}
+          haptics
+        >
+          <Ionicons name="ellipse" size={64} color={theme.secondaryAccent} />
+
           <IText
-            text="Creatine"
+            text={dailyCreatineGoal.toString() + "g"}
+            size={18}
+            style={{ position: "absolute" }}
+            adjustsFontSizeToFit
+            numberOfLines={1}
+            color={theme.background}
+          />
+        </BounceButton>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "center",
+          }}
+        >
+          <ShineText
+            text="CREATINE"
             style={{
-              fontFamily,
+              fontFamily: fontRubikBubbles,
             }}
-            color={theme.secondaryAccent}
+            color={theme.fifthBackground}
+            size={36}
+            width={fullWidth - 88}
+            constant
+            focused={focused}
+          />
+
+          <MidText
+            text="100% monohydrate"
+            style={{
+              fontFamily: fontRubikBubbles,
+              width: fullWidth - 72,
+            }}
+            color={theme.accent}
             adjustsFontSizeToFit
             numberOfLines={1}
           />
@@ -77,8 +135,8 @@ export function CreatineConsumptionCard() {
             onSwipeComplete={handleSwipeComplete}
             onCancel={handleSwipeCancel}
             style={{
-              backgroundColor: confirmed ? "" : theme.text + "20",
-              borderColor: theme.text + "20",
+              backgroundColor: confirmed ? "" : theme.border + "60",
+              borderColor: theme.border + "40",
               borderWidth: 1,
             }}
             slideChild={
@@ -86,15 +144,13 @@ export function CreatineConsumptionCard() {
                 style={{
                   position: "absolute",
                   width: fullWidth - 16,
+                  height: 64,
                 }}
                 disabled={!confirmed}
               >
                 <IText
-                  text={
-                    confirmed
-                      ? `DONE`
-                      : `${creatineConsumption} / ${dailyCreatineGoal}`
-                  }
+                  text={confirmed ? `DONE` : `+${dose}g`}
+                  style={{ fontFamily }}
                   size={24}
                 />
               </StrobeBlur>

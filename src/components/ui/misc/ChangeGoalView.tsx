@@ -26,6 +26,7 @@ interface ChangeGoalViewProps {
   min?: number;
   max?: number;
   animatedTitleEntering?: BaseAnimationBuilder;
+  unit?: string;
 }
 
 export function ChangeGoalView({
@@ -40,10 +41,10 @@ export function ChangeGoalView({
   min,
   max,
   animatedTitleEntering,
+  unit,
 }: ChangeGoalViewProps) {
   const { t } = useTranslation();
-  const { units, theme } = useSettingsStore();
-  const { fromMl, toMl } = useDisplayedUnits();
+  const { theme } = useSettingsStore();
   const { fullWidth } = useWidgetUnit();
 
   return (
@@ -55,15 +56,13 @@ export function ChangeGoalView({
         <IText text={title} size={32} style={{ textAlign: "center" }} />
       </Animated.View>
 
-      <IText text={`${fromMl(goal)} ${units.volume}`} color={theme.accent} />
+      <IText text={`${goal} ${unit}`} color={theme.accent} />
 
       {options && (
         <SegmentedButtons
           options={options}
           value={Math.max(Math.min(goal, max), min).toString()}
-          onChange={(val) =>
-            onChange(toMl(Math.max(Math.min(Number(val), max), min)))
-          }
+          onChange={(val) => onChange(Number(val))}
         />
       )}
 
@@ -83,8 +82,8 @@ export function ChangeGoalView({
           />
           <InfoText
             text={`${t("settings.goal.increment-description")} ${
-              units.volume === "fl.oz" ? "~" : ""
-            }${fromMl(increment)} ${units.volume}.`}
+              unit === "fl.oz" ? "~" : ""
+            }${increment} ${unit}.`}
           />
         </Fragment>
       )}

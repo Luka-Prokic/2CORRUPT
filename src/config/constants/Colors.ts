@@ -94,9 +94,9 @@ export const Colors = {
     // Accents
     accent: "#4B6A88",
     tint: "#E60046",
-    secondaryAccent: "#6B4C3B", // deep brown |
+    secondaryAccent: "#7B3E57", // muted burgundy
     thirdAccent: "#C2C0B6", // light warm gray (magazine paper)
-    fourthAccent: "#7B3E57", // muted burgundy
+    fourthAccent: "#6B4C3B", // deep brown |
     fifthAccent: "#A69F7C", // vintage gold/beige |
 
     // Misc
