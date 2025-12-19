@@ -615,6 +615,29 @@ export const createSplitPlanSlice: StateCreator<
       });
     },
 
+    removeTemplateFromSplits: (templateId: string) => {
+      const { splitPlans, activeSplitPlan, setActiveSplitPlan } = get();
+
+      const updatedSplitPlans: SplitPlan[] = splitPlans.map(
+        (plan: SplitPlan) => ({
+          ...plan,
+          split: plan.split.map((day: SplitPlanDay) => ({
+            ...day,
+            workouts: day.workouts.filter(
+              (w: SplitPlanWorkout) => w.templateId !== templateId
+            ),
+          })),
+        })
+      );
+      set({ splitPlans: updatedSplitPlans });
+
+      if (!activeSplitPlan) return;
+      const updatedActiceSplit: SplitPlan = updatedSplitPlans.find(
+        (p) => p.id === activeSplitPlan.plan.id
+      )!;
+      setActiveSplitPlan(updatedActiceSplit, activeSplitPlan.startDay);
+    },
+
     // ----------------- Getters -----------------
     getSplitById: (planId) => get().splitPlans.find((p) => p.id === planId),
     getActiveSplitStartDay: () => get().activeSplitPlan?.startDay ?? null,

@@ -85,7 +85,16 @@ export function TemplateSelectCard({
         strobeDisabled={!isSelected}
       >
         <MidText
-          text={`${template.name} v${template.version}`}
+          text={`${template.name}`}
+          color={theme.secondaryBackground}
+          align="left"
+          weight="bold"
+          numberOfLines={2}
+          ellipsizeMode="tail"
+          style={{ width: "100%" }}
+        />
+        <MidText
+          text={`v${template.version}`}
           color={theme.secondaryBackground}
           align="left"
           weight="bold"
@@ -94,12 +103,22 @@ export function TemplateSelectCard({
           style={{ width: "100%" }}
         />
 
-        <DescriptionText
+        <MidText
+          text={`${template.id}`}
+          color={theme.secondaryBackground}
+          align="left"
+          weight="bold"
+          numberOfLines={4}
+          ellipsizeMode="tail"
+          style={{ width: "100%" }}
+        />
+
+        {/* <DescriptionText
           text={template.tags?.join(", ")}
           color={theme.secondaryText}
           align="left"
-        />
-        <InfoText
+        /> 
+         <InfoText
           text={`${template.layout?.length} ${
             template.layout?.length > 1
               ? t("templates.exercises")
@@ -108,7 +127,7 @@ export function TemplateSelectCard({
           color={theme.navBackground}
           align="right"
           style={{ width: "100%" }}
-        />
+        /> */}
       </StrobeButton>
 
       <TemplateBottomSheet

@@ -28,170 +28,149 @@ export const createTemplateSlice: StateCreator<
     templateUpperDay,
     templateFullBody,
   ],
+
   historyTemplates: [],
+
   activeTemplate: null,
 
-  /**
-   * Creates a new template or a copy of an existing template
-   * If `template` is passed, we create a new version (draft)
-   */
   createTemplate: (template?: WorkoutTemplate) => {
-    const user = useUserStore.getState().user;
+    const userId = useUserStore.getState().user?.id;
+    const date = new Date().toISOString();
+
     const newTemplate: WorkoutTemplate = template
       ? {
           ...template,
           id: `template-${nanoid()}`,
-          version: template.version ? template.version + 1 : 1,
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-          userId: user?.id || null,
+          createdAt: date,
+          updatedAt: date,
         }
       : {
           id: `template-${nanoid()}`,
           primeId: `template-${nanoid()}`,
           name: "New Template",
           description: "",
-          userId: user?.id || null,
           layout: [],
           version: 1,
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
+          userId,
+          createdAt: date,
+          updatedAt: date,
         };
 
-    if (template) {
-      // Remove old version from templates (drafting) and add to history
-      set((state) => {
-        const newTemplates = state.templates
-          .filter((t) => t.id !== template.id)
-          .concat(newTemplate); // add the new version/draft
-
-        return {
-          templates: newTemplates,
-          historyTemplates: [...state.historyTemplates, template],
-          // activeTemplate stays unchanged
-        };
-      });
-    } else {
-      // Just add new template to templates, activeTemplate stays unchanged
-      set((state) => ({
-        templates: [...state.templates, newTemplate],
-      }));
-    }
+    set((state) => ({
+      templates: [...state.templates, newTemplate],
+    }));
 
     return newTemplate.id;
   },
 
   editTemplate: (templateId?: string) => {
-    const {
-      getTemplateById,
-      createTemplate,
-      setActiveTemplate,
-      activeTemplate,
-    } = get();
-    if (activeTemplate) return;
+    const { getTemplateById, activeTemplate } = get();
+    if (activeTemplate) return null;
 
-    let template: WorkoutTemplate | null = null;
+    const userId = useUserStore.getState().user?.id;
+    const date = new Date().toISOString();
+
+    let draft: WorkoutTemplate;
 
     if (templateId) {
-      template = getTemplateById(templateId);
-      if (!template) return null; // invalid id
+      const base = getTemplateById(templateId);
+      if (!base) return null;
+
+      draft = {
+        ...base,
+        id: `draft-${base.id}`,
+        updatedAt: date,
+        userId,
+      };
     } else {
-      const newId = createTemplate();
-      template = getTemplateById(newId);
+      draft = {
+        id: `draft-new-${nanoid()}`,
+        primeId: `template-${nanoid()}`,
+        name: "New Template",
+        description: "",
+        layout: [],
+        version: 1,
+        userId,
+        createdAt: date,
+        updatedAt: date,
+      };
     }
 
-    if (template) setActiveTemplate(template);
-    return template?.id || null;
+    set({ activeTemplate: draft });
+    return draft.id;
   },
 
-  /** Update a specific field on template and increment version */
-  updateTemplateField: (
-    templateId: string,
-    field: keyof WorkoutTemplate,
-    value: WorkoutTemplate[keyof WorkoutTemplate]
-  ) =>
-    set((state) => {
-      const updatedTemplates = state.templates.map((t) =>
-        t.id === templateId
+  confirmTemplate: () => {
+    const { activeTemplate, templates, clearActiveExercise } = get();
+    if (!activeTemplate) return;
+
+    const date = new Date().toISOString();
+    const isEdit = activeTemplate.id.startsWith("draft-");
+
+    let newTemplates: WorkoutTemplate[];
+
+    if (isEdit) {
+      const targetId = activeTemplate.id.replace("draft-", "");
+
+      const previous = templates.find((t) => t.id === targetId);
+      if (previous) {
+        set((state) => ({
+          historyTemplates: [...state.historyTemplates, previous],
+        }));
+      }
+
+      newTemplates = templates.map((t) =>
+        t.id === targetId
           ? {
-              ...t,
-              [field]: value,
-              updatedAt: new Date().toISOString(),
+              ...activeTemplate,
+              id: targetId,
+              updatedAt: date,
             }
           : t
       );
-
-      const updatedActiveTemplate =
-        state.activeTemplate?.id === templateId
-          ? {
-              ...state.activeTemplate,
-              [field]: value,
-              updatedAt: new Date().toISOString(),
-            }
-          : state.activeTemplate;
-
-      return {
-        templates: updatedTemplates,
-        activeTemplate: updatedActiveTemplate,
-      };
-    }),
-
-  /** Confirm changes: keep new version in templates and history */
-  confirmTemplate: () => {
-    const { clearActiveExercise, activeTemplate } = get();
-    set((state) => {
-      if (!activeTemplate) return null;
-      const confirmedTemplate = activeTemplate;
-      return {
-        historyTemplates: confirmedTemplate
-          ? [...state.historyTemplates, confirmedTemplate]
-          : state.historyTemplates,
-        activeTemplate: null,
-      };
-    });
-    clearActiveExercise();
-  },
-
-  /** Discard changes: restore old template and remove draft */
-  discardTemplate: () => {
-    const { clearActiveExercise, activeTemplate, historyTemplates, templates } =
-      get();
-    if (!activeTemplate) return;
-    const draft = activeTemplate;
-
-    // Check if this template ever existed before (by primeId)
-    const previous = historyTemplates
-      .filter((t) => t.primeId === draft.primeId)
-      .sort((a, b) => b.version - a.version)[0];
-
-    // Always remove the current one
-    const filteredTemplates = templates.filter((t) => t.id !== draft.id);
-
-    const newTemplates = previous
-      ? [...filteredTemplates, previous]
-      : filteredTemplates;
-
-    const newHistory = previous
-      ? historyTemplates
-      : historyTemplates.filter((t) => t.id !== draft.id);
+    } else {
+      newTemplates = [
+        ...templates,
+        {
+          ...activeTemplate,
+          id: `template-${nanoid()}`,
+          updatedAt: date,
+        },
+      ];
+    }
 
     set({
       templates: newTemplates,
       activeTemplate: null,
-      historyTemplates: newHistory,
     });
 
     clearActiveExercise();
   },
 
-  /** Set active template directly */
+  discardTemplate: () => {
+    const { clearActiveExercise } = get();
+    set({ activeTemplate: null });
+    clearActiveExercise();
+  },
+
   setActiveTemplate: (template: WorkoutTemplate) =>
     set({ activeTemplate: template, activeSession: null }),
 
-  /**
-   * Add a new exercise to the session layout
-   */
-  addExerciseToTemplate: (exercise: SessionExercise, afterItemId?: string) => {
+  updateTemplateField: (templateId, field, value) =>
+    set((state) => {
+      if (!state.activeTemplate || state.activeTemplate.id !== templateId)
+        return state;
+
+      return {
+        activeTemplate: {
+          ...state.activeTemplate,
+          [field]: value,
+          updatedAt: new Date().toISOString(),
+        },
+      };
+    }),
+
+  addExerciseToTemplate: (exercise, afterItemId) => {
     const {
       activeTemplate,
       activeExercise,
@@ -200,117 +179,91 @@ export const createTemplateSlice: StateCreator<
     } = get();
     if (!activeTemplate) return;
 
-    const newExercise: SessionExercise = {
-      ...exercise,
-    };
-
     const layout = activeTemplate.layout;
     const insertIndex = afterItemId
-      ? layout.findIndex((item: SessionExercise) => item.id === afterItemId) + 1
+      ? layout.findIndex((i) => i.id === afterItemId) + 1
       : layout.length;
 
     const updatedLayout = [...layout];
-    updatedLayout.splice(insertIndex, 0, newExercise);
+    updatedLayout.splice(insertIndex, 0, exercise);
 
-    set((state) => ({
-      activeTemplate: { ...state.activeTemplate!, layout: updatedLayout },
-    }));
+    set({
+      activeTemplate: { ...activeTemplate, layout: updatedLayout },
+    });
 
-    //if layout has no active exercise, set the new exercise as active
-    if (!activeExercise) {
-      setActiveExercise(newExercise.id);
-    }
-
-    //update navigation flags in flowSlice
+    if (!activeExercise) setActiveExercise(exercise.id);
     updateNavigationFlags();
   },
 
-  /**
-   * Remove multiple exercises from a template layout
-   */
-  removeExercisesFromTemplate: (exerciseIds: string[]) => {
+  removeExercisesFromTemplate: (exerciseIds) => {
     const {
       activeTemplate,
       activeExercise,
-      updateNavigationFlags,
       setActiveExercise,
       clearActiveExercise,
+      updateNavigationFlags,
     } = get();
     if (!activeTemplate) return;
 
     const newLayout = activeTemplate.layout.filter(
-      (item: SessionExercise) => !exerciseIds.includes(item.id)
+      (e) => !exerciseIds.includes(e.id)
     );
 
-    let newActiveExerciseId = activeExercise?.id;
+    let nextActive = activeExercise?.id ?? null;
     if (exerciseIds.includes(activeExercise?.id ?? "")) {
-      newActiveExerciseId = newLayout.length > 0 ? newLayout[0].id : null;
+      nextActive = newLayout[0]?.id ?? null;
     }
 
     set({
       activeTemplate: { ...activeTemplate, layout: newLayout },
     });
 
-    if (newActiveExerciseId) setActiveExercise(newActiveExerciseId);
+    if (nextActive) setActiveExercise(nextActive);
     else clearActiveExercise();
 
     updateNavigationFlags();
   },
 
-  /**
-   * Reorder items in a template layout
-   */
-  reorderTemplateItems: (newOrder: SessionExercise[]) => {
+  reorderTemplateItems: (newOrder) => {
     const { activeTemplate } = get();
     if (!activeTemplate) return;
 
-    set((state) => ({
-      activeTemplate: {
-        ...state.activeTemplate!,
-        layout: newOrder,
-      },
-    }));
+    set({
+      activeTemplate: { ...activeTemplate, layout: newOrder },
+    });
   },
 
-  deleteTemplate: (templateId: string) => {
-    const { clearActiveExercise, templates } = get();
+  deleteTemplate: (templateId) => {
+    const { clearActiveExercise, templates, removeTemplateFromSplits } = get();
 
-    const newTemplates = templates.filter((t) => t.id !== templateId);
+    removeTemplateFromSplits(templateId);
 
     set({
-      templates: newTemplates,
+      templates: templates.filter((t) => t.id !== templateId),
       activeTemplate: null,
     });
 
     clearActiveExercise();
   },
 
-  cloneTemplate: (templateId: string, tempName: string) => {
+  cloneTemplate: (templateId, tempName) => {
     const { templates } = get();
     const user = useUserStore.getState().user;
-    const templateToClone = templates.find((t) => t.id === templateId);
-    if (!templateToClone) return null;
+    const base = templates.find((t) => t.id === templateId);
+    if (!base) return;
 
-    const clonedTemplate: WorkoutTemplate = {
-      ...templateToClone,
+    const cloned: WorkoutTemplate = {
+      ...base,
       id: `template-${nanoid()}`,
-      primeId: templateId,
-      userId: user?.id || null,
       name: tempName,
-      version: templateToClone.version + 1,
+      userId: user?.id ?? null,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
 
-    set((state) => ({
-      templates: [...state.templates, clonedTemplate],
-      // historyTemplates stays unchanged
-    }));
-
-    return clonedTemplate.id;
+    set({ templates: [...templates, cloned] });
   },
 
-  /** Get template by id */
-  getTemplateById: (templateId: string) =>
+  getTemplateById: (templateId) =>
     get().templates.find((t) => t.id === templateId) || null,
 });

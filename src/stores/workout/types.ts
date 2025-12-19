@@ -225,6 +225,9 @@ export interface SplitPlanSlice {
   updateActiveSplitStartDay: (newStartDay: number) => void;
   endActiveSplitPlan: (endTime?: IsoDateString) => void;
 
+  // remove template from all splits
+  removeTemplateFromSplits: (templateId: string) => void;
+
   // getters
   getSplitById: (planId: string) => SplitPlan | undefined;
   getActiveSplitStartDay: () => number | null;
@@ -327,7 +330,10 @@ export interface ExerciseSlice {
   swapExerciseInActiveExercise: (exerciseId: string) => void;
 
   getExerciseById: (exerciseId: string) => ExerciseInfo | null;
-  updateExerciseMetadata: (exerciseId: string, metadata: Record<string, any>) => void;
+  updateExerciseMetadata: (
+    exerciseId: string,
+    metadata: Record<string, any>
+  ) => void;
 }
 
 export interface DraftSlice {

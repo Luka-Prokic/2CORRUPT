@@ -55,7 +55,7 @@ export function PlannedActiveSplitWorkoutCard({
   const visibleCount = Math.floor(
     (widgetUnit - 44 - VERTICAL_PADDING * 2) / ITEM_HEIGHT
   );
-  const exceeds = template.layout.length > visibleCount;
+  const exceeds = template?.layout.length > visibleCount;
 
   if (!splitPlan || !template) return null;
 
@@ -78,7 +78,6 @@ export function PlannedActiveSplitWorkoutCard({
         onPress={handlePress}
         onLongPress={handleLongPress}
         strobeDisabled={isDoneToday}
-        freeze
       >
         <BlurView
           style={{
