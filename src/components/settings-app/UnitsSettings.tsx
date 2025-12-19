@@ -143,12 +143,13 @@ function UnitCard({
         width: fullWidth / 2,
         height: fullWidth / 2,
         backgroundColor: theme.text + "10",
-        padding: 16,
-        borderRadius: 16,
+        padding: 8,
+        paddingTop: 16,
+        borderRadius: 32,
       }}
     >
       <MidText text={t(`settings.${unit}`)} />
-      <Ionicons name={icon} size={32} color={theme.info} />
+      <Ionicons name={icon} size={44} color={theme.info} />
 
       <SwitchButton
         option1={option1}

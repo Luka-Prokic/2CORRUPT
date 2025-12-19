@@ -21,6 +21,7 @@ export function PlannedWorkoutLabel({
   const { theme } = useSettingsStore();
 
   const template = getTemplateById(workout.templateId);
+
   if (!template) return null;
 
   return (

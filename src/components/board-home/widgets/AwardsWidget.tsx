@@ -9,10 +9,12 @@ import { View } from "react-native";
 
 export function AwardsWidget() {
   const { theme } = useSettingsStore();
-  const { widgetUnit, halfWidget } = useWidgetUnit();
+  const { widgetUnit } = useWidgetUnit();
+
   function handlePress() {
-    router.push("/");
+    // TODO: Implement awards widget press
   }
+
   return (
     <View
       style={{
@@ -24,7 +26,7 @@ export function AwardsWidget() {
       <BounceButton
         style={{
           width: widgetUnit,
-          height: halfWidget,
+          height: 64,
           borderRadius: 32,
           backgroundColor: hexToRGBA(theme.fifthAccent, 0.6),
           borderWidth: 1,

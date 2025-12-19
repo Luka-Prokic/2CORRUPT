@@ -1,8 +1,7 @@
-import { forwardRef, Fragment } from "react";
+import { Fragment } from "react";
 import { useWorkoutStore, WorkoutTemplate } from "../../../stores/workout";
 import { OptionButton } from "../../ui/buttons/OptionButton";
 import { Ionicons } from "@expo/vector-icons";
-import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { useSettingsStore } from "../../../stores/settings";
 import { useUIStore } from "../../../stores/ui";
 import { router } from "expo-router";
@@ -12,17 +11,21 @@ import { TemplateNameInput } from "../../board-home/widgets/templates-widget/car
 import { ActiveSessionAlert } from "../../ui/alerts/ActiveSessionAlert";
 import { useKeyboardHeight } from "../../../features/ui/useKeyboardHeight";
 import { DescriptionText } from "../../ui/text/DescriptionText";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
 
 interface TemplateOptionsViewProps {
   template: WorkoutTemplate;
   setView: (view: TemplateBottomSheetViews) => void;
   onAddToSplit: () => void;
+  ref: React.RefObject<BottomSheetModal>;
 }
 
-export const TemplateOptionsView = forwardRef<
-  BottomSheetModal,
-  TemplateOptionsViewProps
->(({ template, setView, onAddToSplit }, ref) => {
+export function TemplateOptionsView({
+  template,
+  setView,
+  onAddToSplit,
+  ref,
+}: TemplateOptionsViewProps) {
   const { editTemplate, activeSession } = useWorkoutStore();
   const { theme } = useSettingsStore();
   const { setTypeOfView } = useUIStore();
@@ -39,7 +42,7 @@ export const TemplateOptionsView = forwardRef<
       setTypeOfView("template");
       router.dismissTo("/");
     }, 200);
-    (ref as React.RefObject<BottomSheetModal>)?.current?.close();
+    ref.current?.close();
   }
 
   function handleCloneTemplate() {
@@ -114,4 +117,4 @@ export const TemplateOptionsView = forwardRef<
       />
     </Fragment>
   );
-});
+}

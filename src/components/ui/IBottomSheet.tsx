@@ -7,13 +7,20 @@ import {
 
 import { useSettingsStore } from "../../stores/settingsStore";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { ViewStyle } from "react-native";
 
 interface IBottomSheetProps extends BottomSheetModalProps {
   ref: React.RefObject<BottomSheetModal>;
   children: React.ReactNode;
+  bottomSheetStyle?: ViewStyle;
 }
 
-export function IBottomSheet({ ref, children, ...props }: IBottomSheetProps) {
+export function IBottomSheet({
+  ref,
+  children,
+  bottomSheetStyle,
+  ...props
+}: IBottomSheetProps) {
   const { theme } = useSettingsStore();
   const insets = useSafeAreaInsets();
 
@@ -48,6 +55,7 @@ export function IBottomSheet({ ref, children, ...props }: IBottomSheetProps) {
             borderTopWidth: 1,
             paddingBottom: insets.bottom,
             alignItems: "center",
+            ...bottomSheetStyle,
           },
         ]}
       >

@@ -25,7 +25,7 @@ export function SegmentedButtons<T extends string>({
   value,
   onChange,
   width = 300,
-  height = 44,
+  height = 48,
   style,
   haptics = false,
 }: SegmentedButtonsProps<T>) {

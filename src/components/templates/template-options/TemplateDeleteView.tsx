@@ -1,4 +1,4 @@
-import { forwardRef, Fragment } from "react";
+import { Fragment } from "react";
 import { useWorkoutStore, WorkoutTemplate } from "../../../stores/workout";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { useSettingsStore } from "../../../stores/settings";
@@ -6,24 +6,25 @@ import { TemplateBottomSheetViews } from "./TemplateBottomSheet";
 import { Text } from "react-native";
 import { useTranslation } from "react-i18next";
 import { TwoOptionStrobeButtons } from "../../ui/buttons/TwoOptionStrobeButtons";
-import { Ionicons } from "@expo/vector-icons";
 import { DescriptionText } from "../../ui/text/DescriptionText";
 
 interface TemplateDeleteViewProps {
   template: WorkoutTemplate;
   setView: (view: TemplateBottomSheetViews) => void;
+  ref: React.RefObject<BottomSheetModal>;
 }
 
-export const TemplateDeleteView = forwardRef<
-  BottomSheetModal,
-  TemplateDeleteViewProps
->(({ template, setView }, ref) => {
+export function TemplateDeleteView({
+  template,
+  setView,
+  ref,
+}: TemplateDeleteViewProps) {
   const { deleteTemplate } = useWorkoutStore();
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
 
   function closeSheet() {
-    (ref as React.RefObject<BottomSheetModal>)?.current?.close();
+    ref.current?.close();
   }
 
   const handleDeleteTemplate = () => {
@@ -71,4 +72,4 @@ export const TemplateDeleteView = forwardRef<
       />
     </Fragment>
   );
-});
+}

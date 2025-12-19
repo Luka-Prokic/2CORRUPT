@@ -7,15 +7,14 @@ export function TemplateProgressDots() {
   const { theme } = useSettingsStore();
   const { activeTemplate, activeExercise } = useWorkoutStore();
 
-  if (!activeTemplate) return null;
-
-  const flatItems = activeTemplate.layout;
+  const flatItems = activeTemplate?.layout ?? [];
 
   const getDotColor = (item: SessionExercise) => {
     if (item.id === activeExercise?.id) return theme.text;
     return theme.grayText;
   };
 
+  if (!activeTemplate) return null;
   return (
     <View
       style={{

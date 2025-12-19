@@ -28,9 +28,7 @@ export function SessionExerciseNameSlider({
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [isUserScrolling, setIsUserScrolling] = useState(true);
 
-  if (!activeSession) return null;
-
-  const exercises = activeSession.layout;
+  const exercises = activeSession?.layout ?? [];
 
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     if (!isUserScrolling) return;
@@ -70,6 +68,8 @@ export function SessionExerciseNameSlider({
     const timeout = setTimeout(() => setIsUserScrolling(true), 500); //delay to prevent flickering
     return () => clearTimeout(timeout);
   }, [activeExercise, exercises]);
+
+  if (!activeSession) return null;
 
   return (
     <FlatList

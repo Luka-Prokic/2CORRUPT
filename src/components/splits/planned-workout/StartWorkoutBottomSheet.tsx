@@ -30,8 +30,8 @@ export function StartWorkoutBottomSheet({
 
   const { getTemplateById } = useWorkoutStore();
   const template = getTemplateById(templateId);
-  if (!template) return null;
-  const cardHeight = useLayoutPreviewHeight(template.layout);
+
+  const cardHeight = useLayoutPreviewHeight(template?.layout ?? []);
   const finalHeight = Math.min(cardHeight, HEIGHT * 0.5);
 
   const startWorkout = useStartWorkoutOfTemplate(templateId);
@@ -41,6 +41,8 @@ export function StartWorkoutBottomSheet({
     onPress?.();
     (ref as React.RefObject<BottomSheetModal>)?.current?.close();
   }
+
+  if (!template) return null;
 
   return (
     <IBottomSheet ref={ref}>

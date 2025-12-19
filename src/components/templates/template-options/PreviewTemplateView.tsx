@@ -1,5 +1,3 @@
-import { BottomSheetModal } from "@gorhom/bottom-sheet";
-import { forwardRef } from "react";
 import { TemplateBottomSheetViews } from "./TemplateBottomSheet";
 import { WorkoutTemplate, useWorkoutStore } from "../../../stores/workout";
 import { CardSlider } from "../../ui/sliders/CardSlider";
@@ -15,16 +13,19 @@ import { useLayoutPreviewHeight } from "../../../features/ui/useGetExercisePrevi
 import { ExercisePreviewCard } from "../../sessions/cards/ExercisePreviewCard";
 import { TemplateName } from "../../board-template/sheets/template/TemplateName";
 import { DescriptionText } from "../../ui/text/DescriptionText";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
 
 interface PreviewTempalteViewProps {
   template: WorkoutTemplate;
   setView: (view: TemplateBottomSheetViews) => void;
+  ref: React.RefObject<BottomSheetModal>;
 }
 
-export const PreviewTempalteView = forwardRef<
-  BottomSheetModal,
-  PreviewTempalteViewProps
->(({ template, setView }, ref) => {
+export function PreviewTempalteView({
+  template,
+  setView,
+  ref,
+}: PreviewTempalteViewProps) {
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
   const { startSession, activeSession } = useWorkoutStore();
@@ -39,7 +40,7 @@ export const PreviewTempalteView = forwardRef<
       router.dismissTo("/");
     }, 200);
 
-    (ref as React.RefObject<BottomSheetModal>)?.current?.close();
+    ref.current?.close();
   }
 
   return (
@@ -83,4 +84,4 @@ export const PreviewTempalteView = forwardRef<
       />
     </Animated.View>
   );
-});
+}

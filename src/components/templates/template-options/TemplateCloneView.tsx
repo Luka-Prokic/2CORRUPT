@@ -1,4 +1,4 @@
-import { forwardRef, Fragment, useState } from "react";
+import { Fragment, useState } from "react";
 import { useWorkoutStore, WorkoutTemplate } from "../../../stores/workout";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { useSettingsStore } from "../../../stores/settings";
@@ -12,12 +12,14 @@ import { DescriptionText } from "../../ui/text/DescriptionText";
 interface TemplateCloneViewProps {
   template: WorkoutTemplate;
   setView: (view: TemplateBottomSheetViews) => void;
+  ref: React.RefObject<BottomSheetModal>;
 }
 
-export const TemplateCloneView = forwardRef<
-  BottomSheetModal,
-  TemplateCloneViewProps
->(({ template, setView }, ref) => {
+export function TemplateCloneView({
+  template,
+  setView,
+  ref,
+}: TemplateCloneViewProps) {
   const { cloneTemplate } = useWorkoutStore();
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
@@ -28,7 +30,7 @@ export const TemplateCloneView = forwardRef<
 
   function handleCloneTemplate() {
     cloneTemplate(template.id, tempName);
-    (ref as React.RefObject<BottomSheetModal>)?.current?.close();
+    ref.current?.close();
   }
 
   function handleCancel() {
@@ -57,4 +59,4 @@ export const TemplateCloneView = forwardRef<
       />
     </Fragment>
   );
-});
+}

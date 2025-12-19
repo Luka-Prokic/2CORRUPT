@@ -48,6 +48,5 @@ export function TemplateDescriptionInput({
         multiline
       />
     );
-
   return null;
 }

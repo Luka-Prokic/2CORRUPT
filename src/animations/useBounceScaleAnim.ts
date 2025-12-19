@@ -15,7 +15,7 @@ export function useBounceScaleAnim({
   const scale = useSharedValue(1);
 
   function bounceIt() {
-    scale.value = withTiming(strength, { duration: 40 }, (finished) => {
+    scale.value = withTiming(strength, { duration: 100 }, (finished) => {
       if (finished) {
         scale.value = withSpring(1, {
           mass: 0.5,

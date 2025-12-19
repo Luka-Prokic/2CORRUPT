@@ -1,14 +1,19 @@
 import { Text, TextStyle } from "react-native";
 import { useSettingsStore } from "../../../stores/settings";
 
+interface BackgroundTextProps {
+  text: string;
+  style?: TextStyle | TextStyle[];
+  align?: "center" | "left" | "right";
+}
+
 export function BackgroundText({
   text,
   style,
-}: {
-  text: string;
-  style?: TextStyle | TextStyle[];
-}) {
+  align = "center",
+}: BackgroundTextProps) {
   const { theme } = useSettingsStore();
+
   return (
     <Text
       style={{
@@ -17,7 +22,7 @@ export function BackgroundText({
         fontWeight: "600",
         letterSpacing: -0.5,
         lineHeight: 24,
-        textAlign: "center",
+        textAlign: align,
         ...style,
       }}
     >

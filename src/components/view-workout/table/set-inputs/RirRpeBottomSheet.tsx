@@ -161,8 +161,6 @@ function Switch({
         option2={option2} // undefined → automatically single mode
         value={mode.toUpperCase()}
         onChange={(val) => switchMode(val.toLowerCase() as SheetMode)}
-        width={150}
-        height={44}
         haptics
       />
       <DescriptionText

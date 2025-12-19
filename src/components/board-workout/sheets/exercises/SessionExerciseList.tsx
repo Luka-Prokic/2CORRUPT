@@ -18,8 +18,6 @@ export function SessionExerciseList({ togglePanel }: SessionExerciseListProps) {
   const [selectMode, setSelectMode] = useState(false);
   const [selectedExercises, setSelectedExercises] = useState<string[]>([]);
 
-  if (!activeSession) return null;
-
   const handleExerciseSelect = (exerciseId: string) => {
     if (selectedExercises.includes(exerciseId)) {
       setSelectedExercises(selectedExercises.filter((i) => i !== exerciseId));
@@ -38,6 +36,7 @@ export function SessionExerciseList({ togglePanel }: SessionExerciseListProps) {
     setSelectedExercises([]);
   };
 
+  if (!activeSession) return null;
   return (
     <Animated.View
       entering={FadeIn}

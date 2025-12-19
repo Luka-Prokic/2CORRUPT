@@ -38,7 +38,6 @@ export function PlannedWorkoutCard({
   const { t } = useTranslation();
 
   const template = getTemplateById(workout.templateId);
-  if (!template) return null;
 
   function handleRemoveWorkout() {
     removeWorkoutFromDay(splitId, dayIndex, workout.id);
@@ -55,6 +54,8 @@ export function PlannedWorkoutCard({
       },
     });
   }
+
+  if (!template) return null;
 
   return (
     <StrobeBlur

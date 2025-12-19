@@ -41,7 +41,7 @@ export function ThemeSettings() {
             <StrobeOptionButton
               key={index}
               title={`${item.emoji} ${t(
-                `theme.${item.displayName.toLowerCase()}`
+                `theme.${item?.displayName?.toLowerCase()}`
               )}`}
               onPress={() => setTheme(item.name)}
               height={44}

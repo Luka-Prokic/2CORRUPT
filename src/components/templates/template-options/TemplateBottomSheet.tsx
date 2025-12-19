@@ -1,16 +1,11 @@
-import { forwardRef, useState } from "react";
-import {
-  BottomSheetBackdrop,
-  BottomSheetModal,
-  BottomSheetView,
-} from "@gorhom/bottom-sheet";
+import { useState } from "react";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { WorkoutTemplate } from "../../../stores/workout";
-import { useSettingsStore } from "../../../stores/settingsStore";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { TemplateOptionsView } from "./TemplateOptionsView";
 import { TemplateDeleteView } from "./TemplateDeleteView";
 import { TemplateCloneView } from "./TemplateCloneView";
 import { PreviewTempalteView } from "./PreviewTemplateView";
+import { IBottomSheet } from "../../ui/IBottomSheet";
 
 export type TemplateBottomSheetViews =
   | "options"
@@ -23,14 +18,15 @@ interface TemplateBottomSheetProps {
   template: WorkoutTemplate;
   startView: TemplateBottomSheetViews;
   onAddToSplit: () => void;
+  ref: React.RefObject<BottomSheetModal>;
 }
 
-export const TemplateBottomSheet = forwardRef<
-  BottomSheetModal,
-  TemplateBottomSheetProps
->(({ template, startView = "options", onAddToSplit }, ref) => {
-  const { theme } = useSettingsStore();
-  const insets = useSafeAreaInsets();
+export function TemplateBottomSheet({
+  template,
+  startView = "options",
+  onAddToSplit,
+  ref,
+}: TemplateBottomSheetProps) {
   const [view, setView] = useState<TemplateBottomSheetViews>(startView);
 
   function visibleView() {
@@ -70,39 +66,12 @@ export const TemplateBottomSheet = forwardRef<
   }
 
   return (
-    <BottomSheetModal
+    <IBottomSheet
       ref={ref}
-      enablePanDownToClose
-      enableDismissOnClose
-      keyboardBehavior="fillParent"
-      keyboardBlurBehavior="restore"
-      handleIndicatorStyle={{ backgroundColor: theme.info }}
-      backgroundStyle={{ backgroundColor: theme.navBackground }}
-      backdropComponent={(props) => (
-        <BottomSheetBackdrop
-          {...props}
-          disappearsOnIndex={-1}
-          appearsOnIndex={0}
-          pressBehavior="close"
-          opacity={0.2}
-        />
-      )}
       onDismiss={() => setView(startView)}
+      bottomSheetStyle={{ paddingTop: 0 }}
     >
-      <BottomSheetView
-        style={[
-          {
-            flex: 1,
-            paddingHorizontal: 16,
-            justifyContent: "flex-start",
-            borderTopColor: theme.border,
-            borderTopWidth: 1,
-            paddingBottom: insets.bottom,
-          },
-        ]}
-      >
-        {visibleView()}
-      </BottomSheetView>
-    </BottomSheetModal>
+      {visibleView()}
+    </IBottomSheet>
   );
-});
+}

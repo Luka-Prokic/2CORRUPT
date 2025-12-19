@@ -59,7 +59,7 @@ export function SearchBar({
           onPress={() => onChangeText("")}
           style={{ position: "absolute", right: 12 }}
         >
-          <Ionicons name="close-circle" size={20} color={theme.grayText} />
+          <Ionicons name="close-circle" size={24} color={theme.grayText} />
         </TouchableOpacity>
       )}
     </View>

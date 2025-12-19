@@ -18,11 +18,10 @@ export function PlannedWorkoutByDateCard({
   const { getTemplateById } = useWorkoutStore();
 
   const plannedWorkout = useFindPlannedWorkout(date);
-  if (!plannedWorkout) return null;
   const template = getTemplateById(plannedWorkout.templateId);
-  if (!template) return null;
-
   const startWorkout = useStartWorkoutOfTemplate(template.id);
+
+  if (!plannedWorkout || !template) return null;
 
   return (
     <StrobeButton

@@ -19,8 +19,6 @@ export function TemplateExerciseNameSlider() {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [isUserScrolling, setIsUserScrolling] = useState(true);
 
-  if (!activeTemplate) return null;
-
   const exercises = activeTemplate.layout;
 
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -61,6 +59,8 @@ export function TemplateExerciseNameSlider() {
     const timeout = setTimeout(() => setIsUserScrolling(true), 500); //delay to prevent flickering
     return () => clearTimeout(timeout);
   }, [activeExercise, exercises]);
+
+  if (!activeTemplate) return null;
 
   return (
     <FlatList
