@@ -94,13 +94,18 @@ export default function TemplatesScreen() {
           headerTitle: headerTitle,
           headerRight: headerRight,
           headerBlurEffect: "none",
+          headerTransparent: false,
+          headerShadowVisible: false,
+          headerStyle: {
+            backgroundColor: theme.background,
+          },
         }}
       />
-      <ScreenContent edges={["top"]}>
-        <TemplateFilter
-          setFilteredTemplates={setFilteredTemplates}
-          style={{ marginTop: insets.top }}
-        />
+      <ScreenContent
+        HeaderComponent={
+          <TemplateFilter setFilteredTemplates={setFilteredTemplates} />
+        }
+      >
         <TemplateSectionList
           templates={filteredTemplates}
           renderCard={(template) => (

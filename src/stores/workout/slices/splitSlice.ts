@@ -635,15 +635,17 @@ export const createSplitPlanSlice: StateCreator<
 
       if (!activeSplitPlan || !updatedSplitPlans.length) return;
 
-      const updatedPlan: SplitPlan = updatedSplitPlans.find(
+      const updatedActivePlan: SplitPlan = updatedSplitPlans.find(
         (p) => p.id === activeSplitPlan.plan.id
-      )!;
+      );
+
+      if (!updatedActivePlan) return;
 
       set((state) => {
         const splitPlans = state.splitPlans.map((p) =>
-          p.id === activeSplitPlan.plan.id ? updatedPlan : p
+          p.id === activeSplitPlan.plan.id ? updatedActivePlan : p
         );
-        return syncActiveSplit({ ...state, splitPlans }, updatedPlan);
+        return syncActiveSplit({ ...state, splitPlans }, updatedActivePlan);
       });
     },
 
