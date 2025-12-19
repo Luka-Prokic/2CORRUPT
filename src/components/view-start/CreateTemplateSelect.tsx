@@ -8,10 +8,11 @@ import { IText } from "../ui/text/IText";
 export function CreateTemplateSelect() {
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
+  const createTemplate = useEditTemplate();
 
   return (
     <IButton
-      onPress={useEditTemplate()}
+      onPress={createTemplate}
       color={theme.tint}
       style={{ width: WIDTH - 32, height: 64, borderRadius: 32 }}
     >

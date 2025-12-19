@@ -21,6 +21,7 @@ const WATER_ADD_OPTIONS_ML = [
 ];
 
 const WATER_ADD_OPTIONS_OZ = [
+  { title: "2 fl.oz", value: 59 },
   { title: "4 fl.oz", value: 118 },
   { title: "6 fl.oz", value: 177 },
   { title: "8 fl.oz", value: 237 },

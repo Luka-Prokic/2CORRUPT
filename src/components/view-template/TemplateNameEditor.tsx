@@ -1,19 +1,18 @@
 import { TemplateNameInput } from "./TemplateNameInput";
 import { useWorkoutStore } from "../../stores/workout";
 import { ViewStyle } from "react-native";
+import { WorkoutTemplate } from "../../stores/workout/types";
 
 interface TemplateNameEditorProps {
-  templateId: string;
+  template?: WorkoutTemplate;
   style?: ViewStyle | ViewStyle[];
 }
 
 export function TemplateNameEditor({
-  templateId,
+  template,
   style,
 }: TemplateNameEditorProps) {
-  const { getTemplateById, updateTemplateField } = useWorkoutStore();
-
-  const template = getTemplateById(templateId);
+  const { updateTemplateField } = useWorkoutStore();
 
   if (!template) return null;
 

@@ -19,7 +19,7 @@ export function TemplateExerciseNameSlider() {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [isUserScrolling, setIsUserScrolling] = useState(true);
 
-  const exercises = activeTemplate.layout;
+  const exercises = activeTemplate?.layout ?? [];
 
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     if (!isUserScrolling) return;
@@ -30,7 +30,7 @@ export function TemplateExerciseNameSlider() {
     if (index >= 0 && index < exercises.length) {
       setSelectedIndex((prevIndex) => {
         if (prevIndex !== index) {
-          const exerciseId = exercises[index].id;
+          const exerciseId = exercises[index]?.id;
           setActiveExercise(exerciseId);
           return index;
         }
@@ -44,7 +44,7 @@ export function TemplateExerciseNameSlider() {
     if (!activeExercise) return;
 
     const index = exercises.findIndex((item: SessionExercise) => {
-      return item.id === activeExercise.id;
+      return item?.id === activeExercise?.id;
     });
 
     if (index === -1 || index === selectedIndex) return;

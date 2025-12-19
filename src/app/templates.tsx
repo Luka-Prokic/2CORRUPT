@@ -15,20 +15,21 @@ import { AddToSplitSelectedTemplates } from "../components/templates/header/AddT
 import { TemplateFilter } from "../components/templates/TemplateFilter";
 import { TemplateSectionList } from "../components/templates/TempalteSectionList";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { EmptyTemplateComponent } from "../components/templates/EmptyTemplateComponent";
 
 export default function TemplatesScreen() {
   const { t } = useTranslation();
   const { theme } = useSettingsStore();
+  const insets = useSafeAreaInsets();
   const { templates } = useWorkoutStore();
   const [selectMode, setSelectMode] = useState<boolean>(false);
   const [selected, setSelected] = useState<WorkoutTemplate[]>([]);
   const [filteredTemplates, setFilteredTemplates] = useState<WorkoutTemplate[]>(
     []
   );
-  const insets = useSafeAreaInsets();
 
   function headerLeft() {
-    if (selectMode)
+    if (selectMode && templates?.length)
       return (
         <Fragment>
           <DeleteSelectedTemplates
@@ -62,7 +63,7 @@ export default function TemplatesScreen() {
   }
 
   function headerRight() {
-    if (templates.length)
+    if (templates?.length)
       return (
         <Fragment>
           {selectMode ? (
@@ -95,14 +96,11 @@ export default function TemplatesScreen() {
           headerBlurEffect: "none",
         }}
       />
-      <ScreenContent
-        HeaderComponent={
-          <TemplateFilter
-            setFilteredTemplates={setFilteredTemplates}
-            style={{ marginTop: insets.top }}
-          />
-        }
-      >
+      <ScreenContent edges={["top"]}>
+        <TemplateFilter
+          setFilteredTemplates={setFilteredTemplates}
+          style={{ marginTop: insets.top }}
+        />
         <TemplateSectionList
           templates={filteredTemplates}
           renderCard={(template) => (

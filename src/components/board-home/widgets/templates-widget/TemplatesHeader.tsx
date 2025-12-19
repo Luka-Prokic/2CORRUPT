@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useWidgetUnit } from "../../../../features/widgets/useWidgetUnit";
 import { useSettingsStore } from "../../../../stores/settings";

@@ -10,20 +10,17 @@ export function EmptyTemplateCard() {
   const { theme } = useSettingsStore();
   const { widgetUnit } = useWidgetUnit();
   const { activeSession } = useWorkoutStore();
-
-  function handlePress() {
-    useEditTemplate();
-  }
+  const editTemplate = useEditTemplate();
 
   return (
     <StrobeButton
-      onPress={handlePress}
+      onPress={editTemplate}
       style={{
         width: widgetUnit * 0.8,
         height: widgetUnit - 84,
         marginHorizontal: widgetUnit * 0.1 - 5,
-        backgroundColor: theme.fifthBackground,
-        borderColor: theme.fifthBackground,
+        backgroundColor: theme.secondaryAccent,
+        borderColor: theme.secondaryAccent + "40",
         borderRadius: 16,
         borderWidth: 1,
         justifyContent: "center",

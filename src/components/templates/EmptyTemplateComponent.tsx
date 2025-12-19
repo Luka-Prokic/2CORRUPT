@@ -7,8 +7,8 @@ import { useWorkoutStore } from "../../stores/workout";
 import { StrobeButton } from "../ui/buttons/StrobeButton";
 import { ActiveSessionAlert } from "../ui/alerts/ActiveSessionAlert";
 import { BackgroundText } from "../ui/text/BackgroundText";
-import { Fragment } from "react";
 import { useTranslation } from "react-i18next";
+import { View } from "react-native";
 
 export function EmptyTemplateComponent() {
   const { theme } = useSettingsStore();
@@ -24,14 +24,21 @@ export function EmptyTemplateComponent() {
   }
 
   return (
-    <Fragment>
+    <View
+      style={{
+        padding: 16,
+        gap: 16,
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
       <StrobeButton
         onPress={handlePress}
         style={{
           height: widgetUnit,
           width: widgetUnit,
-          backgroundColor: theme.fifthBackground,
-          borderColor: theme.border,
+          backgroundColor: theme.secondaryAccent,
+          borderColor: theme.secondaryAccent + "40",
           borderRadius: 32,
           borderWidth: 1,
           justifyContent: "center",
@@ -56,6 +63,6 @@ export function EmptyTemplateComponent() {
         text={t("templates.empty-info")}
         style={{ textAlign: "justify" }}
       />
-    </Fragment>
+    </View>
   );
 }

@@ -23,7 +23,7 @@ export function TemplateSheet() {
           paddingHorizontal: 16,
         }}
       >
-        <TemplateNameEditor templateId={activeTemplate.id} />
+        <TemplateNameEditor template={activeTemplate} />
         <DescriptionText
           text={t("template-board.template-name")}
           style={{ marginBottom: 16, marginTop: 8 }}

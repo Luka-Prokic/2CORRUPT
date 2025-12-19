@@ -20,7 +20,7 @@ export function CreateTemplateView() {
           paddingBottom: CORRUPT_BUTTON_HEIGHT_FROM_BOTTOM + 32,
         }}
       >
-        <TemplateNameEditor templateId={activeTemplate.id} />
+        <TemplateNameEditor template={activeTemplate} />
         <DescriptionText
           text={t("template-view.add-tags")}
           style={{ marginBottom: 8, marginTop: 16 }}

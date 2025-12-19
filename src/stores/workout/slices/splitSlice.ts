@@ -617,6 +617,7 @@ export const createSplitPlanSlice: StateCreator<
 
     removeTemplateFromSplits: (templateId: string) => {
       const { splitPlans, activeSplitPlan, setActiveSplitPlan } = get();
+      if (!templateId || !splitPlans.length) return;
 
       const updatedSplitPlans: SplitPlan[] = splitPlans.map(
         (plan: SplitPlan) => ({

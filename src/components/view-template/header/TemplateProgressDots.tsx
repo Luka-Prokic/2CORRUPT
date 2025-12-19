@@ -10,7 +10,7 @@ export function TemplateProgressDots() {
   const flatItems = activeTemplate?.layout ?? [];
 
   const getDotColor = (item: SessionExercise) => {
-    if (item.id === activeExercise?.id) return theme.text;
+    if (item?.id === activeExercise?.id) return theme.text;
     return theme.grayText;
   };
 
@@ -22,7 +22,7 @@ export function TemplateProgressDots() {
         justifyContent: "center",
       }}
     >
-      {flatItems.length > 1 &&
+      {flatItems?.length > 1 &&
         flatItems.map((item: SessionExercise, index: number) => (
           <View
             key={index}

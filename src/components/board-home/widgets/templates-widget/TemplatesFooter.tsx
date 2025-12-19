@@ -6,13 +6,13 @@ import { useTranslation } from "react-i18next";
 import { useWorkoutStore } from "../../../../stores/workout";
 import { BounceButton } from "../../../ui/buttons/BounceButton";
 import { useEditTemplate } from "../../../../features/start/useEditTemplate";
-import { ActiveSessionAlert } from "../../../ui/alerts/ActiveSessionAlert";
 
 export function TemplatesFooter() {
   const { widgetUnit } = useWidgetUnit();
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
   const { templates, activeSession } = useWorkoutStore();
+  const editTemplate = useEditTemplate();
 
   if (templates.length)
     return (
@@ -25,7 +25,7 @@ export function TemplatesFooter() {
           height: 34,
           backgroundColor: "transparent",
         }}
-        onPress={useEditTemplate()}
+        onPress={editTemplate}
         disabled={!!activeSession}
       >
         <Ionicons name="add-circle" size={34} color={theme.tint} />

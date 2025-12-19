@@ -60,31 +60,33 @@ export function TemplatesCardList({
 
   function handleUseTemplate(templateId: string) {
     const template = getTemplateById(templateId);
-    if (useType === "preview") {
-    } else if (useType === "startSession") {
-      startSession(template);
-      setTypeOfView("workout");
-      router.dismissTo("/");
-    } else if (useType === "addToSession") {
-      updateSessionField(activeSession.id, "layout", [...template.layout]);
-      setActiveExercise(template.layout[0].id);
-      setTypeOfView("workout");
-      router.dismissTo("/");
-    } else if (useType === "addToTemplate") {
-      updateTemplateField(activeTemplate.id, "layout", [...template.layout]);
-      setActiveExercise(template.layout[0].id);
-      setTypeOfView("template");
-      router.dismissTo("/");
+    switch (useType) {
+      case "preview":
+        break;
+      case "startSession":
+        startSession(template);
+        setTypeOfView("workout");
+        break;
+      case "addToSession":
+        updateSessionField(activeSession.id, "layout", [...template?.layout]);
+        setActiveExercise(template?.layout[0].id);
+        setTypeOfView("workout");
+        break;
+      case "addToTemplate":
+        updateTemplateField(activeTemplate.id, "layout", [...template?.layout]);
+        setActiveExercise(template?.layout[0].id);
+        setTypeOfView("template");
+        break;
     }
+    router.dismissTo("/");
   }
 
-  function useButtonText() {
-    if (useType === "startSession") {
-      return t("button.start");
-    } else if (useType === "addToSession" || useType === "addToTemplate") {
-      return t("start.use-exercises");
-    }
-  }
+  const buttonText =
+    useType === "startSession"
+      ? t("button.start")
+      : useType === "addToSession"
+      ? t("start.use-exercises")
+      : t("start.use-exercises");
 
   return (
     <Fragment>
@@ -119,7 +121,7 @@ export function TemplatesCardList({
         ref={ref}
         templateId={templateId}
         onPress={() => handleUseTemplate(templateId ?? "")}
-        buttonText={useButtonText()}
+        buttonText={buttonText}
       />
     </Fragment>
   );

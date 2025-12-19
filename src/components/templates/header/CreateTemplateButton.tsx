@@ -6,9 +6,10 @@ import { useEditTemplate } from "../../../features/start/useEditTemplate";
 export function CreateTemplateButton() {
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
+  const createTemplate = useEditTemplate();
 
   return (
-    <TouchableOpacity onPress={useEditTemplate()} style={{ padding: 8 }}>
+    <TouchableOpacity onPress={createTemplate} style={{ padding: 8 }}>
       <Text style={{ fontSize: 16, color: theme.tint }}>
         {t("button.create")}
       </Text>

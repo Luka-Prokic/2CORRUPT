@@ -43,7 +43,7 @@ export function CreateTemplateBoard() {
           />
         </StrobeButton>
       )}
-      {templates.length > 0 && (
+      {templates?.length > 0 && (
         <TemplatesCardList
           showBy={{ butId: activeTemplate?.id }}
           useType="addToTemplate"

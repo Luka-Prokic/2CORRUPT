@@ -59,7 +59,7 @@ export const createTemplateSlice: StateCreator<
   },
 
   editTemplate: (templateId?: string) => {
-    const { getTemplateById, activeTemplate } = get();
+    const { getTemplateById, activeTemplate, templates } = get();
     if (activeTemplate) return null;
 
     const userId = useUserStore.getState().user?.id;
@@ -78,7 +78,7 @@ export const createTemplateSlice: StateCreator<
       };
     } else {
       draft = {
-        id: `draft-new-${nanoid()}`,
+        id: `template-${nanoid()}`,
         primeId: `template-${nanoid()}`,
         name: "New Template",
         description: "",
@@ -151,19 +151,29 @@ export const createTemplateSlice: StateCreator<
   setActiveTemplate: (template: WorkoutTemplate) =>
     set({ activeTemplate: template, activeSession: null }),
 
-  updateTemplateField: (templateId, field, value) =>
-    set((state) => {
-      if (!state.activeTemplate || state.activeTemplate.id !== templateId)
-        return state;
+  updateTemplateField: (templateId, field, value) => {
+    const { activeTemplate, templates, getTemplateById } = get();
 
-      return {
-        activeTemplate: {
-          ...state.activeTemplate,
-          [field]: value,
-          updatedAt: new Date().toISOString(),
-        },
+    if (templateId !== activeTemplate?.id) {
+      const template = getTemplateById(templateId);
+      if (!template) return;
+      const updatedTemplate = {
+        ...template,
+        [field]: value,
+        updatedAt: new Date().toISOString(),
       };
-    }),
+      set({ templates: [...templates, updatedTemplate] });
+      return;
+    }
+
+    set({
+      activeTemplate: {
+        ...activeTemplate,
+        [field]: value,
+        updatedAt: new Date().toISOString(),
+      },
+    });
+  },
 
   addExerciseToTemplate: (exercise, afterItemId) => {
     const {
@@ -230,6 +240,7 @@ export const createTemplateSlice: StateCreator<
 
   deleteTemplate: (templateId) => {
     const { clearActiveExercise, templates, removeTemplateFromSplits } = get();
+    if (!templateId) return;
 
     removeTemplateFromSplits(templateId);
 

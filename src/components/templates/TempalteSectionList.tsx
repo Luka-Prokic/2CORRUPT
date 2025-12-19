@@ -6,6 +6,7 @@ import { useUserStore } from "../../stores/userStore";
 import { useTranslation } from "react-i18next";
 import { WIDTH } from "../../utils/Dimensions";
 import { IText } from "../ui/text/IText";
+import { EmptyTemplateComponent } from "./EmptyTemplateComponent";
 
 interface TemplateSectionListProps {
   templates: WorkoutTemplate[];
@@ -47,6 +48,7 @@ export function TemplateSectionList({
     ].filter(Boolean) as { title: string; data: WorkoutTemplate[] }[];
   }, [templates, user?.id]);
 
+  if (!DATA?.length) return <EmptyTemplateComponent />;
   return (
     <View style={{ width: WIDTH }}>
       {DATA.map((section, index) => (
