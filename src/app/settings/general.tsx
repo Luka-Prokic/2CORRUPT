@@ -18,7 +18,13 @@ export default function AppSettings() {
     <Fragment>
       <Stack.Screen
         options={{
-          headerTitle: () => <IText text={t("settings.app")} />,
+          headerTitle: () => (
+            <IText
+              text={t("settings.app")}
+              adjustsFontSizeToFit
+              numberOfLines={1}
+            />
+          ),
           headerRight: () => <ModalExitButton />,
         }}
       />

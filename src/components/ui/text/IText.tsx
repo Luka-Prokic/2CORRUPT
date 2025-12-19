@@ -19,10 +19,12 @@ interface ITextProps extends TextProps {
     | "900";
   color?: string;
   children?: React.ReactNode;
+  align?: "left" | "center" | "right";
 }
 
 export function IText({
   text,
+  align = "left",
   style,
   size = 28,
   weight = "bold",
@@ -37,6 +39,7 @@ export function IText({
         fontSize: size,
         fontWeight: weight,
         color: color ?? theme.text,
+        textAlign: align,
         ...style,
       }}
       {...rest}

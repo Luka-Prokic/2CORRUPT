@@ -5,12 +5,13 @@ import { useDracoFont } from "../../../../../features/fonts/useDracoFont";
 import { useCreatineStore } from "../../../../../stores/creatine/useCreatineStore";
 import { IText } from "../../../../ui/text/IText";
 import { StrobeBlur } from "../../../../ui/misc/StrobeBlur";
+import { useTranslation } from "react-i18next";
 
 export function CreatineSlide() {
   const { theme } = useSettingsStore();
   const { fullWidth } = useWidgetUnit();
   const { fontFamily } = useDracoFont();
-
+  const { t } = useTranslation();
   const {
     creatineConsumption,
     dailyCreatineGoal,
@@ -59,13 +60,19 @@ export function CreatineSlide() {
           <IText
             text={
               confirmed
-                ? `DONE`
+                ? t("button.done")
                 : finalSwipe
                 ? `+${remaining.toFixed(1).replace(/\.0$/, "")}g`
                 : `+${dose.toFixed(1).replace(/\.0$/, "")}g`
             }
-            style={{ fontFamily }}
+            style={{
+              fontFamily,
+              width: fullWidth - 160,
+            }}
             size={24}
+            align="center"
+            adjustsFontSizeToFit
+            numberOfLines={1}
           />
         </StrobeBlur>
       }

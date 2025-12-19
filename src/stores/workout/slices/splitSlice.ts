@@ -616,7 +616,8 @@ export const createSplitPlanSlice: StateCreator<
     },
 
     removeTemplateFromSplits: (templateId: string) => {
-      const { splitPlans, activeSplitPlan, setActiveSplitPlan } = get();
+      const { splitPlans, activeSplitPlan } = get();
+
       if (!templateId || !splitPlans.length) return;
 
       const updatedSplitPlans: SplitPlan[] = splitPlans.map(
@@ -632,11 +633,18 @@ export const createSplitPlanSlice: StateCreator<
       );
       set({ splitPlans: updatedSplitPlans });
 
-      if (!activeSplitPlan) return;
-      const updatedActiceSplit: SplitPlan = updatedSplitPlans.find(
+      if (!activeSplitPlan || !updatedSplitPlans.length) return;
+
+      const updatedPlan: SplitPlan = updatedSplitPlans.find(
         (p) => p.id === activeSplitPlan.plan.id
       )!;
-      setActiveSplitPlan(updatedActiceSplit, activeSplitPlan.startDay);
+
+      set((state) => {
+        const splitPlans = state.splitPlans.map((p) =>
+          p.id === activeSplitPlan.plan.id ? updatedPlan : p
+        );
+        return syncActiveSplit({ ...state, splitPlans }, updatedPlan);
+      });
     },
 
     // ----------------- Getters -----------------

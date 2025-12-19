@@ -18,7 +18,13 @@ export default function WorkoutScreen() {
     <Fragment>
       <Stack.Screen
         options={{
-          headerTitle: () => <IText text={t("settings.workout")} />,
+          headerTitle: () => (
+            <IText
+              text={t("settings.workout")}
+              adjustsFontSizeToFit
+              numberOfLines={1}
+            />
+          ),
           headerRight: () => <ModalExitButton />,
         }}
       />

@@ -4,9 +4,10 @@ import { NoExerciseView } from "./NoExerciseView";
 import { UIView } from "../ui/UIView";
 
 export function WorkoutView() {
-  const { activeExercise } = useWorkoutStore();
+  const { activeExercise, activeSession } = useWorkoutStore();
 
-  const content = activeExercise ? <ExerciseListView /> : <NoExerciseView />;
+  const content =
+    activeSession && activeExercise ? <ExerciseListView /> : <NoExerciseView />;
 
   return <UIView type="workout">{content}</UIView>;
 }

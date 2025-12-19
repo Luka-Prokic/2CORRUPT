@@ -18,7 +18,13 @@ export default function GoalsScreen() {
     <Fragment>
       <Stack.Screen
         options={{
-          headerTitle: () => <IText text={t("settings.goals")} />,
+          headerTitle: () => (
+            <IText
+              text={t("settings.goals")}
+              adjustsFontSizeToFit
+              numberOfLines={1}
+            />
+          ),
           headerRight: () => <ModalExitButton />,
         }}
       />

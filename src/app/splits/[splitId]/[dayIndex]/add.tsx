@@ -44,6 +44,7 @@ export default function AddPlannedWorkoutScreen() {
           ),
           headerBlurEffect: "none",
           headerTransparent: false,
+          headerShadowVisible: false,
           headerStyle: {
             backgroundColor: theme.background,
           },
