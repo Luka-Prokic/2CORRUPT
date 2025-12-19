@@ -3,6 +3,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useWidgetUnit } from "../../../../features/widgets/useWidgetUnit";
 import { useSettingsStore } from "../../../../stores/settings";
 import { useTranslation } from "react-i18next";
+import { MidText } from "../../../ui/text/MidText";
 
 export function TemplatesHeader() {
   const { theme } = useSettingsStore();
@@ -20,9 +21,13 @@ export function TemplatesHeader() {
         width: widgetUnit,
       }}
     >
-      <Text style={{ fontSize: 16, fontWeight: "bold", color: theme.text }}>
-        {t("templates-widget.header")}
-      </Text>
+      <MidText
+        text={t("templates-widget.header")}
+        color={theme.text}
+        weight="bold"
+        numberOfLines={1}
+        adjustsFontSizeToFit
+      />
       <Ionicons name="chevron-forward" color={theme.accent} size={24} />
     </View>
   );

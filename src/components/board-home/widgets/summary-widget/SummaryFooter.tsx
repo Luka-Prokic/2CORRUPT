@@ -3,6 +3,7 @@ import { useWidgetUnit } from "../../../../features/widgets/useWidgetUnit";
 import { useSettingsStore } from "../../../../stores/settings";
 import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
+import { InfoText } from "../../../ui/text/InfoText";
 
 export function SummaryFooter() {
   const { widgetUnit } = useWidgetUnit();
@@ -15,22 +16,17 @@ export function SummaryFooter() {
         height: 34,
         width: widgetUnit - 10,
         paddingHorizontal: 8,
+        alignItems: "center",
         flexDirection: "row",
+        gap: 4,
       }}
     >
-      <Text
-        style={{
-          fontSize: 12,
-          color: theme.info,
-          fontWeight: "500",
-        }}
-        adjustsFontSizeToFit
-        numberOfLines={2}
-        minimumFontScale={0.5}
-      >
-        <Ionicons name="information-circle" color={theme.info} size={16} />{" "}
-        {t("summary-widget.footer")}
-      </Text>
+      <Ionicons name="information-circle" color={theme.info} size={18} />
+      <InfoText
+        text={t("summary-widget.footer")}
+        align="left"
+        style={{ width: widgetUnit - 44 }}
+      />
     </View>
   );
 }

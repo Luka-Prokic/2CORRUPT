@@ -53,6 +53,8 @@ export function SplitsWidget() {
             text={activeSplitPlan?.plan.name}
             color={noSplit ? theme.info : theme.text}
             weight="bold"
+            numberOfLines={1}
+            adjustsFontSizeToFit
           />
           <InfoText
             text={t("button.active").toLowerCase()}

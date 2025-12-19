@@ -1,11 +1,12 @@
-import { Text, TextStyle } from "react-native";
+import { Text, TextProps, TextStyle } from "react-native";
 import { useSettingsStore } from "../../../stores/settings";
 
-interface InfoTextProps {
+interface InfoTextProps extends TextProps {
   text: string;
   style?: TextStyle | TextStyle[];
   color?: string;
   align?: "left" | "center" | "right";
+  children?: React.ReactNode;
 }
 
 export function InfoText({
@@ -13,6 +14,8 @@ export function InfoText({
   style,
   color,
   align = "center",
+  children,
+  ...props
 }: InfoTextProps) {
   const { theme } = useSettingsStore();
   return (
@@ -26,7 +29,9 @@ export function InfoText({
         lineHeight: 12,
         ...style,
       }}
+      {...props}
     >
+      {children}
       {text}
     </Text>
   );

@@ -22,7 +22,7 @@ export function ActiveSplitAlert({
   type = "info",
   style,
   styleIcon,
-  disabled,
+  disabled = true,
 }: ActiveSplitAlertProps) {
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
@@ -34,11 +34,7 @@ export function ActiveSplitAlert({
   const message = type !== "icon" ? t("splits.active-split-alert") : "";
 
   return (
-    <TouchableOpacity
-      style={{ width: "100%", ...style }}
-      activeOpacity={1}
-      disabled={true} // no click behavior
-    >
+    <TouchableOpacity style={{ width: "100%", ...style }} disabled={disabled}>
       <Animated.Text
         entering={FadeIn}
         exiting={FadeOut}
@@ -53,11 +49,11 @@ export function ActiveSplitAlert({
           <Fragment>
             {message}{" "}
             {!disabled && (
-              <Ionicons name="lock-closed" size={16} color={theme.info} />
+              <Ionicons name="lock-closed" size={18} color={theme.info} />
             )}
           </Fragment>
         ) : (
-          <Ionicons name="lock-closed" size={16} color={theme.info} />
+          <Ionicons name="lock-closed" size={18} color={theme.info} />
         )}
       </Animated.Text>
     </TouchableOpacity>
