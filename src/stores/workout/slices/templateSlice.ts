@@ -1,11 +1,6 @@
 import { StateCreator } from "zustand";
 import { nanoid } from "nanoid/non-secure";
-import {
-  WorkoutStore,
-  WorkoutTemplate,
-  TemplateSlice,
-  SessionExercise,
-} from "../types";
+import { WorkoutStore, WorkoutTemplate, TemplateSlice } from "../types";
 import {
   templateLegsDay,
   templatePullDay,
@@ -78,7 +73,6 @@ export const createTemplateSlice: StateCreator<
 
       draft = {
         ...base,
-        id: `draft-${base.id}`,
         updatedAt: date,
         userId,
       };
@@ -125,6 +119,7 @@ export const createTemplateSlice: StateCreator<
               ...activeTemplate,
               id: targetId,
               updatedAt: date,
+              version: activeTemplate.version + 0.1,
             }
           : t
       );

@@ -1,5 +1,4 @@
 import { WorkoutTemplate } from "../../../stores/workout";
-import { Text, TouchableOpacity } from "react-native";
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { Fragment, useCallback, useRef } from "react";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
@@ -11,6 +10,7 @@ import { InfoText } from "../../ui/text/InfoText";
 import { DescriptionText } from "../../ui/text/DescriptionText";
 import { MidText } from "../../ui/text/MidText";
 import { StrobeButton } from "../../ui/buttons/StrobeButton";
+import { View } from "react-native";
 
 interface TemplateSelectCardProps {
   template: WorkoutTemplate;
@@ -51,11 +51,6 @@ export function TemplateSelectCard({
     }
   }
 
-  const tags = template.tags?.map((tag, i) => {
-    if (template.tags.length > i + 1) return `${tag}, `;
-    return `${tag}`;
-  });
-
   const presentModal = useCallback(() => {
     templateBottomSheetRef.current?.present();
   }, []);
@@ -93,41 +88,37 @@ export function TemplateSelectCard({
           ellipsizeMode="tail"
           style={{ width: "100%" }}
         />
-        <MidText
-          text={`v${template.version}`}
-          color={theme.secondaryBackground}
-          align="left"
-          weight="bold"
-          numberOfLines={2}
-          ellipsizeMode="tail"
-          style={{ width: "100%" }}
-        />
 
-        <MidText
-          text={`${template.id}`}
-          color={theme.secondaryBackground}
-          align="left"
-          weight="bold"
-          numberOfLines={4}
-          ellipsizeMode="tail"
-          style={{ width: "100%" }}
-        />
-
-        {/* <DescriptionText
+        <DescriptionText
           text={template.tags?.join(", ")}
           color={theme.secondaryText}
           align="left"
-        /> 
-         <InfoText
-          text={`${template.layout?.length} ${
-            template.layout?.length > 1
-              ? t("templates.exercises")
-              : t("templates.exercise")
-          }`}
-          color={theme.navBackground}
-          align="right"
-          style={{ width: "100%" }}
-        /> */}
+        />
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            width: "100%",
+          }}
+        >
+          <InfoText
+            text={`v${template.version}`}
+            color={theme.secondaryBackground}
+            align="left"
+            weight="bold"
+            numberOfLines={2}
+            ellipsizeMode="tail"
+          />
+          <InfoText
+            text={`${template.layout?.length} ${
+              template.layout?.length > 1
+                ? t("templates.exercises")
+                : t("templates.exercise")
+            }`}
+            color={theme.navBackground}
+            align="right"
+          />
+        </View>
       </StrobeButton>
 
       <TemplateBottomSheet

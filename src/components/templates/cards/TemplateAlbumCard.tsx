@@ -1,8 +1,12 @@
 import { WorkoutTemplate } from "../../../stores/workout";
-import { Text, TouchableOpacity } from "react-native";
+import { TouchableOpacity } from "react-native";
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { useTranslation } from "react-i18next";
 import { WIDTH } from "../../../utils/Dimensions";
+import { MidText } from "../../ui/text/MidText";
+import { DescriptionText } from "../../ui/text/DescriptionText";
+import { InfoText } from "../../ui/text/InfoText";
+import { View } from "react-native";
 
 interface TemplateAlbumCardProps {
   template: WorkoutTemplate;
@@ -20,11 +24,6 @@ export function TemplateAlbumCard({
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
 
-  const tags = template.tags?.map((tag, i) => {
-    if (template.tags.length > i + 1) return `${tag}, `;
-    return `${tag}`;
-  });
-
   return (
     <TouchableOpacity
       style={{
@@ -40,43 +39,47 @@ export function TemplateAlbumCard({
       onPress={onPress}
       activeOpacity={0.7}
     >
-      <Text
-        style={{
-          fontSize: 16,
-          fontWeight: "bold",
-          color: theme.secondaryBackground,
-        }}
+      <MidText
+        text={`${template.name}`}
+        color={theme.secondaryBackground}
+        align="left"
+        weight="bold"
         numberOfLines={2}
-      >
-        {template.name}
-      </Text>
+        ellipsizeMode="tail"
+        style={{ width: "100%" }}
+      />
 
-      {template.tags && template.tags.length > 0 && (
-        <Text
-          style={{
-            fontSize: 14,
-            color: theme.secondaryText,
-          }}
-          numberOfLines={4}
-          ellipsizeMode="tail"
-        >
-          {tags}
-        </Text>
-      )}
+      <DescriptionText
+        text={template.tags?.join(", ")}
+        color={theme.secondaryText}
+        align="left"
+      />
 
-      <Text
+      <View
         style={{
-          fontSize: 12,
-          fontWeight: "bold",
-          color: theme.fifthAccent,
-          alignSelf: "flex-end",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          width: "100%",
         }}
       >
-        {template.layout?.length}{" "}
-        {template.layout?.length > 1
-          ? t("templates.exercises")
-          : t("templates.exercise")}
-      </Text>
+        <InfoText
+          text={`v${template.version}`}
+          color={theme.secondaryBackground}
+          align="left"
+          weight="bold"
+          numberOfLines={2}
+          ellipsizeMode="tail"
+        />
+        <InfoText
+          text={`${template.layout?.length} ${
+            template.layout?.length > 1
+              ? t("templates.exercises")
+              : t("templates.exercise")
+          }`}
+          color={theme.navBackground}
+          align="right"
+        />
+      </View>
     </TouchableOpacity>
   );
 }

@@ -1,5 +1,5 @@
 import { WorkoutTemplate } from "../../../../../stores/workout";
-import { Text, TouchableOpacity } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import { useSettingsStore } from "../../../../../stores/settingsStore";
 import { Fragment, useCallback, useRef } from "react";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
@@ -45,29 +45,46 @@ export function TemplateCard({ template }: TemplateCardProps) {
         activeOpacity={0.7}
       >
         <MidText
-          text={`${template.name} v${template.version}`}
+          text={`${template.name}`}
           color={theme.secondaryBackground}
           align="left"
           weight="bold"
-          numberOfLines={2}
+          numberOfLines={1}
           adjustsFontSizeToFit
           style={{ width: "100%" }}
         />
         <InfoText
           text={template.tags?.join(", ")}
           color={theme.secondaryText}
+          numberOfLines={2}
+          ellipsizeMode="tail"
           align="left"
         />
-        <InfoText
-          text={`${template.layout?.length} ${
-            template.layout?.length > 1
-              ? t("templates.exercises")
-              : t("templates.exercise")
-          }`}
-          color={theme.navBackground}
-          align="right"
-          style={{ width: "100%" }}
-        />
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            width: "100%",
+          }}
+        >
+          <InfoText
+            text={`v${template.version}`}
+            color={theme.secondaryBackground}
+            align="left"
+            weight="bold"
+            numberOfLines={2}
+            ellipsizeMode="tail"
+          />
+          <InfoText
+            text={`${template.layout?.length} ${
+              template.layout?.length > 1
+                ? t("templates.exercises")
+                : t("templates.exercise")
+            }`}
+            color={theme.navBackground}
+            align="right"
+          />
+        </View>
       </TouchableOpacity>
 
       <TemplateBottomSheet
