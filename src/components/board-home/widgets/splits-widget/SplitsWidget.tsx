@@ -1,15 +1,15 @@
-import { useWidgetUnit } from "../../../features/widgets/useWidgetUnit";
-import { hexToRGBA } from "../../../utils/HEXtoRGB";
-import { useSettingsStore } from "../../../stores/settings";
-import { Ionicons } from "@expo/vector-icons";
+import { useWidgetUnit } from "../../../../features/widgets/useWidgetUnit";
+import { hexToRGBA } from "../../../../utils/HEXtoRGB";
+import { useSettingsStore } from "../../../../stores/settings";
 import { router } from "expo-router";
-import Animated, { FadeOut, FadeIn } from "react-native-reanimated";
-import { useWorkoutStore } from "../../../stores/workout";
+import { useWorkoutStore } from "../../../../stores/workout";
 import { useTranslation } from "react-i18next";
-import { BounceButton } from "../../ui/buttons/BounceButton";
-import { MidText } from "../../ui/text/MidText";
-import { InfoText } from "../../ui/text/InfoText";
-import { Shine } from "../../ui/misc/Shine";
+import { BounceButton } from "../../../ui/buttons/BounceButton";
+import { MidText } from "../../../ui/text/MidText";
+import { InfoText } from "../../../ui/text/InfoText";
+import { Shine } from "../../../ui/misc/Shine";
+import { SplitFlash } from "./SplitFlash";
+import Animated, { FadeOut, FadeIn } from "react-native-reanimated";
 
 export function SplitsWidget() {
   const { widgetUnit, halfWidget } = useWidgetUnit();
@@ -52,25 +52,14 @@ export function SplitsWidget() {
           <MidText
             text={activeSplitPlan?.plan.name}
             color={noSplit ? theme.info : theme.text}
+            weight="bold"
           />
           <InfoText
             text={t("button.active").toLowerCase()}
             color={noSplit ? theme.info : theme.tint}
           />
         </Animated.View>
-
-        <Ionicons
-          name={noSplit ? "flash-outline" : "flash"}
-          size={44}
-          color={noSplit ? theme.info : theme.fifthBackground}
-          style={{
-            shadowColor: theme.fifthBackground,
-            shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: noSplit ? 0 : 0.6,
-            shadowRadius: 16,
-            elevation: noSplit ? 0 : 10,
-          }}
-        />
+        <SplitFlash noSplit={noSplit} />
       </Shine>
     </BounceButton>
   );

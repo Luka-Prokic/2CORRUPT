@@ -7,6 +7,10 @@ import { useWidgetUnit } from "../../../features/widgets/useWidgetUnit";
 import { TemplateBottomSheet } from "../template-options/TemplateBottomSheet";
 import { AddToSplitBottomSheet } from "../split-options/AddToSplitBottomSheet";
 import { useTranslation } from "react-i18next";
+import { InfoText } from "../../ui/text/InfoText";
+import { DescriptionText } from "../../ui/text/DescriptionText";
+import { MidText } from "../../ui/text/MidText";
+import { StrobeButton } from "../../ui/buttons/StrobeButton";
 
 interface TemplateSelectCardProps {
   template: WorkoutTemplate;
@@ -63,60 +67,49 @@ export function TemplateSelectCard({
 
   return (
     <Fragment>
-      <TouchableOpacity
+      <StrobeButton
+        onPress={handlePress}
         style={{
           height: widgetUnit,
           width: widgetUnit,
-          backgroundColor: isSelected ? theme.text : theme.fifthBackground,
-          borderColor: isSelected
-            ? theme.text + "40"
-            : theme.fifthBackground + "40",
-          borderRadius: 32,
-          padding: 16,
+          backgroundColor: theme.secondaryAccent,
+          borderColor: theme.secondaryAccent + "40",
           borderWidth: 1,
-          justifyContent: "space-between",
+          borderRadius: 32,
         }}
-        onPress={handlePress}
-        activeOpacity={0.7}
+        styleContent={{
+          padding: 16,
+          justifyContent: "space-between",
+          backgroundColor: isSelected ? theme.caka + "40" : "",
+        }}
+        strobeDisabled={!isSelected}
       >
-        <Text
-          style={{
-            fontSize: 16,
-            fontWeight: "bold",
-            color: theme.secondaryBackground,
-          }}
+        <MidText
+          text={`${template.name} v${template.version}`}
+          color={theme.secondaryBackground}
+          align="left"
+          weight="bold"
           numberOfLines={2}
-        >
-          {template.name} v{template.version}
-        </Text>
+          ellipsizeMode="tail"
+          style={{ width: "100%" }}
+        />
 
-        {template.tags && template.tags.length > 0 && (
-          <Text
-            style={{
-              fontSize: 14,
-              color: theme.secondaryText,
-            }}
-            numberOfLines={4}
-            ellipsizeMode="tail"
-          >
-            {tags}
-          </Text>
-        )}
-
-        <Text
-          style={{
-            fontSize: 12,
-            fontWeight: "bold",
-            color: theme.fifthAccent,
-            alignSelf: "flex-end",
-          }}
-        >
-          {template.layout?.length}{" "}
-          {template.layout?.length > 1
-            ? t("templates.exercises")
-            : t("templates.exercise")}
-        </Text>
-      </TouchableOpacity>
+        <DescriptionText
+          text={template.tags?.join(", ")}
+          color={theme.secondaryText}
+          align="left"
+        />
+        <InfoText
+          text={`${template.layout?.length} ${
+            template.layout?.length > 1
+              ? t("templates.exercises")
+              : t("templates.exercise")
+          }`}
+          color={theme.navBackground}
+          align="right"
+          style={{ width: "100%" }}
+        />
+      </StrobeButton>
 
       <TemplateBottomSheet
         template={template}

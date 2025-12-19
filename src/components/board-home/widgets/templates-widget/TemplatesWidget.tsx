@@ -7,7 +7,7 @@ import { useWidgetUnit } from "../../../../features/widgets/useWidgetUnit";
 import { TemplateCard } from "./cards/TemplateCard";
 import { CardSlider } from "../../../ui/sliders/CardSlider";
 import { TemplatesHeader } from "./TemplatesHeader";
-import { EmptyTemplateCard } from "./EmptyTemplateCard";
+import { EmptyTemplateCard } from "./cards/EmptyTemplateCard";
 import { TemplatesFooter } from "./TemplatesFooter";
 import { Shine } from "../../../ui/misc/Shine";
 

@@ -5,9 +5,15 @@ interface InfoTextProps {
   text: string;
   style?: TextStyle | TextStyle[];
   color?: string;
+  align?: "left" | "center" | "right";
 }
 
-export function InfoText({ text, style, color }: InfoTextProps) {
+export function InfoText({
+  text,
+  style,
+  color,
+  align = "center",
+}: InfoTextProps) {
   const { theme } = useSettingsStore();
   return (
     <Text
@@ -15,7 +21,7 @@ export function InfoText({ text, style, color }: InfoTextProps) {
         color: color ?? theme.info,
         fontSize: 12,
         fontWeight: "600",
-        textAlign: "center",
+        textAlign: align,
         letterSpacing: -0.5,
         lineHeight: 12,
         ...style,

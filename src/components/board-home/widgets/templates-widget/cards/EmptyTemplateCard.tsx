@@ -1,10 +1,10 @@
-import { useSettingsStore } from "../../../../stores/settings";
-import { useWidgetUnit } from "../../../../features/widgets/useWidgetUnit";
+import { useSettingsStore } from "../../../../../stores/settings";
+import { useWidgetUnit } from "../../../../../features/widgets/useWidgetUnit";
 import { Ionicons } from "@expo/vector-icons";
-import { useWorkoutStore } from "../../../../stores/workout";
-import { StrobeButton } from "../../../ui/buttons/StrobeButton";
-import { ActiveSessionAlert } from "../../../ui/alerts/ActiveSessionAlert";
-import { useEditTemplate } from "../../../../features/start/useEditTemplate";
+import { useWorkoutStore } from "../../../../../stores/workout";
+import { StrobeButton } from "../../../../ui/buttons/StrobeButton";
+import { ActiveSessionAlert } from "../../../../ui/alerts/ActiveSessionAlert";
+import { useEditTemplate } from "../../../../../features/start/useEditTemplate";
 
 export function EmptyTemplateCard() {
   const { theme } = useSettingsStore();

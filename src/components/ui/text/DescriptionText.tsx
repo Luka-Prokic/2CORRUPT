@@ -8,12 +8,14 @@ export function DescriptionText({
   short = false,
   children,
   color,
+  align = "center",
 }: {
   text: string;
   style?: TextStyle | TextStyle[];
   short?: boolean; // if true, max 3 lines
   children?: React.ReactNode;
   color?: string;
+  align?: "left" | "center" | "right";
 }) {
   const { theme } = useSettingsStore();
   return (
@@ -26,7 +28,7 @@ export function DescriptionText({
         fontWeight: "500",
         letterSpacing: -0.5,
         lineHeight: 18,
-        textAlign: "center",
+        textAlign: align,
         ...style,
       }}
     >

@@ -163,7 +163,7 @@ export const Colors = {
     accent: "#00FF88",
     tint: "#F9C1B6",
     secondaryAccent: "#F1FFF0", // almost-white with green bias
-    thirdAccent: "#4AFF9E", //   toxic green |
+    thirdAccent: "#EFD9C3", //   toxic green |
     fourthAccent: "#66FF00", // nightvision green
     fifthAccent: "#FF4C4C", // coral red |
 

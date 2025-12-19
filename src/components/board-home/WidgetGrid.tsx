@@ -1,7 +1,7 @@
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { BackButtonWidget } from "./widgets/BackButtonWidget";
-import { SplitsWidget } from "./widgets/SplitsWidget";
+import { SplitsWidget } from "./widgets/splits-widget/SplitsWidget";
 import { SummaryWidget } from "./widgets/summary-widget/SummaryWidget";
 import { TemplatesWidget } from "./widgets/templates-widget/TemplatesWidget";
 import { SettingsWidget } from "./widgets/SettingsWidget";
