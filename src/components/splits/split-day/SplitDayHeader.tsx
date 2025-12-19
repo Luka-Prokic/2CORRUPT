@@ -5,8 +5,9 @@ import { BlurView } from "expo-blur";
 
 interface SplitDayHeaderProps {
   dayIndex: number;
+  color?: string;
 }
-export function SplitDayHeader({ dayIndex }: SplitDayHeaderProps) {
+export function SplitDayHeader({ dayIndex, color }: SplitDayHeaderProps) {
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
   return (
@@ -26,7 +27,7 @@ export function SplitDayHeader({ dayIndex }: SplitDayHeaderProps) {
     >
       <Text
         style={{
-          color: theme.text,
+          color: color ?? theme.text,
           fontSize: 22,
           fontWeight: "bold",
         }}

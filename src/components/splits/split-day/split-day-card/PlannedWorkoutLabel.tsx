@@ -5,6 +5,8 @@ import { useSettingsStore } from "../../../../stores/settings";
 import { SplitPlanDay } from "../../../../stores/workout/types";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 import { InfoText } from "../../../ui/text/InfoText";
+import { useCorrectTime } from "../../../../features/format/useCorrectTime";
+import { useMemo } from "react";
 
 interface PlannedWorkoutLabelProps {
   workout: SplitPlanWorkout;
@@ -22,6 +24,12 @@ export function PlannedWorkoutLabel({
 
   const template = getTemplateById(workout.templateId);
 
+  const scheduledAt = useMemo(() => {
+    return workout.scheduledAt
+      ? useCorrectTime(workout.scheduledAt)
+      : undefined;
+  }, [workout.scheduledAt]);
+
   if (!template) return null;
 
   return (
@@ -38,15 +46,7 @@ export function PlannedWorkoutLabel({
       }}
     >
       <InfoText
-        text={`${
-          workout.scheduledAt
-            ? `${new Date(workout.scheduledAt).toLocaleTimeString([], {
-                hour: "2-digit",
-                minute: "2-digit",
-              })} - `
-            : ""
-        }
-        ${template.name}`}
+        text={`${scheduledAt ? `${scheduledAt} - ` : ""}${template.name}`}
         color={theme.text}
         style={{ textDecorationLine: day.isRest ? "line-through" : "none" }}
       />

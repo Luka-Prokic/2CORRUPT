@@ -31,8 +31,8 @@ export function AddSplitDayCard({
       entering={FadeIn}
       exiting={FadeOut}
       style={{
-        backgroundColor: hexToRGBA(theme.thirdBackground, 0.5),
-        borderColor: theme.border,
+        backgroundColor: theme.thirdBackground + "80",
+        borderColor: theme.thirdBackground + "40",
         borderRadius: 32,
         overflow: "hidden",
         borderWidth: 1,

@@ -35,6 +35,7 @@ export function SplitDayFooter({
   function handleToggleRest() {
     toggleDayRest(split.id, index);
   }
+
   return (
     <BlurView
       style={{

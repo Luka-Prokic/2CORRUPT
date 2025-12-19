@@ -7,7 +7,7 @@ import { TouchableOpacity, ViewStyle, View } from "react-native";
 import { useWorkoutStore } from "../../../../stores/workout";
 import { useSettingsStore } from "../../../../stores/settings";
 import { Ionicons } from "@expo/vector-icons";
-import { Fragment } from "react";
+import { Fragment, useMemo } from "react";
 import { router } from "expo-router";
 import { StrobeBlur } from "../../../ui/misc/StrobeBlur";
 import { StrobeButton } from "../../../ui/buttons/StrobeButton";
@@ -55,6 +55,14 @@ export function PlannedWorkoutCard({
     });
   }
 
+  const scheduledAt = useMemo(
+    () =>
+      workout.scheduledAt
+        ? useCorrectTime(workout.scheduledAt)
+        : t("splits.set-time"),
+    [workout.scheduledAt, t]
+  );
+
   if (!template) return null;
 
   return (
@@ -98,14 +106,7 @@ export function PlannedWorkoutCard({
               }}
               strobeDisabled={workout.scheduledAt === undefined}
             >
-              <DescriptionText
-                text={
-                  workout.scheduledAt
-                    ? useCorrectTime(workout.scheduledAt)
-                    : t("splits.set-time")
-                }
-                color={theme.text}
-              />
+              <DescriptionText text={scheduledAt} color={theme.text} />
             </StrobeButton>
 
             {/* Switch Template Button */}

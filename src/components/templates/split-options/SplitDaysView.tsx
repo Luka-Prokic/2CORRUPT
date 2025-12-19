@@ -12,6 +12,8 @@ import { useTranslation } from "react-i18next";
 import { InfoText } from "../../ui/text/InfoText";
 import { HEIGHT } from "../../../utils/Dimensions";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useMemo } from "react";
+import { SplitNewDayButton } from "./SplitNewDayButton";
 
 interface SplitDaysViewProps {
   split: SplitPlan;
@@ -21,7 +23,7 @@ interface SplitDaysViewProps {
 
 export function SplitDaysView({ split, templates, ref }: SplitDaysViewProps) {
   const { widgetUnit, fullWidth } = useWidgetUnit();
-  const { addWorkoutToDay } = useWorkoutStore();
+  const { addWorkoutToDay, addDayToSplit } = useWorkoutStore();
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
 
@@ -32,27 +34,48 @@ export function SplitDaysView({ split, templates, ref }: SplitDaysViewProps) {
     ref.current?.close();
   }
 
+  function handlePressNewDay(dayIndex: number) {
+    addDayToSplit(split.id);
+    templates.forEach((template) => {
+      addWorkoutToDay(split.id, dayIndex, template.id);
+    });
+    ref.current?.close();
+  }
+
+  const splitDays = useMemo(() => {
+    return [...split.split, { id: "new", isRest: false, workouts: [] }];
+  }, [split.split]);
+
   return (
     <FlatList
-      data={split.split}
+      data={splitDays}
       numColumns={2}
       showsVerticalScrollIndicator={false}
       nestedScrollEnabled={true}
       keyExtractor={(item) => item.id}
-      renderItem={({ item, index }) => (
-        <SplitDayButton
-          split={split}
-          day={item as SplitPlanDay}
-          style={{
-            height: widgetUnit,
-            width: widgetUnit,
-            opacity: item.isRest ? 0.4 : 1,
-          }}
-          index={index}
-          onPress={() => handlePressDay(index)}
-          disabled={item.isRest}
-        />
-      )}
+      renderItem={({ item, index }) => {
+        if (item.id === "new")
+          return (
+            <SplitNewDayButton
+              index={index}
+              onPress={() => handlePressNewDay(index)}
+            />
+          );
+        return (
+          <SplitDayButton
+            split={split}
+            day={item as SplitPlanDay}
+            style={{
+              height: widgetUnit,
+              width: widgetUnit,
+              opacity: item.isRest ? 0.4 : 1,
+            }}
+            index={index}
+            onPress={() => handlePressDay(index)}
+            disabled={item.isRest}
+          />
+        );
+      }}
       columnWrapperStyle={{
         justifyContent: "space-between",
         gap: 8,
