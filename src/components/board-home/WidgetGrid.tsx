@@ -9,6 +9,7 @@ import { useWidgetUnit } from "../../features/widgets/useWidgetUnit";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 import { ActionWidget } from "./widgets/action-widget/ActionWidget";
 import { ExerciseWidget } from "./widgets/ExerciseWidget";
+import { AwardsWidget } from "./widgets/AwardsWidget";
 
 export function WidgetGrid() {
   const insets = useSafeAreaInsets();
@@ -31,12 +32,10 @@ export function WidgetGrid() {
           flexDirection: "row",
         }}
       >
-        <ExerciseWidget />
-
         <SummaryWidget />
-
+        <AwardsWidget />
+        <ExerciseWidget />
         <TemplatesWidget />
-
         <View
           style={{
             flexDirection: "row",
@@ -47,7 +46,6 @@ export function WidgetGrid() {
           <BackButtonWidget />
           <SettingsWidget />
         </View>
-
         <SplitsWidget />
       </View>
       <ActionWidget />

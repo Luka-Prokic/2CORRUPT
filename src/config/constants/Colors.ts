@@ -163,7 +163,7 @@ export const Colors = {
     accent: "#00FF88",
     tint: "#F9C1B6",
     secondaryAccent: "#F1FFF0", // almost-white with green bias
-    thirdAccent: "#00FFCC", //   soft green |
+    thirdAccent: "#4AFF9E", //   toxic green |
     fourthAccent: "#66FF00", // nightvision green
     fifthAccent: "#FF4C4C", // coral red |
 
@@ -197,7 +197,7 @@ export const Colors = {
     accent: "#A6F7E5",
     tint: "#FF3B30",
     secondaryAccent: "#FFC0C0", // very light red |
-    thirdAccent: "#FF4C4C", // coral red
+    thirdAccent: "#6F6F6F", // anti-dracula gunmetal
     fourthAccent: "#FF8C8C", // pastel red
     fifthAccent: "#FF6F6F", //  red |
 

@@ -31,7 +31,7 @@ export function WaterBottomSheetHeader({
         justifyContent: "space-between",
         width: "100%",
         marginBottom: 32,
-        gap: 32,
+        gap: 8,
       }}
     >
       <IBubble

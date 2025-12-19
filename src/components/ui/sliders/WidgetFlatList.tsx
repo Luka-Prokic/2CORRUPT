@@ -84,19 +84,23 @@ export function WidgetFlatList({
       }}
     >
       <Animated.View
-        style={{
-          position: "absolute",
-          width: fullWidth,
-          left: 16,
-          height,
-          transform: [{ scale: scrolling ? 1.02 : 1 }],
-          transitionProperty: "transform",
-          transitionDuration: "200ms",
-          transitionTimingFunction: "ease-out",
-          borderRadius: 32,
-          overflow: "hidden",
-          backgroundColor: hexToRGBA(theme.thirdBackground, 0.6),
-        }}
+        style={[
+          {
+            position: "absolute",
+            width: fullWidth,
+            height,
+            left: 16,
+            borderRadius: 32,
+            overflow: "hidden",
+            backgroundColor: hexToRGBA(theme.handle, 0.6),
+          },
+          {
+            transform: [{ scale: scrolling ? 1.02 : 1 }],
+            transitionProperty: "transform",
+            transitionDuration: "200ms",
+            transitionTimingFunction: "ease-out",
+          },
+        ]}
       />
       <FlatList
         ref={flatListRef}
@@ -120,7 +124,6 @@ export function WidgetFlatList({
           flexGrow: 0,
           flexShrink: 0,
           borderRadius: 32,
-          overflow: "hidden",
           zIndex: 2,
           ...(props.style as ViewStyle),
         }}

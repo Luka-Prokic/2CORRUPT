@@ -4,6 +4,7 @@ import { View } from "react-native";
 import { LabeledValue } from "../ui/misc/LabeledValue";
 import { useWidgetUnit } from "../../features/widgets/useWidgetUnit";
 import { useTranslation } from "react-i18next";
+import { IBubble } from "../ui/containers/IBubble";
 
 interface SplitHeaderProps {
   split: SplitPlan;
@@ -17,23 +18,30 @@ export function SplitHeader({ split }: SplitHeaderProps) {
       style={{
         gap: 16,
         alignItems: "center",
-        marginBottom: 16,
+        marginBottom: 8,
         width: fullWidth,
       }}
     >
       <SplitNameInput split={split} />
 
       <View style={{ flexDirection: "row", gap: 8 }}>
-        <LabeledValue
-          label={t("splits.total-days")}
-          value={split.splitLength}
-          style={{ width: widgetUnit }}
-        />
-        <LabeledValue
-          label={t("splits.active-days")}
-          value={split.activeLength}
-          style={{ width: widgetUnit }}
-        />
+        <IBubble size="flexible">
+          <LabeledValue
+            label={t("splits.total-days")}
+            value={split.splitLength}
+            style={{ width: widgetUnit, padding: 8 }}
+            align="center"
+          />
+        </IBubble>
+
+        <IBubble size="flexible">
+          <LabeledValue
+            label={t("splits.active-days")}
+            value={split.activeLength}
+            style={{ width: widgetUnit, padding: 8 }}
+            align="center"
+          />
+        </IBubble>
       </View>
     </View>
   );

@@ -144,17 +144,16 @@ export function IButtonSwipe({
           <Animated.View
             style={[
               {
-                width: moving ? THUMB_SIZE * 1.2 : THUMB_SIZE,
-                height: moving ? THUMB_SIZE * 0.95 : THUMB_SIZE,
                 borderRadius: THUMB_SIZE / 2,
                 backgroundColor: theme.secondaryBackground,
                 justifyContent: "center",
                 alignItems: "center",
               },
-              // @ts-expect-error Reanimated 3 transition props
               {
+                width: moving ? THUMB_SIZE * 1.2 : THUMB_SIZE,
+                height: moving ? THUMB_SIZE * 0.95 : THUMB_SIZE,
                 transitionProperty: ["width", "height"],
-                transitionDuration: 200,
+                transitionDuration: "200ms",
                 transitionTimingFunction: "ease-in",
               },
               thumbStyle,

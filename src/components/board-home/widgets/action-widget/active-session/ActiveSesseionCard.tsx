@@ -13,7 +13,7 @@ export function ActiveSessionCard() {
   const { theme } = useSettingsStore();
   const { activeSession, restingExerciseId } = useWorkoutStore();
 
-  const softGlow = theme.fifthBackground + "40";
+  const softGlow = theme.fifthAccent + "80";
 
   if (!activeSession) return null;
 

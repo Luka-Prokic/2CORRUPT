@@ -8,7 +8,7 @@ import {
 } from "../../../../stores/workout";
 import { useSettingsStore } from "../../../../stores/settings";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
-import { SplitDayGridHeader } from "../SplitDayGridHeader";
+import { SplitDayGridHeader } from "./SplitDayGridHeader";
 import { SplitDayFooter } from "./SplitDayFooter";
 import { PlannedWorkoutLabel } from "./PlannedWorkoutLabel";
 import { SplitDayCardHeader } from "./SplitDayCardHeader";

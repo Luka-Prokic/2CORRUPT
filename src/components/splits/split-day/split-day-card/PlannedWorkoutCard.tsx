@@ -3,7 +3,7 @@ import {
   SplitPlanWorkout,
   SplitPlanDay,
 } from "../../../../stores/workout/types";
-import { TouchableOpacity, ViewStyle, View, Text } from "react-native";
+import { TouchableOpacity, ViewStyle, View } from "react-native";
 import { useWorkoutStore } from "../../../../stores/workout";
 import { useSettingsStore } from "../../../../stores/settings";
 import { Ionicons } from "@expo/vector-icons";
@@ -13,6 +13,8 @@ import { StrobeBlur } from "../../../ui/misc/StrobeBlur";
 import { StrobeButton } from "../../../ui/buttons/StrobeButton";
 import { useTranslation } from "react-i18next";
 import { useCorrectTime } from "../../../../features/format/useCorrectTime";
+import { MidText } from "../../../ui/text/MidText";
+import { DescriptionText } from "../../../ui/text/DescriptionText";
 
 interface PlannedWorkoutCardProps {
   workout: SplitPlanWorkout;
@@ -72,17 +74,14 @@ export function PlannedWorkoutCard({
       >
         {/* Workout Name */}
         <View style={{ flex: 1 }}>
-          <Text
+          <MidText
+            text={template.name}
+            color={day.isRest ? theme.info : theme.text}
             style={{
-              color: day.isRest ? theme.info : theme.text,
               textDecorationLine: day.isRest ? "line-through" : "none",
-              fontSize: 16,
-              fontWeight: "600",
+              textAlign: "left",
             }}
-            numberOfLines={1}
-          >
-            {template.name}
-          </Text>
+          />
         </View>
 
         {!day.isRest && (
@@ -98,17 +97,14 @@ export function PlannedWorkoutCard({
               }}
               strobeDisabled={workout.scheduledAt === undefined}
             >
-              <Text
-                style={{
-                  color: theme.text,
-                  fontWeight: "bold",
-                  fontSize: 14,
-                }}
-              >
-                {workout.scheduledAt
-                  ? useCorrectTime(workout.scheduledAt)
-                  : t("splits.set-time")}
-              </Text>
+              <DescriptionText
+                text={
+                  workout.scheduledAt
+                    ? useCorrectTime(workout.scheduledAt)
+                    : t("splits.set-time")
+                }
+                color={theme.text}
+              />
             </StrobeButton>
 
             {/* Switch Template Button */}

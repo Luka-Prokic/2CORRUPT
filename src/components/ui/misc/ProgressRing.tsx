@@ -21,6 +21,8 @@ interface ProgressRingProps {
   content?: React.ReactNode;
   ringSize?: number;
   style?: ViewStyle | ViewStyle[];
+  color?: string;
+  loopColor?: string;
 }
 
 export function ProgressRing({
@@ -29,6 +31,8 @@ export function ProgressRing({
   content,
   ringSize,
   style,
+  color,
+  loopColor,
 }: ProgressRingProps) {
   const { theme } = useSettingsStore();
   const { widgetUnit } = useWidgetUnit();
@@ -57,7 +61,7 @@ export function ProgressRing({
       <Svg width={size + 2} height={size + 2}>
         {/* Base ring */}
         <Circle
-          stroke={theme.thirdBackground}
+          stroke={color ?? theme.thirdBackground}
           fill="none"
           cx={size / 2}
           cy={size / 2}
@@ -68,8 +72,10 @@ export function ProgressRing({
         {/* Progress loops */}
         {loopsArray.map((_, i) => {
           const isLast = i === loopsArray.length - 1;
-          const color =
-            i % 2 === 0 ? theme.tint : hexToRGBA(theme.secondaryText, 0.2);
+          const thisLoopColor =
+            i % 2 === 0
+              ? loopColor ?? theme.tint
+              : hexToRGBA(theme.secondaryText, 0.2);
           return (
             <ProgressLoop
               key={i}
@@ -79,7 +85,7 @@ export function ProgressRing({
               radius={radius}
               circumference={circumference}
               strokeWidth={strokeWidth}
-              color={color}
+              color={thisLoopColor}
               pulseArrow={pulseArrow}
             />
           );

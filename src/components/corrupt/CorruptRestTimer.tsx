@@ -14,7 +14,7 @@ export function CorruptRestTimer({
   size,
   fontSize = 36,
 }: CorruptRestTimerProps) {
-  const { theme } = useSettingsStore();
+  const { theme, autoRestComplete } = useSettingsStore();
   const { estEndRestTime, updateEstEndRestTime, endRest, startRestTime } =
     useWorkoutStore();
   const triggerHapticsSoft = useHaptics({ modeType: "on", hapticType: "soft" });
@@ -56,6 +56,12 @@ export function CorruptRestTimer({
     }
   };
 
+  const handleAutoRestComplete = () => {
+    if (!autoRestComplete) return;
+    triggerHapticsRigid();
+    endRest();
+  };
+
   return (
     <Animated.View
       entering={FadeInDown}
@@ -90,7 +96,10 @@ export function CorruptRestTimer({
         </Text>
       </TouchableOpacity>
 
-      <RestTimer textStyle={{ fontSize: fontSize }} />
+      <RestTimer
+        textStyle={{ fontSize: fontSize }}
+        onEnd={handleAutoRestComplete}
+      />
 
       <TouchableOpacity
         onPress={removeRest}

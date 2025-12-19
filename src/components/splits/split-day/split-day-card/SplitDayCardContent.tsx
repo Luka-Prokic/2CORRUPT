@@ -10,6 +10,8 @@ import { Ionicons } from "@expo/vector-icons";
 import { TextButton } from "../../../ui/buttons/TextButton";
 import { router } from "expo-router";
 import { useTranslation } from "react-i18next";
+import { MidText } from "../../../ui/text/MidText";
+import { DescriptionText } from "../../../ui/text/DescriptionText";
 
 interface SplitDayCardContentProps {
   split: SplitPlan;
@@ -85,20 +87,14 @@ export function SplitDayCardContent({
         }}
       >
         <Ionicons
-          name="bandage-outline"
-          size={48}
+          name="alert-outline"
+          size={64}
           color={theme.secondaryBackground}
         />
-        <Text
-          style={{
-            fontSize: 16,
-            fontWeight: "500",
-            color: theme.secondaryBackground,
-            textAlign: "center",
-          }}
-        >
-          {t("splits.no-workouts-yet")}
-        </Text>
+        <DescriptionText
+          text={t("splits.no-workouts-yet")}
+          color={theme.secondaryBackground}
+        />
         <TextButton
           text={`+ ${t("splits.add-workout")}`}
           onPress={handleAddWorkout}

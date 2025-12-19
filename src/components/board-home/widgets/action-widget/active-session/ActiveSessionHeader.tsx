@@ -41,7 +41,7 @@ export function ActiveSessionHeader() {
           width: fullWidth,
           height: 44,
           borderBottomWidth: 1,
-          borderBottomColor: hexToRGBA(theme.thirdBackground, 0.4),
+          borderBottomColor: hexToRGBA(theme.thirdAccent, 0.4),
         }}
       >
         <Ionicons

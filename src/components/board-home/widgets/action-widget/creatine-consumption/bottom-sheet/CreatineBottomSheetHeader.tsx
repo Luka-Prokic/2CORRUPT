@@ -27,7 +27,7 @@ export function CreatineBottomSheetHeader({
         justifyContent: "space-between",
         width: "100%",
         marginBottom: 32,
-        gap: 32,
+        gap: 8,
       }}
     >
       <IBubble
@@ -45,8 +45,8 @@ export function CreatineBottomSheetHeader({
               ? `${dailyCreatineGoal.toString()} g`
               : t("dialog.label")
           }
-          align="center"
           style={{ padding: 8 }}
+          align="center"
         />
       </IBubble>
       <IBubble
@@ -64,8 +64,8 @@ export function CreatineBottomSheetHeader({
               ? `${dailyCreatineGoal.toString()} g`
               : `${timesADay.toString()}x`
           }
-          align="center"
           style={{ padding: 8 }}
+          align="center"
         />
       </IBubble>
     </View>

@@ -6,6 +6,9 @@ import { useTranslation } from "react-i18next";
 import { router, useLocalSearchParams } from "expo-router";
 import { Fragment } from "react";
 import { BlurView } from "expo-blur";
+import { InfoText } from "../../../ui/text/InfoText";
+import { MidText } from "../../../ui/text/MidText";
+import { IText } from "../../../ui/text/IText";
 
 interface SplitDayCardHeaderProps {
   day: SplitPlanDay;
@@ -58,54 +61,33 @@ export function SplitDayCardHeader({
           gap: 4,
         }}
       >
-        <Text
-          style={{
-            fontSize: 22,
-            fontWeight: "bold",
-            color: theme.text,
-          }}
-        >
-          {t("splits.day")} {dayIndex + 1}
-        </Text>
+        <IText text={`${t("splits.day")} ${dayIndex + 1}`} />
         <Ionicons
           name={day.isRest ? "rainy" : "barbell"}
           size={20}
           color={day.isRest ? theme.secondaryText : theme.fifthBackground}
           style={{ marginLeft: 12 }}
         />
-        <Text
-          style={{
-            fontSize: 12,
-            color: day.isRest ? theme.secondaryText : theme.fifthBackground,
-            fontWeight: "500",
-          }}
-        >
-          {day.isRest ? t("splits.rest") : t("splits.active")}
-        </Text>
+        <InfoText
+          color={day.isRest ? theme.secondaryText : theme.fifthBackground}
+          text={day.isRest ? t("splits.rest") : t("splits.active")}
+        />
       </View>
       {isActiveDay && (
         <Fragment>
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              gap: 6,
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 12,
-                fontWeight: "500",
-                color: theme.secondaryText,
-              }}
-            >
-              {workoutCount}{" "}
-              {workoutCount === 1 ? t("splits.workout") : t("splits.workouts")}
-            </Text>
-          </View>
+          <InfoText
+            color={theme.secondaryAccent}
+            text={`${workoutCount} ${
+              workoutCount === 1 ? t("splits.workout") : t("splits.workouts")
+            }`}
+          />
 
           <TouchableOpacity onPress={handleAddWorkout}>
-            <Ionicons name="add-circle" size={34} color={theme.tint} />
+            <Ionicons
+              name="add-circle"
+              size={44}
+              color={theme.secondaryAccent}
+            />
           </TouchableOpacity>
         </Fragment>
       )}

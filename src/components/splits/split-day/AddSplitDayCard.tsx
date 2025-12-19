@@ -6,6 +6,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { hexToRGBA } from "../../../utils/HEXtoRGB";
 import { useTranslation } from "react-i18next";
 import { BlurView } from "expo-blur";
+import { IText } from "../../ui/text/IText";
 
 interface AddSplitDayCardProps {
   split: SplitPlan;
@@ -61,15 +62,11 @@ export function AddSplitDayCard({
           right: 0,
         }}
       >
-        <Text
-          style={{
-            fontSize: 22,
-            fontWeight: "bold",
-            color: theme.info,
-          }}
-        >
-          {t("splits.day")} {split.split.length + 1}
-        </Text>
+        <IText
+          text={`${t("splits.day")} ${split.split.length + 1}`}
+          color={theme.info}
+          size={isGridView ? 22 : 28}
+        />
       </BlurView>
       <BlurView
         style={{

@@ -53,14 +53,14 @@ export function SplitDayFooter({
       <TouchableOpacity onPress={handleRemoveDay} hitSlop={10}>
         <Ionicons
           name="remove-circle"
-          size={isGridView ? 24 : 34}
+          size={isGridView ? 24 : 44}
           color={theme.error}
         />
       </TouchableOpacity>
       <TouchableOpacity onPress={handleCloneDay} hitSlop={10}>
         <Ionicons
           name="duplicate"
-          size={isGridView ? 24 : 34}
+          size={isGridView ? 24 : 44}
           color={theme.accent}
         />
       </TouchableOpacity>
@@ -68,7 +68,7 @@ export function SplitDayFooter({
       <TouchableOpacity onPress={handleToggleRest} hitSlop={10}>
         <Ionicons
           name={day.isRest ? "barbell" : "rainy"}
-          size={isGridView ? 24 : 34}
+          size={isGridView ? 24 : 44}
           color={day.isRest ? theme.text : theme.secondaryText}
         />
       </TouchableOpacity>

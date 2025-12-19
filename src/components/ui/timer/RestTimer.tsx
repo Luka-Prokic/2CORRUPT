@@ -11,8 +11,8 @@ interface RestTimerProps {
 }
 
 export function RestTimer({ textStyle, onEnd }: RestTimerProps) {
-  const { theme } = useSettingsStore();
-  const { estEndRestTime, startRestTime } = useWorkoutStore(); // absolute end timestamp in seconds
+  const { theme, autoRestComplete } = useSettingsStore();
+  const { estEndRestTime } = useWorkoutStore(); // absolute end timestamp in seconds
 
   const [isActive, setIsActive] = useState(true);
   const [remaining, setRemaining] = useState<number | null>(null);
@@ -35,7 +35,6 @@ export function RestTimer({ textStyle, onEnd }: RestTimerProps) {
     const tick = () => {
       const now = Math.floor(Date.now() / 1000);
       const r = Math.max(estEndRestTime - now, 0);
-      const t = Math.max(now - startRestTime, 0);
       setRemaining(r);
       if (r === 0) onEnd?.();
     };

@@ -59,9 +59,9 @@ export function SummaryWidget() {
         width: widgetUnit,
         height: widgetUnit,
         borderRadius: 32,
-        backgroundColor: hexToRGBA(theme.thirdBackground, 0.6),
+        backgroundColor: hexToRGBA(theme.thirdAccent, 0.6),
         borderWidth: 1,
-        borderColor: hexToRGBA(theme.thirdBackground, 0.4),
+        borderColor: hexToRGBA(theme.thirdAccent, 0.4),
         padding: 4,
         flexDirection: "row",
         flexWrap: "wrap",
@@ -74,6 +74,8 @@ export function SummaryWidget() {
         key={`${goal}-${sessionsThisWeek.length}`}
         compareWith={sessionsThisWeek.length}
         compareTo={goal}
+        color={theme.thirdAccent}
+        loopColor={theme.secondaryAccent}
         content={
           <BounceButton
             onPress={presentModal}

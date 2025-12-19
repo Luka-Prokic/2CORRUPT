@@ -1,8 +1,8 @@
-import { Text } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useSettingsStore } from "../../../stores/settings";
+import { useSettingsStore } from "../../../../stores/settings";
 import { useTranslation } from "react-i18next";
 import { BlurView } from "expo-blur";
+import { IText } from "../../../ui/text/IText";
 
 interface SplitDayHeaderProps {
   dayIndex: number;
@@ -25,15 +25,12 @@ export function SplitDayGridHeader({ dayIndex }: SplitDayHeaderProps) {
         paddingHorizontal: 16,
       }}
     >
-      <Text
-        style={{
-          color: theme.text,
-          fontSize: 22,
-          fontWeight: "bold",
-        }}
-      >
-        {t("splits.day")} {dayIndex + 1}
-      </Text>
+      <IText
+        text={`${t("splits.day")} ${dayIndex + 1}`}
+        color={theme.text}
+        weight="bold"
+        size={22}
+      />
       <Ionicons name={"reorder-two"} size={34} color={theme.info} />
     </BlurView>
   );
