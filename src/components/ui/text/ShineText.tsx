@@ -84,7 +84,13 @@ export function ShineText({
     transform: [{ translateX: (translateX.value - 1) * (width ?? 200) }],
   }));
 
-  const textStyle = [{ fontSize: size, fontWeight: weight }, style];
+  const textStyle = {
+    fontSize: size,
+    fontWeight: weight,
+    textAlign: "center",
+    ...style,
+  } as TextStyle;
+
   const shine = shineColor ?? theme.glow;
 
   return (
@@ -95,7 +101,7 @@ export function ShineText({
             {...rest}
             numberOfLines={numberOfLines}
             adjustsFontSizeToFit={adjustsFontSizeToFit}
-            style={[textStyle, { color: color ?? theme.text }]}
+            style={{ ...textStyle, color: color ?? theme.text }}
           >
             {text}
           </Text>
@@ -105,7 +111,7 @@ export function ShineText({
         <Text
           numberOfLines={numberOfLines}
           adjustsFontSizeToFit={adjustsFontSizeToFit}
-          style={[textStyle, { color: color ?? theme.text }]}
+          style={{ ...textStyle, color: color ?? theme.text }}
         >
           {text}
         </Text>

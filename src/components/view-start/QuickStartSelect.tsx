@@ -35,7 +35,11 @@ export function QuickStartSelect() {
       }}
       strobeColor={theme.secondaryAccent}
     >
-      <IText text={t("workout-view.quick-start")} color={theme.border} />
+      <IText
+        text={t("workout-view.quick-start")}
+        color={theme.border}
+        size={36}
+      />
     </StrobeButton>
   );
 }

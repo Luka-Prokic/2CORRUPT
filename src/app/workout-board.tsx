@@ -4,7 +4,7 @@ import { ScreenContent } from "../components/ui/utils/ScreenContent";
 import { WorkoutBoardHeaderLeft } from "../components/board-workout/header/WorkoutBoardHeaderLeft";
 import { WorkoutBoardHeaderTitle } from "../components/board-workout/header/WorkoutBoardHeaderTitle";
 import { WorkoutBoardHeaderRight } from "../components/board-workout/header/WorkoutBoardHeaderRight";
-import { DashBoard } from "../components/ui/DashBoard";
+import { DashBoardTwo } from "../components/ui/DashBoardV2";
 import { useWorkoutStore } from "../stores/workout";
 import { NoExerciseBoard } from "../components/board-workout/NoExerciseBoard";
 import { ExerciseProfile } from "../components/board-workout/profile/ExerciseProfile";
@@ -12,6 +12,7 @@ import { SessionExerciseList } from "../components/board-workout/sheets/exercise
 import { RestTimerSheet } from "../components/board-workout/sheets/rest/RestTimerSheet";
 import { ExerciseNameSheet } from "../components/board-workout/sheets/name/ExerciseNameSheet";
 import { SessionSheet } from "../components/board-workout/sheets/session/SessionSheet";
+import { DashBoard } from "../components/ui/DashBoard";
 
 export type SessionSheetType = "exercises" | "rest" | "name" | "session" | null;
 

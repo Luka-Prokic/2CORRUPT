@@ -16,7 +16,11 @@ export function CreateTemplateSelect() {
       color={theme.tint}
       style={{ width: WIDTH - 32, height: 64, borderRadius: 32 }}
     >
-      <IText text={t("workout-view.create-template")} color={theme.border} />
+      <IText
+        text={t("workout-view.create-template")}
+        color={theme.border}
+        size={36}
+      />
     </IButton>
   );
 }
