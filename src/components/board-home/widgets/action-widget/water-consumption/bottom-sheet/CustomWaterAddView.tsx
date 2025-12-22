@@ -38,8 +38,7 @@ interface CustomWaterAddViewProps {
 export function CustomWaterAddView({ ref }: CustomWaterAddViewProps) {
   const { theme, units } = useSettingsStore();
   const { t } = useTranslation();
-  const { waterConsumption, setWaterConsumption, setIncrement } =
-    useWaterStore();
+  const { setIncrement, addWater } = useWaterStore();
   const [selectedOption, setSelectedOption] = useState<number>(0);
 
   const WATER_ADD_OPTIONS =
@@ -50,9 +49,7 @@ export function CustomWaterAddView({ ref }: CustomWaterAddViewProps) {
   }
 
   function handleAddWater() {
-    setWaterConsumption(
-      waterConsumption + WATER_ADD_OPTIONS[selectedOption].value
-    );
+    addWater(WATER_ADD_OPTIONS[selectedOption].value);
     ref.current?.close();
   }
 

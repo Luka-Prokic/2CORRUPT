@@ -1,4 +1,4 @@
-import { CreatineStore, DailyCreatineIntake, GeneralSlice } from "../types";
+import { CreatineStore, CreatineTicket, GeneralSlice } from "../types";
 import { StateCreator } from "zustand";
 import { nanoid } from "nanoid/non-secure";
 import { useUserStore } from "../../user/useUserStore";
@@ -26,7 +26,7 @@ export const createGeneralSlice: StateCreator<
 
     // if (dose > dailyCreatineGoal) return;
 
-    const newCreatineIntake: DailyCreatineIntake = {
+    const newCreatineIntake: CreatineTicket = {
       id: nanoid(),
       userId: user?.id ?? "",
       date: new Date().toISOString(),
@@ -42,7 +42,7 @@ export const createGeneralSlice: StateCreator<
     const today = new Date().toISOString();
 
     const updatedCreatineLog = creatineLog.filter(
-      (intake) => intake.date == today
+      (ticket) => ticket.date == today
     );
 
     set({ creatineLog: updatedCreatineLog });

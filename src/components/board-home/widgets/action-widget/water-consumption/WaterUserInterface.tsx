@@ -4,7 +4,11 @@ import { View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useSettingsStore } from "../../../../../stores/settingsStore";
 import { useWidgetUnit } from "../../../../../features/widgets/useWidgetUnit";
-import { useWaterStore } from "../../../../../stores/water";
+import {
+  useWaterStore,
+  WATER_MIN_INTAKE,
+  WATER_MAX_INTAKE,
+} from "../../../../../stores/water";
 import { Fragment, useRef } from "react";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { WaterBottomSheet } from "./bottom-sheet/WaterBottomSheet";
@@ -17,8 +21,15 @@ export function WaterUserInterface() {
   const { theme, units } = useSettingsStore();
   const { widgetUnit } = useWidgetUnit();
   const { t } = useTranslation();
-  const { waterConsumption, increment, setWaterConsumption, dailyWaterGoal } =
-    useWaterStore();
+  const {
+    getWaterConsumption,
+    increment,
+    addWater,
+    removeWater,
+    dailyWaterGoal,
+    waterLog,
+  } = useWaterStore();
+  const waterConsumption = getWaterConsumption();
   const { fromMl } = useDisplayedUnits();
 
   const bottomSheetRef = useRef<BottomSheetModal>(null);
@@ -28,13 +39,11 @@ export function WaterUserInterface() {
   }
 
   function incrementWaterConsumption() {
-    if (waterConsumption + increment > 6000) setWaterConsumption(6000);
-    else setWaterConsumption(waterConsumption + increment);
+    addWater(increment);
   }
 
   function decrementWaterConsumption() {
-    if (waterConsumption - increment < 0) setWaterConsumption(0);
-    else setWaterConsumption(waterConsumption - increment);
+    removeWater(increment);
   }
 
   return (
@@ -54,7 +63,12 @@ export function WaterUserInterface() {
           }`}
           color={theme.border}
         />
-
+        <InfoText
+          text={waterLog
+            .map((log) => `${fromMl(log.value)} ${units.volume}`)
+            .join(", ")}
+          color={theme.border}
+        />
         <BounceButton
           onPress={openBottomSheet}
           style={{
@@ -83,16 +97,16 @@ export function WaterUserInterface() {
         <View style={{ flexDirection: "row" }}>
           <IButton
             onPress={decrementWaterConsumption}
-            disabled={waterConsumption <= 0}
-            style={{ opacity: waterConsumption <= 0 ? 0.4 : 1 }}
+            disabled={waterConsumption <= WATER_MIN_INTAKE}
+            style={{ opacity: waterConsumption <= WATER_MIN_INTAKE ? 0.4 : 1 }}
             haptics
           >
             <Ionicons name="remove-circle" size={64} color={theme.border} />
           </IButton>
           <IButton
             onPress={incrementWaterConsumption}
-            disabled={waterConsumption >= 6000}
-            style={{ opacity: waterConsumption >= 6000 ? 0.4 : 1 }}
+            disabled={waterConsumption >= WATER_MAX_INTAKE}
+            style={{ opacity: waterConsumption >= WATER_MAX_INTAKE ? 0.4 : 1 }}
             haptics
           >
             <Ionicons name="add-circle" size={64} color={theme.border} />

@@ -9,7 +9,8 @@ import { useWaterStore } from "../../../../../stores/water";
 export function AnimatedWater() {
   const { widgetUnit, fullWidth } = useWidgetUnit();
   const { theme } = useSettingsStore();
-  const { waterConsumption, dailyWaterGoal, increment } = useWaterStore();
+  const { getWaterConsumption, dailyWaterGoal, increment } = useWaterStore();
+  const waterConsumption = getWaterConsumption();
 
   const { animatedFillHeight } = useAnimatedWaterFillHeight({
     waterConsumption,

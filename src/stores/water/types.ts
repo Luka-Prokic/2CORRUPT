@@ -1,11 +1,29 @@
+import { IsoDateString } from "../workout/types";
+export interface WaterTicket {
+  readonly id: string;
+  readonly userId: string;
+  readonly date: IsoDateString;
+  value: number; //  in ml
+  dailyGoal: number; // in ml
+}
+
 export interface GeneralSlice {
-  waterConsumption: number;
-  dailyWaterGoal: number;
-  increment: number;
-  setWaterConsumption: (waterConsumption: number) => void;
-  setDailyWaterGoal: (dailyWaterGoal: number) => void;
+  waterLog: WaterTicket[];
+  dailyWaterGoal: number; // in ml
+  increment: number; // default increment value
+
+  // Actions
+  addWater: (value: number) => void;
+  removeWater: (value: number) => void;
+
+  getWaterConsumption: () => number;
+
+  setDailyWaterGoal: (goal: number) => void;
   setIncrement: (increment: number) => void;
+
+  resetTodaysWater: () => void;
   resetWaterCompletely: () => void;
 }
 
-export type WaterStore = GeneralSlice;
+// Full Zustand store type (for your store)
+export interface WaterStore extends GeneralSlice {}

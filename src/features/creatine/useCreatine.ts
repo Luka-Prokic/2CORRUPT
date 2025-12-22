@@ -1,9 +1,9 @@
-import { DailyCreatineIntake } from "../../stores/creatine/types";
+import { CreatineTicket } from "../../stores/creatine/types";
 import { useCreatineStore } from "../../stores/creatine/useCreatineStore";
 import { getISODateOnly } from "../../utils/getISODateOnly";
 
 // Helper to check if a log is from today
-function isToday(intake: DailyCreatineIntake) {
+function isToday(intake: CreatineTicket) {
   const today = getISODateOnly(new Date().toISOString());
   return intake.date === today;
 }
@@ -12,7 +12,7 @@ function isToday(intake: DailyCreatineIntake) {
 export function useTodayCreatine() {
   const { dailyCreatineGoal, timesADay, creatineLog } = useCreatineStore();
 
-  const todayLogs: DailyCreatineIntake[] = creatineLog.filter(
+  const todayLogs: CreatineTicket[] = creatineLog.filter(
     (intake) => intake.date != getISODateOnly(new Date().toISOString())
   );
 
@@ -49,7 +49,7 @@ export function getTodaysCreatineIntake() {
 export function getTodaysCreatineLogs() {
   const { creatineLog } = useCreatineStore();
 
-  const todayLogs: DailyCreatineIntake[] = creatineLog.filter(
+  const todayLogs: CreatineTicket[] = creatineLog.filter(
     (intake) => intake.date != getISODateOnly(new Date().toISOString())
   );
 

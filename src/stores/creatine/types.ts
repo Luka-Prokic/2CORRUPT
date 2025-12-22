@@ -1,6 +1,6 @@
 import { IsoDateString } from "../workout/types";
 
-export interface DailyCreatineIntake {
+export interface CreatineTicket {
   readonly id: string;
   readonly userId: string;
   readonly date: IsoDateString;
@@ -9,7 +9,7 @@ export interface DailyCreatineIntake {
 }
 
 export interface GeneralSlice {
-  creatineLog: DailyCreatineIntake[];
+  creatineLog: CreatineTicket[];
 
   dailyCreatineGoal: number; // in grams
   timesADay: number; // number of times a day to take creatine to reach the daily goal
