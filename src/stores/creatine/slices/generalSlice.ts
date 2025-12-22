@@ -1,5 +1,7 @@
-import { CreatineStore, GeneralSlice } from "../types";
+import { CreatineStore, DailyCreatineIntake, GeneralSlice } from "../types";
 import { StateCreator } from "zustand";
+import { nanoid } from "nanoid/non-secure";
+import { useUserStore } from "../../user/useUserStore";
 
 export const createGeneralSlice: StateCreator<
   CreatineStore,
@@ -8,7 +10,7 @@ export const createGeneralSlice: StateCreator<
   GeneralSlice
 > = (set, get) => ({
   // STATE
-  creatineConsumption: 0, // in grams
+  creatineLog: [],
   dailyCreatineGoal: 10, // in grams
   timesADay: 1, // number of times a day to take creatine to reach the daily goal
   creatineWidgetLabel: "100% monohydrate", //widget label default value
@@ -18,22 +20,33 @@ export const createGeneralSlice: StateCreator<
   },
 
   // ACTIONS
-  addCreatine: () => {
-    const { creatineConsumption, dailyCreatineGoal, timesADay } = get();
+  addCreatine: (dose: number) => {
+    const { creatineLog, dailyCreatineGoal } = get();
+    const user = useUserStore.getState().user;
 
-    if (creatineConsumption >= dailyCreatineGoal) return;
+    // if (dose > dailyCreatineGoal) return;
 
-    const dose = dailyCreatineGoal / timesADay;
-    const next = creatineConsumption + dose;
+    const newCreatineIntake: DailyCreatineIntake = {
+      id: nanoid(),
+      userId: user?.id ?? "",
+      date: new Date().toISOString(),
+      gramsGoal: dailyCreatineGoal,
+      gramsTaken: Number((dose ?? 0).toFixed(0)),
+    };
 
-    set({
-      creatineConsumption:
-        next >= dailyCreatineGoal - 0.1
-          ? Number(dailyCreatineGoal.toFixed(1))
-          : Number(next.toFixed(1)),
-    });
+    set({ creatineLog: [...creatineLog, newCreatineIntake] });
   },
-  resetCreatine: () => set({ creatineConsumption: 0 }),
+
+  resetTodaysCreatine: () => {
+    const { creatineLog } = get();
+    const today = new Date().toISOString();
+
+    const updatedCreatineLog = creatineLog.filter(
+      (intake) => intake.date == today
+    );
+
+    set({ creatineLog: updatedCreatineLog });
+  },
 
   setDailyCreatineGoal: (dailyCreatineGoal: number) => {
     if (dailyCreatineGoal < 0 || dailyCreatineGoal > 100) return;
@@ -48,7 +61,7 @@ export const createGeneralSlice: StateCreator<
   // COMPLETE RESET OF THE STORE
   resetCreatineCompletely: () =>
     set({
-      creatineConsumption: 0,
+      creatineLog: [],
       dailyCreatineGoal: 10,
       timesADay: 1,
       creatineWidgetLabel: "100% monohydrate",

@@ -6,38 +6,33 @@ import { useCreatineStore } from "../../../../../stores/creatine/useCreatineStor
 import { IText } from "../../../../ui/text/IText";
 import { StrobeBlur } from "../../../../ui/misc/StrobeBlur";
 import { useTranslation } from "react-i18next";
+import { useTodayCreatine } from "../../../../../features/creatine/useCreatine";
 
 export function CreatineSlide() {
   const { theme } = useSettingsStore();
   const { fullWidth } = useWidgetUnit();
   const { fontFamily } = useDracoFont();
   const { t } = useTranslation();
-  const {
-    creatineConsumption,
-    dailyCreatineGoal,
-    timesADay,
-    addCreatine,
-    resetCreatine,
-  } = useCreatineStore();
+  const { addCreatine, resetTodaysCreatine } = useCreatineStore();
 
-  const dose = dailyCreatineGoal / timesADay;
-  const remaining = dailyCreatineGoal - creatineConsumption;
-
-  const finalSwipe = remaining <= dose + 0.5;
-
-  const confirmed = creatineConsumption >= dailyCreatineGoal;
+  const { dose, remaining, finalSwipe, confirmed } = useTodayCreatine();
 
   function handleSwipeComplete() {
-    addCreatine();
+    addCreatine(finalSwipe ? remaining : dose);
   }
 
   function handleSwipeCancel() {
-    resetCreatine();
+    resetTodaysCreatine();
   }
+
+  const sliderMessage = confirmed
+    ? t("button.done")
+    : finalSwipe
+    ? `+${remaining.toFixed(1).replace(/\.0$/, "")}g`
+    : `+${dose.toFixed(1).replace(/\.0$/, "")}g`;
 
   return (
     <IButtonSwipe
-      key={`${dailyCreatineGoal}`}
       width={fullWidth - 16}
       height={64}
       confirmed={confirmed}
@@ -58,13 +53,7 @@ export function CreatineSlide() {
           disabled={!confirmed}
         >
           <IText
-            text={
-              confirmed
-                ? t("button.done")
-                : finalSwipe
-                ? `+${remaining.toFixed(1).replace(/\.0$/, "")}g`
-                : `+${dose.toFixed(1).replace(/\.0$/, "")}g`
-            }
+            text={sliderMessage}
             style={{
               fontFamily,
               width: fullWidth - 160,

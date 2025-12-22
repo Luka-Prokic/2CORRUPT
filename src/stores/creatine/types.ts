@@ -1,11 +1,25 @@
+import { IsoDateString } from "../workout/types";
+
+export interface DailyCreatineIntake {
+  readonly id: string;
+  readonly userId: string;
+  readonly date: IsoDateString;
+  gramsGoal: number; // in grams
+  gramsTaken: number; // in grams
+}
+
 export interface GeneralSlice {
-  creatineConsumption: number;
+  creatineLog: DailyCreatineIntake[];
+
   dailyCreatineGoal: number; // in grams
   timesADay: number; // number of times a day to take creatine to reach the daily goal
-  addCreatine: () => void;
-  resetCreatine: () => void;
+
+  addCreatine: (dose: number) => void; // in grams
+  resetTodaysCreatine: () => void;
+
   setDailyCreatineGoal: (dailyCreatineGoal: number) => void;
   setTimesADay: (timesADay: number) => void;
+
   resetCreatineCompletely: () => void;
 
   // WIDGET CUSTOMIZATION
