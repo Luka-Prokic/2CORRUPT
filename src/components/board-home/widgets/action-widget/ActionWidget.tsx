@@ -1,7 +1,7 @@
 import { WidgetFlatList } from "../../../ui/sliders/WidgetFlatList";
 import { ActionRenderItem } from "./ActionRenderItem";
 import { useWorkoutStore } from "../../../../stores/workout";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 export type ActionItem = {
   id: string;
@@ -18,13 +18,11 @@ export function ActionWidget() {
 
   const [focusedIndex, setFocusedIndex] = useState(0);
 
-  const actionItems = useMemo(() => {
-    return ACTION_ITEMS.filter(
-      (item) =>
-        item.id !== "active-session" ||
-        (item.id === "active-session" && activeSession)
-    );
-  }, [activeSession]);
+  const actionItems = ACTION_ITEMS.filter(
+    (item) =>
+      item.id !== "active-session" ||
+      (item.id === "active-session" && activeSession)
+  );
 
   return (
     <WidgetFlatList

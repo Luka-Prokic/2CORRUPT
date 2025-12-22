@@ -2,7 +2,7 @@ import { WorkoutView } from "../components/view-workout/WorkoutView";
 import { HomeView } from "../components/view-home/HomeView";
 import { TemplateView } from "../components/view-template/TemplateView";
 import { StartView } from "../components/view-start/StartView";
-import { Fragment, useMemo } from "react";
+import { Fragment } from "react";
 import { Stack } from "expo-router";
 import { ScreenContent } from "../components/ui/utils/ScreenContent";
 import { useUIStore } from "../stores/ui";
@@ -26,10 +26,7 @@ export default function HomeScreen() {
   const { activeExercise } = useWorkoutStore();
   const { theme } = useSettingsStore();
 
-  const headerShown = useMemo(() => {
-    if (typeOfView === "home") return false;
-    return true;
-  }, [typeOfView]);
+  const headerShown = typeOfView === "home" ? false : true;
 
   function headerLeft() {
     if (typeOfView === "workout" && activeExercise) return <LeftExerciseFlow />;

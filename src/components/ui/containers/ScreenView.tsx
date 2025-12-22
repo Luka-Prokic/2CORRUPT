@@ -1,19 +1,20 @@
 import { View, ViewStyle } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-export function ScreenView({
-  children,
-  style,
-}: {
+interface ScreenViewProps {
   children?: React.ReactNode;
   style?: ViewStyle | ViewStyle[];
-}) {
+  HeaderComponent?: React.ReactNode;
+}
+
+export function ScreenView({ children, style }: ScreenViewProps) {
   const insets = useSafeAreaInsets();
   return (
     <View
       style={{
-        marginTop: insets.top + 16,
+        marginTop: insets.top,
         alignItems: "center",
+        flex: 1,
         ...style,
       }}
     >

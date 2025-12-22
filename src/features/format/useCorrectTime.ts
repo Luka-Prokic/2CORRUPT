@@ -13,6 +13,7 @@ export function useCorrectTime(input: number | string | Date) {
 }
 
 export function useSystemTime(input: number | string | Date) {
+  if (!input) return null;
   return toDate(input).toLocaleTimeString([], {
     hour: "2-digit",
     minute: "2-digit",

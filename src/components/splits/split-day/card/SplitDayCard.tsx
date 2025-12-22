@@ -13,12 +13,12 @@ import { SplitDayFooter } from "./SplitDayFooter";
 import { PlannedWorkoutLabel } from "./PlannedWorkoutLabel";
 import { SplitDayCardHeader } from "./SplitDayCardHeader";
 import { SplitDayCardContent } from "./SplitDayCardContent";
-import DateTimePicker from "@react-native-community/datetimepicker";
 import { TextButton } from "../../../ui/buttons/TextButton";
 import { StrobeBlur } from "../../../ui/misc/StrobeBlur";
 import { useWidgetUnit } from "../../../../features/widgets/useWidgetUnit";
 import { BackgroundText } from "../../../ui/text/BackgroundText";
 import { useTranslation } from "react-i18next";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 interface SplitDayCardProps {
   split: SplitPlan;
@@ -45,7 +45,6 @@ export function SplitDayCard({
     return timeFormat === "24h";
   }, [timeFormat]);
 
-  // Shared time picker state (now lives here)
   const [showTimePicker, setShowTimePicker] = useState(false);
   const [pickerWorkout, setPickerWorkout] = useState<SplitPlanWorkout | null>(
     null
@@ -65,6 +64,7 @@ export function SplitDayCard({
     setShowTimePicker(false);
     setPickerWorkout(null);
   }
+
   function handleTimeConfirm(date: Date | null) {
     if (pickerWorkout) {
       updateWorkoutInDay(split.id, index, pickerWorkout.id, {

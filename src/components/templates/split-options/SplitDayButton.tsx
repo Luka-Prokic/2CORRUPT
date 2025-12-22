@@ -6,7 +6,7 @@ import {
 } from "react-native";
 import { SplitPlan, SplitPlanDay } from "../../../stores/workout";
 import { useSettingsStore } from "../../../stores/settings";
-import { PlannedWorkoutLabel } from "../../splits/split-day/split-day-card/PlannedWorkoutLabel";
+import { PlannedWorkoutLabel } from "../../splits/split-day/card/PlannedWorkoutLabel";
 import { SplitDayHeader } from "../../splits/split-day/SplitDayHeader";
 
 interface SplitDayButtonProps extends TouchableOpacityProps {

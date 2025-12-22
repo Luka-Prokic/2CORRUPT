@@ -6,7 +6,6 @@ import { SplitPlanDay } from "../../../../stores/workout/types";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 import { InfoText } from "../../../ui/text/InfoText";
 import { useCorrectTime } from "../../../../features/format/useCorrectTime";
-import { useMemo } from "react";
 
 interface PlannedWorkoutLabelProps {
   workout: SplitPlanWorkout;
@@ -24,11 +23,9 @@ export function PlannedWorkoutLabel({
 
   const template = getTemplateById(workout.templateId);
 
-  const scheduledAt = useMemo(() => {
-    return workout.scheduledAt
-      ? useCorrectTime(workout.scheduledAt)
-      : undefined;
-  }, [workout.scheduledAt]);
+  const correctTime = useCorrectTime(workout.scheduledAt);
+
+  const scheduledAt = workout.scheduledAt ? correctTime : undefined;
 
   if (!template) return null;
 

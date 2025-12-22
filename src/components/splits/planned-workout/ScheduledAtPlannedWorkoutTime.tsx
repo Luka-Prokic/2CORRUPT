@@ -12,7 +12,8 @@ export function ScheduledAtPlannedWorkoutTime({
 }: ScheduledAtPlannedWorkoutTimeProps) {
   const { theme } = useSettingsStore();
 
-  const scheduledAt = useCorrectTime(workout.scheduledAt ?? "");
+  const scheduledAt = useCorrectTime(workout.scheduledAt);
+
   if (scheduledAt) return <MidText text={scheduledAt} color={theme.text} />;
   return null;
 }

@@ -1,4 +1,3 @@
-// PlannedWorkoutCard.tsx
 import {
   SplitPlanWorkout,
   SplitPlanDay,
@@ -55,13 +54,9 @@ export function PlannedWorkoutCard({
     });
   }
 
-  const scheduledAt = useMemo(
-    () =>
-      workout.scheduledAt
-        ? useCorrectTime(workout.scheduledAt)
-        : t("splits.set-time"),
-    [workout.scheduledAt, t]
-  );
+  const correctTime = useCorrectTime(workout.scheduledAt);
+
+  const scheduledAt = workout.scheduledAt ? correctTime : t("splits.set-time");
 
   if (!template) return null;
 

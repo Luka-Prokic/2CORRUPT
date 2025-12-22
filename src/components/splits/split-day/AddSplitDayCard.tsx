@@ -1,9 +1,8 @@
-import { Text, TouchableOpacity, View, ViewStyle } from "react-native";
+import { TouchableOpacity, ViewStyle } from "react-native";
 import { SplitPlan, useWorkoutStore } from "../../../stores/workout";
 import { useSettingsStore } from "../../../stores/settings";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 import { Ionicons } from "@expo/vector-icons";
-import { hexToRGBA } from "../../../utils/HEXtoRGB";
 import { useTranslation } from "react-i18next";
 import { BlurView } from "expo-blur";
 import { IText } from "../../ui/text/IText";

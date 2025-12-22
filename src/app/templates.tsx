@@ -15,18 +15,18 @@ import { AddToSplitSelectedTemplates } from "../components/templates/header/AddT
 import { TemplateFilter } from "../components/templates/TemplateFilter";
 import { TemplateSectionList } from "../components/templates/TempalteSectionList";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { EmptyTemplateComponent } from "../components/templates/EmptyTemplateComponent";
+import { ScreenView } from "../components/ui/containers/ScreenView";
 
 export default function TemplatesScreen() {
   const { t } = useTranslation();
   const { theme } = useSettingsStore();
-  const insets = useSafeAreaInsets();
   const { templates } = useWorkoutStore();
   const [selectMode, setSelectMode] = useState<boolean>(false);
   const [selected, setSelected] = useState<WorkoutTemplate[]>([]);
   const [filteredTemplates, setFilteredTemplates] = useState<WorkoutTemplate[]>(
     []
   );
+  const insets = useSafeAreaInsets();
 
   function headerLeft() {
     if (selectMode && templates?.length)
@@ -94,30 +94,28 @@ export default function TemplatesScreen() {
           headerTitle: headerTitle,
           headerRight: headerRight,
           headerBlurEffect: "none",
-          headerTransparent: false,
-          headerShadowVisible: false,
-          headerStyle: {
-            backgroundColor: theme.background,
-          },
         }}
       />
-      <ScreenContent
-        HeaderComponent={
-          <TemplateFilter setFilteredTemplates={setFilteredTemplates} />
-        }
-      >
-        <TemplateSectionList
-          templates={filteredTemplates}
-          renderCard={(template) => (
-            <TemplateSelectCard
-              template={template}
-              selectMode={selectMode}
-              onSelect={setSelected}
-              selected={selected}
-            />
-          )}
-        />
-      </ScreenContent>
+      <ScreenView>
+        <ScreenContent
+          edges={["top"]}
+          HeaderComponent={
+            <TemplateFilter setFilteredTemplates={setFilteredTemplates} />
+          }
+        >
+          <TemplateSectionList
+            templates={filteredTemplates}
+            renderCard={(template) => (
+              <TemplateSelectCard
+                template={template}
+                selectMode={selectMode}
+                onSelect={setSelected}
+                selected={selected}
+              />
+            )}
+          />
+        </ScreenContent>
+      </ScreenView>
     </Fragment>
   );
 }

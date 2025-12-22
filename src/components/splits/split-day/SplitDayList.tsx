@@ -2,7 +2,7 @@ import { FlatList } from "react-native";
 import { SplitPlan, SplitPlanDay } from "../../../stores/workout";
 import { AddSplitDayCard } from "./AddSplitDayCard";
 import { useWidgetUnit } from "../../../features/widgets/useWidgetUnit";
-import { SplitDayCard } from "./split-day-card/SplitDayCard";
+import { SplitDayCard } from "./card/SplitDayCard";
 import { CardSlider } from "../../ui/sliders/CardSlider";
 
 interface SplitDayListProps {
