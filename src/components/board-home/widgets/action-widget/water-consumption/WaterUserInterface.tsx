@@ -63,12 +63,6 @@ export function WaterUserInterface() {
           }`}
           color={theme.border}
         />
-        <InfoText
-          text={waterLog
-            .map((log) => `${fromMl(log.value)} ${units.volume}`)
-            .join(", ")}
-          color={theme.border}
-        />
         <BounceButton
           onPress={openBottomSheet}
           style={{
