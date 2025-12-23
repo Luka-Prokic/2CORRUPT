@@ -23,14 +23,14 @@ export const createDraftSlice: StateCreator<WorkoutStore, [], [], {}> = (
         id: `exercise-${nanoid()}`,
         defaultName: exercise?.defaultName || { en: "", rs: "" },
         userId: user?.id,
-        updatedAt: new Date().toISOString(),
+        createdAt: new Date().toISOString(),
       };
     } else {
       newDraftExercise = {
         id: `exercise-${nanoid()}`,
         defaultName: { en: "", rs: "" },
         userId: user?.id,
-        updatedAt: new Date().toISOString(),
+        createdAt: new Date().toISOString(),
         category: null,
         primaryMuscles: [],
         secondaryMuscles: [],
@@ -62,7 +62,7 @@ export const createDraftSlice: StateCreator<WorkoutStore, [], [], {}> = (
 
     const savedExercise: ExerciseInfo = {
       ...draftExercise,
-      updatedAt: new Date().toISOString(),
+      createdAt: new Date().toISOString(),
       userId: user?.id,
     };
     const newExercises = [...exercises, savedExercise];
@@ -81,7 +81,7 @@ export const createDraftSlice: StateCreator<WorkoutStore, [], [], {}> = (
     const savedExercise: ExerciseInfo = {
       ...draftExercise,
       id: placeholderExercise.id,
-      updatedAt: new Date().toISOString(),
+      createdAt: new Date().toISOString(),
       userId: user?.id,
     };
 

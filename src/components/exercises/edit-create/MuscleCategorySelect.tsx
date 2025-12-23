@@ -5,12 +5,13 @@ import { useHaptics } from "../../../features/ui/useHaptics";
 import { MuscleCategory, useWorkoutStore } from "../../../stores/workout";
 import { useMemo } from "react";
 import { InfoText } from "../../ui/text/InfoText";
-import { IButton } from "../../ui/buttons/IButton";
 import { useTranslation } from "react-i18next";
 import { View } from "react-native";
+import { StrobeButton } from "../../ui/buttons/StrobeButton";
+import { MidText } from "../../ui/text/MidText";
+import { Ionicons } from "@expo/vector-icons";
 
 export function MuscleCategorySelect() {
-  const { theme } = useSettingsStore();
   const { t } = useTranslation();
 
   const { updateDraftExercise, muscleCategories, draftExercise } =
@@ -36,8 +37,12 @@ export function MuscleCategorySelect() {
     <View style={{ gap: 4 }}>
       <CenterCardSlider
         data={muscleCategories}
+        cardHeight={WIDTH / 3}
         cardWidth={WIDTH / 3}
-        cardHeight={WIDTH / 5}
+        sliderWidth={WIDTH}
+        animationType="flat"
+        hapticFeedback
+        hideDots
         selectedIndex={initialSelectedIndex}
         selectedCardIndex={initialSelectedIndex}
         initialScrollIndex={initialSelectedIndex}
@@ -46,31 +51,55 @@ export function MuscleCategorySelect() {
           offset: (WIDTH / 5) * index,
           index,
         })}
-        sliderWidth={WIDTH}
-        animationType="wheel"
-        showDistanceBubble
         distanceTolerance={1}
-        hideDots
-        hapticFeedback
         card={({ item }) => (
-          <IButton
-            title={item.name}
+          <MuscleCategoryCard
+            icon={"dice"}
+            selected={item.id === draftExercise?.category}
+            id={item.id}
             onPress={() => handleSelect(item)}
-            style={{
-              height: WIDTH / 5,
-              width: WIDTH / 3,
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-            textColor={
-              item.id === draftExercise?.category
-                ? theme.fifthBackground
-                : theme.grayText
-            }
           />
         )}
       />
       <InfoText text={t("exercise.select-category")} />
     </View>
+  );
+}
+
+function MuscleCategoryCard({
+  icon,
+  selected,
+  id,
+  onPress,
+}: {
+  icon: keyof typeof Ionicons.glyphMap;
+  selected: boolean;
+  id: string;
+  onPress: () => void;
+}) {
+  const { theme } = useSettingsStore();
+  const { t } = useTranslation();
+
+  function handlePress() {
+    onPress();
+  }
+  return (
+    <StrobeButton
+      onPress={handlePress}
+      strobeDisabled={!selected}
+      style={{
+        alignItems: "center",
+        justifyContent: "space-between",
+        width: WIDTH / 3,
+        height: WIDTH / 3,
+        backgroundColor: selected ? theme.caka + "20" : theme.text + "10",
+        padding: 8,
+        paddingTop: 16,
+        borderRadius: 32,
+      }}
+    >
+      <MidText text={t(`categories.${id}`)} />
+      <Ionicons name={icon} size={44} color={theme.info} />
+    </StrobeButton>
   );
 }

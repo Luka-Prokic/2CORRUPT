@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import { useTranslation } from "react-i18next";
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { useWorkoutStore } from "../../../stores/workout";
@@ -10,6 +10,7 @@ import { useWidgetUnit } from "../../../features/widgets/useWidgetUnit";
 import { useMemo, useState } from "react";
 import { TextButton } from "../../ui/buttons/TextButton";
 import { WIDTH } from "../../../utils/Dimensions";
+import { IBubble } from "../../ui/containers/IBubble";
 
 type MuscleType = "primary" | "secondary";
 
@@ -52,14 +53,17 @@ export function ExerciseMuscleSelect() {
   };
 
   return (
-    <View style={{ gap: 12, alignItems: "center" }}>
+    <IBubble
+      size="flexible"
+      style={{ alignItems: "center", paddingVertical: 8 }}
+    >
       {/* Switch */}
       <SwitchButton
         option1={t("exercise.primary").toUpperCase()}
         option2={t("exercise.secondary").toUpperCase()}
         value={type.toUpperCase()}
         onChange={(v: MuscleType) => setType(v.toLowerCase() as MuscleType)}
-        width={fullWidth}
+        width={fullWidth - 16}
         haptics
       />
 
@@ -88,7 +92,7 @@ export function ExerciseMuscleSelect() {
                 cardWidth={WIDTH / 3}
                 cardHeight={44}
                 hideDots
-                animationType="wheel"
+                animationType="flat"
                 hapticFeedback
                 startAtMiddle
                 getItemLayout={(_, index) => ({
@@ -108,6 +112,7 @@ export function ExerciseMuscleSelect() {
                         width: WIDTH / 3,
                         justifyContent: "center",
                         alignItems: "center",
+                        paddingHorizontal: 4,
                       }}
                       textColor={
                         isSelected ? theme.fifthBackground : theme.grayText
@@ -122,6 +127,6 @@ export function ExerciseMuscleSelect() {
       })}
 
       <InfoText text={t("exercise.select-muscles")} />
-    </View>
+    </IBubble>
   );
 }

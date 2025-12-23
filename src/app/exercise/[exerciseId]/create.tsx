@@ -29,9 +29,9 @@ export default function ExerciseCreateScreen() {
       <ScreenContent>
         <ModalView style={{ gap: 16 }}>
           <EditExerciseName exercise={draftExercise} />
+          <ExerciseEquipmentSelect />
           <MuscleCategorySelect />
           <ExerciseMuscleSelect />
-          <ExerciseEquipmentSelect />
         </ModalView>
       </ScreenContent>
     </Fragment>

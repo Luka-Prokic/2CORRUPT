@@ -1,9 +1,10 @@
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { InfoText } from "../../ui/text/InfoText";
 import { ExerciseInfoNameInput } from "../ExerciseInfoNameInput";
 import { useTranslation } from "react-i18next";
 import { ExerciseInfo } from "../../../stores/workout/types";
-import { View } from "react-native";
+import { IBubble } from "../../ui/containers/IBubble";
+import { TextButton } from "../../ui/buttons/TextButton";
 
 interface EditExerciseNameProps {
   exercise: ExerciseInfo;
@@ -12,9 +13,14 @@ interface EditExerciseNameProps {
 export function EditExerciseName({ exercise }: EditExerciseNameProps) {
   const { t } = useTranslation();
   const locale = t("locale");
+  const [showLocale, setShowLocale] = useState(false);
+
+  function handleToggleLocale() {
+    setShowLocale(!showLocale);
+  }
 
   return (
-    <View style={{ gap: 4 }}>
+    <IBubble size="flexible" style={{ padding: 16 }}>
       <ExerciseInfoNameInput
         exercise={exercise}
         locale={locale}
@@ -22,19 +28,28 @@ export function EditExerciseName({ exercise }: EditExerciseNameProps) {
       />
       <InfoText text={`${t(`language.${locale}`)} ${t("exercise.name")}`} />
 
-      {locale !== "en" && (
+      {showLocale && (
         <Fragment>
-          <ExerciseInfoNameInput exercise={exercise} locale="en" />
-          <InfoText text={`${t("language.en")} ${t("exercise.name")}`} />
-        </Fragment>
-      )}
+          {locale !== "en" && (
+            <Fragment>
+              <ExerciseInfoNameInput exercise={exercise} locale="en" />
+              <InfoText text={`${t("language.en")} ${t("exercise.name")}`} />
+            </Fragment>
+          )}
 
-      {locale !== "rs" && (
-        <Fragment>
-          <ExerciseInfoNameInput exercise={exercise} locale="rs" />
-          <InfoText text={`${t("language.rs")} ${t("exercise.name")}`} />
+          {locale !== "rs" && (
+            <Fragment>
+              <ExerciseInfoNameInput exercise={exercise} locale="rs" />
+              <InfoText text={`${t("language.rs")} ${t("exercise.name")}`} />
+            </Fragment>
+          )}
         </Fragment>
       )}
-    </View>
+      <TextButton
+        text={showLocale ? t("dialog.show-less") : t("dialog.show-more")}
+        onPress={handleToggleLocale}
+        style={{ marginTop: 16 }}
+      />
+    </IBubble>
   );
 }
