@@ -40,8 +40,7 @@ export function DailyCreatineButton() {
 
         <IText
           text={dailyCreatineGoal.toString() + " g"}
-          size={18}
-          style={{ position: "absolute" }}
+          style={{ position: "absolute", width: 44 }}
           adjustsFontSizeToFit
           numberOfLines={1}
           color={theme.background}

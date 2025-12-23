@@ -4,6 +4,8 @@ import { useTranslation } from "react-i18next";
 import { ProfileButton } from "../settings-profile/ProfileButton";
 import { useUserStore } from "../../stores/user";
 import { IText } from "../ui/text/IText";
+import { IButton } from "../ui/buttons/IButton";
+import { router } from "expo-router";
 
 export function HomeHeader() {
   const { theme } = useSettingsStore();
@@ -11,7 +13,7 @@ export function HomeHeader() {
   const { user } = useUserStore();
 
   // Get current time and determine greeting
-  const getGreeting = () => {
+  function getGreeting() {
     const hour = new Date().getHours();
 
     if (hour >= 0 && hour < 12) {
@@ -21,9 +23,13 @@ export function HomeHeader() {
     } else {
       return t("greeting.evening");
     }
-  };
+  }
 
   const greeting = getGreeting();
+
+  function handlePress() {
+    router.push("/profile");
+  }
 
   return (
     <View
@@ -34,10 +40,18 @@ export function HomeHeader() {
         padding: 16,
       }}
     >
-      <View>
+      <IButton
+        onPress={handlePress}
+        style={{
+          flexDirection: "column",
+          alignItems: "flex-start",
+          gap: 0,
+        }}
+        haptics
+      >
         <IText text={`${greeting},`} color={theme.tint} />
         <IText text={user.username} color={theme.text} size={36} />
-      </View>
+      </IButton>
       <ProfileButton />
     </View>
   );

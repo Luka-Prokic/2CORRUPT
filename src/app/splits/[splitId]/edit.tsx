@@ -46,7 +46,7 @@ export default function SplitEditScreen() {
         }}
       />
       <ScreenContent>
-        <ScreenView>
+        <ScreenView style={{ paddingTop: 32 }}>
           <SplitHeader split={split} />
           <SplitDayList split={split} isGridView={isGridView} />
           <SplitFooter split={split} />

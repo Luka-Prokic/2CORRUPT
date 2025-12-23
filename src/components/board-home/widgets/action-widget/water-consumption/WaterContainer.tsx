@@ -6,7 +6,7 @@ import { useWidgetUnit } from "../../../../../features/widgets/useWidgetUnit";
 import { useWaterStore } from "../../../../../stores/water";
 import { BlurView } from "expo-blur";
 import { View } from "react-native";
-
+import { hexToRGBA, tintColor } from "../../../../../utils/HEXtoRGB";
 interface WaterContainerProps {
   children: React.ReactNode;
 }
@@ -25,8 +25,8 @@ export function WaterContainer({ children }: WaterContainerProps) {
   return (
     <LinearGradient
       colors={[
-        color,
-        theme.glow + "80",
+        hexToRGBA(color, 0.8),
+        tintColor(color, 0.8),
         color + "80",
         color + "80",
         color + "80",

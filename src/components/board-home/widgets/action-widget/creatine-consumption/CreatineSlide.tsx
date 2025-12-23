@@ -13,7 +13,8 @@ export function CreatineSlide() {
   const { fullWidth } = useWidgetUnit();
   const { fontFamily } = useDracoFont();
   const { t } = useTranslation();
-  const { addCreatine, resetTodaysCreatine } = useCreatineStore();
+  const { dailyCreatineGoal, addCreatine, resetTodaysCreatine } =
+    useCreatineStore();
 
   const { dose, remaining, finalSwipe, confirmed } = useTodayCreatine();
 
@@ -33,6 +34,7 @@ export function CreatineSlide() {
 
   return (
     <IButtonSwipe
+      key={`${dailyCreatineGoal}`}
       width={fullWidth - 16}
       height={64}
       confirmed={confirmed}

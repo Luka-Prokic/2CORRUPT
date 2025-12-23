@@ -10,6 +10,7 @@ import { EmptyFooter } from "../../components/ui/containers/EmptyFooter";
 import { generalSettingsConfig } from "../../config/settings/generalSettings";
 import { SettingsField } from "../../components/ui/settings-fields/SettingsField";
 import { IText } from "../../components/ui/text/IText";
+import { ModalView } from "../../components/ui/containers/ModalView";
 
 export default function AppSettings() {
   const { t } = useTranslation();
@@ -30,7 +31,7 @@ export default function AppSettings() {
       />
 
       <ScreenContent>
-        <ScreenView style={{ paddingHorizontal: 16, gap: 16 }}>
+        <ModalView style={{ paddingHorizontal: 16, gap: 16 }}>
           <DescriptionText text={t("settings.general-settings.description")} />
           <FlatList
             data={generalSettingsConfig}
@@ -39,7 +40,7 @@ export default function AppSettings() {
             renderItem={({ item }) => <SettingsField setting={item} />}
             ListFooterComponent={<EmptyFooter />}
           />
-        </ScreenView>
+        </ModalView>
       </ScreenContent>
     </Fragment>
   );

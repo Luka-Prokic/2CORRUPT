@@ -67,6 +67,7 @@ export function PlannedWorkoutCard({
         ...style,
       }}
       disabled={day.isRest}
+      noShine
     >
       <View
         style={{

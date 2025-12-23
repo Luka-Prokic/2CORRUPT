@@ -46,9 +46,16 @@ export const createGeneralSlice: StateCreator<
     const waterConsumption = getWaterConsumption();
     const currentConsumption = waterConsumption - value;
 
-    if (currentConsumption < WATER_MIN_INTAKE) return;
-
     const today = new Date().toISOString().split("T")[0];
+
+    if (currentConsumption < WATER_MIN_INTAKE) {
+      const newLogs = waterLog.filter(
+        (log) => log.date.split("T")[0] !== today
+      );
+      set({ waterLog: newLogs });
+      return;
+    }
+
     let remaining = value;
 
     const newLogs: WaterTicket[] = [];

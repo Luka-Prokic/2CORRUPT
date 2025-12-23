@@ -29,8 +29,8 @@ export function TemplateAlbumCard({
       style={{
         height: cardHeight,
         width: cardWidth,
-        backgroundColor: theme.fifthBackground,
-        borderColor: theme.fifthBackground + "40",
+        backgroundColor: theme.secondaryAccent,
+        borderColor: theme.secondaryAccent + "40",
         borderRadius: 24,
         padding: 8,
         borderWidth: 1,

@@ -19,7 +19,7 @@ export function ActionRenderItem({ item, focused }: ActionRenderItemProps) {
           case "creatine-consumption":
             return <CreatineConsumptionCard focused={focused} />;
           case "water-consumption":
-            return <WaterConsumptionCard />;
+            return <WaterConsumptionCard focused={focused} />;
           default:
             return null;
         }

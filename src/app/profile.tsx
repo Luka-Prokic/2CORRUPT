@@ -6,7 +6,7 @@ import { Stack } from "expo-router";
 import { ScreenContent } from "../components/ui/utils/ScreenContent";
 import { useTranslation } from "react-i18next";
 import { ModalExitButton } from "./_layout";
-import { ScreenView } from "../components/ui/containers/ScreenView";
+import { ModalView } from "../components/ui/containers/ModalView";
 
 export default function ProfileScreen() {
   const { theme } = useSettingsStore();
@@ -50,7 +50,7 @@ export default function ProfileScreen() {
           keyboardVerticalOffset: 88,
         }}
       >
-        <ScreenView>
+        <ModalView>
           {isLogin ? (
             <UserLogin
               onLoginSuccess={handleLoginSuccess}
@@ -62,7 +62,7 @@ export default function ProfileScreen() {
               onSwitchToLogin={handleSwitchToLogin}
             />
           )}
-        </ScreenView>
+        </ModalView>
       </ScreenContent>
     </Fragment>
   );

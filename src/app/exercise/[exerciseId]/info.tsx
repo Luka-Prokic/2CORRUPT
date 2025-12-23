@@ -3,6 +3,8 @@ import { ScreenContent } from "../../../components/ui/utils/ScreenContent";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { useWorkoutStore } from "../../../stores/workout/useWorkoutStore";
 import { useTranslation } from "react-i18next";
+import { ModalView } from "../../../components/ui/containers/ModalView";
+import { IText } from "../../../components/ui/text/IText";
 
 export default function ExerciseListScreen() {
   const { exerciseId } = useLocalSearchParams();
@@ -20,7 +22,11 @@ export default function ExerciseListScreen() {
         }}
       />
 
-      <ScreenContent edges={["top"]} scroll={true}></ScreenContent>
+      <ScreenContent>
+        <ModalView>
+          <IText text={exercise?.defaultName?.[locale]} />
+        </ModalView>
+      </ScreenContent>
     </Fragment>
   );
 }

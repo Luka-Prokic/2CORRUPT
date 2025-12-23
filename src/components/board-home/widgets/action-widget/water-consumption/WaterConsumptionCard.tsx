@@ -5,7 +5,11 @@ import { WaterContainer } from "./WaterContainer";
 import { AnimatedWater } from "./AnimatedWater";
 import { WaterUserInterface } from "./WaterUserInterface";
 
-export function WaterConsumptionCard() {
+interface WaterConsumptionCardProps {
+  focused: boolean;
+}
+
+export function WaterConsumptionCard({ focused }: WaterConsumptionCardProps) {
   const { widgetUnit, fullWidth } = useWidgetUnit();
   const { theme } = useSettingsStore();
 
@@ -25,7 +29,7 @@ export function WaterConsumptionCard() {
     >
       <AnimatedWater />
       <WaterContainer>
-        <WaterUserInterface />
+        <WaterUserInterface focused={focused} />
       </WaterContainer>
     </IButton>
   );

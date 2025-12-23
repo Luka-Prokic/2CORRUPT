@@ -39,7 +39,7 @@ export function CustomWaterAddView({ ref }: CustomWaterAddViewProps) {
   const { theme, units } = useSettingsStore();
   const { t } = useTranslation();
   const { setIncrement, addWater } = useWaterStore();
-  const [selectedOption, setSelectedOption] = useState<number>(0);
+  const [selectedOption, setSelectedOption] = useState<number>(1);
 
   const WATER_ADD_OPTIONS =
     units.volume === "fl.oz" ? WATER_ADD_OPTIONS_OZ : WATER_ADD_OPTIONS_ML;
@@ -68,6 +68,8 @@ export function CustomWaterAddView({ ref }: CustomWaterAddViewProps) {
         cardHeight={64}
         maxDotsShown={WATER_ADD_OPTIONS.length}
         onSelect={handleSelectOption}
+        selectedIndex={1}
+        selectedCardIndex={1}
         hapticsModeType="on"
         hapticFeedback
         animationType="flat"

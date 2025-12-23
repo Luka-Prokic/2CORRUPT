@@ -28,6 +28,7 @@ export function ProfileButton({ onPress }: ProfileButtonProps) {
         alignItems: "center",
         justifyContent: "center",
       }}
+      haptics
     >
       {/* Glow circle BEHIND icon */}
       <View

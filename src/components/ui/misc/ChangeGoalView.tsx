@@ -8,9 +8,13 @@ import { useSettingsStore } from "../../../stores/settingsStore";
 import { Fragment } from "react";
 import { InfoText } from "../text/InfoText";
 import { useWidgetUnit } from "../../../features/widgets/useWidgetUnit";
+import { TextStyle, ViewStyle } from "react-native";
 
 interface ChangeGoalViewProps {
   title?: string;
+  titleStyle?: TextStyle | TextStyle[];
+  descriptionStyle?: TextStyle | TextStyle[];
+  style?: ViewStyle | ViewStyle[];
   goal: number;
   options?: string[];
   option1?: string;
@@ -26,6 +30,9 @@ interface ChangeGoalViewProps {
 
 export function ChangeGoalView({
   title,
+  titleStyle,
+  descriptionStyle,
+  style,
   goal,
   options,
   option1,
@@ -44,9 +51,9 @@ export function ChangeGoalView({
   return (
     <Animated.View
       entering={FadeIn}
-      style={{ flex: 1, gap: 16, alignItems: "center" }}
+      style={{ flex: 1, gap: 16, alignItems: "center", ...style }}
     >
-      <IText text={title} style={{ textAlign: "center" }} />
+      <IText text={title} style={{ textAlign: "center", ...titleStyle }} />
 
       <IText text={`${goal} ${unit}`} color={theme.accent} size={52} />
 
@@ -81,7 +88,9 @@ export function ChangeGoalView({
           />
         </Fragment>
       )}
-      {description && <DescriptionText text={description} />}
+      {description && (
+        <DescriptionText text={description} style={descriptionStyle} />
+      )}
     </Animated.View>
   );
 }

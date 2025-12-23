@@ -51,6 +51,7 @@ export function SplitDayCardContent({
         data={day.workouts}
         showsVerticalScrollIndicator={false}
         nestedScrollEnabled={true}
+        scrollEnabled={!day.isRest}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <PlannedWorkoutCard

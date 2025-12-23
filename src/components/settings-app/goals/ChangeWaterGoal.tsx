@@ -3,6 +3,8 @@ import { useWaterStore } from "../../../stores/water";
 import { ChangeGoalView } from "../../ui/misc/ChangeGoalView";
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { useDisplayedUnits } from "../../../features/translate/useDisplayedUnits";
+import { WIDTH } from "../../../utils/Dimensions";
+import { IBubble } from "../../ui/containers/IBubble";
 
 export function ChangeWaterGoal() {
   const { t } = useTranslation();
@@ -13,6 +15,7 @@ export function ChangeWaterGoal() {
   return (
     <ChangeGoalView
       title={t("settings.goal.daily-water-goal")}
+      titleStyle={{ width: WIDTH - 64 }}
       goal={Number(fromMl(dailyWaterGoal))}
       value={Number(fromMl(dailyWaterGoal))}
       option1="-"
@@ -24,5 +27,13 @@ export function ChangeWaterGoal() {
       max={6000} // 6L
       unit={units.volume}
     />
+  );
+}
+
+export function ChangeWaterGoalBubble() {
+  return (
+    <IBubble size="flexible" style={{ padding: 16 }}>
+      <ChangeWaterGoal />
+    </IBubble>
   );
 }

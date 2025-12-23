@@ -5,7 +5,6 @@ import { Fragment } from "react";
 import { ScreenContent } from "../../components/ui/utils/ScreenContent";
 import { useTranslation } from "react-i18next";
 import { ModalExitButton } from "./../_layout";
-import { ScreenView } from "../../components/ui/containers/ScreenView";
 import { WorkoutButton } from "../../components/settings-app/WorkoutButton";
 import { GoalsButton } from "../../components/settings-app/GoalsButton";
 import { UnitsSettings } from "../../components/settings-app/UnitsSettings";
@@ -13,6 +12,7 @@ import { IBubble } from "../../components/ui/containers/IBubble";
 import { EmptyFooter } from "../../components/ui/containers/EmptyFooter";
 import { GeneralButton } from "../../components/settings-app/GeneralButton";
 import { IText } from "../../components/ui/text/IText";
+import { ModalView } from "../../components/ui/containers/ModalView";
 
 export default function SettingsScreen() {
   const { t } = useTranslation();
@@ -33,7 +33,7 @@ export default function SettingsScreen() {
       />
 
       <ScreenContent>
-        <ScreenView style={{ gap: 8, paddingHorizontal: 16 }}>
+        <ModalView style={{ gap: 8, paddingHorizontal: 16 }}>
           <IBubble size="flexible">
             <GeneralButton />
             <WorkoutButton />
@@ -46,7 +46,7 @@ export default function SettingsScreen() {
 
           <LanguageSettings />
           <EmptyFooter />
-        </ScreenView>
+        </ModalView>
       </ScreenContent>
     </Fragment>
   );

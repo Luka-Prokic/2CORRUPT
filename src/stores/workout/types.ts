@@ -19,6 +19,7 @@ export interface MuscleCategory {
   muscles: Muscle[];
   metadata?: Record<string, any>;
 }
+
 export type LocalizedName = Record<string, string>;
 
 // Canonical exercise reference (master data)
@@ -30,7 +31,7 @@ export interface ExerciseInfo {
   readonly secondaryMuscles?: Muscle["id"][];
   readonly equipment?: Equipment["id"][];
   readonly metadata?: Record<string, any>;
-  readonly updatedAt?: IsoDateString;
+  readonly createdAt?: IsoDateString;
   readonly userId?: string | null;
 }
 

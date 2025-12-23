@@ -16,8 +16,13 @@ import { useDisplayedUnits } from "../../../../../features/translate/useDisplaye
 import { useTranslation } from "react-i18next";
 import { BounceButton } from "../../../../ui/buttons/BounceButton";
 import { IButton } from "../../../../ui/buttons/IButton";
+import { ShineText } from "../../../../ui/text/ShineText";
 
-export function WaterUserInterface() {
+interface WaterUserInterfaceProps {
+  focused: boolean;
+}
+
+export function WaterUserInterface({ focused }: WaterUserInterfaceProps) {
   const { theme, units } = useSettingsStore();
   const { widgetUnit } = useWidgetUnit();
   const { t } = useTranslation();
@@ -27,12 +32,13 @@ export function WaterUserInterface() {
     addWater,
     removeWater,
     dailyWaterGoal,
-    waterLog,
   } = useWaterStore();
   const waterConsumption = getWaterConsumption();
   const { fromMl } = useDisplayedUnits();
 
   const bottomSheetRef = useRef<BottomSheetModal>(null);
+
+  const completed = waterConsumption >= dailyWaterGoal;
 
   function openBottomSheet() {
     bottomSheetRef.current?.present();
@@ -46,6 +52,13 @@ export function WaterUserInterface() {
     removeWater(increment);
   }
 
+  const waterText =
+    waterConsumption == dailyWaterGoal
+      ? "✓"
+      : completed
+      ? `+ ${fromMl(waterConsumption - dailyWaterGoal)} ${units.volume}`
+      : `- ${fromMl(dailyWaterGoal - waterConsumption)} ${units.volume}`;
+
   return (
     <Fragment>
       <View
@@ -57,11 +70,12 @@ export function WaterUserInterface() {
           height: widgetUnit,
         }}
       >
-        <IText
-          text={`${fromMl(waterConsumption)}/${fromMl(dailyWaterGoal)} ${
-            units.volume
-          }`}
-          color={theme.border}
+        <ShineText
+          text={`${fromMl(waterConsumption)} / ${fromMl(dailyWaterGoal)}`}
+          color={completed ? theme.accent : theme.border}
+          constant
+          focused={focused && completed}
+          size={36}
         />
         <BounceButton
           onPress={openBottomSheet}
@@ -80,9 +94,14 @@ export function WaterUserInterface() {
           haptics
         >
           <Ionicons name="ellipse" size={64} color={theme.accent} />
-          <Ionicons
-            name="water-outline"
+          {/* <Ionicons
+            name="chevron-up"
             size={32}
+            color={theme.border}
+            style={{ position: "absolute" }}
+          /> */}
+          <IText
+            text={`${units.volume}`}
             color={theme.border}
             style={{ position: "absolute" }}
           />

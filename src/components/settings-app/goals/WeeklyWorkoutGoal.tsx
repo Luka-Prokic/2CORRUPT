@@ -9,6 +9,7 @@ import { useWidgetUnit } from "../../../features/widgets/useWidgetUnit";
 import { TwoOptionStrobeButtons } from "../../ui/buttons/TwoOptionStrobeButtons";
 import { useWorkoutStore } from "../../../stores/workout";
 import { DescriptionText } from "../../ui/text/DescriptionText";
+import { IBubble } from "../../ui/containers/IBubble";
 
 interface WeeklyWorkoutGoalProps {
   description?: string;
@@ -58,5 +59,17 @@ export function WeeklyWorkoutGoal({ description }: WeeklyWorkoutGoalProps) {
 
       {description && <DescriptionText text={description} />}
     </View>
+  );
+}
+
+export function WeeklyWorkoutGoalBubble() {
+  const { t } = useTranslation();
+
+  return (
+    <IBubble size="flexible" style={{ padding: 16 }}>
+      <WeeklyWorkoutGoal
+        description={t("settings.goal.weekly-workout-goal-description")}
+      />
+    </IBubble>
   );
 }

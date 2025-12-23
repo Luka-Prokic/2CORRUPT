@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { ChangeGoalView } from "../../ui/misc/ChangeGoalView";
 import { useCreatineStore } from "../../../stores/creatine";
+import { IBubble } from "../../ui/containers/IBubble";
 
 export function ChangeCreatineGoal() {
   const { t } = useTranslation();
@@ -20,5 +21,13 @@ export function ChangeCreatineGoal() {
       max={100} // 100g
       unit={"g"}
     />
+  );
+}
+
+export function ChangeCreatineGoalBubble() {
+  return (
+    <IBubble size="flexible" style={{ padding: 16 }}>
+      <ChangeCreatineGoal />
+    </IBubble>
   );
 }

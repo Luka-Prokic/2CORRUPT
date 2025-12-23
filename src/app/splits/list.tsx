@@ -30,7 +30,7 @@ export default function SplitListScreen() {
         }}
       />
       <ScreenContent>
-        <ScreenView>
+        <ScreenView style={{ paddingTop: 32 }}>
           <NoSplitCard />
           <FlatList
             data={splitPlans}
