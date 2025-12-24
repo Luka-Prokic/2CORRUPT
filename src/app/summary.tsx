@@ -1,23 +1,33 @@
 import { Stack } from "expo-router";
 import { Fragment } from "react";
-import { DaySliderScreen } from "../components/sessions/DaySliderScreen";
-import { SummaryHeader } from "../components/sessions/header/SummaryHeader";
 import { useUIStore } from "../stores/ui/useUIStore";
+import { IText } from "../components/ui/text/IText";
+import { WeekSummarySlider } from "../components/summary/WeekSummarySlider";
+import { getWeekRange } from "../features/calendar/useWeeks";
 
 export default function SummaryScreen() {
-  const { weeks, selectedDate, setSelectedDate } = useUIStore();
+  const { weeks, currentWeekIndex, setCurrentWeekIndex } = useUIStore();
+
+  const currentWeek = getWeekRange(weeks[currentWeekIndex], "mid");
+  const currentYear = new Date().getFullYear();
 
   return (
     <Fragment>
       <Stack.Screen
         options={{
-          header: () => <SummaryHeader />,
+          headerTitle: () => (
+            <IText
+              text={`${currentWeek} ${currentYear}`}
+              adjustsFontSizeToFit
+              numberOfLines={1}
+            />
+          ),
         }}
       />
-      <DaySliderScreen
+      <WeekSummarySlider
         weeks={weeks}
-        selectedDate={selectedDate}
-        setSelectedDate={setSelectedDate}
+        currentWeekIndex={currentWeekIndex}
+        setCurrentWeekIndex={setCurrentWeekIndex}
       />
     </Fragment>
   );

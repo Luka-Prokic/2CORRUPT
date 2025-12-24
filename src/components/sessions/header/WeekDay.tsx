@@ -1,6 +1,5 @@
 import { TouchableOpacity } from "react-native";
 import { useSessionsByDate } from "../../../features/workout";
-import { Text } from "react-native";
 import { useSettingsStore } from "../../../stores/settings";
 import { useDayLabels } from "../../../utils/Labels";
 import { Ionicons } from "@expo/vector-icons";
