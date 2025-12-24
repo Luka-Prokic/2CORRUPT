@@ -227,12 +227,12 @@ export const exercisesDefList: ExerciseInfo[] = [
     equipment: ["dumbbells", "cable"],
   },
   {
-    id: "ex-ab-wheel",
+    id: "ex-other",
     defaultName: { en: "Ab Wheel Rollout", rs: "Ab Wheel Rollout" },
     category: "core",
     primaryMuscles: ["abs"],
     secondaryMuscles: ["obliques"],
-    equipment: ["ab-wheel"],
+    equipment: ["other"],
   },
   {
     id: "ex-cable-crunch",
@@ -312,7 +312,7 @@ export const exercisesDefList: ExerciseInfo[] = [
     category: "arms",
     primaryMuscles: ["biceps"],
     secondaryMuscles: [],
-    equipment: ["barbell", "preacher-bench"],
+    equipment: ["barbell", "other"],
   },
   {
     id: "ex-incline-bicep-curl",
@@ -475,7 +475,7 @@ export const exercisesDefList: ExerciseInfo[] = [
     category: "legs",
     primaryMuscles: ["quads", "glutes"],
     secondaryMuscles: ["hamstrings", "calves"],
-    equipment: ["dumbbells", "box"],
+    equipment: ["dumbbells", "other"],
   },
   {
     id: "ex-cable-lat-raise",

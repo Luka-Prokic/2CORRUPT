@@ -53,7 +53,6 @@ export function ExerciseFilter({
   // Prepare display lists (id + label)
   const muscleCategoriesList = useMemo(() => {
     return [
-      { id: "fullBody", label: t("categories.full-body") },
       ...muscleCategories.map((item) => ({
         id: item.id,
         label: t(`categories.${item.id}`),

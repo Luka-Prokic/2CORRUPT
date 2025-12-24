@@ -15,8 +15,8 @@ export function useFilterAddExercise() {
 
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<
-    MuscleCategory["id"] | "fullBody"
-  >("fullBody");
+    MuscleCategory["id"] | "full-body"
+  >("full-body");
   const [selectedEquipment, setSelectedEquipment] = useState<
     Equipment["id"] | "all"
   >("all");
@@ -27,7 +27,8 @@ export function useFilterAddExercise() {
         ?.filter((ex) => {
           // Filter by category
           const matchesCategory =
-            selectedCategory === "fullBody" || ex.category === selectedCategory;
+            selectedCategory === "full-body" ||
+            ex.category === selectedCategory;
 
           // Filter by equipment
           const matchesEquipment =

@@ -38,13 +38,16 @@ const defaultEquipment = [
   { id: "dip-bar", name: "Dip Bar" },
   { id: "pull-up-bar", name: "Pull-Up Bar" },
   { id: "machine", name: "Machine" },
-  { id: "box", name: "Box" },
   { id: "kettlebell", name: "Kettlebell" },
-  { id: "ab-wheel", name: "Ab Wheel" },
-  { id: "preacher-bench", name: "Preacher Bench" },
+  { id: "other", name: "Other" },
 ];
 
 const defaultMuscleCategories = [
+  {
+    id: "full-body",
+    name: "Full Body",
+    muscles: [...defaultMuscles],
+  },
   {
     id: "chest",
     name: "Chest",
@@ -103,11 +106,6 @@ const defaultMuscleCategories = [
       { id: "obliques", name: "Obliques" },
       { id: "hip-flexors", name: "Hip Flexors" },
     ],
-  },
-  {
-    id: "full-body",
-    name: "Full Body",
-    muscles: [...defaultMuscles],
   },
 ];
 
