@@ -16,6 +16,7 @@ const defaultMuscles = [
   { id: "brachialis", name: "Brachialis" },
   { id: "triceps", name: "Triceps" },
   { id: "forearms", name: "Forearms" },
+  { id: "grip", name: "Grip" },
   { id: "quads", name: "Quads" },
   { id: "hamstrings", name: "Hamstrings" },
   { id: "glutes", name: "Glutes" },
@@ -24,8 +25,6 @@ const defaultMuscles = [
   { id: "abs", name: "Abs" },
   { id: "obliques", name: "Obliques" },
   { id: "hip-flexors", name: "Hip Flexors" },
-  { id: "forearms", name: "Forearms" },
-  { id: "grip", name: "Grip" },
 ];
 
 const defaultEquipment = [
@@ -36,7 +35,7 @@ const defaultEquipment = [
   { id: "cable", name: "Cable" },
   { id: "bodyweight", name: "Bodyweight" },
   { id: "dip-bar", name: "Dip Bar" },
-  { id: "pull-up-bar", name: "Pull-Up Bar" },
+  { id: "pull-up-bar", name: "Pull Up Bar" },
   { id: "machine", name: "Machine" },
   { id: "kettlebell", name: "Kettlebell" },
   { id: "other", name: "Other" },
@@ -85,6 +84,7 @@ const defaultMuscleCategories = [
       { id: "brachialis", name: "Brachialis" },
       { id: "triceps", name: "Triceps" },
       { id: "forearms", name: "Forearms" },
+      { id: "grip", name: "Grip" },
     ],
   },
   {

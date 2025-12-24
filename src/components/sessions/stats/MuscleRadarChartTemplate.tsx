@@ -4,7 +4,7 @@ import { useSettingsStore } from "../../../stores/settings";
 import { useTranslation } from "react-i18next";
 import { hexToRGBA } from "../../../utils/HEXtoRGB";
 import { WorkoutTemplate } from "../../../stores/workout";
-import { fixedMuscleOrder } from "../../../config/constants/musscleOrder";
+import { fixedMuscleOrder } from "../../../config/constants/muscleOrder";
 import { useMuscleScoresForTemplate } from "../../../features/stats/useMucleScores";
 import { useCategoryScoresForTemplate } from "../../../features/stats/useCategoryScores";
 

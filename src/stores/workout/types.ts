@@ -20,6 +20,8 @@ export interface MuscleCategory {
   metadata?: Record<string, any>;
 }
 
+export type MuscleType = "primary" | "secondary";
+
 export type LocalizedName = Record<string, string>;
 
 // Canonical exercise reference (master data)

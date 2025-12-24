@@ -34,7 +34,7 @@ export function MuscleCategorySelect() {
   }, [draftExercise?.category]);
 
   return (
-    <View style={{ gap: 4 }}>
+    <View style={{ gap: 8 }}>
       <CenterCardSlider
         data={muscleCategories}
         cardHeight={WIDTH / 3}

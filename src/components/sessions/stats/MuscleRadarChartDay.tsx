@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 import { useWidgetUnit } from "../../../features/widgets/useWidgetUnit";
 import { hexToRGBA } from "../../../utils/HEXtoRGB";
 import { Ionicons } from "@expo/vector-icons";
-import { fixedMuscleOrder } from "../../../config/constants/musscleOrder";
+import { fixedMuscleOrder } from "../../../config/constants/muscleOrder";
 
 interface MuscleRadarChartDayProps {
   date: Date;

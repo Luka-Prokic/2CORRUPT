@@ -6,7 +6,7 @@ import { useSettingsStore } from "../../../stores/settings";
 import { useTranslation } from "react-i18next";
 import { hexToRGBA } from "../../../utils/HEXtoRGB";
 import { WorkoutSession } from "../../../stores/workout";
-import { fixedMuscleOrder } from "../../../config/constants/musscleOrder";
+import { fixedMuscleOrder } from "../../../config/constants/muscleOrder";
 
 interface MuscleRadarChartSessionProps {
   session: WorkoutSession;

@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { ExerciseInfo } from "../../../stores/workout/types";
 import { IBubble } from "../../ui/containers/IBubble";
 import { TextButton } from "../../ui/buttons/TextButton";
+import { IButton } from "../../ui/buttons/IButton";
 
 interface EditExerciseNameProps {
   exercise: ExerciseInfo;
@@ -45,11 +46,14 @@ export function EditExerciseName({ exercise }: EditExerciseNameProps) {
           )}
         </Fragment>
       )}
-      <TextButton
-        text={showLocale ? t("dialog.show-less") : t("dialog.show-more")}
+      <IButton
+        style={{ height: 34, width: "100%", marginTop: 16 }}
         onPress={handleToggleLocale}
-        style={{ marginTop: 16 }}
-      />
+      >
+        <InfoText
+          text={showLocale ? t("dialog.show-less") : t("dialog.show-more")}
+        />
+      </IButton>
     </IBubble>
   );
 }

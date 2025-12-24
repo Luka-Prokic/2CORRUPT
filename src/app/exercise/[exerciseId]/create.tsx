@@ -9,6 +9,7 @@ import { MuscleCategorySelect } from "../../../components/exercises/edit-create/
 import { ExerciseEquipmentSelect } from "../../../components/exercises/edit-create/ExerciseEquipmentSelect";
 import { ExerciseMuscleSelect } from "../../../components/exercises/edit-create/ExerciseMuscleSelect";
 import { ModalView } from "../../../components/ui/containers/ModalView";
+import { EmptyFooter } from "../../../components/ui/containers/EmptyFooter";
 
 export default function ExerciseCreateScreen() {
   const { draftExercise } = useWorkoutStore();
@@ -32,6 +33,7 @@ export default function ExerciseCreateScreen() {
           <ExerciseEquipmentSelect />
           <MuscleCategorySelect />
           <ExerciseMuscleSelect />
+          <EmptyFooter />
         </ModalView>
       </ScreenContent>
     </Fragment>
