@@ -631,6 +631,9 @@
     "secondary": "Sekundarni",
     "made-by-you": "Ti Si Kreirao",
     "your-favorites": "Tvoje Omiljene",
-    "rest-of-them": "Ostale Vežbe"
+    "rest-of-them": "Ostale Vežbe",
+    "exercises": "Vežbe",
+    "new": "Novi",
+    "edit": "Uredi"
   }
 }

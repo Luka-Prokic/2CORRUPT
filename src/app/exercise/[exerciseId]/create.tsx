@@ -10,19 +10,20 @@ import { ExerciseEquipmentSelect } from "../../../components/exercises/edit-crea
 import { ExerciseMuscleSelect } from "../../../components/exercises/edit-create/ExerciseMuscleSelect";
 import { ModalView } from "../../../components/ui/containers/ModalView";
 import { EmptyFooter } from "../../../components/ui/containers/EmptyFooter";
+import { IText } from "../../../components/ui/text/IText";
+import { useTranslation } from "react-i18next";
 
 export default function ExerciseCreateScreen() {
   const { draftExercise } = useWorkoutStore();
+  const { t } = useTranslation();
 
   if (!draftExercise) return null;
-
   return (
     <Fragment>
       <Stack.Screen
         options={{
-          headerBackButtonDisplayMode: "minimal",
           headerLeft: () => <ExerciseDraftHeaderLeft />,
-          headerTitle: "create",
+          headerTitle: () => <IText text={t("exercise.new")} />,
           headerRight: () => <ExerciseCreateHeaderRight />,
         }}
       />

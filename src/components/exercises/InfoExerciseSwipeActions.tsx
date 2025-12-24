@@ -8,17 +8,14 @@ import { useUserStore } from "../../stores/userStore";
 import { router } from "expo-router";
 import { Fragment } from "react";
 import { Ionicons } from "@expo/vector-icons";
-import { MidText } from "../ui/text/MidText";
 
 export function InfoExerciseSwipeActions({
   exercise,
-  swipeableRef,
 }: {
   exercise: ExerciseInfo;
   swipeableRef: React.RefObject<Swipeable>;
 }) {
   const { theme } = useSettingsStore();
-  const { t } = useTranslation();
   const { removeExercise, updateExerciseMetadata, startDraftExercise } =
     useWorkoutStore();
   const { user } = useUserStore();
@@ -26,10 +23,6 @@ export function InfoExerciseSwipeActions({
   const triggerHapticsRigid = useHaptics({
     modeType: "on",
     hapticType: "rigid",
-  });
-  const triggerHapticsMedium = useHaptics({
-    modeType: "gentle",
-    hapticType: "medium",
   });
   const triggerHapticsHeavy = useHaptics({
     modeType: "gentle",
@@ -107,7 +100,7 @@ export function InfoExerciseSwipeActions({
           minWidth: 72,
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: theme.grayText,
+          backgroundColor: theme.fifthAccent,
         }}
         onPress={handleCreatePress}
       >
@@ -121,8 +114,8 @@ export function InfoExerciseSwipeActions({
           alignItems: "center",
           justifyContent: "center",
           backgroundColor: exercise.metadata?.isFavorite
-            ? theme.error
-            : theme.caka,
+            ? theme.grayText
+            : theme.secondaryAccent,
         }}
         onPress={handleAddToFavorites}
       >

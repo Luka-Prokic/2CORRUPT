@@ -101,7 +101,7 @@ export function MuscleColumn({ title, type, exercise }: MuscleColumnProps) {
           >
             <ShineText
               text={muscle.name}
-              color={isSelected ? theme.tint : theme.grayText}
+              color={isSelected ? theme.tint : theme.text + "80"}
               size={18}
               constant
               focused={isSelected}

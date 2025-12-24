@@ -1,8 +1,8 @@
 import { router } from "expo-router";
-import { TextButton } from "../../ui/buttons/TextButton";
 import { useTranslation } from "react-i18next";
 import { useWorkoutStore } from "../../../stores/workout";
 import { useSettingsStore } from "../../../stores/settingsStore";
+import { Text, TouchableOpacity } from "react-native";
 
 export function ExerciseDraftHeaderLeft() {
   const { t } = useTranslation();
@@ -15,10 +15,10 @@ export function ExerciseDraftHeaderLeft() {
   }
 
   return (
-    <TextButton
-      text={t("button.cancel")}
-      onPress={handlePress}
-      color={theme.error}
-    />
+    <TouchableOpacity onPress={handlePress} style={{ padding: 8 }}>
+      <Text style={{ fontSize: 16, color: theme.error }}>
+        {t("button.cancel")}
+      </Text>
+    </TouchableOpacity>
   );
 }

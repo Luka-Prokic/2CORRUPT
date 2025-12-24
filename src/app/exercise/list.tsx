@@ -2,18 +2,16 @@ import { Fragment, useState } from "react";
 import { ScreenContent } from "../../components/ui/utils/ScreenContent";
 import { Stack } from "expo-router";
 import { IText } from "../../components/ui/text/IText";
-import { ExerciseInfo, useWorkoutStore } from "../../stores/workout";
+import { ExerciseInfo } from "../../stores/workout";
 import { ExerciseSectionList } from "../../components/exercises/ExerciseSectionList";
 import { CreateNewExerciseButton } from "../../components/exercise-add/CreateNewExerciseButton";
-import {
-  InfoExerciseCard,
-  MemoizedInfoExerciseCard,
-} from "../../components/exercises/InfoExerciseCard";
+import { MemoizedInfoExerciseCard } from "../../components/exercises/InfoExerciseCard";
 import { useSettingsStore } from "../../stores/settingsStore";
 import { ExerciseSearchBar } from "../../components/exercises/ExerciseSearchBar";
+import { useTranslation } from "react-i18next";
 
 export default function ExerciseListScreen() {
-  const { draftExercise } = useWorkoutStore();
+  const { t } = useTranslation();
   const { theme } = useSettingsStore();
   const [filteredExercises, setFilteredExercises] = useState<ExerciseInfo[]>(
     []
@@ -30,9 +28,7 @@ export default function ExerciseListScreen() {
             backgroundColor: theme.background,
           },
           headerLeft: () => <Fragment />,
-          headerTitle: () => (
-            <IText text={draftExercise?.defaultName?.en || "Exercises"} />
-          ),
+          headerTitle: () => <IText text={t("exercise.exercises")} />,
           headerRight: () => <CreateNewExerciseButton />,
         }}
       />

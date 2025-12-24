@@ -635,6 +635,9 @@
     "select-muscles": "Select Muscles",
     "made-by-you": "Made By You",
     "your-favorites": "Your Favorites",
-    "rest-of-them": "Rest Of Them"
+    "rest-of-them": "Rest Of Them",
+    "exercises": "Exercises",
+    "new": "New",
+    "edit": "Edit"
   }
 }

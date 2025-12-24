@@ -1,13 +1,16 @@
 import { router } from "expo-router";
-import { TextButton } from "../../ui/buttons/TextButton";
 import { useTranslation } from "react-i18next";
 import { useWorkoutStore } from "../../../stores/workout";
 import { useSettingsStore } from "../../../stores/settingsStore";
+import { useIsExerciseInfoComplete } from "../../../features/workout/useIsExerciseInfoComplete";
+import { Text, TouchableOpacity } from "react-native";
 
 export function ExerciseEditHeaderRight() {
   const { t } = useTranslation();
-  const { updateExerciseWithDraft } = useWorkoutStore();
+  const { updateExerciseWithDraft, draftExercise } = useWorkoutStore();
   const { theme } = useSettingsStore();
+
+  const isComplete = useIsExerciseInfoComplete(draftExercise);
 
   function handlePress() {
     updateExerciseWithDraft();
@@ -17,10 +20,14 @@ export function ExerciseEditHeaderRight() {
   }
 
   return (
-    <TextButton
-      text={t("button.done")}
+    <TouchableOpacity
       onPress={handlePress}
-      color={theme.accent}
-    />
+      style={{ padding: 8, opacity: !isComplete ? 0.2 : 1 }}
+      disabled={!isComplete}
+    >
+      <Text style={{ fontSize: 16, color: theme.accent }}>
+        {t("button.done")}
+      </Text>
+    </TouchableOpacity>
   );
 }

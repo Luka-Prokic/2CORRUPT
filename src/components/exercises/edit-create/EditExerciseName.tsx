@@ -4,8 +4,8 @@ import { ExerciseInfoNameInput } from "../ExerciseInfoNameInput";
 import { useTranslation } from "react-i18next";
 import { ExerciseInfo } from "../../../stores/workout/types";
 import { IBubble } from "../../ui/containers/IBubble";
-import { TextButton } from "../../ui/buttons/TextButton";
 import { IButton } from "../../ui/buttons/IButton";
+import { useSettingsStore } from "../../../stores/settingsStore";
 
 interface EditExerciseNameProps {
   exercise: ExerciseInfo;
@@ -13,6 +13,7 @@ interface EditExerciseNameProps {
 
 export function EditExerciseName({ exercise }: EditExerciseNameProps) {
   const { t } = useTranslation();
+  const { theme } = useSettingsStore();
   const locale = t("locale");
   const [showLocale, setShowLocale] = useState(false);
 
@@ -22,11 +23,7 @@ export function EditExerciseName({ exercise }: EditExerciseNameProps) {
 
   return (
     <IBubble size="flexible" style={{ padding: 16 }}>
-      <ExerciseInfoNameInput
-        exercise={exercise}
-        locale={locale}
-        placeholder={t("exercise.name")}
-      />
+      <ExerciseInfoNameInput exercise={exercise} locale={locale} />
       <InfoText text={`${t(`language.${locale}`)} ${t("exercise.name")}`} />
 
       {showLocale && (
@@ -47,11 +44,16 @@ export function EditExerciseName({ exercise }: EditExerciseNameProps) {
         </Fragment>
       )}
       <IButton
-        style={{ height: 34, width: "100%", marginTop: 16 }}
+        style={{
+          height: 34,
+          width: "100%",
+          alignItems: "flex-end",
+        }}
         onPress={handleToggleLocale}
       >
         <InfoText
           text={showLocale ? t("dialog.show-less") : t("dialog.show-more")}
+          color={theme.tint}
         />
       </IButton>
     </IBubble>

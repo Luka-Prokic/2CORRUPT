@@ -6,39 +6,35 @@ import { ExerciseDraftHeaderLeft } from "../../../components/exercises/header/Ex
 import { ExerciseEditHeaderRight } from "../../../components/exercises/header/ExerciseEditHeaderRight";
 import { EditExerciseName } from "../../../components/exercises/edit-create/EditExerciseName";
 import { MuscleCategorySelect } from "../../../components/exercises/edit-create/MuscleCategorySelect";
+import { ExerciseEquipmentSelect } from "../../../components/exercises/edit-create/ExerciseEquipmentSelect";
+import { ExerciseMuscleSelect } from "../../../components/exercises/edit-create/ExerciseMuscleSelect";
 import { ModalView } from "../../../components/ui/containers/ModalView";
+import { EmptyFooter } from "../../../components/ui/containers/EmptyFooter";
+import { IText } from "../../../components/ui/text/IText";
+import { useTranslation } from "react-i18next";
 
 export default function ExerciseEditScreen() {
   const { draftExercise } = useWorkoutStore();
+  const { t } = useTranslation();
 
   if (!draftExercise) return null;
-
   return (
     <Fragment>
       <Stack.Screen
         options={{
-          headerBackButtonDisplayMode: "minimal",
           headerLeft: () => <ExerciseDraftHeaderLeft />,
-          headerTitle: "edit",
+          headerTitle: () => <IText text={t("exercise.edit")} />,
           headerRight: () => <ExerciseEditHeaderRight />,
         }}
       />
 
       <ScreenContent>
-        <ModalView>
-          {/* Exercise name inputs */}
+        <ModalView style={{ gap: 16 }}>
           <EditExerciseName exercise={draftExercise} />
-
-          {/* Exercise muscle categorie */}
+          <ExerciseEquipmentSelect />
           <MuscleCategorySelect />
-
-          {/* Exercise primary/secondary muscles */}
-
-          {/* Exercise equipment */}
-
-          {/* Exercise "media" */}
-
-          {/* Exercise description */}
+          <ExerciseMuscleSelect />
+          <EmptyFooter />
         </ModalView>
       </ScreenContent>
     </Fragment>
