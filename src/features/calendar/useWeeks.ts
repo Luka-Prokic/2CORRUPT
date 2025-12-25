@@ -100,6 +100,9 @@ export function getWeekRange(
       if (startMonth === endMonth && startYear === endYear) {
         return `${startDay}-${endDay} ${startMonth} , ${startYear}`;
       }
+      if (startYear === endYear) {
+        return `${startDay} ${startMonth} - ${endDay} ${endMonth} , ${startYear}`;
+      }
       return `${startDay} ${startMonth} , ${startYear} - ${endDay} ${endMonth} , ${endYear}`;
   }
 }

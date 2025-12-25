@@ -29,6 +29,7 @@ interface IBubbleProps {
   styleContent?: ViewStyle | ViewStyle[];
   onPress?: () => void;
   haptics?: boolean;
+  noBorder?: boolean;
 }
 
 export function IBubble({
@@ -47,6 +48,7 @@ export function IBubble({
   onPress,
   styleContent,
   haptics = false,
+  noBorder = false,
 }: IBubbleProps) {
   const { theme } = useSettingsStore();
   const { widgetUnit, fullWidth } = useWidgetUnit();
@@ -71,15 +73,15 @@ export function IBubble({
         flex: size === "flexible" ? 1 : undefined,
         height: size === "flexible" ? undefined : height ?? bubbleHeight,
         width: width ?? fullWidth,
-        borderRadius: 32,
+        borderRadius: noBorder ? 0 : 32,
         backgroundColor: backgroundColor ?? theme.text + "10",
         overflow: "hidden",
-        borderWidth: 1,
+        borderWidth: noBorder ? 0 : 1,
         borderColor: theme.text + "10",
         ...style,
       }}
     >
-      <Shine />
+      <Shine style={{ borderRadius: noBorder ? 0 : 32 }} />
       <Pressable
         onPress={handlePress}
         style={{

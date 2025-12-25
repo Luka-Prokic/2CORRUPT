@@ -6,10 +6,9 @@ import { WeekSummarySlider } from "../components/summary/WeekSummarySlider";
 import { getWeekRange } from "../features/calendar/useWeeks";
 
 export default function SummaryScreen() {
-  const { weeks, currentWeekIndex, setCurrentWeekIndex } = useUIStore();
+  const { weeks, currentWeekIndex } = useUIStore();
 
-  const currentWeek = getWeekRange(weeks[currentWeekIndex], "mid");
-  const currentYear = new Date().getFullYear();
+  const currentWeek = getWeekRange(weeks[currentWeekIndex], "long");
 
   return (
     <Fragment>
@@ -17,18 +16,14 @@ export default function SummaryScreen() {
         options={{
           headerTitle: () => (
             <IText
-              text={`${currentWeek} ${currentYear}`}
+              text={`${currentWeek}`}
               adjustsFontSizeToFit
               numberOfLines={1}
             />
           ),
         }}
       />
-      <WeekSummarySlider
-        weeks={weeks}
-        currentWeekIndex={currentWeekIndex}
-        setCurrentWeekIndex={setCurrentWeekIndex}
-      />
+      <WeekSummarySlider />
     </Fragment>
   );
 }

@@ -20,12 +20,19 @@ export function SessionRecapCardHeader({
 
   return (
     <View>
-      <IText color={theme.tint} text={`${startOfSession}-${endOfSession}`} />
+      <IText
+        color={theme.secondaryAccent}
+        text={`${startOfSession}-${endOfSession}`}
+        adjustsFontSizeToFit
+        numberOfLines={1}
+      />
 
       <MidText
         text={session.name}
         color={theme.shadow}
         style={{ textAlign: "left" }}
+        adjustsFontSizeToFit
+        numberOfLines={1}
       />
     </View>
   );

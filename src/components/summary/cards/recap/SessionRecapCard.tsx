@@ -1,7 +1,7 @@
 import { useWidgetUnit } from "../../../../features/widgets/useWidgetUnit";
 import { useSettingsStore } from "../../../../stores/settings";
 import { WorkoutSession } from "../../../../stores/workout";
-import { Text } from "react-native";
+import { Text, View } from "react-native";
 import { Fragment, useRef } from "react";
 import { SessionBottomSheet } from "../../session-options/SessionBottomSheet";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
@@ -17,7 +17,7 @@ interface SessionRecapCardProps {
 
 export function SessionRecapCard({ session }: SessionRecapCardProps) {
   const { theme } = useSettingsStore();
-  const { halfWidget, fullWidth } = useWidgetUnit();
+  const { halfWidget, widgetUnit } = useWidgetUnit();
   const ratio = useSessionCompletionRatio(session);
   const isCompleted = ratio === 1;
 
@@ -27,62 +27,59 @@ export function SessionRecapCard({ session }: SessionRecapCardProps) {
     bottomSheetRef.current?.present();
   }
 
-  if (session)
-    return (
-      <Fragment>
-        <StrobeButton
-          onPress={handlePress}
-          strobeColors={[
-            theme.caka,
-            theme.background,
-            theme.background,
-            theme.tint,
-          ]}
-          strobeDisabled={!isCompleted}
-          style={{
-            width: fullWidth,
-            height: halfWidget,
-            borderRadius: 32,
-            overflow: "hidden",
-            backgroundColor: hexToRGBA(theme.thirdBackground, 0.6),
-            borderWidth: 1,
-            borderColor: hexToRGBA(theme.thirdBackground, 0.4),
-          }}
-          styleContent={{
-            padding: 8,
-            justifyContent: "space-between",
-            alignContent: "center",
-            flexDirection: "row",
-          }}
-          animatedExiting={false}
-        >
+  if (!session) return null;
+  return (
+    <Fragment>
+      <StrobeButton
+        onPress={handlePress}
+        strobeDisabled={!isCompleted}
+        style={{
+          width: widgetUnit,
+          height: halfWidget,
+          borderRadius: 32,
+          overflow: "hidden",
+          backgroundColor: hexToRGBA(theme.thirdAccent, 0.6),
+          borderWidth: 1,
+          borderColor: hexToRGBA(theme.thirdAccent, 0.4),
+        }}
+        styleContent={{
+          padding: 8,
+          justifyContent: "space-between",
+          alignContent: "center",
+          flexDirection: "row",
+        }}
+        animatedExiting={false}
+      >
+        <View style={{ width: halfWidget }}>
           <SessionRecapCardHeader session={session} />
-          <ProgressRing
-            compareWith={ratio}
-            compareTo={1}
-            ringSize={halfWidget - 16}
-            content={
-              <Text
-                style={{
-                  fontSize: 12,
-                  color: theme.tint,
-                  fontWeight: "bold",
-                }}
-                adjustsFontSizeToFit
-                numberOfLines={1}
-              >
-                {Math.round(ratio * 100)}%
-              </Text>
-            }
-          />
-        </StrobeButton>
-
-        <SessionBottomSheet
-          session={session}
-          ref={bottomSheetRef}
-          startView="preview"
+        </View>
+        <ProgressRing
+          compareWith={ratio}
+          compareTo={1}
+          ringSize={halfWidget - 16}
+          color={theme.thirdAccent}
+          loopColor={theme.secondaryAccent}
+          content={
+            <Text
+              style={{
+                fontSize: 12,
+                color: theme.secondaryAccent,
+                fontWeight: "bold",
+              }}
+              adjustsFontSizeToFit
+              numberOfLines={1}
+            >
+              {Math.round(ratio * 100)}%
+            </Text>
+          }
         />
-      </Fragment>
-    );
-  return null;
+      </StrobeButton>
+
+      <SessionBottomSheet
+        session={session}
+        ref={bottomSheetRef}
+        startView="preview"
+      />
+    </Fragment>
+  );
 }

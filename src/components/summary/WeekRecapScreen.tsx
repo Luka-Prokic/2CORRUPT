@@ -4,28 +4,21 @@ import { SessionRecapCard } from "./cards/recap/SessionRecapCard";
 import { useSessionsByDateRange } from "../../features/workout";
 import { getWeekBounds } from "../../features/calendar/useWeeks";
 import { EmptyHeader } from "../ui/containers/EmptyHeader";
-import { View } from "react-native";
-import { useSettingsStore } from "../../stores/settings";
-import { hexToRGBA } from "../../utils/HEXtoRGB";
+import { memo } from "react";
+import { IBubble } from "../ui/containers/IBubble";
 
 interface WeekRecapScreenProps {
   week: Date[];
 }
 
+export const MemoizedWeekRecapScreen = memo(WeekRecapScreen);
+
 export function WeekRecapScreen({ week }: WeekRecapScreenProps) {
-  const { theme } = useSettingsStore();
   const { start, end } = getWeekBounds(week);
   const sessionsThisWeek = useSessionsByDateRange(start, end);
 
-  const opacity = Math.random();
-
   return (
-    <View
-      style={{
-        backgroundColor: hexToRGBA(theme.text, opacity),
-        height: HEIGHT,
-      }}
-    >
+    <IBubble width={WIDTH} height={HEIGHT} noBorder>
       <EmptyHeader />
       <EmptyHeader />
       <FlatList
@@ -39,6 +32,6 @@ export function WeekRecapScreen({ week }: WeekRecapScreenProps) {
         }}
         scrollEnabled={false}
       />
-    </View>
+    </IBubble>
   );
 }

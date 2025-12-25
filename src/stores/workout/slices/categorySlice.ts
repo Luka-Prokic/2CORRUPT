@@ -30,14 +30,14 @@ const defaultMuscles = [
 const defaultEquipment = [
   { id: "barbell", name: "Barbell" },
   { id: "dumbbells", name: "Dumbbells" },
+  { id: "cable", name: "Cable" },
+  { id: "machine", name: "Machine" },
   { id: "bench", name: "Bench" },
   { id: "rack", name: "Rack" },
-  { id: "cable", name: "Cable" },
-  { id: "bodyweight", name: "Bodyweight" },
   { id: "dip-bar", name: "Dip Bar" },
   { id: "pull-up-bar", name: "Pull Up Bar" },
-  { id: "machine", name: "Machine" },
   { id: "kettlebell", name: "Kettlebell" },
+  { id: "bodyweight", name: "Bodyweight" },
   { id: "other", name: "Other" },
 ];
 

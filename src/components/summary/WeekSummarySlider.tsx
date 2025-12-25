@@ -3,20 +3,14 @@ import {
   NativeScrollEvent,
   NativeSyntheticEvent,
 } from "react-native";
-import { WeekRecapScreen } from "./WeekRecapScreen";
+import { MemoizedWeekRecapScreen } from "./WeekRecapScreen";
 import { HEIGHT } from "../../utils/Dimensions";
+import { useUIStore } from "../../stores/ui/useUIStore";
+import { useMemo } from "react";
 
-interface WeekSummarySliderProps {
-  weeks: Date[][];
-  currentWeekIndex: number;
-  setCurrentWeekIndex: (index: number) => void;
-}
+export function WeekSummarySlider() {
+  const { weeks, currentWeekIndex, setCurrentWeekIndex } = useUIStore();
 
-export function WeekSummarySlider({
-  weeks,
-  currentWeekIndex,
-  setCurrentWeekIndex,
-}: WeekSummarySliderProps) {
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const offsetY = event.nativeEvent.contentOffset.y;
     const index = Math.round(offsetY / HEIGHT);
@@ -24,13 +18,11 @@ export function WeekSummarySlider({
     setCurrentWeekIndex(weeks.length - 1 - index);
   };
 
-  const reversedWeeks = [...weeks].reverse();
-  const initialScrollIndex = reversedWeeks.length - 1 - currentWeekIndex;
+  const reversedWeeks = useMemo(() => [...weeks].reverse(), [weeks]);
 
   return (
     <FlatList
       data={reversedWeeks}
-      initialScrollIndex={initialScrollIndex}
       pagingEnabled
       showsVerticalScrollIndicator={false}
       onMomentumScrollEnd={handleScroll}
@@ -39,7 +31,7 @@ export function WeekSummarySlider({
         offset: HEIGHT * index,
         index,
       })}
-      renderItem={({ item }) => <WeekRecapScreen week={item} />}
+      renderItem={({ item }) => <MemoizedWeekRecapScreen week={item} />}
     />
   );
 }
