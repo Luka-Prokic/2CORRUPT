@@ -17,16 +17,19 @@ import {
   useStartWorkoutOfSession,
   useStartWorkoutOfTemplate,
 } from "../../../features/start/useStartWorkout";
+import { Pressable } from "react-native";
 
 interface PreviewSessionViewProps {
   session: WorkoutSession;
   setView?: (view: SessionBottomSheetViews) => void;
+  ref: React.RefObject<BottomSheetModal>;
 }
 
-export const PreviewSessionView = forwardRef<
-  BottomSheetModal,
-  PreviewSessionViewProps
->(({ session, setView }, ref) => {
+export function PreviewSessionView({
+  session,
+  setView,
+  ref,
+}: PreviewSessionViewProps) {
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
   const { activeSession, getTemplateById } = useWorkoutStore();
@@ -57,12 +60,14 @@ export const PreviewSessionView = forwardRef<
       <CardSlider
         data={session.layout}
         card={({ item }) => (
-          <ExercisePreviewCard exercise={item} maxHeight={finalHeight} />
+          <Pressable style={{ width: WIDTH, alignItems: "center" }}>
+            <ExercisePreviewCard exercise={item} maxHeight={finalHeight} />
+          </Pressable>
         )}
-        cardWidth={WIDTH - 32}
+        cardWidth={WIDTH}
         cardHeight={finalHeight}
         styleDots={{
-          width: WIDTH - 32,
+          width: WIDTH,
           justifyContent: "center",
           alignItems: "center",
         }}
@@ -76,8 +81,8 @@ export const PreviewSessionView = forwardRef<
         onOptionTwo={() => setView("options")}
         styleOne={{ backgroundColor: theme.thirdBackground }}
         disabledOne={!!activeSession}
-        style={{ marginVertical: 16 }}
+        style={{ margin: 16 }}
       />
     </Animated.View>
   );
-});
+}

@@ -82,8 +82,6 @@ export function CenterCardSlider<T>({
   hapticFeedback = false,
   startAtMiddle = false,
   hapticsModeType = "max",
-  paddingStart = 0,
-  paddingEnd = 0,
   ...flatListProps
 }: CenterCardSliderProps<T>) {
   const { theme } = useSettingsStore();
@@ -214,8 +212,6 @@ export function CenterCardSlider<T>({
         scrollEventThrottle={16}
         contentContainerStyle={{
           paddingHorizontal: horizontalPadding,
-          paddingLeft: paddingStart,
-          paddingRight: paddingEnd,
         }}
         style={{
           width: sliderWidth || cardWidth,

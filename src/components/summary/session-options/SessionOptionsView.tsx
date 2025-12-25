@@ -1,4 +1,3 @@
-import { forwardRef } from "react";
 import { WorkoutSession } from "../../../stores/workout";
 import { OptionButton } from "../../ui/buttons/OptionButton";
 import { Ionicons } from "@expo/vector-icons";
@@ -12,12 +11,14 @@ import { DescriptionText } from "../../ui/text/DescriptionText";
 interface SessionOptionsViewProps {
   session: WorkoutSession;
   setView: (view: SessionBottomSheetViews) => void;
+  ref: React.RefObject<BottomSheetModal>;
 }
 
-export const SessionOptionsView = forwardRef<
-  BottomSheetModal,
-  SessionOptionsViewProps
->(({ session, setView }, ref) => {
+export function SessionOptionsView({
+  session,
+  setView,
+  ref,
+}: SessionOptionsViewProps) {
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
 
@@ -85,4 +86,4 @@ export const SessionOptionsView = forwardRef<
       </View>
     );
   return null;
-});
+}

@@ -1,4 +1,4 @@
-import { forwardRef, Fragment } from "react";
+import { Fragment } from "react";
 import { useWorkoutStore, WorkoutSession } from "../../../stores/workout";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { useSettingsStore } from "../../../stores/settings";
@@ -13,12 +13,15 @@ interface SessionRemoveViewProps {
   session: WorkoutSession;
   setView: (view: SessionBottomSheetViews) => void;
   closeOnCancel?: boolean;
+  ref: React.RefObject<BottomSheetModal>;
 }
 
-export const SessionRemoveView = forwardRef<
-  BottomSheetModal,
-  SessionRemoveViewProps
->(({ session, setView, closeOnCancel = false }, ref) => {
+export function SessionRemoveView({
+  session,
+  setView,
+  closeOnCancel = false,
+  ref,
+}: SessionRemoveViewProps) {
   const { theme } = useSettingsStore();
   const { t } = useTranslation();
   const { removeSession } = useWorkoutStore();
@@ -75,4 +78,4 @@ export const SessionRemoveView = forwardRef<
       </Fragment>
     );
   return null;
-});
+}

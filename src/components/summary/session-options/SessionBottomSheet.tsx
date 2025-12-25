@@ -1,17 +1,12 @@
-import { forwardRef, useState } from "react";
-import {
-  BottomSheetBackdrop,
-  BottomSheetModal,
-  BottomSheetView,
-} from "@gorhom/bottom-sheet";
+import { useState } from "react";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { WorkoutSession } from "../../../stores/workout";
-import { useSettingsStore } from "../../../stores/settingsStore";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { SessionOptionsView } from "./SessionOptionsView";
 import { SessionRemoveView } from "./SessionRemoveView";
 import { PullTemplateFromSessionView } from "./PullTemplateFromSessionView";
 import { UpdateTemplateView } from "./UpdateTemplateView";
 import { PreviewSessionView } from "./PreviewSessionView";
+import { IBottomSheet } from "../../ui/IBottomSheet";
 
 export type SessionBottomSheetViews =
   | "options"
@@ -25,14 +20,15 @@ interface SessionBottomSheetProps {
   session: WorkoutSession;
   startView?: SessionBottomSheetViews;
   closeOnCancel?: boolean;
+  ref: React.RefObject<BottomSheetModal>;
 }
 
-export const SessionBottomSheet = forwardRef<
-  BottomSheetModal,
-  SessionBottomSheetProps
->(({ session, startView = "options", closeOnCancel = false }, ref) => {
-  const { theme } = useSettingsStore();
-  const insets = useSafeAreaInsets();
+export const SessionBottomSheet = ({
+  session,
+  startView = "options",
+  closeOnCancel = false,
+  ref,
+}: SessionBottomSheetProps) => {
   const [view, setView] = useState<SessionBottomSheetViews>(startView);
 
   function visibleView() {
@@ -84,40 +80,13 @@ export const SessionBottomSheet = forwardRef<
 
   if (session)
     return (
-      <BottomSheetModal
+      <IBottomSheet
         ref={ref}
-        enablePanDownToClose
-        enableDismissOnClose
-        keyboardBlurBehavior="restore"
-        keyboardBehavior="fillParent"
-        handleIndicatorStyle={{ backgroundColor: theme.info }}
-        backgroundStyle={{ backgroundColor: theme.navBackground }}
-        backdropComponent={(props) => (
-          <BottomSheetBackdrop
-            {...props}
-            disappearsOnIndex={-1}
-            appearsOnIndex={0}
-            pressBehavior="close"
-            opacity={0.2}
-          />
-        )}
         onDismiss={() => setView(startView)}
+        bottomSheetStyle={{ paddingTop: 0 }}
       >
-        <BottomSheetView
-          style={[
-            {
-              flex: 1,
-              paddingHorizontal: 16,
-              justifyContent: "flex-start",
-              borderTopColor: theme.border,
-              borderTopWidth: 1,
-              paddingBottom: insets.bottom,
-            },
-          ]}
-        >
-          {visibleView()}
-        </BottomSheetView>
-      </BottomSheetModal>
+        {visibleView()}
+      </IBottomSheet>
     );
   return null;
-});
+};

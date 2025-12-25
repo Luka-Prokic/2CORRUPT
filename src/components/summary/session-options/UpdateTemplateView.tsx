@@ -1,4 +1,4 @@
-import { forwardRef, Fragment, useState } from "react";
+import { Fragment, useState } from "react";
 import { useWorkoutStore, WorkoutSession } from "../../../stores/workout";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { useSettingsStore } from "../../../stores/settings";
@@ -16,12 +16,15 @@ interface UpdateTemplateViewProps {
   session: WorkoutSession;
   setView: (view: SessionBottomSheetViews) => void;
   closeOnCancel?: boolean;
+  ref: React.RefObject<BottomSheetModal>;
 }
 
-export const UpdateTemplateView = forwardRef<
-  BottomSheetModal,
-  UpdateTemplateViewProps
->(({ session, setView, closeOnCancel = false }, ref) => {
+export function UpdateTemplateView({
+  session,
+  setView,
+  closeOnCancel = false,
+  ref,
+}: UpdateTemplateViewProps) {
   const { editTemplate, confirmTemplate, updateTemplateField } =
     useWorkoutStore();
   const { theme } = useSettingsStore();
@@ -148,4 +151,4 @@ export const UpdateTemplateView = forwardRef<
       />
     </Fragment>
   );
-});
+}

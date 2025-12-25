@@ -14,6 +14,7 @@ import { ExercisePreviewCard } from "../../summary/cards/ExercisePreviewCard";
 import { TemplateName } from "../../board-template/sheets/template/TemplateName";
 import { DescriptionText } from "../../ui/text/DescriptionText";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import { Pressable } from "react-native";
 
 interface PreviewTempalteViewProps {
   template: WorkoutTemplate;
@@ -61,12 +62,14 @@ export function PreviewTempalteView({
       <CardSlider
         data={template.layout}
         card={({ item }) => (
-          <ExercisePreviewCard exercise={item} maxHeight={finalHeight} />
+          <Pressable style={{ width: WIDTH, alignItems: "center" }}>
+            <ExercisePreviewCard exercise={item} maxHeight={finalHeight} />
+          </Pressable>
         )}
-        cardWidth={WIDTH - 32}
+        cardWidth={WIDTH}
         cardHeight={finalHeight}
         styleDots={{
-          width: WIDTH - 32,
+          width: WIDTH,
           justifyContent: "center",
           alignItems: "center",
         }}
@@ -80,7 +83,7 @@ export function PreviewTempalteView({
         onOptionTwo={() => setView("options")}
         styleOne={{ backgroundColor: theme.thirdBackground }}
         disabledOne={!!activeSession}
-        style={{ marginVertical: 16 }}
+        style={{ margin: 16 }}
       />
     </Animated.View>
   );
