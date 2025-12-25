@@ -30,6 +30,8 @@ interface IBubbleProps {
   onPress?: () => void;
   haptics?: boolean;
   noBorder?: boolean;
+  noShine?: boolean;
+  shineColor?: string;
 }
 
 export function IBubble({
@@ -49,6 +51,8 @@ export function IBubble({
   styleContent,
   haptics = false,
   noBorder = false,
+  noShine = false,
+  shineColor,
 }: IBubbleProps) {
   const { theme } = useSettingsStore();
   const { widgetUnit, fullWidth } = useWidgetUnit();
@@ -81,7 +85,9 @@ export function IBubble({
         ...style,
       }}
     >
-      <Shine style={{ borderRadius: noBorder ? 0 : 32 }} />
+      {!noShine && (
+        <Shine color={shineColor} style={{ borderRadius: noBorder ? 0 : 32 }} />
+      )}
       <Pressable
         onPress={handlePress}
         style={{

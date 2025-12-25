@@ -4,7 +4,6 @@ import Animated, { FadeIn } from "react-native-reanimated";
 import { useSettingsStore } from "../../../../stores/settings";
 import { useTranslation } from "react-i18next";
 import { ExpandedSessionRecapHeader } from "./ExpandedSessionRecapHeader";
-import { ExpandedSessionRecapFooter } from "./ExpandedSessionRecapFooter";
 import { ExercisePreviewCard } from "../ExercisePreviewCard";
 import { CenterCardSlider } from "../../../ui/sliders/CenterCardSlider";
 import { useLayoutPreviewHeight } from "../../../../features/ui/useGetExercisePreviewCardHeight";

@@ -10,7 +10,7 @@ import { router } from "expo-router";
 import { useUIStore } from "../../../stores/ui";
 import Animated, { FadeIn } from "react-native-reanimated";
 import { useLayoutPreviewHeight } from "../../../features/ui/useGetExercisePreviewCardHeight";
-import { ExercisePreviewCard } from "../../sessions/cards/ExercisePreviewCard";
+import { ExercisePreviewCard } from "../../summary/cards/ExercisePreviewCard";
 import { TemplateName } from "../../board-template/sheets/template/TemplateName";
 import { DescriptionText } from "../../ui/text/DescriptionText";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";

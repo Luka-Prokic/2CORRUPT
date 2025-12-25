@@ -27,6 +27,7 @@ interface CenterCardSliderProps<T>
   cardWidth?: number;
   cardHeight?: number;
   sliderWidth?: number;
+  sliderHeight?: number;
   hideDots?: boolean;
   styleSlider?: ViewStyle | ViewStyle[];
   styleDots?: ViewStyle | ViewStyle[];
@@ -48,6 +49,8 @@ interface CenterCardSliderProps<T>
   hapticFeedback?: boolean;
   startAtMiddle?: boolean;
   hapticsModeType?: HapticsMode;
+  paddingStart?: number;
+  paddingEnd?: number;
 }
 
 export function CenterCardSlider<T>({
@@ -58,6 +61,7 @@ export function CenterCardSlider<T>({
   cardHeight = 100,
   sliderWidth = WIDTH - 32,
   hideDots = false,
+  sliderHeight,
   styleSlider,
   styleDots,
   distanceBubbleStyle,
@@ -78,6 +82,8 @@ export function CenterCardSlider<T>({
   hapticFeedback = false,
   startAtMiddle = false,
   hapticsModeType = "max",
+  paddingStart = 0,
+  paddingEnd = 0,
   ...flatListProps
 }: CenterCardSliderProps<T>) {
   const { theme } = useSettingsStore();
@@ -208,12 +214,15 @@ export function CenterCardSlider<T>({
         scrollEventThrottle={16}
         contentContainerStyle={{
           paddingHorizontal: horizontalPadding,
+          paddingLeft: paddingStart,
+          paddingRight: paddingEnd,
         }}
         style={{
-          width: sliderWidth,
+          width: sliderWidth || cardWidth,
+          height: sliderHeight || cardHeight,
           flexGrow: 0,
           flexShrink: 0,
-          flexBasis: cardHeight,
+          flexBasis: sliderHeight || cardHeight,
           ...styleSlider,
         }}
         nestedScrollEnabled

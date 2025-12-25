@@ -1,7 +1,7 @@
 import { useSettingsStore } from "../../../stores/settings";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { useWorkoutStore } from "../../../stores/workout";
-import { ExercisePreviewCard } from "../../sessions/cards/ExercisePreviewCard";
+import { ExercisePreviewCard } from "../../summary/cards/ExercisePreviewCard";
 import { CardSlider } from "../../ui/sliders/CardSlider";
 import { useLayoutPreviewHeight } from "../../../features/ui/useGetExercisePreviewCardHeight";
 import { HEIGHT, WIDTH } from "../../../utils/Dimensions";

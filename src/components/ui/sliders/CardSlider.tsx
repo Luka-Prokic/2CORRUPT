@@ -10,6 +10,8 @@ interface CardSliderProps<T> extends Omit<FlatListProps<T>, "renderItem"> {
   card: ({ item, index }: { item: T; index?: number }) => ReactNode;
   cardWidth: number;
   cardHeight: number;
+  sliderWidth?: number;
+  sliderHeight?: number;
   hideDots?: boolean;
   styleSlider?: ViewStyle | ViewStyle[];
   styleDots?: ViewStyle | ViewStyle[];
@@ -30,6 +32,8 @@ export function CardSlider<T>({
   keyExtractor,
   cardWidth,
   cardHeight,
+  sliderWidth,
+  sliderHeight,
   hideDots = false,
   styleSlider,
   styleDots,
@@ -137,7 +141,14 @@ export function CardSlider<T>({
         decelerationRate="fast"
         onScroll={onScroll}
         scrollEventThrottle={16}
-        style={styleSlider}
+        style={{
+          width: sliderWidth || cardWidth,
+          height: sliderHeight || cardHeight,
+          flexGrow: 0,
+          flexShrink: 0,
+          flexBasis: sliderHeight || cardHeight,
+          ...styleSlider,
+        }}
         nestedScrollEnabled
         ListEmptyComponent={emptyCard}
       />
