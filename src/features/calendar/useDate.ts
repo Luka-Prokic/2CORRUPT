@@ -38,3 +38,23 @@ export function getDayIndex(date?: Date) {
   if (!date) return 0;
   return (date?.getDay() + 6) % 7;
 }
+
+export function subMonths(date: Date, months: number): Date {
+  const result = new Date(date);
+  result.setMonth(result.getMonth() - months);
+  return result;
+}
+
+export function subYears(date: Date, years: number = 0): Date {
+  const result = new Date(date);
+  result.setFullYear(result.getFullYear() - years);
+  return result;
+}
+
+export function isAfter(date: Date, dateToCompare: Date): boolean {
+  return date.getTime() > dateToCompare.getTime();
+}
+
+export function parseISO(isoString: string): Date {
+  return new Date(isoString);
+}

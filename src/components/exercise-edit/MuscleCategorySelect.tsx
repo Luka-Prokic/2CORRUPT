@@ -1,14 +1,14 @@
-import { WIDTH } from "../../../utils/Dimensions";
-import { CenterCardSlider } from "../../ui/sliders/CenterCardSlider";
-import { useSettingsStore } from "../../../stores/settings";
-import { useHaptics } from "../../../features/ui/useHaptics";
-import { MuscleCategory, useWorkoutStore } from "../../../stores/workout";
+import { WIDTH } from "../../utils/Dimensions";
+import { CenterCardSlider } from "../ui/sliders/CenterCardSlider";
+import { useSettingsStore } from "../../stores/settingsStore";
+import { useHaptics } from "../../features/ui/useHaptics";
+import { MuscleCategory, useWorkoutStore } from "../../stores/workout";
 import { useMemo } from "react";
-import { InfoText } from "../../ui/text/InfoText";
+import { InfoText } from "../ui/text/InfoText";
 import { useTranslation } from "react-i18next";
 import { View } from "react-native";
-import { StrobeButton } from "../../ui/buttons/StrobeButton";
-import { MidText } from "../../ui/text/MidText";
+import { StrobeButton } from "../ui/buttons/StrobeButton";
+import { MidText } from "../ui/text/MidText";
 import { Ionicons } from "@expo/vector-icons";
 
 export function MuscleCategorySelect() {

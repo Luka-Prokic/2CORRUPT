@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
-import { useWorkoutStore } from "../../../stores/workout";
-import { IBubble } from "../../ui/containers/IBubble";
+import { useWorkoutStore } from "../../stores/workout";
+import { IBubble } from "../ui/containers/IBubble";
 import { MuscleColumn } from "./MuscleColumn";
 
 export function ExerciseMuscleSelect() {

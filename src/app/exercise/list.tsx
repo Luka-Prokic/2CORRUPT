@@ -3,11 +3,11 @@ import { ScreenContent } from "../../components/ui/utils/ScreenContent";
 import { Stack } from "expo-router";
 import { IText } from "../../components/ui/text/IText";
 import { ExerciseInfo } from "../../stores/workout";
-import { ExerciseSectionList } from "../../components/exercises/ExerciseSectionList";
+import { ExerciseSectionList } from "../../components/exercise-list/ExerciseSectionList";
 import { CreateNewExerciseButton } from "../../components/exercise-add/CreateNewExerciseButton";
-import { MemoizedInfoExerciseCard } from "../../components/exercises/InfoExerciseCard";
+import { MemoizedInfoExerciseCard } from "../../components/exercise-list/InfoExerciseCard";
 import { useSettingsStore } from "../../stores/settingsStore";
-import { ExerciseSearchBar } from "../../components/exercises/ExerciseSearchBar";
+import { ExerciseSearchBar } from "../../components/exercise-list/ExerciseSearchBar";
 import { useTranslation } from "react-i18next";
 
 export default function ExerciseListScreen() {

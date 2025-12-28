@@ -3,7 +3,6 @@ import { StrobeButton } from "../../ui/buttons/StrobeButton";
 import { useSettingsStore } from "../../../stores/settingsStore";
 import { useWidgetUnit } from "../../../features/widgets/useWidgetUnit";
 import { SessionName } from "../../board-workout/sheets/session/SessionName";
-import { MuscleRadarChartSession } from "../../sessions/stats/MuscleRadarChartSession";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 import { View } from "react-native";
 import { InfoText } from "../../ui/text/InfoText";
@@ -53,8 +52,6 @@ export function SpiderSessionCard({
           <SessionName session={session} />
           <InfoText text={new Date(session.startTime).toLocaleDateString()} />
         </View>
-
-        <MuscleRadarChartSession session={session} size={widgetUnit - 32} />
       </Animated.View>
     </StrobeButton>
   );

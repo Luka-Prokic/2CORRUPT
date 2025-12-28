@@ -1,13 +1,13 @@
 import { useTranslation } from "react-i18next";
 import { View } from "react-native";
-import { useSettingsStore } from "../../../stores/settingsStore";
-import { useWorkoutStore } from "../../../stores/workout";
-import { InfoText } from "../../ui/text/InfoText";
+import { InfoText } from "../ui/text/InfoText";
 import { Ionicons } from "@expo/vector-icons";
-import { MidText } from "../../ui/text/MidText";
-import { CenterCardSlider } from "../../ui/sliders/CenterCardSlider";
-import { StrobeButton } from "../../ui/buttons/StrobeButton";
-import { WIDTH } from "../../../utils/Dimensions";
+import { MidText } from "../ui/text/MidText";
+import { CenterCardSlider } from "../ui/sliders/CenterCardSlider";
+import { StrobeButton } from "../ui/buttons/StrobeButton";
+import { WIDTH } from "../../utils/Dimensions";
+import { useSettingsStore } from "../../stores/settingsStore";
+import { useWorkoutStore } from "../../stores/workout";
 
 export function ExerciseEquipmentSelect() {
   const { t } = useTranslation();

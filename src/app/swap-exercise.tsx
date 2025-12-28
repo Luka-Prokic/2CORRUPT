@@ -4,7 +4,7 @@ import { ExerciseFilter } from "../components/exercise-add/ExerciseFilter";
 import { ScreenContent } from "../components/ui/utils/ScreenContent";
 import { Stack } from "expo-router";
 import { useTranslation } from "react-i18next";
-import { ExerciseSectionList } from "../components/exercises/ExerciseSectionList";
+import { ExerciseSectionList } from "../components/exercise-list/ExerciseSectionList";
 import { MemoizedSwapExerciseCard } from "../components/exercise-swap/SwapExerciseCard";
 import { IText } from "../components/ui/text/IText";
 import { useSafeAreaInsets } from "react-native-safe-area-context";

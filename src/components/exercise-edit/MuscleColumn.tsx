@@ -1,17 +1,17 @@
 import { View } from "react-native";
 import { useEffect, useMemo } from "react";
-import { useSettingsStore } from "../../../stores/settingsStore";
-import { IButton } from "../../ui/buttons/IButton";
-import { InfoText } from "../../ui/text/InfoText";
-import { ShineText } from "../../ui/text/ShineText";
+import { useSettingsStore } from "../../stores/settingsStore";
+import { IButton } from "../ui/buttons/IButton";
+import { InfoText } from "../ui/text/InfoText";
+import { ShineText } from "../ui/text/ShineText";
 import {
   ExerciseInfo,
   Muscle,
   MuscleCategory,
   MuscleType,
   useWorkoutStore,
-} from "../../../stores/workout";
-import { CATEGORY_RULES } from "../../../config/constants/muscleOrder";
+} from "../../stores/workout";
+import { CATEGORY_RULES } from "../../config/constants/muscleOrder";
 
 function getKeys(type: MuscleType) {
   return {

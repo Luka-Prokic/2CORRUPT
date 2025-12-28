@@ -7,7 +7,7 @@ import { Stack } from "expo-router";
 import { CreateNewExerciseButton } from "../../components/exercise-add/CreateNewExerciseButton";
 import { useTranslation } from "react-i18next";
 import { MemoizedAddExerciseCard } from "../../components/exercise-add/AddExerciseCard";
-import { ExerciseSectionList } from "../../components/exercises/ExerciseSectionList";
+import { ExerciseSectionList } from "../../components/exercise-list/ExerciseSectionList";
 import { IText } from "../../components/ui/text/IText";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 

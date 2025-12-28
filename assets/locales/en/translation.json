@@ -461,6 +461,7 @@
   },
   "sessions": {
     "session": "Session",
+    "sessions": "Sessions",
     "back-to-preview": "Back to Preview",
     "preview": "View Preview",
     "repeat-workout": "Repeat Workout",

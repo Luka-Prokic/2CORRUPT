@@ -1,11 +1,11 @@
 import { Fragment, useState } from "react";
-import { InfoText } from "../../ui/text/InfoText";
-import { ExerciseInfoNameInput } from "../ExerciseInfoNameInput";
+import { InfoText } from "../ui/text/InfoText";
+import { ExerciseInfoNameInput } from "../exercise-list/ExerciseInfoNameInput";
 import { useTranslation } from "react-i18next";
-import { ExerciseInfo } from "../../../stores/workout/types";
-import { IBubble } from "../../ui/containers/IBubble";
-import { IButton } from "../../ui/buttons/IButton";
-import { useSettingsStore } from "../../../stores/settingsStore";
+import { ExerciseInfo } from "../../stores/workout";
+import { IBubble } from "../ui/containers/IBubble";
+import { IButton } from "../ui/buttons/IButton";
+import { useSettingsStore } from "../../stores/settingsStore";
 
 interface EditExerciseNameProps {
   exercise: ExerciseInfo;
