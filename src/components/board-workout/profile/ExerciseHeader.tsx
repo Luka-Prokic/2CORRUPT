@@ -26,7 +26,10 @@ export function ExerciseHeader({ setSheetType }: ExerciseHeaderProps) {
   }
 
   function handleExerciseNamePress() {
-    router.back();
+    router.push({
+      pathname: "/exercise/[exerciseId]/info",
+      params: { exerciseId: activeExercise?.exerciseInfoId as string },
+    });
   }
   return (
     <View

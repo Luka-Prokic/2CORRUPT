@@ -594,7 +594,7 @@
     "biceps": "Biceps",
     "brachialis": "Brachialis",
     "triceps": "Triceps",
-    "forearms": "Prednje ruke",
+    "forearms": "Podlaktice",
     "legs": "Noge",
     "quads": "Kvadricepsi",
     "hamstrings": "Zadnja loža",
@@ -635,6 +635,10 @@
     "rest-of-them": "Ostale Vežbe",
     "exercises": "Vežbe",
     "new": "Novi",
-    "edit": "Uredi"
+    "edit": "Uredi",
+    "primary-muscles": "Primarni Mišići",
+    "secondary-muscles": "Sekundarni Mišići",
+    "equipment": "Oprema",
+    "created-at": "Kreirano"
   }
 }

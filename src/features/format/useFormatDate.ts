@@ -6,6 +6,7 @@ export const useFormatFriendlyDate = () => {
 
   return useCallback(
     (date: Date): string => {
+      if (!date) return "-";
       const today = new Date();
 
       const yesterday = new Date();

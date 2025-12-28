@@ -5,9 +5,9 @@ import { useWorkoutStore } from "../../../stores/workout/useWorkoutStore";
 import { useTranslation } from "react-i18next";
 import { ModalView } from "../../../components/ui/containers/ModalView";
 import { ExerciseInfoHeaderRight } from "../../../components/exercise-list/header/ExerciseInfoHeaderRight";
-import { ExerciseInfoView } from "../../../components/exercise-info/ExerciseInfoView";
+import { ExerciseStatsView } from "../../../components/exercise-stats/ExerciseStatsView";
 
-export default function ExerciseInfoScreen() {
+export default function ExerciseStatsScreen() {
   const { exerciseId } = useLocalSearchParams();
   const { getExerciseById } = useWorkoutStore();
   const exercise = getExerciseById(exerciseId as string);
@@ -16,7 +16,7 @@ export default function ExerciseInfoScreen() {
 
   function handlePress() {
     router.replace({
-      pathname: "/exercise/[exerciseId]/stats",
+      pathname: "/exercise/[exerciseId]/info",
       params: { exerciseId: exerciseId as string },
     });
   }
@@ -28,14 +28,17 @@ export default function ExerciseInfoScreen() {
           headerBackButtonDisplayMode: "minimal",
           headerTitle: exercise?.defaultName?.[locale],
           headerRight: () => (
-            <ExerciseInfoHeaderRight isStats handlePress={handlePress} />
+            <ExerciseInfoHeaderRight
+              isStats={false}
+              handlePress={handlePress}
+            />
           ),
         }}
       />
 
       <ScreenContent>
         <ModalView fadeIn>
-          <ExerciseInfoView exercise={exercise} />
+          <ExerciseStatsView exercise={exercise} />
         </ModalView>
       </ScreenContent>
     </Fragment>

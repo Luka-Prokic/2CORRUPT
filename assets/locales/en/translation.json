@@ -639,6 +639,10 @@
     "rest-of-them": "Rest Of Them",
     "exercises": "Exercises",
     "new": "New",
-    "edit": "Edit"
+    "edit": "Edit",
+    "primary-muscles": "Primary Muscles",
+    "secondary-muscles": "Secondary Muscles",
+    "equipment": "Equipment",
+    "created-at": "Created At"
   }
 }
