@@ -22,6 +22,7 @@ export default function Layout() {
       <Stack.Screen name="[exerciseId]/edit" />
       <Stack.Screen name="[exerciseId]/create" />
       <Stack.Screen name="[exerciseId]/info" />
+      <Stack.Screen name="[exerciseId]/stats" />
     </Stack>
   );
 }

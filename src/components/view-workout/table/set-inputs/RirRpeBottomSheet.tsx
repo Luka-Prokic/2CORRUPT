@@ -13,10 +13,10 @@ import { Set } from "../../../../stores/workout/types";
 import { WIDTH } from "../../../../utils/Dimensions";
 import { SwitchButton } from "../../../ui/buttons/SwitchButton";
 import { DescriptionText } from "../../../ui/text/DescriptionText";
-import { RirRpeCheatSheet } from "./RirRpeCheetSheet";
 import { useTranslation } from "react-i18next";
 import { InfoText } from "../../../ui/text/InfoText";
 import { useHaptics } from "../../../../features/ui/useHaptics";
+import { CheatSheet } from "../../../ui/CheatSheet";
 
 export type SheetMode = "rir" | "rpe";
 
@@ -172,7 +172,24 @@ function Switch({
       />
 
       {/* RIR/RPE CHEAT SHEET */}
-      <RirRpeCheatSheet mode={mode} />
+      <CheatSheet
+        title={
+          mode === "rir"
+            ? t("workout-view.rir-description")
+            : t("workout-view.rpe-description")
+        }
+        items={[
+          t("workout-view.rir-1"),
+          t("workout-view.rir-2"),
+          t("workout-view.rir-3"),
+          t("workout-view.rir-4"),
+          t("workout-view.rpe-1"),
+          t("workout-view.rpe-2"),
+          t("workout-view.rpe-3"),
+          t("workout-view.rpe-4"),
+        ]}
+        useBullets
+      />
     </View>
   );
 }

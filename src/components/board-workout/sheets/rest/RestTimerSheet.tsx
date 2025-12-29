@@ -4,12 +4,12 @@ import { useSettingsStore } from "../../../../stores/settingsStore";
 import { useWorkoutStore } from "../../../../stores/workout/useWorkoutStore";
 import { ExerciseName } from "../../../view-workout/table/header/ExerciseName";
 import { useTranslation } from "react-i18next";
-import { RestCheatSheet } from "./RestCheatSheet";
 import { TwoOptionStrobeButtons } from "../../../ui/buttons/TwoOptionStrobeButtons";
 import { MidText } from "../../../ui/text/MidText";
 import { DescriptionText } from "../../../ui/text/DescriptionText";
 import { useFormatTime } from "../../../../features/format/useFormatTime";
 import { IText } from "../../../ui/text/IText";
+import { CheatSheet } from "../../../ui/CheatSheet";
 
 export function RestTimerSheet() {
   const { theme } = useSettingsStore();
@@ -72,7 +72,17 @@ export function RestTimerSheet() {
         text={t("workout-board.rest-timer-description")}
       />
 
-      <RestCheatSheet />
+      <CheatSheet
+        title={t("workout-board.typical-rest-times")}
+        items={[
+          t("workout-board.heavy-lifts"),
+          t("workout-board.compound-lifts"),
+          t("workout-board.accessory-lifts"),
+          t("workout-board.accessory-lifts-supersets"),
+          t("workout-board.cardio-or-warm-up-sets"),
+        ]}
+        useBullets
+      />
     </View>
   );
 }

@@ -3,14 +3,12 @@ import { ExerciseInfo } from "../../stores/workout/types";
 import { IText } from "../ui/text/IText";
 import { useTranslation } from "react-i18next";
 import { InfoText } from "../ui/text/InfoText";
-import { parseISO } from "../../features/calendar/useDate";
-import { useFormatFriendlyDate } from "../../features/format/useFormatDate";
 
-interface ExerciseInfoViewProps {
+interface ExerciseBasicInfoProps {
   exercise: ExerciseInfo;
 }
 
-export function ExerciseInfoView({ exercise }: ExerciseInfoViewProps) {
+export function ExerciseBasicInfo({ exercise }: ExerciseBasicInfoProps) {
   const { t } = useTranslation();
   const locale = t("locale");
 

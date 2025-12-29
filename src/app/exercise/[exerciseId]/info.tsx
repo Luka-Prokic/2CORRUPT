@@ -5,11 +5,14 @@ import { useWorkoutStore } from "../../../stores/workout/useWorkoutStore";
 import { useTranslation } from "react-i18next";
 import { ModalView } from "../../../components/ui/containers/ModalView";
 import { ExerciseInfoHeaderRight } from "../../../components/exercise-list/header/ExerciseInfoHeaderRight";
-import { ExerciseInfoView } from "../../../components/exercise-info/ExerciseInfoView";
+import { ExerciseBasicInfo } from "../../../components/exercise-info/ExerciseBasicInfo";
+import { AddToActiveSessionOrTemplate } from "../../../components/exercise-info/AddToActiveSessionOrTemplate";
 
 export default function ExerciseInfoScreen() {
   const { exerciseId } = useLocalSearchParams();
   const { getExerciseById } = useWorkoutStore();
+  const { activeSession, activeTemplate } = useWorkoutStore();
+  const showAddToActiveSessionOrTemplate = activeSession || activeTemplate;
   const exercise = getExerciseById(exerciseId as string);
   const { t } = useTranslation();
   const locale = t("locale");
@@ -28,14 +31,19 @@ export default function ExerciseInfoScreen() {
           headerBackButtonDisplayMode: "minimal",
           headerTitle: exercise?.defaultName?.[locale],
           headerRight: () => (
-            <ExerciseInfoHeaderRight isStats handlePress={handlePress} />
+            <Fragment>
+              <ExerciseInfoHeaderRight isStats handlePress={handlePress} />
+            </Fragment>
           ),
         }}
       />
 
       <ScreenContent>
         <ModalView fadeIn>
-          <ExerciseInfoView exercise={exercise} />
+          {showAddToActiveSessionOrTemplate && (
+            <AddToActiveSessionOrTemplate exercise={exercise} />
+          )}
+          <ExerciseBasicInfo exercise={exercise} />
         </ModalView>
       </ScreenContent>
     </Fragment>

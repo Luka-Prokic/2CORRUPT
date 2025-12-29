@@ -5,7 +5,8 @@ import { useWorkoutStore } from "../../../stores/workout/useWorkoutStore";
 import { useTranslation } from "react-i18next";
 import { ModalView } from "../../../components/ui/containers/ModalView";
 import { ExerciseInfoHeaderRight } from "../../../components/exercise-list/header/ExerciseInfoHeaderRight";
-import { ExerciseStatsView } from "../../../components/exercise-stats/ExerciseStatsView";
+import { ExerciseStatsBadge } from "../../../components/exercise-stats/ExerciseStatsBadge";
+import { ExerciseStatsSlider } from "../../../components/exercise-stats/ExerciseStatsSlider";
 
 export default function ExerciseStatsScreen() {
   const { exerciseId } = useLocalSearchParams();
@@ -28,17 +29,20 @@ export default function ExerciseStatsScreen() {
           headerBackButtonDisplayMode: "minimal",
           headerTitle: exercise?.defaultName?.[locale],
           headerRight: () => (
-            <ExerciseInfoHeaderRight
-              isStats={false}
-              handlePress={handlePress}
-            />
+            <Fragment>
+              <ExerciseInfoHeaderRight
+                isStats={false}
+                handlePress={handlePress}
+              />
+            </Fragment>
           ),
         }}
       />
 
       <ScreenContent>
         <ModalView fadeIn>
-          <ExerciseStatsView exercise={exercise} />
+          <ExerciseStatsBadge />
+          <ExerciseStatsSlider exercise={exercise} />
         </ModalView>
       </ScreenContent>
     </Fragment>
