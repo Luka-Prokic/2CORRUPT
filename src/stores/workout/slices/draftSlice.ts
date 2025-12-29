@@ -1,4 +1,4 @@
-import { ExerciseInfo, WorkoutStore } from "../types";
+import { ExerciseInfo, ExerciseTip, WorkoutStore } from "../types";
 import { StateCreator } from "zustand";
 import { nanoid } from "nanoid/non-secure";
 import { useUserStore } from "../../user/useUserStore";
@@ -121,6 +121,54 @@ export const createDraftSlice: StateCreator<WorkoutStore, [], [], {}> = (
       exercises: newExercises,
       draftExercise: null,
       placeholderExercise: null,
+    });
+  },
+
+  // --- Exercise Tips Logic ---
+  addExerciseTip: (tip: Partial<ExerciseTip>) => {
+    const { draftExercise } = get();
+    const user = useUserStore.getState().user;
+
+    if (
+      !draftExercise ||
+      !user ||
+      !tip.title ||
+      !tip.tip ||
+      tip.title === "" ||
+      tip.tip === ""
+    )
+      return;
+
+    const newTip: ExerciseTip = {
+      title: "New tip",
+      tip: "TIP",
+      ...tip,
+      id: `tip-${nanoid()}`,
+      createdAt: new Date().toISOString(),
+      userId: user?.id,
+    };
+    const newTips = [...(draftExercise.metadata?.tips ?? []), newTip];
+    set({
+      draftExercise: {
+        ...draftExercise,
+        metadata: { ...draftExercise.metadata, tips: newTips },
+      },
+    });
+  },
+
+  removeExerciseTip: (tipId: string) => {
+    const { draftExercise } = get();
+    if (!draftExercise) return;
+    set({
+      draftExercise: {
+        ...draftExercise,
+        metadata: {
+          ...draftExercise.metadata,
+          tips: (draftExercise.metadata?.tips ?? []).filter(
+            (t) => t.id !== tipId
+          ),
+        },
+      },
     });
   },
 });

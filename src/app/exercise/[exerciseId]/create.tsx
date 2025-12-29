@@ -12,6 +12,7 @@ import { ModalView } from "../../../components/ui/containers/ModalView";
 import { EmptyFooter } from "../../../components/ui/containers/EmptyFooter";
 import { IText } from "../../../components/ui/text/IText";
 import { useTranslation } from "react-i18next";
+import { ExerciseTipsField } from "../../../components/exercise-edit/ExerciseTipsField";
 
 export default function ExerciseCreateScreen() {
   const { draftExercise } = useWorkoutStore();
@@ -32,6 +33,7 @@ export default function ExerciseCreateScreen() {
         <ModalView style={{ gap: 16 }}>
           <EditExerciseName exercise={draftExercise} />
           <ExerciseEquipmentSelect />
+          <ExerciseTipsField exercise={draftExercise} />
           <MuscleCategorySelect />
           <ExerciseMuscleSelect />
           <EmptyFooter />

@@ -14,6 +14,7 @@ import { useExerciseMaxReps } from "../../features/exercise-stats/useExerciseSta
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { CenterCardSlider } from "../ui/sliders/CenterCardSlider";
+import { useDisplayedUnits } from "../../features/translate/useDisplayedUnits";
 
 type ExerciseStats = {
   title: string;
@@ -49,19 +50,7 @@ export function ExerciseStatsSlider({ exercise }: ExerciseStatsSliderProps) {
         value: prReps,
       },
       {
-        title: "Max Reps",
-        value: maxReps,
-      },
-      {
-        title: "Total Sets",
-        value: totalSets,
-      },
-      {
-        title: "Total Reps",
-        value: totalReps,
-      },
-      {
-        title: "Times Used",
+        title: "Used In",
         value: timesUsed,
         unit: `${
           timesUsed === 1
@@ -70,7 +59,16 @@ export function ExerciseStatsSlider({ exercise }: ExerciseStatsSliderProps) {
         }`,
       },
       {
-        title: "Total Weight",
+        title: "Sets",
+        value: totalSets,
+      },
+      {
+        title: "Reps",
+        value: totalReps,
+      },
+
+      {
+        title: "Weight",
         value: totalWeight,
         unit: units.weight,
       },
@@ -100,10 +98,29 @@ export function ExerciseStatsSlider({ exercise }: ExerciseStatsSliderProps) {
 }
 
 function ExerciseStatsCard({ item }: { item: ExerciseStats }) {
+  const { units } = useSettingsStore();
+  const { fromKg } = useDisplayedUnits();
+  const { t } = useTranslation();
+
+  const displayedValue = useMemo(() => {
+    if (item.value == undefined || item.value == 0) return "-";
+    if (item.title === "Total Weight") {
+      return fromKg(item.value);
+    }
+    return item.value;
+  }, [item.value, item.unit]);
+
+  const displayedTitle = useMemo(() => {
+    if (item.unit === units.weight) {
+      return `${item.title} (${t(`units.weight.${units.weight}`)})`;
+    }
+    return item.title;
+  }, [item.title, item.unit]);
+
   return (
     <LabeledValue
-      label={item.title}
-      value={`${item.value}${item.unit ? ` ${item.unit}` : ""}`}
+      label={displayedTitle}
+      value={displayedValue}
       align="center"
       style={{
         width: WIDTH / 3,

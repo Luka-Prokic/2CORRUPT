@@ -20,6 +20,14 @@ export interface MuscleCategory {
   metadata?: Record<string, any>;
 }
 
+export interface ExerciseTip {
+  readonly id: string;
+  readonly title: string;
+  readonly tip: string;
+  readonly createdAt?: IsoDateString;
+  readonly userId?: string | null;
+}
+
 export type MuscleType = "primary" | "secondary";
 
 export type LocalizedName = Record<string, string>;
@@ -367,6 +375,9 @@ export interface RestSlice {
   updateEstEndRestTime: (newEndSec: number) => void;
   extendEstEndRestTime: (amount: number) => void;
   reduceEstEndRestTime: (amount: number) => void;
+
+  addExerciseTip: (tip: Partial<ExerciseTip>) => void;
+  removeExerciseTip: (tipId: string) => void;
 }
 
 export interface StatsSlice {

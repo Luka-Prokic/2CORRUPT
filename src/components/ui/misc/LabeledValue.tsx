@@ -1,5 +1,7 @@
 import { View, Text, ViewStyle, TextStyle } from "react-native";
 import { useSettingsStore } from "../../../stores/settingsStore";
+import { MidText } from "../text/MidText";
+import { IText } from "../text/IText";
 
 interface LabeledValueProps {
   label: string;
@@ -25,6 +27,7 @@ export function LabeledValue({
       style={[
         {
           flexDirection: "column",
+          justifyContent: "space-between",
           alignItems:
             align === "center"
               ? "center"
@@ -35,21 +38,20 @@ export function LabeledValue({
         style,
       ]}
     >
-      <Text
-        style={[
-          {
-            color: theme.info,
-            fontSize: 18,
-            marginBottom: 2,
-          },
-          labelStyle,
-        ]}
-      >
-        {label}
-      </Text>
+      <MidText
+        text={label}
+        weight="500"
+        color={theme.info}
+        style={labelStyle}
+        numberOfLines={1}
+        adjustsFontSizeToFit
+        minimumFontScale={0.6}
+      />
 
       {typeof value === "string" || typeof value === "number" ? (
-        <Text
+        <IText
+          text={value.toString()}
+          weight="500"
           style={[
             {
               color: theme.text,
@@ -58,9 +60,10 @@ export function LabeledValue({
             },
             valueStyle,
           ]}
-        >
-          {value}
-        </Text>
+          numberOfLines={1}
+          adjustsFontSizeToFit
+          minimumFontScale={0.6}
+        />
       ) : (
         value
       )}
