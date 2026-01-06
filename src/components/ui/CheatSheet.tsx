@@ -33,18 +33,18 @@ export function CheatSheet({
         gap: 8,
         borderWidth: 1,
         borderColor: theme.border,
-        borderRadius: 8,
+        borderRadius: 32,
         alignItems: "flex-start",
         marginBottom: 16,
-        padding: 8,
+        padding: 16,
         ...style,
       }}
     >
-      {title && <DescriptionText text={title} />}
+      {title && <DescriptionText text={title} style={{ marginBottom: 8 }} />}
 
       {items &&
-        items.map((item) => (
-          <InfoText text={useBullets ? "• " + item : item} />
+        items.map((item: string, index: number) => (
+          <InfoText key={index} text={useBullets ? "• " + item : item} />
         ))}
 
       {description && <DescriptionText text={description} />}

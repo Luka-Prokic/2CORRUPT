@@ -163,13 +163,6 @@ function Switch({
         onChange={(val) => switchMode(val.toLowerCase() as SheetMode)}
         haptics
       />
-      <DescriptionText
-        text={
-          mode === "rir"
-            ? t("workout-view.rir-description")
-            : t("workout-view.rpe-description")
-        }
-      />
 
       {/* RIR/RPE CHEAT SHEET */}
       <CheatSheet

@@ -639,6 +639,7 @@
     "primary-muscles": "Primarni Mišići",
     "secondary-muscles": "Sekundarni Mišići",
     "equipment": "Oprema",
-    "created-at": "Kreirano"
+    "created-at": "Kreirano",
+    "delete-tip-message": "Ovaj savet će biti trajno obrisan."
   }
 }

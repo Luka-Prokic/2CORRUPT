@@ -12,7 +12,7 @@ import { ModalView } from "../../../components/ui/containers/ModalView";
 import { EmptyFooter } from "../../../components/ui/containers/EmptyFooter";
 import { IText } from "../../../components/ui/text/IText";
 import { useTranslation } from "react-i18next";
-import { ExerciseTipsField } from "../../../components/exercise-edit/ExerciseTipsField";
+import { ExerciseTipsField } from "../../../components/exercise-edit/tips/ExerciseTipsField";
 
 export default function ExerciseCreateScreen() {
   const { draftExercise } = useWorkoutStore();

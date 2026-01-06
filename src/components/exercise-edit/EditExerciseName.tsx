@@ -4,8 +4,9 @@ import { ExerciseInfoNameInput } from "../exercise-list/ExerciseInfoNameInput";
 import { useTranslation } from "react-i18next";
 import { ExerciseInfo } from "../../stores/workout";
 import { IBubble } from "../ui/containers/IBubble";
-import { IButton } from "../ui/buttons/IButton";
 import { useSettingsStore } from "../../stores/settingsStore";
+import { StrobeOptionButton } from "../ui/buttons/StrobeOptionButton";
+import { View } from "react-native";
 
 interface EditExerciseNameProps {
   exercise: ExerciseInfo;
@@ -22,12 +23,18 @@ export function EditExerciseName({ exercise }: EditExerciseNameProps) {
   }
 
   return (
-    <IBubble size="flexible" style={{ padding: 16 }}>
-      <ExerciseInfoNameInput exercise={exercise} locale={locale} />
-      <InfoText text={`${t(`language.${locale}`)} ${t("exercise.name")}`} />
+    <IBubble
+      size="flexible"
+      style={{ paddingTop: 16 }}
+      styleContent={{ gap: 16 }}
+    >
+      <View style={{ paddingHorizontal: 16 }}>
+        <ExerciseInfoNameInput exercise={exercise} locale={locale} />
+        <InfoText text={`${t(`language.${locale}`)} ${t("exercise.name")}`} />
+      </View>
 
       {showLocale && (
-        <Fragment>
+        <View style={{ paddingHorizontal: 16 }}>
           {locale !== "en" && (
             <Fragment>
               <ExerciseInfoNameInput exercise={exercise} locale="en" />
@@ -41,21 +48,14 @@ export function EditExerciseName({ exercise }: EditExerciseNameProps) {
               <InfoText text={`${t("language.rs")} ${t("exercise.name")}`} />
             </Fragment>
           )}
-        </Fragment>
+        </View>
       )}
-      <IButton
-        style={{
-          height: 34,
-          width: "100%",
-          alignItems: "flex-end",
-        }}
+      <StrobeOptionButton
+        title={showLocale ? t("dialog.show-less") : t("dialog.show-more")}
         onPress={handleToggleLocale}
-      >
-        <InfoText
-          text={showLocale ? t("dialog.show-less") : t("dialog.show-more")}
-          color={theme.tint}
-        />
-      </IButton>
+        color={theme.tint}
+        justifyContent="center"
+      />
     </IBubble>
   );
 }

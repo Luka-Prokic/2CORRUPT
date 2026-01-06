@@ -8,6 +8,7 @@ import { useUserStore } from "../../stores/userStore";
 import { router } from "expo-router";
 import { Fragment } from "react";
 import { Ionicons } from "@expo/vector-icons";
+import { useActionSheet } from "../../utils/useActionSheet";
 
 export function InfoExerciseSwipeActions({
   exercise,
@@ -24,14 +25,20 @@ export function InfoExerciseSwipeActions({
     modeType: "on",
     hapticType: "rigid",
   });
-  const triggerHapticsHeavy = useHaptics({
-    modeType: "gentle",
-    hapticType: "heavy",
-  });
+
+  const { showActionSheet, t } = useActionSheet();
 
   function handleDeleteExercise() {
-    triggerHapticsHeavy();
-    removeExercise(exercise.id);
+    showActionSheet({
+      title: t("exercise.delete-exercise"),
+      message: t("exercise.delete-exercise-message"),
+      options: [t("button.cancel"), t("button.delete")],
+      destructiveIndex: 1,
+      cancelIndex: 0,
+      onSelect: (index) => {
+        if (index === 1) removeExercise(exercise.id);
+      },
+    });
   }
 
   function handleAddToFavorites() {

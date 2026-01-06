@@ -643,6 +643,7 @@
     "primary-muscles": "Primary Muscles",
     "secondary-muscles": "Secondary Muscles",
     "equipment": "Equipment",
-    "created-at": "Created At"
+    "created-at": "Created At",
+    "delete-tip-message": "This tip will be deleted permanently."
   }
 }
