@@ -171,16 +171,21 @@ function Switch({
             ? t("workout-view.rir-description")
             : t("workout-view.rpe-description")
         }
-        items={[
-          t("workout-view.rir-1"),
-          t("workout-view.rir-2"),
-          t("workout-view.rir-3"),
-          t("workout-view.rir-4"),
-          t("workout-view.rpe-1"),
-          t("workout-view.rpe-2"),
-          t("workout-view.rpe-3"),
-          t("workout-view.rpe-4"),
-        ]}
+        items={
+          mode === "rir"
+            ? [
+                t("workout-view.rpe-1") + " 5+",
+                t("workout-view.rpe-2") + " 3-4",
+                t("workout-view.rpe-3") + " 1-2",
+                t("workout-view.rpe-4") + " 0",
+              ]
+            : [
+                t("workout-view.rpe-1") + " 0-2",
+                t("workout-view.rpe-2") + " 3-5",
+                t("workout-view.rpe-3") + " 6-8",
+                t("workout-view.rpe-4") + " 9-10",
+              ]
+        }
         useBullets
       />
     </View>
