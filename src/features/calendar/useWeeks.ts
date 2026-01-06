@@ -98,12 +98,12 @@ export function getWeekRange(
     case "long":
       // Apr 04–12, 2025 | Dec 28, 2024 – Jan 03, 2025
       if (startMonth === endMonth && startYear === endYear) {
-        return `${startDay}-${endDay} ${startMonth} , ${startYear}`;
+        return `${startDay}-${endDay} ${startMonth} ${startYear}`;
       }
       if (startYear === endYear) {
-        return `${startDay} ${startMonth} - ${endDay} ${endMonth} , ${startYear}`;
+        return `${startDay} ${startMonth} - ${endDay} ${endMonth} ${startYear}`;
       }
-      return `${startDay} ${startMonth} , ${startYear} - ${endDay} ${endMonth} , ${endYear}`;
+      return `${startDay} ${startMonth} ${startYear} - ${endDay} ${endMonth} ${endYear}`;
   }
 }
 

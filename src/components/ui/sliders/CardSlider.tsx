@@ -211,6 +211,8 @@ function renderCard({
         height,
         opacity,
         transform: [{ scale }, { perspective: 600 }, { rotateY }],
+        justifyContent: "center",
+        alignItems: "center",
       }}
     >
       {content}

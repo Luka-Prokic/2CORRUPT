@@ -4,6 +4,7 @@ import { AddSplitDayCard } from "./AddSplitDayCard";
 import { useWidgetUnit } from "../../../features/widgets/useWidgetUnit";
 import { SplitDayCard } from "./card/SplitDayCard";
 import { CardSlider } from "../../ui/sliders/CardSlider";
+import { WIDTH } from "../../../utils/Dimensions";
 
 interface SplitDayListProps {
   split: SplitPlan;
@@ -66,9 +67,10 @@ export function SplitDayList({ split, isGridView }: SplitDayListProps) {
           isGridView={isGridView}
         />
       )}
-      cardWidth={fullWidth}
+      cardWidth={WIDTH}
       cardHeight={fullWidth}
-      styleSlider={{ width: fullWidth, height: fullWidth }}
+      sliderWidth={WIDTH}
+      styleSlider={{ width: WIDTH, height: fullWidth }}
       lastCard={
         <AddSplitDayCard
           split={split}

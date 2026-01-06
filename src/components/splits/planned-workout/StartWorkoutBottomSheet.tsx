@@ -45,7 +45,7 @@ export function StartWorkoutBottomSheet({
   if (!template) return null;
 
   return (
-    <IBottomSheet ref={ref}>
+    <IBottomSheet ref={ref} bottomSheetStyle={{ gap: 8, paddingTop: 0 }}>
       <TemplateName template={template} />
       <DescriptionText text={template.description ?? ""} />
       <CardSlider
@@ -53,7 +53,7 @@ export function StartWorkoutBottomSheet({
         card={({ item }) => (
           <ExercisePreviewCard exercise={item} maxHeight={finalHeight} />
         )}
-        cardWidth={WIDTH - 32}
+        cardWidth={WIDTH}
         cardHeight={finalHeight}
         styleDots={{
           width: WIDTH - 32,
