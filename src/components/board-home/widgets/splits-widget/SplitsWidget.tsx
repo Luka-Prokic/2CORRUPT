@@ -51,14 +51,14 @@ export function SplitsWidget() {
         >
           <MidText
             text={activeSplitPlan?.plan.name}
-            color={noSplit ? theme.info : theme.text}
+            color={noSplit ? theme.thirdBackground : theme.text}
             weight="bold"
             numberOfLines={1}
             adjustsFontSizeToFit
           />
           <InfoText
             text={t("button.active").toLowerCase()}
-            color={noSplit ? theme.info : theme.tint}
+            color={noSplit ? theme.thirdBackground : theme.tint}
           />
         </Animated.View>
         <SplitFlash noSplit={noSplit} />

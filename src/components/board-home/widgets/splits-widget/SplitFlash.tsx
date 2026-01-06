@@ -14,7 +14,7 @@ export function SplitFlash({ noSplit }: SplitFlashProps) {
       <Ionicons
         name={noSplit ? "flash-outline" : "flash"}
         size={44}
-        color={noSplit ? theme.info + "80" : theme.fifthBackground}
+        color={noSplit ? theme.thirdBackground : theme.fifthBackground}
         style={{
           shadowColor: theme.fifthBackground,
           shadowOffset: { width: 0, height: 2 },
@@ -28,7 +28,7 @@ export function SplitFlash({ noSplit }: SplitFlashProps) {
         <Ionicons
           name={"flash"}
           size={44}
-          color={theme.info + "80"}
+          color={theme.thirdBackground + "80"}
           style={{
             position: "absolute",
           }}
