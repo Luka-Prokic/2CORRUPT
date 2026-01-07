@@ -7,6 +7,7 @@ import { ModalView } from "../../../components/ui/containers/ModalView";
 import { ExerciseInfoHeaderRight } from "../../../components/exercise-list/header/ExerciseInfoHeaderRight";
 import { ExerciseBasicInfo } from "../../../components/exercise-info/ExerciseBasicInfo";
 import { AddToActiveSessionOrTemplate } from "../../../components/exercise-info/AddToActiveSessionOrTemplate";
+import { ExerciseTipsList } from "../../../components/exercise-info/ExerciseTipsList";
 
 export default function ExerciseInfoScreen() {
   const { exerciseId } = useLocalSearchParams();
@@ -40,10 +41,13 @@ export default function ExerciseInfoScreen() {
 
       <ScreenContent>
         <ModalView fadeIn>
+          <ExerciseBasicInfo exercise={exercise} />
+
           {showAddToActiveSessionOrTemplate && (
             <AddToActiveSessionOrTemplate exercise={exercise} />
           )}
-          <ExerciseBasicInfo exercise={exercise} />
+
+          <ExerciseTipsList tips={exercise.metadata?.tips ?? []} />
         </ModalView>
       </ScreenContent>
     </Fragment>

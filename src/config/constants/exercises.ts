@@ -8,6 +8,20 @@ export const exercisesDefList: ExerciseInfo[] = [
     primaryMuscles: ["mid-chest"],
     secondaryMuscles: ["triceps", "front-delts", "side-delts"],
     equipment: ["barbell", "bench"],
+    metadata: {
+      tips: [
+        {
+          id: "bench-setup",
+          title: "Lock your base",
+          tip: "Plant your feet and pin your upper back to the bench before unracking.",
+        },
+        {
+          id: "bench-bar-path",
+          title: "Bar path",
+          tip: "Lower to mid-chest and press slightly back, not straight up.",
+        },
+      ],
+    },
   },
   {
     id: "ex-back-squat",
@@ -16,6 +30,20 @@ export const exercisesDefList: ExerciseInfo[] = [
     primaryMuscles: ["quads", "glutes"],
     secondaryMuscles: ["hamstrings", "core"],
     equipment: ["barbell", "rack"],
+    metadata: {
+      tips: [
+        {
+          id: "squat-brace",
+          title: "Brace first",
+          tip: "Take a deep breath and brace your core before every rep.",
+        },
+        {
+          id: "squat-depth",
+          title: "Own the bottom",
+          tip: "Control the descent and stay tight coming out of the hole.",
+        },
+      ],
+    },
   },
   {
     id: "ex-deadlift",
@@ -24,6 +52,20 @@ export const exercisesDefList: ExerciseInfo[] = [
     primaryMuscles: ["hamstrings", "glutes", "lower-back"],
     secondaryMuscles: ["mid-traps", "forearms"],
     equipment: ["barbell"],
+    metadata: {
+      tips: [
+        {
+          id: "deadlift-slack",
+          title: "Pull the slack",
+          tip: "Create tension in the bar before you lift it off the floor.",
+        },
+        {
+          id: "deadlift-bar",
+          title: "Bar stays close",
+          tip: "Keep the bar glued to your shins to protect your lower back.",
+        },
+      ],
+    },
   },
   {
     id: "ex-ohp",
@@ -32,6 +74,15 @@ export const exercisesDefList: ExerciseInfo[] = [
     primaryMuscles: ["front-delts", "side-delts"],
     secondaryMuscles: ["triceps", "rear-delts"],
     equipment: ["barbell"],
+    metadata: {
+      tips: [
+        {
+          id: "ohp-stack",
+          title: "Stay stacked",
+          tip: "Squeeze glutes and ribs down to avoid leaning back.",
+        },
+      ],
+    },
   },
   {
     id: "ex-pullups",
@@ -40,6 +91,20 @@ export const exercisesDefList: ExerciseInfo[] = [
     primaryMuscles: ["lats"],
     secondaryMuscles: ["biceps", "rear-delts"],
     equipment: ["bodyweight", "pull-up-bar"],
+    metadata: {
+      tips: [
+        {
+          id: "pullup-start",
+          title: "Dead hang",
+          tip: "Start each rep from a controlled dead hang, no bounce.",
+        },
+        {
+          id: "pullup-cue",
+          title: "Chest to bar",
+          tip: "Think chest to bar instead of chin over bar.",
+        },
+      ],
+    },
   },
   {
     id: "ex-incline-bench",
@@ -51,6 +116,15 @@ export const exercisesDefList: ExerciseInfo[] = [
     primaryMuscles: ["upper-chest"],
     secondaryMuscles: ["triceps", "front-delts"],
     equipment: ["barbell", "bench"],
+    metadata: {
+      tips: [
+        {
+          id: "incline-angle",
+          title: "Bench angle",
+          tip: "Use a moderate incline to keep tension on upper chest.",
+        },
+      ],
+    },
   },
   {
     id: "ex-decline-bench",
@@ -62,6 +136,15 @@ export const exercisesDefList: ExerciseInfo[] = [
     primaryMuscles: ["lower-chest"],
     secondaryMuscles: ["triceps", "front-delts"],
     equipment: ["barbell", "bench"],
+    metadata: {
+      tips: [
+        {
+          id: "decline-control",
+          title: "Stay controlled",
+          tip: "Lower the bar slowly to keep shoulders safe.",
+        },
+      ],
+    },
   },
   {
     id: "ex-db-bench",
@@ -70,6 +153,15 @@ export const exercisesDefList: ExerciseInfo[] = [
     primaryMuscles: ["mid-chest"],
     secondaryMuscles: ["triceps", "front-delts", "side-delts"],
     equipment: ["dumbbells", "bench"],
+    metadata: {
+      tips: [
+        {
+          id: "db-bench-path",
+          title: "Natural path",
+          tip: "Let dumbbells move slightly inward as you press.",
+        },
+      ],
+    },
   },
   {
     id: "ex-db-incline",
@@ -78,6 +170,15 @@ export const exercisesDefList: ExerciseInfo[] = [
     primaryMuscles: ["upper-chest"],
     secondaryMuscles: ["triceps", "front-delts", "side-delts"],
     equipment: ["dumbbells", "bench"],
+    metadata: {
+      tips: [
+        {
+          id: "db-incline-depth",
+          title: "Deep stretch",
+          tip: "Lower until you feel a controlled stretch in upper chest.",
+        },
+      ],
+    },
   },
   {
     id: "ex-dips",
@@ -86,6 +187,15 @@ export const exercisesDefList: ExerciseInfo[] = [
     primaryMuscles: ["mid-chest"],
     secondaryMuscles: ["triceps", "front-delts"],
     equipment: ["bodyweight", "dip-bar"],
+    metadata: {
+      tips: [
+        {
+          id: "dip-lean",
+          title: "Lean forward",
+          tip: "Slight forward lean shifts tension to the chest.",
+        },
+      ],
+    },
   },
   {
     id: "ex-leg-press",
@@ -94,6 +204,15 @@ export const exercisesDefList: ExerciseInfo[] = [
     primaryMuscles: ["quads", "glutes"],
     secondaryMuscles: ["hamstrings"],
     equipment: ["machine"],
+    metadata: {
+      tips: [
+        {
+          id: "legpress-depth",
+          title: "Depth matters",
+          tip: "Lower until thighs approach chest without lifting hips.",
+        },
+      ],
+    },
   },
   {
     id: "ex-leg-ext",
@@ -102,6 +221,15 @@ export const exercisesDefList: ExerciseInfo[] = [
     primaryMuscles: ["quads"],
     secondaryMuscles: [],
     equipment: ["machine"],
+    metadata: {
+      tips: [
+        {
+          id: "legext-squeeze",
+          title: "Top squeeze",
+          tip: "Pause briefly at the top and squeeze the quads.",
+        },
+      ],
+    },
   },
   {
     id: "ex-leg-curl",
@@ -110,6 +238,15 @@ export const exercisesDefList: ExerciseInfo[] = [
     primaryMuscles: ["hamstrings"],
     secondaryMuscles: [],
     equipment: ["machine"],
+    metadata: {
+      tips: [
+        {
+          id: "legcurl-control",
+          title: "Slow negatives",
+          tip: "Control the eccentric to maximize hamstring tension.",
+        },
+      ],
+    },
   },
   {
     id: "ex-barbell-lunge",
@@ -118,6 +255,15 @@ export const exercisesDefList: ExerciseInfo[] = [
     primaryMuscles: ["quads", "glutes"],
     secondaryMuscles: ["hamstrings"],
     equipment: ["barbell"],
+    metadata: {
+      tips: [
+        {
+          id: "lunge-balance",
+          title: "Stay balanced",
+          tip: "Keep torso upright and step far enough forward.",
+        },
+      ],
+    },
   },
   {
     id: "ex-rdl",
@@ -126,6 +272,15 @@ export const exercisesDefList: ExerciseInfo[] = [
     primaryMuscles: ["hamstrings", "glutes"],
     secondaryMuscles: ["lower back"],
     equipment: ["barbell"],
+    metadata: {
+      tips: [
+        {
+          id: "rdl-hips",
+          title: "Hips back",
+          tip: "Push hips back and keep shins nearly vertical.",
+        },
+      ],
+    },
   },
   {
     id: "ex-barbell-row",
@@ -134,6 +289,15 @@ export const exercisesDefList: ExerciseInfo[] = [
     primaryMuscles: ["lats", "rear-delts"],
     secondaryMuscles: ["biceps", "mid-traps"],
     equipment: ["barbell"],
+    metadata: {
+      tips: [
+        {
+          id: "row-torso",
+          title: "Stable torso",
+          tip: "Keep your torso angle fixed throughout the set.",
+        },
+      ],
+    },
   },
   {
     id: "ex-1arm-db-row",
@@ -142,6 +306,15 @@ export const exercisesDefList: ExerciseInfo[] = [
     primaryMuscles: ["lats", "rear-delts"],
     secondaryMuscles: ["biceps"],
     equipment: ["dumbbells", "bench"],
+    metadata: {
+      tips: [
+        {
+          id: "db-row-pull",
+          title: "Elbow path",
+          tip: "Pull elbow toward your hip, not straight up.",
+        },
+      ],
+    },
   },
   {
     id: "ex-lat-pulldown",
@@ -150,6 +323,15 @@ export const exercisesDefList: ExerciseInfo[] = [
     primaryMuscles: ["lats"],
     secondaryMuscles: ["biceps"],
     equipment: ["cable"],
+    metadata: {
+      tips: [
+        {
+          id: "pulldown-start",
+          title: "Lead with elbows",
+          tip: "Drive elbows down before bending the arms.",
+        },
+      ],
+    },
   },
   {
     id: "ex-cable-row",
@@ -158,6 +340,15 @@ export const exercisesDefList: ExerciseInfo[] = [
     primaryMuscles: ["lats", "rear-delts"],
     secondaryMuscles: ["biceps"],
     equipment: ["cable"],
+    metadata: {
+      tips: [
+        {
+          id: "cable-row-chest",
+          title: "Chest up",
+          tip: "Keep chest tall and avoid rounding the back.",
+        },
+      ],
+    },
   },
   {
     id: "ex-barbell-shrug",
@@ -166,6 +357,15 @@ export const exercisesDefList: ExerciseInfo[] = [
     primaryMuscles: ["upper-traps", "mid-traps"],
     secondaryMuscles: [],
     equipment: ["barbell"],
+    metadata: {
+      tips: [
+        {
+          id: "shrug-up",
+          title: "Straight up",
+          tip: "Lift shoulders straight up, not rolling them.",
+        },
+      ],
+    },
   },
   {
     id: "ex-lateral-raise",

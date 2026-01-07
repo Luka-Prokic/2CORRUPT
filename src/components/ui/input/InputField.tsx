@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useSettingsStore } from "../../../stores/settingsStore";
+import { MidText } from "../text/MidText";
 
 export interface InputFieldProps extends TextInputProps {
   label?: string;
@@ -103,19 +104,7 @@ export function InputField({
             height: 44,
           }}
         >
-          <Text
-            style={{
-              fontSize: fontSize,
-              fontWeight: "bold",
-              flexShrink: 1,
-              textAlign: "center",
-            }}
-            numberOfLines={1}
-            adjustsFontSizeToFit
-            minimumFontScale={0.6}
-          >
-            {value || placeholder}
-          </Text>
+          <MidText text={value || placeholder} />
 
           <Ionicons name="pencil" size={24} color={theme.grayText} />
         </TouchableOpacity>

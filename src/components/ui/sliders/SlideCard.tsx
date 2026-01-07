@@ -107,6 +107,8 @@ export function SlideCard({
         height,
         opacity,
         transform: [{ scale }, { perspective: 600 }, { rotateY }],
+        justifyContent: "center",
+        alignItems: "center",
       }}
     >
       {content}
