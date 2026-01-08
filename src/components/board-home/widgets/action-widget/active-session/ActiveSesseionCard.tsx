@@ -7,6 +7,8 @@ import { ActiveSessionHeader } from "./ActiveSessionHeader";
 import { SevenSegmentSessionTimer } from "../../../../ui/timer/SevenSegmentSessionTimer";
 import { CorruptRestTimer } from "../../../../corrupt/CorruptRestTimer";
 import { View } from "react-native";
+import { ActiveSessionChartButton } from "./ActiveSessionChartButton";
+import { ActiveSessionPreviewButton } from "./ActiveSessionPreviewButton";
 
 export function ActiveSessionCard() {
   const { widgetUnit, fullWidth } = useWidgetUnit();
@@ -49,10 +51,14 @@ export function ActiveSessionCard() {
           </View>
         ) : (
           <SevenSegmentSessionTimer
-            segmentSize={36}
+            segmentSize={24}
             color={theme.secondaryAccent}
           />
         )}
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+          <ActiveSessionPreviewButton />
+          <ActiveSessionChartButton />
+        </View>
       </StrobeButton>
     </Fragment>
   );

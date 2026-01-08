@@ -23,6 +23,7 @@ interface ProgressRingProps {
   style?: ViewStyle | ViewStyle[];
   color?: string;
   loopColor?: string;
+  arrowColor?: string;
 }
 
 export function ProgressRing({
@@ -33,6 +34,7 @@ export function ProgressRing({
   style,
   color,
   loopColor,
+  arrowColor,
 }: ProgressRingProps) {
   const { theme } = useSettingsStore();
   const { widgetUnit } = useWidgetUnit();
@@ -103,7 +105,7 @@ export function ProgressRing({
           <Ionicons
             name="arrow-forward"
             size={strokeWidth}
-            color={theme.secondaryText}
+            color={arrowColor ?? theme.secondaryText}
           />
         </Animated.View>
       </Svg>

@@ -8,7 +8,9 @@
     "icon": "./assets/2CORRUPT-icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
-    "assetBundlePatterns": ["assets/**/*"],
+    "assetBundlePatterns": [
+      "assets/**/*"
+    ],
     "jsEngine": "hermes",
     "splash": {
       "image": "./assets/2CORRUPT-icon.png",
@@ -19,6 +21,10 @@
       "supportsTablet": true,
       "splash": {
         "backgroundColor": "#000000"
+      },
+      "bundleIdentifier": "com.lukatricepa.twocorrupt",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
       }
     },
     "android": {
@@ -33,9 +39,18 @@
       "favicon": "./assets/2CORRUPT-icon.png",
       "backgroundColor": "#000000"
     },
-    "plugins": ["expo-asset", "expo-router"],
+    "plugins": [
+      "expo-asset",
+      "expo-router"
+    ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "5bc51978-e01d-45a6-a336-7c5134039ca9"
+      }
     }
   }
 }
