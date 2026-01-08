@@ -27,7 +27,7 @@ export function SplitsWidget() {
       onPress={handleWidgetPress}
       style={{
         width: widgetUnit,
-        height: halfWidget,
+        height: widgetUnit,
         borderRadius: 32,
         backgroundColor: hexToRGBA(theme.thirdBackground, 0.6),
         borderWidth: 1,
@@ -38,7 +38,7 @@ export function SplitsWidget() {
       <Shine
         style={{
           width: widgetUnit,
-          height: halfWidget,
+          height: widgetUnit,
           padding: 16,
           alignItems: "center",
           flexDirection: "row",

@@ -8,7 +8,7 @@ import { Shine } from "../../ui/misc/Shine";
 
 export function ExerciseWidget() {
   const { theme } = useSettingsStore();
-  const { widgetUnit } = useWidgetUnit();
+  const { widgetUnit, halfWidget } = useWidgetUnit();
 
   function handlePress() {
     router.push("/exercise/list");
@@ -18,7 +18,7 @@ export function ExerciseWidget() {
     <BounceButton
       style={{
         width: widgetUnit,
-        height: widgetUnit,
+        height: halfWidget,
         borderRadius: 32,
         backgroundColor: hexToRGBA(theme.thirdBackground, 0.6),
         borderWidth: 1,

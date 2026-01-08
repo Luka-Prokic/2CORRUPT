@@ -34,7 +34,7 @@ export function WidgetGrid() {
       >
         <SummaryWidget />
         <AwardsWidget />
-        <ExerciseWidget />
+        <SplitsWidget />
         <TemplatesWidget />
         <View
           style={{
@@ -46,7 +46,7 @@ export function WidgetGrid() {
           <BackButtonWidget />
           <SettingsWidget />
         </View>
-        <SplitsWidget />
+        <ExerciseWidget />
       </View>
       <ActionWidget />
     </Animated.View>
