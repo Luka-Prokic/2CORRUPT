@@ -6,37 +6,15 @@ import { useUIStore } from "../../../stores/ui";
 import { router } from "expo-router";
 import { useActionSheet } from "../../../utils/useActionSheet";
 import { Fragment } from "react";
+import { usePullTemplate } from "../../../features/workout/usePullTemplate";
 
 export function WorkoutBoardHeaderRight() {
   const { theme } = useSettingsStore();
-  const {
-    activeSession,
-    cancelSession,
-    completeSession,
-    editTemplate,
-    updateTemplateField,
-    confirmTemplate,
-  } = useWorkoutStore();
+  const { activeSession, cancelSession, completeSession } = useWorkoutStore();
   const { setTypeOfView } = useUIStore();
   const { t, showActionSheet } = useActionSheet();
   const isItEmpty = !activeSession?.layout.length;
-
-  const handlePullTemplate = () => {
-    const templateId = editTemplate();
-
-    const newLayout = activeSession.layout.map((ex) => ({
-      ...ex,
-      sets: ex.sets.map((set) => ({
-        ...set,
-        isCompleted: false,
-      })),
-    }));
-
-    updateTemplateField(templateId, "layout", newLayout);
-    updateTemplateField(templateId, "name", activeSession.name);
-    updateTemplateField(templateId, "description", activeSession.notes);
-    confirmTemplate();
-  };
+  const handlePullTemplate = usePullTemplate();
 
   function handleCancelSession() {
     const options = [
@@ -60,7 +38,7 @@ export function WorkoutBoardHeaderRight() {
         if (buttonIndex === 2 && !isItEmpty) {
           setTypeOfView("home");
           router.push("/home-board");
-          handlePullTemplate();
+          handlePullTemplate(activeSession);
         }
       },
     });

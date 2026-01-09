@@ -2,7 +2,6 @@ import { WorkoutSession } from "../../../../stores/workout";
 import { HEIGHT, WIDTH } from "../../../../utils/Dimensions";
 import Animated, { FadeIn } from "react-native-reanimated";
 import { useSettingsStore } from "../../../../stores/settings";
-import { useTranslation } from "react-i18next";
 import { ExpandedSessionRecapHeader } from "./ExpandedSessionRecapHeader";
 import { ExercisePreviewCard } from "../ExercisePreviewCard";
 import { CenterCardSlider } from "../../../ui/sliders/CenterCardSlider";
@@ -14,7 +13,6 @@ interface ExpandedSessionRecapProps {
 
 export function ExpandedSessionRecap({ session }: ExpandedSessionRecapProps) {
   const { theme } = useSettingsStore();
-  const { t } = useTranslation();
 
   const cardHeight = useLayoutPreviewHeight(session.layout);
   const finalHeight = Math.min(cardHeight, HEIGHT * 0.5);
@@ -45,7 +43,6 @@ export function ExpandedSessionRecap({ session }: ExpandedSessionRecapProps) {
         cardWidth={WIDTH}
         cardHeight={finalHeight}
         sliderWidth={WIDTH}
-        // hideDots
       />
     </Animated.View>
   );

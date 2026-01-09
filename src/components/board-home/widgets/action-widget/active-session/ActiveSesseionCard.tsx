@@ -21,8 +21,10 @@ export function ActiveSessionCard() {
   const softGlow = theme.fifthAccent + "80";
 
   function handlePress() {
-    router.dismissTo("/");
     setTypeOfView("workout");
+    setTimeout(() => {
+      router.dismissTo("/");
+    }, 100);
   }
 
   if (!activeSession) return null;

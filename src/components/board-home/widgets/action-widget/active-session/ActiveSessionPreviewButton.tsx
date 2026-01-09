@@ -1,7 +1,7 @@
 import { Fragment, useRef } from "react";
 import { BounceButton } from "../../../../ui/buttons/BounceButton";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
-import { SessionPreviewBottomSheet } from "../../../../recap/workout-preview/SessionPreviewBottomSheet";
+import { ActiveSessionPreviewBottomSheet } from "../../../../recap/workout-preview/ActiveSessionPreviewBottomSheet";
 import { useSettingsStore } from "../../../../../stores/settingsStore";
 import { useWorkoutStore } from "../../../../../stores/workout/useWorkoutStore";
 import { ProgressRing } from "../../../../ui/misc/ProgressRing";
@@ -10,12 +10,12 @@ import { InfoText } from "../../../../ui/text/InfoText";
 
 export function ActiveSessionPreviewButton() {
   const { theme } = useSettingsStore();
-  const sessionChartBottomSheetRef = useRef<BottomSheetModal>(null);
+  const activeSessionPreviewBottomSheetRef = useRef<BottomSheetModal>(null);
   const { activeSession } = useWorkoutStore();
   const data = useSessionCompletionRatio(activeSession);
 
   function handlePress() {
-    sessionChartBottomSheetRef.current?.present();
+    activeSessionPreviewBottomSheetRef.current?.present();
   }
 
   return (
@@ -39,9 +39,8 @@ export function ActiveSessionPreviewButton() {
           ringSize={54}
         />
       </BounceButton>
-      <SessionPreviewBottomSheet
-        ref={sessionChartBottomSheetRef}
-        session={activeSession}
+      <ActiveSessionPreviewBottomSheet
+        ref={activeSessionPreviewBottomSheetRef}
       />
     </Fragment>
   );
