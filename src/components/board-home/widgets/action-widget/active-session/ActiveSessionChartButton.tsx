@@ -35,6 +35,12 @@ export function ActiveSessionChartButton() {
             strokeWidth: 1,
             strokeDashArray: [8, 2],
           }}
+          asterLinesConfig={{
+            stroke: theme.info + "80",
+            strokeWidth: 1,
+            strokeDashArray: [1, 0],
+          }}
+          noOfSections={3}
           chartSize={64}
           hideLabels
           circular

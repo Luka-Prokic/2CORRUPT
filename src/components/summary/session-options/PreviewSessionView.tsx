@@ -1,5 +1,4 @@
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
-import { forwardRef } from "react";
 import { SessionBottomSheetViews } from "./SessionBottomSheet";
 import { WorkoutSession, useWorkoutStore } from "../../../stores/workout";
 import { CardSlider } from "../../ui/sliders/CardSlider";
@@ -79,7 +78,8 @@ export function PreviewSessionView({
         labelTwo={t("button.more")}
         onOptionOne={handleStartWorkout}
         onOptionTwo={() => setView("options")}
-        styleOne={{ backgroundColor: theme.thirdBackground }}
+        styleOne={{ backgroundColor: theme.fifthAccent }}
+        styleTwo={{ backgroundColor: theme.primaryBackground }}
         disabledOne={!!activeSession}
         style={{ margin: 16 }}
       />

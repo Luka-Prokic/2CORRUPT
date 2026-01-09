@@ -81,7 +81,8 @@ export function PreviewTempalteView({
         labelTwo={t("button.edit")}
         onOptionOne={handleStartWorkout}
         onOptionTwo={() => setView("options")}
-        styleOne={{ backgroundColor: theme.thirdBackground }}
+        styleOne={{ backgroundColor: theme.fifthAccent }}
+        styleTwo={{ backgroundColor: theme.primaryBackground }}
         disabledOne={!!activeSession}
         style={{ margin: 16 }}
       />

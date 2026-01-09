@@ -97,7 +97,8 @@ export function ActiveSessionPreviewBottomSheet({
         labelTwo={t("button.cancel")}
         onOptionOne={handlePressOne}
         onOptionTwo={handlePressTwo}
-        styleOne={{ backgroundColor: theme.thirdBackground }}
+        styleOne={{ backgroundColor: theme.fifthAccent }}
+        styleTwo={{ backgroundColor: theme.error }}
         style={{ margin: 16 }}
         haptics
       />

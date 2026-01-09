@@ -6,6 +6,7 @@ import { Text } from "react-native";
 import { useWorkoutStore } from "../../../stores/workout/useWorkoutStore";
 import { useTranslation } from "react-i18next";
 import { useHaptics } from "../../../features/ui/useHaptics";
+import { IText } from "../../ui/text/IText";
 
 export function AddSetButton() {
   const { theme } = useSettingsStore();
@@ -44,15 +45,7 @@ export function AddSetButton() {
           alignItems: "center",
         }}
       >
-        <Text
-          style={{
-            color: theme.secondaryText,
-            fontSize: 24,
-            fontWeight: "bold",
-          }}
-        >
-          {t("workout-view.add-set")}
-        </Text>
+        <IText text={t("workout-view.add-set")} color={theme.secondaryText} />
       </StrobeBlur>
     </BounceButton>
   );

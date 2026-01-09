@@ -1,4 +1,3 @@
-import { Fragment } from "react";
 import { StrobeButton } from "../../../../ui/buttons/StrobeButton";
 import { useWidgetUnit } from "../../../../../features/widgets/useWidgetUnit";
 import { useSettingsStore } from "../../../../../stores/settingsStore";
@@ -11,6 +10,7 @@ import { ActiveSessionChartButton } from "./ActiveSessionChartButton";
 import { ActiveSessionPreviewButton } from "./ActiveSessionPreviewButton";
 import { IText } from "../../../../ui/text/IText";
 import { router } from "expo-router";
+import { Shine } from "../../../../ui/misc/Shine";
 
 export function ActiveSessionCard() {
   const { widgetUnit, fullWidth } = useWidgetUnit();
@@ -30,14 +30,18 @@ export function ActiveSessionCard() {
   if (!activeSession) return null;
 
   return (
-    <Fragment>
-      <StrobeButton
+    <StrobeButton
+      style={{
+        height: widgetUnit,
+        width: fullWidth,
+        borderRadius: 32,
+      }}
+      pressable
+      strobeColors={[softGlow, softGlow, softGlow, softGlow]}
+    >
+      <Shine
+        color={theme.secondaryAccent}
         style={{
-          height: widgetUnit,
-          width: fullWidth,
-          borderRadius: 32,
-        }}
-        styleContent={{
           height: widgetUnit,
           width: fullWidth,
           backgroundColor: theme.thirdAccent + "10",
@@ -47,8 +51,6 @@ export function ActiveSessionCard() {
           justifyContent: "space-between",
           padding: 16,
         }}
-        pressable
-        strobeColors={[softGlow, softGlow, softGlow, softGlow]}
       >
         {restingExerciseId ? (
           <View
@@ -78,7 +80,7 @@ export function ActiveSessionCard() {
           <IText text={activeSession.name} color={theme.text} />
           <ActiveSessionChartButton />
         </Pressable>
-      </StrobeButton>
-    </Fragment>
+      </Shine>
+    </StrobeButton>
   );
 }

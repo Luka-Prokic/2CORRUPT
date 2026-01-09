@@ -7,6 +7,7 @@ import { useUIStore } from "../../../stores/ui";
 import { router } from "expo-router";
 import { Fragment } from "react";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
+import { usePullTemplate } from "../../../features/workout/usePullTemplate";
 
 interface IconStyle {
   color?: string;
@@ -28,33 +29,10 @@ export function ActiveSessionAlert({
 }: ActiveSessionAlertProps) {
   const { theme } = useSettingsStore();
   const { t, showActionSheet } = useActionSheet();
-  const {
-    activeSession,
-    cancelSession,
-    editTemplate,
-    updateTemplateField,
-    confirmTemplate,
-  } = useWorkoutStore();
+  const { activeSession, cancelSession } = useWorkoutStore();
   const { setTypeOfView } = useUIStore();
   const isItEmpty = !activeSession?.layout.length;
-
-  const handlePullTemplate = () => {
-    const templateId = editTemplate();
-
-    const newLayout = activeSession.layout.map((ex) => ({
-      ...ex,
-      sets: ex.sets.map((set) => ({
-        ...set,
-        isCompleted: false,
-      })),
-    }));
-
-    updateTemplateField(templateId, "layout", newLayout);
-    updateTemplateField(templateId, "name", activeSession.name);
-    updateTemplateField(templateId, "description", activeSession.notes);
-    confirmTemplate();
-    cancelSession();
-  };
+  const handlePullTemplate = usePullTemplate();
 
   function handleAcitveSession() {
     const options = [
@@ -75,7 +53,7 @@ export function ActiveSessionAlert({
         if (buttonIndex === 1) {
           router.dismissTo("/"), setTypeOfView("workout");
         }
-        if (buttonIndex === 2 && !isItEmpty) handlePullTemplate();
+        if (buttonIndex === 2 && !isItEmpty) handlePullTemplate(activeSession);
         if (buttonIndex === 3 || (isItEmpty && buttonIndex === 2))
           cancelSession();
       },
@@ -99,7 +77,10 @@ export function ActiveSessionAlert({
     return (
       <TouchableOpacity
         onPress={handleAcitveSession}
-        style={{ width: "100%", ...style }}
+        style={{
+          width: "100%",
+          ...style,
+        }}
         disabled={disabled}
       >
         <Animated.Text
@@ -110,6 +91,7 @@ export function ActiveSessionAlert({
             color: theme.info,
             fontSize: 16,
             fontWeight: "500",
+            textAlign: "center",
           }}
         >
           <Ionicons
