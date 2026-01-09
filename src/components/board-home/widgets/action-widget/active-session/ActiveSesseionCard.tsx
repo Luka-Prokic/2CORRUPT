@@ -3,19 +3,27 @@ import { StrobeButton } from "../../../../ui/buttons/StrobeButton";
 import { useWidgetUnit } from "../../../../../features/widgets/useWidgetUnit";
 import { useSettingsStore } from "../../../../../stores/settingsStore";
 import { useWorkoutStore } from "../../../../../stores/workout";
-import { ActiveSessionHeader } from "./ActiveSessionHeader";
+import { useUIStore } from "../../../../../stores/ui";
 import { SevenSegmentSessionTimer } from "../../../../ui/timer/SevenSegmentSessionTimer";
 import { CorruptRestTimer } from "../../../../corrupt/CorruptRestTimer";
-import { View } from "react-native";
+import { Pressable, View } from "react-native";
 import { ActiveSessionChartButton } from "./ActiveSessionChartButton";
 import { ActiveSessionPreviewButton } from "./ActiveSessionPreviewButton";
+import { IText } from "../../../../ui/text/IText";
+import { router } from "expo-router";
 
 export function ActiveSessionCard() {
   const { widgetUnit, fullWidth } = useWidgetUnit();
   const { theme } = useSettingsStore();
   const { activeSession, restingExerciseId } = useWorkoutStore();
+  const { setTypeOfView } = useUIStore();
 
   const softGlow = theme.fifthAccent + "80";
+
+  function handlePress() {
+    router.dismissTo("/");
+    setTypeOfView("workout");
+  }
 
   if (!activeSession) return null;
 
@@ -30,16 +38,16 @@ export function ActiveSessionCard() {
         styleContent={{
           height: widgetUnit,
           width: fullWidth,
-          paddingTop: 44,
-          backgroundColor: theme.thirdAccent + "40",
+          backgroundColor: theme.thirdAccent + "10",
           borderWidth: 1,
           borderColor: theme.thirdAccent + "20",
           borderRadius: 32,
+          justifyContent: "space-between",
+          padding: 16,
         }}
         pressable
         strobeColors={[softGlow, softGlow, softGlow, softGlow]}
       >
-        <ActiveSessionHeader />
         {restingExerciseId ? (
           <View
             style={{
@@ -51,14 +59,23 @@ export function ActiveSessionCard() {
           </View>
         ) : (
           <SevenSegmentSessionTimer
-            segmentSize={24}
+            fitWidth={fullWidth - 32}
             color={theme.secondaryAccent}
           />
         )}
-        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+        <Pressable
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+            width: fullWidth - 32,
+          }}
+          onPress={handlePress}
+        >
           <ActiveSessionPreviewButton />
+          <IText text={activeSession.name} color={theme.text} />
           <ActiveSessionChartButton />
-        </View>
+        </Pressable>
       </StrobeButton>
     </Fragment>
   );

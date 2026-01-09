@@ -5,14 +5,12 @@ import { SessionChartBottomSheet } from "../../../../recap/workout-preview/Sessi
 import { useSettingsStore } from "../../../../../stores/settingsStore";
 import { RadarChart } from "react-native-gifted-charts";
 import { useWorkoutStore } from "../../../../../stores/workout/useWorkoutStore";
-import { useWidgetUnit } from "../../../../../features/widgets/useWidgetUnit";
 import { useMuscleScoresForSession } from "../../../../../features/stats/useMucleScores";
 
 export function ActiveSessionChartButton() {
   const { theme } = useSettingsStore();
   const sessionChartBottomSheetRef = useRef<BottomSheetModal>(null);
   const { activeSession } = useWorkoutStore();
-  const { widgetUnit } = useWidgetUnit();
   const data = useMuscleScoresForSession(activeSession);
 
   function handlePress() {
@@ -21,16 +19,14 @@ export function ActiveSessionChartButton() {
 
   return (
     <Fragment>
-      <BounceButton
-        onPress={handlePress}
-        style={{ width: widgetUnit, height: 64 }}
-      >
+      <BounceButton onPress={handlePress} style={{ width: 64, height: 64 }}>
         <RadarChart
           data={data.map((item) => item.percentage)}
           polygonConfig={{
             fill: theme.fifthBackground + "80",
             stroke: theme.fifthBackground,
             strokeWidth: 3,
+            opacity: 1,
           }}
           gridConfig={{
             fill: theme.handle,
