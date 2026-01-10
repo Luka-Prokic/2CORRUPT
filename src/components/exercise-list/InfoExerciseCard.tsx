@@ -11,6 +11,7 @@ import { Swipeable } from "react-native-gesture-handler";
 import { WIDTH } from "../../utils/Dimensions";
 import { InfoExerciseSwipeActions } from "./InfoExerciseSwipeActions";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
+import { Shine } from "../ui/misc/Shine";
 
 interface InfoExerciseCardProps {
   exercise: ExerciseInfo;
@@ -59,7 +60,14 @@ export function InfoExerciseCard({ exercise }: InfoExerciseCardProps) {
         }}
       >
         {/* Exercise info section */}
-        <View style={{ flex: 1 }}>
+        <Shine
+          style={{
+            flex: 1,
+            borderRadius: 0,
+            justifyContent: "center",
+            padding: 8,
+          }}
+        >
           <Text
             style={{
               color: theme.text,
@@ -90,7 +98,7 @@ export function InfoExerciseCard({ exercise }: InfoExerciseCardProps) {
               {translatedSecondary?.join(", ")}
             </Text>
           </Text>
-        </View>
+        </Shine>
 
         {/* Selection button section */}
         <OptionButtons exercise={exercise} />
