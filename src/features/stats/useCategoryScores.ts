@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import {
   useWorkoutStore,
+  MuscleCategory,
   WorkoutSession,
   WorkoutTemplate,
 } from "../../stores/workout";
@@ -67,7 +68,7 @@ export const useCategoryScoresForDay = (date: Date) => {
  */
 export const useCategoryScoresForSession = (
   session: WorkoutSession | null
-): { category: string; score: number; percentage: number }[] => {
+): { category: MuscleCategory["id"]; score: number; percentage: number }[] => {
   const { exercises } = useWorkoutStore();
 
   return useMemo(() => {

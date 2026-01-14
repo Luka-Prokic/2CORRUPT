@@ -67,7 +67,7 @@ export function ActiveSessionPreviewBottomSheet({
     });
   }
   return (
-    <IBottomSheet ref={ref}>
+    <IBottomSheet ref={ref} bottomSheetStyle={{ paddingTop: 0 }}>
       <SessionName
         session={activeSession}
         styleView={{ marginVertical: 16 }}

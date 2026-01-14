@@ -7,6 +7,10 @@ import { useSettingsStore } from "../../../stores/settingsStore";
 import { useWidgetUnit } from "../../../features/widgets/useWidgetUnit";
 import { useTranslation } from "react-i18next";
 import { useSessionCompletionRatio } from "../../../features/workout/useSessionHistory";
+import { useCategoryScoresForSession } from "../../../features/stats/useCategoryScores";
+import { InfoText } from "../../ui/text/InfoText";
+import { getWorkoutFocus } from "../../../features/stats/useCategoryFocused";
+import { IText } from "../../ui/text/IText";
 
 interface SessionPreviewBottomSheetProps {
   ref: React.RefObject<BottomSheetModal>;
@@ -21,11 +25,18 @@ export function SessionChartBottomSheet({
   const { theme } = useSettingsStore();
   const data = useMuscleScoresForSession(activeSession);
   const isCompleted = useSessionCompletionRatio(activeSession);
+  const categoryScores = useCategoryScoresForSession(activeSession);
+  const muscleCategories = categoryScores.map((item) => item.category);
+  const focus = getWorkoutFocus(muscleCategories);
 
   const maxValue = isCompleted === 1 ? 120 : 150;
 
   return (
     <IBottomSheet ref={ref}>
+      <IText text={focus.toUpperCase()} />
+      <InfoText
+        text={categoryScores.map((item) => item.category).join(" + ")}
+      />
       <RadarChart
         data={data.map((item) => item.percentage)}
         polygonConfig={{

@@ -29,8 +29,12 @@ export const createTemplateSlice: StateCreator<
   activeTemplate: null,
 
   createTemplate: (template?: WorkoutTemplate) => {
+    const { activeSession, activeTemplate } = get();
     const userId = useUserStore.getState().user?.id;
     const date = new Date().toISOString();
+
+    if (activeSession) return null;
+    if (activeTemplate) return activeTemplate.id;
 
     const newTemplate: WorkoutTemplate = template
       ? {
@@ -59,7 +63,7 @@ export const createTemplateSlice: StateCreator<
   },
 
   editTemplate: (templateId?: string) => {
-    const { getTemplateById, activeTemplate, templates } = get();
+    const { getTemplateById, activeTemplate } = get();
     if (activeTemplate) return null;
 
     const userId = useUserStore.getState().user?.id;
