@@ -11,6 +11,8 @@ import { useCategoryScoresForSession } from "../../../features/stats/useCategory
 import { InfoText } from "../../ui/text/InfoText";
 import { getWorkoutFocus } from "../../../features/stats/useCategoryFocused";
 import { IText } from "../../ui/text/IText";
+import { StrobeButton } from "../../ui/buttons/StrobeButton";
+import { router } from "expo-router";
 
 interface SessionPreviewBottomSheetProps {
   ref: React.RefObject<BottomSheetModal>;
@@ -31,8 +33,20 @@ export function SessionChartBottomSheet({
 
   const maxValue = isCompleted === 1 ? 120 : 150;
 
+  function handleAddExercises() {
+    ref.current?.close();
+    setTimeout(() => {
+      router.push({
+        pathname: "/add-exercise/[type]",
+        params: {
+          type: "session",
+        },
+      });
+    }, 100);
+  }
+
   return (
-    <IBottomSheet ref={ref}>
+    <IBottomSheet ref={ref} bottomSheetStyle={{ gap: 16 }}>
       <IText text={t(`workout-focus.${focus}`).toUpperCase()} />
       <InfoText
         text={categoryScores
@@ -72,6 +86,17 @@ export function SessionChartBottomSheet({
         chartSize={fullWidth}
         circular
       />
+      <StrobeButton
+        title={t("button.add")}
+        onPress={handleAddExercises}
+        style={{
+          width: fullWidth,
+          height: 64,
+          borderRadius: 32,
+          backgroundColor: theme.fifthAccent,
+        }}
+      />
+      <InfoText text="Add exercises to this session" />
     </IBottomSheet>
   );
 }
