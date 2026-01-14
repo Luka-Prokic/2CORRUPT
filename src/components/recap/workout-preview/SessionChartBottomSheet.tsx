@@ -33,9 +33,13 @@ export function SessionChartBottomSheet({
 
   return (
     <IBottomSheet ref={ref}>
-      <IText text={focus.toUpperCase()} />
+      <IText text={t(`workout-focus.${focus}`).toUpperCase()} />
       <InfoText
-        text={categoryScores.map((item) => item.category).join(" + ")}
+        text={categoryScores
+          .map((item) => {
+            return t(`categories.${item.category}`).toLowerCase();
+          })
+          .join(" + ")}
       />
       <RadarChart
         data={data.map((item) => item.percentage)}

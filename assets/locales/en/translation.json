@@ -611,6 +611,14 @@
     "full-body": "Full Body",
     "grip": "Grip"
   },
+  "workout-focus": {
+    "push": "Push",
+    "pull": "Pull",
+    "upper-body": "Upper Body",
+    "lower-body": "Lower Body",
+    "full-body": "Full Body",
+    "core": "Core"
+  },
   "equipment": {
     "all": "All",
     "barbell": "Barbell",

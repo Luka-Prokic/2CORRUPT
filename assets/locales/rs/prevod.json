@@ -608,6 +608,14 @@
     "full-body": "Celo telo",
     "grip": "Grip"
   },
+  "workout-focus": {
+    "push": "Pritisak",
+    "pull": "Vlačenje",
+    "upper-body": "Gornje telo",
+    "lower-body": "Donje telo",
+    "full-body": "Celo telo",
+    "core": "Trbuh"
+  },
   "equipment": {
     "all": "Sve",
     "barbell": "Šipka",
