@@ -28,7 +28,6 @@ export const createRestSlice: StateCreator<WorkoutStore, [], [], RestSlice> = (
       restingExerciseId,
       restingSetId,
       startRestTime,
-      estEndRestTime,
       updateSetInActiveExercise,
     } = get();
 
@@ -53,7 +52,7 @@ export const createRestSlice: StateCreator<WorkoutStore, [], [], RestSlice> = (
       estEndRestTime: null,
     });
   },
-  
+
   // directly set a new estimated end timestamp (seconds)
   updateEstEndRestTime: (newEndSec) => {
     set({ estEndRestTime: newEndSec });

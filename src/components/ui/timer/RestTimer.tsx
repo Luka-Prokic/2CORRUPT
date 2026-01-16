@@ -11,7 +11,7 @@ interface RestTimerProps {
 }
 
 export function RestTimer({ textStyle, onEnd }: RestTimerProps) {
-  const { theme, autoRestComplete } = useSettingsStore();
+  const { theme } = useSettingsStore();
   const { estEndRestTime } = useWorkoutStore(); // absolute end timestamp in seconds
 
   const [isActive, setIsActive] = useState(true);
