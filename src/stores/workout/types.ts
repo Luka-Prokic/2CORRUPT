@@ -361,6 +361,9 @@ export interface DraftSlice {
   clearPlaceholderExercise: () => void;
 
   removeExercise: (exerciseId: string) => void; // removes from exercises[] // only user made ones
+
+  addExerciseTip: (tip: Partial<ExerciseTip>) => void;
+  removeExerciseTip: (tipId: string) => void;
 }
 export interface RestSlice {
   restingExerciseId: string | null;
@@ -375,9 +378,6 @@ export interface RestSlice {
   updateEstEndRestTime: (newEndSec: number) => void;
   extendEstEndRestTime: (amount: number) => void;
   reduceEstEndRestTime: (amount: number) => void;
-
-  addExerciseTip: (tip: Partial<ExerciseTip>) => void;
-  removeExerciseTip: (tipId: string) => void;
 }
 
 export interface StatsSlice {
