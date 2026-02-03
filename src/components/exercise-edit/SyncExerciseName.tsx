@@ -1,7 +1,7 @@
-import { StrobeOptionButton } from "../../ui/buttons/StrobeOptionButton";
+import { StrobeOptionButton } from "../ui/buttons/StrobeOptionButton";
 import { useTranslation } from "react-i18next";
 import { Ionicons } from "@expo/vector-icons";
-import { useSettingsStore } from "../../../stores/settingsStore";
+import { useSettingsStore } from "../../stores/settingsStore";
 
 interface SyncExerciseNameProps {
   names: string[];

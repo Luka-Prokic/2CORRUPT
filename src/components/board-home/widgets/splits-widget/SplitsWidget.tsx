@@ -12,7 +12,7 @@ import { SplitFlash } from "./SplitFlash";
 import Animated, { FadeOut, FadeIn } from "react-native-reanimated";
 
 export function SplitsWidget() {
-  const { widgetUnit, halfWidget } = useWidgetUnit();
+  const { widgetUnit } = useWidgetUnit();
   const { theme } = useSettingsStore();
   const { activeSplitPlan } = useWorkoutStore();
   const noSplit = activeSplitPlan?.plan?.id === "no-split";
