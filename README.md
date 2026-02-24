@@ -15,6 +15,7 @@ Split → Day → Template → Workout → Exercise → Set
 Instead of treating workouts as flat logs, the system separates planning, execution, and weekly performance tracking into distinct layers. The result is a scalable structure that supports complex training splits while maintaining clean state boundaries and offline-first reliability.
 
 The product emphasizes:
+
 	•	Structural clarity over ad-hoc logging
 	•	Separation of planning and execution
 	•	Modular state architecture
@@ -27,23 +28,24 @@ The architecture was intentionally rebuilt to support long-term extensibility (a
 ## Core Concept
 
 The app introduces a layered training model:
-• Splits define weekly training structure
-• Days organize workouts within a split
-• Templates define reusable workout blueprints
-• Workouts represent executed training sessions
-• Exercises contain structured movement definitions
-• Sets capture granular performance data
+
+	• Splits define weekly training structure
+	• Days organize workouts within a split
+	• Templates define reusable workout blueprints
+	• Workouts represent executed training sessions
+	• Exercises contain structured movement definitions
+	• Sets capture granular performance data
 
 This separation prevents execution data from mutating planning structures and enables flexible weekly progress tracking.
 
 ---
 
 ## Key Features
-•  Configurable splits and days with multi-workout templates
-•  Weekly progress engine with dynamic dashboard goals
-•  Grouped dashboard widgets (hydration, supplements, active workout)
-•  Modular Zustand stores for domain isolation
-•  Offline-first architecture
+	•  Configurable splits and days with multi-workout templates
+	•  Weekly progress engine with dynamic dashboard goals
+	•  Grouped dashboard widgets (hydration, supplements, active workout)
+	•  Modular Zustand stores for domain isolation
+	•  Offline-first architecture
 
 ---
 
