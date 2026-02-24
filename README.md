@@ -41,11 +41,11 @@ This separation prevents execution data from mutating planning structures and en
 
 ## Key Features
 
-• Configurable splits and days with multi-workout templates
-• Weekly progress engine with dynamic dashboard goals
-• Grouped dashboard widgets (hydration, supplements, active workout)
-• Modular Zustand stores for domain isolation
-• Offline-first architecture
+- Configurable splits and days with multi-workout templates
+- Weekly progress engine with dynamic dashboard goals
+- Grouped dashboard widgets (hydration, supplements, active workout)
+- Modular Zustand stores for domain isolation
+- Offline-first architecture
 
 ---
 
@@ -55,18 +55,18 @@ The system is designed for hybrid storage:
 
 WatermelonDB
 Large relational datasets:
-	•	Exercises
-	•	Workout history
-	•	Templates
-	•	Split structures
-	•	Sets
+	-	Exercises
+	-	Workout history
+	-	Templates
+	-	Split structures
+	-	Sets
 
 MMKV
 Lightweight and frequently accessed data:
-	•	Settings
-	•	Active workout session
-	•	UI preferences
-	•	Cached summaries
+	-	Settings
+	-	Active workout session
+	-	UI preferences
+	-	Cached summaries
 
 This approach balances performance with scalability.
 
